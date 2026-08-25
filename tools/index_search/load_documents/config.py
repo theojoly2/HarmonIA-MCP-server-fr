@@ -23,9 +23,14 @@ from onnxruntime.quantization import quantize_dynamic, QuantType
 from huggingface_hub import snapshot_download
 from filelock import FileLock
 
-load_dotenv()
-
 PROJECT_ROOT = Path(__file__).resolve().parent
+SERVER_PROJECT_ROOT = PROJECT_ROOT.parents[2]  # Remonte à SemantiQ-MCP-server-fr
+env_path = SERVER_PROJECT_ROOT / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
+else:
+    load_dotenv(override=True)
+
 environ["HF_HOME"] = str(PROJECT_ROOT / ".cache_hf")
 
 CONFIG_PATH = Path(__file__).resolve().parent / "config.yaml"
@@ -395,6 +400,13 @@ class ApiReranker(BaseReranker):
             except requests.exceptions.RequestException as e:
                 last_exception = e
                 status_code = getattr(e.response, "status_code", None)
+                response_body = ""
+                try:
+                    response_body = e.response.text[:500] if e.response else ""
+                except Exception:
+                    pass
+
+                print(f"⚠ Albert rerank API error: status={status_code}, url={self._url}, model={self.model}, api_key_set={self.api_key is not None}, response={response_body}, exception={e}")
 
                 # Retries limités aux erreurs transitoires
                 if status_code not in (429, 503) and not isinstance(
