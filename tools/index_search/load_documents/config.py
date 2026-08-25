@@ -24,14 +24,28 @@ from huggingface_hub import snapshot_download
 from filelock import FileLock
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-SERVER_PROJECT_ROOT = PROJECT_ROOT.parents[2]  # Remonte à SemantiQ-MCP-server-fr
-env_path = SERVER_PROJECT_ROOT / ".env"
-if env_path.exists():
-    load_dotenv(dotenv_path=env_path, override=True)
-else:
-    load_dotenv(override=True)
-
 environ["HF_HOME"] = str(PROJECT_ROOT / ".cache_hf")
+
+# Charge le .env du serveur MCP s'il n'a pas déjà été chargé.
+# On utilise override=False pour ne pas écraser les variables déjà présentes
+# (notamment celles chargées par server.py avant l'import de ce module).
+SERVER_PROJECT_ROOT = PROJECT_ROOT.parents[2]  # Remonte à SemantiQ-MCP-server-fr
+server_env_path = SERVER_PROJECT_ROOT / ".env"
+if server_env_path.exists():
+    load_dotenv(dotenv_path=server_env_path, override=False)
+    print(f"✓ Loaded server .env: {server_env_path}")
+else:
+    load_dotenv(override=False)
+    print("✓ Loaded .env from current working directory")
+
+# Vérification debug des variables d'environnement critiques
+print(
+    f"[ENV DEBUG] SERVER_HOST={getenv('SERVER_HOST')}, "
+    f"SERVER_PORT={getenv('SERVER_PORT')}, "
+    f"URL_RERANKER_API={getenv('URL_RERANKER_API')}, "
+    f"RERANKER_MODEL={getenv('RERANKER_MODEL')}, "
+    f"RERANKER_API_KEY_SET={getenv('RERANKER_API_KEY') is not None}"
+)
 
 CONFIG_PATH = Path(__file__).resolve().parent / "config.yaml"
 
