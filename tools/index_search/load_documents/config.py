@@ -95,13 +95,15 @@ class ApiEmbeddingModel:
         retry_attempts: int = 1,
         retry_delay: float = 1.0,
     ):
+        # On conserve l'URL exacte fournie par l'utilisateur (qui doit contenir
+        # le chemin complet, ex: https://albert.api.etalab.gouv.fr/v1/embeddings).
         self.base_url = base_url.rstrip("/")
         self.model = model
         self.api_key = api_key
         self.timeout = timeout
         self.retry_attempts = retry_attempts
         self.retry_delay = retry_delay
-        self._url = f"{self.base_url}/v1/embeddings"
+        self._url = self.base_url
 
     def _headers(self) -> dict[str, str]:
         headers = {"Content-Type": "application/json"}
@@ -339,13 +341,16 @@ class ApiReranker(BaseReranker):
         retry_attempts: int = 1,
         retry_delay: float = 1.0,
     ):
+        # On conserve l'URL exacte fournie par l'utilisateur (qui doit contenir
+        # le chemin complet, ex: https://albert.api.etalab.gouv.fr/v1/rerank).
+        # On supprime juste un éventuel slash final.
         self.base_url = base_url.rstrip("/")
         self.model = model
         self.api_key = api_key
         self.timeout = timeout
         self.retry_attempts = retry_attempts
         self.retry_delay = retry_delay
-        self._url = f"{self.base_url}/v1/rerank"
+        self._url = self.base_url
 
     def _headers(self) -> dict[str, str]:
         headers = {"Content-Type": "application/json"}
