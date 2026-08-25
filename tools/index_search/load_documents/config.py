@@ -58,6 +58,109 @@ class BaseReranker(ABC):
 
 
 # =========================================================
+# API EMBEDDING MODEL
+# =========================================================
+class ApiEmbeddingModel:
+    """
+    Wrapper pour un modèle d'embedding externe accessible via une API
+    compatible OpenAI (/v1/embeddings) ou Albert (/v1/embeddings).
+    Retourne des vecteurs denses et, si possible, des poids lexicaux sparse.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        model: str,
+        api_key: str | None = None,
+        timeout: int = 30,
+        retry_attempts: int = 1,
+        retry_delay: float = 1.0,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.model = model
+        self.api_key = api_key
+        self.timeout = timeout
+        self.retry_attempts = retry_attempts
+        self.retry_delay = retry_delay
+        self._url = f"{self.base_url}/v1/embeddings"
+
+    def _headers(self) -> dict[str, str]:
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        return headers
+
+    def encode(self, texts, return_dense=True, return_sparse=False, return_colbert_vecs=False, **kwargs):
+        """
+        Appelle l'API d'embedding pour encoder une liste de textes.
+        Retourne un dict avec 'dense_vecs' et éventuellement 'lexical_weights'.
+        """
+        if isinstance(texts, str):
+            texts = [texts]
+        if not texts:
+            return {"dense_vecs": [], "lexical_weights": []}
+
+        payload = {
+            "input": texts,
+            "model": self.model,
+            "encoding_format": "float",
+        }
+
+        last_exception: Exception | None = None
+        attempts = self.retry_attempts + 1
+
+        for attempt in range(attempts):
+            try:
+                response = requests.post(
+                    self._url,
+                    headers=self._headers(),
+                    json=payload,
+                    timeout=self.timeout,
+                )
+                response.raise_for_status()
+                data = response.json()
+
+                embeddings = sorted(
+                    data.get("data", []),
+                    key=lambda item: item.get("index", 0),
+                )
+                dense_vecs = [item.get("embedding") for item in embeddings]
+
+                result: dict[str, Any] = {"dense_vecs": dense_vecs}
+
+                # Certains endpoints (ex: Albert bge-m3) peuvent retourner des sparse weights
+                if return_sparse and embeddings and "sparse_weights" in embeddings[0]:
+                    result["lexical_weights"] = [
+                        item.get("sparse_weights", {}) for item in embeddings
+                    ]
+
+                return result
+
+            except requests.exceptions.RequestException as e:
+                last_exception = e
+                status_code = getattr(e.response, "status_code", None)
+
+                if status_code not in (429, 503) and not isinstance(
+                    e, (requests.exceptions.Timeout, requests.exceptions.ConnectionError)
+                ):
+                    break
+
+                if attempt < self.retry_attempts:
+                    print(f"⚠ Embedding API transient error ({status_code}), retrying in {self.retry_delay}s... (attempt {attempt + 1}/{attempts})")
+                    time.sleep(self.retry_delay)
+                    continue
+
+                break
+
+        raise EmbeddingApiError(f"Embedding API call failed: {last_exception}") from last_exception
+
+
+class EmbeddingApiError(Exception):
+    """Exception levée lors d'un échec d'appel à l'API d'embedding."""
+    pass
+
+
+# =========================================================
 # LOCAL RERANKER
 # =========================================================
 class LocalReranker(BaseReranker):
@@ -397,8 +500,63 @@ def _load_qdrant_client() -> QdrantClient:
 # =========================================================
 # EMBEDDINGS
 # =========================================================
+def _load_embedding_api():
+    """
+    Configure l'API d'embedding si activée.
+    Variables d'environnement prioritaires : URL_EMBEDDING_API, EMBEDDING_MODEL, EMBEDDING_API_KEY.
+    """
+    api_cfg = config.get("embedding_api", {})
+    enabled = api_cfg.get("enabled", False)
+
+    base_url = (getenv("URL_EMBEDDING_API") or api_cfg.get("base_url", "")).strip()
+    api_model = (getenv("EMBEDDING_MODEL") or api_cfg.get("model", "")).strip()
+
+    api_key_env = api_cfg.get("api_key_env", "")
+    api_key = getenv("EMBEDDING_API_KEY") or (getenv(api_key_env) if api_key_env else None)
+    if api_key:
+        api_key = api_key.strip()
+    if api_key == "":
+        api_key = None
+
+    timeout = int(api_cfg.get("timeout", 30))
+    retry_attempts = int(api_cfg.get("retry_attempts", 1))
+    retry_delay = float(api_cfg.get("retry_delay", 1.0))
+
+    if enabled and base_url and api_model:
+        try:
+            api_embedding = ApiEmbeddingModel(
+                base_url=base_url,
+                model=api_model,
+                api_key=api_key,
+                timeout=timeout,
+                retry_attempts=retry_attempts,
+                retry_delay=retry_delay,
+            )
+            print(f"✓ Configured embedding API: {api_model} ({base_url})")
+            return api_embedding
+        except Exception as e:
+            print(f"⚠ Failed to initialize embedding API: {e}.")
+            return None
+
+    return None
+
+
 def _load_embedding_model():
-    model_embedding = config["model"]["embedding"]
+    # 1. Essayer l'API d'embedding si activée
+    api_embedding = _load_embedding_api()
+    if api_embedding is not None:
+        return api_embedding
+
+    # 2. Sinon, charger le modèle local (si l'embedding local est activé)
+    embedding_local_enabled = config.get("model", {}).get("embedding_local", True)
+    if not embedding_local_enabled:
+        raise ValueError(
+            "embedding_api is disabled and embedding_local is false. "
+            "No embedding backend is available."
+        )
+
+    model_embedding = getenv("EMBEDDING_MODEL") or config["model"]["embedding"]
+    model_embedding = model_embedding.strip()
 
     if "bge-m3" in model_embedding.lower():
         from FlagEmbedding import BGEM3FlagModel
@@ -422,29 +580,42 @@ def _load_reranker_model() -> BaseReranker:
     Charge le reranker.
     Priorité à l'API Albert si configurée et activée.
     Sinon, fallback sur le modèle local.
+
+    Les paramètres sensibles (URL, modèle, clé API) sont lus depuis le fichier
+    .env du serveur. Le .env prend priorité sur config.yaml si les deux sont renseignés.
     """
-    model_reranker = config["model"]["reranker"]
-    local_reranker = LocalReranker(model_name=model_reranker)
+    model_reranker = getenv("RERANKER_MODEL") or config["model"]["reranker"]
+    model_reranker = model_reranker.strip()
+
+    # Ne pas charger le modèle local si le reranker local est désactivé
+    reranker_local_enabled = config.get("model", {}).get("reranker_local", True)
+    if reranker_local_enabled:
+        local_reranker = LocalReranker(model_name=model_reranker)
+    else:
+        local_reranker = None
 
     api_cfg = config.get("reranker_api", {})
     enabled = api_cfg.get("enabled", False)
-    base_url = api_cfg.get("base_url", "").strip()
-    api_model = api_cfg.get("model", "").strip()
+
+    # Paramètres API lus en priorité depuis le .env, avec fallback sur config.yaml
+    base_url = (getenv("URL_RERANKER_API") or api_cfg.get("base_url", "")).strip()
+    api_model = (getenv("RERANKER_MODEL") or api_cfg.get("model", "")).strip()
+
     api_key_env = api_cfg.get("api_key_env", "")
+    api_key = getenv("RERANKER_API_KEY") or (getenv(api_key_env) if api_key_env else None)
+    if api_key:
+        api_key = api_key.strip()
+    if api_key == "":
+        api_key = None
+
     timeout = int(api_cfg.get("timeout", 30))
     retry_attempts = int(api_cfg.get("retry_attempts", 1))
     retry_delay = float(api_cfg.get("retry_delay", 1.0))
     max_consecutive_errors = int(api_cfg.get("max_consecutive_errors", 3))
 
-    api_key = None
-    if api_key_env:
-        api_key = getenv(api_key_env)
-        if api_key:
-            api_key = api_key.strip()
-        if api_key == "":
-            api_key = None
-
     if enabled and base_url and api_model:
+        # Le reranker local a déjà été conditionné par reranker_local au début de la fonction
+
         try:
             api_reranker = ApiReranker(
                 base_url=base_url,
@@ -455,14 +626,24 @@ def _load_reranker_model() -> BaseReranker:
                 retry_delay=retry_delay,
             )
             print(f"✓ Configured Albert API reranker: {api_model} ({base_url})")
-            return RerankerRouter(
-                api_reranker=api_reranker,
-                local_reranker=local_reranker,
-                max_consecutive_errors=max_consecutive_errors,
-            )
+
+            if local_reranker is not None:
+                return RerankerRouter(
+                    api_reranker=api_reranker,
+                    local_reranker=local_reranker,
+                    max_consecutive_errors=max_consecutive_errors,
+                )
+            return api_reranker
         except Exception as e:
+            if local_reranker is None:
+                raise ValueError(
+                    f"reranker_api is enabled but reranker_local is false and API init failed: {e}"
+                ) from e
             print(f"⚠ Failed to initialize Albert API reranker: {e}. Using local reranker.")
             return local_reranker
+
+        if local_reranker is None:
+            raise ValueError("reranker_api is disabled and reranker_local is false. No reranker backend available.")
 
     print(f"✓ Loaded local reranker: {model_reranker}")
     return local_reranker
@@ -542,8 +723,8 @@ def _detect_model_capabilities(model) -> dict[str, Any]:
 # =========================================================
 client = _load_qdrant_client()
 
-EMBEDDING_MODEL_NAME = config["model"]["embedding"]
-RERANKER_MODEL_NAME = config["model"]["reranker"]
+EMBEDDING_MODEL_NAME = (getenv("EMBEDDING_MODEL") or config["model"]["embedding"]).strip()
+RERANKER_MODEL_NAME = (getenv("RERANKER_MODEL") or config["model"]["reranker"]).strip()
 
 EMBEDDING_MODEL = _load_embedding_model()
 RERANKER_MODEL = _load_reranker_model()
