@@ -872,6 +872,8 @@ def encode_batch(texts: list[str], capabilities: dict[str, Any]) -> list[dict[st
             item = {}
             if i < len(dense_vecs):
                 dense = dense_vecs[i]
+                if isinstance(dense, str):
+                    raise ValueError(f"Expected numeric vector, got string: {dense!r}")
                 item["dense"] = dense.tolist() if hasattr(dense, "tolist") else list(dense)
             if i < len(lexical_weights):
                 item["sparse"] = _lexical_to_sparse_vector(lexical_weights[i])
@@ -880,8 +882,15 @@ def encode_batch(texts: list[str], capabilities: dict[str, Any]) -> list[dict[st
         return outputs
 
     if capabilities["has_dense"]:
-        dense_vecs = model.encode(texts)
+        result = model.encode(texts)
+        # Si le résultat est un dict (API embedding), extraire dense_vecs
+        if isinstance(result, dict):
+            dense_vecs = result.get("dense_vecs", [])
+        else:
+            dense_vecs = result
         for dense in dense_vecs:
+            if isinstance(dense, str):
+                raise ValueError(f"Expected numeric vector, got string: {dense!r}")
             outputs.append(
                 {"dense": dense.tolist() if hasattr(dense, "tolist") else list(dense)}
             )
@@ -992,6 +1001,19 @@ def flush_batch(
 def index_documents():
     print("Detecting model capabilities...")
     capabilities = cf.MODEL_CAPABILITIES
+
+    # DEBUG : affiche le type du modèle d'embedding et un exemple d'encodage
+    print(f"[DEBUG load.py] Embedding model type: {type(cf.model)}")
+    print(f"[DEBUG load.py] Embedding model name: {cf.EMBEDDING_MODEL_NAME}")
+    try:
+        sample_result = cf.model.encode("test", return_dense=True, return_sparse=False)
+        print(f"[DEBUG load.py] Sample encode result type: {type(sample_result)}")
+        print(f"[DEBUG load.py] Sample encode result keys: {list(sample_result.keys()) if isinstance(sample_result, dict) else 'N/A'}")
+        if isinstance(sample_result, dict) and sample_result.get("dense_vecs"):
+            first_vec = sample_result["dense_vecs"][0]
+            print(f"[DEBUG load.py] Sample first dense_vec type: {type(first_vec)}, len: {len(first_vec) if hasattr(first_vec, '__len__') else 'N/A'}, first 3 values: {first_vec[:3] if hasattr(first_vec, '__getitem__') else 'N/A'}")
+    except Exception as e:
+        print(f"[DEBUG load.py] Sample encode error: {e}")
 
     is_fresh = setup_collection(capabilities)
     existing_ids = set() if is_fresh else get_existing_ids()
