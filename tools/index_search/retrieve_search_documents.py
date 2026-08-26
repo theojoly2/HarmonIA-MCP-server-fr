@@ -92,9 +92,11 @@ def _cached_encode(query_text: str) -> dict[str, Any]:
         return outputs
 
     if capabilities["has_dense"]:
-        dense = model.encode([query_text])
-        first_dense = dense[0] if hasattr(dense, "__len__") else dense
-        outputs["dense"] = first_dense.tolist() if hasattr(first_dense, "tolist") else list(first_dense)
+        result = model.encode([query_text], return_dense=True, return_sparse=False, return_colbert_vecs=False)
+        dense_vecs = result.get("dense_vecs", []) if isinstance(result, dict) else result
+        if len(dense_vecs) > 0:
+            dense = dense_vecs[0]
+            outputs["dense"] = dense.tolist() if hasattr(dense, "tolist") else list(dense)
         return outputs
 
     if capabilities["has_sparse"]:
