@@ -33,6 +33,33 @@ indexing:
   batch_size: 5
   documents_path: "documents"
 
+# Génération ou extraction de résumés de documents (stockés sur le chunk 0 dans Qdrant)
+summary:
+  enabled: false              # true = générer via LLM ; false = extraire du fichier
+  lang: "fr"                # langue demandée pour le résumé LLM
+  # Les variables suivantes peuvent aussi être définies dans le .env du serveur.
+  # Le .env prend priorité sur config.yaml si les deux sont renseignés.
+  # Variables d'environnement attendues : URL_LLM_API, LLM_MODEL, LLM_API_KEY
+  base_url: "URL_LLM_API"
+  api_key_env: "LLM_API_KEY"
+  model: "LLM_MODEL"
+  llm:
+    max_input_chars: 800000   # ~200 000 tokens (4 caractères/token)
+    min_output_chars: 200
+    max_output_chars: 400
+    system_prompt: |
+      Tu es un assistant expert en résumé de documents techniques et réglementaires.
+      Produis un résumé factuel, neutre et très concis du document fourni.
+      Le résumé doit :
+      - Présenter l'objet principal du document en une phrase.
+      - Optionnellement lister 1 à 2 points clés.
+      - Ne rien inventer ni extrapoler au-delà du texte fourni.
+      - Être rédigé en {lang}.
+      - Avoir une longueur totale comprise entre 200 et 400 caractères MAXIMUM.
+      - Mentionner la langue principale du document ou du standard si identifiable.
+  fallback:
+    max_chars: 400            # longueur max pour la description native ou le texte descriptif
+
 reranker_api:
   enabled: true
   # Les variables suivantes peuvent aussi être définies dans le .env du serveur.
