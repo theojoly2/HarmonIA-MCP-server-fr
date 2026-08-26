@@ -1,5 +1,6 @@
 from pathlib import Path
 from hashlib import sha256
+import base64
 import os
 import re
 import codecs
@@ -950,8 +951,14 @@ def flush_batch(
     points: list[PointStruct],
     capabilities: dict[str, Any],
 ) -> int:
-    texts = [item["text"] for item in batch_docs]
-    encoded_vectors = encode_batch(texts, capabilities)
+    # Enrichit le texte à embedder avec les tags et le nom de fichier pour améliorer
+    # la recherche sémantique (surtout utile pour les vocabulaires et standards).
+    texts_to_embed = [
+        f"Source : {', '.join(item['payloadextra'].get('tags', []))}\n"
+        f"Fichier : {item['filename']}\n\n{item['text']}"
+        for item in batch_docs
+    ]
+    encoded_vectors = encode_batch(texts_to_embed, capabilities)
 
     for item, vectors in zip(batch_docs, encoded_vectors):
         point = build_point(
@@ -964,11 +971,12 @@ def flush_batch(
             payloadextra=item.get("payloadextra"),
         )
         points.append(point)
+        tags = item['payloadextra'].get('tags', [])
         print(
             f"[~] Loaded {item['filename']} "
             f"(chunk {item['payloadextra'].get('chunk_index', 0) + 1}/"
             f"{item['payloadextra'].get('chunk_count', 1)}) "
-            f"({item['encoding']})"
+            f"tags={tags}"
         )
 
     client.upsert(collection_name=COLLECTION, points=points)
@@ -1003,7 +1011,7 @@ def index_documents():
         print(f"[!] Directory not found: {docs_path}")
         return
 
-    print(f"[~] Scanning documents in {docs_path}")
+    print(f"[~] Scanning documents recursively in {docs_path}")
 
     def pushdoc(
         filename: str,
@@ -1033,13 +1041,23 @@ def index_documents():
             }
         )
 
-    for filepath in docs_path.iterdir():
+    for filepath in docs_path.rglob("*"):
         if not filepath.is_file():
             continue
+
+        relative_path = filepath.relative_to(docs_path)
+        tags = list(relative_path.parent.parts)
 
         ext = filepath.suffix.lower()
 
         try:
+            file_base64 = None
+            try:
+                with open(filepath, "rb") as f:
+                    file_base64 = base64.b64encode(f.read()).decode("utf-8")
+            except Exception as e:
+                print(f"[!] Warning: Could not base64 encode {filepath.name}: {e}")
+
             if ext == ".pdf":
                 text, encodingused = read_pdf_document(filepath)
             else:
@@ -1061,9 +1079,15 @@ def index_documents():
             document_id = generate_document_id(filepath)
 
             # Génération/extraction du résumé (stocké uniquement sur le chunk 0)
-            doc_summary = get_doc_summary(filepath.name, filepath, optimized_text)
-            if doc_summary:
-                print(f"[~] Summary for {filepath.name}: {doc_summary[:120]}{'…' if len(doc_summary) > 120 else ''}")
+            # On ne regénère pas si le document est déjà indexé.
+            chunk0_id = generate_chunk_stable_id(document_id, 0)
+            if not is_fresh and chunk0_id in existing_ids:
+                print(f"[~] Document already indexed, skipping summary: {filepath.name}")
+                doc_summary = None
+            else:
+                doc_summary = get_doc_summary(filepath.name, filepath, optimized_text)
+                if doc_summary:
+                    print(f"[~] Summary for {filepath.name}: {doc_summary[:120]}{'…' if len(doc_summary) > 120 else ''}")
 
             chunks = split_text_uniformly(optimized_text)
 
@@ -1071,7 +1095,7 @@ def index_documents():
                 continue
 
             total_chunks += len(chunks)
-            print(f"[~] Chunked {filepath.name} into {len(chunks)} chunks")
+            print(f"[~] Chunked {filepath.name} into {len(chunks)} chunks (Tags: {tags})")
 
             for chunk_index, chunk_text in enumerate(chunks):
                 payloadextra = {
@@ -1083,9 +1107,13 @@ def index_documents():
                     "source_path": str(filepath.resolve()),
                     "source_extension": filepath.suffix.lower(),
                     "document_name": filepath.stem,
+                    "tags": tags,
                 }
-                if chunk_index == 0 and doc_summary:
-                    payloadextra["doc_summary"] = doc_summary
+                if chunk_index == 0:
+                    if doc_summary:
+                        payloadextra["doc_summary"] = doc_summary
+                    if file_base64:
+                        payloadextra["file_base64"] = file_base64
 
                 pushdoc(
                     filename=filepath.name,
