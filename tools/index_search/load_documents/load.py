@@ -848,6 +848,14 @@ def setup_collection(capabilities: dict[str, Any]) -> bool:
     )
     print("[✓] Payload index for 'document_id' created.")
 
+    print("[~] Creating payload index for 'summary_enabled'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="summary_enabled",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'summary_enabled' created.")
+
     return True
 
 
@@ -1147,6 +1155,7 @@ def index_documents():
                     "source_extension": filepath.suffix.lower(),
                     "document_name": filepath.stem,
                     "tags": tags,
+                    "summary_enabled": bool(SUMMARY_ENABLED),
                 }
                 if chunk_index == 0:
                     if doc_summary:

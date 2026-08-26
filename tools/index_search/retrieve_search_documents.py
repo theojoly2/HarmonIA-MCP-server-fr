@@ -60,6 +60,10 @@ AGGREGATION_MAX_WEIGHT: float = float(getattr(cf, "config", {}).get("search", {}
 AGGREGATION_MEAN_WEIGHT: float = float(getattr(cf, "config", {}).get("search", {}).get("aggregation_mean_weight", 0.1) if hasattr(cf, "config") else 0.1)
 HYBRID_DENSE_WEIGHT: float = float(getattr(cf, "config", {}).get("search", {}).get("hybrid_dense_weight", 0.7) if hasattr(cf, "config") else 0.7)
 
+# Configuration des résumés : détermine si le reranking hybride sur résumé est autorisé
+SUMMARY_CFG = getattr(cf, "config", {}).get("summary", {})
+SUMMARY_ENABLED = bool(SUMMARY_CFG.get("enabled", False))
+
 _FILENAME_INDEX_CREATED = False
 
 
@@ -359,23 +363,31 @@ def retrieve_search_documents(
             candidate_docs.sort(key=lambda x: x["rerank_score"], reverse=True)
 
         # --- ÉTAPE 2 : RERANKING HYBRIDE DES RÉSUMÉS EN PARALLÈLE ---
+        # N'effectuer le reranking sur résumé que si tous les finalists provenaient
+        # d'une indexation avec summary.enabled=true. Flag manquant = False (safe).
         top_n = min(30, len(candidate_docs))
         finalists = candidate_docs[:top_n]
         rest = candidate_docs[top_n:]
 
-        summary_pairs = []
-        for doc in finalists:
-            tags_str = ", ".join(doc_tags_map.get(doc["document_id"], [])) or "Inconnue"
-            summary = str(doc.get("doc_summary", "")).strip() or str(doc.get("best_chunk_text", ""))
-            enriched_summary = f"Source : {tags_str}\nFichier : {doc.get('filename', '')}\nRésumé : {summary[:1024]}"
-            summary_pairs.append([search_terms, enriched_summary])
+        all_summaries_enabled = SUMMARY_ENABLED and all(
+            str(doc.get("summary_enabled", "False")).lower() in ("true", "1", "yes")
+            for doc in finalists
+        )
 
-        if summary_pairs:
-            summary_scores = parallel_rerank(summary_pairs, batch_size=24)
-            for i, doc in enumerate(finalists):
-                if i < len(summary_scores):
-                    doc["rerank_score"] = (0.5 * doc["rerank_score"]) + (0.5 * float(summary_scores[i]))
-            finalists.sort(key=lambda x: x["rerank_score"], reverse=True)
+        if all_summaries_enabled and finalists:
+            summary_pairs = []
+            for doc in finalists:
+                tags_str = ", ".join(doc_tags_map.get(doc["document_id"], [])) or "Inconnue"
+                summary = str(doc.get("doc_summary", "")).strip() or str(doc.get("best_chunk_text", ""))
+                enriched_summary = f"Source : {tags_str}\nFichier : {doc.get('filename', '')}\nRésumé : {summary[:1024]}"
+                summary_pairs.append([search_terms, enriched_summary])
+
+            if summary_pairs:
+                summary_scores = parallel_rerank(summary_pairs, batch_size=24)
+                for i, doc in enumerate(finalists):
+                    if i < len(summary_scores):
+                        doc["rerank_score"] = (0.5 * doc["rerank_score"]) + (0.5 * float(summary_scores[i]))
+                finalists.sort(key=lambda x: x["rerank_score"], reverse=True)
 
         # Reconstruction complète + tri global final
         candidate_docs = finalists + rest
