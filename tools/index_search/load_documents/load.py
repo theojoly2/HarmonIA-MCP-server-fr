@@ -807,10 +807,12 @@ def setup_collection(capabilities: dict[str, Any]) -> bool:
     elif capabilities["has_dense"]:
         client.create_collection(
             collection_name=COLLECTION,
-            vectors_config=VectorParams(
-                size=capabilities["dense_dim"],
-                distance=Distance.COSINE,
-            ),
+            vectors_config={
+                DENSE_VECTOR_NAME: VectorParams(
+                    size=capabilities["dense_dim"],
+                    distance=Distance.COSINE,
+                ),
+            },
         )
         print(
             f"[✓] Created dense-only collection '{COLLECTION}' "
@@ -958,7 +960,7 @@ def build_point(
     if capabilities["has_dense"]:
         return PointStruct(
             id=docid,
-            vector=vectors["dense"],
+            vector={DENSE_VECTOR_NAME: vectors["dense"]},
             payload=payload,
         )
 
