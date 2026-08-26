@@ -1032,10 +1032,22 @@ def index_documents():
     # Vérification silencieuse du modèle d'embedding
     try:
         sample_result = cf.model.encode("test", return_dense=True, return_sparse=False)
-        if isinstance(sample_result, dict) and sample_result.get("dense_vecs"):
-            first_vec = sample_result["dense_vecs"][0]
-            if not isinstance(first_vec, (list, tuple)) or len(first_vec) == 0:
-                raise ValueError(f"Embedding API returned invalid dense vector: {type(first_vec)}")
+        dense_vecs = None
+        if isinstance(sample_result, dict):
+            dense_vecs = sample_result.get("dense_vecs")
+        elif isinstance(sample_result, (list, tuple)):
+            dense_vecs = sample_result
+        elif hasattr(sample_result, "tolist"):
+            dense_vecs = sample_result.tolist()
+
+        if dense_vecs is None or len(dense_vecs) == 0:
+            raise ValueError("Embedding model returned no dense vectors")
+
+        first_vec = dense_vecs[0]
+        if hasattr(first_vec, "tolist"):
+            first_vec = first_vec.tolist()
+        if not isinstance(first_vec, (list, tuple)) or len(first_vec) == 0:
+            raise ValueError(f"Embedding model returned invalid dense vector: {type(first_vec)}")
     except Exception as e:
         print(f"⚠ Embedding API check failed: {e}")
         raise
