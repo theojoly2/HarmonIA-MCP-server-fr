@@ -1031,7 +1031,7 @@ def index_documents():
 
     # Vérification silencieuse du modèle d'embedding
     try:
-        sample_result = cf.model.encode("test", return_dense=True, return_sparse=False)
+        sample_result = cf.model.encode(["test"], return_dense=True, return_sparse=False)
         dense_vecs = None
         if isinstance(sample_result, dict):
             dense_vecs = sample_result.get("dense_vecs")
