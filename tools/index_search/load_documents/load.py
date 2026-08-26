@@ -16,6 +16,7 @@ from qdrant_client.models import (
     PointStruct,
     SparseVectorParams,
     SparseVector,
+    PayloadSchemaType,
 )
 
 try:
@@ -828,6 +829,22 @@ def setup_collection(capabilities: dict[str, Any]) -> bool:
 
     else:
         raise ValueError("Model has neither dense nor sparse capability")
+
+    print("[~] Creating payload index for 'tags'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="tags",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'tags' created.")
+
+    print("[~] Creating payload index for 'document_id'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="document_id",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'document_id' created.")
 
     return True
 
