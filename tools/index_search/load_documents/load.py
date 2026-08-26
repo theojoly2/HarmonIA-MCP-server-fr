@@ -1002,18 +1002,16 @@ def index_documents():
     print("Detecting model capabilities...")
     capabilities = cf.MODEL_CAPABILITIES
 
-    # DEBUG : affiche le type du modèle d'embedding et un exemple d'encodage
-    print(f"[DEBUG load.py] Embedding model type: {type(cf.model)}")
-    print(f"[DEBUG load.py] Embedding model name: {cf.EMBEDDING_MODEL_NAME}")
+    # Vérification silencieuse du modèle d'embedding
     try:
         sample_result = cf.model.encode("test", return_dense=True, return_sparse=False)
-        print(f"[DEBUG load.py] Sample encode result type: {type(sample_result)}")
-        print(f"[DEBUG load.py] Sample encode result keys: {list(sample_result.keys()) if isinstance(sample_result, dict) else 'N/A'}")
         if isinstance(sample_result, dict) and sample_result.get("dense_vecs"):
             first_vec = sample_result["dense_vecs"][0]
-            print(f"[DEBUG load.py] Sample first dense_vec type: {type(first_vec)}, len: {len(first_vec) if hasattr(first_vec, '__len__') else 'N/A'}, first 3 values: {first_vec[:3] if hasattr(first_vec, '__getitem__') else 'N/A'}")
+            if not isinstance(first_vec, (list, tuple)) or len(first_vec) == 0:
+                raise ValueError(f"Embedding API returned invalid dense vector: {type(first_vec)}")
     except Exception as e:
-        print(f"[DEBUG load.py] Sample encode error: {e}")
+        print(f"⚠ Embedding API check failed: {e}")
+        raise
 
     is_fresh = setup_collection(capabilities)
     existing_ids = set() if is_fresh else get_existing_ids()

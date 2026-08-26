@@ -127,9 +127,6 @@ class ApiEmbeddingModel:
             "encoding_format": "float",
         }
 
-        print(f"[DEBUG ApiEmbeddingModel] URL={self._url}, model={self.model}, api_key_set={self.api_key is not None}, n_texts={len(texts)}")
-        print(f"[DEBUG ApiEmbeddingModel] payload={payload}")
-
         last_exception: Exception | None = None
         attempts = self.retry_attempts + 1
 
@@ -141,13 +138,8 @@ class ApiEmbeddingModel:
                     json=payload,
                     timeout=self.timeout,
                 )
-                print(f"[DEBUG ApiEmbeddingModel] response status={response.status_code}")
                 response.raise_for_status()
                 data = response.json()
-                print(f"[DEBUG ApiEmbeddingModel] response data keys={list(data.keys())}, n_data={len(data.get('data', []))}")
-                if data.get("data"):
-                    first = data["data"][0]
-                    print(f"[DEBUG ApiEmbeddingModel] first data keys={list(first.keys())}, embedding type={type(first.get('embedding'))}, embedding len={len(first.get('embedding', []))}")
 
                 embeddings = sorted(
                     data.get("data", []),
@@ -163,7 +155,6 @@ class ApiEmbeddingModel:
                         item.get("sparse_weights", {}) for item in embeddings
                     ]
 
-                print(f"[DEBUG ApiEmbeddingModel] returning dense_vecs n={len(dense_vecs)}, first type={type(dense_vecs[0]) if dense_vecs else None}")
                 return result
 
             except requests.exceptions.RequestException as e:
@@ -174,8 +165,6 @@ class ApiEmbeddingModel:
                     response_body = e.response.text[:500] if e.response else ""
                 except Exception:
                     pass
-                print(f"[DEBUG ApiEmbeddingModel] request exception: status={status_code}, response={response_body}, exception={e}")
-
                 if status_code not in (429, 503) and not isinstance(
                     e, (requests.exceptions.Timeout, requests.exceptions.ConnectionError)
                 ):
