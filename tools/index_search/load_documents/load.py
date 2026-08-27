@@ -253,8 +253,9 @@ def extract_native_description(filepath: Path, text: str) -> str:
     elif ext in (".sql", ".ddl"):
         description = _extract_description_from_sql(text)
 
-    if description and len(description.strip()) >= 20:
-        return _truncate_text(description.strip(), SUMMARY_FALLBACK_MAX_CHARS)
+    description = description.strip()
+    if description:
+        return _truncate_text(description, SUMMARY_FALLBACK_MAX_CHARS)
 
     # Fallback : 400 premiers caractères descriptifs du texte
     cleaned = _clean_fallback_text(text)
