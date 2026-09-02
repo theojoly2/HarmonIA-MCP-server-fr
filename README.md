@@ -1,6 +1,6 @@
-# SemantiQ-MCP-Server
+# HarmonIA-MCP-Server
 
-Serveur MCP pour l'assistant de modélisation sémantique **SemantiQ**. Il expose un ensemble d'outils et de ressources permettant à un agent LLM de valider, analyser, améliorer et transformer des modèles de données sémantiques.
+Serveur MCP pour l'assistant de modélisation sémantique **HarmonIA**. Il expose un ensemble d'outils et de ressources permettant à un agent LLM de valider, analyser, améliorer et transformer des modèles de données sémantiques.
 
 ---
 
@@ -37,7 +37,7 @@ Les outils sont des fonctions appelables par l'agent pour analyser et modifier l
 ## Structure du projet
 
 ```
-SemantiQ-MCP-server-fr/
+HarmonIA-MCP-server-fr/
 │
 ├── server.py                          # Point d'entrée du serveur MCP
 │
@@ -76,7 +76,7 @@ SemantiQ-MCP-server-fr/
 
 ```bash
 git clone <url-du-depot>
-cd SemantiQ-MCP-server-fr
+cd HarmonIA-MCP-server-fr
 ```
 
 ### 2. Créer l'environnement virtuel

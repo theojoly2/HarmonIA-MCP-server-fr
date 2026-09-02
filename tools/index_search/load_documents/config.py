@@ -29,7 +29,7 @@ environ["HF_HOME"] = str(PROJECT_ROOT / ".cache_hf")
 # Charge le .env du serveur MCP s'il n'a pas déjà été chargé.
 # On utilise override=False pour ne pas écraser les variables déjà présentes
 # (notamment celles chargées par server.py avant l'import de ce module).
-SERVER_PROJECT_ROOT = PROJECT_ROOT.parents[2]  # Remonte à SemantiQ-MCP-server-fr
+SERVER_PROJECT_ROOT = PROJECT_ROOT.parents[2]  # Remonte à HarmonIA-MCP-server-fr
 server_env_path = SERVER_PROJECT_ROOT / ".env"
 if server_env_path.exists():
     load_dotenv(dotenv_path=server_env_path, override=False)
