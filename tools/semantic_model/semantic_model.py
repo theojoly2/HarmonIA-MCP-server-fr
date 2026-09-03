@@ -16,7 +16,7 @@ from resources.semantic_model.utils import MODELS_PATH
 BASE_MODELS_PATH = Path(MODELS_PATH)
 BASE_MODELS_PATH.mkdir(parents=True, exist_ok=True)
 
-UML_META = Namespace("urn:ai4semantics:uml:")
+UML_META = Namespace("urn:harmonia:uml:")
 
 
 def ea_id(prefix: str, uri: str) -> str:
@@ -78,7 +78,7 @@ def get_model_path(user: str = "", name: str = "") -> str:
 def _model_uri(user: str, name: str) -> URIRef:
     u = _slugify_uri(user or 'default')
     n = _slugify_uri(name or 'generated')
-    return URIRef(f"urn:ai4semantics:model:{u}:{n}")
+    return URIRef(f"urn:harmonia:model:{u}:{n}")
 
 
 def _new_graph(user: str, name: str) -> Graph:
