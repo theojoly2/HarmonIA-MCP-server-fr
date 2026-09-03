@@ -52,6 +52,15 @@ def _canonical_text(value: Any) -> str:
     return value
 
 
+def _display_name_from_stored(stored_name: str) -> str:
+    """Return the human-readable part of a timestamped stored model name."""
+    if not stored_name:
+        return "Generated"
+    if "__" in stored_name:
+        return stored_name.rsplit("__", 1)[0]
+    return stored_name
+
+
 def _slugify_uri(value: str) -> str:
     value = unicodedata.normalize("NFKD", value)
     value = "".join(ch for ch in value if not unicodedata.combining(ch))
@@ -830,6 +839,11 @@ def _ensure_synchronized(model: dict[str, Any], user: str, name: str, keep_raw: 
     Synchronise le modèle sémantique.
     Mise à jour essentielle : si `has_elements` est True (via EA parser), on n'écrase plus les éléments
     graphiques/diagrammes pour ne générer QUE le ttl_raw d'exportation (update_elements=False).
+
+    `name` is the technical stored file name (may contain a timestamp suffix).
+    We always derive the human-readable package/ontology label from the JSON
+    `name` field or by stripping that suffix, so exports never leak technical
+    identifiers into the generated RDF.
     """
     print(f"[DEBUG _ensure_synchronized] Début de la vérification de synchronisation...")
     if not model:
@@ -856,17 +870,21 @@ def _ensure_synchronized(model: dict[str, Any], user: str, name: str, keep_raw: 
 
     if needs_sync:
         print(f"[DEBUG _ensure_synchronized] Synchronisation nécessaire.")
-        g = graph_from_model(model, user=user, name=name)
+        # Never use the technical file name as the ontology/package label.
+        display_name = _norm_text(model.get("name")) or _display_name_from_stored(name)
+        g = graph_from_model(model, user=user, name=display_name)
         # On évite d'écraser les diagrammes/éléments complexes provenant de l'import
         update_elements = not has_elements
         model = _sync_model_from_graph(
             g,
             model,
-            package_name=name or "Generated",
+            package_name=display_name or "Generated",
             source_format="xmi" if has_raw_xmi else "ttl",
             keep_raw=keep_raw,
             update_elements=update_elements
         )
+        # Ensure the model remembers its display name for future exports.
+        model["name"] = display_name
         fp = _find_file(user, name)
         model = _save_model(fp, model, user=user, name=name)
         print(f"[DEBUG _ensure_synchronized] Synchronisation terminée.")
@@ -879,8 +897,10 @@ def ensure_model_exists(user: str = "", name: str = "") -> Path:
     if fp.exists():
         return fp
 
-    g = _new_graph(user, name or "Generated")
+    display_name = _display_name_from_stored(name)
+    g = _new_graph(user, display_name)
     model: dict[str, Any] = {
+        "name": display_name,
         "elements": [],
         "connectors": [],
         "xmi": {"elements": [], "connectors": []},
@@ -888,7 +908,7 @@ def ensure_model_exists(user: str = "", name: str = "") -> Path:
         "ttl_raw": "",
         "source_format": "ttl",
     }
-    model = _sync_model_from_graph(g, model, package_name=name or "Generated", source_format="ttl", keep_raw=False, update_elements=True)
+    model = _sync_model_from_graph(g, model, package_name=display_name, source_format="ttl", keep_raw=False, update_elements=True)
     _save_model(fp, model, user=user, name=name)
     return fp
 
