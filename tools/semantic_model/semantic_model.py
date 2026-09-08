@@ -2359,7 +2359,7 @@ def build_xmi_bytes(model: dict[str, Any]) -> bytes:
     root.set(qname(NS_XMI, "version"), "2.1")
 
     documentation = SubElement(root, qname(NS_XMI, "Documentation"))
-    documentation.set("exporter", "AI4Semantics")
+    documentation.set("exporter", "HarmonIA")
     documentation.set("exporterVersion", "2.1")
 
     model_name = text(model.get("name") or "model")
