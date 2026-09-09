@@ -1,0 +1,110 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/archival/vocab/arch> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator "Aaron Rubinstein" ;
+    dc:description "An RDF vocabulary for describing archival collections and the names associated with them" ;
+    dc:title "Archival" .
+
+<http://purl.org/archival/vocab/arch#Manuscript> a owl:Class ;
+    rdfs:comment "An unpublished document in an arch:Collection"^^xsd:string ;
+    rdfs:subClassOf <http://purl.org/archival/vocab/arch#Collection> .
+
+<http://purl.org/archival/vocab/arch#appearsWith> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:comment "Name appears with another name in an archival collection" ;
+    rdfs:subPropertyOf foaf:knows .
+
+<http://purl.org/archival/vocab/arch#bulkEnd> a owl:ObjectProperty ;
+    rdfs:comment "The end of a collection's bulk dates" ;
+    rdfs:subPropertyOf dcterms:created .
+
+<http://purl.org/archival/vocab/arch#bulkStart> a owl:ObjectProperty ;
+    rdfs:comment "The beginning of a collection's bulk dates" ;
+    rdfs:subPropertyOf dcterms:created .
+
+<http://purl.org/archival/vocab/arch#correspondedWith> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:subPropertyOf foaf:knows .
+
+<http://purl.org/archival/vocab/arch#hasProvenance> a owl:ObjectProperty ;
+    rdfs:comment "Property relating a arch:Collection to the names that are the provenance of that collection.  Inverse of arch:primaryProvenanceOf."^^xsd:string ;
+    rdfs:domain <http://purl.org/archival/vocab/arch#Collection> ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf <http://purl.org/archival/vocab/arch#primaryProvenanceOf> .
+
+<http://purl.org/archival/vocab/arch#heldBy> a owl:ObjectProperty ;
+    rdfs:comment "Relates a arch:Collection to the archive that holds it.  Inverse of arch:holds"^^xsd:string ;
+    rdfs:domain <http://purl.org/archival/vocab/arch#Collection> ;
+    rdfs:range <http://purl.org/archival/vocab/arch#Archive> ;
+    owl:inverseOf <http://purl.org/archival/vocab/arch#holds> .
+
+<http://purl.org/archival/vocab/arch#inclusiveEnd> a owl:ObjectProperty ;
+    rdfs:comment "The end of a collection's inclusive dates" ;
+    rdfs:subPropertyOf dcterms:created .
+
+<http://purl.org/archival/vocab/arch#inclusiveStart> a owl:ObjectProperty ;
+    rdfs:comment "The beginning of a collection's inclusive dates" ;
+    rdfs:subPropertyOf dcterms:created .
+
+<http://purl.org/archival/vocab/arch#referencedIn> a owl:ObjectProperty ;
+    rdfs:comment "Relates a foaf:Person, foaf:Organization, or arch:Family to a arch:Collection that they are referenced in." ;
+    rdfs:domain <http://purl.org/archival/vocab/arch#Family>,
+        foaf:Organization,
+        foaf:Person ;
+    rdfs:range <http://purl.org/archival/vocab/arch#Collection> .
+
+<http://purl.org/archival/vocab/arch#relatedSubject> a owl:ObjectProperty ;
+    rdfs:comment "Related Subject",
+        "Subjects related to a name in an archival collection.  Usually represents the subjects from a collection that a name is the arch:primaryProvenanceOf" ;
+    rdfs:subPropertyOf dcterms:subject .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+<http://purl.org/archival/vocab/arch#Family> a owl:Class ;
+    rdfs:comment "For representing a family, a subclass of foaf:Group.  This class might be equivalent to a similar class in genealogical vocabularies."^^xsd:string ;
+    rdfs:subClassOf foaf:Group .
+
+<http://purl.org/archival/vocab/arch#holds> a owl:ObjectProperty ;
+    rdfs:comment "Relates an arch:Archive to a collection that it holds.  Inverse of arch:heldBy"^^xsd:string ;
+    rdfs:domain <http://purl.org/archival/vocab/arch#Archive> ;
+    rdfs:range <http://purl.org/archival/vocab/arch#Collection> .
+
+<http://purl.org/archival/vocab/arch#primaryProvenanceOf> a owl:ObjectProperty ;
+    rdfs:comment "Relates a foaf:Person, foaf:Organization, or arch:Family to the arch:Collection that they created.  This might be more than one entity.  Inverse of arch:hasProvenance."^^xsd:string ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range <http://purl.org/archival/vocab/arch#Collection> .
+
+dcterms:subject a owl:ObjectProperty .
+
+foaf:Group a owl:Class ;
+    rdfs:subClassOf foaf:Agent .
+
+foaf:Person a owl:Class ;
+    rdfs:subClassOf foaf:Agent .
+
+<http://purl.org/archival/vocab/arch#Archive> a owl:Class ;
+    rdfs:comment "An organization that holds archival collections."^^xsd:string ;
+    rdfs:subClassOf foaf:Organization .
+
+foaf:Organization a owl:Class ;
+    rdfs:subClassOf foaf:Agent .
+
+foaf:knows a owl:ObjectProperty .
+
+dcterms:created a owl:ObjectProperty .
+
+foaf:Agent a owl:Class .
+
+<http://purl.org/archival/vocab/arch#Collection> a owl:Class ;
+    rdfs:comment "A collection of documents organized according to the principle of provenance."^^xsd:string .
+

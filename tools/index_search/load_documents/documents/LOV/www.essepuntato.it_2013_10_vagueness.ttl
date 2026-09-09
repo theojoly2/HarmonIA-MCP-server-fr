@@ -1,0 +1,375 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://www.essepuntato.it/2013/10/vagueness> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty ;
+    rdfs:label "has creator"@en ;
+    rdfs:isDefinedBy dc: .
+
+dc:date a owl:AnnotationProperty ;
+    rdfs:label "has date"@en ;
+    rdfs:isDefinedBy dc: .
+
+dc:description a owl:AnnotationProperty ;
+    rdfs:label "has description"@en ;
+    rdfs:isDefinedBy dc: .
+
+dc:title a owl:AnnotationProperty ;
+    rdfs:label "has title"@en ;
+    rdfs:isDefinedBy dc: .
+
+<http://www.essepuntato.it/2013/10/vagueness/isApplicabilityContextOf> a owl:ObjectProperty ;
+    rdfs:label "is applicability context of"@en ;
+    rdfs:comment "This property links applicability contexts to the related descriptions of vagueness/non-vagueness or dimensions of descriptions of quantitative vagueness."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasApplicabilityContext> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isDimensionIn> a owl:ObjectProperty ;
+    rdfs:label "is dimension in"@en ;
+    rdfs:comment "It links a dimension to the situations that include related applicability contexts."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/situation.owl#hasSetting> ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/withDimension> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isDimensionInContextOf> a owl:ObjectProperty ;
+    rdfs:label "is dimension in context of"@en ;
+    rdfs:comment "It links situations describing a dimension according to a particular context to the justification that involves them."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasDimensionInContext> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isDimensionOf> a owl:ObjectProperty ;
+    rdfs:label "is dimension of"@en ;
+    rdfs:comment "It links dimensions to the justification that involves them."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasDimension> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isEntityOf> a owl:ObjectProperty ;
+    rdfs:label "is entity of"@en ;
+    rdfs:comment "It links to the justification/dimension that involves the entity."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasEntity> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isJustificationOf> a owl:ObjectProperty ;
+    rdfs:label "is justification of"@en ;
+    rdfs:comment "It links to the description of vagueness/non-vagueness supported by the justification."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasJustification> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isLogicFormulaOf> a owl:ObjectProperty ;
+    rdfs:label "is logic formula of"@en ;
+    rdfs:comment "It links to the justification/dimension that involves the logic formula."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> .
+
+<http://www.essepuntato.it/2013/10/vagueness/isVaguenessTypeOf> a owl:ObjectProperty ;
+    rdfs:label "is vagueness type of"@en ;
+    rdfs:comment "It links to the description of vagueness that has the particular vagueness type."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasDimension> a owl:ObjectProperty ;
+    rdfs:label "has dimension"@en ;
+    rdfs:comment "It links justifications of a description of quantitative vagueness to the dimensions that identify what boundaries are not defined precisely by a particular entity and, thus, are part of the causes of vagueness for the entity itself."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/Justification> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> [ a owl:Restriction ;
+                                            owl:hasValue <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ;
+                                            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ] ) ] ;
+                        owl:onProperty [ owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ] ] ) ],
+        [ a owl:Class ;
+            owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/Justification> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> [ a owl:Restriction ;
+                                            owl:hasValue <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ;
+                                            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ] ) ] ;
+                        owl:onProperty [ owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ] ] ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/Dimension> ;
+    owl:propertyChainAxiom ( <http://www.essepuntato.it/2013/10/vagueness/hasDimensionInContext> <http://www.essepuntato.it/2013/10/vagueness/withDimension> ),
+        ( <http://www.essepuntato.it/2013/10/vagueness/hasDimensionInContext> <http://www.essepuntato.it/2013/10/vagueness/withDimension> ) .
+
+<http://www.w3.org/ns/oa#Annotation> a owl:Class ;
+    rdfs:label "annotation"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/oa#> .
+
+prov:Entity a owl:Class ;
+    rdfs:label "entity"@en ;
+    rdfs:isDefinedBy prov: .
+
+<http://www.essepuntato.it/2013/10/vagueness/VaguenessAnnotation> a owl:Class ;
+    rdfs:label "annotation of vagueness/non-vagueness"@en ;
+    rdfs:comment "The annotation of an ontological entity with information about its vagueness is a particular act of tagging done by someone (i.e., an agent) who associates a description of vagueness/non-vagueness (called the body of the annotation) to the entity in consideration (called the target of the annotation)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass [ a owl:Class ;
+                    owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> ) ] ;
+            owl:onProperty <http://www.w3.org/ns/oa#hasBody> ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass [ a owl:Class ;
+                    owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> ) ] ;
+            owl:onProperty <http://www.w3.org/ns/oa#hasBody> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/ns/oa#hasTarget> ],
+        [ a owl:Restriction ;
+            owl:onProperty prov:wasAttributedTo ;
+            owl:someValuesFrom prov:Agent ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/ns/oa#hasTarget> ],
+        [ a owl:Restriction ;
+            owl:onProperty prov:wasAttributedTo ;
+            owl:someValuesFrom prov:Agent ],
+        <http://www.w3.org/ns/oa#Annotation>,
+        prov:Entity .
+
+<http://www.essepuntato.it/2013/10/vagueness/qualitative-vagueness> a <http://www.essepuntato.it/2013/10/vagueness/VaguenessType>,
+        owl:NamedIndividual ;
+    rdfs:label "qualitative vagueness"@en ;
+    rdfs:comment "A vagueness type that concerns the identification of such other discriminants of which boundaries are not quantifiable in any precise way."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.w3.org/ns/oa#hasBody> a owl:ObjectProperty ;
+    rdfs:label "has body"@en ;
+    dc:description "Note that in the Annotation Ontology the intended meaning of oa:hasBody is broader than what described herein in the entity comment."@en ;
+    rdfs:comment "It links to the description of vagueness/non-vagueness involved in the annotation."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/oa#> .
+
+<http://www.w3.org/ns/oa#hasTarget> a owl:ObjectProperty ;
+    rdfs:label "has target"@en ;
+    dc:description "Note that in the Annotation Ontology the intended meaning of oa:hasTarget is broader than what described herein in the entity comment."@en ;
+    rdfs:comment "It links to the entity that has been object of the annotation."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/oa#> .
+
+prov:wasAttributedTo a owl:ObjectProperty ;
+    rdfs:label "was attributed to"@en ;
+    dc:description "Note that in the PROV Ontology the intended meaning of prov:wasAttributedTo is broader than what described herein in the entity comment."@en ;
+    rdfs:comment "It links the annotation of an ontological entity with information about its vagueness to the agent who made the annotation itself."@en ;
+    rdfs:isDefinedBy prov: .
+
+<http://www.essepuntato.it/2013/10/vagueness/ApplicabilityContext> a owl:Class ;
+    rdfs:label "applicability context of descriptions and related dimensions"@en ;
+    rdfs:comment "A context defines precise boundaries of application of descriptions of vagueness/non-vagueness or of the relation between a justification and a certain dimension."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasApplicabilityContext> a owl:ObjectProperty ;
+    rdfs:label "has applicability context"@en ;
+    rdfs:comment "This property links either descriptions of vagueness/non-vagueness or dimensions of descriptions of quantitative vagueness to the context to which they apply."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/ApplicabilityContext> .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasDimensionInContext> a owl:ObjectProperty ;
+    rdfs:label "has dimension in context"@en ;
+    rdfs:comment "It links justifications of a description of quantitative vagueness to situations where a particular dimension, which identifies the boundaries that are not defined precisely by a particular entity, has to be considered within a particular applicability context."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/Justification> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> [ a owl:Restriction ;
+                                            owl:hasValue <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ;
+                                            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ] ) ] ;
+                        owl:onProperty [ owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ] ] ) ],
+        [ a owl:Class ;
+            owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/Justification> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> [ a owl:Restriction ;
+                                            owl:hasValue <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ;
+                                            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ] ) ] ;
+                        owl:onProperty [ owl:inverseOf <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ] ] ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasNaturalLanguageText> a owl:DatatypeProperty ;
+    rdfs:label "has natural language text"@en ;
+    rdfs:comment "The natural language text defining the body of either a justification or dimension."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+prov:Agent a owl:Class ;
+    rdfs:label "agent"@en ;
+    dc:description "Note that in the PROV Ontology the intended meaning of prov:Agent is broader than what described herein in the entity comment."@en ;
+    rdfs:comment "The agent who tags an ontology entity with a vagueness/non-vagueness description."@en ;
+    rdfs:isDefinedBy prov: .
+
+<http://www.essepuntato.it/2013/10/vagueness/VaguenessType> a owl:Class ;
+    rdfs:label "vagueness type"@en ;
+    rdfs:comment "A particular kind of vagueness that characterizes the entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasEntity> a owl:ObjectProperty ;
+    rdfs:label "has entity"@en ;
+    rdfs:comment "The entity defining the body of either a justification or dimension."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ] ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> a owl:ObjectProperty ;
+    rdfs:label "has logic formula"@en ;
+    rdfs:comment "The logic formula defining the body of either a justification or dimension."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/Justification> ) ] ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.essepuntato.it/2013/10/vagueness/withDimension> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "with dimension"@en ;
+    rdfs:comment "It links the dimension that is used in a justification according to a particular applicability context."@en ;
+    rdfs:domain <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/Dimension> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/situation.owl#isSettingFor> .
+
+<http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> a owl:Class ;
+    rdfs:label "dimension in context"@en ;
+    rdfs:comment "This class describes situations where a particular dimension in considered according to a particular context. In particular, instances of this class are actually specifying that the relation between a justification and a certain dimension must be considered according to a particular applicability context."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasApplicabilityContext> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/withDimension> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasApplicabilityContext> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/withDimension> ],
+        <http://www.ontologydesignpatterns.org/cp/owl/situation.owl#Situation> .
+
+<http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> a <http://www.essepuntato.it/2013/10/vagueness/VaguenessType>,
+        owl:NamedIndividual ;
+    rdfs:label "quantitative vagueness"@en ;
+    rdfs:comment "A vagueness type that concerns the (real or apparent) lack of precise boundaries defining an entity along one or more specific dimensions."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has vagueness type"@en ;
+    rdfs:comment "The link between a description of vagueness and the particular type of vagueness it describes."@en ;
+    rdfs:domain <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/VaguenessType> .
+
+<http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> a owl:Class ;
+    rdfs:label "description of non-vagueness"@en ;
+    rdfs:comment "The descriptive characterisation of non-vagueness to associate to an ontological entity by means of an annotation. It provides at least one justification for considering the target ontological entity non-vague. This description is primarily meant to be used for entities that would typically be considered vague but which, for some reason, in the particular ontology are not. \\n\\nA description of non-vagueness is a context-dependent object, which means that it can be applied within the boundaries of a particular context (i.e. the same entity can be vague in one context and non-vague in another)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ] .
+
+<http://www.essepuntato.it/2013/10/vagueness/hasJustification> a owl:ObjectProperty ;
+    rdfs:label "has justification"@en ;
+    rdfs:comment "It links a particular description of vagueness/non-vagueness to a related justification."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.essepuntato.it/2013/10/vagueness/Justification> .
+
+<http://www.essepuntato.it/2013/10/vagueness/Dimension> a owl:Class ;
+    rdfs:label "dimension"@en ;
+    rdfs:comment "A dimension is part of the justification of a description of quantitative vagueness. Dimensions of such a justification are used to identify what boundaries are not defined precisely by a particular entity and, thus, are part of the causes of vagueness for the entity itself. A dimension is defined either as natural language text, an entity, a more complex logic formula, or any combination of them. \\n\\nThe relation between a justification and a dimension may be context-dependent, which means that it can be applied within the boundaries of a particular context (i.e. the same entity can be vague in dimension A in one context and in dimension B in another). In this case, instances of the classes 'DimensionInContext' should be used to link the justification to the related dimension."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasEntity> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasNaturalLanguageText> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasEntity> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasNaturalLanguageText> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+<http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> a owl:Class ;
+    rdfs:label "description of vagueness"@en ;
+    rdfs:comment "The descriptive characterisation of vagueness to associate to an ontological entity by means of an annotation. It specifies a vagueness type and provides at least one justification for considering the target ontological entity vague. \\n\\nA description of vagueness is a context-dependent object, which means that it can be applied within the boundaries of a particular context (i.e. the same entity can be vague in one context and non-vague in another)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasJustification> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasVaguenessType> ] .
+
+<http://www.essepuntato.it/2013/10/vagueness/Justification> a owl:Class ;
+    rdfs:label "justification for vagueness/non-vagueness description"@en ;
+    rdfs:comment "A justification that explains one possible reason behind a vagueness/non-vagueness description. It is defined either as natural language text, an entity, a more complex logic formula, or any combination of them."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasEntity> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasNaturalLanguageText> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasEntity> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasLogicFormula> ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.essepuntato.it/2013/10/vagueness/hasNaturalLanguageText> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+onto: a owl:Ontology ;
+    rdfs:label "Vagueness Ontology"@en ;
+    dc:creator "Panos Alexopoulos",
+        "Silvio Peroni" ;
+    dc:date "2013-11-28" ;
+    dc:description "Vagueness is a common human knowledge and language phenomenon, typically manifested by terms and concepts like High, Expert, Bad, Near etc.\\n\\nIn an OWL ontology vagueness may appear in the definitions of classes, properties, datatypes and individuals. For these entities a more explicit description of the nature and characteristics of their vagueness/non-vagueness is required.\\n\\nAnalyzing and describing the nature of vagueness/non-vagueness in ontological entities is subjective activity, since it is often a personal interpretation of someone (a person or, more generally, an agent).\\n\\nVagueness can be described according to at least two complementary types referring to quantitative or qualitative connotations respectively. The quantitative aspect of vagueness concerns the (real or apparent) lack of precise boundaries defining an entity along one or more specific dimensions. The qualitative aspect of vagueness concerns the identification of such other discriminants of which boundaries are not quantifiable in any precise way.\\n\\nEither a vagueness description, that specifies always a type, or a non-vagueness description provides at least a justification (defined either as natural language text, an entity or a more complex logic formula, or any combination of them) that motivates a specific aspect of why an entity should be intended as vague/non-vague. Multiple justifications are possible for the same description.\\n\\nThe justification of a description of vagueness having quantitative type can include an explicit definition of the dimensions (defined either as natural language text, an entity or a more complex logic formula, or any combination of them) in which the entity is vague.\\n\\nA description of vagueness/non-vagueness can also be context-dependent. In particular, the context-dependent objects are:\\n\\n- the descriptions of vagueness/non-vagueness related to entities (i.e. the same entity can be vague in one context and non-vague in another);\\n\\n- the dimensions related to a description of vagueness having quantitative type (i.e. the same entity can be vague in dimension A in one context and in dimension B in another). Note that it is the relation between a justification and a certain dimension that may specify a particular context, rather than the dimension itself.\\n\\nThe annotation of an entity with information about its vagueness is a particular act of tagging done by someone (i.e., an agent) who associates a description of vagueness/non-vagueness (called the body of the annotation) to the entity in consideration (called the target of the annotation)."@en ;
+    dc:title "The Vagueness Ontology (VO)"@en ;
+    rdfs:comment "The Vagueness Ontology (VO) allows one to specify vagueness characterisations of the TBox entities of an ontology."@en ;
+    owl:imports <http://www.ontologydesignpatterns.org/cp/owl/situation.owl> ;
+    owl:versionIRI <http://www.essepuntato.it/2013/10/vagueness/1.0> ;
+    owl:versionInfo "1.0" .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <http://www.essepuntato.it/2013/10/vagueness/ApplicabilityContext> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> <http://www.essepuntato.it/2013/10/vagueness/Justification> <http://www.essepuntato.it/2013/10/vagueness/VaguenessAnnotation> <http://www.essepuntato.it/2013/10/vagueness/VaguenessType> prov:Agent ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( <http://www.essepuntato.it/2013/10/vagueness/qualitative-vagueness> <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( <http://www.essepuntato.it/2013/10/vagueness/qualitative-vagueness> <http://www.essepuntato.it/2013/10/vagueness/quantitative-vagueness> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <http://www.essepuntato.it/2013/10/vagueness/ApplicabilityContext> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfNonVagueness> <http://www.essepuntato.it/2013/10/vagueness/DescriptionOfVagueness> <http://www.essepuntato.it/2013/10/vagueness/Dimension> <http://www.essepuntato.it/2013/10/vagueness/DimensionInContext> <http://www.essepuntato.it/2013/10/vagueness/Justification> <http://www.essepuntato.it/2013/10/vagueness/VaguenessAnnotation> <http://www.essepuntato.it/2013/10/vagueness/VaguenessType> prov:Agent ) .
+

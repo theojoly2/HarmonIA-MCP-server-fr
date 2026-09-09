@@ -1,0 +1,1528 @@
+@prefix onto: <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#alt> a owl:DatatypeProperty ;
+    rdfs:comment "The WGS84 altitude of a SpatialThing (decimal meters \\nabove the local reference ellipsoid)."@en,
+        "altitude"@en ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> a owl:DatatypeProperty ;
+    rdfs:label "latitude" ;
+    rdfs:comment "The WGS84 latitude of a SpatialThing (decimal degrees)."@en ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> a owl:DatatypeProperty ;
+    rdfs:label "longitude" ;
+    rdfs:comment "The WGS84 longitude of a SpatialThing (decimal degrees)"@en ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+onto: a owl:Ontology ;
+    rdfs:comment "smart home ontology for weather phenomena and exterior conditions"@en ;
+    owl:imports <http://www.w3.org/2006/time> ;
+    owl:versionIRI <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/weather/WeatherOntology_1.03.owl> ;
+    owl:versionInfo "1.03"^^xsd:string .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AiringWeatherState> a owl:Class ;
+    rdfs:comment ""@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveRoomTemperature> ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CoolingWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#BelowRoomTemperature> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CurrentWeatherReport> a owl:Class ;
+    owl:disjointWith <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ForecastWeatherReport> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 0 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CurrentWeatherReportFromSensor> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SensorReportSource> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 0 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CurrentWeatherReportFromService> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ServiceReportSource> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 0 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast10HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 10 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast11HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 11 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast13HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 13 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast14HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 14 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast16HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 16 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast17HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 17 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast19HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 19 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast20HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 20 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast22HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 22 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast23HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 23 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast4HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 4 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast5HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 5 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast7HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 7 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast8HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 8 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Frost> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "-25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxExclusive "0.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Heat> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "30.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeatingWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveRoomTemperature> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HumidifyingWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MoistHumidity> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LongRangeForecast> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:onProperty time:hour ;
+                                                owl:someValuesFrom [ a rdfs:Datatype ;
+                                                        owl:onDatatype xsd:nonNegativeInteger ;
+                                                        owl:withRestrictions ( [ xsd:minExclusive 12 ] ) ] ] ] ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:allValuesFrom [ a rdfs:Datatype ;
+                                                        owl:onDatatype xsd:nonNegativeInteger ;
+                                                        owl:withRestrictions ( [ xsd:minExclusive 12 ] ) ] ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MidRangeForecast> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:onProperty time:hour ;
+                                                owl:someValuesFrom [ a rdfs:Datatype ;
+                                                        owl:intersectionOf ( [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:minInclusive 6 ] ) ] [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:maxInclusive 12 ] ) ] ) ] ] ] ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:allValuesFrom [ a rdfs:Datatype ;
+                                                        owl:intersectionOf ( [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:minInclusive 6 ] ) ] [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:maxInclusive 12 ] ) ] ) ] ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NeutralWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Class ;
+                        owl:complementOf [ a owl:Class ;
+                                owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FairWeatherState> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SevereWeatherState> ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#RainyWeatherState> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Rain> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveZeroTemperature> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#RoomTemperature> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "20.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ShortRangeForecast> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:onProperty time:hour ;
+                                                owl:someValuesFrom [ a rdfs:Datatype ;
+                                                        owl:intersectionOf ( [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:maxExclusive 6 ] ) ] ) ] ] ] ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:allValuesFrom [ a rdfs:Datatype ;
+                                                        owl:intersectionOf ( [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] [ a rdfs:Datatype ;
+                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                    owl:withRestrictions ( [ xsd:maxExclusive 6 ] ) ] ) ] ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SnowyWeatherState> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Snow> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Class ;
+                                    owl:complementOf [ a owl:Restriction ;
+                                            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                            owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ] ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#BelowOrZeroTemperature> ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> ] ) ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SunnyWeatherState> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Sun> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighSolarIrradiance> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoCloudCover> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Thunderstorm> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Thunder> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveZeroTemperature> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Storm> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportFromSensor> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SensorReportSource> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportFromService> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ServiceReportSource> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasAirPollution> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasAtmosphericPressure> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AtmosphericPressure> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCover> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasDewPointTemperature> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DewPointTemperature> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasEndTime> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain time:Interval ;
+    rdfs:range xsd:float .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasExteriorTemperature> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasHumidity> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasLatitude> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:float ;
+            owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ],
+        [ a rdfs:Datatype ;
+            owl:onDatatype xsd:float ;
+            owl:withRestrictions ( [ xsd:minInclusive "-90.0"^^xsd:float ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasLongitude> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:float ;
+            owl:withRestrictions ( [ xsd:minInclusive "-180.0"^^xsd:float ] ) ],
+        [ a rdfs:Datatype ;
+            owl:onDatatype xsd:float ;
+            owl:withRestrictions ( [ xsd:maxInclusive "180.0"^^xsd:float ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasPrecipitation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSolarIrradiation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasStartTime> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain time:Interval ;
+    rdfs:range xsd:float .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasTime> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain time:Instant ;
+    rdfs:range xsd:float .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasUnit> a owl:DatatypeProperty .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWind> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> ;
+    rdfs:subPropertyOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#isSourceOf> a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#Point> a owl:Class ;
+    rdfs:label "point" ;
+    rdfs:comment " \\nUniquely identified by lat/long/alt. i.e.\\n\\nspaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT),\\n  lat(P2, LAT), long(P2, LONG), alt(P2, ALT).\\n\\nsameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2)."@en,
+        "A point, typically described using a coordinate system relative to Earth, such as WGS84."@en ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> a owl:ObjectProperty ;
+    rdfs:label "location" ;
+    rdfs:comment "The relation between something and the point, \\n or other geometrical thing in space, where it is.  For example, the realtionship between\\n a radio tower and a Point with a given lat and long.\\n Or a relationship between a park and its outline as a closed arc of points, or a road and\\n its location as a arc (a sequence of points).\\n Clearly in practice there will be limit to the accuracy of any such statement, but one would expect\\n an accuracy appropriate for the size of the object and uses such as mapping ."@en ;
+    rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#BelowOrZeroTemperature> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "0.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#BelowRoomTemperature> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxExclusive "20.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Cloud> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ExtremeFrost> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxExclusive "-25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ExtremeHeat> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "37.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FairWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoWind> ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoCloudCover> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloudy> ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Fog> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast12HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 12 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast15HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 15 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast18HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 18 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast1HourWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 1 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast21HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 21 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast24HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 24 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast2HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 2 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast3HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 3 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast6HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 6 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast9HoursWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:hasValue 9 ;
+                                                owl:onProperty time:hour ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ForecastWeatherReport> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasBeginning ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:inDateTime ;
+                                        owl:someValuesFrom [ a owl:Restriction ;
+                                                owl:onProperty time:hour ;
+                                                owl:someValuesFrom [ a rdfs:Datatype ;
+                                                        owl:onDatatype xsd:nonNegativeInteger ;
+                                                        owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] ] ] ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FreshBreeze> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "7.9"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "10.7"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FreshGale> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "17.1"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "20.7"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#GentleBreeze> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "3.4"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "5.4"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Hail> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Hurricane> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "32.6"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightAir> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "0.2"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "1.5"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightBreeze> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "1.5"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "3.4"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightCloud> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightRainSun> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateBreeze> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "5.4"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "7.9"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateGale> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "13.8"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "17.1"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloud> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SevereWeatherState> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Class ;
+                                    owl:intersectionOf ( [ a owl:Restriction ;
+                                                owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                                owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> ] [ a owl:Restriction ;
+                                                owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                                owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> ] ) ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ExtremeFrost> ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ExtremeHeat> ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> ] [ a owl:Restriction ;
+                                    owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ;
+                                    owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Storm> ] ) ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Sleet> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongBreeze> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "10.7"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "13.8"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongGale> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "20.7"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "24.4"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ViolentStorm> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "28.4"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "32.6"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WholeGale> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "24.4"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "28.4"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#belongsToWeatherState> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "this property was known as \"belongsToState\" in prior versions of the ontology"@en .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#createdAt> a owl:ObjectProperty ;
+    rdfs:comment "The instant at which a weather report is created"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> ;
+    rdfs:range time:TemporalEntity .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasAssociatedSensor> a owl:ObjectProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SensorReportSource> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudAltitude> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ) ] ;
+    rdfs:range xsd:int .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasDirection> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Wind direction"@en,
+        "Wind direction represented in degrees"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:float ;
+            owl:withRestrictions ( [ xsd:maxExclusive "360.0"^^xsd:float ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasObservationTime> a owl:ObjectProperty ;
+    rdfs:comment "Denotes the time a weather state has been observed or is forecasted for."@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( time:Instant time:Interval ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasPriority> a owl:DatatypeProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherReport> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "a specific weather state is reported for a location by a weather report."@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherObservation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherReport> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveRoomTemperature> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AboveZeroTemperature> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DryHumidity> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighAirPollution> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 75 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 100 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightPrecipitation> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowAirPollution> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 25 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 50 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowSolarIrradiance> a owl:Class ;
+    rdfs:comment "this concept was known as \"LowSolarRadiation\" in prior versions of the ontology"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "50.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "250.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MediumAirPollution> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 50 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 75 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModeratePrecipitation> a owl:Class ;
+    rdfs:comment "this concept was known as \"MediumPrecipitation\" in prior versions of the ontology"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "1.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "4.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateSolarIrradiance> a owl:Class ;
+    rdfs:subClassOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "250.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "500.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MostlyCloudy> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 5 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxExclusive 8 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NeglectibleSolarIrradiance> a owl:Class ;
+    rdfs:comment "this concept was known as \"NeglectibleSolarRadiation\" in prior versions of the ontology"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "50.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#OptimumHumidity> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "25.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "60.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Overcast> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> [ a owl:Restriction ;
+                        owl:hasValue 8 ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Rain> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Snow> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Sun> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Thunder> a owl:NamedIndividual,
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#UnknownCloudCover> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> [ a owl:Restriction ;
+                        owl:hasValue 9 ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryHighAirPollution> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 100 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryLowAirPollution> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 25 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AtmosphericPressure> a owl:Class ;
+    rdfs:comment "atmospheric pressure in hectopascal (hPa)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:float ;
+                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DewPointTemperature> a owl:Class ;
+    rdfs:comment "The dewpoint temperature in degrees Celsius. It is the temperature at which the air can no longer hold all of its water vapor, and some of the water vapor must condense into liquid water. The dew point is always lower than (or equal to) the air temperature.\\n"@en,
+        "this concept was known as \"DewPoint\" in prior versions of the ontology"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:float ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighSolarIrradiance> a owl:Class ;
+    rdfs:comment "this concept was known as \"HighSolarRadiation\" in prior versions of the ontology"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "500.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MoistHumidity> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "60.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoWind> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "0.2"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloudy> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxExclusive 5 ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoCloudCover> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> [ a owl:Restriction ;
+                        owl:hasValue 0 ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SensorReportSource> a owl:Class ;
+    rdfs:comment "this class was known as \"SensorSource\" in prior versions of the ontology"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasAssociatedSensor> ;
+            owl:someValuesFrom owl:Thing ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> ;
+    owl:disjointWith <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ServiceReportSource> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ServiceReportSource> a owl:Class ;
+    rdfs:comment "this class was known as \"ServiceSource\" in prior versions of the ontology"@en ;
+    rdfs:subClassOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Storm> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "24.4"^^xsd:float ] ) ] ] ) ] .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> a owl:Class ;
+    rdfs:label "SpatialThing" ;
+    rdfs:comment "Anything with spatial extent, i.e. size, shape, or position.\\n e.g. people, places, bowling balls, as well as abstract areas like cubes."@en .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> [ a owl:Restriction ;
+                        owl:allValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "4.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "0.2"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "10.7"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minExclusive "10.7"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "24.4"^^xsd:float ] ) ] ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> a owl:Class ;
+    rdfs:comment "Holds information about the origins of weather reports"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SensorReportSource> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ServiceReportSource> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "relation of weather states and a one-word description for the observed weather situation"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> a owl:Class ;
+    rdfs:comment "represents the relative humidity of the air in percent"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:float ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DryHumidity> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MoistHumidity> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#OptimumHumidity> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> a owl:ObjectProperty ;
+    rdfs:comment "links a weather report to the reporting source, either an internet weather service or a local weather sensor"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> [ a owl:Restriction ;
+                        owl:hasValue "0.0"^^xsd:float ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:nonNegativeInteger ;
+            owl:withRestrictions ( [ xsd:maxExclusive 10 ] ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> a owl:DatatypeProperty ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> ;
+    rdfs:range xsd:float .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> a owl:Class ;
+    rdfs:comment "the current air pollution represented as European Air Quality Index value. The index value is based on 3 pollutants of major concern in Europe: PM10, NO2, O3 and will be able to take into account to 3 additional pollutants (CO, PM2.5 and SO2) where data are also available."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:someValuesFrom xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MediumAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryHighAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryLowAirPollution> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> a owl:Class ;
+    rdfs:comment "measurement of solar irrradiation at a specific location in Watts per square meter (W/m²)"@en,
+        "this concept was known as \"SolarRadiation\" in prior versions of the ontology"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:float ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NeglectibleSolarIrradiance> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> a owl:Class ;
+    rdfs:comment "represents precipitation in millimetres"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:float ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasIntensity> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightPrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModeratePrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> a owl:Class ;
+    rdfs:comment "clound cover in the unit \"Okta\""@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onDataRange [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxExclusive 10 ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudCoverValue> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:nonNegativeInteger ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasCloudAltitude> ] ) ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MostlyCloudy> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoCloudCover> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Overcast> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloudy> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#UnknownCloudCover> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> a owl:Class ;
+    rdfs:comment "different weather phenomena that may influence the current and forecasted weather state."@en .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> a owl:Class ;
+    rdfs:comment "exterior temperature in degrees Celsius"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:float ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> a owl:Class ;
+    rdfs:comment "One-word description of the observed weather condition"@en ;
+    rdfs:subClassOf owl:Thing ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Fog> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Snow> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloud> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Cloud> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightCloud> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Rain> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Thunder> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Sleet> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Hail> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Sun> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightRainSun> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> a owl:Class ;
+    rdfs:comment "Unit of wind direction is degrees \\n"@en,
+        "Unit of wind speed in metres per second (m/s)."@en,
+        "Wind direction and speed are represented as datatype properties\"hasDirection\" and \"hasSpeed\"\\n"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onDataRange [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxExclusive "360.0"^^xsd:float ] ) ] ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasDirection> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:float ;
+                        owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
+        <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FreshBreeze> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#FreshGale> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#GentleBreeze> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Hurricane> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightAir> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightBreeze> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateBreeze> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateGale> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Storm> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongBreeze> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongGale> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ViolentStorm> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WholeGale> ) ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> a owl:Class ;
+    rdfs:comment "Describes the actual weather reported through information from the weather source."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AtmosphericPressure> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherCondition> ;
+            owl:someValuesFrom <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ],
+        [ a owl:Restriction ;
+            owl:onClass [ a owl:Class ;
+                    owl:unionOf ( time:Instant time:Interval ) ] ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasObservationTime> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DewPointTemperature> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSpeed> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Wind speed"@en,
+        "wind speed in metres per second (m/s)"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> ;
+    rdfs:range xsd:float .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> a owl:ObjectProperty ;
+    rdfs:comment "this property describes an interval that denotes the time in the future (offset) for which the weather is reported"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> ;
+    rdfs:range time:Interval .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasValue> a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> a owl:Class ;
+    rdfs:comment "a weather report that can be retrieved through a local sensor (e.g. weather station integrated in the smart home) or a remote internet service. Further a time division has been realized to differentiate between current, short, mid and long term forecasts. \\n\\nFor the smart home domain, a time window of 24 hours for weather forecasts has been seen as suitable with a 24 hours forecast being classified as long-term forecast"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass time:Interval ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherForTimeInterval> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass time:TemporalEntity ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#createdAt> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ;
+            owl:onProperty <http://www.w3.org/2003/01/geo/wgs84_pos#location> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#reportsWeatherObservation> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:nonNegativeInteger ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasPriority> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> ;
+            owl:onProperty <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasSource> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+<https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#hasWeatherPhenomenon> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "Relation between weather states and the phenomena that are observed or forecasted"@en ;
+    rdfs:domain <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ;
+    rdfs:range <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> ;
+    owl:inverseOf <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#belongsToWeatherState> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoWind> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Storm> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#StrongWind> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MostlyCloudy> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoCloudCover> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Overcast> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#PartlyCloudy> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#UnknownCloudCover> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherCondition> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherPhenomenon> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherReportSource> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#WeatherState> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MediumAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryHighAirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#VeryLowAirPollution> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AirPollution> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#AtmosphericPressure> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#CloudCover> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DewPointTemperature> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Humidity> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Precipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#SolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Temperature> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Wind> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast12HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast15HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast18HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast1HourWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast21HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast24HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast2HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast3HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast6HoursWeatherReport> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#Forecast9HoursWeatherReport> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HeavyPrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LightPrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModeratePrecipitation> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NoPrecipitation> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#DryHumidity> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#MoistHumidity> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#OptimumHumidity> ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#HighSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#LowSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#ModerateSolarIrradiance> <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/WeatherOntology.owl#NeglectibleSolarIrradiance> ) .
+

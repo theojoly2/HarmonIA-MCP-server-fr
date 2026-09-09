@@ -1,0 +1,511 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://ontologydesignpatterns.org/opla/> .
+@prefix ns2: <https://w3id.org/arco/ontology/core/> .
+@prefix onto: <https://w3id.org/arco/ontology/core> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://dati.beniculturali.it/cis/CulturalEvent> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/EventOrSituation> ;
+    owl:disjointWith <http://dati.beniculturali.it/cis/NameInTime> .
+
+<http://dati.beniculturali.it/cis/CulturalInstituteOrSite> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Agent> .
+
+<http://dati.beniculturali.it/cis/Site> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Location> .
+
+<http://dati.gov.it/onto/dcatapit#Agent> a owl:Class ;
+    owl:equivalentClass <https://w3id.org/italia/onto/l0/Agent> .
+
+<http://dati.gov.it/onto/dcatapit#Organization> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Agent> ;
+    owl:equivalentClass <http://www.w3.org/2006/vcard/ns#Organization> .
+
+ns1:isNativeTo a owl:AnnotationProperty .
+
+ns1:reusesPatternAsTemplate a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:language a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+foaf:Agent a owl:Class ;
+    owl:equivalentClass <https://w3id.org/italia/onto/l0/Agent> .
+
+ns2:CulturalEntityClassification a owl:Class ;
+    rdfs:label "Cultural entity classification"@en ;
+    rdfs:comment "The class that models the concept of cultural entity classification."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Classification .
+
+ns2:description a owl:DatatypeProperty ;
+    rdfs:label "description"@en ;
+    rdfs:comment "This property relates a description associated to an entity, in order to add details and some more information."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasAgentRole a owl:ObjectProperty ;
+    rdfs:label "has agent role"@en ;
+    rdfs:comment "This property relates an entity to a situation in which an agent holds a role connected to that entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:AgentRole ;
+    rdfs:subPropertyOf ns2:hasSituation ;
+    owl:inverseOf ns2:isAgentRoleOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasCategory a owl:ObjectProperty ;
+    rdfs:label "has category"@en ;
+    rdfs:comment "The object property that associates any object with a category."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Category ;
+    rdfs:subPropertyOf ns2:hasConcept ;
+    owl:inverseOf ns2:isCategoryOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasClassification a owl:ObjectProperty ;
+    rdfs:label "has classification"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/countingas.owl> ;
+    rdfs:comment "The object property that allows to add a classification to any object."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Classification ;
+    rdfs:subPropertyOf ns2:hasSituation ;
+    owl:inverseOf ns2:isClassificationOf .
+
+ns2:hasComponent a owl:ObjectProperty ;
+    rdfs:label "has component"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/componency.owl> ;
+    rdfs:comment "This property relates, non-transitively, an entity to a component."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:hasPart ;
+    owl:inverseOf ns2:isComponentOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasCulturalEntityCharacteristic a owl:ObjectProperty ;
+    rdfs:label "has cultural entity characteristic"@en ;
+    rdfs:comment "The object property that links a cultural entity to one of its characteristics."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:CulturalEntityCharacteristic ;
+    rdfs:subPropertyOf ns2:hasCharacteristic ;
+    owl:inverseOf ns2:isCulturalEntityCharacteristicOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasLocation a owl:ObjectProperty ;
+    rdfs:label "has location"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/place.owl#> ;
+    rdfs:comment "The object property that associates an entity to a location."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/italia/onto/l0/Location> ;
+    owl:inverseOf ns2:isLocationOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasMethod a owl:ObjectProperty ;
+    rdfs:label "has method"@en ;
+    rdfs:comment "The object property that links an entity to a method."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Method ;
+    rdfs:subPropertyOf <https://w3id.org/italia/onto/l0/hasDescription> ;
+    owl:inverseOf ns2:isMethodOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasTimeIndexedSituation a owl:ObjectProperty ;
+    rdfs:label "has time indexed situation"@en ;
+    ns1:isNativeTo <http://ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl> ;
+    rdfs:comment "The property that links any object to a time indexed situation."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:TimeIndexedSituation ;
+    rdfs:subPropertyOf ns2:hasSituation ;
+    owl:inverseOf ns2:isTimeIndexedSituationOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasType a owl:ObjectProperty ;
+    rdfs:label "has type"@en ;
+    rdfs:comment "The object property that associates any object with a type."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Type ;
+    rdfs:subPropertyOf ns2:hasConcept ;
+    owl:inverseOf ns2:isTypeOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:iccdNormTag a owl:AnnotationProperty .
+
+ns2:keyword a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "keyword"@en ;
+    rdfs:comment "This property represents a keyword related to an entity, used to search for that entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en ;
+    ns2:iccdNormTag "ICCD Normativa PST: CT/CTC" .
+
+ns2:note a owl:DatatypeProperty ;
+    rdfs:label "note"@en ;
+    rdfs:comment "This property represents notes associated to a piece of information."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+ns2:specifications a owl:DatatypeProperty ;
+    rdfs:label "specifications"@en ;
+    rdfs:comment "This property represents specifications associated to a piece of information."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+<https://w3id.org/italia/onto/l0/hasTopic> a owl:ObjectProperty .
+
+<https://w3id.org/italia/onto/l0/isTopicOf> a owl:ObjectProperty .
+
+<http://dati.beniculturali.it/cis/NameInTime> a owl:Class ;
+    rdfs:subClassOf ns2:Situation,
+        <https://w3id.org/italia/onto/l0/EventOrSituation> .
+
+<http://www.w3.org/2006/vcard/ns#Organization> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Agent> .
+
+ns2:hasAgent a owl:ObjectProperty ;
+    rdfs:label "has agent"@en ;
+    rdfs:comment "This property relates a situation in which an agent holds a role to that agent."@en ;
+    rdfs:domain ns2:AgentRole ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/italia/onto/l0/Agent> ;
+    owl:inverseOf ns2:isAgentOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasCharacteristic a owl:ObjectProperty ;
+    rdfs:label "has characteristic"@en ;
+    rdfs:comment "The object property that links an entity to one of its characteristics."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/italia/onto/l0/Characteristic> ;
+    owl:inverseOf ns2:isCharacteristicOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasPart a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has part"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/partof.owl> ;
+    rdfs:comment "This property relates an entity to its part."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ns2:isPartOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:comment "This property relates a situation in which an agent holds a role to that role."@en ;
+    rdfs:domain ns2:AgentRole ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/italia/onto/RO/Role> ;
+    owl:inverseOf ns2:isRoleOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isAgentOf a owl:ObjectProperty ;
+    rdfs:label "is agent of"@en ;
+    rdfs:comment "This property relates an agent to a situation in which that agent holds a role."@en ;
+    rdfs:domain <https://w3id.org/italia/onto/l0/Agent> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:AgentRole ;
+    owl:versionInfo "stable"@en .
+
+ns2:isAgentRoleOf a owl:ObjectProperty ;
+    rdfs:label "is agent role of"@en ;
+    rdfs:comment "This property relates a situation in which an agent holds a role connected to an entity to that entity."@en ;
+    rdfs:domain ns2:AgentRole ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:isSituationOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isCategoryOf a owl:ObjectProperty ;
+    rdfs:label "is category of"@en ;
+    rdfs:comment "The object property that associates a category to any object."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Category ;
+    rdfs:subPropertyOf ns2:isConceptOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isClassificationOf a owl:ObjectProperty ;
+    rdfs:label "is classification of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/countingas.owl> ;
+    rdfs:comment "The inverse object property of hasClassification, that links an object to a classification."@en ;
+    rdfs:domain ns2:Classification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:isSituationOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isComponentOf a owl:ObjectProperty ;
+    rdfs:label "is component of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/componency.owl> ;
+    rdfs:comment "This property relates, non-transitively, a component to an entity of which it is component."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:isPartOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isCulturalEntityCharacteristicOf a owl:ObjectProperty ;
+    rdfs:label "is cultural entity characteristic of"@en ;
+    rdfs:domain ns2:CulturalEntityCharacteristic ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    rdfs:subPropertyOf ns2:isCharacteristicOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isLocationOf a owl:ObjectProperty ;
+    rdfs:label "is location of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/place.owl#> ;
+    rdfs:comment "The object property that associates a location to an entity located there."@en ;
+    rdfs:domain <https://w3id.org/italia/onto/l0/Location> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:versionInfo "stable"@en .
+
+ns2:isMethodOf a owl:ObjectProperty ;
+    rdfs:label "is method of"@en ;
+    rdfs:comment "The object property that links a method to an entity."@en ;
+    rdfs:domain ns2:Method ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf <https://w3id.org/italia/onto/l0/isDescriptionOf> ;
+    owl:versionInfo "stable"@en .
+
+ns2:isRoleOf a owl:ObjectProperty ;
+    rdfs:label "is role of"@en ;
+    rdfs:comment "This property relates a role to a situation in which an agent holds that role."@en ;
+    rdfs:domain <https://w3id.org/italia/onto/RO/Role> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:AgentRole ;
+    owl:versionInfo "stable"@en .
+
+ns2:isTimeIndexedSituationOf a owl:ObjectProperty ;
+    rdfs:label "is time indexed situation of"@en ;
+    ns1:isNativeTo <http://ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl> ;
+    rdfs:comment "The property that links a time indexed situation to any object. The property is modelled as inverse object property of hasTimeIndexedSituation."@en ;
+    rdfs:domain ns2:TimeIndexedSituation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:isSituationOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isTypeOf a owl:ObjectProperty ;
+    rdfs:label "is type of"@en ;
+    rdfs:comment "The object property that associates a type to any object."@en ;
+    rdfs:domain ns2:Type ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns2:isConceptOf ;
+    owl:versionInfo "stable"@en .
+
+<https://w3id.org/italia/onto/l0/Concept> a owl:Class ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Object> .
+
+<https://w3id.org/italia/onto/l0/Description> a owl:Class .
+
+<https://w3id.org/italia/onto/l0/hasDescription> a owl:ObjectProperty .
+
+<https://w3id.org/italia/onto/l0/isDescriptionOf> a owl:ObjectProperty .
+
+<http://dati.beniculturali.it/cis/CulturalEntity> a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+ns2:Category a owl:Class ;
+    rdfs:label "Category"@en ;
+    rdfs:comment "The class representing a category."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Concept ;
+    owl:versionInfo "stable"@en .
+
+ns2:CulturalEntityCharacteristic a owl:Class ;
+    rdfs:label "Cultural Entity Characteristic"@en ;
+    rdfs:comment "The class representing the characteristic of a cultural entity (e.g. a cultural property)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Characteristic> ;
+    owl:versionInfo "stable"@en .
+
+ns2:Method a owl:Class ;
+    rdfs:label "Method"@en ;
+    rdfs:comment "The class representing the concept of method."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Description> ;
+    owl:versionInfo "stable"@en .
+
+ns2:TimeIndexedSituation a owl:Class ;
+    rdfs:label "Time indexed situation"@en ;
+    ns1:isNativeTo <http://ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl> ;
+    rdfs:comment "The class representing the generic concept of time indexed situation."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Situation ;
+    owl:versionInfo "stable"@en .
+
+ns2:Type a owl:Class ;
+    rdfs:label "Type"@en ;
+    rdfs:comment "The class representing the concept of type."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Concept ;
+    owl:versionInfo "stable"@en .
+
+ns2:hasConcept a owl:ObjectProperty ;
+    rdfs:label "has concept"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/classification.owl#> ;
+    rdfs:comment "The object property that associates any object with a concept, classifying it."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Concept ;
+    owl:inverseOf ns2:isConceptOf ;
+    owl:versionInfo "stable"@en .
+
+ns2:isCharacteristicOf a owl:ObjectProperty ;
+    rdfs:label "is characteristic of"@en ;
+    rdfs:comment "The object property that links an entity characteristic to the entity."@en ;
+    rdfs:domain <https://w3id.org/italia/onto/l0/Characteristic> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:versionInfo "stable"@en .
+
+ns2:isPartOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "is part of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/partof.owl> ;
+    rdfs:comment "This property relates the part of an entity to that entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:versionInfo "stable"@en .
+
+<https://w3id.org/italia/onto/l0/Object> a owl:Class .
+
+ns2:hasSituation a owl:ObjectProperty ;
+    rdfs:label "has situation"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/situation.owl> ;
+    rdfs:comment "The property that links any object to a situation."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Situation ;
+    owl:inverseOf ns2:isSituationOf .
+
+ns2:isConceptOf a owl:ObjectProperty ;
+    rdfs:label "is concept of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/classification.owl#> ;
+    rdfs:comment "The inverse property of hasConcept, that relates a concept to any object."@en ;
+    rdfs:domain ns2:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:versionInfo "stable"@en .
+
+<https://w3id.org/italia/onto/RO/Role> a owl:Class ;
+    rdfs:subClassOf ns2:Concept .
+
+<https://w3id.org/italia/onto/l0/Characteristic> a owl:Class .
+
+<https://w3id.org/italia/onto/l0/EventOrSituation> a owl:Class .
+
+<https://w3id.org/italia/onto/l0/Location> a owl:Class .
+
+ns2:Classification a owl:Class ;
+    rdfs:label "Classification"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/countingas.owl> ;
+    rdfs:comment "The class that models the concept of classification."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Situation ;
+    owl:versionInfo "stable"@en .
+
+ns2:isSituationOf a owl:ObjectProperty ;
+    rdfs:label "is situation of"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/situation.owl> ;
+    rdfs:comment "The property that links a situation to any object. The property is modelled as inverse object property of hasSituation."@en ;
+    rdfs:domain ns2:Situation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:versionInfo "stable"@en .
+
+ns2:Concept a owl:Class ;
+    rdfs:label "Concept"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/classification.owl#> ;
+    rdfs:comment "The class representing a concept."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/Object> ;
+    owl:equivalentClass <https://w3id.org/italia/onto/l0/Concept> ;
+    owl:versionInfo "stable"@en .
+
+ns2:AgentRole a owl:Class ;
+    rdfs:label "Agent Role"@en ;
+    rdfs:comment "This class represents a situation in which an agent holds a role, regardless of the timing."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:hasRole ;
+            owl:someValuesFrom <https://w3id.org/italia/onto/RO/Role> ],
+        [ a owl:Restriction ;
+            owl:onProperty ns2:hasAgent ;
+            owl:someValuesFrom <https://w3id.org/italia/onto/l0/Agent> ],
+        ns2:Situation ;
+    owl:disjointWith ns2:Classification ;
+    owl:versionInfo "stable"@en .
+
+ns2:Situation a owl:Class ;
+    rdfs:label "Situation"@en ;
+    ns1:isNativeTo <http://www.ontologydesignpatterns.org/cp/owl/situation.owl> ;
+    rdfs:comment "The class representing the generic concept of situation."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/italia/onto/l0/EventOrSituation> ;
+    owl:versionInfo "stable"@en .
+
+<https://w3id.org/italia/onto/l0/Agent> a owl:Class .
+
+onto: a owl:Ontology ;
+    rdfs:label "Core Ontology (ArCo network)"@en ;
+    ns1:reusesPatternAsTemplate <http://ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/classification.owl#>,
+        <http://www.ontologydesignpatterns.org/cp/owl/componency.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/countingas.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/partof.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/place.owl#>,
+        <http://www.ontologydesignpatterns.org/cp/owl/situation.owl> ;
+    dc:creator "Aldo Gangemi (ISTC-CNR, STLab)",
+        "Andrea Nuzzolese (ISTC-CNR, STLab)",
+        "Chiara Veninata (MiBAC, ICCD)",
+        "Ludovica Marinucci (ISTC-CNR, STLab)",
+        "Marialetizia Mancinelli (MiBAC, ICCD)",
+        "Valentina Carriero (ISTC-CNR, STLab)",
+        "Valentina Presutti (ISTC-CNR, STLab)" ;
+    dc:description "The Core module represents general-purpose concepts orthogonal to the whole network, which are imported by all other ontology modules (e.g. part-whole relation, classification)."@en ;
+    dc:language <http://publications.europa.eu/resource/authority/language/ENG>,
+        <http://publications.europa.eu/resource/authority/language/ITA> ;
+    dc:title "Core Ontology (ArCo network)"@en ;
+    dcterms:issued "2018-03-07" ;
+    dcterms:license <https://creativecommons.org/licenses/by-sa/4.0/>,
+        <https://w3id.org/italia/controlled-vocabulary/licences/A31_CCBYSA40> ;
+    dcterms:modified "2019-06-01" ;
+    rdfs:comment "The Core module represents general-purpose concepts orthogonal to the whole network, which are imported by all other ontology modules (e.g. part-whole relation, classification)."@en ;
+    owl:versionInfo "Version 1.0"@en .
+

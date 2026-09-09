@@ -1,0 +1,108 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <https://w3id.org/cmd#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:date a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+skos:altLabel a owl:AnnotationProperty .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "Compound Measure Description"@en ;
+    dcterms:contributor "Philippe Lamarre",
+        "Sylvie Cazalens" ;
+    dcterms:created "2022-08-25"^^xsd:date ;
+    dcterms:creator "Jennie Andersen" ;
+    dcterms:date "2024-03-24"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-nc-sa/2.0/> ;
+    dcterms:modified "2024-03-24"^^xsd:date ;
+    vann:preferredNamespacePrefix "cmd" ;
+    vann:preferredNamespaceUri "https://w3id.org/cmd#" ;
+    rdfs:comment "This document is a vocabulary to describe compound measures, i.e. measures with several metric or item that are organized with serveral dimensions. The description of such a measure relies on a Tree-Structure of Requirement (TSoR): a set of requirements structured hierarchicaly with analysis element. A TSoR represents the main measure. Several information may be added to explicitely indicate how the overall score on the measure should be calculated based on the hierarchy, relative importance of the node of the hierarchy and an aggregation function. The measure can be described completely and unambiguously from the organisation to the requirements and the implementation."@en ;
+    owl:versionInfo 2.0 ;
+    skos:altLabel "CMD-v",
+        "Complex Measure Definition"@en .
+
+onto:aggregFunction a owl:DatatypeProperty ;
+    rdfs:label "aggregation function"@en ;
+    rdfs:comment "Definition of a function expressing how to compute a unique global score based on the result obtained on each requirements and their weight."@en ;
+    rdfs:domain onto:TSoR .
+
+onto:expects a owl:ObjectProperty ;
+    rdfs:label "expects"@en ;
+    rdfs:comment "Associate a requirement with an analysis element: an analysis element expects a requirement."@en ;
+    rdfs:domain onto:AnalysisElement ;
+    rdfs:range onto:Requirement .
+
+onto:hasContent a owl:ObjectProperty ;
+    rdfs:label "hasContent"@en ;
+    rdfs:comment "A node of a TSoR has as content a given concept or metric."@en .
+
+onto:hasRoot a owl:ObjectProperty ;
+    rdfs:label "has root"@en ;
+    rdfs:comment "The TSoR has a given root among the analysis element."@en ;
+    rdfs:domain onto:TSoR ;
+    rdfs:range onto:AnalysisElement .
+
+onto:isFollowedBy a owl:ObjectProperty ;
+    rdfs:label "is followed by"@en ;
+    rdfs:comment "An implementation is followed by another implementation if the the second complement the first one."@en ;
+    rdfs:domain onto:Implementation ;
+    rdfs:range onto:Implementation .
+
+onto:isImplementedBy a owl:ObjectProperty ;
+    rdfs:label "is implemented by"@en ;
+    rdfs:comment "A requirement is implemented by an implementation."@en ;
+    rdfs:domain onto:Requirement ;
+    rdfs:range onto:Implementation .
+
+onto:isSpecifiedBy a owl:ObjectProperty ;
+    rdfs:label "is specified by"@en ;
+    rdfs:comment "Structures analysis elements through this relation. An analysis element is specified by one or more other analysis elements that detail the analysis."@en ;
+    rdfs:domain onto:AnalysisElement ;
+    rdfs:range onto:AnalysisElement .
+
+onto:weight a owl:DatatypeProperty ;
+    rdfs:label "weight"@en ;
+    rdfs:comment "Number representing the relative importance of one node (analysis element or requirement) of a TSoR compared to its siblings."@en ;
+    rdfs:range xsd:double .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+onto:Requirement a owl:Class ;
+    rdfs:label "Requirement"@en ;
+    rdfs:comment "Node of the tree structure representing a given metric to evaluate a concrete element."@en .
+
+onto:TSoR a owl:Class ;
+    rdfs:label "TSoR: Tree-Structure of Requirements"@en ;
+    rdfs:comment "Defines a compound measure with a set of requirements as well as a structuration of these requirements through the use of analysis elements."@en .
+
+onto:Implementation a owl:Class ;
+    rdfs:label "Implementation"@en ;
+    rdfs:comment "An implementation describing a procedure and/or an executable document. Can either be expressed in a query language, or be refering to an executable file, or be precisly describing the procedure."@en .
+
+onto:AnalysisElement a owl:Class ;
+    rdfs:label "Analysis Element"@en ;
+    rdfs:comment "Node of the tree structure to classify requirements."@en .
+

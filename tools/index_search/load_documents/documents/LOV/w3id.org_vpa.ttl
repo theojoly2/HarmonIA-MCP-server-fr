@@ -1,0 +1,518 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix ns2: <http://data.europa.eu/949/> .
+@prefix ns3: <http://schema.org/> .
+@prefix ns4: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <https://w3id.org/vpa> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+ns2:hasOrganisationRole a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has organisation role"@en ;
+    ns2:inSkosConceptScheme <http://data.europa.eu/949/concepts/organisation-roles/OrgRoles> ;
+    dcterms:created "2024-06-03"^^xsd:date ;
+    rdfs:comment "Relates the Organisation role instance (the role played by an Organisation)  with the specific role in the taxonomy of organisation roles."@en ;
+    rdfs:domain ns2:OrganisationRole ;
+    rdfs:isDefinedBy ns2: ;
+    rdfs:range skos:Concept .
+
+ns2:inSkosConceptScheme a owl:AnnotationProperty .
+
+ns2:role a owl:ObjectProperty ;
+    rdfs:label "role"@en ;
+    ns2:shaclShapeValidationRule <http://data.europa.eu/949/shapes/Role> ;
+    dcterms:created "2024-06-03"^^xsd:date ;
+    dcterms:modified "2024-10-24"^^xsd:date ;
+    rdfs:comment "Indicates the relationship of a Body to the organisation roles that it can play."@en ;
+    rdfs:domain ns2:Body ;
+    rdfs:isDefinedBy ns2: ;
+    rdfs:range ns2:OrganisationRole ;
+    owl:inverseOf ns2:roleOf .
+
+ns2:shaclShapeValidationRule a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:publisher a owl:AnnotationProperty .
+
+dcterms:replaces a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+ns3:affiliation a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+ns4:term_status a owl:AnnotationProperty .
+
+skos:altLabel a owl:AnnotationProperty .
+
+skos:changeNote a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:editorialNote a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+skos:scopeNote a owl:AnnotationProperty .
+
+foaf:homepage a owl:AnnotationProperty .
+
+foaf:name a owl:AnnotationProperty .
+
+foaf:workInfoHomepage a owl:AnnotationProperty .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "The Verified Permissions (VP) ontology"@en ;
+    ns1:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:contributor [ a foaf:Agent ;
+            foaf:homepage <https://www.era.europa.eu/> ;
+            foaf:name "OPD Unit" ] ;
+    dcterms:created "2024-06-28"^^xsd:date ;
+    dcterms:creator [ a foaf:Person ;
+            ns3:affiliation [ foaf:homepage <https://www.era.europa.eu/> ;
+                    foaf:name "European Union Agency for Railways" ] ;
+            rdfs:seeAlso <https://orcid.org/0000-0003-1562-6922> ;
+            foaf:name "Ghislain Atemezing" ;
+            foaf:workInfoHomepage <http://publications.europa.eu/resource/authority/corporate-body/ERA> ],
+        [ a foaf:Person ;
+            ns3:affiliation [ foaf:homepage <https://www.era.europa.eu/> ;
+                    foaf:name "European Union Agency for Railways" ] ;
+            rdfs:seeAlso <https://orcid.org/0009-0003-6653-6123> ;
+            foaf:name "Maarten Duhoux" ;
+            foaf:workInfoHomepage <http://publications.europa.eu/resource/authority/corporate-body/ERA> ] ;
+    dcterms:issued "2024-06-28"^^xsd:date ;
+    dcterms:modified "2024-07-02"^^xsd:date,
+        "2024-10-14"^^xsd:date,
+        "2025-02-21"^^xsd:date,
+        "2025-03-27"^^xsd:date,
+        "2025-04-02"^^xsd:date,
+        "2025-05-14"^^xsd:date,
+        "2025-05-15"^^xsd:date,
+        "2025-05-23"^^xsd:date ;
+    dcterms:publisher "European Union Agency for Railways"@en ;
+    dcterms:title "ERA Ontology for verified permissions"@en ;
+    vann:preferredNamespacePrefix "vpa" ;
+    vann:preferredNamespaceUri <https://w3id.org/vpa#> ;
+    rdfs:comment "ERA ontology for verified permissions, as applied in vehicle(type) authorisations, registrations and approvals"@en ;
+    owl:versionInfo "v1.0" ;
+    skos:changeNote "\\n                        Revision 1.0 (23-05-2025)\\n- Removed sameAs between property vpa:submittedfor - vpa:supportsRequest and added altLabel instead for the naming.                        \\n- Added `vpa:permits` which allows refining what the `vpa:Permission` actually permits (range: SKOS)\\n- Added `vpa:requestedIn`, as the true inverse of `vpa:requestFor`\\n\\nRevision 0.9 (15-05-2025):\\n- Changed `vpa:supportsRequest` to have domain `vpa:Evidence` (in order to be in line with all other supports properties)\\n- Added `vpa:constitutes` as the true inverse of `vpa:constitutedBy` (change regarding version 0.5).\\n\\nRevision 0.8 (14-05-2025):\\n- Isolated domain of `vpa:checkedCompliance` (renamed from `vpa:checked`) to `vpa:EvidenceDocument`\\n- Keep the link between Evidence and Compliance, using `vpa:statesCompliance` (renamed from `vpa:supportsCompliance` in order to avoid confusion with the supports class).\\n- Added `vpa:supportsScope`, as it is third level of `supports` for vpa:Evidence\\n- Added comments for the supports subProperties\\n- corrected to rdfs:isDefinedBy some links to vpa:\\n- added property `vpa:versionNumber` for `vpa:EvidenceDocument` (a sequence numbering integer)\\n- corrected typo, annotated and commented `vpa:constitutedBy` \\n- added ORCID MD\\n\\nRevision 0.7 (02-04-2025):\\n - renamed supports properties \\n - added subclassOf vpa:Requirement of eli:LegalResource \\n - added a super property for supports-alike properties\\n\\nRevision 0.6 (27-03-2025):\\n - added new properties vpa:supportsRequest, vpa:supportsCase\\n - refined domain and range of classes vpa:Evidence \\n\\nRevision 0.5 (21-02-2025):\\n- Introduction of `vpa:Evidence`, and renaming of `vpa:DocumentedEvidence` to `vpa:EvidenceDocument`\\n- Adding properties: \\n  `vpa:constitutes`/ `vpa:constitutedBy`, to link EvidenceDocument with Evidence and inversely;\\n  `vpa:checkedRequirement` (`vpa:closes` for `vpa:Compliance`)\\n- Moving some properties from `EvidenceDocument` to `Evidence`.\\n- Improving/adapting the comments of relevant properties."@en .
+
+<https://w3id.org/vpa#PermittingBody> a owl:Class ;
+    rdfs:label "Permitting Body"@en ;
+    rdfs:comment "Within its legally recognized mandate, this Body is able to receive EvidenceDocument as submitted in a Request and based upon it, issue a Permit to the RequestingBody for the activities covered by the mentioned legislation."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf ns2:Body .
+
+<https://w3id.org/vpa#certifies> a owl:ObjectProperty ;
+    rdfs:label "certifies"@en ;
+    rdfs:comment "within its accredited competencies, can express an opinion whether a (legal or standardized) requirement is met. This relation must be accompanied by Evidence(Document) to formalize this opinion and eventually Restrictions if it is met only partially."@en ;
+    rdfs:domain <https://w3id.org/vpa#AppropriateBody> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Requirement> .
+
+<https://w3id.org/vpa#checkedCompliance> a owl:ObjectProperty ;
+    rdfs:label "checked compliance"@en ;
+    rdfs:comment "The Compliance checks having been documented by the Appropriate Body in the EvidenceDocument."@en ;
+    rdfs:domain <https://w3id.org/vpa#EvidenceDocument> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Compliance> ;
+    skos:editorialNote "Use `statesCompliance` for the relation Evidence -- Compliance`"@en .
+
+<https://w3id.org/vpa#checkedRequirement> a owl:ObjectProperty ;
+    rdfs:label "checked requirement"@en ;
+    rdfs:comment "For a Compliance check, the Requirement which was (globally or in part) checked by the Appropriate Body."@en ;
+    rdfs:domain <https://w3id.org/vpa#Compliance> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Requirement> .
+
+<https://w3id.org/vpa#checkedSection> a owl:ObjectProperty ;
+    rdfs:label "checked section"@en ;
+    rdfs:comment "For a Compliance check, the section of the Requirement which was individually checked by the Appropriate Body. The sections in scope of the verification are registered under each Requirement itself."@en ;
+    rdfs:domain <https://w3id.org/vpa#Compliance> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range skos:Concept .
+
+<https://w3id.org/vpa#closes> a owl:ObjectProperty ;
+    rdfs:label "closes"@en ;
+    rdfs:comment "within the accredited competencies of the issuer of the EvidenceDocument, confirms that the evidence shown in the context of the Requirement was (not, partially or fully) fulfilled, where needed in presence of a Restriction."@en ;
+    rdfs:domain <https://w3id.org/vpa#EvidenceDocument> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Requirement> .
+
+<https://w3id.org/vpa#concerns> a owl:ObjectProperty ;
+    rdfs:label "concerns"@en ;
+    rdfs:comment "holds as material content, constitutes, embodies the material components of the Scope."@en ;
+    rdfs:domain <https://w3id.org/vpa#Case> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Scope> .
+
+<https://w3id.org/vpa#definesCase> a owl:ObjectProperty ;
+    rdfs:label "defines case"@en ;
+    rdfs:comment "Inverse property of `vpa:concerns`. Is covered by, included in"@en ;
+    rdfs:domain <https://w3id.org/vpa#Scope> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Case> .
+
+<https://w3id.org/vpa#delivers> a owl:ObjectProperty ;
+    rdfs:label "delivers"@en ;
+    rdfs:comment "within its accredited mandate, issues in a traceable and qualitative manner for reuse in a Permission process"@en ;
+    rdfs:domain <https://w3id.org/vpa#AppropriateBody> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#EvidenceDocument> .
+
+<https://w3id.org/vpa#grants> a owl:ObjectProperty ;
+    rdfs:label "grants"@en ;
+    rdfs:comment "within its legally recognized mandate, issues, delivers in a traceable and qualitative manner, such that the receiver is able to act within the authorisation cases and its verified documentation"@en ;
+    rdfs:domain ns2:OrganisationRole ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Permission> .
+
+<https://w3id.org/vpa#isCompliant> a owl:DatatypeProperty ;
+    rdfs:label "is compliant"@en ;
+    rdfs:comment "For the verified section of a Requirement: true when fully compliant, false in other cases (in which a clarifying Restriction is possible)"@en ;
+    rdfs:domain <https://w3id.org/vpa#Compliance> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/vpa#issues> a owl:ObjectProperty ;
+    rdfs:label "issues"@en ;
+    rdfs:comment "transmits with the intention to be allowed to act according to a legally verified process"@en ;
+    rdfs:domain <https://w3id.org/vpa#RequestingBody> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Request> .
+
+<https://w3id.org/vpa#permissionType> a owl:ObjectProperty ;
+    rdfs:label "permission type"@en ;
+    rdfs:comment "the detailed process which constitutes this Case's permission conditions"@en ;
+    rdfs:domain <https://w3id.org/vpa#Case> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range skos:Concept .
+
+<https://w3id.org/vpa#permits> a owl:ObjectProperty ;
+    rdfs:label "permits"@en ;
+    rdfs:comment "the process, activity, role or other scope which the Permission allows to the Requesting Body to execute or hold"@en ;
+    rdfs:domain <https://w3id.org/vpa#Permission> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range skos:Concept ;
+    skos:example "For an ECM Certificate, vpa:permits will link to the OrganisationalRole 'ECM'\\n                      "@en .
+
+<https://w3id.org/vpa#regarding> a owl:ObjectProperty ;
+    rdfs:label "regarding"@en ;
+    rdfs:comment "belonging to, and when being respected, then also fulfilling"@en ;
+    rdfs:domain <https://w3id.org/vpa#Restriction> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Requirement> ;
+    skos:scopeNote "The linked requirement URI must remain consistent with the Compliance check, if both are used. This property should be used if no trace of a Compliance check is present, apart from the checked Requirement itself."@en .
+
+<https://w3id.org/vpa#requestedIn> a owl:ObjectProperty ;
+    rdfs:label "requested in"@en ;
+    rdfs:comment "aiming to be enabled to act as covered by the Permission and its conditions, by issuing"@en ;
+    rdfs:domain <https://w3id.org/vpa#Permission> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Request> ;
+    owl:inverseOf <https://w3id.org/vpa#requestFor> .
+
+<https://w3id.org/vpa#requests> a owl:ObjectProperty ;
+    rdfs:label "requests"@en ;
+    rdfs:comment "aims to be allowed to act according to a legally verified process, by receiving"@en ;
+    rdfs:domain ns2:OrganisationRole ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Permission> .
+
+<https://w3id.org/vpa#section> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "sections"@en ;
+    rdfs:comment "section(s) of the requirement to which individual compliance can be registered by the Appropriate Body"@en ;
+    rdfs:domain <https://w3id.org/vpa#Requirement> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range skos:Concept .
+
+<https://w3id.org/vpa#statesCompliance> a owl:ObjectProperty ;
+    rdfs:label "states compliance"@en ;
+    rdfs:comment "stating, through a collective set of evidence providing documents, a (non)compliance, instantiated as a `vpa:Compliance`"@en ;
+    rdfs:domain <https://w3id.org/vpa#Evidence> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Compliance> .
+
+<https://w3id.org/vpa#status> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "status"@en ;
+    rdfs:comment "the status of the Request as it is being treated by the PermittingBody"@en ;
+    rdfs:domain <https://w3id.org/vpa#Request> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range skos:Concept .
+
+<https://w3id.org/vpa#submittedFor> a owl:ObjectProperty ;
+    rdfs:label "submitted for"@en ;
+    rdfs:comment "supporting, holding evidence of compliance in order to enable the Permitting Body to verify and permit"@en ;
+    rdfs:domain <https://w3id.org/vpa#Evidence> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Request> ;
+    skos:altLabel "supports Request"@en .
+
+<https://w3id.org/vpa#submittedIn> a owl:ObjectProperty ;
+    rdfs:label "submitted in"@en ;
+    rdfs:comment "The submission of a permission or evidence to a case"@en ;
+    rdfs:domain <https://w3id.org/vpa#Permission> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Case> .
+
+<https://w3id.org/vpa#supportsCase> a owl:ObjectProperty ;
+    rdfs:label "supports case"@en ;
+    rdfs:comment "supporting, as a collective set of evidence providing documents, a specific case, as such also supporting the request"@en ;
+    rdfs:domain <https://w3id.org/vpa#Evidence> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Case> ;
+    rdfs:subPropertyOf <https://w3id.org/vpa#supports> .
+
+<https://w3id.org/vpa#supportsScope> a owl:ObjectProperty ;
+    rdfs:label "supports scope"@en ;
+    rdfs:comment "supporting, as a collective set of evidence providing documents, a specific, material scope within a case, as such also supporting the request"@en ;
+    rdfs:domain <https://w3id.org/vpa#Evidence> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Scope> ;
+    rdfs:subPropertyOf <https://w3id.org/vpa#supports> .
+
+<https://w3id.org/vpa#valid> a owl:ObjectProperty ;
+    rdfs:label "valid"@en ;
+    rdfs:comment "valid during a certain time"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ a rdf:List ;
+                    rdf:first <https://w3id.org/vpa#EvidenceDocument> ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first <https://w3id.org/vpa#Permission> ;
+                            rdf:rest () ] ] ] ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range time:Interval ;
+    skos:scopeNote "The validity of Evidence should be based on the validity limits of the EvidenceDocuments it is constitutedBy.\\nThe validity of a Permission (checked e.g. with SHACL) should also be consistent with the validity of the underlying Evidence."@en .
+
+<https://w3id.org/vpa#versionNumber> a owl:DatatypeProperty ;
+    rdfs:label "version number"@en ;
+    rdfs:comment "An integer representing any sequence number of a version of an EvidenceDocument. Subsequent EvidenceDocuments SHOULD use `dcterms:isReplacedBy` and `dcterms:replaces` to indicate their relation."@en ;
+    rdfs:domain <https://w3id.org/vpa#EvidenceDocument> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range xsd:integer .
+
+<https://w3id.org/vpa#withRestriction> a owl:ObjectProperty ;
+    rdfs:label "with restriction"@en ;
+    rdfs:comment "when taken into account in the final act to be permitted, can be accepted under the condition that the conditions of the Restriction are fully answered to"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ a rdf:List ;
+                    rdf:first <https://w3id.org/vpa#Compliance> ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first <https://w3id.org/vpa#EvidenceDocument> ;
+                            rdf:rest () ] ] ] ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Restriction> ;
+    skos:scopeNote "Only Compliance checks and specific EvidenceDocuments are precise enough to form the basis of a Restriction. Therefore, Evidence itself cannot directly link to a Restriction"@en .
+
+ns2:roleOf a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "role of"@en ;
+    ns2:shaclShapeValidationRule <http://data.europa.eu/949/shapes/RoleOf> ;
+    dcterms:created "2024-10-24"^^xsd:date ;
+    rdfs:comment "Indicates the corresponding Body that plays a certain organisation role."@en ;
+    rdfs:domain ns2:OrganisationRole ;
+    rdfs:isDefinedBy ns2: ;
+    rdfs:range ns2:Body .
+
+<http://data.europa.eu/eli/ontology#LegalResource> a owl:Class ;
+    rdfs:label "Legal Resource"@en ;
+    rdfs:comment "A work in a legislative corpus. This applies to acts that have been legally enacted (whether or not they are still in force).\\nFor example, the abstract concept of the legal resource; e.g. &quot;act 3 of 2005&quot; (adapted from Akoma Ntoso)\\n\\nA legal resource can represent a legal act or any component of a legal act, like an article.  Legal resources can be linked together using properties defined in the model.\\n\\nNote that ELI ontology accommodates different point of view on what should be considered a new legal resource, or a new legal expression of the same resource. Typically, a consolidated version can be viewed, in the context of ELI, either as separate legal resource (linked to original version and previous consolidated version using corresponding ELI relations), or as a different legal expression of the same legal resource.</rdfs:comment>"@en .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+rdf:Bag a owl:Class .
+
+rdfs:member a owl:ObjectProperty ;
+    rdfs:label "member"@en .
+
+time:Interval a owl:Class ;
+    rdfs:label "Interval"@en,
+        "Time interval"@en ;
+    rdfs:comment "A temporal entity with an extent or duration"@en ;
+    rdfs:subClassOf time:TemporalEntity ;
+    skos:definition "A temporal entity with an extent or duration"@en .
+
+time:TemporalEntity a owl:Class ;
+    rdfs:label "Temporal entity"@en ;
+    rdfs:comment "A temporal interval or instant."@en ;
+    rdfs:subClassOf owl:Thing ;
+    skos:definition "A temporal interval or instant."@en .
+
+foaf:Agent a owl:Class .
+
+foaf:Document a owl:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "A document." ;
+    rdfs:isDefinedBy foaf: ;
+    owl:disjointWith foaf:Organization ;
+    ns4:term_status "stable" .
+
+foaf:Organization a owl:Class .
+
+<https://w3id.org/vpa#RequestingBody> a owl:Class ;
+    rdfs:label "Requesting Body"@en ;
+    rdfs:comment "Within its legally recognized role, this Body is able to express the intention to act under the condition of reception of a Permission. The intended action being covered by legal or standardized Requirements to fullfil, this Body will present all required information, as verified by the Appropriate and examined by the Permitting Bodies, to the latter in order to receive the mentioned Permission."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf ns2:Body .
+
+<https://w3id.org/vpa#constitutedBy> a owl:ObjectProperty ;
+    rdfs:label "constituted by"@en ;
+    rdfs:comment "holds as a complete, independent, possibly sole part, embodies as one element of potentially more"@en ;
+    rdfs:domain <https://w3id.org/vpa#Request> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Case> ;
+    owl:inverseOf <https://w3id.org/vpa#constitutes> .
+
+<https://w3id.org/vpa#constitutes> a owl:ObjectProperty ;
+    rdfs:label "constitutes"@en ;
+    rdfs:comment "forms a complete, independent, possibly sole part of a request"@en,
+        "is part of, inherently constitutes"@en ;
+    rdfs:domain <https://w3id.org/vpa#Case> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Request> .
+
+<https://w3id.org/vpa#requestFor> a owl:ObjectProperty ;
+    rdfs:label "request for"@en ;
+    rdfs:comment "aiming to be enabled to act as covered by the Permission and its conditions, by receiving"@en ;
+    rdfs:domain <https://w3id.org/vpa#Request> ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:range <https://w3id.org/vpa#Permission> .
+
+org:Organization a owl:Class .
+
+<https://w3id.org/vpa#AppropriateBody> a owl:Class ;
+    rdfs:label "Appropriate Body"@en ;
+    rdfs:comment "Accredited organization which is able to express a formal opinion on Requirements, expressing them in EvidenceDocument (mostly called Certificates), and if necessary making them dependent on Restrictions, which shall be fulfilled."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf ns2:Body .
+
+<https://w3id.org/vpa#supports> a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    rdfs:comment "super property for the different targets of supporting evidence: the scope, a case or the full request"@en .
+
+foaf:Person a owl:Class .
+
+<https://w3id.org/vpa#Restriction> a owl:Class ;
+    rdfs:label "Restriction"@en ;
+    rdfs:comment "Issued by an Appropriate Body in connection with its (documented) evidence on a certain requirement, it contains all aspects to take into account in order to accept the Evidence as proof, enabling the scope of the Permission. It is possible that the Restriction limits the Permission in the same way."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> .
+
+<https://w3id.org/vpa#Scope> a owl:Class ;
+    rdfs:label "Scope"@en ;
+    rdfs:comment "A collection of Scopes together defining a Case. Scope is mostly the specific material object of the Case, where the Case groups them together."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> .
+
+ns2:Body a owl:Class ;
+    rdfs:label "Body"@en ;
+    dcterms:created "2024-06-03"^^xsd:date ;
+    dcterms:modified "2025-02-18"^^xsd:date ;
+    dcterms:replaces ns2:InfrastructureManager,
+        ns2:Manufacturer,
+        ns2:VehicleKeeper ;
+    rdfs:comment "Is an organisation or a physical person"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf [ a rdf:List ;
+                    rdf:first org:Organization ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first foaf:Person ;
+                            rdf:rest () ] ] ] ;
+    owl:disjointWith ns2:OrganisationRole .
+
+<https://w3id.org/vpa#Evidence> a owl:Class ;
+    rdfs:label "Evidence"@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rdfs:member ;
+            owl:someValuesFrom <https://w3id.org/vpa#EvidenceDocument> ],
+        rdf:Bag .
+
+ns2:OrganisationRole a owl:Class ;
+    rdfs:label "Organisation Role"@en ;
+    rdfs:comment "Represents an n-ary relationship between a Body and a role"@en ;
+    owl:disjointWith org:Organization .
+
+skos:Concept a owl:Class .
+
+<https://w3id.org/vpa#Compliance> a owl:Class ;
+    rdfs:label "Compliance"@en ;
+    rdfs:comment "Regroups the result of a compliance check on a specific section of an applicable Requirement as registered in Documented Evicence. If needed, links this examined section to a specific Restriction."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> .
+
+<https://w3id.org/vpa#Requirement> a owl:Class ;
+    rdfs:label "Requirement"@en ;
+    rdfs:comment "A legal/standardised collection of rules, which must be verified independently to be met in the context of a Permission Request, and of which the measure of compliance is expressed in EvidenceDocuments, with or without added Restrictions."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf <http://data.europa.eu/eli/ontology#LegalResource> ;
+    skos:editorialNote "ERA has the list of TSIs as instances of this class to be released as reference data in RDF"@en .
+
+<https://w3id.org/vpa#EvidenceDocument> a owl:Class ;
+    rdfs:label "Documented Evidence"@en ;
+    rdfs:comment "Issued by an AppropriateBody, it is the summary of its formal and accredited verification process, enabling the receiver (RequestingBody) to issue a Request for a Permission to the PermittingBody."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf foaf:Document .
+
+<https://w3id.org/vpa#Permission> a owl:Class ;
+    rdfs:label "Permission"@en ;
+    rdfs:comment "Issued by a PermittingBody, it enables - mostly because of legal frameworks in place - the RequestingBody to execute the processes covered under these requirement frameworks."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> .
+
+<https://w3id.org/vpa#Request> a owl:Class ;
+    rdfs:label "Request"@en ;
+    rdfs:comment "Issued by a Requesting Body to a PermittingBody, and supported by at least one Case, while being supported by the necessary Evidence (consisting of EvidenceDocuments), it intends to enable the reception of a Permission."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/vpa#constitutedBy> ;
+            owl:someValuesFrom <https://w3id.org/vpa#Case> ] .
+
+<https://w3id.org/vpa#Case> a owl:Class ;
+    rdfs:label "Case"@en ;
+    rdfs:comment "A clearly separated part of a Request, identified clearly by its Scope(s). Each Case has an individual PermissionType as objective. A Request consists out of minimally one Case."@en ;
+    rdfs:isDefinedBy <https://w3id.org/vpa#> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members [ a rdf:List ;
+            rdf:first <https://w3id.org/vpa#Case> ;
+            rdf:rest [ a rdf:List ;
+                    rdf:first <https://w3id.org/vpa#Evidence> ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first <https://w3id.org/vpa#EvidenceDocument> ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first <https://w3id.org/vpa#Permission> ;
+                                    rdf:rest [ a rdf:List ;
+                                            rdf:first <https://w3id.org/vpa#Request> ;
+                                            rdf:rest [ a rdf:List ;
+                                                    rdf:first <https://w3id.org/vpa#Requirement> ;
+                                                    rdf:rest [ a rdf:List ;
+                                                            rdf:first <https://w3id.org/vpa#Restriction> ;
+                                                            rdf:rest [ a rdf:List ;
+                                                                    rdf:first <https://w3id.org/vpa#Scope> ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] .
+

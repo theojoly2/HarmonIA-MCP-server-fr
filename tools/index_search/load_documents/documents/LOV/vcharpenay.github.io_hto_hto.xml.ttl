@@ -1,0 +1,600 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://vcharpenay.github.io/hto/hto.xml#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://vcharpenay.github.io/hto/hto.xml> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    ns2:license "Academic Free License (\"AFL\") 3.0" ;
+    dc:creator "Victor Charpenay <victor.charpenay[at]siemens.com>" ;
+    dc:title "Haystack Tagging Ontology" ;
+    dcterms:modified "2016-10-20"^^xsd:date ;
+    rdfs:comment "The Haystack Tagging Ontology is an OWL ontology for Project Haystack, a domain vocabulary for Building Automation Systems." ;
+    rdfs:seeAlso "http://vcharpenay.github.io/hto/"^^xsd:anyURI ;
+    owl:imports <http://purl.oclc.org/NET/ssnx/ssn> ;
+    owl:versionInfo "0.2.0" .
+
+ns1:Fan a owl:Class ;
+    rdfs:label "Fan" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Historized a owl:Class ;
+    rdfs:label "Historized" ;
+    rdfs:subClassOf ns1:PointProperty .
+
+ns1:Pump a owl:Class ;
+    rdfs:label "Pump" ;
+    rdfs:subClassOf ns1:VFD .
+
+ns1:RealTime a owl:Class ;
+    rdfs:label "Real time" ;
+    rdfs:subClassOf ns1:PointProperty .
+
+ns1:VFDFan a owl:Class ;
+    rdfs:label "VFD Fan" ;
+    rdfs:subClassOf ns1:VFD .
+
+ns1:Writable a owl:Class ;
+    rdfs:label "Writable" ;
+    rdfs:subClassOf ns1:PointProperty .
+
+ns1:ahu a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:AHU ;
+    rdfs:comment "  Air Handler Unit which heats and/or cools air."^^xsd:string .
+
+ns1:air a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Air ;
+    rdfs:comment "  Point associated with the measurement or control of air. In regards to `wetBulb`, points with the 'air' tag are associated with dry bulb."^^xsd:string .
+
+ns1:associatedTo a owl:AnnotationProperty ;
+    rdfs:comment "gives the OWL class defined in the present ontology that should be associated to the individual defined as subject." ;
+    rdfs:domain ns1:HTag .
+
+ns1:belongsTo a owl:ObjectProperty ;
+    rdfs:domain ns1:Point ;
+    rdfs:range ns1:Equipment ;
+    rdfs:subPropertyOf <http://purl.oclc.org/NET/ssnx/ssn#onPlatform> .
+
+ns1:boiler a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Boiler ;
+    rdfs:comment "  Boiler `equip` used to generate hot water or steam for heating."^^xsd:string,
+        "note: does not fully implement specification (no boilerPlant). However, is still a TODO in project Haystack." .
+
+ns1:bypass a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  If used with `valve` indicates a by-pass in a piping system. If used in combination with the `damper` tag on an `ahu` to indicate a damper in the ductwork to by-pass the VAV boxs and create a direct circuit between the discharge and return of the unit."^^xsd:string .
+
+ns1:chilled a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:ChilledSystem ;
+    rdfs:comment "  Marker tag used with `water` for the chilled water system between `chiller` and `ahu`."^^xsd:string .
+
+ns1:chiller a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Chiller ;
+    rdfs:comment "  Chillers remove heat from a liquid via a vapor compression or an absorption refrigeration cycle."^^xsd:string,
+        "note: does not fully implement specification (no chillerPlant, no CoolingTower)." .
+
+ns1:cmd a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Command ;
+    rdfs:comment "  Classifies a `point` as an output, AO/BO, command, or actuator."^^xsd:string .
+
+ns1:co2 a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:CO2 ;
+    rdfs:comment "  Carbon dioxide level `point` measured in \"ppm\"."^^xsd:string .
+
+ns1:condenser a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:CondenserSystem ;
+    rdfs:comment "  When combined with the `water` tag, this indicates points in a condenser water system between a `chiller` and `coolingTower`. When used with the `refrig` tag, this indicates points on the condenser mechanism used to convert a refrigerant from its gaseous to liquid state. If paired with the `cmd` tag this tag indicates the command status of a condensor in a `chiller` modeled as true/false (on/off) or 0% to 100%."^^xsd:string .
+
+ns1:cool a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:CoolingCoil ;
+    rdfs:comment "  Cooling coil as bool or numeric `point` used with `ahu` equip.  If multiple stages are used, then also specify the `stage` tag. If the cooling coil is controlled by a valve, then this point is mesaured from 0% to 100%, otherwise it should be a boolean point."^^xsd:string .
+
+ns1:cooling a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Associated with the cooling mode of an HVAC system."^^xsd:string .
+
+ns1:damper a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Percentage ;
+    rdfs:comment "  Damper position measured from 0% (fully closed) to 100% (fully open)."^^xsd:string,
+        "note: indicates the measurement of how open the damper of a AHU is (0-100%)" .
+
+ns1:delta a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Indicates a differential of `air`, `water`, or `steam` between the `entering` and `leaving` sensors."^^xsd:string .
+
+ns1:dis a owl:DatatypeProperty ;
+    rdfs:domain ns1:HEntity .
+
+ns1:discharge a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Discharge ;
+    rdfs:comment "  Associated with the discharge air an `ahu` or `vav`."^^xsd:string .
+
+ns1:effective a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Used to indicate the effective setpoint which takes into account various other mode based setpoints the equip might define.  See [zone setpoints]`Zones#zonePoints` for complete example of how this tag is used."^^xsd:string .
+
+ns1:efficiency a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Efficiency ;
+    rdfs:comment "  Efficiency point of a `chiller` measured in \"COP\" or \"kW/ton\"."^^xsd:string .
+
+ns1:elec a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Used on `point` or `equip` entities relating to electricity. When paried with `meter` indicates a electric meter."^^xsd:string,
+        "note: according to the documentation, is assocated to either point or equip" .
+
+ns1:enable a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  Secondary on/off `point` of an `equip` especially used with a `vfd`. Enable is used with Bool points where true indicates on and false indicates off.  Equip with an enable should always also define a `run` point which indicates the primary on/off state of the equipment."^^xsd:string .
+
+ns1:energy a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Applied to `point` entities which measure energy consumption:   - Electric meters: \"kWh\"   - Thermal meters: \"BTU\"   - Gas meters: \"mÂ³_gas\"   - Chillers: \"tonrefh\""^^xsd:string .
+
+ns1:entering a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Entering ;
+    rdfs:comment "  Indicates `water` or `steam` entering a piece of equipment like a `boiler` or `chiller`.  Used with `vav` for air flow into the unit from the AHU."^^xsd:string .
+
+ns1:evaporator a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Indicates points on the evaporator mechanism used to convert a refrigerant from its liquid to gageous state.  It is often paired with the `refrig` marker tag."^^xsd:string .
+
+ns1:exhaust a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Exhaust ;
+    rdfs:comment "  Associated with the exhaust air an `ahu`."^^xsd:string .
+
+ns1:faceBypass a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  A `point` of an `ahu` indicating air flow is by-passing the heating/cooling elements. If a boolean point, then true indicates the unit is in by-pass mode and false indicates by-pass is disabled.  If the point is an analog point then 100% indicates full by-pass mode and 0% that by-pass is completely disabled."^^xsd:string .
+
+ns1:fan a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Fan `point` or `equip` associated with an `ahu`, `vav`, or `coolingTower`."^^xsd:string,
+        "note: according to the documentation, is assocated to either point or equip. Should use reasoning to choose the right one for a given HEntity" .
+
+ns1:filter a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Pressure ;
+    rdfs:comment "  Differential pressure across the filter of an `ahu`.  If a boolean point then true indicates successful airflow and false indicates a clogged filter.  If a numeric then the pressure differential should be measured in \"inHâ‚‚O\" or \"kPa\""^^xsd:string .
+
+ns1:flow a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Flow ;
+    rdfs:comment "  Marker tag on a `point` which measures rate of volume currently flowing through a flow meter, duct, or pipe .   - Air flow: \"cfm\" or \"L/s\"   - Gas/water flow: \"gal/min\" or \"mÂ³/s\""^^xsd:string .
+
+ns1:freezeStat a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  A boolean `point` of an `ahu` indicating a freezing condition which might require a control sequence to protect the equipment. If true then a freeze condition is deteted, or false if not."^^xsd:string .
+
+ns1:freq a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Frequency ;
+    rdfs:comment "  Electrical A/C frequency `point` measured in \"Hz\" for `elec` `meter` or a `vfd`."^^xsd:string .
+
+ns1:gas a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Gas ;
+    rdfs:comment "  Used on `point` or `equip` entities relating to natural gas. When paried with `meter` indicates a gas meter."^^xsd:string .
+
+ns1:hasRef a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf ns1:isRefedBy .
+
+ns1:hasSection a owl:ObjectProperty ;
+    rdfs:domain ns1:Equipment ;
+    rdfs:range ns1:Section .
+
+ns1:hasTag a owl:ObjectProperty .
+
+ns1:heat a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:HeatingCoil ;
+    rdfs:comment "  Heating coil as bool or float point on an `ahu` or `vav`. If multiple stages are used, then also specify the `stage` tag. If the heating coil is controlled by a valve, then this point is mesaured from 0% to 100%, otherwise it should be a boolean point."^^xsd:string .
+
+ns1:heatWheel a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  Bool `point` which models the on or off state of an `ahu` heat wheel."^^xsd:string .
+
+ns1:heating a ns1:HTag,
+        owl:NamedIndividual ;
+    rdfs:comment "  Associated with the heating mode of an HVAC system."^^xsd:string .
+
+ns1:humidifier a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  Boolean or numeric `point` of an `ahu` used to indicate if if the humidifier is on or off."^^xsd:string .
+
+ns1:humidity a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Humidity ;
+    rdfs:comment "  Humidity measured from 0% to 100%."^^xsd:string .
+
+ns1:hvac a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:HVAC ;
+    rdfs:comment "  Associated with HVAC (Heating, Ventilating, Air Conditioning)"^^xsd:string .
+
+ns1:isolation a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:IsolationValve ;
+    rdfs:comment "  Indicates a `valve` used to isolate a piece of equipment from a piping system."^^xsd:string .
+
+ns1:leaving a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Leaving ;
+    rdfs:comment "  Indicates `water` or `steam` exiting a piece of equipment like a `boiler` or `chiller`."^^xsd:string .
+
+ns1:lightLevel a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:LightLevel ;
+    rdfs:comment "  Light level sensor point under `lightsGroup` measured in \"lux\" or \"lumen\"."^^xsd:string .
+
+ns1:lights a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:LightLevel ;
+    rdfs:comment "  Lighting on/off status as a boolean or if dimmable a numeric between 0% and 100%."^^xsd:string,
+        "note: according to the documentation, subsumes sensor. But associated here to a Measurement type and redundant with the tag lightLevel." .
+
+ns1:lightsGroup a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:LightsGroup ;
+    rdfs:comment "  Equip level of the lighting system which is a group of one or more `lights` points."^^xsd:string .
+
+ns1:load a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Percentage ;
+    rdfs:comment "  Models a `point` on a `chiller` used to command or measure the chiller's load as a percentage from \"0%\" to \"100%\".  When paired with `cmd` this models the chiller's load limit.  When paired with `sensor` this models the chiller's current load factor."^^xsd:string .
+
+ns1:locatedOn a owl:ObjectProperty ;
+    rdfs:domain ns1:Point ;
+    rdfs:range ns1:Section ;
+    rdfs:subPropertyOf <http://purl.oclc.org/NET/ssnx/ssn#isPropertyOf> .
+
+ns1:measuredOn a owl:ObjectProperty ;
+    rdfs:domain ns1:Measurement ;
+    rdfs:range ns1:PhysicalBody .
+
+ns1:meter a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Meter ;
+    rdfs:comment "  Equip which meters usage of `elec` energy, thermal energy, `gas`, `water` or `steam`."^^xsd:string .
+
+ns1:mixed a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Mixed ;
+    rdfs:comment "  Associated with the mixed air of an `ahu`."^^xsd:string .
+
+ns1:occupancyIndicator a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  Occupancy sensor under `lightsGroup`.  Point must be Bool where true indicates occupied and false indicates unoccupied"^^xsd:string,
+        "note: according to the documentation, subsumes sensor. But associated here to a Measurement type. Similarly, lights and lightLevel tags both refer to the class LightLevel." ;
+    rdfs:seeAlso "http://project-haystack.org/tag/lights" .
+
+ns1:perimeterHeat a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:PerimeterHeat ;
+    rdfs:comment "  Auxiliary heating points associated with a `vav`."^^xsd:string .
+
+ns1:point a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Point ;
+    rdfs:comment "  Data point such as a sensor or actuator."^^xsd:string .
+
+ns1:power a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Power ;
+    rdfs:comment "  Applied to `point` entities which measure energy consumed per unit time. For 'elec meter' this is the electrical demand.   - Electric meters: \"kW\"   - Thermal meters: \"BTU/h\"   - Chillers: \"tonref\" or \"kW\" refrigeration"^^xsd:string .
+
+ns1:pressure a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Pressure ;
+    rdfs:comment "  Static pressure associated with the measurement or control of fluids such as air, oxygen, water, steam, gas, oil, etc."^^xsd:string .
+
+ns1:quantifies a owl:ObjectProperty ;
+    rdfs:domain ns1:Point ;
+    rdfs:range ns1:Measurement ;
+    rdfs:subPropertyOf <http://purl.oclc.org/NET/ssnx/ssn#observes> .
+
+ns1:refrig a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:RefrigerantSubstance ;
+    rdfs:comment "  Indicates points associated with the measurment or control of the refrigerant substance in a cooling system like a `chiller`."^^xsd:string .
+
+ns1:return a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Return ;
+    rdfs:comment "  Associated with the return air an `ahu`."^^xsd:string .
+
+ns1:rooftop a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:RTU ;
+    rdfs:comment "  Used with `ahu` to mark an AHU as a packaged rooftop unit (RTU)."^^xsd:string .
+
+ns1:run a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:OnOff ;
+    rdfs:comment "  Primary on/off `point` of an `equip` especially used with a `vfd`. Run is used with Bool points where true indicates on and false indicates off. When paired with `cmd` this is the commanded state of the equipment. When paired with `sensor` this is the actual status of the equip.  If the equipment also defines an `enable` point then both must be commanded on in order to run the equipment."^^xsd:string,
+        "note: according to the documentation, subsumes sensor. But associated here to a Measurement type." .
+
+ns1:sp a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:SetPoint ;
+    rdfs:comment "  Classifies a `point` as a setpoint, soft point, or process control variable."^^xsd:string .
+
+ns1:speed a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Speed ;
+    rdfs:comment "  Speed `point` of a `vfd` measured in \"%\" where 0% is off and 100% is the fastest speed."^^xsd:string .
+
+ns1:steam a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Steam ;
+    rdfs:comment "  Point associated with the measurement or control of steam. This tag is often paired with `entering` versus `leaving` versus `delta`. It may also be paired with `meter` to indicate a steam meter."^^xsd:string .
+
+ns1:temp a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Temperature ;
+    rdfs:comment "  Temperature measured in Â°C or Â°F."^^xsd:string .
+
+ns1:valve a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Valve ;
+    rdfs:comment "  Marker tag on `point` which indicates a valve used to regulate or control the flow or pressure of a fluid.  It is used with `cmd` to indicate the valve command: true/false (open/close) or 0% to 100%.  It may also be used with `sensor` to indicate a feedback sensor such as a voltage giving exact position between 0% and 100%."^^xsd:string .
+
+ns1:vav a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:VAV ;
+    rdfs:comment "  Variable Volume Volume supply duct `equip`."^^xsd:string .
+
+ns1:vfd a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:VFD ;
+    rdfs:comment "  Marker for a motor `equip` with variable frequency drive.  Commonly used in combination with `fan` and `pump`."^^xsd:string .
+
+ns1:water a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Water ;
+    rdfs:comment "  Point associated with the measurement or control of water.  This tag is often paired:   - `entering` versus `leaving` versus `delta`   - `chilled` versus `condenser` It may also be paired with `meter` to indicate a water meter."^^xsd:string .
+
+ns1:zone a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Zone ;
+    rdfs:comment "  Associated with a conditioned [zone]`Zones` of a building."^^xsd:string .
+
+ns1:Air a owl:Class ;
+    rdfs:label "Air" ;
+    rdfs:subClassOf ns1:PhysicalBody .
+
+ns1:Boiler a owl:Class ;
+    rdfs:label "Boiler" ;
+    rdfs:subClassOf ns1:HVAC .
+
+ns1:CO2 a owl:Class ;
+    rdfs:label "CO2" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:ChilledSystem a owl:Class ;
+    rdfs:label "Chilled System" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Chiller a owl:Class ;
+    rdfs:label "Chiller" ;
+    rdfs:subClassOf ns1:HVAC .
+
+ns1:Command a owl:Class ;
+    rdfs:label "Command" ;
+    rdfs:subClassOf ns1:Point .
+
+ns1:CondenserSystem a owl:Class ;
+    rdfs:label "Condenser System" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:CoolingCoil a owl:Class ;
+    rdfs:label "Cooling Coil" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Discharge a owl:Class ;
+    rdfs:label "Discharge" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Efficiency a owl:Class ;
+    rdfs:label "Efficiency" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Entering a owl:Class ;
+    rdfs:label "Entering" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Exhaust a owl:Class ;
+    rdfs:label "Exhaust" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Flow a owl:Class ;
+    rdfs:label "Flow" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Frequency a owl:Class ;
+    rdfs:label "Frequency" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Gas a owl:Class ;
+    rdfs:label "Gas" ;
+    rdfs:subClassOf ns1:PhysicalBody .
+
+ns1:HeatingCoil a owl:Class ;
+    rdfs:label "Heating Coil" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Humidity a owl:Class ;
+    rdfs:label "Humidity" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:IsolationValve a owl:Class ;
+    rdfs:label "Isolation Valve" ;
+    rdfs:subClassOf ns1:Valve .
+
+ns1:Leaving a owl:Class ;
+    rdfs:label "Leaving" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:LightsGroup a owl:Class ;
+    rdfs:label "Lights Group" ;
+    rdfs:subClassOf ns1:Equipment .
+
+ns1:Meter a owl:Class ;
+    rdfs:label "Meter" ;
+    rdfs:subClassOf ns1:Equipment .
+
+ns1:Mixed a owl:Class ;
+    rdfs:label "Mixed" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:PerimeterHeat a owl:Class ;
+    rdfs:label "Perimeter Heat" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Power a owl:Class ;
+    rdfs:label "Power" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:RTU a owl:Class ;
+    rdfs:label "RTU" ;
+    rdfs:subClassOf ns1:AHU .
+
+ns1:RefrigerantSubstance a owl:Class ;
+    rdfs:label "Refrigirant Substance" ;
+    rdfs:subClassOf ns1:PhysicalBody .
+
+ns1:Return a owl:Class ;
+    rdfs:label "Return" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:Sensor a owl:Class ;
+    rdfs:label "Sensor" ;
+    ns1:associatedTo ns1:sensor ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#SensingDevice>,
+        ns1:Point .
+
+ns1:SetPoint a owl:Class ;
+    rdfs:label "Set Point" ;
+    rdfs:subClassOf ns1:Point .
+
+ns1:Site a owl:Class ;
+    rdfs:label "Site" ;
+    rdfs:subClassOf ns1:HEntity .
+
+ns1:Speed a owl:Class ;
+    rdfs:label "Speed" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Steam a owl:Class ;
+    rdfs:label "Steam" ;
+    rdfs:subClassOf ns1:PhysicalBody .
+
+ns1:Temperature a owl:Class ;
+    rdfs:label "Temperature" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:VAV a owl:Class ;
+    rdfs:label "VAV" ;
+    rdfs:subClassOf ns1:HVAC .
+
+ns1:Water a owl:Class ;
+    rdfs:label "Water" ;
+    rdfs:subClassOf ns1:PhysicalBody .
+
+ns1:Zone a owl:Class ;
+    rdfs:label "Zone" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:isRefedBy a owl:ObjectProperty .
+
+ns1:sensor a ns1:HTag,
+        owl:NamedIndividual ;
+    ns1:associatedTo ns1:Sensor ;
+    rdfs:comment "  Classifies a `point` as an input, AI/BI, or sensor."^^xsd:string .
+
+ns1:AHU a owl:Class ;
+    rdfs:label "AHU" ;
+    rdfs:subClassOf ns1:HVAC .
+
+ns1:LightLevel a owl:Class ;
+    rdfs:label "Light Level" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Percentage a owl:Class ;
+    rdfs:label "Percentage" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Pressure a owl:Class ;
+    rdfs:label "Pressure" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:Valve a owl:Class ;
+    rdfs:label "Valve" ;
+    rdfs:subClassOf ns1:Section .
+
+ns1:PointProperty a owl:Class ;
+    rdfs:label "Point Property" .
+
+ns1:VFD a owl:Class ;
+    rdfs:label "VFD" ;
+    rdfs:subClassOf ns1:Equipment .
+
+ns1:HEntity a owl:Class ;
+    rdfs:label "HEntity" .
+
+ns1:HVAC a owl:Class ;
+    rdfs:label "HVAC" ;
+    rdfs:subClassOf ns1:Equipment .
+
+ns1:OnOff a owl:Class ;
+    rdfs:label "On/Off" ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:PhysicalBody a owl:Class ;
+    rdfs:label "Physical Body" .
+
+ns1:Equipment a owl:Class ;
+    rdfs:label "Equipment" ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#Platform>,
+        ns1:HEntity .
+
+ns1:Point a owl:Class ;
+    rdfs:label "Point" ;
+    rdfs:subClassOf ns1:HEntity .
+
+ns1:Measurement a owl:Class ;
+    rdfs:label "Measurement" .
+
+ns1:Section a owl:Class ;
+    rdfs:label "Section" ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#FeatureOfInterest> .
+
+ns1:HTag a owl:Class ;
+    rdfs:label "HTag" .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ns1:Equipment ns1:Point ns1:Site ) .
+

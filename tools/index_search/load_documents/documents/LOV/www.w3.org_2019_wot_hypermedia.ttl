@@ -1,0 +1,79 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix onto: <https://www.w3.org/2019/wot/hypermedia#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+onto:ExpectedResponse a rdfs:Class,
+        owl:Class ;
+    rdfs:label "ExpectedResponse" ;
+    rdfs:comment "Communication metadata describing the expected response message."@en .
+
+onto:Form a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Form" ;
+    rdfs:comment "A form can be viewed as a statement of \"To perform an <b><em>operation type</em></b> operation on <b><em>form context</b></em>, make a <b><em>request method</b></em> request to <b><em>submission target</b></em>\" where the optional <b><em>form fields</b></em> may further describe the required request. In Thing Descriptions, the <b><em>form context</b></em> is the surrounding Object, such as Properties, Actions, and Events or the Thing itself for meta-interactions."@en .
+
+onto:Link a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Link" ;
+    rdfs:comment "A link can be viewed as a statement of the form \"<b><em>link context</em></b>  has a <b><em>relation type</em></b> resource at <b><em>link target</em></b>\", where the optional <b><em>target attributes</em></b>  may further describe the resource."@en .
+
+onto: a owl:Ontology ;
+    rdfs:label "Hypermedia Controls Ontology" ;
+    dcterms:creator <https://vcharpenay.link/#me> ;
+    vann:preferredNamespacePrefix "hctl" ;
+    rdfs:comment "Ontology designed to provide an RDF representation of Hypermedia Controls, in particular links and forms." .
+
+onto:forContentCoding a owl:DatatypeProperty ;
+    rdfs:label "forContentCoding" ;
+    ns1:domainIncludes onto:Form ;
+    ns1:rangeIncludes ns1:Text ;
+    rdfs:comment "Content coding values indicate an encoding transformation that has been or can be applied to a representation. Content codings are primarily used to allow a representation to be compressed or otherwise usefully transformed without losing the identity of its underlying media type and without loss of information. Examples of content coding include \"gzip\", \"deflate\", etc. "@en .
+
+onto:forContentType a owl:DatatypeProperty ;
+    rdfs:label "forContentType" ;
+    ns1:domainIncludes onto:Form ;
+    ns1:rangeIncludes ns1:Text ;
+    rdfs:comment "Assign a content type based on a media type [[IANA-MEDIA-TYPES]] (e.g., 'text/plain') and potential parameters (e.g., 'charset=utf-8') for the media type."@en .
+
+onto:forSubProtocol a owl:DatatypeProperty ;
+    rdfs:label "forSubProtocol" ;
+    ns1:domainIncludes onto:Form ;
+    ns1:rangeIncludes ns1:Text ;
+    rdfs:comment "Indicates the exact mechanism by which an interaction will be accomplished for a given protocol when there are multiple options.\\n     \\nFor example, for HTTP and Events, it indicates which of several available mechanisms should be used for asynchronous notifications such as long polling, websub (also see https://www.w3.org/TR/websub/), or server sent events (also see https://www.w3.org/TR/eventsource/). Please note that there is no restriction on the sub-protocol selection and other mechanisms can also be announced by this subprotocol term."@en .
+
+onto:hasAnchor a owl:ObjectProperty ;
+    rdfs:label "hasAnchor" ;
+    ns1:domainIncludes onto:Link ;
+    rdfs:comment "By default, the context, or anchor, of a link conveyed in the Link header field is the URL of the representation it is associated with, as defined in RFC7231, Section 3.1.4.1, and is serialized as a URI." .
+
+onto:hasOperationType a owl:ObjectProperty ;
+    rdfs:label "hasOperationType" ;
+    ns1:domainIncludes onto:Form ;
+    rdfs:comment "Indicates the semantic intention of performing the operation(s) described by the form." .
+
+onto:hasRelationType a owl:ObjectProperty ;
+    rdfs:label "hasRelationType" ;
+    ns1:domainIncludes onto:Link ;
+    rdfs:comment "A link relation type identifies the semantics of a link." .
+
+onto:hasTarget a owl:ObjectProperty ;
+    rdfs:label "hasTarget" ;
+    ns1:domainIncludes onto:Form,
+        onto:Link ;
+    rdfs:comment "target IRI of a link or submission target of a form." .
+
+onto:hintsAtMediaType a owl:DatatypeProperty ;
+    rdfs:label "hintsAtMediaType" ;
+    ns1:domainIncludes onto:Link ;
+    ns1:rangeIncludes ns1:Text ;
+    rdfs:comment "Target attribute providing a hint indicating what the media type [IANA-MEDIA-TYPES] of the result of dereferencing the link should be." .
+
+onto:returns a owl:ObjectProperty ;
+    rdfs:label "returns" ;
+    ns1:domainIncludes onto:Form ;
+    ns1:rangeIncludes onto:ExpectedResponse ;
+    rdfs:comment "This optional term can be used if, e.g., the output communication metadata differ from input metdata (e.g., output contentType differ from the\\n     input contentType). The response name contains metadata that is only valid for the reponse messages."@en .
+

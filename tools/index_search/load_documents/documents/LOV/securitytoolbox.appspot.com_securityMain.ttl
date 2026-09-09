@@ -1,0 +1,258 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://securitytoolbox.appspot.com/securityMain#> .
+@prefix ns2: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns3: <http://creativecommons.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns3:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dc:contributor <mailto:gyrard@eurecom.fr> ;
+    dc:creator <mailto:kim@itd.nrl.navy.mil>,
+        <mailto:luo@itd.nrl.navy.mil>,
+        <mailto:mkang@itd.nrl.navy.mil> ;
+    dc:description "An ontology to describe various cryptographic algorithms"@en ;
+    dc:title "Security Main"@en ;
+    dcterms:issued "2005-08-31"^^xsd:date ;
+    dcterms:modified "2015-03-27"^^xsd:date ;
+    dcterms:source <http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA437938> ;
+    vann:preferredNamespacePrefix "algo" ;
+    vann:preferredNamespaceUri "http://securitytoolbox.appspot.com/securityMain#" ;
+    rdfs:comment "A security ontology to annotate resources with security-related information" ;
+    owl:versionInfo 0.2 ;
+    ns2:term_status "Finished" ;
+    skos:historyNote "Ontology extracted from the paper Security Ontology for Annotating Resources. [Kim et al. 2005] (See APPENDIX D. OWL Representations of the NRL Security Ontology) Security ontology to faciliate web service description and discovery."@en .
+
+ns1:ApplicationMechanism a owl:Class ;
+    rdfs:label "Application Mechanism"@en ;
+    rdfs:subClassOf ns1:SecurityMechanism .
+
+ns1:Availability a ns1:SecurityObjective ;
+    rdfs:comment "\\nProvides guarantee that resource is available to authorized users at any\\nauthorized time.\\n" .
+
+ns1:BLP a ns1:MilitaryPolicy ;
+    rdfs:comment "\\nBell La-Padula\\n" .
+
+ns1:ChineseWall a ns1:CommercialPolicy .
+
+ns1:ClarkWilson a ns1:CommercialPolicy .
+
+ns1:IPSec a ns1:NetworkSecurityProtocol ;
+    ns1:supportsSecurityObjectives ns1:Confidentiality,
+        ns1:Integrity,
+        ns1:MessageAuthentication .
+
+ns1:Kerberos a ns1:AuthenticationProtocol .
+
+ns1:LoginProtocol a ns1:AuthenticationProtocol .
+
+ns1:MLSPump a ns1:NetworkMechanism ;
+    ns1:supportsSecurityObjectives ns1:CovertChannelPrevention .
+
+ns1:MessageIntegrity a ns1:SecurityObjective ;
+    rdfs:comment "\\nData integrity or Message integrity; data cannot be changed, deleted,\\nmodified, etc by unauthorized parties.\\n" .
+
+ns1:OnionRouter a ns1:NetworkMechanism ;
+    ns1:supportsSecurityObjectives ns1:Anonymity,
+        ns1:Confidentiality .
+
+ns1:RBAC a ns1:SecurityPolicy ;
+    rdfs:comment "\\nRole-based Access Control\\n" .
+
+ns1:ReplayPrevention a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) Protect against replay attacks\\n" .
+
+ns1:SAML a ns1:AuthenticationProtocol .
+
+ns1:SSH a ns1:NetworkSecurityProtocol ;
+    ns1:supportsSecurityObjectives ns1:Confidentiality,
+        ns1:Integrity,
+        ns1:MessageAuthentication,
+        ns1:UserAuthentication .
+
+ns1:Safehost a ns1:HostMechanism ;
+    ns1:supportsSecurityObjectives ns1:HostTrust .
+
+ns1:SoapFirewall a ns1:ServiceMechanism ;
+    ns1:supportsSecurityObjectives ns1:Authorization .
+
+ns1:TrafficHiding a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) Pad traffic with bogus data to hide traffic patterns\\n" .
+
+ns1:Trust a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) How to trust entity. Trust not only of identification,\\nbut statements, claims, etc.\\n" .
+
+ns1:VMM a ns1:HostMechanism ;
+    ns1:supportsSecurityObjectives ns1:HostTrust .
+
+ns1:VPN a ns1:NetworkMechanism ;
+    ns1:supportsSecurityObjectives ns1:Confidentiality,
+        ns1:Separation .
+
+ns1:XKMS a ns1:KeyManagementProtocol .
+
+ns1:XML-dsig a ns1:SignatureProtocol .
+
+ns1:XML-enc a ns1:EncryptionProtocol .
+
+ns1:hasAssurance a owl:ObjectProperty ;
+    rdfs:label "hasAssurance"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:SecurityProtocol ns1:SecurityMechanism ) ] ;
+    rdfs:range <http://www.kim.com/NRLOntologyFiles/securityAssurance.owl#Assurance> .
+
+ns1:hasEncryptionAlgorithm a owl:ObjectProperty ;
+    rdfs:label "hasEncryptionAlgorithm"@en ;
+    rdfs:range <http://securitytoolbox.appspot.com/securityAlgorithms#EncryptionAlgorithm> ;
+    rdfs:subPropertyOf ns1:hasAlgorithm .
+
+ns1:hasSignatureAlgorithm a owl:ObjectProperty ;
+    rdfs:label "hasSignatureAlgorithm"@en ;
+    rdfs:range <http://securitytoolbox.appspot.com/securityAlgorithms#SignatureAlgorithm> ;
+    rdfs:subPropertyOf ns1:hasAlgorithm .
+
+ns1:reqCredential a owl:ObjectProperty ;
+    rdfs:label "reqCredential"@en ;
+    rdfs:domain ns1:SecurityProtocol ;
+    rdfs:range <http://www.kim.com/NRLOntologyFiles/credentials.owl#Credential> .
+
+ns1:Anonymity a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) Provides anonymity\\n" .
+
+ns1:Authorization a ns1:SecurityObjective ;
+    rdfs:comment "\\nOnly authorized entities are allowed to access resources in an authorized\\nmanner.\\n(Aka Access Control). If desired, user may create instance of AccessControl as\\nwell.\\n" .
+
+ns1:CovertChannelPrevention a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) Prevent or limit the existance of covert channels\\n" .
+
+ns1:EncryptionProtocol a owl:Class ;
+    rdfs:label "Encryption Protocol"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:Confidentiality ;
+            owl:onProperty ns1:supportsSecurityObjectives ],
+        ns1:SecurityProtocol .
+
+ns1:KeyManagement a ns1:SecurityObjective ;
+    rdfs:comment "\\n(SecondaryObjective) Securely manages keys for legitimate users.\\n" .
+
+ns1:KeyManagementProtocol a owl:Class ;
+    rdfs:label "Key Management Protocol"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:KeyManagement ;
+            owl:onProperty ns1:supportsSecurityObjectives ],
+        ns1:SecurityProtocol .
+
+ns1:MilitaryPolicy a owl:Class ;
+    rdfs:label "Military Policy"@en ;
+    rdfs:subClassOf ns1:SecurityPolicy .
+
+ns1:SSL a ns1:NetworkSecurityProtocol ;
+    ns1:supportsSecurityObjectives ns1:Confidentiality,
+        ns1:UserAuthentication ;
+    owl:sameAs ns1:TLS .
+
+ns1:Separation a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective)\\n" .
+
+ns1:ServiceMechanism a owl:Class ;
+    rdfs:label "Service Mechanism"@en ;
+    rdfs:subClassOf ns1:SecurityMechanism .
+
+ns1:SignatureProtocol a owl:Class ;
+    rdfs:label "Signature Protocol"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:MessageAuthentication ;
+            owl:onProperty ns1:supportsSecurityObjectives ],
+        ns1:SecurityProtocol .
+
+ns1:TLS a ns1:NetworkSecurityProtocol ;
+    ns1:supportsSecurityObjectives ns1:Confidentiality,
+        ns1:UserAuthentication ;
+    owl:sameAs ns1:SSL .
+
+<mailto:gyrard@eurecom.fr> a foaf:Person ;
+    foaf:name "Amelie Gyrard" .
+
+<mailto:kim@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Anya Kim" .
+
+<mailto:luo@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Jim Luo" .
+
+<mailto:mkang@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Myong Kang" .
+
+ns1:CommercialPolicy a owl:Class ;
+    rdfs:label "Commercial Policy"@en ;
+    rdfs:subClassOf ns1:SecurityPolicy .
+
+ns1:HostMechanism a owl:Class ;
+    rdfs:label "Host Mechanism"@en ;
+    rdfs:subClassOf ns1:SecurityMechanism .
+
+ns1:HostTrust a ns1:SecurityObjective ;
+    rdfs:comment "\\n(Secondary Objective) How to trust host or platform. Is relevant to Common\\ncriteria, etc.\\n" .
+
+ns1:hasAlgorithm a owl:ObjectProperty ;
+    rdfs:label "hasAlgorithm"@en ;
+    rdfs:domain ns1:SecurityProtocol ;
+    rdfs:range <http://securitytoolbox.appspot.com/securityAlgorithms#Algorithm> .
+
+ns1:AuthenticationProtocol a owl:Class ;
+    rdfs:label "Authentication Protocol"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:UserAuthentication ;
+            owl:onProperty ns1:supportsSecurityObjectives ],
+        ns1:SecurityProtocol .
+
+ns1:MessageAuthentication a ns1:SecurityObjective ;
+    rdfs:comment "\\nProvides guarantee that message came from whoever claimed to have sent it.\\n" .
+
+ns1:NetworkMechanism a owl:Class ;
+    rdfs:label "Network Mechanism"@en ;
+    rdfs:subClassOf ns1:SecurityMechanism .
+
+ns1:SecurityPolicy a owl:Class ;
+    rdfs:label "Security Policy"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://securitytoolbox.appspot.com/Authorization> ;
+            owl:onProperty <http://securitytoolbox.appspot.com/supportsSecurityObjectives> ],
+        ns1:SecurityConcept .
+
+ns1:NetworkSecurityProtocol a owl:Class ;
+    rdfs:label "Network Security Protocol"@en ;
+    rdfs:subClassOf ns1:SecurityProtocol .
+
+ns1:SecurityConcept a owl:Class ;
+    rdfs:label "Security Concept"@en .
+
+ns1:UserAuthentication a ns1:SecurityObjective ;
+    rdfs:comment "\\nProvides assurance of the identity of a person or entity.\\n" .
+
+ns1:supportsSecurityObjectives a owl:ObjectProperty ;
+    rdfs:label "supports Security Objectives"@en ;
+    rdfs:comment "\\nAny SecurityConcept can support one or more of the Security Objectives defined\\nin the SecurityObjective class\\n" ;
+    rdfs:domain ns1:SecurityConcept ;
+    rdfs:range ns1:SecurityObjective .
+
+ns1:SecurityMechanism a owl:Class ;
+    rdfs:label "Security Mechanism"@en ;
+    rdfs:subClassOf ns1:SecurityConcept .
+
+ns1:Confidentiality a ns1:SecurityObjective ;
+    rdfs:comment "\\nProtects against information being disclosed or revealed to unauthorized\\nparties.\\n" .
+
+ns1:SecurityProtocol a owl:Class ;
+    rdfs:label "Security Protocol"@en ;
+    rdfs:subClassOf ns1:SecurityConcept .
+
+ns1:SecurityObjective a owl:Class ;
+    rdfs:label "Security Objective"@en .
+

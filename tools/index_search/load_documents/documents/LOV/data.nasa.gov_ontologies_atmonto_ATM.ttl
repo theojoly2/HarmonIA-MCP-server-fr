@@ -1,0 +1,1195 @@
+@prefix onto: <https://data.nasa.gov/ontologies/atmonto/ATM#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.nasa.gov/ontologies/atmonto/ATM> a owl:Ontology ;
+    owl:imports <https://data.nasa.gov/ontologies/atmonto/NAS> ;
+    owl:versionInfo "Created with TopBraid Composer" .
+
+onto:AirportFix a owl:Class ;
+    rdfs:label "Airport Fix" ;
+    rdfs:comment "A subclass of navigation fix corresponding to fixes associated directly with a ground reference point that is an airport." ;
+    rdfs:subClassOf onto:VORfix .
+
+onto:AirspaceRouteSegment a owl:Class ;
+    rdfs:label "Airspace route segment" ;
+    rdfs:comment "A contiguous portion of an existing airspace route." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#AirspaceRoute> ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#subsequenceOf> ],
+        onto:NavigationSubPath .
+
+onto:FRDfix a owl:Class ;
+    rdfs:label "FRD Fix" ;
+    rdfs:comment "A Fix Radial Distance (FRD) fix is located a specified distance from a ground-based navaid, a named fix, or an airport, along a given radial vector." ;
+    rdfs:subClassOf onto:RelativeFix .
+
+onto:FlightPlanSegment a owl:Class ;
+    rdfs:label "Flight plan segment" ;
+    rdfs:comment "A contiguous portion of a complete flight plan." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:PlannedFlightRoute ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#subsequenceOf> ],
+        onto:NavigationSubPath .
+
+onto:GDPmodel rdfs:comment "This model provides parameters to the code that assigns times to the aircraft involved in the GDP or GS" .
+
+onto:GPSfix a owl:Class ;
+    rdfs:label "GPS fix" ;
+    rdfs:comment "A navigation fix defined by GPS coordinates." ;
+    rdfs:subClassOf onto:LatLonFix .
+
+onto:IntersectionFix a owl:Class ;
+    rdfs:label "Intersection fix" ;
+    rdfs:comment "A navigation fix defined by the intersection of two airspace routes." ;
+    rdfs:subClassOf onto:AbsoluteFix .
+
+onto:MeterFix a owl:Class ;
+    rdfs:label "Meter fix" ;
+    rdfs:comment "A fix defined as an point in the terminal airspace through which flights are metered by air traffic control on approach." ;
+    rdfs:subClassOf onto:AbsoluteFix .
+
+onto:MilesInTrailTMI a owl:Class ;
+    rdfs:label "Miles in Trail (MIT)" ;
+    rdfs:comment "A Miles-in-Trail (MIT) traffic management initiative (TMI) is used to apportion traffic into a manageable flow, as well as provide space for additional traffic (merging or departing) to enter the flow of traffic. Miles-in-trail describes the number of miles required between aircraft departing an airport, over a fix, at an altitude, through a sector, or on a specific route." ;
+    rdfs:subClassOf onto:TrafficManagementInitiative .
+
+onto:NDBfix a owl:Class ;
+    rdfs:label "NDB Fix" ;
+    rdfs:comment "A fix based on the location of a ground-based non-directional radio beacon (NDB) installation. NDB signals follow the curvature of the Earth, so they can be received at much greater distances at lower altitudes, a major advantage over VOR. However, NDB signals are also affected more by atmospheric conditions, mountainous terrain, coastal refraction and electrical storms, particularly at long range." ;
+    rdfs:subClassOf onto:NavaidFix .
+
+onto:NRSfix a owl:Class ;
+    rdfs:label "NRS fix" ;
+    rdfs:comment "The NRS is a system of waypoints developed for use within the United States for flight planning and navigation without reference to ground based navigational aids. The NRS waypoints are located in a grid pattern along defined latitude and longitude lines. NRS waypoint names are composed of two letters followed by two numbers, followed by a single letter. The first and second characters of NRS waypoints are the FIR identifier for the United States (“K”) and the FIR subdivision, or ARTCC center in which the waypoint is located (e.g. “D” for Denver ARTCC). The third and fourth characters are a number group representing the latitude of the waypoint. These numbers begin at the equator with 00 and advances north and south from 01 to 90 and correspond to every 10 minutes of latitude and repeating every 15°. The final character in the NRS waypoint is a letter representing the line of longitude for which the waypoint is located. This identifier starts at the prime meridian moving west to east and uses the letters A to Z while repeating every 26°. To date, the current density of the NRS grid is one waypoint spaced every 30 minutes of latitude and every 2° of longitude." ;
+    rdfs:subClassOf onto:LatLonFix .
+
+onto:TACANfix a owl:Class ;
+    rdfs:label "TACAN Fix" ;
+    rdfs:comment "A fix based on the location of a ground-based TACAN (TACtical Air Navigation) installation." ;
+    rdfs:subClassOf onto:NavaidFix .
+
+onto:actualArrivalDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "actual arrival day" ;
+    rdfs:comment "Links a flight with the day on which the flight arrives. This is the day determined by surveillance data sources to be the 'actual' day of arrival, versus the scheduled day or the day specified in the flight plan, etc." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:actualArrivalTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "actual arrival time" ;
+    rdfs:comment "The time determined by surveillance data sources to be the 'actual' time of flight arrival, versus the scheduled time or the time specified in the flight plan, etc." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:actualDepartureDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "actual departure day" ;
+    rdfs:comment "Links a flight with the day on which the flight departs. This is the day determined by surveillance data sources to be the 'actual' day of departure, versus the scheduled day or the day specified in the flight plan, etc." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:actualDepartureTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "actual departure time" ;
+    rdfs:comment "The time determined by surveillance data sources to be the 'actual' time of flight departure, versus the scheduled time or the time specified in the flight plan, etc." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:adlDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "adl day" ;
+    rdfs:comment "Links a delay model to the day that the ADL (Aggregate Demand List) was generated. Each ADL contains information on the flights arriving and departing from an airport, or entering into and departing from a flow area." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:adlTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "adl time" ;
+    rdfs:comment "The timestamp of the ADL (Aggregate Demand List) that the delay model is based upon. Each ADL contains information on the flights arriving and departing from an airport, or entering into and departing from a flow area." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:dateTime .
+
+onto:adsbID a owl:DatatypeProperty ;
+    rdfs:label "adsb ID" ;
+    rdfs:comment "The unique identifier of the ADS-B (Automatic Dependent Surveillance - Broadcast) transponder unit on board the aircraft for this flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:string .
+
+onto:advisoryNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "advisory number" ;
+    rdfs:comment "Advisory number as reported from the FAA Command Center database. it restarts at 001 on every new day UTC." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:integer .
+
+onto:aircraftCount a owl:DatatypeProperty ;
+    rdfs:label "aircraft count" ;
+    rdfs:comment "The number of aircraft flowing through an airspace region per some interval of time." ;
+    rdfs:domain onto:AircraftFlow ;
+    rdfs:range xsd:integer .
+
+onto:aircraftFix a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "aircraft fix" ;
+    rdfs:comment "Links an aircraft track point with its associated navigation fix." ;
+    rdfs:domain onto:AircraftTrackPoint ;
+    rdfs:range onto:NavigationFix .
+
+onto:aircraftFlown a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "aircraft flown" ;
+    rdfs:comment "Links a flight with the actual aircraft used." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/equipment#Aircraft> .
+
+onto:aircraftTypeFlown a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "aircraft type flown" ;
+    rdfs:comment "Links a flight with the type of aircraft flown. The aircraft 'type' corresponds to a set of aircraft models with similar characteristics." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/equipment#AircraftType> .
+
+onto:allowedRoute a owl:ObjectProperty ;
+    rdfs:label "allowed route" ;
+    rdfs:comment "In a reRoute traffic management initiative, there are multiple allowed routes specified between origin and destination. This property links a ReRouteTMI with its allowed routes." ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range onto:ReRouteSegment .
+
+onto:alternateArrivalAirport a owl:ObjectProperty ;
+    rdfs:label "alternate arrival airport" ;
+    rdfs:comment "Links to the alternate arrival airport to be used in case of weather, traffic, or other unforseen contingency. The alternate airport is specified in the flight plan." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> .
+
+onto:arrivalAirport a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "arrival airport" ;
+    rdfs:comment "Links to the actual arrival airport for the flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> .
+
+onto:arrivalRunway a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "arrival runway" ;
+    rdfs:comment "Links to the actual arrival runway for the flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#OperationalRunway> .
+
+onto:arrivalTaxiPath a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "arrival taxi path" ;
+    rdfs:comment "Links to the taxipath followed by the flight en route to the gate." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range onto:Taxipath .
+
+onto:callSign a owl:DatatypeProperty ;
+    rdfs:label "call sign" ;
+    rdfs:comment "The flight identifier (3-letter ICAO code plus number)." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:string .
+
+onto:cruisingAltitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "cruising altitude" ;
+    rdfs:comment "The cruising altitude (in number of feet) specified in the flight plan for this flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:integer .
+
+onto:departureAirport a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "departure airport" ;
+    rdfs:comment "Links to the actual departure airport for the flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> .
+
+onto:departureRunway a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "departure runway" ;
+    rdfs:comment "Links to the actual departure runway for the flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#OperationalRunway> .
+
+onto:departureScope a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "departure scope" ;
+    rdfs:comment "Links a Ground Delay Program (GDP) or a Ground Stop (GS) to a specification of the departure airport(s) participating in the traffic management initiative (TMI)." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:GroundDelayProgramTMI onto:GroundStopTMI ) ] ;
+    rdfs:range onto:AirportSpec .
+
+onto:departureTaxiPath a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "departure taxi path" ;
+    rdfs:comment "Links to the taxipath followed by the flight en route to the runway." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range onto:Taxipath .
+
+onto:effectiveEndDay a owl:ObjectProperty ;
+    rdfs:label "effective end day" ;
+    rdfs:comment "Links to the expected ending day of the traffic management initiative (TMI)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:effectiveEndTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "effective end time" ;
+    rdfs:comment "The expected end time of the traffic management initiative (TMI)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:dateTime .
+
+onto:effectiveStartDay a owl:ObjectProperty ;
+    rdfs:label "effective start day" ;
+    rdfs:comment "Links to the expected starting day of the traffic management initiative (TMI)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:effectiveStartTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "effective start time" ;
+    rdfs:comment "The expected start time of the traffic management initiative (TMI)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:dateTime .
+
+onto:excludesARTCC a owl:ObjectProperty ;
+    rdfs:label "excludes ARTCC" ;
+    rdfs:comment "Links an airport specification to one of more ARTCCs (Centers) or ARTCC tiers (Centers radiating out from a give ARTCC). Any airport within the ARTCC or ARTCC tier is excluded from the set of airports covered by this airport specification." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <https://data.nasa.gov/ontologies/atmonto/NAS#ARTCC> <https://data.nasa.gov/ontologies/atmonto/NAS#ARTCCtier> ) ] .
+
+onto:excludesAirport a owl:ObjectProperty ;
+    rdfs:label "excludes airport" ;
+    rdfs:comment "Links an airport specification to one of more airports. Any airport linked is excluded from the set of airports covered by this airport specification." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> .
+
+onto:excludesAirway a owl:ObjectProperty ;
+    rdfs:label "excludes airway" ;
+    rdfs:comment "Links a flight specification to one of more airways (routes). Any flight that traverses a linked airway is excluded from the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirspaceRoute> .
+
+onto:excludesFix a owl:ObjectProperty ;
+    rdfs:label "excludes fix" ;
+    rdfs:comment "Links a flight specification to one of more navigation fixes. Any flight that traverses a linked fix is excluded from the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:NavigationFix .
+
+onto:excludesFlight a owl:ObjectProperty ;
+    rdfs:label "excludes flight" ;
+    rdfs:comment "Links a flight specification to one of more flights. Any linked flight is excluded from the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:Flight .
+
+onto:exemptedAFP a owl:ObjectProperty ;
+    rdfs:label "exempted AFP" ;
+    rdfs:comment "Links a flight specification to one of more Airspace Flow Program (AFP) traffic management initiatives (TMIs). Any flight included in one of the linked AFPs is excluded from the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:AirspaceFlowProgramTMI .
+
+onto:fixId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "fix ID" ;
+    rdfs:comment "A non-unique FAA identifier for a fix. When combined with a fix ICAO code, it defines a unique fix worldwide. Often, but not always, the fixId is identical to the fixName." ;
+    rdfs:domain onto:NavigationFix ;
+    rdfs:range xsd:string .
+
+onto:fixName a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "fix name" ;
+    rdfs:comment "A unique FAA identier for a fix that can be filed as part of a flight plan. The fix name conceptually represents the worldwide-unique combination of a FixID and ICAO code. Often, but not always, the fixId is identical to the fixName." ;
+    rdfs:domain onto:NavigationFix ;
+    rdfs:range xsd:string .
+
+onto:fixTrajectoryString a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "fix trajectory string" ;
+    rdfs:comment "This is an experimental property of a flight that stores an ordered sequence of named fixes corresponding one-to-one to the sequence of trajectory track points recorded for the flight. For a given track point, the corresponding named fix is computed by finding the closest named fix to the track point." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:string .
+
+onto:flightExclusionSpec a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "flight exclusion spec" ;
+    rdfs:comment "Links a Ground Delay Program (GDP) or a Ground Stop (GS) to a specification of the flight(s) excluded from the traffic management initiative (TMI)." ;
+    rdfs:domain onto:GroundDelayProgramTMI ;
+    rdfs:range onto:FlightSpec .
+
+onto:flightInclusionExclusion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "flight inclusion exclusion" ;
+    rdfs:comment "Links a ReRoute to a specification of the flight(s) included in or excluded from the ReRoute traffic management initiative (TMI)." ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range onto:FlightSpec .
+
+onto:flightInclusionSpec a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "flight inclusion spec" ;
+    rdfs:comment "Links a Ground Delay Program (GDP) or a Ground Stop (GS) to a specification of the flight(s) included in the traffic management initiative (TMI)." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:GroundDelayProgramTMI onto:GroundStopTMI ) ] ;
+    rdfs:range onto:FlightSpec .
+
+onto:flightPlanETA a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "flight plan ETA" ;
+    rdfs:comment "The estimated time of arrival specified in the flight plan." ;
+    rdfs:domain onto:PlannedFlightRoute ;
+    rdfs:range xsd:dateTime .
+
+onto:flightRouteString a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "flight route string" ;
+    rdfs:comment "A string that provides the route of flight proposed in a flight plan. Syntactically, the string shows a path of fixes, airways, SIDs, and STARs, separated by either one or two dots. The string is parsed to create an equivalent ontology representation: an ordered sequence of navigation elements that are associated directly with the flight plan (atm:PlannedFlightRoute)." ;
+    rdfs:domain onto:PlannedFlightRoute ;
+    rdfs:range xsd:string .
+
+onto:flowCapacity a owl:DatatypeProperty ;
+    rdfs:label "flow capacity" ;
+    rdfs:comment "The maximum controllable number of aircraft flowing through an airspace region per some interval of time." ;
+    rdfs:domain onto:AircraftCapacity ;
+    rdfs:range xsd:float .
+
+onto:flowMeasurementRegion a owl:ObjectProperty ;
+    rdfs:label "flow measurement region" ;
+    rdfs:comment "Links an aircraft capacity or aircraft flow to the spatial region through which flow or capacity is being monitored and measured." ;
+    rdfs:domain onto:AircraftFlowCapacity ;
+    rdfs:range onto:TFMcontrolElement .
+
+onto:groundSpeed a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "ground speed" ;
+    rdfs:comment "The reported ground speed at an aircraft track point." ;
+    rdfs:domain onto:AircraftTrackPoint ;
+    rdfs:range xsd:integer .
+
+onto:hasActualRoute a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has actual route" ;
+    rdfs:comment "Links a flight to its actual trajectory (i.e., a sequence of track points), as determined by flight track surveillance data." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range onto:ActualFlightRoute .
+
+onto:hasCrewMember a owl:ObjectProperty ;
+    rdfs:label "has crew member" ;
+    rdfs:comment "Links a flight to its crew members." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range onto:CrewMember .
+
+onto:hasNavElement a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has navigation element" ;
+    rdfs:comment "Links a container for a navigational element to the element contained." ;
+    rdfs:domain onto:NavElementContainer ;
+    rdfs:range onto:NavigationElement .
+
+onto:hasPlannedRoute a owl:ObjectProperty ;
+    rdfs:label "has planned route" ;
+    rdfs:comment "Links a flight to a version of its flight plan. (Which version gets stored is application-dependent.) There are multiple versions of the flight plan generated and then amended during the course of the flight, starting in the pre-flight timeframe and extending through to the termination of the flight." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range onto:PlannedFlightRoute .
+
+onto:heading a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "heading" ;
+    rdfs:comment "The aircraft heading at the track point: a number between 0.01 and 360.0 indicating the angular heading with respect to North." ;
+    rdfs:domain onto:AircraftTrackPoint ;
+    rdfs:range xsd:float .
+
+onto:impactingConditionMessage a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "impacting condition message" ;
+    rdfs:comment "A free-text descriptoin elaborating on the reason for initiating the Ground Delay Program." ;
+    rdfs:domain onto:GroundDelayProgramTMI ;
+    rdfs:range xsd:string .
+
+onto:includedFlights a owl:ObjectProperty ;
+    rdfs:label "included flights" ;
+    rdfs:comment "Links an aircraft flow to a specification of the flights included in the flow." ;
+    rdfs:domain onto:AircraftFlow ;
+    rdfs:range onto:FlightSpec .
+
+onto:includesAirport a owl:ObjectProperty ;
+    rdfs:label "includes airport" ;
+    rdfs:comment "Links an airport specification to one of more airports. Any airport linked is included in the set of airports covered by this airport specification. This property allows for explicit specification of a list of specific airports; the property atm:includesAirportType allows for the the implicit specification of an entire class of airports." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> .
+
+onto:includesAirway a owl:ObjectProperty ;
+    rdfs:label "includes airway" ;
+    rdfs:comment "Links a flight specification to one of more airways (routes). Any flight that traverses a linked airway is included in the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirspaceRoute> .
+
+onto:includesFix a owl:ObjectProperty ;
+    rdfs:label "includes fix" ;
+    rdfs:comment "Links a flight specification to one of more navigation fixes. Any flight that traverses a linked fix is included in the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:NavigationFix .
+
+onto:includesFlight a owl:ObjectProperty ;
+    rdfs:label "includes flight" ;
+    rdfs:comment "Links a flight specification to one of more flights. Any linked flight is included in the set of flights covered by this flight specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:Flight .
+
+onto:initiativeComments a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Provides any specific comments on the traffic management initiative (TMI) made by the issuing authority (e.g., ATCSCC, ARTCC)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:string .
+
+onto:issuedDay a owl:ObjectProperty ;
+    rdfs:label "issued day" ;
+    rdfs:comment "Links to the day when the traffic management initiative (TMI) was issued." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:issuedTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "issued time" ;
+    rdfs:comment "The time when the traffic management initiative (TMI) was issued." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:dateTime .
+
+onto:locatedInSector a owl:ObjectProperty ;
+    rdfs:label "located in sector" ;
+    rdfs:comment "Links a navigation fix to the airspace sector in which that fix is located." ;
+    rdfs:domain onto:NavigationFix ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#Sector> .
+
+onto:maxFlowCapacity a owl:DatatypeProperty ;
+    rdfs:label "max flow capacity" ;
+    rdfs:comment "The absolute maximum controllable number of aircraft flowing through an airspace region per some interval of time under any air traffic conditions." ;
+    rdfs:domain onto:TFMcontrolElement ;
+    rdfs:range xsd:float .
+
+onto:modeledArrivalRate a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "modeled arrival rate" ;
+    rdfs:comment "Links a delay model used in defining a Ground Delay Program (GDP) or Ground Stop(GS) to a sequence of desired hourly aircraft arrival rates specified for the initiative." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range onto:ProgramArrivalRateSequence .
+
+onto:modeledAverageDelay a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "modeled average delay minutes" ;
+    rdfs:comment "The average flight delay specified when modeling a Ground Delay Program (GDP) or Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:modeledBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "modeled by" ;
+    rdfs:comment "Links a Ground Delay Program (GDP) or a Ground Stop (GS) to a representation of the model used to design that initiative. The model contains all relevant parameters used to create the initiative." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:GroundDelayProgramTMI onto:GroundStopTMI ) ] ;
+    rdfs:range onto:DelayModel .
+
+onto:modeledMaximumDelay a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "modeled maximum delay minutes" ;
+    rdfs:comment "The maximum flight delay specified when modeling a Ground Delay Program (GDP) or Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:modeledPopUpFactor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "modeled pop up factor" ;
+    rdfs:comment "Links a delay model used in defining a Ground Delay Program (GDP) or Ground Stop(GS) to a sequence of desired hourly popup factors specified for the initiative. 'Popups' account for late-filing flights (unexpected/unplanned flights) when modeling delays as part of a traffic management initiative (TMI) design process." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range onto:PopupFactorSequence .
+
+onto:modeledTotalDelay a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "modeled total delay minutes" ;
+    rdfs:comment "The total flight delay specified when modeling a Ground Delay Program (GDP) or Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:mustHaveDestination a owl:ObjectProperty ;
+    rdfs:label "must have destination" ;
+    rdfs:comment "Links a flight specification to an airport specification describing the destination airports for the flights being specified. Any flight covered by the flight specification must have as its destination one of the airports covered by the airport specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:AirportSpec .
+
+onto:mustHaveOrigin a owl:ObjectProperty ;
+    rdfs:label "must have origin" ;
+    rdfs:comment "Links a flight specification to an airport specification describing the originating airports for the flights being specified. Any flight covered by the flight specification must have as its origin one of the airports covered by the airport specification." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range onto:AirportSpec .
+
+onto:operatedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "operated by" ;
+    rdfs:comment "Links a flight to its carrier airline." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirCarrier> .
+
+onto:operatingCarrier a owl:ObjectProperty ;
+    rdfs:label "operating carrier" ;
+    rdfs:comment "Links a flight specification to one or more carrier airline(s). Each flight covered by the specification must be operated by one of these carriers." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirCarrier> .
+
+onto:operatingTimeInterval a owl:ObjectProperty ;
+    rdfs:label "operating time interval" ;
+    rdfs:comment "Links a flight specification to a time interval. Each flight covered by the specification must be airborne sometime during the time period specified by the interval." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/general#TimeInterval> .
+
+onto:planFilingDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "plan filing day" ;
+    rdfs:comment "Links to the day when the flight plan was filed with the FAA." ;
+    rdfs:domain onto:PlannedFlightRoute ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:planFilingTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "plan filing time" ;
+    rdfs:comment "The time that the flight plan was filed with the FAA." ;
+    rdfs:domain onto:PlannedFlightRoute ;
+    rdfs:range xsd:dateTime .
+
+onto:planGapAfterSequenceElementNumber a owl:DatatypeProperty ;
+    rdfs:label "plan gap after sequence element number" ;
+    rdfs:comment "Indicates the location of a gap in the flight plan due to non-parsable/uninterpretable elements in the flight plan string." ;
+    rdfs:domain onto:PlannedFlightRoute ;
+    rdfs:range xsd:integer .
+
+onto:plannedArrivalDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "planned arrival day" ;
+    rdfs:comment "Links to the day that the flight is planned to arrive per the flight plan." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:plannedArrivalTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "planned arrival time" ;
+    rdfs:comment "The time that the flight is planned to arrive per the flight plan." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:plannedDepartureDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "planned departure day" ;
+    rdfs:comment "Links to the day that the flight is planned to depart per the flight plan." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:plannedDepartureTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "planned departure time" ;
+    rdfs:comment "The time that the flight is planned to depart per the flight plan." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:prevAverageDelay a owl:DatatypeProperty ;
+    rdfs:label "previous average delay minutes" ;
+    rdfs:comment "The average flight delay experienced prior to the start of a Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:prevMaximumDelay a owl:DatatypeProperty ;
+    rdfs:label "previous maximum delay minutes" ;
+    rdfs:comment "The maximum flight delay experienced prior to the start of a Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:prevTotalDelay a owl:DatatypeProperty ;
+    rdfs:label "previous total delay minutes" ;
+    rdfs:comment "The total flight delay experienced prior to the start of a Ground Stop(GS)." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:integer .
+
+onto:publishedArrivalDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "published arrival day" ;
+    rdfs:comment "Links to the day that the flight is planned to arrive per the OAG schedule." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:publishedArrivalTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "published arrival time" ;
+    rdfs:comment "The time that the flight is planned to arrive per the OAG schedule." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:publishedDepartureDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "published departure day" ;
+    rdfs:comment "Links to the day that the flight is planned to depart per the OAG schedule." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:publishedDepartureTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "published departure time" ;
+    rdfs:comment "The time that the flight is planned to depart per the OAG schedule." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:dateTime .
+
+onto:radialAngle a owl:DatatypeProperty ;
+    rdfs:label "radial angle" ;
+    rdfs:comment "The angle (in degrees) that defines the radial route's angular position with respect to the defined fix." ;
+    rdfs:domain <https://data.nasa.gov/ontologies/atmonto/NAS#RadialRoute> ;
+    rdfs:range xsd:integer .
+
+onto:radialFix a owl:ObjectProperty ;
+    rdfs:label "radial fix" ;
+    rdfs:comment "Links to the fix through which the radial route passes." ;
+    rdfs:domain <https://data.nasa.gov/ontologies/atmonto/NAS#RadialRoute> ;
+    rdfs:range onto:NavigationFix .
+
+onto:reRouteConstraint a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "reroute constraint" ;
+    rdfs:comment "Links a route segment specified as part of a ReRoute traffic management initiative (TMI) to a flight specification indicating which flights are permitted to follow the route segment." ;
+    rdfs:domain onto:ReRouteSegment ;
+    rdfs:range onto:FlightSpec .
+
+onto:reRoutePath a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "re route path" ;
+    rdfs:comment "Links a route segment alternative (specified as part of a ReRoute traffic management initiative) to its associated flight plan." ;
+    rdfs:domain onto:ReRouteSegment ;
+    rdfs:range onto:PlannedFlightRoute .
+
+onto:referenceFix a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "Links a relative fix to the absolute fix that serves as the basis for its location. (A relative fix position is defined relative to an absolute fix position, e.g. as a vector offset from the absolute fix.)" ;
+    rdfs:domain onto:RelativeFix ;
+    rdfs:range onto:AbsoluteFix .
+
+onto:relativeAngle a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "relative angle" ;
+    rdfs:comment "The angular direction in degrees (1-360) of a relative fix with respect to its defining absolute fix." ;
+    rdfs:domain onto:RelativeFix ;
+    rdfs:range xsd:integer .
+
+onto:relativeDistance a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "relative distance" ;
+    rdfs:comment "The distance (in nautical miles) between a relative fix and its defining (absolute) fix." ;
+    rdfs:domain onto:RelativeFix ;
+    rdfs:range xsd:integer .
+
+onto:reportingDay a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "reporting day" ;
+    rdfs:comment "A link between an aircraft track point and the day during which an en route aircraft traversed that point and reported its position, speed, and heading." ;
+    rdfs:domain onto:AircraftTrackPoint ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#NASday> .
+
+onto:reportingTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "reporting time" ;
+    rdfs:comment "The time when an en route aircraft passed through a trackpoint and reported its position, speed, and heading." ;
+    rdfs:domain onto:AircraftTrackPoint ;
+    rdfs:range xsd:dateTime .
+
+onto:traconID a owl:DatatypeProperty ;
+    rdfs:label "tracon ID" ;
+    rdfs:comment "Three letter FAA TRACON identifier code." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:string .
+
+    rdfs:label "traverses SIDSTAR" ;
+    rdfs:comment "Links a SIDSTARtraverse (i.e., a specific route through a SID or STAR) to the specific SID or STAR being traversed by a given flight." ;
+    rdfs:domain onto:SIDSTARtraverse ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#SIDSTAR> .
+
+onto:trueAirspeed a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "true airspeed" ;
+    rdfs:comment "The true airspeed of a flight: the speed of the aircraft relative to the airmass in which it is flying." ;
+    rdfs:domain onto:Flight ;
+    rdfs:range xsd:integer .
+
+onto:usesAirportRoute a owl:ObjectProperty ;
+    rdfs:label "uses airport route" ;
+    rdfs:comment "Links a SIDSTARtraverse (a path through a SID/STAR) to the airport route used in making the traverse." ;
+    rdfs:domain onto:SIDSTARtraverse ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirportRoute> .
+
+onto:usesTransitionRoute a owl:ObjectProperty ;
+    rdfs:label "uses transition route" ;
+    rdfs:comment "Links a SIDSTARtraverse (a path through a SID/STAR) to the transition route used in making the traverse." ;
+    rdfs:domain onto:SIDSTARtraverse ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#TransitionRoute> .
+
+onto:withinARTCC a owl:ObjectProperty ;
+    rdfs:label "within ARTCC" ;
+    rdfs:comment "Links an airport specification to an ARTCC or ARTCC tier. Only airports within the ARTCC or ARTCC tier are covered by the specification." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <https://data.nasa.gov/ontologies/atmonto/NAS#ARTCC> <https://data.nasa.gov/ontologies/atmonto/NAS#ARTCCtier> ) ] .
+
+onto:withinAirportBoundingRegion a owl:ObjectProperty ;
+    rdfs:label "within airport bounding region" ;
+    rdfs:comment "Links an airport specification to a circular geographic region. Only airports whose locations fall within this region satisfy the specification." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/general#CircularRegion> .
+
+<https://data.nasa.gov/ontologies/atmonto/NAS#AirspaceInfrastructureComponent> rdfs:subClassOf onto:TFMcontrolElement .
+
+onto:ActualFlightRoute a owl:Class ;
+    rdfs:label "Actual Flight Route" ;
+    rdfs:comment "A flight trajectory (i.e., a sequence of track points), as determined by flight track surveillance data." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:AircraftTrackPoint ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasSequencedItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:AircraftTrackPoint ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasLastItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:AircraftTrackPoint ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasFirstItem> ],
+        <https://data.nasa.gov/ontologies/atmonto/general#Sequence> .
+
+onto:AircraftCapacity a owl:Class ;
+    rdfs:label "Aircraft capacity" ;
+    rdfs:comment "A subclass of interval-based data representing the maximum number of controllable aircraft flowing through an airspace region during some interval of time." ;
+    rdfs:subClassOf onto:AircraftFlowCapacity .
+
+onto:AirspaceFlowProgramTMI a owl:Class ;
+    rdfs:label "Airspace Flow Program (AFP)" ;
+    rdfs:comment "A subclass of Traffic Management Initiative involving control and metering of air traffic through specified airspace volumes." ;
+    rdfs:subClassOf onto:TrafficManagementInitiative .
+
+onto:CrewMember a owl:Class ;
+    rdfs:label "Crew member" ;
+    rdfs:comment "The set of inflight airline personnel operating or performing servicing functions on a flight (pilots and cabin attendants)." ;
+    rdfs:subClassOf owl:Thing .
+
+onto:PopupFactor a owl:Class ;
+    rdfs:label "Popup factor" ;
+    rdfs:comment "Factor to account for late-filing flights when modeling delays as part of a traffic management initiative (TMI) design process." ;
+    rdfs:subClassOf <https://data.nasa.gov/ontologies/atmonto/general#IntegerParameter> .
+
+onto:PopupFactorSequence a owl:Class ;
+    rdfs:label "Popup Factor Sequence" ;
+    rdfs:comment "An ordered sequence of hourly popup factors used in specifying a Ground Delay Program (GDP)." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:PopupFactorContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasSequencedItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:PopupFactorContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasFirstItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:PopupFactorContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasLastItem> ],
+        <https://data.nasa.gov/ontologies/atmonto/general#Sequence> .
+
+onto:ProgramArrivalRate a owl:Class ;
+    rdfs:label "Program arrival rate" ;
+    rdfs:comment "The number of aircraft that the Ground Delay Program (GDP) is to provide to the airport for a given hour." ;
+    rdfs:subClassOf <https://data.nasa.gov/ontologies/atmonto/general#IntegerParameter> .
+
+onto:ProgramArrivalRateSequence a owl:Class ;
+    rdfs:label "Program Arrival Rate Sequence" ;
+    rdfs:comment "An ordered sequence of hourly program arrival rates used in specifying a Ground Dela Program (GDP)." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:ProgramArrivalRateContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasLastItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:ProgramArrivalRateContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasSequencedItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:ProgramArrivalRateContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasFirstItem> ],
+        <https://data.nasa.gov/ontologies/atmonto/general#Sequence> .
+
+onto:VORfix a owl:Class ;
+    rdfs:label "VOR Fix" ;
+    rdfs:comment "A fix based on the location of a ground-based VOR (VHF Omni Directional Radio Range) installation." ;
+    rdfs:subClassOf onto:NavaidFix .
+
+onto:delayAssignmentMode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "delay assignment mode" ;
+    rdfs:comment "The type of delay assignment mode specified for this delay model: DAS, GAAP, or UDP." ;
+    rdfs:domain onto:DelayModel ;
+    rdfs:range xsd:string .
+
+onto:includesAirportType a owl:DatatypeProperty ;
+    rdfs:label "includes airport type" ;
+    rdfs:comment "Indicates which type of airports are included in the set of airports covered by this airport specification: all, US, CONUS, NonCONUS, International, Canadian. This property allows for the implicit specification of an entire class of airports; the property atm:includesAirport allows for the explicit specification of a list of specific airports." ;
+    rdfs:domain onto:AirportSpec ;
+    rdfs:range xsd:string .
+
+onto:reRouteSegmentType a owl:DatatypeProperty ;
+    rdfs:label "re route segment type" ;
+    rdfs:comment "Indicates which type of ReRoute segment: origin , destination, origin-destination. A ReRoute segment can be a entire route between origin and destination, or a partial route leading from an origin or leading to a destination." ;
+    rdfs:domain onto:ReRouteSegment ;
+    rdfs:range xsd:string .
+
+onto:AircraftFlow a owl:Class ;
+    rdfs:label "Aircraft flow" ;
+    rdfs:comment "A subclass of interval-based data representing the number of aircraft flowing through an airspace region during some interval of time." ;
+    rdfs:subClassOf onto:AircraftFlowCapacity .
+
+onto:LatLonFix a owl:Class ;
+    rdfs:label "Lat-lon fix" ;
+    rdfs:comment "A navigation fix based on latitude/longitude coordinates." ;
+    rdfs:subClassOf onto:AbsoluteFix .
+
+onto:NavigationPath a owl:Class ;
+    rdfs:label "Navigation path" ;
+    rdfs:comment "An ordered sequence of navigation elements (fixes, routes, airports) representing a path through the airspace." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:NavElementContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasSequencedItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:NavElementContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasLastItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:NavElementContainer ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasFirstItem> ],
+        onto:NavigationElement,
+        <https://data.nasa.gov/ontologies/atmonto/general#Sequence> .
+
+onto:NavigationSubPath a owl:Class ;
+    rdfs:label "Navigation SubPath" ;
+    rdfs:comment "A contiguous portion of an existing navigation path." ;
+    rdfs:subClassOf onto:NavigationElement,
+        <https://data.nasa.gov/ontologies/atmonto/general#SubSequence> .
+
+onto:Taxipath a owl:Class ;
+    rdfs:label "Taxipath" ;
+    rdfs:comment "A sequence of taxiways followed by an aircraft taxiing en route to/from a runway." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#Taxiway> ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasLastItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#Taxiway> ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasSequencedItem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#Taxiway> ;
+            owl:onProperty <https://data.nasa.gov/ontologies/atmonto/general#hasFirstItem> ],
+        <https://data.nasa.gov/ontologies/atmonto/general#Sequence> .
+
+onto:aircraftWeightCat a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aircraft weight category" ;
+    rdfs:comment "Indicates the weight category as part of a flight specification constraint." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range xsd:string .
+
+onto:hasNumericParameter a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has numeric parameter" ;
+    rdfs:comment "Links a container for a numerical parameter to the numerical parameter contained." ;
+    rdfs:domain onto:NumericParameterContainer ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/general#NumericParameter> .
+
+onto:impactingCondition a owl:DatatypeProperty ;
+    rdfs:label "impacting condition" ;
+    rdfs:comment "Indicates the reason for initiating the Ground Delay Program: weather, volume, runway, equipment, other." ;
+    rdfs:domain onto:GroundDelayProgramTMI ;
+    rdfs:range xsd:string .
+
+onto:implementationStatus a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "implementation status" ;
+    rdfs:comment "Indicates the enforcement status of the ReRoute advisory: RQD (required), RMD (recommended), PLN (planned for implementation), FYI (informational only)" ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range xsd:string .
+
+onto:includesAircraftClass a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "includes aircraft class" ;
+    rdfs:comment "Indicates which class of aircraft the flights defined by this specification must employ: jet, prop, jet and prop, turbo, all." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range xsd:string .
+
+onto:reRouteReason a owl:DatatypeProperty ;
+    rdfs:label "reroute reason" ;
+    rdfs:comment "Provides the reason for initiating a ReRoute: WEATHER , VOLUME , EQUIPMENT , RUNWAY/TAXIWAY , OTHER." ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range xsd:string .
+
+onto:reRouteTimeType a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "ReRoute time type" ;
+    rdfs:comment "The time period associated with the reroute is specified in one of three ways. The reroute can apply to flights that: depart specified airports or centers during a certain time window (timeType=ETD); depart specified airports or centers to arrive at their destinations during a certain time window (timeType=ETA); or arrive at the boundary of a flow constrained area during a certain time window (timeType=FCA Flight List)." ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range xsd:string .
+
+onto:reRouteType a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "ReRoute type" ;
+    rdfs:comment "The ReRoute type encodes information about the type of ReRoute being initiated or the reason for the ReRoute. One of the following: ROUTE , PLAYBOOK , CDR, SPECIAL OPERATIONS, NRP SUSPENSIONS, VS , NAT, SHUTTLE ACTIVITY, FCA, FEA, INFORMATIONAL, MISCELLANEOUS." ;
+    rdfs:domain onto:ReRouteTMI ;
+    rdfs:range xsd:string .
+
+onto:timeConstraintType a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "time constraint type" ;
+    rdfs:comment "Specifies the type of flight time being constrained in this flight specification: either ETA (estimated arrival time) or ETD (estimated departure time)." ;
+    rdfs:domain onto:FlightSpec ;
+    rdfs:range xsd:string .
+
+onto:AircraftFlowCapacity a owl:Class ;
+    rdfs:label "Aircraft flow capacity" ;
+    rdfs:comment "A subclass of interval-based data representing the maximum controllable number of aircraft flowing through an airspace region during some interval of time, given weather and other air traffic control constraints." .
+
+onto:GroundStopTMI a owl:Class ;
+    rdfs:label "Ground Stop (GS)" ;
+    rdfs:comment "A Ground Stop (GS) traffic management initiative (TMI). A ground stop is a procedure requiring aircraft that meet specific criteria to remain on the ground. The GS may be airport specific, related to a geographical area, or equipment related." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:extensionProbability ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "weather" "volume" "runway" "equipment" "other" ) ] ;
+            owl:onProperty onto:impactingCondition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> ;
+            owl:onProperty onto:controlledNASelement ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "NONE" "LOW" "MEDIUM" "HIGH" ) ] ;
+            owl:onProperty onto:extensionProbability ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:controlledNASelement ],
+        onto:TrafficManagementInitiative .
+
+onto:NavaidFix a owl:Class ;
+    rdfs:label "NavaidFix" ;
+    rdfs:comment "A fix based on the location of a ground-based Navigation Aid (Navaid) installation." ;
+    rdfs:subClassOf onto:AbsoluteFix .
+
+onto:NumericParameterContainer a owl:Class ;
+    rdfs:label "Numeric parameter container" ;
+    rdfs:comment "A wrapper around a numeric parameter. Containers can be sequenced to create an ordered list of numeric parameters." ;
+    rdfs:subClassOf <https://data.nasa.gov/ontologies/atmonto/general#SequencedItem> .
+
+onto:PopupFactorContainer a owl:Class ;
+    rdfs:label "Popup Factor container" ;
+    rdfs:comment "A wrapper around a popup factor parameter. Used to sequence popup factors in the specification of a Ground Delay Program (GDP)." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:PopupFactor ;
+            owl:onProperty onto:hasNumericParameter ],
+        onto:NumericParameterContainer .
+
+onto:ProgramArrivalRateContainer a owl:Class ;
+    rdfs:label "Program arrival rate container" ;
+    rdfs:comment "A wrapper around a program arrival rate, used to sequence them into an ordered list." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:ProgramArrivalRate ;
+            owl:onProperty onto:hasNumericParameter ],
+        onto:NumericParameterContainer .
+
+onto:SIDSTARtraverse a owl:Class ;
+    rdfs:label "SIDSTARtraverse" ;
+    rdfs:comment "A route through a SID (Standard Instrument Departure route) or a STAR (Standard Arrival Route), traversing a common route at minimum and optionally a transition route and/or an airport route." ;
+    rdfs:subClassOf onto:NavigationElement .
+
+onto:userCategory a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "user category" ;
+    rdfs:comment "The type of airspace user that this flight represents: GA, Air Taxi, Cargo, Commercial, Military. Also used to constrain a flight specification to contain only flights representing a specific user category." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:FlightSpec onto:Flight ) ] ;
+    rdfs:range xsd:string .
+
+<https://data.nasa.gov/ontologies/atmonto/NAS#AirspaceRoute> rdfs:subClassOf onto:NavigationPath .
+
+onto:NavElementContainer a owl:Class ;
+    rdfs:label "Navigation element container" ;
+    rdfs:comment "A navigation element container is a wrapper around an existing navigation element, such as a fix or a route. These containers can be sequenced together to represent flight paths and flight trajectories." ;
+    rdfs:subClassOf <https://data.nasa.gov/ontologies/atmonto/general#SequencedItem> .
+
+onto:ReRouteSegment a owl:Class ;
+    rdfs:label "ReRoute segment" ;
+    rdfs:comment "One of the route segment alternatives specified as part of a ReRoute traffic management initiative (TMI)." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "origin" "destination" "origin-destination" ) ] ;
+            owl:onProperty onto:reRouteSegmentType ],
+        owl:Thing .
+
+onto:RelativeFix a owl:Class ;
+    rdfs:label "Relative fix" ;
+    rdfs:comment "A fix defined in relation to another fix." ;
+    rdfs:subClassOf onto:NavigationFix .
+
+onto:controlledNASelement a owl:ObjectProperty ;
+    rdfs:label "controlled NASelement" ;
+    rdfs:comment "Links a traffic management initiative (TMI) to the airspace element being controlled by the TMI (e.g., an airport)." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range onto:TFMcontrolElement .
+
+onto:AbsoluteFix a owl:Class ;
+    rdfs:label "Absolute fix" ;
+    rdfs:comment "A fix based on some established global measuring scheme." ;
+    rdfs:subClassOf onto:NavigationFix,
+        <https://data.nasa.gov/ontologies/atmonto/general#PointLocation> .
+
+onto:TFMcontrolElement a owl:Class ;
+    rdfs:label "TFM control element" ;
+    rdfs:comment "Any NAS entity that is potentially controlled via a TFM initiative." ;
+    rdfs:subClassOf owl:Thing .
+
+onto:extensionProbability a owl:DatatypeProperty ;
+    rdfs:label "extension probability" ;
+    rdfs:comment "The probability that this traffic management initiative (TMI) will be extended: LOW, MEDIUM, or HIGH." ;
+    rdfs:domain onto:TrafficManagementInitiative ;
+    rdfs:range xsd:string .
+
+onto:GroundDelayProgramTMI a owl:Class ;
+    rdfs:label "Ground Delay Program (GDP)" ;
+    rdfs:comment "A Ground Delay Program (GDP) traffic management initiative (TMI). A Ground Delay Program (GDP) is a traffic management procedure where aircraft are delayed at their departure airport in order to manage demand and capacity at their arrival airport." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:controlledNASelement ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#Airport> ;
+            owl:onProperty onto:controlledNASelement ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "weather" "volume" "runway" "equipment" "other" ) ] ;
+            owl:onProperty onto:impactingCondition ],
+        onto:TrafficManagementInitiative .
+
+onto:NavigationElement a owl:Class ;
+    rdfs:label "Navigation element" ;
+    rdfs:comment "A navigation element is a set of components that can be used to assemble a flight plan or trajectory. They include fixes, routes, airports, SID/STAR traverses, etc." ;
+    rdfs:subClassOf onto:TFMcontrolElement .
+
+onto:ReRouteTMI a owl:Class ;
+    rdfs:label "ReRoute" ;
+    rdfs:comment "A ReRoute is a traffic management initiative (TMI) that mandates a change in the filed flight plan for a set of specified flights. There are multiple factors that might justify a reroute, including weather, traffic congestion, unusual airspace activity, etc. The substitute flight plans route air traffic around the airspace problem area." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:reRouteReason ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "NONE" "LOW" "MEDIUM" "HIGH" ) ] ;
+            owl:onProperty onto:extensionProbability ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:extensionProbability ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:reRouteTimeType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "FYI" "PLN" "RMD" "RQD" ) ] ;
+            owl:onProperty onto:implementationStatus ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:implementationStatus ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "ROUTE" "PLAYBOOK" "CDR" "SPECIAL OPERATIONS" "NRP SUSPENSIONS" "VS" "NAT" "SHUTTLE ACTIVITY" "FCA" "FEA" "INFORMATIONAL" "MISCELLANEOUS" ) ] ;
+            owl:onProperty onto:reRouteType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "WEATHER" "VOLUME" "EQUIPMENT" "RUNWAY/TAXIWAY" "OTHER" ) ] ;
+            owl:onProperty onto:reRouteReason ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "ETD" "ETA" "FCA Flight List" ) ] ;
+            owl:onProperty onto:reRouteTimeType ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:reRouteType ],
+        onto:TrafficManagementInitiative .
+
+<https://data.nasa.gov/ontologies/atmonto/NAS#Airport> rdfs:subClassOf onto:NavigationElement .
+
+onto:AircraftTrackPoint a owl:Class ;
+    rdfs:label "Aircraft Track Point" ;
+    rdfs:comment "A point during a flight where various flight parameters are captured and sent (via transponder) to FAA computers." ;
+    rdfs:subClassOf <https://data.nasa.gov/ontologies/atmonto/general#SequencedItem> .
+
+onto:PlannedFlightRoute a owl:Class ;
+    rdfs:label "Planned flight route" ;
+    rdfs:comment "A planned flight route is an ordered sequence of navigation elements that the pilot intends to traverse en route from origin to destination airport." ;
+    rdfs:subClassOf onto:NavigationPath .
+
+onto:AirportSpec a owl:Class ;
+    rdfs:label "Airport spec" ;
+    rdfs:comment "A specification of a set of airports." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "all" "US" "CONUS" "NonCONUS" "International" "Canadian" ) ] ;
+            owl:onProperty onto:includesAirportType ],
+        owl:Thing .
+
+onto:NavigationFix a owl:Class ;
+    rdfs:label "Navigation fix" ;
+    rdfs:comment "A designated point on the surface of the earth used for aeronautical navigation." ;
+    rdfs:subClassOf onto:NavigationElement .
+
+onto:DelayModel a owl:Class ;
+    rdfs:label "GDPmodel" ;
+    rdfs:comment "This class represents a computational delay model used in assigning times to the aircraft involved in the GDP or GS. The properties of this class correspond to parameters that are used by the delay model to compute the delay times." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "DAS" "GAAP" "UDP" ) ] ;
+            owl:onProperty onto:delayAssignmentMode ],
+        owl:Thing .
+
+onto:TrafficManagementInitiative a owl:Class ;
+    rdfs:label "Traffic management initiative" ;
+    rdfs:comment "A Traffic Management Initiative (TMI) is an orchestrated air traffic management procedure implemented as needed to control the flow of air traffic in the NAS based on capacity and demand." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "LOW" "MEDIUM" "HIGH" ) ] ;
+            owl:onProperty onto:extensionProbability ],
+        owl:Thing .
+
+onto:FlightSpec a owl:Class ;
+    rdfs:label "Flight spec" ;
+    rdfs:comment "A specification describing a set of flights." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "ETD" "ETA" ) ] ;
+            owl:onProperty onto:timeConstraintType ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:timeConstraintType ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:aircraftWeightCat ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "GA" "Air Taxi" "Cargo" "Commercial" "Military" ) ] ;
+            owl:onProperty onto:userCategory ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "large" "heavy" "small" ) ] ;
+            owl:onProperty onto:aircraftWeightCat ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "Jet" "Prop" "Jet and Prop" "Turbo" "All" ) ] ;
+            owl:onProperty onto:includesAircraftClass ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:includesAircraftClass ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:userCategory ],
+        owl:Thing .
+
+onto:Flight a owl:Class ;
+    rdfs:label "Flight" ;
+    rdfs:comment "A single flight segment from origin to destination." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "GA" "Air Taxi" "Cargo" "Commercial" "Military" ) ] ;
+            owl:onProperty onto:userCategory ],
+        owl:Thing .
+

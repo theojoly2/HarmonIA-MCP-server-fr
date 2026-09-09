@@ -1,0 +1,549 @@
+@prefix onto: <http://inference-web.org/2.0/pml-provenance.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "PML2 provenance ontology"@en ;
+    rdfs:comment "The provenance part of PML2 ontology. It is a fundamental component of PML2 ontology."@en ;
+    owl:imports <http://inference-web.org/2.0/ds.owl#> ;
+    owl:versionInfo "version 2.0, Authors: Deborah L. McGuinness, Li Ding, Paulo Pinheiro da Silva, Alyssa Glass, and Cynthia Chang"@en .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Dataset> a owl:Class ;
+    rdfs:label "Dataset"@en ;
+    rdfs:comment "A dataset is a collection of data document whose information is encoded in a defined structure (for example, lists, tables, and databases). see also http://purl.org/dc/dcmitype/Dataset."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Document> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#DeclarativeRule> a owl:Class ;
+    rdfs:label "Declarative Rule"@en ;
+    rdfs:comment "A declarative inference rule can be fully specified by patterns for premises and its conclusion.   For example, Modus Ponens, can be specified by the premise patterns ?A,  ?A -&gt; ?B and the conclusion pattern ?B."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#EmptyInformation> a owl:Class ;
+    rdfs:label "Empty Information"@en ;
+    rdfs:comment "An instance of information indicating no conclusion has been derived, i.e. empty set of statements. In this case, the rawstring may contain some english message indicating no answer. "@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Information> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Ontology> a owl:Class ;
+    rdfs:label "Ontology"@en ;
+    rdfs:comment "An Ontology is a document that describes a vocabulary of terms and their correlations."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Document> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Person> a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A person"@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Sensor> a owl:Class ;
+    rdfs:label "Sensor"@en ;
+    rdfs:comment "any device that receives a signal or stimulus (as heat or pressure or light or motion etc.) and records it. (WordNet)"@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#WebService> a owl:Class ;
+    rdfs:label "Web Service"@en ;
+    rdfs:comment "services implemented by software and available on the Web"@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Software> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Website> a owl:Class ;
+    rdfs:label "Website"@en ;
+    rdfs:comment "Collection of files and related resources accessible through the World Wide Web and organized under a particular domain name. Typical files found at a Web site are HTML documents with their associated graphic image files (GIF, JPEG, etc.), scripted programs (in Perl, CGI, Java, etc.), and similar resources. The site's files are usually accessed through hypertext or hyperlinks embedded in other files. A Web site may consist of a single HTML file, or it may comprise hundreds or thousands of related files. A Web site's usual starting point or opening page, called a home page, usually functions as a table of contents or index, with links to other sections of the site. Web sites are hosted on one or more Web servers, which transfer files to client computers or other servers that request them using the HTTP protocol. Although the term ?ite?implies a single physical location, the files and resources of a Web site may actually be spread among several servers in different geographic locations.(adapted from Britannica Concise Encyclopedia)."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Document> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasConfidenceValue> a owl:DatatypeProperty ;
+    rdfs:label "confidence"@en ;
+    rdfs:comment "this is a common property and can be used to describe an agent's confidence \\n        on a piece of information or an action step.It is typically used together with an object property\\n        indicating who asserted the confidence. For example, an inference engine may be one example.\\n        Although we did not specified its cardinality, it is typically used only once in one individual."@en ;
+    rdfs:range xsd:double .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasDescription> a owl:ObjectProperty ;
+    rdfs:label "description"@en ;
+    rdfs:comment "The detailed description of the identified thing, e.g. a web page describing KIF language. An identified thing may have zero to many descriptions that could be written in different languages, format, and etc. "@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Information> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasEncoding> a owl:DatatypeProperty ;
+    rdfs:label "encoding"@en ;
+    rdfs:comment "The content encoding, e.g. \"base64\". The value of this property helps applications determine the decoder of the raw string.\\t"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasEscapeCharacterSequence> a owl:DatatypeProperty ;
+    rdfs:label "escape character sequence"@en ;
+    rdfs:comment "The escape character used by a (formal) language (for parse use). It is used more like a comment indicator. This is used by InferenceML to embed metalangauge for proof checking (talk to Priyendra Deshwa)."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Language> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasLongPrettyName> a owl:DatatypeProperty ;
+    rdfs:label "long pretty name"@en ;
+    rdfs:subPropertyOf <http://inference-web.org/2.0/pml-provenance.owl#hasPrettyName> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasMimetype> a owl:DatatypeProperty ;
+    rdfs:label "mime-type"@en ;
+    rdfs:comment "A well-defined string indicating the mime type of information content. Internet Media Types (MIME). see also http://www.iana.org/assignments/media-types/."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasModificationDateTime> a owl:DatatypeProperty ;
+    rdfs:label "last modified"@en ;
+    rdfs:comment "When the artifact has been modified."@en ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasPublisher> a owl:ObjectProperty ;
+    rdfs:label "publisher"@en ;
+    rdfs:comment "An agent responsible for making the document publicly available. see also http://purl.org/dc/elements/1.1/publisher."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Document> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasRuleExample> a owl:ObjectProperty ;
+    rdfs:label "rule example"@en ;
+    rdfs:comment "it is sub-property of rdfs:comment. It is used to provide an example to help users understand the referred entity."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Information> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#isMemberOf> a owl:ObjectProperty ;
+    rdfs:label "member of"@en ;
+    rdfs:comment "An organization may have member agents such as persons and other organizations."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Agent> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Organization> ;
+    owl:inverseOf <http://inference-web.org/2.0/pml-provenance.owl#hasMember> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#usesInferenceEngine> a owl:ObjectProperty ;
+    rdfs:label "uses-inference-engine"@en ;
+    rdfs:comment "The inference engine used by an agent"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Agent> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#InferenceEngine> .
+
+<http://inference-web.org/2.0/ds.owl#> a owl:Ontology .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Format> a owl:Class ;
+    rdfs:label "Format"@en ;
+    rdfs:comment "A plan for the organization and arrangement of specified information. Examples: binary, text,  pdf, etc."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#MethodRule> a owl:Class ;
+    rdfs:label "Method Rule"@en ;
+    rdfs:comment "A method inference rule, uses patterns for premises and its conclusions, and additionally contains a method that must be applied.  In addition, \\nthe conclusion needs to be a valid output of the method, using the premises.  For example, procedural attachment is a common encoding form for method rules."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasAbstract> a owl:DatatypeProperty ;
+    rdfs:label "abstract"@en ;
+    rdfs:comment "The abstract of a document."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Document> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasAuthorList> a owl:ObjectProperty ;
+    rdfs:label "author(s)"@en ;
+    rdfs:comment "A list of agents primarily responsible for making the artifact, for example, a person, an organization, or a software service. The AgentList enables an ordered list of agents; however, domain applications may optionally choose to ignore the order. We should be able to derive that each agent is the dc:creator of the artifact."@en ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#AgentList> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasCreationDateTime> a owl:DatatypeProperty ;
+    rdfs:label "created"@en ;
+    rdfs:comment "When the artifact has been first created."@en ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasDataCollectionEndDateTime> a owl:DatatypeProperty ;
+    rdfs:label "data-collection-end-datetime"@en ;
+    rdfs:comment "the time stamp when data collection ended"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#LearnedSourceUsage> ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasDataCollectionStartDateTime> a owl:DatatypeProperty ;
+    rdfs:label "data-collection-start-datetime"@en ;
+    rdfs:comment "the time stamp when data collection started"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#LearnedSourceUsage> ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasDocument> a owl:ObjectProperty ;
+    rdfs:label "document"@en ;
+    rdfs:comment "A document fragment always depend on one source document, which is also the source."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragment> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Document> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasEnglishDescriptionTemplate> a owl:DatatypeProperty ;
+    rdfs:label "english-description-template"@en ;
+    rdfs:comment "it is sub-property of rdfs:comment. It is also a simplified template for adding rule description template in English rather than using hasDescription."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasFormat> a owl:ObjectProperty ;
+    rdfs:label "format"@en ;
+    rdfs:comment "it specifies the format of information, e.g. \"pdf\", \"ppt\" (Power Point). It is mainly used to determine the appropriate application for process/display purpose."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Format> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasFromCol> a owl:DatatypeProperty ;
+    rdfs:label "from-column"@en ;
+    rdfs:comment "The from column of the fragment (inclusive, index based on 1)"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByRowCol> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasFromLanguage> a owl:ObjectProperty ;
+    rdfs:label "from-language"@en ;
+    rdfs:comment "language used by the source."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#TranslationRule> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Language> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasFromOffset> a owl:DatatypeProperty ;
+    rdfs:label "from-offset"@en ;
+    rdfs:comment "The from offset of the fragment (inclusive, index based on 0)."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByOffset> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasFromRow> a owl:DatatypeProperty ;
+    rdfs:label "from-row"@en ;
+    rdfs:comment "The from row of the fragment (inclusive, index based on 1)"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByRowCol> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasISBN> a owl:DatatypeProperty ;
+    rdfs:label "isbn"@en ;
+    rdfs:comment "The International Standard Book Number."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Publication> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasInferenceEngineRule> a owl:ObjectProperty ;
+    rdfs:label "uses-inference-rule"@en ;
+    rdfs:comment "The inference rules used by the inference engine"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#InferenceEngine> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasLanguage> a owl:ObjectProperty ;
+    rdfs:label "language"@en ;
+    rdfs:comment "it specifies the language used to encode information, e.g. \"Tony's specialty is shellfish\" is encoded in English. This property may also link to a registered formal language such as KIF."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Language> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasMember> a owl:ObjectProperty ;
+    rdfs:label "member"@en ;
+    rdfs:comment "An organization may have member agents such as persons and other organizations."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Organization> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasName> a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    rdfs:comment "the human readable label of the identified thing."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasOwner> a owl:ObjectProperty ;
+    rdfs:label "owner"@en ;
+    rdfs:comment "the owner of a thing."@en ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasPrettyNameMappingList> a owl:ObjectProperty ;
+    rdfs:label "pretty name mapping"@en ;
+    rdfs:comment "The rendering instruction. UI tools may feed the PrettyNameMapping in sequence to string replace operation to get a pretty rendering of the conclusion of a NodeSet. It only applies to the conclusion of the node set."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMappingList> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasPrettyString> a owl:DatatypeProperty ;
+    rdfs:label "pretty-string"@en ;
+    rdfs:comment "the human friendly presentation of the information. Its format is text and it is usually written in English."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasPublicationDateTime> a owl:DatatypeProperty ;
+    rdfs:label "published in"@en ;
+    rdfs:comment "When the publication is published."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Publication> ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasRawString> a owl:DatatypeProperty ;
+    rdfs:label "raw-string"@en ;
+    rdfs:comment "materialized version of the content of information"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasReferenceSourceUsage> a owl:ObjectProperty ;
+    rdfs:label "reference source usage"@en ;
+    rdfs:comment "Explain how this information is obtained from a source: by whom, when, which source and which part of the source."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasReplacee> a owl:DatatypeProperty ;
+    rdfs:label "replacee"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMapping> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasShortPrettyName> a owl:DatatypeProperty ;
+    rdfs:label "short pretty name"@en ;
+    rdfs:subPropertyOf <http://inference-web.org/2.0/pml-provenance.owl#hasPrettyName> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasSource> a owl:ObjectProperty ;
+    rdfs:label "source"@en ;
+    rdfs:comment "the source of the Source Usage, i.e. where does it come from."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Source> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasToCol> a owl:DatatypeProperty ;
+    rdfs:label "to-column"@en ;
+    rdfs:comment "The to column of the fragment (inclusive, index based on 1)"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByRowCol> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasToLanguage> a owl:ObjectProperty ;
+    rdfs:label "to-language"@en ;
+    rdfs:comment "language used by the target."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#TranslationRule> ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Language> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasToOffset> a owl:DatatypeProperty ;
+    rdfs:label "to-offset"@en ;
+    rdfs:comment "The to offset of the fragment (exclusive, index based on 0)"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByOffset> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasToRow> a owl:DatatypeProperty ;
+    rdfs:label "to-row"@en ;
+    rdfs:comment "The to row of the fragment (inclusive, index based on 1)"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByRowCol> ;
+    rdfs:range xsd:int .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasURL> a owl:DatatypeProperty ;
+    rdfs:label "url"@en ;
+    rdfs:comment "The URL of a relevant web page."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#Information> ;
+    rdfs:range xsd:anyURI .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasUsageDateTime> a owl:DatatypeProperty ;
+    rdfs:label "usage-datetime"@en ;
+    rdfs:comment "the time stamp when the source usage occurred."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> ;
+    rdfs:range xsd:dateTime .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasUsageQueryContent> a owl:ObjectProperty ;
+    rdfs:label "query-content"@en ;
+    rdfs:comment "The query content that leads to the source usage. e.g. the query part of a URL."@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> ;
+    rdfs:subPropertyOf <http://inference-web.org/2.0/pml-provenance.owl#hasContent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#AgentList> a owl:Class ;
+    rdfs:label " List of Agents"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://inference-web.org/2.0/pml-provenance.owl#Agent> ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#first> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://inference-web.org/2.0/pml-provenance.owl#AgentList> ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#rest> ],
+        <http://inference-web.org/2.0/ds.owl#List> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByOffset> a owl:Class ;
+    rdfs:label "Document Fragment by Offset"@en ;
+    rdfs:comment "We may treat a document a one dimensional string, so we can mark a fragment with two offsets. We don't use byte because characters in text document may be multi-bytes."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasToOffset> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasFromOffset> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragment> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#InferenceEngine> a owl:Class ;
+    rdfs:label "Inference Engine"@en ;
+    rdfs:comment "An inference engine represents an engine that is able to produce a justification for a conclusion. Note that the phrase \"inference engine\" applies not only to reasoners but also to other systems like search engines which may justify their answers by direct assertion"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasInferenceEngineRule> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#Software> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#LearnedSourceUsage> a owl:Class ;
+    rdfs:label "Learned Source Usage"@en ;
+    rdfs:comment "A special type of source usage. It records the modification of sources - the question that initiates the learning process, the duration of learning, the original source and current source used by learning."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasDataCollectionEndDateTime> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasDataCollectionStartDateTime> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Organization> a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "A group of agents organized for a particular purpose, e.g., KSL, stanford."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMappingList> a owl:Class ;
+    rdfs:label " List of PrettyNameMappings"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMapping> ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#first> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMappingList> ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#rest> ],
+        <http://inference-web.org/2.0/ds.owl#List> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Publication> a owl:Class ;
+    rdfs:label "Publication"@en ;
+    rdfs:comment "If we have two versions of the same publication, we need to create two instances of Publication. A publication may have multiple ISBNs."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasISBN> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasPublicationDateTime> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#Document> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Software> a owl:Class ;
+    rdfs:label "Software"@en ;
+    rdfs:comment "written programs or procedures or rules and associated documentation pertaining to the operation of a computer system and that are stored in read/write memory.(WordNet)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasVersion> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#TranslationRule> a owl:Class ;
+    rdfs:label "Translation Rule"@en ;
+    rdfs:comment "Translation rules are special kinds of inference rules which are used to translate expressions from one language to the other."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasToLanguage> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasFromLanguage> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#MethodRule> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasPrettyName> a owl:DatatypeProperty ;
+    rdfs:label "pretty name"@en ;
+    rdfs:domain <http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMapping> ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasVersion> a owl:DatatypeProperty ;
+    rdfs:label "version"@en ;
+    rdfs:comment "the version number."@en ;
+    rdfs:range xsd:string .
+
+<http://inference-web.org/2.0/pml-provenance.owl#DocumentFragment> a owl:Class ;
+    rdfs:label "Document Fragment"@en ;
+    rdfs:comment "A fragment of document that can be used as source."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasDocument> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#Source> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#PrettyNameMapping> a owl:Class ;
+    rdfs:label "Pretty Name Mapping"@en ;
+    rdfs:comment "specially designed for pretty display purpose."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasReplacee> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasShortPrettyName> ] .
+
+<http://inference-web.org/2.0/pml-provenance.owl#hasContent> a owl:ObjectProperty ;
+    rdfs:label "content"@en ;
+    rdfs:comment " This is a common concept that links to a piece of information. Currently, we focus on content of document, and inference rule."@en ;
+    rdfs:range <http://inference-web.org/2.0/pml-provenance.owl#Information> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#DocumentFragmentByRowCol> a owl:Class ;
+    rdfs:label "Document Fragment by Row/Column"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasFromCol> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasToRow> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasToCol> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasFromRow> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#DocumentFragment> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Language> a owl:Class ;
+    rdfs:label "Language"@en ;
+    rdfs:comment "The language used to encode the raw string, e.g. English, Knowledge Interchange Format (KIF) , and N3. Languages are in general registered at the core IWRegistry."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Source> a owl:Class ;
+    rdfs:label "Source"@en ;
+    rdfs:comment "A source refers to the source of information. It is the place where we obtain information."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#InferenceRule> a owl:Class ;
+    rdfs:label "Inference Rule"@en ;
+    rdfs:comment "Inference rules are used to derive conclusions from premises.\\nInference Web divides inference rules into three classes: Primitive and Derived and Translation. \\nThis is an abstract class without any direct instance. A primitive rule is an atomic rule with respect to an inference engine. An inference engine may support rules that it does not need to further decompose. Since a primitive rule is an inference engine dependent concept, we may find a rule is primitive to one inference engine but not to another engine. For example a `natural deduction reasoner R1 may define Modus Ponens as a primitive rule and another reasoner R2 may register Robinson's resolution rule as a primitive rule. The reasoner R2 may be able to derive a Modus Ponens rule using its primitive resolution rule. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasContent> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasEnglishDescriptionTemplate> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#SourceUsage> a owl:Class ;
+    rdfs:label "Source Usage"@en ;
+    rdfs:comment "A usage of the source. It records an access of a source at a certain date time."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasSource> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasUsageQueryContent> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasUsageDateTime> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Document> a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:comment "A physical information container that is not actionable. They function like database."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasVersion> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasContent> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasAbstract> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#Source> ;
+    owl:disjointWith <http://inference-web.org/2.0/pml-provenance.owl#Agent> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> a owl:Class ;
+    rdfs:label "Identified Thing"@en ;
+    rdfs:comment "The abstract root of provenance related concepts. It organizes a collection of common metadata about the referenced object, and it does not have any instance. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasCreationDateTime> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasName> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasAuthorList> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasOwner> ] .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Agent> a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "actionalble entities."@en ;
+    rdfs:subClassOf <http://inference-web.org/2.0/pml-provenance.owl#Source> .
+
+<http://inference-web.org/2.0/pml-provenance.owl#Information> a owl:Class ;
+    rdfs:label "Information"@en ;
+    rdfs:comment "A piece of information, e.g. a formula in logic languages, and an utterance/word/phrase/sentence/paragraph/article in natural language. It is used as a range of iw:hasContent. This class and two of its sub-classes enable users to specify four types of semantics  (i) Information Annotation - annotate just the format and language used by the content of information; (ii) Information With Content - additionally provide the content of information that is materialized as string without loading a web page; (iii) Information external - additionally provide the URL for fetching the content; and (iv) Information - with every thing including the content string and URL. The second semantics is especially useful when the content is short or mainly used locally. For example, when learning by instruction, the utterances used for learning can be stored within the PML document without being externally stored. By assigning URI reference to information, we can even use owl:sameAs to capture the equivalence of two pieces of information. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasPrettyString> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasRawString> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasPrettyNameMappingList> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasLanguage> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasURL> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasReferenceSourceUsage> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://inference-web.org/2.0/pml-provenance.owl#hasFormat> ],
+        <http://inference-web.org/2.0/pml-provenance.owl#IdentifiedThing> .
+

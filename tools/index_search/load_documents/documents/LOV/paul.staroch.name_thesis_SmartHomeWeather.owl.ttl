@@ -1,0 +1,2330 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.oclc.org/NET/muo/muo#> .
+@prefix ns2: <http://purl.oclc.org/NET/muo/ucum/> .
+@prefix ns3: <http://creativecommons.org/ns#> .
+@prefix onto: <http://paul.staroch.name/thesis/SmartHomeWeather.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    ns3:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dc:contributor <http://paul.staroch.name/foaf/staroch.rdf#paul>,
+        "Mario Kofler" ;
+    dc:creator <http://paul.staroch.name/foaf/staroch.rdf#paul> ;
+    dc:description "A ontology defining weather-related concepts and properties being relevant to smart home systems that provide predictive control." ;
+    dc:issued "2013-08-29"^^xsd:date ;
+    dc:modified "2014-03-23"^^xsd:date ;
+    dc:publisher <http://paul.staroch.name/foaf/staroch.rdf#paul> ;
+    dc:title "SmartHomeWeather" ;
+    vann:preferredNamespacePrefix "shw" ;
+    vann:preferredNamespaceUri "http://paul.staroch.name/thesis/SmartHomeWeather.owl" ;
+    owl:imports ns2:,
+        <http://www.w3.org/2006/time> ;
+    owl:versionInfo 1.0 .
+
+onto:AiringWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:FairWeather onto:PleasantTemperatureWeather ) ] .
+
+onto:AstronomicalTwilight a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "-18.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "-12.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:CivilTwilight a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "-6.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:CloudyWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:MostlyCloudy ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Overcast ] ) ] ) ] .
+
+onto:ColdWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Cold ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Frost ] ) ] ) ] .
+
+onto:CurrentWeatherReportFromSensor a owl:Class ;
+    rdfs:comment "A WeatherState about the current weather based on data retrieved from a (collection of) sensor(s), e.g. it is connected to an instance of SensorSource via the hasSource property."^^xsd:string ;
+    rdfs:seeAlso onto:CurrentWeatherState,
+        onto:WeatherState,
+        onto:WeatherStateFromSensor ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:CurrentWeatherReport onto:WeatherReportFromSensor ) ] .
+
+onto:CurrentWeatherReportFromService a owl:Class ;
+    rdfs:comment "A WeatherState about the current weather based on data retrieved from an internet service, e.g. it is connected to an instance of ServiceSource via the hasSource property."^^xsd:string ;
+    rdfs:seeAlso onto:CurrentWeatherState,
+        onto:WeatherState,
+        onto:WeatherStateFromService ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:CurrentWeatherReport onto:WeatherReportFromService ) ] .
+
+onto:DirectionalWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:DryWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Dry ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:VeryDry ] ) ] ) ] .
+
+onto:EastWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive 45 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 135 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:HighPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing an atmospheric pressure between 1018 hPa and 1028 hPa."^^xsd:string ;
+    rdfs:seeAlso onto:AtmosphericPressure,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "1018.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "1028.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:HighRadiation a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "500.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "750.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:HotWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Restriction ;
+                        owl:onProperty onto:hasWeatherPhenomenon ;
+                        owl:someValuesFrom onto:Heat ] ) ] .
+
+onto:Hour a owl:Class ;
+    rdfs:comment "This class describes a duration of hours."^^xsd:string ;
+    rdfs:seeAlso time:DurationDescription ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:weeks ],
+        [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:years ],
+        [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:days ],
+        [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:seconds ],
+        [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:minutes ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:hours ],
+        [ a owl:Restriction ;
+            owl:cardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty time:months ],
+        time:DurationDescription .
+
+onto:LongRangeForecastReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather for more than 12 hours in the future."^^xsd:string ;
+    rdfs:seeAlso onto:LongRange,
+        onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:hours ;
+                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                owl:onDatatype xsd:decimal ;
+                                                owl:withRestrictions ( [ xsd:minInclusive 12 ] ) ] ] ] ] ) ] .
+
+onto:LowPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing an atmospheric pressure between 998 hPa and 1008 hPa."^^xsd:string ;
+    rdfs:seeAlso onto:AtmosphericPressure,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "998.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "1008.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:LowRadiation a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "250.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:MediumRadiation a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "250.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "500.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:MediumRangeForecastReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather for more than 3 and less than 12 hours in the future."^^xsd:string ;
+    rdfs:seeAlso onto:MidRange,
+        onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Class ;
+                                        owl:intersectionOf ( [ a owl:Restriction ;
+                                                    owl:onProperty time:hours ;
+                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                            owl:onDatatype xsd:decimal ;
+                                                            owl:withRestrictions ( [ xsd:minExclusive 3 ] ) ] ] [ a owl:Restriction ;
+                                                    owl:onProperty time:hours ;
+                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                            owl:onDatatype xsd:decimal ;
+                                                            owl:withRestrictions ( [ xsd:maxExclusive 12 ] ) ] ] ) ] ] ] ) ] .
+
+onto:MoistWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Moist ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:VeryMoist ] ) ] ) ] .
+
+onto:NauticalTwilight a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "-12.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "-6.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Night a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "-18.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:NoAwningWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( onto:SevereWeather [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:StrongWind ] ) ] ) ] .
+
+onto:NoRadiation a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:hasValue "0.0"^^xsd:float ;
+                                            owl:onProperty ns1:numericalValue ] ) ] ] ) ] .
+
+onto:NormalHumidity a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.4"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "0.7"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:NormalPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing an atmospheric pressure between 1008 hPa and 1018 hPa."^^xsd:string ;
+    rdfs:seeAlso onto:AtmosphericPressure,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "1008.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "1018.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:NorthWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Class ;
+                                            owl:unionOf ( [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:minInclusive 315 ] ) ] ] [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:maxExclusive 45 ] ) ] ] ) ] [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:RainyWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:ExtremelyHeavyRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:HeavyRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:LightRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:MediumRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:TropicalStormRain ] ) ] ) ] .
+
+onto:ShortRangeForecastReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather for more at most 3 hours in the future."^^xsd:string ;
+    rdfs:seeAlso onto:ShortRange,
+        onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Class ;
+                                        owl:intersectionOf ( [ a owl:Restriction ;
+                                                    owl:onProperty time:hours ;
+                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                            owl:onDatatype xsd:decimal ;
+                                                            owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] ] [ a owl:Restriction ;
+                                                    owl:onProperty time:hours ;
+                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                            owl:onDatatype xsd:decimal ;
+                                                            owl:withRestrictions ( [ xsd:maxInclusive 3 ] ) ] ] ) ] ] ] ) ] .
+
+onto:SolarTwilight a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "6.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SouthWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive 135 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 225 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunBelowHorizon a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunFromEast a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive 45 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive 135 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunFromNorth a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Class ;
+                                            owl:unionOf ( [ a owl:Class ;
+                                                        owl:intersectionOf ( [ a owl:Restriction ;
+                                                                    owl:onProperty ns1:numericalValue ;
+                                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                            owl:onDatatype xsd:nonNegativeInteger ;
+                                                                            owl:withRestrictions ( [ xsd:minExclusive 315 ] ) ] ] [ a owl:Restriction ;
+                                                                    owl:onProperty ns1:numericalValue ;
+                                                                    owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                            owl:onDatatype xsd:nonNegativeInteger ;
+                                                                            owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:maxInclusive 45 ] ) ] ] ) ] [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunFromSouth a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Class ;
+                                            owl:intersectionOf ( [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:minExclusive 135 ] ) ] ] [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:maxInclusive 225 ] ) ] ] ) ] [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunFromWest a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Class ;
+                                            owl:intersectionOf ( [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:minExclusive 225 ] ) ] ] [ a owl:Restriction ;
+                                                        owl:onProperty ns1:numericalValue ;
+                                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                owl:withRestrictions ( [ xsd:maxInclusive 315 ] ) ] ] ) ] [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunProtectionWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:ClearWeather [ a owl:Restriction ;
+                        owl:onProperty onto:hasWeatherPhenomenon ;
+                        owl:someValuesFrom onto:Day ] ) ] .
+
+onto:Thunderstorm a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:SevereWeather [ a owl:Restriction ;
+                        owl:hasValue onto:Thunder ;
+                        owl:onProperty onto:hasCondition ] ) ] .
+
+onto:Twilight a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "-18.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:UnknownCloudCover a owl:Class ;
+    rdfs:seeAlso onto:CloudCover,
+        onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover,
+        "A WeatherPhenomenon describing a cloud layer with cloud cover 9 (unknown cloud cover).\\n\\nNOTE: This class only specifies a single cloud layer. It does not make any statement about other cloud layers."^^xsd:string ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:hasValue 9 ;
+                                            owl:onProperty ns1:numericalValue ] ) ] ] ) ] .
+
+onto:VeryHighPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing an atmospheric pressure of more than 1028 hPa."^^xsd:string ;
+    rdfs:seeAlso onto:AtmosphericPressure,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "1028.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:VeryHighRadiation a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "750.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:VeryLowPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing an atmospheric pressure of less than 998 hPa."^^xsd:string ;
+    rdfs:seeAlso onto:AtmosphericPressure,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "998.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:WestWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive 225 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 315 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:WindyWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( onto:StormyWeather [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:StrongWind ] ) ] ) ] .
+
+onto:belongsToWeatherReport a owl:ObjectProperty ;
+    rdfs:comment "Inverse property of hasWeatherState."^^xsd:string ;
+    rdfs:seeAlso onto:hasWeatherState ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf onto:hasWeatherState .
+
+onto:hasPreviousWeatherState a owl:ObjectProperty ;
+    owl:inverseOf onto:hasNextWeatherState .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#> rdfs:label "geo" ;
+    dc:date "$Date: 2009/04/20 15:00:30 $" ;
+    dc:description "A vocabulary for representing latitude, longitude and \\n altitude information in the WGS84 geodetic reference datum. \\n Version $Id: wgs84_pos.rdf,v 1.22 2009/04/20 15:00:30 timbl Exp $. See http://www.w3.org/2003/01/geo/ for more details." ;
+    dc:title "WGS84 Geo Positioning: an RDF vocabulary" ;
+    rdfs:comment "Recent changes to this namespace:\\n$Log: wgs84_pos.rdf,v $\\nRevision 1.22  2009/04/20 15:00:30  timbl\\nRemove the time bits which have been deal with elsewhere eg in iCal.\\n\\nRevision 1.21  2009/04/20 12:52:47  timbl\\ntry again\\n\\nRevision 1.20  2009/04/20 12:42:11  timbl\\nAdd Event (edited ages ago and never checked in), and location (following discussion http://chatlogs.planetrdf.com/swig/2009-04-20#T12-36-09)\\n\\nRevision 1.19  2009/04/20 12:36:31  timbl\\nAdd Event (edited ages ago and never checked in), and location (following discussion http://chatlogs.planetrdf.com/swig/2009-04-20#T12-36-09)\\n\\nRevision 1.18  2006/02/01 22:01:04  danbri\\nClarified that lat and long are decimal degrees, and that alt is decimal metres about local reference ellipsoid\\n\\nRevision 1.17  2004/02/06 17:38:12  danbri\\nFixed a bad commit screwup\\n\\nRevision 1.15  2003/04/19 11:24:08  danbri\\nFixed the typo even more.\\n\\nRevision 1.14  2003/04/19 11:16:56  danbri\\nfixed a typo\\n\\nRevision 1.13  2003/02/19 22:27:27  connolly\\nrelaxed domain constraints on lat/long/alt from Point to SpatialThing\\n\\nRevision 1.12  2003/01/12 01:41:41  danbri\\nTrying local copy of XSLT doc.\\n\\nRevision 1.11  2003/01/12 01:20:18  danbri\\nadded a link to morten's xslt rdfs viewer.\\n\\nRevision 1.10  2003/01/11 18:56:49  danbri\\nRemoved datatype range from lat and long properties, since they would\\nhave required each occurance of the property to mention the datatype.\\n\\nRevision 1.9  2003/01/11 11:41:31  danbri\\nAnother typo; repaired rdfs:Property to rdf:Property x4\\n\\nRevision 1.8  2003/01/11 11:05:02  danbri\\nAdded an rdfs:range for each lat/long/alt property,\\nhttp://www.w3.org/2001/XMLSchema#float\\n\\nRevision 1.7  2003/01/10 20:25:16  danbri\\nLonger rdfs:comment for Point, trying to be Earth-centric and neutral about\\ncoordinate system(s) at the same time. Feedback welcomed.\\n\\nRevision 1.6  2003/01/10 20:18:30  danbri\\nAdded CVS log comments into the RDF/XML as an rdfs:comment property of the\\nvocabulary. Note that this is not common practice (but seems both harmless\\nand potentially useful).\\n\\n\\nrevision 1.5\\ndate: 2003/01/10 20:14:31;  author: danbri;  state: Exp;  lines: +16 -5\\nUpdated schema:\\nAdded a dc:date, added url for more info. Changed the rdfs:label of the\\nnamespace from gp to geo. Added a class Point, set as the rdfs:domain of\\neach property. Added XML comment on the lat_long property suggesting that\\nwe might not need it (based on #rdfig commentary from implementors).\\n\\nrevision 1.4\\ndate: 2003/01/10 20:01:07;  author: danbri;  state: Exp;  lines: +6 -5\\nFixed typo; several rdfs:about attributes are now rdf:about. Thanks to MortenF in\\n#rdfig for catching this error.\\n\\nrevision 1.3\\ndate: 2003/01/10 11:59:03;  author: danbri;  state: Exp;  lines: +4 -3\\nfixed buglet in vocab, added more wgs links\\n\\nrevision 1.2\\ndate: 2003/01/10 11:01:11;  author: danbri;  state: Exp;  lines: +4 -4\\nRemoved alt from the as-a-flat-string property, and switched from\\nspace separated to comma separated.\\n\\nrevision 1.1\\ndate: 2003/01/10 10:53:23;  author: danbri;  state: Exp;\\nbasic geo vocab" .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#alt> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat_long> rdfs:label "lat/long" ;
+    rdfs:comment "A comma-separated representation of a latitude, longitude coordinate." .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+onto:AboveRoomTemperature a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a temperature of more than 25 degrees Celsius."^^xsd:string ;
+    rdfs:seeAlso onto:Temperature,
+        onto:WeatherPhenomenon,
+        onto:hasTemperature ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "25.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "30.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:BelowRoomTemperature a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a temperature of less than 20 degrees Celsius."^^xsd:string ;
+    rdfs:seeAlso onto:Temperature,
+        onto:WeatherPhenomenon,
+        onto:hasTemperature ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "10.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "20.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Calm a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a wind speed of less than 1 m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:Wind,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "1.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:CalmWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Calm ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:LightWind ] ) ] ) ] .
+
+onto:ClearSky a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a cloud layer with cloud cover 0 (clear sky).\\n\\nNOTE: This class only specifies a single cloud layer. It does not make any statement about other cloud layers."^^xsd:string ;
+    rdfs:seeAlso onto:CloudCover,
+        onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:hasValue 0 ;
+                                            owl:onProperty ns1:numericalValue ] ) ] ] ) ] .
+
+onto:Cold a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "10.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Day a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:DewPoint a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon specifying the dew point. The actual value is specified in degrees Celsius using the hasDewPoint property."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasDewPoint ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasDewPointValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom xsd:float ] ) ] ] ) ] .
+
+onto:Dry a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a humidity of less than 40 percent."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasHumidity ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.3"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.4"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:FairWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:CalmWeather onto:ClearWeather onto:NoRainWeather ) ] .
+
+onto:Forecast12HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 12 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 12 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast15HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 15 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 15 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast18HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 18 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 18 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast1HourWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in one hour."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 1 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast21HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 21 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 21 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast24HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 21 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 24 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast2HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in two hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 2 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast3HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in three hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 3 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast6HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 6 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 6 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:Forecast9HoursWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather in 9 hours."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 9 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:ForecastWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the weather for some time in the future."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:onProperty time:hours ;
+                                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                                owl:onDatatype xsd:decimal ;
+                                                owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] ] ] ] ) ] .
+
+onto:Frost a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a temperature of less than 0 degrees Celsius."^^xsd:string ;
+    rdfs:seeAlso onto:Temperature,
+        onto:WeatherPhenomenon,
+        onto:hasTemperature ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Heat a owl:Class ;
+    rdfs:comment onto:Temperature,
+        onto:WeatherPhenomenon,
+        onto:hasTemperature,
+        "A WeatherPhenomenon describing a temperature of more than 30 degrees Celsius."^^xsd:string ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "30.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Hurricane a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a wind speed of more than 32 m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:Wind,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "32.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:LightRain a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "5.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:LightWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a wind speed of less than 1 m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:Wind,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "1.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "10.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:MediumRain a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "5.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "20.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Moist a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a humidity of more than 70 percent."^^xsd:string ;
+    rdfs:seeAlso onto:Humidity,
+        onto:WeatherPhenomenon,
+        onto:hasHumidity ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.7"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "0.8"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:MostlyCloudy a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a cloud layer with cloud cover 5, 6 or 7 (mostly cloudy).\\n\\nNOTE: This class only specifies a single cloud layer. It does not make any statement about other cloud layers."^^xsd:string ;
+    rdfs:seeAlso onto:CloudCover,
+        onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive 4 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 8 ] ) ] ] ) ] ] ) ] .
+
+onto:NoRain a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing the absence of precipitation, either because the probability for precipitation is 0 (specified by the property hasPrecipitationProbability) or because the amount of precipitation per hour is 0 (specified by the property hasPrecipitationValue) or both."^^xsd:string ;
+    rdfs:seeAlso onto:Precipitation,
+        onto:WeatherPhenomenon,
+        onto:hasPrecipitationProbability,
+        onto:hasPrecipitationValue ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:hasValue "0.0"^^xsd:float ;
+                                            owl:onProperty ns1:numericalValue ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:NoRainWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Restriction ;
+                        owl:onProperty onto:hasWeatherPhenomenon ;
+                        owl:someValuesFrom onto:NoRain ] ) ] .
+
+onto:Overcast a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a cloud layer with cloud cover 8 (overcast).\\n\\nNOTE: This class only specifies a single cloud layer. It does not make any statement about other cloud layers."^^xsd:string ;
+    rdfs:seeAlso onto:CloudCover,
+        onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:hasValue 8 ;
+                                            owl:onProperty ns1:numericalValue ] ) ] ] ) ] .
+
+onto:PartlyCloudy a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a cloud layer with cloud cover 1, 2, 3 or 4 (partly cloudy).\\n\\nNOTE: This class only specifies a single cloud layer. It does not make any statement about other cloud layers."^^xsd:string ;
+    rdfs:seeAlso onto:CloudCover,
+        onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive 0 ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 5 ] ) ] ] ) ] ] ) ] .
+
+onto:PleasantTemperatureWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:AboveRoomTemperature ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:BelowRoomTemperature ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:RoomTemperature ] ) ] ) ] .
+
+onto:RoomTemperature a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a temperature between 20 and 25 degrees Celsius."^^xsd:string ;
+    rdfs:seeAlso onto:Temperature,
+        onto:WeatherPhenomenon,
+        onto:hasTemperature ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "20.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "25.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SolarRadiation a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing sun radiation using the hasSunRadiation property (in W/m²)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasSunRadiation ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSolarRadiationValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:wattsPerSquareMeter ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Storm a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a wind speed of more than 20 m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:Wind,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "20.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:SunPosition a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing the sun's position at solar noon. The property hasSunAngleNoon specifies the angle of the sun above horizon in degrees Celsius."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasSunAngleNoon ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunDirection ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSunElevationAngle ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "-90.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:VeryDry a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "0.3"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:VeryMoist a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.8"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:VeryRainyWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:ExtremelyHeavyRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:HeavyRain ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:TropicalStormRain ] ) ] ) ] .
+
+onto:WeatherReportFromSensor a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasSource ;
+                        owl:someValuesFrom onto:SensorSource ] ) ] .
+
+onto:WeatherReportFromService a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasSource ;
+                        owl:someValuesFrom onto:ServiceSource ] ) ] .
+
+onto:belongsToWeatherState a owl:ObjectProperty ;
+    rdfs:comment "Inverse property of hasWeatherPhenomenon."^^xsd:string ;
+    rdfs:seeAlso onto:hasWeatherPhenomenon .
+
+onto:cloudCoverage a ns1:PhysicalQuality,
+        owl:NamedIndividual .
+
+onto:hasDewPointValue a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom xsd:float ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasEndTime a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( time:Interval [ a owl:Restriction ;
+                        owl:onClass time:DateTimeDescription ;
+                        owl:onProperty time:hasDurationDescription ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+onto:hasNextWeatherState a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherState ;
+    rdfs:range onto:WeatherState .
+
+onto:hasObservationTime a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( time:Instant [ a owl:Restriction ;
+                        owl:onClass [ a owl:Restriction ;
+                                owl:hasValue time:unitMinute ;
+                                owl:onProperty time:unitType ] ;
+                        owl:onProperty time:inDateTime ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+onto:hasPriority a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Specifies the priority of a WeatherState (a positive integer). The higher this value is compared to another WeatherState's priority, the more the WeatherState takes precedence over the other WeatherState."^^xsd:string ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range xsd:positiveInteger ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+onto:irradiance a ns1:PhysicalQuality,
+        owl:NamedIndividual .
+
+onto:millimeter a ns1:SimpleDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom <http://purl.oclc.org/NET/muo/ucum/unit/length/meter> ;
+    ns1:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+    ns1:modifierPrefix <http://purl.oclc.org/NET/muo/ucum/prefix/milli> .
+
+onto:precipitationIntensity a ns1:PhysicalQuality,
+        owl:NamedIndividual .
+
+onto:speed a ns1:PhysicalQuality,
+        owl:NamedIndividual .
+
+onto:squareMeter a ns1:SimpleDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom <http://purl.oclc.org/NET/muo/ucum/unit/length/meter> ;
+    ns1:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#Point> a owl:Class ;
+    rdfs:label "point" ;
+    rdfs:comment "A point, typically described using a coordinate system relative to Earth, such as WGS84.",
+        "Uniquely identified by lat/long/alt. i.e.\\n\\nspaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT),\\n  lat(P2, LAT), long(P2, LONG), alt(P2, ALT).\\n\\nsameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2)." ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    rdfs:subPropertyOf foaf:based_near .
+
+time:TemporalEntity rdfs:comment "A TemporalEntity describes the temporal dimension of a WeatherState. This can either be a specific moment (an Instant that has a specific time) or a period of time (an Interval having a start time and an end time)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState,
+        time:Instant,
+        time:Interval .
+
+foaf:based_near a owl:ObjectProperty .
+
+onto:ClearWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:ClearSky ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:PartlyCloudy ] ) ] ) ] .
+
+onto:Cloud a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:CurrentWeatherReport a owl:Class ;
+    rdfs:comment "A WeatherState describing the current weather."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState,
+        onto:ZeroHour,
+        onto:hasTime ;
+    owl:disjointWith onto:ForecastWeatherReport ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherReport [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom [ a owl:Restriction ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:someValuesFrom [ a owl:Restriction ;
+                                        owl:hasValue 0 ;
+                                        owl:onProperty time:hours ] ] ] ) ] .
+
+onto:ExtremelyHeavyRain a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "50.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "100.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Fog a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:HeavyRain a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "20.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "50.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Humidity a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon specifying relative humidity. Relative umidity specified using the hasHumidity property (in the interval [0,1])."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasHumidity ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasHumidityValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:LightCloud a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:PartlyCloud a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:Precipitation a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing both precipitation probability (property hasPrecipitationProbability, in the interval [0,1]) and the amount of precipitation (property hasPrecipitationValue, in mm/h)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasPrecipitationProbability,
+        onto:hasPrecipitationValue ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Rain a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:SensorSource a owl:Class ;
+    rdfs:comment "A WeatherStateSource as a (collection of) sensor(s)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherStateSource ;
+    rdfs:subClassOf onto:WeatherReportSource ;
+    owl:disjointWith onto:ServiceSource .
+
+onto:SevereWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:StormyWeather onto:VeryRainyWeather ) ] .
+
+onto:Sleet a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:Snow a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:StormyWeather a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherState [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Hurricane ] [ a owl:Restriction ;
+                                    owl:onProperty onto:hasWeatherPhenomenon ;
+                                    owl:someValuesFrom onto:Storm ] ) ] ) ] .
+
+onto:StrongWind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon describing a wind speed of less than 1 m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:Wind,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "10.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive "20.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:Sun a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:TropicalStormRain a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationIntensity ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:millimetresPerHour ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "100.0"^^xsd:float ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasPrecipitationProbability ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minExclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:isSourceOf a owl:ObjectProperty ;
+    rdfs:comment "Inverse property of hasSource."^^xsd:string ;
+    rdfs:seeAlso onto:hasSource ;
+    owl:inverseOf onto:hasSource .
+
+<http://paul.staroch.name/foaf/staroch.rdf#paul> a foaf:Person .
+
+onto:ServiceSource a owl:Class ;
+    rdfs:comment "A WeatherStateSource as an internet service."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherStateSource ;
+    rdfs:subClassOf onto:WeatherReportSource .
+
+onto:Thunder a onto:WeatherCondition,
+        owl:NamedIndividual .
+
+onto:hasCondition a owl:ObjectProperty ;
+    rdfs:comment "Links a WeatherCondition to a WeatherPhenomenon. A WeatherPhenomenon can be associated with an arbitrary number of instances of WeatherCondition."^^xsd:string ;
+    rdfs:domain onto:WeatherState ;
+    rdfs:range onto:WeatherCondition ;
+    rdfs:seeAlso onto:WeatherCondition,
+        onto:WeatherPhenomenon .
+
+onto:hasWeatherState a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "Associates a WeatherState to a WeatherObservation. One WeatherState can only be associated with one WeatherObservation."^^xsd:string ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range onto:WeatherState ;
+    rdfs:seeAlso onto:WeatherObservation,
+        onto:WeatherState,
+        onto:belongsToWeather .
+
+onto:WeatherReportSource a owl:Class ;
+    rdfs:comment "WeatherStateSource represents a source of weather data, either from a (collection of) sensor(s) (sub-concept SensorSource) or from an internet service (ServiceSource).\\n\\nWeatherStateSource is connected to WeatherState via the hasSource/isSourceOf properties."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState,
+        onto:hasSource,
+        onto:isSourceOf ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( onto:SensorSource onto:ServiceSource ) ],
+        owl:Thing .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> a owl:Class ;
+    rdfs:label "SpatialThing" ;
+    rdfs:comment "Anything with spatial extent, i.e. size, shape, or position.\\n e.g. people, places, bowling balls, as well as abstract areas like cubes." .
+
+onto:AtmosphericPressure a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon specifying atmospheric pressure using the hasPressure property (in hPa/mbar on MSL)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasPressure ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasPressureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:hectopascal ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom xsd:float ] ) ] ] ) ] .
+
+onto:CloudCover a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about a cloud layer. There are two properties: hasCloudCover gives the cloud cover of this layer in okta (an integer in the interval [0-9] where 0 is clear sky, 8 is overcast and 9 is unknown). hasCloudAltitude gives the altitude of that cloud layer.\\n\\nIf there is more than one cloud layer, for each cloud layer another WeatherPhenomenon must be created and linked to the appropriate WeatherState."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasCloudCover ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:okta ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                    owl:withRestrictions ( [ xsd:maxExclusive 10 ] ) ] ] ) ] ] ) ] .
+
+onto:Temperature a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon specifying temperature. The actual temperature is specified using the hasTemperature property (in degrees Celsius)."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasTemperature ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasTemperatureValue ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom xsd:float ] ) ] ] ) ] .
+
+onto:Wind a owl:Class ;
+    rdfs:comment "A WeatherPhenomenon giving information about wind. There are two properties: hasWindDirection gives the cloud cover of this layer in degrees (an integer in the interval [0-359] where 0 is North, 90 is East etc.). hasWindSpeed is a float specifying wind speed in m/s."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasWindDirection,
+        onto:hasWindSpeed ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:WeatherPhenomenon [ a owl:Restriction ;
+                        owl:onProperty onto:hasWindSpeed ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( [ a owl:Restriction ;
+                                            owl:hasValue onto:metresPerSecond ;
+                                            owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                                            owl:onProperty ns1:numericalValue ;
+                                            owl:someValuesFrom [ a rdfs:Datatype ;
+                                                    owl:onDatatype xsd:float ;
+                                                    owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ] ) ] .
+
+onto:hasHumidityValue a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasPressureValue a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue onto:hectopascal ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom xsd:float ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasSolarRadiationValue a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue onto:wattsPerSquareMeter ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasCloudAltitude a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/length/meter> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom xsd:integer ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasPrecipitationIntensity a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue onto:millimetresPerHour ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasSource a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "Associates a WeatherStateSource with a WeatherState, i.e. specifies where a WeatherState's data comes from. One WeatherState can only have one WeatherStateSource."^^xsd:string ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range onto:WeatherReportSource ;
+    rdfs:seeAlso onto:WeatherState,
+        onto:WeatherStateSource,
+        onto:isSourceOf .
+
+onto:hasTemperatureValue a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom xsd:float ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hectopascal a ns1:SimpleDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom <http://purl.oclc.org/NET/muo/ucum/unit/pressure/Pascal> ;
+    ns1:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+    ns1:modifierPrefix <http://purl.oclc.org/NET/muo/ucum/prefix/hecto> .
+
+onto:okta a ns1:UnitOfMeasurement,
+        owl:NamedIndividual ;
+    ns1:measuresQuality onto:cloudCoverage ;
+    ns1:prefSymbol ""^^xsd:string ;
+    ns2:code1 ""^^xsd:string ;
+    ns2:code2 ""^^xsd:string .
+
+onto:wattsPerSquareMeter a ns1:ComplexDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom onto:squareMeter,
+        <http://purl.oclc.org/NET/muo/ucum/unit/power/Watt> ;
+    ns1:measuresQuality onto:irradiance .
+
+onto:millimetresPerHour a ns1:ComplexDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom onto:millimeter,
+        <http://purl.oclc.org/NET/muo/ucum/unit/time/hour> ;
+    ns1:measuresQuality onto:precipitationIntensity .
+
+onto:hasPrecipitationProbability a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "1.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:metresPerSecond a ns1:ComplexDerivedUnit,
+        owl:NamedIndividual ;
+    ns1:derivesFrom <http://purl.oclc.org/NET/muo/ucum/unit/length/meter>,
+        <http://purl.oclc.org/NET/muo/ucum/unit/time/second> ;
+    ns1:measuresQuality onto:speed .
+
+onto:WeatherCondition a owl:Class ;
+    rdfs:comment "A WeatherCondition is a simple description of the state of the weather. Currently there are: Cloud, Fog, LightCloud, PartlyCloud, Rain, Sleet, Snow, Sun, Thunder.\\n\\nSeveral instances of WeatherCondition can be associated with the same instance of WeatherPhenomenon using the hasCondition property. That way, it is possible to describe a thunderstorm that comes with rain."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:hasCondition ;
+    rdfs:subClassOf owl:Thing ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( onto:LightCloud onto:PartlyCloud onto:Sleet onto:Sun onto:Snow onto:Fog onto:Thunder onto:Cloud onto:Rain ) ] .
+
+onto:hasCloudCover a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue onto:okta ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 9 ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasSunDirection a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasSunElevationAngle a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "-90.0"^^xsd:float ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive "90.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasStartTime a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherReport ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( time:Interval [ a owl:Restriction ;
+                        owl:onClass time:DateTimeDescription ;
+                        owl:onProperty time:hasDurationDescription ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+onto:hasWindDirection a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree> ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:nonNegativeInteger ;
+                                owl:withRestrictions ( [ xsd:maxExclusive 360 ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:hasWindSpeed a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:WeatherPhenomenon ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue onto:metresPerSecond ;
+                        owl:onProperty ns1:measuredIn ] [ a owl:Restriction ;
+                        owl:onProperty ns1:numericalValue ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float ] ) ] ] ) ] ;
+    rdfs:subPropertyOf ns1:qualityValue .
+
+onto:WeatherReport a owl:Class ;
+    rdfs:comment "A WeatherObservation puts together all the information known at a certain time about both the current and the future weather at a certain location.\\n\\nUsing the mandatory properties location a Point -- having latitude, longitude and altitude -- the location this WeatherObservation belongs to is specified. The property hasObservation time gives the time when the data has been collected.\\n\\nA WeatherObservation can have an arbitrary number of WeatherStates. Each of them gives some information about either the current state of the weather or the weather predicted for some time in the future."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherState,
+        onto:belongsToWeather ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasStartTime ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( time:Interval [ a owl:Restriction ;
+                                owl:onClass [ a owl:Restriction ;
+                                        owl:onProperty time:hours ;
+                                        owl:someValuesFrom xsd:decimal ] ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasPriority ;
+            owl:someValuesFrom xsd:positiveInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://www.w3.org/2003/01/geo/wgs84_pos#location> ;
+            owl:someValuesFrom <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasObservationTime ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( time:Instant [ a owl:Restriction ;
+                                owl:onClass [ a owl:Restriction ;
+                                        owl:hasValue time:unitMinute ;
+                                        owl:onProperty time:unitType ] ;
+                                owl:onProperty time:inDateTime ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasEndTime ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( time:Interval [ a owl:Restriction ;
+                                owl:onClass [ a owl:Restriction ;
+                                        owl:onProperty time:hours ;
+                                        owl:someValuesFrom xsd:decimal ] ;
+                                owl:onProperty time:hasDurationDescription ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasSource ;
+            owl:someValuesFrom onto:WeatherReportSource ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:WeatherCondition ;
+            owl:onProperty onto:hasCondition ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasWeatherState ;
+            owl:someValuesFrom onto:WeatherState ] .
+
+onto:hasWeatherPhenomenon a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:comment "Associates a WeatherPhenomenon to its WeatherState. One WeatherPhenomenon can only belong to one WeatherState, but one WeatherState can have an arbitrary number of instances of WeatherPhenomenon."^^xsd:string ;
+    rdfs:domain onto:WeatherState ;
+    rdfs:range onto:WeatherPhenomenon ;
+    rdfs:seeAlso onto:WeatherPhenomenon,
+        onto:WeatherState,
+        onto:belongsToState ;
+    owl:inverseOf onto:belongsToWeatherState .
+
+onto:WeatherState a owl:Class ;
+    rdfs:comment "A WeatherState is a set of weather information (temperature, humidity etc.). It is assigned to exactly one WeatherObservation (properties belongsToWeatherObservation/hasWeatherState), has a priority (property hasPriority) and has a source (where the weather information comes from, properties hasSource/isSourceOf).\\n\\nThe weather information itself (temperature, humidity etc.) is provided using instances of WeatherPhenomenon that are connected using the belongsToState/hasWeatherPhenomenon properties."^^xsd:string ;
+    rdfs:seeAlso onto:WeatherObservation,
+        onto:WeatherPhenomenon,
+        onto:WeatherStateSource,
+        onto:hasSource,
+        onto:hasTemporalEntity,
+        onto:hasWeatherPhenomenon,
+        onto:hasWeatherState,
+        time:TemporalEntity .
+
+onto:WeatherPhenomenon a owl:Class ;
+    rdfs:comment onto:WeatherState,
+        onto:belongsToState,
+        onto:hasCloudAltitude,
+        onto:hasCloudCover,
+        onto:hasDewPoint,
+        onto:hasHumidity,
+        onto:hasPrecipitationProbability,
+        onto:hasPrecipitationValue,
+        onto:hasPressure,
+        onto:hasSunRadiation,
+        onto:hasTemperature,
+        onto:hasWindDirection,
+        onto:hasWindSpeed,
+        onto:sunAngleNoon,
+        "A WeatherPhenomenon specifies information about the weather (temperature, humidity etc.) for a certain WeatherState. It is linked to the WeatherState using the belongsToState property.\\n\\nFor specifying the weather information, there exist several data properties: hasTemperature, hasHumidity, hasDewPoint, hasWindSpeed, hasWindDirection, hasPrecipitationProbability, hasPrecipitationValue, hasPressure, hasCloudCover, hasCloudAltitude, hasSunRadiation and hasSunAngleNoon."^^xsd:string .
+
+ns1:numericalValue a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:QualityValue .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:WeatherCondition onto:WeatherPhenomenon onto:WeatherReport onto:WeatherReportSource onto:WeatherState ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:AtmosphericPressure onto:CloudCover onto:DewPoint onto:Humidity onto:Precipitation onto:SolarRadiation onto:SunPosition onto:Temperature onto:Wind ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Forecast12HoursWeatherReport onto:Forecast15HoursWeatherReport onto:Forecast18HoursWeatherReport onto:Forecast1HourWeatherReport onto:Forecast21HoursWeatherReport onto:Forecast24HoursWeatherReport onto:Forecast2HoursWeatherReport onto:Forecast3HoursWeatherReport onto:Forecast6HoursWeatherReport onto:Forecast9HoursWeatherReport ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( onto:Cloud onto:Fog onto:LightCloud onto:PartlyCloud onto:Rain onto:Sleet onto:Snow onto:Sun onto:Thunder ) .
+

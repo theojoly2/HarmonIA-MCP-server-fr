@@ -1,0 +1,105 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/ontology/bibo/> .
+@prefix onto: <http://privatealpha.com/ontology/certification/1#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:qualification a owl:ObjectProperty ;
+    rdfs:label "qualification"@en ;
+    rdfs:comment "This property specifies what achievement, skill, or fact is being certified."@en ;
+    rdfs:domain onto:Certification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://smiy.sourceforge.net/cco/spec/cognitivecharacteristics.html>,
+        skos:Concept,
+        <http://www.w3.org/TR/vocab-org/#org:Role> ;
+    skos:note "The range of this term is left open, but should probably reference something abstract like a skos:Concept, an org:Role (itself a subclass of skos:Concept), or a skill, such as modeled by the Cognitive Characteristics Ontology."@en .
+
+<http://doriantaylor.com/person/dorian-taylor#me> foaf:name "Dorian Taylor"@en .
+
+onto:authority a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "authority"@en ;
+    rdfs:comment "This property specifies who (or what) is doing the certifying."@en ;
+    rdfs:domain onto:Certification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf onto:certifies ;
+    skos:note "The issuing authority can, once again, be a person, business, institution, or any other kind of agent."@en .
+
+onto:certifies a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "certifies"@en ;
+    rdfs:comment "This property specifies that its subject, an agent, has issued a certification."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Certification ;
+    owl:inverseOf onto:authority .
+
+onto:has-certification a owl:ObjectProperty ;
+    rdfs:label "has-certification"@en ;
+    rdfs:comment "This property specifies that an agent possesses a given certification."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Certification ;
+    owl:inverseOf onto:principal .
+
+onto:principal a owl:ObjectProperty ;
+    rdfs:label "principal"@en ;
+    rdfs:comment "This property specifies who or what agent is being certified."@en ;
+    rdfs:domain onto:Certification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf onto:has-certification ;
+    skos:note "The principal of the certification can be any agent, like a person, company, animal, AI, whatever."@en .
+
+onto:proof a owl:ObjectProperty ;
+    rdfs:label "proof"@en ;
+    rdfs:comment "This property points to some proof of the certification, like a scan of an official document or a page on the issuing authority's website that corroborates the certification."@en ;
+    rdfs:domain onto:Certification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://www.w3.org/ns/auth/cert> ;
+    owl:inverseOf onto:proves ;
+    skos:note "The range of this term is left open, but should probably reference a document. It could even point to an actual cryptographic certificate."@en .
+
+onto:proves a owl:ObjectProperty ;
+    rdfs:label "proves"@en ;
+    rdfs:comment "This property asserts that its subject is somehow proof of a given certification."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Certification ;
+    owl:inverseOf onto:proof .
+
+onto:Certification a owl:Class ;
+    rdfs:label "Certification"@en ;
+    rdfs:comment "This class represents the abstract notion of certification, of an agent, by another agent, that the first agent possesses some property or set of properties implied by the certification, potentially within some spatiotemporal scope, and which may or may not be designated by some identifier."@en ;
+    rdfs:isDefinedBy onto: ;
+    skos:example "A mandatory professional status, e.g. bar association membership"@en,
+        "A pet license, where the principal is an animal"@en,
+        "A private certification of achievement, e.g. CISSP"@en,
+        "An award (e.g. 2014 Nobel Prize in physics)"@en,
+        "An errors and omissions insurance policy"@en,
+        "An officially-recognized trade qualification, e.g. a welding ticket"@en,
+        "The issuance of a government-regulated privilege, e.g. driver's license"@en,
+        "The issuance of an academic degree to a particular person"@en,
+        "The notarization of an affadavit"@en .
+
+onto: a ns1:Webpage,
+        owl:Ontology ;
+    dcterms:created "2014-01-23T23:40:28+00:00"^^xsd:dateTime ;
+    dcterms:creator <http://doriantaylor.com/person/dorian-taylor#me> ;
+    dcterms:description "This document specifies a vocabulary for asserting the existence of official endorsements or certifications of <em xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:acrt=\"http://privatealpha.com/ontology/certification/1#\" xmlns:bibo=\"http://purl.org/ontology/bibo/\" xmlns:dct=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:owl=\"http://www.w3.org/2002/07/owl#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\" xmlns:vann=\"http://purl.org/vocab/vann/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\">agents</em>, such as people and organizations." ;
+    dcterms:title "An Agent Certification Ontology"@en ;
+    ns1:uri onto: ;
+    vann:preferredNamespacePrefix "acrt"@en ;
+    rdfs:comment "This document specifies a vocabulary for asserting the existence of official endorsements or certifications of <em xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:acrt=\"http://privatealpha.com/ontology/certification/1#\" xmlns:bibo=\"http://purl.org/ontology/bibo/\" xmlns:dct=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:owl=\"http://www.w3.org/2002/07/owl#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\" xmlns:vann=\"http://purl.org/vocab/vann/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\">agents</em>, such as people and organizations." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://creativecommons.org/ns>,
+        <http://www.w3.org/TR/vocab-adms/>,
+        <http://www.w3.org/community/odrl/two/model/>,
+        <http://www.w3.org/ns/auth/cert> ;
+    skos:editorialNote "Note that this assertion says only in <em xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:acrt=\"http://privatealpha.com/ontology/certification/1#\" xmlns:bibo=\"http://purl.org/ontology/bibo/\" xmlns:dct=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:owl=\"http://www.w3.org/2002/07/owl#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\" xmlns:vann=\"http://purl.org/vocab/vann/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\">informal</em> terms what the certification is, and what it allows me to do. This vocabulary is intended neither to describe the privileges granted by the certification, nor to describe the artifact that embodies the certification. It simply connects the subject of the certification to the issuing authority and their official serial number of the account." ;
+    skos:scopeNote "The purpose of this vocabulary is record-keeping and exchange, and likewise is its application context. The actual vetting mechanisms of the certifications in question are out of scope."@en .
+

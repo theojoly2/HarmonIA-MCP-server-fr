@@ -1,0 +1,156 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix onto: <https://www.w3.org/2019/wot/security#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+onto:APIKeySecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "APIKeySecurityScheme" ;
+    rdfs:comment "API key authentication security configuration identified by the term <code>apikey</code> (i.e., <code>\"scheme\": \"apikey\"</code>).  This is for the case where the access token is opaque and is not using a standard token format."@en ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:BasicSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "BasicSecurityScheme" ;
+    rdfs:comment "Basic authentication security configuration identified by the term <code>basic</code> (i.e., <code>\"scheme\": \"basic\"</code>), using an unencrypted username and password.  This scheme should be used with some other security mechanism providing confidentiality, for example, TLS."@en ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:BearerSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "BearerSecurityScheme" ;
+    rdfs:comment "Bearer token authentication security configuration identified by the term <code>bearer</code> (i.e., <code>\"scheme\": \"bearer\"</code>).  This scheme is intended for situations where bearer tokens are used independently of OAuth2.  If the <code>oauth2</code> scheme is specified it is not generally necessary to specify this scheme as well as it is implied.  For <code>format</code>, the value <code>jwt</code> indicates conformance with RFC7519, <code>jws</code> indicates conformance with RFC7797, <code>cwt</code> indicates conformance with RFC8392, and <code>jwe</code> indicates conformance with !RFC7516, with values for <code>alg</code> interpreted consistently with those standards. <span class=\"rfc2119-assertion\" id=\"td-security-bearer-format-extensions\">Other formats and algorithms for bearer tokens MAY be specified in vocabulary extensions.</span>" ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:CertSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "CertSecurityScheme" ;
+    rdfs:comment "Certificate-based asymmetric key security configuration conformant with X509V3 identified by the term <code>cert</code> (i.e., <code>\"scheme\": \"cert\"</code>)." ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:DigestSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "DigestSecurityScheme" ;
+    rdfs:comment "Digest authentication security configuration identified by the term <code>digest</code> (i.e., <code>\"scheme\": \"digest\"</code>). This scheme is similar to basic authentication but with added features to avoid man-in-the-middle attacks." ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:NoSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "NoSecurityScheme" ;
+    rdfs:comment "A security configuration corresponding to identified by the term <code>nosec</code> (i.e., <code>\"scheme\": \"nosec\"</code>), indicating there is no authentication or other mechanism required to access the resource."@en ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:OAuth2SecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "OAuth2SecurityScheme" ;
+    rdfs:comment "OAuth2 authentication security configuration for systems conformant with !RFC6749 and !RFC8252, identified by the term <code>oauth2</code> (i.e., <code>\"scheme\": \"oauth2\"</code>).  <span class=\"rfc2119-assertion\" id=\"td-security-oauth2-implicit-flow\">For the <code>implicit</code> flow <code>authorization</code> MUST be included.</span>  <span class=\"rfc2119-assertion\" id=\"td-security-oauth2-password-client-flow\">For the <code>password</code> and <code>client</code> flows <code>token</code> MUST be included.</span>  <span class=\"rfc2119-assertion\" id=\"td-security-oauth2-code-flow\">For the <code>code</code> flow both <code>authorization</code> and <code>token</code> MUST be included.</span>  If no <code>scopes</code> are defined in the <code>SecurityScheme</code> then they are considered to be empty."@en ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:PSKSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "PSKSecurityScheme" ;
+    rdfs:comment "Pre-shared key authentication security configuration identified by the term <code>psk</code> (i.e., <code>\"scheme\": \"psk\"</code>)." ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:PoPSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "PoPSecurityScheme" ;
+    rdfs:comment "Proof-of-possession (PoP) token authentication security configuration identified by the term <code>pop</code> (i.e., <code>\"scheme\": \"pop\"</code>). Here <code>jwt</code> indicates conformance with !RFC7519, <code>jws</code> indicates conformance with !RFC7797, <code>cwt</code> indicates conformance with !RFC8392, and <code>jwe</code> indicates conformance with RFC7516, with values for <code>alg</code> interpreted consistently with those standards. <span class=\"rfc2119-assertion\" id=\"td-security-pop-format-extensions\">Other formats and algorithms for PoP tokens MAY be specified in vocabulary extensions.</span>" ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:PublicSecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "PublicSecurityScheme" ;
+    rdfs:comment "Raw public key asymmetric key security configuration identified by the term <code>public</code> (i.e., <code>\"scheme\": \"public\"</code>)." ;
+    rdfs:subClassOf onto:SecurityScheme .
+
+onto:SecurityScheme a rdfs:Class,
+        owl:Class ;
+    rdfs:label "SecurityScheme" ;
+    rdfs:comment "Metadata describing the configuration of a security mechanism.  <span class=\"rfc2119-assertion\" id=\"td-security-scheme-name\">The value assigned to the name <code>scheme</code> MUST be defined within a vocabulary included in the Thing Description, either in the present vocabulary or in a TD context extension." .
+
+onto: a owl:Ontology ;
+    dc:title "Security mechanisms for the Web of Things"@en ;
+    dcterms:contributor <https://vcharpenay.link/#me> ;
+    dcterms:creator <mailto:michael.mccool@intel.com> ;
+    dcterms:license <http://purl.org/NET/rdflicense/cc-by4.0> ;
+    vann:preferredNamespacePrefix "wotsec" ;
+    vann:preferredNamespaceUri "https://www.w3.org/2019/wot/security#" ;
+    owl:versionInfo "0.0.1" .
+
+onto:alg a owl:DatatypeProperty ;
+    rdfs:label "alg" ;
+    ns1:domainIncludes onto:BearerSecurityScheme,
+        onto:PoPSecurityScheme ;
+    rdfs:comment "Encoding, encryption, or digest algorithm."@en .
+
+onto:authorization a owl:ObjectProperty ;
+    rdfs:label "authorization" ;
+    ns1:domainIncludes onto:BearerSecurityScheme,
+        onto:OAuth2SecurityScheme,
+        onto:PoPSecurityScheme ;
+    rdfs:comment "URI of the authorization server."@en .
+
+onto:flow a owl:DatatypeProperty ;
+    rdfs:label "flow" ;
+    ns1:domainIncludes onto:OAuth2SecurityScheme ;
+    rdfs:comment "Authorization flow."@en .
+
+onto:format a owl:DatatypeProperty ;
+    rdfs:label "format" ;
+    ns1:domainIncludes onto:BearerSecurityScheme,
+        onto:PoPSecurityScheme ;
+    rdfs:comment "Specifies format of security authentication information."@en .
+
+onto:identity a owl:DatatypeProperty ;
+    rdfs:label "identity" ;
+    ns1:domainIncludes onto:CertSecurityScheme,
+        onto:PSKSecurityScheme,
+        onto:PublicSecurityScheme ;
+    rdfs:comment "Identifier providing information which can be used for selection or confirmation." .
+
+onto:in a owl:DatatypeProperty ;
+    rdfs:label "in" ;
+    ns1:domainIncludes onto:APIKeySecurityScheme,
+        onto:BasicSecurityScheme,
+        onto:BearerSecurityScheme,
+        onto:DigestSecurityScheme,
+        onto:PoPSecurityScheme ;
+    rdfs:comment "Specifies the location of security authentication information."@en .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    ns1:domainIncludes onto:APIKeySecurityScheme,
+        onto:BasicSecurityScheme,
+        onto:BearerSecurityScheme,
+        onto:DigestSecurityScheme,
+        onto:PoPSecurityScheme ;
+    rdfs:comment "Name for query, header, or cookie parameters." .
+
+onto:proxy a owl:ObjectProperty ;
+    rdfs:label "proxy" ;
+    ns1:domainIncludes onto:SecurityScheme ;
+    rdfs:comment "URI of the proxy server this security configuration provides access to.  If not given, the corresponding security configuration is for the endpoint.  <br/>This feature is at risk."@en .
+
+onto:qop a owl:DatatypeProperty ;
+    rdfs:label "qop" ;
+    ns1:domainIncludes onto:DigestSecurityScheme ;
+    rdfs:comment "Quality of protection.  <br/>This feature is at risk." .
+
+onto:refresh a owl:ObjectProperty ;
+    rdfs:label "refresh" ;
+    ns1:domainIncludes onto:OAuth2SecurityScheme ;
+    rdfs:comment "URI of the refresh server."@en .
+
+onto:scopes a owl:DatatypeProperty ;
+    rdfs:label "scopes" ;
+    ns1:domainIncludes onto:OAuth2SecurityScheme ;
+    rdfs:comment "Set of authorization scope identifiers provided as an array.  These are provided in tokens returned by an authorization server and associated with forms in order to identify what resources a client may access and how.  The values associated with a form should be chosen from those defined in an <code>OAuth2SecurityScheme</code> active on that form.  <br/>This feature is at risk."@en .
+
+onto:token a owl:ObjectProperty ;
+    rdfs:label "token" ;
+    ns1:domainIncludes onto:OAuth2SecurityScheme ;
+    rdfs:comment "URI of the token server."@en .
+

@@ -1,0 +1,605 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://umbel.org/umbel> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dc:creator "Ontotext AD"@en,
+        "Structured Dynamics LLC"@en ;
+    vann:preferredNamespacePrefix "umbel" ;
+    vann:preferredNamespaceUri "http://umbel.org/umbel#" ;
+    owl:imports <http://www.w3.org/TR/skos-reference/skos-owl1-dl.rdf> ;
+    owl:versionIRI <http://umbel.org/umbel/v100#> ;
+    skos:definition "UMBEL (Upper Mapping and Binding Exchange Layer) vocabulary provides a general vocabulary (the UMBEL \"vocabulary\") of classes and predicates for describing domain ontologies, with the specific aim of promoting interoperability with external datasets and domains."@en ;
+    skos:prefLabel "Upper Mapping and Binding Exchange Layer (UMBEL) Vocabulary"@en .
+
+<http://umbel.org/umbel#AutomaticInspectedSMatch> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Mapping based on automatic scoring of concepts using S-Match, with specific alignment choice based on hand selection."@en ;
+    skos:prefLabel "Automatic - Inspected S-Match"@en .
+
+<http://umbel.org/umbel#AutomaticInspectedSV> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Mapping based on automatic scoring of concepts using Semantic Vectors, with specific alignment choice based on hand selection."@en ;
+    skos:prefLabel "Automatic - Inspected SV"@en .
+
+<http://umbel.org/umbel#AutomaticNotSpecified> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:prefLabel "Automatic - Not Specified"@en,
+        "Mapping based on automatic scoring of concepts using a script or technique not otherwise specified."@en .
+
+<http://umbel.org/umbel#ExternalDBOntologyMapping> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Mapping based on existing DBOntology assertion."@en ;
+    skos:prefLabel "External - DBOntology Mapping"@en .
+
+<http://umbel.org/umbel#ExternalGeoNamesMapping> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Mapping based on existing GeoNames assertion."@en ;
+    skos:prefLabel "External - GeoNames Mapping"@en .
+
+<http://umbel.org/umbel#ExternalOpenCycMapping> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Mapping based on existing OpenCyc assertion."@en ;
+    skos:prefLabel "External - OpenCyc Mapping"@en .
+
+<http://umbel.org/umbel#HeuristicListOfBasis> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Type assignment based on Wikipedia ListOf category."@en ;
+    skos:prefLabel "Heuristic - ListOf Basis"@en .
+
+<http://umbel.org/umbel#HeuristicNotSpecified> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "Heuristic mapping method applied; script or technique not otherwise specified."@en ;
+    skos:prefLabel "Heuristic - Not Specified"@en .
+
+<http://umbel.org/umbel#ManualNearlyEquivalent> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "The two mapped concepts are deemed to be nearly an equivalentClass or sameAs relationship, but not 100% so."@en ;
+    skos:prefLabel "Manual - Nearly Equivalent"@en .
+
+<http://umbel.org/umbel#ManualSimilarSense> a <http://umbel.org/umbel#Qualifier>,
+        owl:NamedIndividual ;
+    skos:definition "The two mapped concepts share much overlap, but are not the exact same sense, such as an action as related to the thing it acts upo."@en ;
+    skos:prefLabel "Manual - Similar Sense"@en .
+
+<http://umbel.org/umbel#correspondsTo> a owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:comment "The property umbel:correspondsTo is used to assert a close correspondence between an external class, named entity, individual or instance with a Reference Concept class. umbel:correspondsTo relates the external class, named entity, individual or instance to the class through the basis of both its subject matter and intended scope. This predicate should be used where the correspondence between the two entities is felt to be nearly equivalent to a sameAs assertion, and is reflexive, but without the full entailments of intensional class memberships. In these cases, both entities are understood to have the same type and intended scope, but without asserting a full class-level or sameAs individual relationship.\\n\\nThis predicate is designed for the circumstance of aligning two different ontologies or knowledge bases based on node-level correspondences, but without entailing the actual ontological relationships and structure of the object source. For example, the umbel:correspondsTo predicate is used to assert close correspondence between UMBEL Reference Concepts and Wikipedia categories or pages, yet without entailing the actual Wikipedia category structure.\\n\\nThis property asserts a different and stronger relationship than umbel:isAbout. One practical use is to guide specific instance member determinations when, say, the native structure of the external ontology or knowledge base is to be analyzed and replaced with an UMBEL-based structure.\\n\\nThis property is therefore used to create a nearly equivalent assertion (however, with the degree of that equivalence being unknown or unknowable) between an external instance or class and a Reference Concept class"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#RefConcept> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://umbel.org/umbel#hasCharacteristic> a owl:AnnotationProperty ;
+    skos:definition "The property umbel:hasCharacteristic is used to assert the relation between a Reference Concept and external properties that may be used in external ontologies to characterize, describe, or provide attributes for data records associated with that concept. It is via this property or its inverse, umbel:isCharacteristicOf, that external data characterizations may be incorporated and modeled within a domain ontology based on the UMBEL vocabulary."@en ;
+    skos:prefLabel "has characteristic"@en .
+
+<http://umbel.org/umbel#hasMapping> a owl:ObjectProperty ;
+    rdfs:domain rdf:Statement ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This property is used to reify a umbel:isAbout or a umbel:isRelatedTo property to a mapping percentage value, some quantitative metric value, or a qualitative descriptor characterizing the linkage degree or overlap between the two classes, predicates, individuals or datatypes. This value might be calculated from some external utility. "@en ;
+    skos:prefLabel "has mapping"@en .
+
+<http://umbel.org/umbel#isAbout> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#RefConcept> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://umbel.org/umbel#isRelatedTo> ;
+    skos:definition "The property umbel:isAbout is used to assert the relation between a named entity (individual) and a Reference Concept class. umbel:isAbout relates the named entity (individual) to the class through the basis of its subject matter. The relation acknowledges that the scope of the class can not be determined solely by the aggregation or extent of its associated individual entity members, and that the nature of the Reference Concept class may not alone bound or define the individual entity.\\n\\nThis property is therefore used to create a topical assertion between an individual and a Reference Concept."@en ;
+    skos:prefLabel "is about"@en .
+
+<http://umbel.org/umbel#isCharacteristicOf> a owl:AnnotationProperty ;
+    skos:definition "The property umbel:isCharacteristicOf is used to assert the relation between a property and a Reference Concept (or its punned individual) to which it applies. Such properties may be used in external ontologies to characterize, describe, or provide attributes for data records associated with that concept. It is via this property or its inverse, umbel:hasCharacteristic, that external data characterizations may be incorporated and modeled within a domain ontology based on the UMBEL vocabulary."@en ;
+    skos:prefLabel "is characteristic of"@en .
+
+<http://umbel.org/umbel#isLike> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "The property umbel:isLike is used to assert an associative link between similar individuals who may or may not be identical, but are believed to be so. This property is not intended as a general expression of similarity, but rather the likely but uncertain same identity of the two resources being related.\\n\\nThis property can and should be changed if the certainty of the sameness of identity is subsequently determined.\\n\\nIn general, we may not be able to assert that two individuals are the same based solely on current information on hand. However, there may be quite reasonable bases or methods that the two individuals are likely the same without being one hundred percent sure.\\n\\numbel:isLike has the semantics of likely identity, but where there is some uncertainty that the two resources indeed refer to the exact same individual with the same identity. Such uncertainty can arise when, for example, common names may be used for different individuals (e.g., John Smith).\\n\\nIt is appropriate to use this property when there is strong belief the two resources refer to the same individual with the same identity, but that association can not be asserted at the present time with certitude. "@en ;
+    skos:prefLabel "is like"@en .
+
+<http://umbel.org/umbel#relatesToAbstraction> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#AbstractLevel> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has abstraction"@en .
+
+<http://umbel.org/umbel#relatesToActivity> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Activities> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has activity"@en .
+
+<http://umbel.org/umbel#relatesToAnimal> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Animals> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "relates to animal"@en .
+
+<http://umbel.org/umbel#relatesToAttribute> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Attributes> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has attribute"@en .
+
+<http://umbel.org/umbel#relatesToAudioInfo> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#AudioInfo> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "relates to audio information"@en .
+
+<http://umbel.org/umbel#relatesToChemistry> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Chemistry> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to chemistry"@en .
+
+<http://umbel.org/umbel#relatesToDisease> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Diseases> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to disease"@en .
+
+<http://umbel.org/umbel#relatesToDrug> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Drugs> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to drug"@en .
+
+<http://umbel.org/umbel#relatesToEarth> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Earthscape> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to earthscape"@en .
+
+<http://umbel.org/umbel#relatesToEvent> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Events> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has event"@en .
+
+<http://umbel.org/umbel#relatesToFacility> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Facilities> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to facility"@en .
+
+<http://umbel.org/umbel#relatesToFinanceEconomy> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#FinanceEconomy> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to finance or economy"@en .
+
+<http://umbel.org/umbel#relatesToFoodDrink> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#FoodDrink> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has food drink"@en .
+
+<http://umbel.org/umbel#relatesToGeoEntity> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Geopolitical> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to geopolitical entity"@en .
+
+<http://umbel.org/umbel#relatesToHeavens> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Extraterrestrial> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to extraterrestrial entity"@en .
+
+<http://umbel.org/umbel#relatesToMarketIndustry> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#MarketsIndustries> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to market or industry"@en .
+
+<http://umbel.org/umbel#relatesToNotation> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Notations> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has notation"@en .
+
+<http://umbel.org/umbel#relatesToNumbers> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Numbers> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to numbers"@en .
+
+<http://umbel.org/umbel#relatesToOrganizationType> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Organizations> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has organization type"@en .
+
+<http://umbel.org/umbel#relatesToOtherOrganism> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> ) ] ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to other organism"@en .
+
+<http://umbel.org/umbel#relatesToPersonType> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#PersonTypes> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has person type"@en .
+
+<http://umbel.org/umbel#relatesToPhenomenon> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#NaturalPhenomena> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to natural phenomenon"@en .
+
+<http://umbel.org/umbel#relatesToPlant> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Plants> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to plant"@en .
+
+<http://umbel.org/umbel#relatesToProductType> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Products> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has product type"@en .
+
+<http://umbel.org/umbel#relatesToSociety> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Society> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to society"@en .
+
+<http://umbel.org/umbel#relatesToStructuredInfo> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#StructuredInfo> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to structured information"@en .
+
+<http://umbel.org/umbel#relatesToSubstance> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#NaturalSubstances> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to natural substance"@en .
+
+<http://umbel.org/umbel#relatesToTime> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Time> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has time"@en .
+
+<http://umbel.org/umbel#relatesToTopic> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#TopicsCategories> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has topic"@en .
+
+<http://umbel.org/umbel#relatesToVisualInfo> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#VisualInfo> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to visual information"@en .
+
+<http://umbel.org/umbel#relatesToWorkplace> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range <http://umbel.org/umbel#Workplaces> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship "@en ;
+    skos:prefLabel "has workplace"@en .
+
+<http://umbel.org/umbel#relatesToWrittenInfo> a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "This predicate relates an external entity to the SuperType (ST) shown. It indicates there is a relationship to the ST of a verifiable nature, but which is undetermined as to strength or a full rdf:type relationship."@en ;
+    skos:prefLabel "relates to written information"@en .
+
+<http://umbel.org/umbel#superPropertyOf> a owl:AnnotationProperty,
+        owl:ObjectProperty ;
+    rdfs:domain rdf:Property ;
+    rdfs:range rdf:Property ;
+    skos:definition "Specifies that a property is a super property of another property. This is the inverse of rdfs:subPropertyOf"@en ;
+    skos:prefLabel "super property of"@en .
+
+rdfs:comment a owl:AnnotationProperty .
+
+owl:topDataProperty a owl:DatatypeProperty .
+
+skos:altLabel a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:prefLabel a owl:AnnotationProperty .
+
+<http://umbel.org/umbel#AbstractLevel> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    skos:definition "This general SuperType category is largely composed of former AbstractConcepts, and represent some of the more abstract upper-level nodes for connecting the UMBEL structure together. This SuperType also includes theories or processes or methods for humans to do stuff or any human technology "@en ;
+    skos:prefLabel "abstract level"@en .
+
+<http://umbel.org/umbel#Attributes> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    skos:definition "This general SuperType category is for descriptive attributes of all kinds. Think of the specific attributes in Wikipedia \"infoboxes\" to understand the purpose and coverage of this SuperType. It includes colors, shapes, sizes, or other descriptive characteristics about an object."@en ;
+    skos:prefLabel "attributes"@en .
+
+<http://umbel.org/umbel#MarketsIndustries> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    skos:definition "This SuperType is a specialized classificatory system for markets and industries. It could be combined with the SuperType above, but is kept separate in order to provide a separate, economy-oriented system. "@en ;
+    skos:prefLabel "market industries"@en .
+
+<http://umbel.org/umbel#TopicsCategories> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    skos:definition "This largely subject-oriented SuperType is a means for using controlled vocabularies and classification schemes for characterizing what content \"is about\". The key constituents of this category are Types, Classifications, Concepts, CCC, and controlled vocabularies "@en ;
+    skos:prefLabel "topics categories"@en .
+
+<http://umbel.org/umbel#isRelatedTo> a owl:ObjectProperty ;
+    rdfs:domain <http://umbel.org/umbel#RefConcept> ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:definition "Check the definition of umbel:isAbout for the definition of this property; isRelatedTo is the inverse property of isAbout. "@en ;
+    skos:prefLabel "links entity"@en .
+
+<http://umbel.org/umbel#RefConcept> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom owl:Thing ;
+            owl:onProperty <http://umbel.org/umbel#isRelatedTo> ],
+        skos:Concept ;
+    skos:definition "Reference Concepts are a distinct subset of the more broadly understood concept such as used in the SKOS RDFS controlled vocabulary or formal concept analysis or the very general or abstract concepts common to some upper ontologies.\\n\\nReference Concepts are selected for their use as concrete, subject-related or commonly used notions for describing tangible ideas and referents in human experience and language. Reference Concepts are classes, the members of which are nameable instances or named entities, which by definition are held as distinct from these concepts. The UMBEL ontology is a coherently organized structure (or reference \"backbone\") of these Reference Concepts. "@en ;
+    skos:prefLabel "reference concept"@en .
+
+<http://umbel.org/umbel#Qualifier> a owl:Class ;
+    skos:definition "The Qualifier class is a set of descriptions that indicate the method used in order to establish an isAbout relationship between an UMBEL reference concept (RC) and an external entity. This description should be complete enough to aid understanding of the nature and reliability of the \"aboutness\" assertion and to be usable for filtering or user interface information. The descriptions may be literal strings or may refer to literal numeric values resulting from an automated alignment technique."@en ;
+    skos:prefLabel "qualifier"@en .
+
+<http://umbel.org/umbel#Products> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> ) ] ;
+    skos:definition "This is the largest SuperType and includes any instance offered for sale or performed as a commercial service. Often physical object made by humans that is not a conceptual work or a facility, such as vehicles, cars, trains, aircraft, spaceships, ships, foods, beverages, clothes, drugs, weapons. Products also include the concept of 'state' (e/g/., on/off) "@en ;
+    skos:prefLabel "products"@en .
+
+<http://umbel.org/umbel#Events> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "These are nameable occasions, games, sports events, conferences, natural phenomena, natural disasters, wars, incidents, anniversaries, holidays, or notable moments or periods in time "@en ;
+    skos:prefLabel "events"@en .
+
+<http://umbel.org/umbel#FinanceEconomy> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> ) ] ;
+    skos:definition "This SuperType pertains to all things financial and with respect to the economy, including chartable company performance, stock index entities, money, local currencies, taxes, incomes, accounts and accounting, mortgages and property. "@en ;
+    skos:prefLabel "finance and economy"@en .
+
+<http://umbel.org/umbel#Activities> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "These are ongoing activities that result (mostly) from human effort, often conducted by organizations to assist other organizations or individuals (in which case they are known as services, such as medicine, law, printing, consulting or teaching) or individual or group efforts for leisure, fun, sports, games or personal interests (activities) "@en ;
+    skos:prefLabel "activities"@en .
+
+<http://umbel.org/umbel#FoodDrink> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType is any edible substance grown, made or harvested by humans. The category also specifically includes the concept of cuisines "@en ;
+    skos:prefLabel "food or drink"@en .
+
+<http://umbel.org/umbel#NaturalSubstances> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "Notable inclusions are minerals, compounds, chemicals, or physical objects that are not the outcome of purposeful human effort, but are found naturally occurring. Other natural objects (such as rock, fossil, etc.) are also found under this SuperType. Natural Substances include subatomic particles. The contrast is with Earthscape, which covers natural \"features\" or living substances, which are covered under the appropriate SuperTypes. Chemicals can be Natural Substances, but only if they are naturally occurring, such as limestone or salt."@en ;
+    skos:prefLabel "natural substance"@en .
+
+<http://umbel.org/umbel#VisualInfo> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "any still image or picture or streaming video human work, with or without audio. Examples include graphics, pictures, movies, TV shows, individual shows from a TV show, etc. "@en ;
+    skos:prefLabel "visual information"@en .
+
+<http://umbel.org/umbel#Notations> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "Akin to conceptual works, these are codified means of human expression. Examples range from human languages themselves, to more domain-specific cases such as chemical symbols, genetic code (A-G-C-T), protocols, and computer languages, mathematical and set notations, etc. \\n\\nIdentifiers (numeric or alphanumeric identifiers for objects, often in a highly patterned way, such as phone numbers, URLs, zip and postal codes, SKUs, product codes, etc.), Units (any of the various ways in which measurement, space, volume, weight, speed, intensity, temperature, calories, siesmic intensity or other quantitative descriptions of phenomena can be made) and key reference types are also included in this SuperType "@en ;
+    skos:prefLabel "notations"@en .
+
+<http://umbel.org/umbel#StructuredInfo> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "This information SuperType is for all kinds of structured information and datasets, including compute programs, databases, files, Web pages and structured data that can be presented in tabular form "@en ;
+    skos:prefLabel "structured information"@en .
+
+<http://umbel.org/umbel#WrittenInfo> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "This SuperType includes any general material written by humans including books, blogs, articles, manuscripts, but any written information conveyed via text."@en ;
+    skos:prefLabel "written information"@en .
+
+<http://umbel.org/umbel#Animals> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This large SuperType includes all animal types, including specific animal types and vertebrates, invertebrates, insects, crustaceans, fish, reptiles, amphibia, birds, mammals, and animal body parts. Animal parts are specifically included. Also, groupings of such animals are included. Humans, as an animal, are included (versus as an individual Person). Diseases are specifically excluded. Animals have many of the similar overlaps to Plants. However, in addition, there are more terms for animal groups, animal parts, animal secretions, etc. Also Animals can include some human traits (posture, dead animal, etc) "@en ;
+    skos:prefLabel "animals"@en .
+
+<http://umbel.org/umbel#Chemistry> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType is a residual category (n.o.c., not otherwise categorized) for chemical bonds, chemical composition groupings, and the like. It is formed by what is not a natural substance or living thing (organic) substance. "@en ;
+    skos:prefLabel "chemistry"@en .
+
+<http://umbel.org/umbel#Earthscape> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "The Natural Feature SuperType is the collection of cartographic features that occur on the surface of the Earth. Positive examples include Mountain, Ocean, and Mesa. Artificial features such as canals are excluded. Most instances of these features have a fixed location in space.\\n\\nUnderground and underwater are also explicitly contained.\\n\\nThis SuperType is explicitly disjoint with Extraterrestrial (see below). "@en ;
+    skos:prefLabel "earthscape"@en .
+
+<http://umbel.org/umbel#Facilities> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "Facilities are physical places or buildings constructed by humans, such as schools, public institutions, markets, museums, amusement parks, worship places, stations, airports, ports, carstops, lines, railroads, roads, waterways, tunnels, bridges, parks, sport facilities, monuments. All can be geospatially located.\\n\\nFacilities also include animal pens and enclosures and general human \"activity\" areas (golf course, archeology sites, etc.). Iportantly Facilities include infrastructure systems such as roadways and physical networks.\\n\\nFacilities also include the component parts that go into making them (such as foundations, doors, windows, roofs, etc.) "@en ;
+    skos:prefLabel "facilities"@en .
+
+<http://umbel.org/umbel#Organizations> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "Organization is a broad SuperType and includes formal collections of humans, sometimes by legal means, charter, agreement or some mode of formal understanding. Examples include geoplotical entities such as nations, municipalities or countries; or companies, institutes, governments, universities, militaries, political parties, game groups, international organizations, trade associations, etc. All institutions, for example, are organizations.\\n\\nAlso included are informal collections of humans. Informal or less defined groupings of humans may result from ethnicity or tribes or nationality or from shared interests (such as social networks or mailing lists) or expertise (\"communities of practice\"). This dimension also includes the notion of identifiable human groups with set members at any given point in time. Examples include music groups, cast members of a play, directors on a corporate Board, TV show members, gangs, mobs, juries, generations, minorities, etc.\\n\\nFinally, Organizations contain the concepts of Industries and Programs and Communities. "@en ;
+    skos:prefLabel "organizations"@en .
+
+<http://umbel.org/umbel#Drugs> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType is an drug, medication or addictive substance "@en ;
+    skos:prefLabel "drugs"@en .
+
+<http://umbel.org/umbel#Geopolitical> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "Named places that have some informal or formal political (authorized) component. Important subcollections include Country, IndependentCountry, State_Geopolitical, City, and Province. "@en ;
+    skos:prefLabel "geopolitical"@en .
+
+<http://umbel.org/umbel#Workplaces> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "These are various workplaces and areas of human activities, ranging from single person workstations to large aggregations of people (but which are not formal political entities) "@en ;
+    skos:prefLabel "workplaces"@en .
+
+<http://umbel.org/umbel#Extraterrestrial> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType includes all natural things not specifically terrestrial, including celestial bodies (planets, asteroids, stars, galaxies, etc., that can be located within a sky map)."@en ;
+    skos:prefLabel "Extraterrestrial"@en .
+
+<http://umbel.org/umbel#NaturalPhenomena> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType includes natural phenomena and natural processes such as weather, weathering, erosion, fires, lightning, earthquakes, tectonics, etc. Clouds and weather processes are specifically included. Also includes climate cycles, general natural events (such as hurricanes) that are not specifically named, and biochemical processes and pathways. "@en ;
+    skos:prefLabel "natural phenomena"@en .
+
+<http://umbel.org/umbel#AudioInfo> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType is for any audio-only human work. Examples include live music performances, record albums, or radion shows or individual radio broadcasts "@en ;
+    skos:prefLabel "audio information"@en .
+
+<http://umbel.org/umbel#Diseases> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "Diseases are atypical or unusual or unhealthy conditions for (mostly human) living things, generally known as conditions, disorders, infections, diseases or syndromes. Diseases only affect living things and sometimes are caused by living things. This SuperType also includes impairments, disease vectors, wounds and injuries, and poisoning."@en ;
+    skos:prefLabel "diseases"@en .
+
+<http://umbel.org/umbel#Society> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> ) ] ;
+    skos:definition "This category includes concepts related to political systems, laws, rules or cultural mores governing societal or community behavior, or doctrinal, faith or religious bases or entities (such as gods, angels, totems) governing spiritual human matters. Culture, Issues, beliefs and various activisms (most -isms) are included "@en ;
+    skos:prefLabel "society"@en .
+
+<http://umbel.org/umbel#PersonTypes> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "The appropriate SuperType for all named, individual human beings. This SuperType also includes the assignment of formal, honorific or cultural titles given to specific human individuals. It further includes names given to humans who conduct specific jobs or activities (the latter case is known as an avocation). Examples include steelworker, waitress, lawyer, plumber, artisan. Ethnic groups are specifically included."@en ;
+    skos:prefLabel "person types"@en .
+
+<http://umbel.org/umbel#Plants> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType includes all plant types and flora, including flowering plants, algae, non-flowering plants, gymnosperms, cycads, and plant parts and body types. Note that all Plant Parts are also included."@en ;
+    skos:prefLabel "plants"@en .
+
+<http://umbel.org/umbel#ProtistsFungus> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This is the remaining cluster of eukaryotic organisms, specifically including the fungus and the protista (protozoans and slime molds)."@en ;
+    skos:prefLabel "protists fungus"@en .
+
+<http://umbel.org/umbel#Numbers> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This unique SuperType is for any abstract representation of numbers and numerics "@en ;
+    skos:prefLabel "numbers"@en .
+
+<http://umbel.org/umbel#Prokaryotes> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Events> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#Time> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "The Prokaryotes include all prokaryotic organisms, including the Monera, Archaebacteria, Bacteria, and Blue-green algas. Also included in this SuperType are viruses and prions."@en ;
+    skos:prefLabel "prokaryotes"@en .
+
+<http://umbel.org/umbel#Time> a owl:Class ;
+    rdfs:subClassOf <http://umbel.org/umbel#SuperType> ;
+    owl:disjointWith [ a owl:Class ;
+            owl:unionOf ( <http://umbel.org/umbel#Activities> <http://umbel.org/umbel#Animals> <http://umbel.org/umbel#AudioInfo> <http://umbel.org/umbel#Chemistry> <http://umbel.org/umbel#Diseases> <http://umbel.org/umbel#Drugs> <http://umbel.org/umbel#Earthscape> <http://umbel.org/umbel#Extraterrestrial> <http://umbel.org/umbel#Facilities> <http://umbel.org/umbel#FinanceEconomy> <http://umbel.org/umbel#FoodDrink> <http://umbel.org/umbel#Geopolitical> <http://umbel.org/umbel#NaturalPhenomena> <http://umbel.org/umbel#NaturalSubstances> <http://umbel.org/umbel#Notations> <http://umbel.org/umbel#Numbers> <http://umbel.org/umbel#Organizations> <http://umbel.org/umbel#PersonTypes> <http://umbel.org/umbel#Plants> <http://umbel.org/umbel#Products> <http://umbel.org/umbel#Prokaryotes> <http://umbel.org/umbel#ProtistsFungus> <http://umbel.org/umbel#Society> <http://umbel.org/umbel#StructuredInfo> <http://umbel.org/umbel#VisualInfo> <http://umbel.org/umbel#Workplaces> <http://umbel.org/umbel#WrittenInfo> ) ] ;
+    skos:definition "This SuperType is for specific time or date or period (such as eras, or days, weeks, months type intervals) references in various formats "@en ;
+    skos:prefLabel "time"@en .
+
+<http://umbel.org/umbel#SuperType> a owl:Class ;
+    skos:definition "SuperTypes are a collection of (mostly) similar Reference Concepts. Most of the SuperType classes have been designed to be (mostly) disjoint from the other SuperType classes. SuperTypes thus provide a higher-level of clustering and organization of Reference Concepts for use in user interfaces and for reasoning purposes."@en ;
+    skos:prefLabel "SuperType"@en .
+
+owl:topObjectProperty a owl:ObjectProperty .
+

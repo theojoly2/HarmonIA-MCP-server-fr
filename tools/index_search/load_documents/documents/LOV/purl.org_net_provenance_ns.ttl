@@ -1,0 +1,383 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://xmlns.com/wot/0.1/> .
+@prefix ns2: <http://www.w3.org/1999/xhtml/vocab#> .
+@prefix onto: <http://purl.org/net/provenance/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:conformsTo a owl:ObjectProperty .
+
+dcterms:created a owl:DatatypeProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:DatatypeProperty .
+
+dcterms:modified a owl:DatatypeProperty .
+
+dcterms:title a owl:DatatypeProperty .
+
+onto:Actor a owl:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Actor"@en ;
+    rdfs:comment "This class is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:Actor was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use one of the more specific classes prv:HumanAgent and prv:NonHumanAgent instead; or, if such a specialization is unsuitable for the use case at hand, directly use the general class prov:Agent as defined by PROV-O."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Artifact a owl:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Artifact"@en ;
+    rdfs:comment "This class is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:Artifact was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prov:Entity (or the more specific prv:Immutable) instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Execution a owl:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Execution"@en ;
+    rdfs:comment "This class is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:Execution was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prov:Activity instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:HumanActor a owl:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Human Actor"@en ;
+    rdfs:comment "This class is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:HumanActor was renamed to prv:HumanAgent in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prv:HumanAgent instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:NonHumanActor a owl:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Non-Human Actor"@en ;
+    rdfs:comment "This class is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:NonHumanActor was renamed to prv:NonHumanAgent in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prv:NonHumanAgent instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:completedAt a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "completed at"@en ;
+    rdfs:comment "This property refers to the time an activity has been completed."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentProperty prov:endedAtTime .
+
+onto:containedBy a owl:ObjectProperty ;
+    rdfs:label "contained in"@en ;
+    rdfs:comment "This property refers to a data item that contained a data item. Hence, this property refers to another data item of a larger granularity (e.g. an RDF triple is usually contained in an RDF graph)."@en ;
+    rdfs:domain onto:DataItem ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataItem .
+
+onto:deployedSoftware a owl:ObjectProperty ;
+    rdfs:label "runs"@en ;
+    rdfs:comment "This property refers to the software that was run by a non-human actor (usually a service)."@en ;
+    rdfs:domain onto:NonHumanAgent ;
+    rdfs:isDefinedBy onto: .
+
+onto:employedArtifact a owl:DeprecatedProperty,
+        owl:ObjectProperty ;
+    rdfs:label "used"@en ;
+    rdfs:comment "This property is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:employedArtifact was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prov:used instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:involvedActor a owl:DeprecatedProperty,
+        owl:ObjectProperty ;
+    rdfs:label "involved"@en ;
+    rdfs:comment "This property is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:involvedActor was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prov:wasAssociatedWith instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:operatedBy a owl:ObjectProperty ;
+    rdfs:label "operated by"@en ;
+    rdfs:comment "This property refers to a human agent who was operating a non-human agent. For instance, a service provider operates a data providing service (see concept prv:DataProvidingService). Another example is a human agent who operates a non-human data creating agent."@en ;
+    rdfs:domain onto:NonHumanAgent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:HumanAgent ;
+    rdfs:subPropertyOf prov:actedOnBehalfOf .
+
+onto:performedAt a owl:DatatypeProperty,
+        owl:DeprecatedProperty ;
+    rdfs:label "executed at"@en ;
+    rdfs:comment "This property has been renamed to prv:completedAt. Hence, prv:performedAt is deprecated and will be removed from the Provenance Vocabulary in the next revision."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:performedBy a owl:ObjectProperty ;
+    rdfs:label "performed by"@en ;
+    rdfs:comment "This property refers to an agent that/who performed an activity."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:precededBy a owl:ObjectProperty ;
+    rdfs:label "immediately preceded by"@en ;
+    rdfs:comment "This property may be used to make the relationship between different version of a data item explicit. More precisely, this property refers to an immediately preceding version of a data item; hence, the new version (i.e. the subject) has been created using the old version (i.e. the object). We strongly encourage to also describe this creation of the new version explicitly."@en ;
+    rdfs:domain onto:DataItem ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataItem ;
+    rdfs:subPropertyOf [ a owl:ObjectProperty ;
+            owl:inverseOf prov:wasRevisionOf ],
+        [ a owl:ObjectProperty ;
+            owl:inverseOf prov:wasRevisionOf ],
+        dcterms:replaces .
+
+onto:retrievedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "retrieved by"@en ;
+    rdfs:comment "This property refers to the data access by which an immutable entity has been retrieved from the Web. Each entity that has this property is a Web representation."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataItem onto:File ) ],
+        [ a owl:Class ;
+            owl:unionOf ( onto:DataItem onto:File ) ],
+        onto:Immutable ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataAccess ;
+    rdfs:subPropertyOf prov:wasGeneratedBy .
+
+onto:usedBy a owl:ObjectProperty ;
+    rdfs:label "used by"@en ;
+    rdfs:comment "This property refers to a data publisher who used a data providing services at the time the provenance description refers to."@en ;
+    rdfs:domain onto:DataProvidingService ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataPublisher ;
+    rdfs:subPropertyOf prov:actedOnBehalfOf .
+
+onto:usedData a owl:ObjectProperty ;
+    rdfs:label "used"@en ;
+    rdfs:comment "This property refers to a source data item that has been used during the creation of a data item. Examples for source data are the content of a document used for machine learning, the statements in a knowledge base used to entail a new statement, and the entries in a database used to answer a query. Notice, all source data has provenance; we strongly encourage to describe this provenance as well, at least as far as available information permits."@en ;
+    rdfs:domain onto:DataCreation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataItem ;
+    rdfs:seeAlso <http://purl.org/net/provenance/files#> ;
+    rdfs:subPropertyOf prov:used .
+
+onto:usedGuideline a owl:ObjectProperty ;
+    rdfs:label "guided by"@en ;
+    rdfs:comment "This property refers to a creation guideline which guided the execution of a data creation. Examples for creation guidelines are transformation rules, mapping definitions, entailment rules, and database queries. Notice, all creation guidelines have provenance; we strongly encourage to describe this provenance as well, at least as far as available information permits."@en ;
+    rdfs:domain onto:DataCreation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:CreationGuideline ;
+    rdfs:seeAlso <http://purl.org/net/provenance/files#> ;
+    rdfs:subPropertyOf prov:used .
+
+onto:yieldedBy a owl:DeprecatedProperty,
+        owl:ObjectProperty ;
+    rdfs:label "yielded by"@en ;
+    rdfs:comment "This property is deprecated and will be removed from the Provenance Vocabulary in the next revision. prv:yieldedBy was deprecated in the process of making the Provenance Vocabulary a specialization of W3C's PROV-O. Hence, use prov:wasGeneratedBy instead."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/net/provenance/ns.rdf> a foaf:Document .
+
+<http://sw.nokia.com/WebArch-1/Server> a owl:Class ;
+    rdfs:subClassOf onto:DataProvidingService .
+
+<http://sw.nokia.com/WebArch-1/Service> a owl:Class ;
+    rdfs:subClassOf onto:DataProvidingService .
+
+<http://trdf.sourceforge.net/provenance/ns.html> a foaf:Document ;
+    rdfs:label "Document that defines the core ontology of the Provenance Vocabulary"@en ;
+    dcterms:conformsTo <http://www.w3.org/TR/rdfa-syntax> ;
+    dcterms:description "This documents specifies the Provenance Vocabulary Core Ontology which defines the main classes and properties provided by the Provenance Vocabulary."@en ;
+    dcterms:title "Provenance Vocabulary Core Ontology Specification"@en ;
+    ns2:alternate <http://trdf.sourceforge.net/provenance/ns.rdf> ;
+    ns2:license <http://creativecommons.org/licenses/by/1.0/> ;
+    foaf:primaryTopic onto: ;
+    ns1:assurance <http://trdf.sourceforge.net/provenance/ns.html.sig> .
+
+<http://www.ontologydesignpatterns.org/ont/web/irw.owl#WebServer> a owl:Class ;
+    rdfs:subClassOf onto:DataProvidingService .
+
+ns2:alternate a owl:ObjectProperty .
+
+ns2:license a owl:ObjectProperty .
+
+foaf:Group a owl:Class ;
+    rdfs:subClassOf onto:HumanAgent .
+
+foaf:Organization a owl:Class ;
+    rdfs:subClassOf onto:HumanAgent .
+
+foaf:homepage a owl:ObjectProperty .
+
+foaf:name a owl:DatatypeProperty .
+
+foaf:primaryTopic a owl:ObjectProperty .
+
+ns1:assurance a owl:ObjectProperty .
+
+ns1:endorser a owl:ObjectProperty .
+
+<http://creativecommons.org/licenses/by/1.0/> a owl:Thing .
+
+<http://olafhartig.de/> a foaf:Document .
+
+<http://olafhartig.de/foaf.rdf#olaf> a foaf:Person ;
+    foaf:homepage <http://olafhartig.de/> ;
+    foaf:name "Olaf Hartig"@en .
+
+<http://olafhartig.de/foaf.rdf#pubkey2011> a ns1:PubKey .
+
+dcterms:replaces a owl:ObjectProperty .
+
+onto:CreationGuideline a owl:Class ;
+    rdfs:label "Creation Guideline"@en ;
+    rdfs:comment "CreationGuideline is a concept that represents a guideline used to guide the execution of a data creation. Examples for creation guidelines are transformation rules, mapping definitions, entailment rules, and database queries."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:DataItem,
+        prov:Plan .
+
+onto:DataPublisher a owl:Class ;
+    rdfs:label "Data Publisher"@en ;
+    rdfs:comment "DataPublisher is a concept that represents entities such as persons, groups, or organizations who use a data providing service (see concept prv:DataProvidingService) to publish data on the Web."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:HumanAgent .
+
+onto:Immutable a owl:Class ;
+    rdfs:label "Data Item"@en ;
+    rdfs:comment "Immutable is a concept that represents entities which are immutable."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf prov:Entity .
+
+<http://trdf.sourceforge.net/provenance/ns.html.sig> a ns1:Endorsement ;
+    dcterms:title "Detached signature"@en ;
+    ns1:endorser <http://olafhartig.de/foaf.rdf#pubkey2011> .
+
+<http://users.ox.ac.uk/~zool0770/> a foaf:Document .
+
+<http://users.ox.ac.uk/~zool0770/foaf.rdf#me> a foaf:Person ;
+    foaf:homepage <http://users.ox.ac.uk/~zool0770/> ;
+    foaf:name "Jun Zhao"@en .
+
+<http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/ont/web/irw.owl#WebResource> a owl:Class .
+
+<http://www.w3.org/TR/rdfa-syntax> a owl:Thing .
+
+prov:Plan a owl:Class .
+
+prov:endedAtTime a owl:DatatypeProperty .
+
+ns1:Endorsement a owl:Class .
+
+ns1:PubKey a owl:Class .
+
+onto:accessedResource a owl:ObjectProperty ;
+    rdfs:label "accessed"@en ;
+    rdfs:comment "This property refers to the Web resource that has been accessed during the execution of a data access. More precisely, the request of the referenced Web resource resulted in retrieving the representation that has been retrieved by the corresponding prv:DataAccess execution."@en ;
+    rdfs:domain onto:DataAccess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.ontologydesignpatterns.org/ont/web/irw.owl#WebResource> .
+
+onto:accessedService a owl:ObjectProperty ;
+    rdfs:label "accessed"@en ;
+    rdfs:comment "This property refers to the service that provided the Web representation during the execution of a data access."@en ;
+    rdfs:domain onto:DataAccess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataProvidingService ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:createdBy a owl:ObjectProperty ;
+    rdfs:label "created by"@en ;
+    rdfs:comment "This property refers to the creation of a data item (or a file that serializes data items)."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataItem onto:File ) ],
+        [ a owl:Class ;
+            owl:unionOf ( onto:DataItem onto:File ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataCreation ;
+    rdfs:subPropertyOf prov:wasGeneratedBy ;
+    owl:propertyChainAxiom ( onto:serializedBy onto:createdBy ),
+        ( onto:serializedBy onto:createdBy ) .
+
+onto:serializedBy a owl:ObjectProperty ;
+    rdfs:label "serialized by"@en ;
+    rdfs:comment "This property refers to a file that serialized a data item."@en ;
+    rdfs:domain onto:DataItem ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:File .
+
+prov:Activity a owl:Class .
+
+prov:Agent a owl:Class .
+
+prov:actedOnBehalfOf a owl:ObjectProperty .
+
+prov:used a owl:ObjectProperty .
+
+prov:wasAssociatedWith a owl:ObjectProperty .
+
+prov:wasGeneratedBy a owl:ObjectProperty .
+
+prov:wasRevisionOf a owl:ObjectProperty .
+
+foaf:Person a owl:Class ;
+    rdfs:subClassOf onto:HumanAgent .
+
+prov:Entity a owl:Class .
+
+onto:DataAccess a owl:Class ;
+    rdfs:label "Data Access"@en ;
+    rdfs:comment "DataAccess is a concept that represents the completed execution of an activity by which an immutable data item has been retrieved from the Web."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:accessedResource ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:accessedService ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:accessedService ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:accessedResource ],
+        prov:Activity ;
+    owl:disjointWith onto:DataCreation .
+
+onto:DataCreation a owl:Class ;
+    rdfs:label "Data Creation"@en ;
+    rdfs:comment "DataCreation is a concept that represents the execution of an activity by which data items have been created."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf prov:Activity ;
+    owl:disjointWith onto:DataAccess .
+
+onto:NonHumanAgent a owl:Class ;
+    rdfs:label "Non-Human Agent"@en ;
+    rdfs:comment "NonHumanAgent is a general class that represents agents who are not social beings."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf prov:Agent ;
+    owl:disjointWith onto:HumanAgent .
+
+foaf:Document a owl:Class .
+
+onto:DataProvidingService a owl:Class ;
+    rdfs:label "Data Providing Service"@en ;
+    rdfs:comment "DataProvidingService is a concept that represents a non-human agent - usually a Web service or a server - that processes data access requests and actually sends the requested Web representations over the Web."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:NonHumanAgent .
+
+onto:File a owl:Class ;
+    rdfs:label "File"@en ;
+    rdfs:comment "File is a general class that represents computer files/documents of any kind."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf prov:Entity ;
+    owl:disjointWith onto:DataItem .
+
+onto:HumanAgent a owl:Class ;
+    rdfs:label "Human Agent"@en ;
+    rdfs:comment "HumanAgent is a general class that represents agents who are social beings such as persons, organizations, companies."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf prov:Agent ;
+    owl:disjointWith onto:NonHumanAgent .
+
+onto:DataItem a owl:Class ;
+    rdfs:label "Data Item"@en ;
+    rdfs:comment "DataItem is a general concept that represents data items of any kind."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization>,
+        prov:Entity ;
+    owl:disjointWith onto:File .
+
+onto: a owl:Ontology ;
+    dcterms:created "2009-08-25T12:00:00+00:00"^^xsd:dateTime ;
+    dcterms:creator <http://olafhartig.de/foaf.rdf#olaf>,
+        <http://users.ox.ac.uk/~zool0770/foaf.rdf#me> ;
+    dcterms:description "The Provenance Vocabulary provides classes and properties for describing provenance of Web data. The vocabulary focuses on two main use cases: 1.) It enables consumers of Web data to describe provenance of data retrieved from the Web and of data derived from such Web data. 2.) It enables providers of Web data to publish provenance-related metadata about their data. Notice, the vocabulary is not intended for describing provenance of other kinds of Web content. The Provenance Vocabulary is designed as a Web data specific specialization of the W3C PROV Ontology (PROV-O); classes and properties provided by the vocabulary are domain specific extensions of the more general concepts introduced in PROV-O. As a consequence, any Provenance Vocabulary based description of provenance can be easily interpreted and exchanged according to the W3C PROV family of standards."@en ;
+    dcterms:modified "2012-03-14T12:00:00+00:00"^^xsd:dateTime ;
+    dcterms:title "Provenance Vocabulary Core Ontology namespace"@en .
+

@@ -1,0 +1,280 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:language a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+rdf:PlainLiteral a rdfs:Datatype .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<https://w3id.org/dio#> a owl:Ontology ;
+    dc:creator "Monika Solanki (monika.solanki@cs.ox.ac.uk)"@en ;
+    dc:date "04-01-2016" ;
+    dc:description <http://aligned.cs.ox.ac.uk/images/dio.jpg>,
+        "The scope of the DIO ODP is the domain of design intent or design rationale that needs to be documented while undertaking the design of any artifact.\\r\\n\\r\\nTo capture provenance, DIO exploits PROV-O. However DIO uses a modualrised version of PROV-O, based on Syntactic locality." ;
+    dc:title "The Design Intent Ontology - A content ontology design pattern" ;
+    owl:imports <http://aligned.cs.ox.ac.uk/ontologies/prov_dio.owl>,
+        <http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl> ;
+    owl:versionInfo 1.1 .
+
+<https://w3id.org/dio#Active> a owl:NamedIndividual,
+        <https://w3id.org/dio#Status> .
+
+<https://w3id.org/dio#Comment> a owl:Class ;
+    rdfs:label "Comment" ;
+    dc:description "A comment made by an agent in response to an argument, a justification or another comment" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#Evaluation> a owl:Class ;
+    rdfs:label "Evaluation" ;
+    dc:description "An entity representing the evaluation that supports the solution." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#OnHold> a owl:NamedIndividual,
+        <https://w3id.org/dio#Status> .
+
+<https://w3id.org/dio#RationaleCaptureMethod> a owl:Class ;
+    rdfs:label "Rationale Capture Methodology" ;
+    dc:description "An entity representing the methodology used to capture the design intent artifact" .
+
+<https://w3id.org/dio#Resolved> a owl:NamedIndividual,
+        <https://w3id.org/dio#Status> .
+
+<https://w3id.org/dio#Terminated> a owl:NamedIndividual,
+        <https://w3id.org/dio#Status> .
+
+<https://w3id.org/dio#addressedBy> a owl:ObjectProperty ;
+    rdfs:label "addressedBy" .
+
+<https://w3id.org/dio#captureMethodology> a owl:ObjectProperty ;
+    rdfs:label "captureMethodology" .
+
+<https://w3id.org/dio#contradicts> a owl:ObjectProperty ;
+    rdfs:label "contradicts" ;
+    rdfs:domain <https://w3id.org/dio#Solution> ;
+    rdfs:range <https://w3id.org/dio#Solution> .
+
+<https://w3id.org/dio#fulfillsRequirement> a owl:ObjectProperty ;
+    rdfs:label "fullfillsRequirements" ;
+    rdfs:domain <https://w3id.org/dio#Design>,
+        <https://w3id.org/dio#DesignIntentArtifact> ;
+    rdfs:range <https://w3id.org/dio#DesignRequirement> ;
+    owl:inverseOf <https://w3id.org/dio#requirementFulfilledBy> .
+
+<https://w3id.org/dio#governsDesign> a owl:ObjectProperty ;
+    rdfs:label "governsDesign" ;
+    rdfs:domain <https://w3id.org/dio#DesignDecision> ;
+    rdfs:range <https://w3id.org/dio#Design> .
+
+<https://w3id.org/dio#hasArgument> a owl:ObjectProperty ;
+    rdfs:label "hasArgument" ;
+    rdfs:range <https://w3id.org/dio#Argument> .
+
+<https://w3id.org/dio#hasComment> a owl:ObjectProperty ;
+    rdfs:label "hasComment" .
+
+<https://w3id.org/dio#hasConstraint> a owl:ObjectProperty ;
+    rdfs:label "hasConstraint" ;
+    rdfs:domain <https://w3id.org/dio#Solution> ;
+    rdfs:range <https://w3id.org/dio#Constraint> .
+
+<https://w3id.org/dio#hasEvidence> a owl:ObjectProperty ;
+    rdfs:label "hasEvidence" ;
+    rdfs:domain <https://w3id.org/dio#Argument>,
+        <https://w3id.org/dio#Justification> ;
+    rdfs:range <https://w3id.org/dio#Evidence> .
+
+<https://w3id.org/dio#hasJustification> a owl:ObjectProperty ;
+    rdfs:label "hasJustification" ;
+    rdfs:range <https://w3id.org/dio#Justification> .
+
+<https://w3id.org/dio#hasStatus> a owl:ObjectProperty ;
+    rdfs:label "hasStatus" ;
+    rdfs:domain <https://w3id.org/dio#DesignIssue> ;
+    rdfs:range <https://w3id.org/dio#Status> .
+
+<https://w3id.org/dio#intentAddresses> a owl:ObjectProperty ;
+    rdfs:label "intentAddresses" ;
+    rdfs:domain <https://w3id.org/dio#DesignIntent> ;
+    rdfs:range <https://w3id.org/dio#DesignGoal> .
+
+<https://w3id.org/dio#leadsTo> a owl:ObjectProperty ;
+    rdfs:label "leadsTo" ;
+    rdfs:domain <https://w3id.org/dio#MandatedSolution> ;
+    rdfs:range <https://w3id.org/dio#DesignDecision> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dio#providesAlternativeSolution> a owl:ObjectProperty ;
+    rdfs:label "providesAlternativeSolution" ;
+    owl:inverseOf <https://w3id.org/dio#hasAlternativeSolution> .
+
+<https://w3id.org/dio#providesMandatedSolution> a owl:ObjectProperty ;
+    rdfs:label "providesMandatedSolution" ;
+    owl:inverseOf <https://w3id.org/dio#hasMandatedSolution> .
+
+<https://w3id.org/dio#rationaleCapturedUsing> a owl:ObjectProperty ;
+    rdfs:label "rationaleCapturedUsing" .
+
+<https://w3id.org/dio#refines> a owl:ObjectProperty ;
+    rdfs:label "refines" ;
+    rdfs:domain <https://w3id.org/dio#Solution> ;
+    rdfs:range <https://w3id.org/dio#Solution> .
+
+<https://w3id.org/dio#supports> a owl:ObjectProperty ;
+    rdfs:label "supports" ;
+    rdfs:range <https://w3id.org/dio#Justification> .
+
+<https://w3id.org/dio#usesAssumption> a owl:ObjectProperty ;
+    rdfs:label "usesAssumption" ;
+    rdfs:domain <https://w3id.org/dio#Solution> ;
+    rdfs:range <https://w3id.org/dio#Assumption> .
+
+<https://w3id.org/dio#usesHeuristic> a owl:ObjectProperty ;
+    rdfs:label "usesHeuristic" ;
+    rdfs:domain <https://w3id.org/dio#Solution> ;
+    rdfs:range <https://w3id.org/dio#Heuristic> .
+
+dcterms:description a owl:DatatypeProperty .
+
+xsd:dateTime a rdfs:Datatype .
+
+prov:generatedAtTime a owl:DatatypeProperty .
+
+prov:wasAttributedTo a owl:ObjectProperty .
+
+<https://w3id.org/dio#Assumption> a owl:Class ;
+    rdfs:label "Assumption" ;
+    dc:description "The assumption on which a proposed solution is based." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#Constraint> a owl:Class ;
+    rdfs:label "Constraint" ;
+    dc:description "A constraint that underlies the proposed solution." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#DesignGoal> a owl:Class ;
+    rdfs:label "Design Goal" ;
+    dc:description "An entity representing the problem, goal, question or issue the design intent aims to address." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/dio#DesignIntentArtifact> [ a owl:Restriction ;
+                        owl:allValuesFrom <https://w3id.org/dio#AlternativeSolution> ;
+                        owl:onProperty <https://w3id.org/dio#hasAlternativeSolution> ] [ a owl:Restriction ;
+                        owl:allValuesFrom <https://w3id.org/dio#MandatedSolution> ;
+                        owl:onProperty <https://w3id.org/dio#hasMandatedSolution> ] [ a owl:Restriction ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass <https://w3id.org/dio#MandatedSolution> ;
+                        owl:onProperty <https://w3id.org/dio#hasMandatedSolution> ] ) ] ;
+    owl:equivalentClass <https://w3id.org/dio#DesignIssue> .
+
+<https://w3id.org/dio#DesignIntent> a owl:Class ;
+    rdfs:label "Design Intent" ;
+    dc:description "A entity defining the notion of a design intent, i.e., the rationale underpinning the choices that are made from the alternatives available during various phases of the overall design lifecycle." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#DesignRequirement> a owl:Class ;
+    rdfs:label "Design Requirements" ;
+    dc:description "An entity capturing the requirements that result in the design intent" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#Evidence> a owl:Class ;
+    dc:description "An entity representing an evidence that supports a proposed solution.",
+        "Evidence" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#Heuristic> a owl:Class ;
+    rdfs:label "Heuristic" ;
+    dc:description "An entity representing the requirements to be fulfilled for realising the solution" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#requirementFulfilledBy> a owl:ObjectProperty ;
+    rdfs:label "requirementFulfilledBy" .
+
+<https://w3id.org/dio#version> a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
+xsd:string a rdfs:Datatype .
+
+<https://w3id.org/dio#AlternativeSolution> a owl:Class ;
+    rdfs:label "Alternative Solution" ;
+    dc:description "An entity representing the proposed solution." ;
+    rdfs:subClassOf <https://w3id.org/dio#Solution> .
+
+<https://w3id.org/dio#Argument> a owl:Class ;
+    rdfs:label "Argument" ;
+    dc:description "A reason presented against a proposed solution." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#Design> a owl:Class ;
+    rdfs:label "Design" ;
+    dc:description "A design is a specification of an object, manifested by an agent, intended to accomplish goals, in a particular environment, using a set of  components, satisfying a set of requirements, subject to constraints." .
+
+<https://w3id.org/dio#DesignDecision> a owl:Class ;
+    rdfs:label "Design Decision" ;
+    dc:description "The final design decision made based on the various alternative solutions proposed. A design decision is driven by a mandated solution." .
+
+<https://w3id.org/dio#DesignIssue> a owl:Class ;
+    rdfs:label "Design Issue" ;
+    dc:description "An entity representing the problem, goal, question or issue the design intent aims to address." ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#hasAlternativeSolution> a owl:ObjectProperty ;
+    rdfs:label "hasAlternativeSolution" ;
+    rdfs:range <https://w3id.org/dio#AlternativeSolution> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+owl:topObjectProperty a owl:ObjectProperty .
+
+<https://w3id.org/dio#Justification> a owl:Class ;
+    rdfs:label "A reason supporting the proposed solution.",
+        "Justification" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#hasMandatedSolution> a owl:ObjectProperty ;
+    rdfs:label "hasMandatedSolution" ;
+    rdfs:range <https://w3id.org/dio#MandatedSolution> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dio#MandatedSolution> a owl:Class ;
+    rdfs:label "Mandated Solution" ;
+    dc:description "An entity representing the solution accepted as a result of the design deliberation process." ;
+    rdfs:subClassOf <https://w3id.org/dio#Solution> .
+
+<https://w3id.org/dio#Status> a owl:Class ;
+    rdfs:label "Status" ;
+    dc:description "An entity representing the status of a design issue." .
+
+<https://w3id.org/dio#Solution> a owl:Class ;
+    rdfs:label "Solution" ;
+    rdfs:subClassOf <https://w3id.org/dio#DesignIntentArtifact> .
+
+<https://w3id.org/dio#DesignIntentArtifact> a owl:Class ;
+    rdfs:label "Design Intent Artifact" ;
+    dc:description "An entity representing any artifact that plays a part in capturing the design intent. The minimum ontological commitment required for this entity is a brief description of the artifact, the version info and the date." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onClass prov:Agent ;
+                        owl:onProperty prov:wasAttributedTo ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string ;
+                        owl:onProperty dcterms:description ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:dateTime ;
+                        owl:onProperty prov:generatedAtTime ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:string ;
+                        owl:onProperty <https://w3id.org/dio#version> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+

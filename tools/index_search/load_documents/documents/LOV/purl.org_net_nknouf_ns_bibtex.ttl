@@ -1,0 +1,485 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://purl.org/net/nknouf/ns/bibtex> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty ;
+    dc:title "Nicholas Knouf" .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:identifier a owl:AnnotationProperty .
+
+dc:source a owl:AnnotationProperty .
+
+dc:subject a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:abstract a owl:AnnotationProperty .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "bibtex ontology" ;
+    dc:date "2003-12-29" ;
+    dc:description "Transformation of bibTeX into an OWL ontology" ;
+    dc:identifier "http://zeitkunst.org/bibtex/0.2/bibtex.owl"^^xsd:anyURI ;
+    dc:subject "fMRI, ontology, fMRI analysis" ;
+    dc:title "bibtex.owl: an ontology for bibTeX entries" ;
+    rdfs:comment "Possible ontology to describe bibTeX entries." ;
+    owl:versionInfo "0.2" .
+
+<http://purl.org/net/nknouf/ns/bibtex#Article> a owl:Class ;
+    rdfs:label "Article"@en ;
+    rdfs:comment "An article from a journal or magazine."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasJournal> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Book> a owl:Class ;
+    rdfs:label "Book"@en ;
+    rdfs:comment "A book with an explicit publisher."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasPublisher> ],
+        [ a owl:Restriction ;
+            dc:description "One thing to figure out is whether or not this tells us what we want; that is, does this imply that we must have at least one property of humanCreator, which could be either hasAuthor or hasEditor?" ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#humanCreator> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Booklet> a owl:Class ;
+    rdfs:label "Booklet"@en ;
+    rdfs:comment "A work that is printed and bound, but without a named publisher or sponsoring institution."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Conference> a owl:Class ;
+    rdfs:label "Conference"@en ;
+    rdfs:comment "The same as INPROCEEDINGS, included for Scribe compatibility."@en ;
+    rdfs:subClassOf <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    owl:equivalentClass <http://purl.org/net/nknouf/ns/bibtex#Inproceedings> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Inbook> a owl:Class ;
+    rdfs:label "Inbook"@en ;
+    rdfs:comment "A part of a book, which may be a chapter (or section or whatever) and/or a range of pages. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            dc:description "One thing to figure out is whether or not this tells us what we want; that is, does this imply that we must have at least one property of humanCreator, which could be either hasAuthor or hasEditor?" ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#humanCreator> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasPublisher> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#pageChapterData> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Incollection> a owl:Class ;
+    rdfs:label "Incollection"@en ;
+    rdfs:comment "A part of a book having its own title."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasBooktitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasPublisher> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Manual> a owl:Class ;
+    rdfs:label "Manual"@en ;
+    rdfs:comment "Technical documentation."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Mastersthesis> a owl:Class ;
+    rdfs:label "Mastersthesis"@en ;
+    rdfs:comment "A Master's thesis."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasSchool> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Misc> a owl:Class ;
+    rdfs:label "Misc"@en ;
+    rdfs:comment "Use this type when nothing else fits."@en ;
+    rdfs:subClassOf <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Phdthesis> a owl:Class ;
+    rdfs:label "Phdthesis"@en ;
+    rdfs:comment "A PhD thesis."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasSchool> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Proceedings> a owl:Class ;
+    rdfs:label "Proceedings"@en ;
+    rdfs:comment "The proceedings of a conference."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Techreport> a owl:Class ;
+    rdfs:label "Techreport"@en ;
+    rdfs:comment "A report published by a school or other institution, usually numbered within a series."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasInstitution> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#Unpublished> a owl:Class ;
+    rdfs:label "Unpublished"@en ;
+    rdfs:comment "A document having an author and title, but not formally published."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasNote> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasAbstract> a owl:DatatypeProperty ;
+    rdfs:label "has abstract"@en ;
+    rdfs:comment "An abstract of the work."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasAddress> a owl:DatatypeProperty ;
+    rdfs:label "has address"@en ;
+    rdfs:comment "Usually the address of the publisher or other type of institution. For major publishing houses, van Leunen recommends omitting the information entirely. For small publishers, on the other hand, you can help the reader by giving the complete address."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasAffiliation> a owl:DatatypeProperty ;
+    rdfs:label "has affiliation"@en ;
+    rdfs:comment "The authors affiliation."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasAnnotation> a owl:DatatypeProperty ;
+    rdfs:label "has annotation"@en ;
+    rdfs:comment "An annotation. It is not used by the standard bibliography styles, but may be used by others that produce an annotated bibliography."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasChapter> a owl:DatatypeProperty ;
+    rdfs:label "has chapter"@en ;
+    rdfs:comment "A chapter (or section or whatever) number."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:subPropertyOf <http://purl.org/net/nknouf/ns/bibtex#pageChapterData> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasContents> a owl:DatatypeProperty ;
+    rdfs:label "has contents"@en ;
+    rdfs:comment "A Table of Contents."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasCopyright> a owl:DatatypeProperty ;
+    rdfs:label "has copyright"@en ;
+    rdfs:comment "Copyright information."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasCrossref> a owl:DatatypeProperty ;
+    rdfs:label "has crossref"@en ;
+    rdfs:comment "The database key of the entry being cross referenced."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasEdition> a owl:DatatypeProperty ;
+    rdfs:label "has edition"@en ;
+    rdfs:comment "The edition of a book--for example, \"Second\". This should be an ordinal, and should have the first letter capitalized, as shown here; the standard styles convert to lower case when necessary."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasEditor> a owl:DatatypeProperty ;
+    rdfs:label "has editor"@en ;
+    dc:description "Again, the same issues that arose with the \"hasAuthor\" property apply here." ;
+    rdfs:comment "Name(s) of editor(s), typed as indicated in the LaTeX book. If there is also an author field, then the editor field gives the editor of the book or collection in which the reference appears."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://purl.org/net/nknouf/ns/bibtex#humanCreator> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasISBN> a owl:DatatypeProperty ;
+    rdfs:label "has ISBN"@en ;
+    rdfs:comment "The International Standard Book Number."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasISSN> a owl:DatatypeProperty ;
+    rdfs:label "has ISSN"@en ;
+    rdfs:comment "The International Standard Serial Number. Used to identify a journal."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasKey> a owl:DatatypeProperty ;
+    rdfs:label "has key"@en ;
+    rdfs:comment "The key for a particular bibTeX entry.  Note that the rdf:ID for each Entry instance could be the bibTeX key as well, possibly making this property redundant."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasKeywords> a owl:DatatypeProperty ;
+    rdfs:label "has keywords"@en ;
+    rdfs:comment "Key words used for searching or possibly for annotation."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasLCCN> a owl:DatatypeProperty ;
+    rdfs:label "has LCCN"@en ;
+    rdfs:comment "The Library of Congress Call Number."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasLanguage> a owl:DatatypeProperty ;
+    rdfs:label "has language"@en ;
+    rdfs:comment "The language the document is in."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasLocation> a owl:DatatypeProperty ;
+    rdfs:label "has location"@en ;
+    rdfs:comment "A location associated with the entry, such as the city in which a conference took place."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasMonth> a owl:DatatypeProperty ;
+    rdfs:label "has month"@en ;
+    rdfs:comment "The month in which the work was published or, for an unpublished work, in which it was written. You should use the standard three-letter abbreviation, as described in Appendix B.1.3 of the LaTeX book."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasMrnumber> a owl:DatatypeProperty ;
+    rdfs:label "has mrnumber"@en ;
+    rdfs:comment "The Mathematical Reviews number."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasNumber> a owl:DatatypeProperty ;
+    rdfs:label "has number"@en ;
+    rdfs:comment "The number of a journal, magazine, technical report, or of a work in a series. An issue of a journal or magazine is usually identified by its volume and number; the organization that issues a technical report usually gives it a number; and sometimes books are given numbers in a named series."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasOrganization> a owl:DatatypeProperty ;
+    rdfs:label "has organization"@en ;
+    rdfs:comment "The organization that sponsors a conference or that publishes a manual."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasPages> a owl:DatatypeProperty ;
+    rdfs:label "has pages"@en ;
+    rdfs:comment "One or more page numbers or range of numbers, such as 42-111 or 7,41,73-97 or 43+ (the `+' in this last example indicates pages following that don't form a simple range). To make it easier to maintain Scribe-compatible databases, the standard styles convert a single dash (as in 7-33) to the double dash used in TeX to denote number ranges (as in 7-33)."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://purl.org/net/nknouf/ns/bibtex#pageChapterData> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasPrice> a owl:DatatypeProperty ;
+    rdfs:label "has price"@en ;
+    rdfs:comment "The price of the document."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasSeries> a owl:DatatypeProperty ;
+    rdfs:label "has series"@en ;
+    rdfs:comment "The name of a series or set of books. When citing an entire book, the the title field gives its title and an optional series field gives the name of a series or multi-volume set in which the book is published."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasSize> a owl:DatatypeProperty ;
+    rdfs:label "has size"@en ;
+    rdfs:comment "The physical dimensions of a work."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasType> a owl:DatatypeProperty ;
+    rdfs:label "has type"@en ;
+    rdfs:comment "The type of a technical report--for example, \"Research Note\"."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasURL> a owl:DatatypeProperty ;
+    rdfs:label "has URL"@en ;
+    rdfs:comment "The WWW Universal Resource Locator that points to the item being referenced. This often is used for technical reports to point to the ftp or web site where the postscript source of the report is located."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasVolume> a owl:DatatypeProperty ;
+    rdfs:label "has volume"@en ;
+    rdfs:comment "The volume of a journal or multivolume book."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://purl.org/net/nknouf/ns/bibtex#howPublished> a owl:DatatypeProperty ;
+    rdfs:label "how published"@en ;
+    rdfs:comment "How something strange has been published. The first word should be capitalized."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#Inproceedings> a owl:Class ;
+    rdfs:label "Inproceedings"@en ;
+    rdfs:comment "An article in a conference proceedings."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasTitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasAuthor> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasBooktitle> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/net/nknouf/ns/bibtex#hasYear> ],
+        <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasInstitution> a owl:DatatypeProperty ;
+    rdfs:label "has institution"@en ;
+    dc:description "This could be an object property that refers to an external set of institution instances." ;
+    rdfs:comment "The sponsoring institution of a technical report."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasJournal> a owl:DatatypeProperty ;
+    rdfs:label "has journal"@en ;
+    dc:description "This could optionally be an object property, whereby the range would refer to an external set of journal instances, thus providing standardized abbreviations for different bibliographic styles." ;
+    rdfs:comment "A journal name. Abbreviations are provided for many journals; see the Local Guide"@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasNote> a owl:DatatypeProperty ;
+    rdfs:label "has note"@en ;
+    rdfs:comment "Any additional information that can help the reader. The first word should be capitalized."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasBooktitle> a owl:DatatypeProperty ;
+    rdfs:label "has booktitle"@en ;
+    rdfs:comment "Title of a book, part of which is being cited. See the LaTeX book for how to type titles. For book entries, use the title field instead."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasSchool> a owl:DatatypeProperty ;
+    rdfs:label "has school"@en ;
+    dc:description "As with \"hasPublisher\", this could be an ObjectProperty that refers to an external set of school instances." ;
+    rdfs:comment "The name of the school where a thesis was written."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasPublisher> a owl:DatatypeProperty ;
+    rdfs:label "has publisher"@en ;
+    dc:description "This is a case where an ObjectProperty might be a better choice, where the range is some set of publisher names defined in another ontology.  That would allow all of the metadata for the publisher to be incorporated as needed." ;
+    rdfs:comment "The publisher's name."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#pageChapterData> a owl:DatatypeProperty ;
+    rdfs:label "page and/or chapter data"@en ;
+    rdfs:comment "A generic property to hold page and/or chapter data."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> .
+
+<http://purl.org/net/nknouf/ns/bibtex#humanCreator> a owl:DatatypeProperty ;
+    rdfs:label "human creator"@en ;
+    rdfs:comment "A generic human creator category, necessary in order to contain both author and editor."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasAuthor> a owl:DatatypeProperty ;
+    rdfs:label "has author"@en ;
+    dc:description "This is tricky due to the fact that order is not (generally) preserved in RDF documents.  The problem arises when you want to have an author list where the order is _extremely_ important.  How shall we do that?  Perhaps we want to define \"hasPrimaryAuthor\", \"hasSecondaryAuthor\", \"hasTertiaryAuthor\", and \"hasRemainingAuthors\", or something of that sort.  This will be have to given more thought." ;
+    rdfs:comment "The name(s) of the author(s), in the format described in the LaTeX book."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://purl.org/net/nknouf/ns/bibtex#humanCreator> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasYear> a owl:DatatypeProperty ;
+    rdfs:label "has year"@en ;
+    rdfs:comment "The year of publication or, for an unpublished work, the year it was written. Generally it should consist of four numerals, such as 1984, although the standard styles can handle any year whose last four nonpunctuation characters are numerals, such as '(about 1984)'."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasTitle> a owl:DatatypeProperty ;
+    rdfs:label "has title"@en ;
+    rdfs:comment "The work's title, typed as explained in the LaTeX book."@en ;
+    rdfs:domain <http://purl.org/net/nknouf/ns/bibtex#Entry> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/net/nknouf/ns/bibtex#Entry> a owl:Class ;
+    rdfs:label "Entry"@en ;
+    rdfs:comment "Base class for all entries"@en .
+

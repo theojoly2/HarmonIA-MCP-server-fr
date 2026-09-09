@@ -1,0 +1,116 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://w3id.org/rsp/vocals#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:RDFStream a owl:Class ;
+    rdfs:label "RDFStream"@en ;
+    rdfs:comment "A stream composed of RDF data elements, i.e. RDF graphs and/or triples."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:Stream ;
+    rdfs:subClassOf onto:Stream .
+
+onto:StreamDescriptor a owl:Class ;
+    rdfs:label "StreamDescriptor"@en ;
+    rdfs:comment "A Stream Descriptor is a Web document that contains the description of a Stream."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:Stream ;
+    rdfs:subClassOf dcat:CatalogRecord,
+        foaf:Document .
+
+onto:hasEndpoint a owl:ObjectProperty ;
+    rdfs:label "hasEndpoint"@en ;
+    rdfs:comment "A relationship between a Stream and a StreamEndpoint. A stream may have several endpoints through which its contents can be accessible."@en ;
+    rdfs:domain onto:Stream ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:StreamEndpoint ;
+    rdfs:seeAlso onto:Stream,
+        onto:StreamEndpoint ;
+    rdfs:subPropertyOf dcat:distribution .
+
+onto:hasPartition a owl:ObjectProperty ;
+    rdfs:label "hasPartition"@en ;
+    rdfs:comment "A relationship between a Stream and a partition, or portion of elements streamed"@en ;
+    rdfs:domain onto:Stream ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:StreamPartition ;
+    rdfs:seeAlso onto:Stream,
+        onto:StreamPartition .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+onto:StreamDistribution a owl:Class ;
+    rdfs:label "StreamDistribution"@en ;
+    rdfs:comment "Represents a specific available form of a stream. Each stream might be available in different forms, these forms might represent different access points of the stream. Examples of distributions include a WebSocket endpoint, an HTTP endpoint, a Server-Sent Events endpoint, MQTT, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:Stream ;
+    rdfs:subClassOf dcat:Distribution ;
+    owl:equivalentClass onto:StreamEndpoint .
+
+onto:previous a owl:ObjectProperty ;
+    rdfs:label "previous"@en ;
+    rdfs:comment "Relationship between a stream partition and the previous partition in the stream. it connects stream partitions in order"@en ;
+    rdfs:domain onto:StreamPartition ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:StreamPartition ;
+    rdfs:seeAlso onto:StreamPartition .
+
+dcat:CatalogRecord a owl:Class .
+
+dcat:distribution a owl:ObjectProperty .
+
+foaf:Document a owl:Class .
+
+dcat:Dataset a owl:Class .
+
+dcat:Distribution a owl:Class .
+
+onto:StreamEndpoint a owl:Class ;
+    rdfs:label "StreamEndpoint"@en ;
+    rdfs:comment "Represents a specific available form of a stream. Each stream might be available in different forms, these forms might represent different access points of the stream. Examples of endpoints include a WebSocket endpoint, an HTTP endpoint, a Server-Sent Events endpoint, MQTT, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcat:Distribution .
+
+onto:StreamPartition a owl:Class ;
+    rdfs:label "StreamPartition"@en ;
+    rdfs:comment "A finite subset of the stream that are made available to be accessed and consumed by standard Linked Data services."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:Stream,
+        onto:previous ;
+    rdfs:subClassOf dcat:Dataset .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    dc:publisher <http://aislab.hevs.ch/> ;
+    dcterms:creator <http://streamreasoning.org/vois#RiccardoTommasini>,
+        <http://streamreasoning.org/vois#YehiaAboSedira>,
+        <http://w3id.org/people/jpcik/me> ;
+    dcterms:description "This ontology aims to model RDF streams, their metadata, and access endpoints for publishing and consuming these streams"@en,
+        "Cette ontologie a été conçue pour representer des données et meta-données de streams RDF, ainsi que leurs points d'accès."@fr ;
+    dcterms:issued "2017-12-01"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2017-12-10"^^xsd:date ;
+    dcterms:publisher <http://w3id.org/hes-so/aislab> ;
+    dcterms:rights "Copyright © 2017 Politecnico di Milano & HES-SO Valais-Wallis" ;
+    dcterms:title "VoCaLS: A Vocabulary and Catalog for Linked Streams"@en,
+        "VoCaLS: ontologie de representation de données et metadonnées de streams"@fr ;
+    vann:preferredNamespacePrefix "vocals" ;
+    vann:preferredNamespaceUri "http://w3id.org/rsp/vocals#" ;
+    rdfs:comment "This ontology aims to model RDF streams, their metadata, and access endpoints for publishing and consuming these streams"@en,
+        "Cette ontologie a été conçue pour representer des données et meta-données de streams RDF, ainsi que leurs points d'accès."@fr ;
+    owl:imports dcat: ;
+    owl:versionInfo "0.1.1" .
+
+onto:Stream a owl:Class ;
+    rdfs:label "Stream"@en ;
+    rdfs:comment "A potentially infinite sequence of data elements. A stream may be findable and accesible on the Web."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:StreamDistribution ;
+    rdfs:subClassOf dcat:Dataset .
+

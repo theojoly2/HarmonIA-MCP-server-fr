@@ -1,0 +1,166 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <https://w3id.org/seas/DeviceOntology> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+foaf:Person a owl:Class .
+
+foaf:name a owl:DatatypeProperty .
+
+<https://w3id.org/seas/actsOn> a owl:ObjectProperty ;
+    rdfs:label "acts on"@en ;
+    rdfs:comment "Links an actuating, actuator, or actuation, to the feature of interest a property of which it acts on.\\r\\n\\r\\nIf `x` acts on a property, then it also acts on the feature of interest of this property:\\r\\n\\r\\n```\\r\\nseas:actsOnProperty < seas:actsOn o seas:isPropertyOf .\\r\\n```\\r\\n\\r\\nIf a acting acts on a feature of interest, then any actuator that implements this acting also acts on this feature of interest, and any actuation that used this acting also acts on this feature of interest. Furthermore, if a actuator acts on a feature of interest, then any actuation executed by this actuator also acts on this feature of interest:\\r\\n\\r\\n```\\r\\nseas:actsOn < pep:usedProcedure o seas:actsOn .\\r\\nseas:actsOn < pep:usedProcedure o seas:actsOn .\\r\\nseas:actsOn < pep:madeBy o seas:actsOn .\\r\\n```\\r\\n"@en ;
+    rdfs:domain [ owl:unionOf ( <https://w3id.org/seas/Actuating> <https://w3id.org/seas/Actuator> <https://w3id.org/seas/Actuation> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/seas/FeatureOfInterest> ;
+    ns1:term_status "testing" .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+<https://w3id.org/seas/Actuation> a owl:Class ;
+    rdfs:label "Actuation"@en ;
+    rdfs:comment "An actuation is the execution of some actuating procedure by some actuator, and has an impact on the physical world."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ owl:onProperty <https://w3id.org/pep/madeBy> ;
+            owl:someValuesFrom <https://w3id.org/seas/Actuator> ],
+        [ owl:onProperty <https://w3id.org/seas/actsOnProperty> ;
+            owl:someValuesFrom <https://w3id.org/seas/Property> ],
+        [ owl:onProperty <https://w3id.org/pep/usedProcedure> ;
+            owl:someValuesFrom <https://w3id.org/seas/Actuating> ],
+        <https://w3id.org/pep/ProcedureExecution> ;
+    owl:equivalentClass [ owl:onProperty <https://w3id.org/pep/usedProcedure> ;
+            owl:someValuesFrom <https://w3id.org/seas/Actuating> ] ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Device> a owl:Class ;
+    rdfs:label "Device"@en ;
+    rdfs:comment "Device is a physical system designed to execute one or more procedures that invove the physical world.\\r\\n\\r\\nA `seas:Device` is also a `pep:ProcedureExecutor` from the [Procedure Execution Ontology (PEP)](https://w3id.org/pep/). As such, it may implement procedures, and generate procedure executions.\\r\\n\\r\\nIf SEAS was to be aligned to the SAREF ontology, `seas:Device` would be more generic than `saref:Device`.\\r\\n\\r\\nA `seas:Device` may also be aligned with the SSN `ssn:Device`."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/pep/ProcedureExecutor> ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Observation> a owl:Class ;
+    rdfs:label "Observation"@en ;
+    rdfs:comment "An observation is the execution of some sensing procedure by some sensor."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ owl:onProperty <https://w3id.org/pep/usedProcedure> ;
+            owl:someValuesFrom <https://w3id.org/seas/Sensing> ],
+        [ owl:onProperty <https://w3id.org/seas/observesProperty> ;
+            owl:someValuesFrom <https://w3id.org/seas/Property> ],
+        [ owl:onProperty <https://w3id.org/pep/madeBy> ;
+            owl:someValuesFrom <https://w3id.org/seas/Sensor> ],
+        <https://w3id.org/pep/ProcedureExecution> ;
+    owl:equivalentClass [ owl:onProperty <https://w3id.org/pep/usedProcedure> ;
+            owl:someValuesFrom <https://w3id.org/seas/Sensing> ] ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Actuator> a owl:Class ;
+    rdfs:label "Actuator"@en ;
+    rdfs:comment "An actuator is a device that implements some actuating procedure, and has thus an impact on the physical world."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ owl:onProperty <https://w3id.org/pep/implements> ;
+            owl:someValuesFrom <https://w3id.org/seas/Actuating> ],
+        <https://w3id.org/seas/Device> ;
+    owl:equivalentClass [ owl:onProperty <https://w3id.org/pep/implements> ;
+            owl:someValuesFrom <https://w3id.org/seas/Actuating> ] ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Sensor> a owl:Class ;
+    rdfs:label "Sensor"@en ;
+    rdfs:comment "A sensor is a device that implements some sensing procedure, and hence uses stimuli from the physical world to produce outputs."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ owl:onProperty <https://w3id.org/pep/implements> ;
+            owl:someValuesFrom <https://w3id.org/seas/Sensing> ],
+        <https://w3id.org/seas/Device> ;
+    owl:equivalentClass [ owl:onProperty <https://w3id.org/pep/implements> ;
+            owl:someValuesFrom <https://w3id.org/seas/Sensing> ] ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/observes> a owl:ObjectProperty ;
+    rdfs:label "observes"@en ;
+    rdfs:comment "Links a sensing, sensor, or observation, to the feature of interest a property of which it observes.\\r\\n\\r\\nIf `x` observes a property, then it also observes the feature of interest of this property:\\r\\n\\r\\n```\\r\\nseas:observes < seas:observesProperty o seas:isPropertyOf .\\r\\n```\\r\\n\\r\\nIf a sensing observes a feature of interest, then any sensor that implements this sensing also observes this feature of interest, and any observation that used this sensing also observes this feature of interest. Furthermore, if a sensor observes a feature of interest, then any observation executed by this sensor also observes this feature of interest:\\r\\n\\r\\n```\\r\\nseas:observes < pep:usedProcedure o seas:observes .\\r\\nseas:observes < pep:usedProcedure o seas:observes .\\r\\nseas:observes < pep:madeBy o seas:observes .\\r\\n```\\r\\n  \\r\\n"@en ;
+    rdfs:domain [ owl:unionOf ( <https://w3id.org/seas/Sensing> <https://w3id.org/seas/Sensor> <https://w3id.org/seas/Observation> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/seas/FeatureOfInterest> ;
+    owl:propertyChainAxiom ( <https://w3id.org/pep/implements> <https://w3id.org/seas/observes> ),
+        ( <https://w3id.org/pep/madeBy> <https://w3id.org/seas/observes> ),
+        ( <https://w3id.org/pep/usedProcedure> <https://w3id.org/seas/observes> ) ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/actsOnProperty> a owl:ObjectProperty ;
+    rdfs:label "acts on property"@en ;
+    rdfs:comment "Links an actuating, actuator, or actuation, to the property it acts on.\\r\\n\\r\\nIf a acting acts on a property, then any actuator that implements this acting also acts on this property, and any actuation that used this acting also acts on this property. Furthermore, if a actuator acts on a property, then any actuation executed by this actuator also acts on this property:\\r\\n\\r\\n```\\r\\nseas:actsOnProperty < pep:implements o seas:actsOnProperty .\\r\\nseas:actsOnProperty < pep:usedProcedure o seas:actsOnProperty .\\r\\nseas:actsOnProperty < pep:madeBy o seas:actsOnProperty .\\r\\n```"@en ;
+    rdfs:domain [ owl:unionOf ( <https://w3id.org/seas/Actuating> <https://w3id.org/seas/Actuator> <https://w3id.org/seas/Actuation> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/seas/Property> ;
+    owl:propertyChainAxiom ( <https://w3id.org/pep/madeBy> <https://w3id.org/seas/actsOnProperty> ),
+        ( <https://w3id.org/pep/usedProcedure> <https://w3id.org/seas/actsOnProperty> ),
+        ( <https://w3id.org/pep/implements> <https://w3id.org/seas/actsOnProperty> ) ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/observesProperty> a owl:ObjectProperty ;
+    rdfs:label "observes property"@en ;
+    rdfs:comment "Links a sensing, sensor, or observation, to a property it observes.\\r\\n\\r\\nIf a sensing observes a property, then any sensor that implements this sensing also observes this property, and any observation that used this sensing also observes this property. Furthermore, if a sensor observes a property, then any observation executed by this sensor also observes this property:\\r\\n\\r\\n```\\r\\nseas:observesProperty < pep:implements o seas:observesProperty .\\r\\nseas:observesProperty < pep:usedProcedure o seas:observesProperty .\\r\\nseas:observesProperty < pep:madeBy o seas:observesProperty .\\r\\n```\\r\\n"@en ;
+    rdfs:domain [ owl:unionOf ( <https://w3id.org/seas/Sensing> <https://w3id.org/seas/Sensor> <https://w3id.org/seas/Observation> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/seas/Property> ;
+    owl:propertyChainAxiom ( <https://w3id.org/pep/usedProcedure> <https://w3id.org/seas/observesProperty> ),
+        ( <https://w3id.org/pep/madeBy> <https://w3id.org/seas/observesProperty> ),
+        ( <https://w3id.org/pep/implements> <https://w3id.org/seas/observesProperty> ) ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Actuating> a owl:Class ;
+    rdfs:label "Actuating"@en ;
+    rdfs:comment "Actuating is a procedure that has an impact on the physical world."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/pep/Procedure> ;
+    ns1:term_status "testing" .
+
+<https://w3id.org/seas/Sensing> a owl:Class ;
+    rdfs:label "Sensing"@en ;
+    rdfs:comment "Sensing is a procedure where stimuli from the physical world are used to produce outputs."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/pep/Procedure> ;
+    ns1:term_status "testing" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    dcterms:creator <http://www.maxime-lefrancois.info/me#> ;
+    dcterms:description "The SEAS Device ontology defines `seas:Device` as physical system that are designed to execute one or more procedures that involve the physical world.\\r\\n\\r\\n\\r\\nFigure below provides an overview of the concepts in this ontology:\\r\\n\\r\\n[![Overview of the Device ontology](https://w3id.org/seas/device.png)](https://w3id.org/seas/device.png)\\r\\n\\r\\nThis ontology extends the [Procedure Execution Ontology (PEP)](https://w3id.org/pep/) and defines:\\r\\n\\r\\n- `seas:Actuator`s implements `seas:Actuating` procedures and do `seas:Actuation`s;\\r\\n- `seas:Sensor`s implements `seas:Sensing` procedures and do `seas:Observation`s.\\r\\n\\r\\nSub types of `seas:Actuator`, `seas:Actuating`, and `seas:Actuation`, may constrain the type of the value of the property. For instance ontology `seas:BooleanOntology` defines `seas:BooleanActuator`,  `seas:BooleanActuating`, and  `seas:BooleanActuation`, that constrain the acted upon property to be a `seas:BooleanProperty`. Other ontologies may define many more.\\r\\n\\r\\nSimilarly, sub types of `seas:Sensor`, `seas:Sensing`, and `seas:Observation`, may constrain the type of the value of the property. For instance ontology `seas:BooleanOntology` defines `seas:BooleanSensor`,  `seas:BooleanSensing`, and  `seas:BooleanObservation`, that constrain the observed property to be a `seas:BooleanProperty`. Other ontologies may define many more.\\r\\n\\r\\n\\r\\nAlignments to the [SSN ontology](http://www.w3.org/ns/ssn/) is proposed in [SSNAlignment](https://w3id.org/seas/SSNAlignment).\\r\\n\\r\\n"@en ;
+    dcterms:issued "2016-05-10"^^xsd:date ;
+    dcterms:license <https://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:modified "2016-09-26"^^xsd:date ;
+    dcterms:title "The SEAS Device ontology"@en ;
+    vann:preferredNamespacePrefix "seas" ;
+    vann:preferredNamespaceUri <https://w3id.org/seas/> ;
+    owl:imports <https://w3id.org/pep/>,
+        <https://w3id.org/seas/SystemOntology> ;
+    owl:priorVersion onto:-1.0 ;
+    owl:versionIRI onto:-1.1 ;
+    owl:versionInfo "v1.1" .
+

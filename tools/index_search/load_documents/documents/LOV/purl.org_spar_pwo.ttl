@@ -1,0 +1,258 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/11/swrl#> .
+@prefix onto: <http://purl.org/spar/pwo> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dc:creator "Aldo Gangemi"^^xsd:string,
+        "David Shotton"^^xsd:string,
+        "Silvio Peroni"^^xsd:string ;
+    dc:date "2015-06-18"^^xsd:string ;
+    dc:description <https://svn.code.sf.net/p/sempublishing/code/PWO/pwo.png>,
+        "The Publishing Workflow Ontology (PWO) is a simple ontology written in OWL 2 DL for the characterization of the main stages in the workflow associated with the publication of a document (e.g. being written, under review, XML capture, page design, publication to the Web)."@en ;
+    dc:rights "This work is distributed under a Creative Commons Attribution License (http://creativecommons.org/licenses/by/3.0/)."@en ;
+    dc:title "The Publishing Workflow Ontology (PWO)"^^xsd:string ;
+    rdfs:comment "The Publishing Workflow Ontology (PWO) is an ontology for describing the workflow associated with the publication of a document.  It forms part of SPAR, a suite of Semantic Publishing and Referencing Ontologies."@en ;
+    owl:imports <http://www.essepuntato.it/2009/10/error>,
+        <http://www.ontologydesignpatterns.org/cp/owl/basicplan.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/controlflow.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/participation.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl>,
+        <http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl>,
+        <http://www.w3.org/2006/time> ;
+    owl:versionInfo "2.2"^^xsd:string .
+
+<http://purl.org/spar/pwo/hasNextStep> a owl:ObjectProperty ;
+    rdfs:label "has next step"@en ;
+    rdfs:comment "A property linking a step in a workflow with the step that directly follows it."@en ;
+    rdfs:domain <http://purl.org/spar/pwo/Step> ;
+    rdfs:range <http://purl.org/spar/pwo/Step> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> ;
+    owl:inverseOf <http://purl.org/spar/pwo/hasPreviousStep> .
+
+<http://purl.org/spar/pwo/isNeededBy> a owl:ObjectProperty ;
+    rdfs:label "is needed by"@en ;
+    rdfs:comment "The property linking a thing required to undertake a workflow step to the step itself."@en ;
+    owl:inverseOf <http://purl.org/spar/pwo/needs> .
+
+<http://purl.org/spar/pwo/isProducedBy> a owl:ObjectProperty ;
+    rdfs:label "is produced by"@en ;
+    rdfs:comment "The property linking something to the workflow step that produces, creates or results in that thing."@en ;
+    owl:inverseOf <http://purl.org/spar/pwo/produces> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/participation.owl#Event> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/participation.owl#Object> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/participation.owl#hasParticipant> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/participation.owl#isParticipantIn> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/situation.owl#Situation> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/situation.owl#isSettingFor> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/taskexecution.owl#executesTask> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/taskexecution.owl#isExecutedIn> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#atTime> a owl:ObjectProperty ;
+    rdfs:label "at time"@en ;
+    rdfs:comment "A step is performed within a time interval."@en .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#forEntity> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#hasTimeIndexedSetting> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#TimeInterval> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalDate> a owl:DatatypeProperty .
+
+<http://www.semanticweb.org/owlapi#nodeID> a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://purl.org/spar/pwo/WorkflowExecution> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/spar/pwo/executes> ;
+            owl:someValuesFrom <http://purl.org/spar/pwo/Workflow> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/spar/pwo/involvesAction> ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( <http://purl.org/spar/pwo/Action> [ a owl:Restriction ;
+                                owl:onProperty <http://purl.org/spar/pwo/isActionInvolvedIn> ;
+                                owl:someValuesFrom <http://purl.org/spar/pwo/Step> ] ) ] ],
+        <http://www.ontologydesignpatterns.org/cp/owl/basicplanexecution.owl#PlanExecution>,
+        <http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#TimeIndexedSituation> .
+
+<http://purl.org/spar/pwo/hasFirstStep> a owl:ObjectProperty ;
+    rdfs:label "has first step"@en ;
+    rdfs:comment "A workflow that starts with a particular step."@en ;
+    rdfs:range [ a owl:Class ;
+            owl:complementOf [ a owl:Restriction ;
+                    owl:onProperty <http://purl.org/spar/pwo/hasPreviousStep> ;
+                    owl:someValuesFrom <http://purl.org/spar/pwo/Step> ] ] ;
+    rdfs:subPropertyOf <http://purl.org/spar/pwo/hasStep> .
+
+<http://purl.org/spar/pwo/isStepOf> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is step of"@en ;
+    rdfs:comment "The property linking a step in a workflow to the workflow of which it is a component."@en ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#isTaskDefinedIn> ;
+    owl:inverseOf <http://purl.org/spar/pwo/hasStep> .
+
+<http://www.essepuntato.it/2009/10/error/hasError> a owl:DatatypeProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#definesTask> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/basicplanexecution.owl#PlanExecution> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#precedes> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/taskexecution.owl#Action> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/taskrole.owl#Task> a owl:Class .
+
+<http://purl.org/spar/pwo/executes> a owl:ObjectProperty ;
+    rdfs:label "executes"@en ;
+    rdfs:comment "This property allows to link a workflow execution to the related workflow description."@en ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/basicplan.owl#satisfies> ;
+    owl:inverseOf <http://purl.org/spar/pwo/isExecutedBy> .
+
+<http://purl.org/spar/pwo/hasPreviousStep> a owl:ObjectProperty ;
+    rdfs:label "has previous step"@en ;
+    rdfs:comment "A property linking a step in a workflow with the step that directly precedes it."@en ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> .
+
+<http://purl.org/spar/pwo/isActionInvolvedIn> a owl:ObjectProperty ;
+    rdfs:label "is action involved in step"@en ;
+    rdfs:comment "The property linking an event to a step in a workflow or to a particular execution of a workflow description."@en ;
+    owl:inverseOf <http://purl.org/spar/pwo/involvesAction> ;
+    owl:propertyChainAxiom ( <http://purl.org/spar/pwo/isActionInvolvedIn> <http://purl.org/spar/pwo/isStepOf> <http://purl.org/spar/pwo/isExecutedBy> ) .
+
+<http://purl.org/spar/pwo/isExecutedBy> a owl:ObjectProperty ;
+    rdfs:label "is executed by" ;
+    rdfs:comment "This property allows to link a workflow description to the related workflow execution." ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/basicplan.owl#isSatisfiedBy> .
+
+<http://purl.org/spar/pwo/needs> a owl:ObjectProperty ;
+    rdfs:label "needs"@en ;
+    rdfs:comment "The property linking a workflow step to anything required to undertake that step."@en ;
+    rdfs:domain <http://purl.org/spar/pwo/Step> .
+
+<http://purl.org/spar/pwo/produces> a owl:ObjectProperty ;
+    rdfs:label "produces"@en ;
+    rdfs:comment "The property linking a workflow step to the thing that the step produces, creates or results in."@en ;
+    rdfs:domain <http://purl.org/spar/pwo/Step> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#isTaskDefinedIn> a owl:ObjectProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#TimeIndexedSituation> a owl:Class .
+
+<urn:swrl#r> a ns1:Variable .
+
+<http://purl.org/spar/pwo/Action> a owl:Class ;
+    rdfs:label "action" ;
+    rdfs:comment "An event with at least one agent that is participant in it and that is linked to a workflow execution and to a step of the related workflow description." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( <http://www.ontologydesignpatterns.org/cp/owl/basicplanexecution.owl#Action> <http://www.ontologydesignpatterns.org/cp/owl/taskexecution.owl#Action> <http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#TimeIndexedSituation> ) ] .
+
+<http://purl.org/spar/pwo/Workflow> a owl:Class ;
+    rdfs:label "workflow"@en ;
+    rdfs:comment "A sequence of connected steps, representing a sequence of publishing operations undertaken by agents. A workflow may be seen as an abstract model of real work."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/spar/pwo/hasFirstStep> ;
+            owl:someValuesFrom <http://purl.org/spar/pwo/Step> ],
+        <http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#Plan> .
+
+<http://purl.org/spar/pwo/hasStep> a owl:ObjectProperty ;
+    rdfs:label "has step"@en ;
+    rdfs:comment "The property linking a workflow to a component step."@en ;
+    rdfs:domain <http://purl.org/spar/pwo/Workflow> ;
+    rdfs:range <http://purl.org/spar/pwo/Step> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#definesTask> .
+
+<urn:swrl#sj> a ns1:Variable .
+
+<http://purl.org/spar/pwo/involvesAction> a owl:ObjectProperty ;
+    rdfs:label "involves action"@en ;
+    rdfs:comment "The property linking a step in a workflow or a particular execution of a workflow to an action."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/spar/pwo/Step> <http://purl.org/spar/pwo/WorkflowExecution> ) ] ;
+    rdfs:range <http://purl.org/spar/pwo/Action> ;
+    owl:propertyChainAxiom ( <http://purl.org/spar/pwo/executes> <http://purl.org/spar/pwo/hasStep> <http://purl.org/spar/pwo/involvesAction> ) .
+
+<urn:swrl#si> a ns1:Variable .
+
+<http://purl.org/spar/pwo/Step> a owl:Class ;
+    rdfs:label "step"@en ;
+    rdfs:comment "An atomic unit of a workflow, that may be characterized by a starting time and an ending time, and may be associated with one or more events.  A workflow step usually involves some input information, material or energy needed to complete the step, and some output information, material or energy produced by that step.  In the case of a publishing workflow, a step typically results in the creation of a publication entity, usually by the modification of another pre-existing publication entity, e.g. the creation of an edited paper from a rough draft, or of an HTML representation from an XML mark-up."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass time:DurationDescription ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/parameter.owl#hasParameter> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/spar/pwo/involvesAction> ;
+            owl:someValuesFrom <http://purl.org/spar/pwo/Action> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://purl.org/spar/pwo/Workflow> ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/basicplandescription.owl#isTaskDefinedIn> ],
+        <http://www.ontologydesignpatterns.org/cp/owl/taskrole.owl#Task> .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#si> ;
+                    ns1:classPredicate <http://purl.org/spar/pwo/Step> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 <urn:swrl#sj> ;
+                            ns1:classPredicate <http://purl.org/spar/pwo/Step> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#si> ;
+                                    ns1:argument2 <urn:swrl#r> ;
+                                    ns1:propertyPredicate <http://purl.org/spar/pwo/needs> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#sj> ;
+                                            ns1:argument2 <urn:swrl#r> ;
+                                            ns1:propertyPredicate <http://purl.org/spar/pwo/produces> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 <urn:swrl#si> ;
+                                                    ns1:argument2 <urn:swrl#sj> ;
+                                                    ns1:propertyPredicate <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#precedes> ] ;
+                                            rdf:rest () ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <urn:swrl#si> ;
+                    ns1:argument2 "A step cannot need a resource that will be produced by a following step"^^xsd:string ;
+                    ns1:propertyPredicate <http://www.essepuntato.it/2009/10/error/hasError> ] ;
+            rdf:rest () ] .
+

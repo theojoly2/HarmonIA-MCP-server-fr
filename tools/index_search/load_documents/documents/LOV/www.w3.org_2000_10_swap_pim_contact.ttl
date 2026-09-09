@@ -1,0 +1,217 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2000/10/swap/pim/contact#> .
+@prefix ns2: <http://www.w3.org/2000/10/swap/pim/doc#> .
+@prefix onto: <http://www.w3.org/2000/10/swap/pim/contact> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Address a rdfs:Class .
+
+ns1:ContactLocation a rdfs:Class ;
+    rdfs:label "contact point" ;
+    rdfs:comment "A place, or mobile situation, with address, phone number, fax, etc. \\n    Related to a person by home, office, etc.\\n    Note one person's workplace may be another person's home.\\n    A person may have more than one home and more than one workplace.\\n    (In practice it sometimes maybe useful with restriucted datasets to\\n    assume that this is not the case, when extracting data from other ontologies\\n    with no concept of ContactLocation).  Strongly related to a person: \\n    in some ways a role that a person can be in." .
+
+ns1:Female a rdfs:Class .
+
+ns1:LanguageCode a rdfs:Class .
+
+ns1:Male a rdfs:Class .
+
+ns1:Phone a rdfs:Class ;
+    rdfs:label "phone"@en,
+        "tel."@fr ;
+    rdfs:comment "\\n    An end-point in the public swiitched telephone system.\\n    Anything identified by a URI with tel: scheme is in this class.\\n    " .
+
+ns1:SocialEntity a rdfs:Class ;
+    rdfs:comment "The sort of thing which can have a phone number.\\n    Typically a person or an incorporated company, or unincorporated group." .
+
+onto: dc:description "$Id: contact.rdf,v 1.18 2011/02/01 04:13:21 timbl Exp $",
+        "\\n To illustrate with examples the creation of a schema of RDF properties\\n and classes, but using abstract things for people, rather than strings, etc.\\n If you have an \"Assistant's phone number\", then really you have an assitant who has\\n a phone number - and that is much more useful in general.\\n For example, when data about you and your assietnt in merged,\\n you will end up with an \"assistant's email\" and the like.\\n" ;
+    dc:title "Contact: Utility concepts for everyday life" ;
+    ns2:creator <http://www.w3.org/People/Berners-Lee/card#i> ;
+    ns2:persistencePolicy [ a ns1:_SubjectToChange ;
+            dc:description "If you change this, you have to tell the W3C SemWeb AD\\n   folk, including Dan Connolly; so agreed 5 Jun 2001.\\n   TimBl takes this as being met by a mail to sw-team." ] ;
+    ns2:rules onto:-rules .
+
+ns1:MobilePhone rdfs:label "mobile" ;
+    rdfs:subClassOf ns1:Phone .
+
+ns1:Pager rdfs:subClassOf ns1:Phone .
+
+ns1:_addressProperty a rdf:Property .
+
+ns1:address a rdf:Property ;
+    rdfs:label "address"@en ;
+    rdfs:domain ns1:ContactLocation ;
+    rdfs:range ns1:Address .
+
+ns1:assistant a rdf:Property ;
+    rdfs:label "assistant" ;
+    rdfs:comment "A person (or other agent) who is an assistant to the subject." ;
+    rdfs:domain foaf:Agent ;
+    rdfs:ramge foaf:Agent .
+
+ns1:birthday a rdf:Property ;
+    rdfs:domain ns1:SocialEntity ;
+    rdfs:range ns1:Date .
+
+ns1:child a rdf:Property .
+
+ns1:city rdfs:domain ns1:Address .
+
+ns1:country rdfs:domain ns1:Address .
+
+ns1:departmentName rdfs:domain ns1:Person .
+
+ns1:description a rdf:Property .
+
+ns1:emailAddress a owl:InverseFunctionalProperty ;
+    rdfs:label "email" ;
+    rdfs:comment "emailAddress is a string.  Use of this is discouraged. Use :mailbox instead " ;
+    rdfs:domain ns1:SocialEntity ;
+    rdfs:range ns1:_EmailAddress ;
+    ns1:_example "\\n            <rdf:Description xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" rdf:about=\"http://www.w3.org/2000/10/swap/pim/contact#_Dan\">\\n                <con:emailAddress xmlns:con=\"http://www.w3.org/2000/10/swap/pim/contact#\">connolly@w3.org</con:emailAddress>\\n            </rdf:Description>\\n        "^^rdf:XMLLiteral .
+
+ns1:emergency a rdf:Property ;
+    rdfs:label "emergency only" ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:ContactLocation .
+
+ns1:familyName rdfs:domain ns1:Person .
+
+ns1:fax a rdf:Property ;
+    rdfs:domain ns1:ContactLocation ;
+    rdfs:range ns1:Fax .
+
+ns1:firstName rdfs:domain ns1:Person .
+
+ns1:fullName a rdf:Property ;
+    rdfs:label "full name" .
+
+ns1:givenName rdfs:domain ns1:Person .
+
+ns1:home a rdf:Property ;
+    rdfs:label "home" ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:ContactLocation .
+
+ns1:knownAs a rdf:Property ;
+    rdfs:label "name" ;
+    rdfs:comment "A person may be known as various strings.\\n\\tFor example, an email friendly name string.\\n\\tIf you have an email from someone using a string as the human-readable phrase,\\n\\tthen it is reasonable to assume that there are :knownAs that." .
+
+ns1:lastName rdfs:domain ns1:Person .
+
+ns1:mailbox a owl:InverseFunctionalProperty ;
+    rdfs:domain ns1:SocialEntity ;
+    rdfs:range ns1:Mailbox ;
+    ns1:_addressProperty ns1:mailboxURI ;
+    ns1:_example "\\n            <rdf:Description xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" rdf:about=\"http://www.w3.org/2000/10/swap/pim/contact#_Dan\">\\n                <con:mailbox xmlns:con=\"http://www.w3.org/2000/10/swap/pim/contact#\" rdf:resource=\"mailto:connolly@w3.org\"/>\\n            </rdf:Description>\\n        "^^rdf:XMLLiteral .
+
+ns1:middleInitial rdfs:domain ns1:Person .
+
+ns1:middleName rdfs:domain ns1:Person .
+
+ns1:mobile a rdf:Property ;
+    rdfs:label "mobile" ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:ContactLocation .
+
+ns1:motherTongue a rdf:Property ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:LanguageCode .
+
+ns1:nearestAirport a rdf:Property ;
+    rdfs:label "nearest airport" ;
+    rdfs:comment "?X nearestAirport ?Y locates ?X in an international\\n   context; for example, for the purpose of organizing a face-to-face\\n   meeting of a W3C working group. This property is intended to mitigate\\n   privacy risks of giving out detailed contact info." ;
+    rdfs:seeAlso <http://lists.w3.org/Archives/Public/www-webont-wg/2001Nov/0006.html>,
+        <http://www.perceive.net/pages/page/articles/year/2002/month/12#9>,
+        <http://www.w3.org/2001/sw/Europe/200303/geo/intro.html>,
+        <http://www.w3.org/2001/sw/WebOnt/webont-airports.rdf>,
+        <http://www.w3.org/2001/tag/ilist#httpRange-14> .
+
+ns1:office a rdf:Property ;
+    rdfs:label "work" ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:ContactLocation .
+
+ns1:organization rdfs:domain ns1:Person .
+
+ns1:participant a rdf:Property ;
+    rdfs:label "participant" ;
+    rdfs:comment "A person (or other agent) who  particpates in an event, meeting, etc." ;
+    rdfs:ramge foaf:Agent .
+
+ns1:partner a rdf:Property ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:Person .
+
+ns1:personalSuffix rdfs:domain ns1:Person .
+
+ns1:personalTitle rdfs:domain ns1:Person .
+
+ns1:phone a rdf:Property ;
+    rdfs:domain ns1:ContactLocation ;
+    rdfs:range ns1:Phone .
+
+ns1:preferredURI a rdf:Property ;
+    rdfs:label "preferred" ;
+    rdfs:comment "A string which is the URI a person, organization, etc, prefers that people use for them." .
+
+ns1:publicHomePage rdfs:subPropertyOf ns1:homePage .
+
+ns1:region a rdf:Property ;
+    rdfs:label "region" ;
+    rdfs:comment "The sub-national unit such as state (us),\\nprovince (ca), county (uk), département (fr), and so on" .
+
+ns1:sortName a rdf:Property ;
+    rdfs:label "sort name" ;
+    rdfs:comment "re-arranged for lexicographic ordering; ala Doe, John" .
+
+ns1:stateOrProvince rdfs:domain ns1:Address .
+
+ns1:street rdfs:domain ns1:Address .
+
+ns1:street2 rdfs:domain ns1:Address .
+
+ns1:street3 rdfs:domain ns1:Address .
+
+ns1:title rdfs:domain ns1:Person .
+
+ns1:vacationHome a rdf:Property ;
+    rdfs:label "vacation" ;
+    rdfs:domain ns1:Person ;
+    rdfs:range ns1:ContactLocation .
+
+ns1:zip rdfs:subPropertyOf ns1:postalCode .
+
+ns2:persistencePolicy rdfs:seeAlso <http://www.w3.org/1999/10/nsuri> .
+
+ns1:Fax rdfs:label "fax" ;
+    rdfs:subClassOf ns1:Phone .
+
+ns1:_SubjectToChange rdfs:label "subject to change" .
+
+ns1:homePage a owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf ns1:webPage ;
+    ns1:_addressProperty ns1:homePageAddress .
+
+ns1:homePageAddress a owl:InverseFunctionalProperty ;
+    rdfs:comment "Use is discouraged" .
+
+ns1:mailboxURI a owl:InverseFunctionalProperty ;
+    rdfs:comment "mailboxURI is a string.  Use of this is discouraged. Use :mailbox instead " ;
+    rdfs:domain ns1:SocialEntity ;
+    rdfs:range ns1:_URI ;
+    ns1:_example "\\n            <rdf:Description xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" rdf:about=\"http://www.w3.org/2000/10/swap/pim/contact#_Dan\">\\n                <con:mailboxURI xmlns:con=\"http://www.w3.org/2000/10/swap/pim/contact#\">mailto:connolly@w3.org</con:mailboxURI>\\n            </rdf:Description>\\n        "^^rdf:XMLLiteral .
+
+ns1:postalCode rdfs:domain ns1:Address .
+
+ns1:webPage a rdf:Property ;
+    rdfs:label "web page" ;
+    rdfs:comment "A related web page" .
+
+ns1:Person rdfs:comment "A person in the normal sense of the word." ;
+    rdfs:subClassOf ns1:SocialEntity .
+

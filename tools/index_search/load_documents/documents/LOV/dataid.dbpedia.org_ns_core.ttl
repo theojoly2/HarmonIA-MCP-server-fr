@@ -1,0 +1,841 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix onto: <http://dataid.dbpedia.org/ns/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:FileCollection a owl:Class ;
+    rdfs:label "dataset files in differnt paths of a distribution"@en ;
+    rdfs:comment "Multiple files of a distribution constituting one dataset."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:downloadURL ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:checksum ],
+        onto:Distribution .
+
+onto:GuestAgent a onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    foaf:homepage <http://dataid.dbpedia.org> ;
+    foaf:name "Guest Actor" .
+
+onto:ServiceEndpoint a owl:Class ;
+    rdfs:label "Service Endpoint"@en ;
+    rdfs:comment "A specific distribution, which is accessible via an access url and provides data as a web service in a certain format."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:accessURL ],
+        onto:Distribution,
+        <http://www.w3.org/ns/wsdl-rdf#Service> .
+
+onto:SparqlEndpoint a owl:Class ;
+    rdfs:label "Sparql Endpoint"@en ;
+    rdfs:comment "A specific distribution, which is accessible via an access url and can be queried with the SPARQL language."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:accessURL ],
+        onto:Distribution,
+        <http://www.w3.org/ns/sparql-service-description#Service> .
+
+onto:accessProcedure a owl:DatatypeProperty ;
+    rdfs:label "access procedure"@en ;
+    rdfs:comment "Describes the steps which have to be taken to gain access to the described data at the location of a distribution (e.g. register an account to gain dct:accessRights)."@en ;
+    rdfs:domain onto:Distribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:agentId a owl:InverseFunctionalProperty ;
+    rdfs:label "agent id"@en ;
+    rdfs:comment "provides an unique identifier for this agent"@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AgentIdentifier ;
+    rdfs:subPropertyOf foaf:isPrimaryTopicOf .
+
+onto:aidURI a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aid uri"@en ;
+    rdfs:comment "uri/url provided as, or in addition to an id"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document .
+
+onto:containsLinks a owl:ObjectProperty ;
+    rdfs:label "contains links"@en ;
+    rdfs:comment "Set of links to another dataset contained in this dataset"@en ;
+    rdfs:domain onto:Dataset ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Linkset .
+
+onto:isDistributionOf a owl:ObjectProperty ;
+    rdfs:label "Is distribution of"@en ;
+    rdfs:comment "Inverse property of dcat:distribution, linking a Distribution to a Dataset"@en ;
+    rdfs:domain onto:Distribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Dataset ;
+    owl:inverseOf dcat:distribution .
+
+onto:preview a owl:ObjectProperty ;
+    rdfs:label "data preview"@en ;
+    rdfs:comment "provides the uri of a short preview of the data provided by a distribution (do not link to the download or accessURL with this property)"@en ;
+    rdfs:domain onto:Distribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document .
+
+onto:similarData a owl:ObjectProperty ;
+    rdfs:label "similar data"@en ;
+    rdfs:comment "points to other dataset containing related data"@en ;
+    rdfs:domain onto:Dataset ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Dataset .
+
+onto:softwareRquirement a owl:ObjectProperty ;
+    rdfs:label "software requirement"@en ;
+    rdfs:comment "software needed to access the data in this distribution"@en ;
+    rdfs:domain onto:Distribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document .
+
+onto:validForAccessLevel a owl:ObjectProperty ;
+    rdfs:label "valid for access level"@en ;
+    rdfs:comment "Limits rights and actions an Agent is allwed to take depending on the AccessLevel chosen for this AuthorityEntityContext."@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AccessLevel .
+
+onto:AgentIdentifier a owl:Class ;
+    rdfs:label "agent identifier"@en ;
+    rdfs:comment "Uniquly identifies an agent given a identifier and a correspondng aid/pid system (ORCID, ResearcherID etc.)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:aid ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:aidSystem ] .
+
+onto:Contact a onto:AgentRole ;
+    rdfs:label "contact"@en ;
+    onto:allowsFor onto:ModifyContent,
+        onto:ReadContent,
+        onto:ReadDataId,
+        onto:ResponseToContact ;
+    rdfs:comment "Contact agent. An agent that can be contacted for general requests about the resource."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Contributor a onto:AgentRole ;
+    rdfs:label "contributor"@en ;
+    onto:allowsFor onto:ReadContent,
+        onto:ReadDataId ;
+    rdfs:comment "Contributor to the resource. An agent that was involved in creating or maintaining the resource but does not have the main part in this activity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Creator a onto:AgentRole ;
+    rdfs:label "creator"@en ;
+    onto:allowsFor onto:AgentSupervision,
+        onto:DeleteContent,
+        onto:ModifyAccessLevel,
+        onto:ModifyAgentRoles,
+        onto:ModifyAuthorizedAgents,
+        onto:ModifyContent,
+        onto:PublishingDecision,
+        onto:ReadContent,
+        onto:ReadDataId,
+        onto:ResponseToContact,
+        onto:ResponseToLifeCycleEvent,
+        onto:UpdateDataId ;
+    rdfs:comment "Creator of the resource. An agent that is credited with a main part in the initial creation of the resource."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Directory a owl:Class ;
+    rdfs:label "dataset files in one directory"@en ;
+    rdfs:comment "A dedicated directory holding multiple files of the same dataset."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:checksum ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:accessURL ],
+        onto:Distribution .
+
+onto:Guest a onto:AgentRole ;
+    rdfs:label "guest"@en ;
+    onto:allowsFor onto:ReadContent,
+        onto:ReadDataId ;
+    rdfs:comment "A visitor/anonymous agent has only read rights on public and semi-private documents"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Maintainer a onto:AgentRole ;
+    rdfs:label "maintainer"@en ;
+    onto:allowsFor onto:DeleteContent,
+        onto:ModifyAuthorizedAgents,
+        onto:ModifyContent,
+        onto:ReadContent,
+        onto:ReadDataId,
+        onto:ResponseToContact,
+        onto:ResponseToLifeCycleEvent,
+        onto:UpdateDataId ;
+    rdfs:comment "Maintainer of the dataset. An agent that ensures the technical correctness, accessibility and up-to-dateness of a dataset."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:NoAccess a onto:AccessLevel ;
+    rdfs:label "no access"@en ;
+    rdfs:comment "Disallows access to a resource for an agent."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:PrivateAccess a onto:AccessLevel ;
+    rdfs:label "private"@en ;
+    rdfs:comment "Provides an agent with unrestricted access and all rights of a resource."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:PublicAccess a onto:AccessLevel ;
+    rdfs:label "public"@en ;
+    rdfs:comment "Limits the rights an agent has on a resource to read rights."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Publisher a onto:AgentRole ;
+    rdfs:label "publisher"@en ;
+    onto:allowsFor onto:AgentSupervision,
+        onto:DeleteContent,
+        onto:ModifyAccessLevel,
+        onto:ModifyAuthorizedAgents,
+        onto:ModifyContent,
+        onto:PublishingDecision,
+        onto:ReadContent,
+        onto:ReadDataId,
+        onto:ResponseToContact,
+        onto:ResponseToLifeCycleEvent,
+        onto:UpdateDataId ;
+    rdfs:comment "Publisher of the dataset. An agent that makes the dataset accessible online on a server or repository without necessarily being involved in its creation."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:SemiPrivateAccess a onto:AccessLevel ;
+    rdfs:label "semi-private"@en ;
+    rdfs:comment "Limits the rights an agent has on a resource to read and modify."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:SingleFile a owl:Class ;
+    rdfs:label "single dump file"@en ;
+    rdfs:comment "A single data dump file representing your dataset."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:checksum ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:downloadURL ],
+        onto:Distribution .
+
+onto:aid a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aid"@en ;
+    rdfs:comment "the id of an agent as string"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:aidSystem a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aid system"@en ;
+    rdfs:comment "the aid/pid system used for this identifier (ORCID, ResearcherID etc.)"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:allowsFor a owl:ObjectProperty ;
+    rdfs:label "allowes for"@en ;
+    rdfs:comment "AgentRoles allows an agent to execute certain actions."@en ;
+    rdfs:domain onto:AgentRole ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AuthorizedAction .
+
+onto:authorityAgentRole a owl:ObjectProperty ;
+    rdfs:label "authority agent role"@en ;
+    rdfs:comment "Adds a role an agent can administer in the scope provided by the AuthorityEntityContext, thereby allowing for certain actions an agent can execute."@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AgentRole .
+
+onto:authorizedAgent a owl:ObjectProperty ;
+    rdfs:label "authorized agent"@en ;
+    rdfs:comment "Provides an agent the ability to execute authorized actions in a certain scope (e.g. to modify the metadata of a dataset)"@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent .
+
+onto:crc32 a rdfs:Datatype ;
+    rdfs:label "crc32 checksum"@en ;
+    rdfs:comment "A crc32 checksum"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:graphName a owl:DatatypeProperty ;
+    rdfs:label "Graph name"@en ;
+    rdfs:comment "The name of the graph of this distribution in a SPARQL endpoint"@en ;
+    rdfs:domain onto:Distribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:isInheritable a owl:DatatypeProperty ;
+    rdfs:label "is inheritable"@en ;
+    rdfs:comment "Defines that a context keeps intact for the next version of a DataID (if set to 'true')."@en,
+        "The property of certain authority entity context to be able to be inherited"@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:md5 a rdfs:Datatype ;
+    rdfs:label "md5 checksum"@en ;
+    rdfs:comment "A md5 checksum"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:validFrom a owl:DatatypeProperty ;
+    rdfs:label "valid from"@en ;
+    rdfs:comment "An AuthorityEntityContext is valid for a specific Agent from a certain point in time."@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+onto:validUntil a owl:DatatypeProperty ;
+    rdfs:label "valid until"@en ;
+    rdfs:comment "An AuthorityEntityContext is valid for a specific Agent until a certain point in time."@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+onto:ModifyAgentRoles a onto:EntitledAction ;
+    rdfs:label "modify agent roles"@en ;
+    rdfs:comment "Entitled action to modify the role of agents on certain entities."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:associatedAgent a owl:ObjectProperty ;
+    rdfs:label "associated agent"@en ;
+    rdfs:comment "some agent generally connected to the dataset, their function to be specified by their rdf:type"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent .
+
+onto:authorizedFor a owl:ObjectProperty ;
+    rdfs:label "authorized for"@en ;
+    rdfs:comment "Defines the scope of an authority-context. An Agent has the right to execute authorized actions in this scope (e.g. a single DataId and all it's members)."@en ;
+    rdfs:domain onto:AuthorityEntityContext ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range prov:Entity .
+
+onto:AgentSupervision a onto:ResponsibleAction ;
+    rdfs:label "agent supervision"@en ;
+    rdfs:comment "The responsibility to supervise other agents."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:AuthorizedAction a owl:Class ;
+    rdfs:label "Authorized action"@en ;
+    rdfs:comment "AgentRoles provide agents with the ability to execute certain actions as well as demand certain responsibilities, which are defines by the instances of this concept."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( onto:ResponsibleAction onto:EntitledAction ) ] .
+
+onto:DataId a owl:Class ;
+    rdfs:label "DataId"@en ;
+    dcterms:description "DataID is a way of describing Linked-Open-Data (LOD) datasets including content, authors, licenses and provenance via RDF files.\\nMaking your data accessible to others is the basic idea of LOD and is your contribution to a universal data give and take.\\nTo create DataIDs alongside datasets is the best way of announcing a new dataset and its updates to a global community by placing \\nit in the LOD cloud.\\nValidating and delivering metadata files in a uniform way, as well as providing the ability to query \\nfor datasets are main objectives of the DBpedia/DataID project.\\nTo learn more including how to draft an new DataID, please visit http://dataid.dbpedia.org."@en ;
+    rdfs:comment "A description of one or more datasets. The DataID itself."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:modified ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:DataId ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Dataset ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:DataId ;
+            owl:onProperty onto:nextVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Dataset ;
+            owl:onProperty foaf:primaryTopic ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:hasVersion ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasAccessLevel ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasEntityContext ] ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:DataId ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:issued ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Dataset ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:version ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:associatedAgent ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Dataset ;
+            owl:onProperty onto:nextVersion ],
+        void:DatasetDescription,
+        dcat:CatalogRecord,
+        prov:Entity .
+
+onto:ModifyAccessLevel a onto:EntitledAction ;
+    rdfs:label "modify entity access level"@en ;
+    rdfs:comment "Entitled action to modify access level of an entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:PublishingDecision a onto:ResponsibleAction ;
+    rdfs:label "publishing decision"@en ;
+    rdfs:comment "The responsibility decide if the entity should be published"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:checksum a owl:DatatypeProperty ;
+    rdfs:label "checksum"@en ;
+    rdfs:comment "Checksum of a file to check for correctness"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:SingleFile onto:Directory ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:crc32,
+        onto:md5 .
+
+onto:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "Any type of agent without a specific function."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:account ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:name ],
+        dcterms:Agent,
+        prov:Agent ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:disjointUnionOf ( [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty foaf:mbox ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty foaf:homepage ] ) ] .
+
+onto:DeleteContent a onto:EntitledAction ;
+    rdfs:label "delete content right"@en ;
+    rdfs:comment "Entitled action to delete some content of an entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ModifyAuthorizedAgents a onto:EntitledAction ;
+    rdfs:label "modify authorized agents"@en ;
+    rdfs:comment "Entitled action to modify which agents are authorized on certain entities."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ResponseToLifeCycleEvent a onto:ResponsibleAction ;
+    rdfs:label "response to life-cycle event"@en ;
+    rdfs:comment "The responsibility to manage changes and react to bugs and issues that are reported"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:UpdateDataId a onto:ResponsibleAction ;
+    rdfs:label "update DataId"@en ;
+    rdfs:comment "The responsibility to update dataset metadata."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:hasAccessLevel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "access level"@en ;
+    rdfs:comment "defines the access rights for DataId related entities"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AccessLevel .
+
+onto:hasEntityContext a owl:ObjectProperty ;
+    rdfs:label "has authority-entity-context"@en ;
+    rdfs:comment "Points out a dataid:AuthorityEntityContext pertaining to this resource."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf onto:authorizedFor .
+
+onto:version a owl:DatatypeProperty ;
+    rdfs:label "version"@en ;
+    rdfs:comment "provides a version string for any entity"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:ModifyContent a onto:EntitledAction ;
+    rdfs:label "modify content right"@en ;
+    rdfs:comment "Entitled action to modify the content of an entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ResponseToContact a onto:ResponsibleAction ;
+    rdfs:label "response to contact attempt"@en ;
+    rdfs:comment "The responsibility to respond to contact attempts by external agents. A contact point for the entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:AccessLevel a owl:Class ;
+    rdfs:label "Access level"@en ;
+    rdfs:comment "The level of openness of access to particular groups of agents"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( onto:PrivateAccess onto:SemiPrivateAccess onto:PublicAccess onto:NoAccess ) ] .
+
+onto:ReadDataId a onto:EntitledAction ;
+    rdfs:label "read DataID right"@en ;
+    rdfs:comment "Entitled action to read the DataID dataset metadata"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ResponsibleAction a owl:Class ;
+    rdfs:label "responsible actions"@en ;
+    rdfs:comment "AgentRoles provide access rights as well as responsibilities an agent has to attend to in order to fullfill this role. Responsible actions should describe actions pertaining to responsibilities an agent is supposed to do."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:AuthorizedAction ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( onto:ResponseToContact onto:AgentSupervision onto:UpdateDataId onto:PublishingDecision onto:ResponseToLifeCycleEvent ) ] .
+
+onto:AuthorityEntityContext a owl:Class ;
+    rdfs:label "Authority entity context"@en ;
+    rdfs:comment "This concept defines a scope of Entities and links it to an Agent which has certain rights for those entities (defined by the AgentRole). This scope consists of all Entities directly linked to the context, as well as transitively dependend Entities"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:authorizedFor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:validUntil ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:validFrom ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:authorityAgentRole ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:isInheritable ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:authorizedAgent ] .
+
+onto:Linkset a owl:Class ;
+    rdfs:label "Linkset"@en ;
+    rdfs:comment "Entity representing the set of links between two datasets."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass void:Dataset ;
+            owl:onProperty void:objectsTarget ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Linkset ;
+            owl:onProperty onto:nextVersion ],
+        [ a owl:Restriction ;
+            owl:onClass void:Dataset ;
+            owl:onProperty void:subjectsTarget ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Linkset ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasAccessLevel ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasEntityContext ] ) ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Linkset ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:exampleResource ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:triples ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Linkset ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Linkset ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:hasVersion ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:modified ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Linkset ;
+            owl:onProperty onto:nextVersion ],
+        void:Linkset,
+        prov:Entity .
+
+onto:ReadContent a onto:EntitledAction ;
+    rdfs:label "read content right"@en ;
+    rdfs:comment "Entitled action to read the content of an entity."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:latestVersion a owl:ObjectProperty ;
+    rdfs:label "latest linkset version"@en ;
+    rdfs:comment "Latest version of a DataIdPart"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range prov:Entity .
+
+onto:nextVersion a owl:ObjectProperty ;
+    rdfs:label "next version"@en ;
+    rdfs:comment "Next version of a DataIdPart"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range prov:Entity .
+
+onto:previousVersion a owl:ObjectProperty ;
+    rdfs:label "previous version"@en ;
+    rdfs:comment "previous version of a DataIdPart"@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range prov:Entity .
+
+onto:AgentRole a owl:Class ;
+    rdfs:label "Agent role"@en ;
+    rdfs:comment "Instances of this class define an array of rights and responsibilities an agent, assigned with this role for a given scope of entities, has to address or can execute."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:allowsFor ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( onto:Guest onto:Creator onto:Contributor onto:Maintainer onto:Publisher onto:Contact ) ] .
+
+onto:EntitledAction a owl:Class ;
+    rdfs:label "Entitled action"@en ;
+    rdfs:comment "AgentRoles provide access and modification rights to an agent. Entitled actions should comprise actions pertaining to access/modification restrictions."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:AuthorizedAction ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( onto:ReadContent onto:ModifyContent onto:DeleteContent onto:ModifyAuthorizedAgents onto:ModifyAccessLevel onto:ModifyAgentRoles ) ] .
+
+onto:Dataset a owl:Class ;
+    rdfs:label "Dataset"@en ;
+    rdfs:comment "A collection of data, available for access in one or more formats. Dataset resources describe the concept of the dataset, not it's manifestation (the data itself), which can be acquired as Distribution.\\n    Datasets are prov:Entities and can be generated by prov:Activities."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:issued ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Dataset ;
+            owl:onProperty onto:nextVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:version ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://lexvo.org/ontology#Language> ;
+            owl:onProperty dcterms:language ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:associatedAgent ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://lexvo.org/ontology#Language> ;
+            owl:onProperty dcterms:language ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:classes ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Dataset ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Dataset ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:landingPage ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:triples ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom odrl:Policy ;
+            owl:onProperty dcterms:license ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:vocabulary ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasAccessLevel ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasEntityContext ] ) ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:nextVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:entities ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty void:subset ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty dcat:distribution ] ) ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:distinctObjects ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:properties ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:rights ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Distribution ;
+            owl:onProperty dcat:distribution ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:modified ],
+        [ a owl:Restriction ;
+            owl:onClass odrl:Policy ;
+            owl:onProperty dcterms:license ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:keyword ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:accrualPeriodicity ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty rdfs:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Dataset ;
+            owl:onProperty void:subset ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:distinctSubjects ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:rootResource ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty void:documents ],
+        void:Dataset,
+        dcat:Dataset,
+        prov:Entity .
+
+onto:Distribution a owl:Class ;
+    rdfs:label "Distribution"@en ;
+    rdfs:comment "A way to access a dataset, like a dump file, an endpoint, an API etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Distribution ;
+            owl:onProperty onto:nextVersion ],
+        [ a owl:Restriction ;
+            owl:onClass odrl:Policy ;
+            owl:onProperty dcterms:license ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:graphName ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Distribution ;
+            owl:onProperty onto:previousVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty rdfs:label ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:mediaType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:accessURL ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Distribution ;
+            owl:onProperty onto:latestVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom odrl:Policy ;
+            owl:onProperty dcterms:license ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcat:byteSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:rights ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasAccessLevel ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:hasEntityContext ] ) ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:issued ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:format ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:date ;
+            owl:onProperty dcterms:modified ],
+        dcat:Distribution,
+        prov:Entity ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:disjointUnionOf ( [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty dcat:accessURL ] [ a owl:Restriction ;
+                        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty dcat:downloadURL ] ) ] .
+
+onto: a owl:Ontology ;
+    rdfs:label "DataID"@en ;
+    vann:preferredNamespacePrefix "dataid"^^xsd:string ;
+    vann:preferredNamespaceUri onto: ;
+    rdfs:comment "DBpedia Data ID is an ontology with the goal of describing LOD datasets via RDF files in a uniform way. Established vocabularies like DCAT, VoID, Prov-O and SPARQL Service Description are used for maximum compatibility."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:imports <http://vocab.deri.ie/void>,
+        <http://www.w3.org/ns/dcat>,
+        <http://www.w3.org/ns/prov> ;
+    owl:versionInfo "1.0.0" .
+

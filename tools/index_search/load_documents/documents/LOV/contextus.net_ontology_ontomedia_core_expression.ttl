@@ -1,0 +1,440 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://contextus.net/ontology/ontomedia/core/expression#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "OntoMedia Core" ;
+    dc:description "OntoMedia (Ontology for Media) has been designed to describe the interactions occurring in multimedia."@en ;
+    dc:title "OntoMedia Core"@en ;
+    dcterms:created "2005-05-03" ;
+    owl:versionInfo "0.32" .
+
+onto:Action a owl:Class ;
+    rdfs:label "Action" ;
+    rdfs:comment "This event class describes an action sequence (ie no plot)" ;
+    rdfs:subClassOf onto:Event .
+
+onto:DiscreteTime a owl:ObjectProperty ;
+    rdfs:label "Time/Date" ;
+    rdfs:comment "The time/date/temporal reference for the the event" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/date#Date> .
+
+onto:EndTime a owl:ObjectProperty ;
+    rdfs:label "Period Initial Limit" ;
+    rdfs:comment "The time/date/temporal reference for the end of the event" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/date#Date> .
+
+onto:Gain a owl:Class ;
+    rdfs:label "Gain" ;
+    rdfs:comment "This event class results in an overall increase of the entities related to the primary subject or subjects of the event" ;
+    rdfs:subClassOf onto:Event .
+
+onto:Introduction a owl:Class ;
+    rdfs:label "Introduction" ;
+    rdfs:comment "This event class denotes the introduction of an entity to the media" ;
+    rdfs:subClassOf onto:Event .
+
+onto:Loss a owl:Class ;
+    rdfs:label "Loss" ;
+    rdfs:comment "This event class results in an overall reduction of the entities related to the primary subject or subjects of the event" ;
+    rdfs:subClassOf onto:Event .
+
+onto:MediaTAQ a owl:ObjectProperty ;
+    rdfs:label "Media End Period Limit" ;
+    rdfs:comment "Terminus Ante Quem (Limit Before Which): The latest point that the period the event covers could have happened" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> .
+
+onto:MediaTPQ a owl:ObjectProperty ;
+    rdfs:label "Media Start Period Limit" ;
+    rdfs:comment "Terminus Post Quem (Limit After Which): The earliest point that the period the event covers could be said to be happening",
+        "This property specifies the earliest point in the media at which the event occurrence could have happened" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> .
+
+onto:Physical-Item a owl:Class ;
+    rdfs:label "Physical Item" ;
+    rdfs:comment "This class represents a physical entity which may participate in an event within the media" ;
+    rdfs:subClassOf onto:Collection,
+        onto:Item .
+
+onto:Social a owl:Class ;
+    rdfs:label "Social" ;
+    rdfs:comment "This event class describes a sequence focusing on social, interpersonal and personal emotional elements" ;
+    rdfs:subClassOf onto:Event .
+
+onto:StartTime a owl:ObjectProperty ;
+    rdfs:label "Temporal End" ;
+    rdfs:comment "The time/date/temporal reference for the start of the event" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/date#Date> .
+
+onto:TAQ a owl:ObjectProperty ;
+    rdfs:label "Period Terminal Limit" ;
+    rdfs:comment "Terminus Ante Quem (Limit Before Which): The latest date that the period the event covers could have happened" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/date#Date> .
+
+onto:TPQ a owl:ObjectProperty ;
+    rdfs:label "Temporal Start" ;
+    rdfs:comment "The time/date/temporal reference for the start of the event" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/date#Date> .
+
+onto:end-point a owl:ObjectProperty ;
+    rdfs:label "End Point in Media" ;
+    rdfs:comment "This property specifies the point in the media at which the event occurrence stops happening" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> .
+
+onto:final-event a owl:ObjectProperty ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Event .
+
+onto:from a owl:ObjectProperty ;
+    rdfs:label "From" ;
+    rdfs:comment "This property specifies the entity which is being transformed" ;
+    rdfs:domain onto:Transformation ;
+    rdfs:range onto:Entity .
+
+onto:has-duration a owl:FunctionalProperty ;
+    rdfs:label "Duration of Occurrence" ;
+    rdfs:comment "This property specifies the duration of the occurrence" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> <http://contextus.net/ontology/ontomedia/ext/common/trait#Dimension> ) ] .
+
+onto:has-max-number-of-parts a owl:ObjectProperty ;
+    rdfs:label "Has Maximum Number Of Parts" ;
+    rdfs:comment "This property specifies the maximum number of parts that can be contained by the collection" ;
+    rdfs:domain onto:Collection ;
+    rdfs:range rdfs:Literal .
+
+onto:has-min-number-of-parts a owl:ObjectProperty ;
+    rdfs:label "Has Minimum Number Of Parts" ;
+    rdfs:comment "This property specifies the minimum number of parts that can be contained by the collection" ;
+    rdfs:domain onto:Collection ;
+    rdfs:range rdfs:Literal .
+
+onto:has-number-of-parts a owl:ObjectProperty ;
+    rdfs:label "Has Number Of Parts" ;
+    rdfs:comment "This property specifies the number of parts contained by the collection" ;
+    rdfs:domain onto:Collection ;
+    rdfs:range rdfs:Literal .
+
+onto:has-object-entity a owl:ObjectProperty ;
+    rdfs:label "Has Object Entity" ;
+    rdfs:comment "This property specifies the entity which is the target of the event" ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Entity .
+
+onto:has-subject-entity a owl:ObjectProperty ;
+    rdfs:label "Has Subject Entity" ;
+    rdfs:comment "This property specifies the entity which carries out the aim of the event" ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Entity .
+
+onto:initial-event a owl:ObjectProperty ;
+    rdfs:comment "the first event which begins this sequence" ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Event .
+
+onto:is-potentially a owl:ObjectProperty ;
+    rdfs:label "Is Potentially" ;
+    rdfs:comment "This property indicates that the expression is potentially another. For example, it may be a possible future version" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:has-variant .
+
+onto:occurs a owl:FunctionalProperty ;
+    rdfs:label "Occurs" ;
+    rdfs:comment "This property specifies the region of media in when an event occurrence happens" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> .
+
+onto:postcondition a owl:ObjectProperty ;
+    rdfs:label "Postcondition" ;
+    rdfs:comment "This property contains the state which should occur as a consequence of this event" ;
+    rdfs:domain onto:Event ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Entity onto:Event ) ] .
+
+onto:precondition a owl:ObjectProperty ;
+    rdfs:label "Precondition" ;
+    rdfs:comment "This property is a state that must exist before the event can occur" ;
+    rdfs:domain onto:Event ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Entity onto:Event ) ] .
+
+onto:start-point a owl:FunctionalProperty ;
+    rdfs:label "Start point in Media" ;
+    rdfs:comment "This property specifies the point in the media at which the event occurrence starts happening" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range <http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> .
+
+onto:summary a owl:FunctionalProperty ;
+    rdfs:label "Summary" ;
+    rdfs:comment "This property is a plain-text summery of what occurs in the event" ;
+    rdfs:domain onto:Event ;
+    rdfs:range rdfs:Literal .
+
+onto:timeline-ref a owl:ObjectProperty ;
+    rdfs:label "Timeline Reference" ;
+    rdfs:comment "Reference to the Timeline that the Occurrence exists on" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range onto:Timeline .
+
+onto:to a owl:ObjectProperty ;
+    rdfs:label "To" ;
+    rdfs:comment "This property specifies the resultant entity" ;
+    rdfs:domain onto:Transformation ;
+    rdfs:range onto:Entity .
+
+onto:Timeline a owl:Class ;
+    rdfs:label "Timeline" ;
+    rdfs:comment "This class contains a sequence of occurring events" ;
+    rdfs:subClassOf onto:Entity .
+
+onto:allows-existence-of a owl:ObjectProperty ;
+    rdfs:label "Allows Existence Of" ;
+    rdfs:comment "This class represents that the desired expression may exist within the context" ;
+    rdfs:domain onto:Context ;
+    rdfs:range onto:Expression ;
+    owl:inverseOf onto:exists-in .
+
+onto:caused-by a owl:ObjectProperty ;
+    rdfs:label "Caused By" ;
+    rdfs:comment "This property indicates the instigating factor of an event, whether it be an item, event, or collection." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Event onto:Entity ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Event onto:Entity ) ] ;
+    owl:inverseOf onto:causes .
+
+onto:causes a owl:ObjectProperty ;
+    rdfs:label "Causes" ;
+    rdfs:comment "This property indicates the instigating factor of an event, whether it be an item, event, or collection." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Event onto:Entity ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Event onto:Entity ) ] ;
+    owl:inverseOf onto:caused-by .
+
+onto:contained-by a owl:ObjectProperty ;
+    rdfs:label "Contained By" ;
+    rdfs:comment "This property indicates that one expression is contained by the other" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:is-linked-to ;
+    owl:inverseOf onto:contains .
+
+onto:contains a owl:ObjectProperty ;
+    rdfs:label "Contains" ;
+    rdfs:comment "This property indicates that one expression contains the other" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:is-linked-to ;
+    owl:inverseOf onto:contained-by .
+
+onto:exists-in a owl:ObjectProperty ;
+    rdfs:label "Exists In" ;
+    rdfs:comment "This class represents that the expression exists within the related context" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Context ;
+    owl:inverseOf onto:allows-existence-of .
+
+onto:follows a owl:ObjectProperty ;
+    rdfs:label "Follows" ;
+    rdfs:comment "Follows specifies the occurrence that happens after the referencing occurrence" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range onto:Occurrence ;
+    owl:inverseOf onto:precedes .
+
+onto:has-occurrence a owl:ObjectProperty ;
+    rdfs:label "Has occurrence" ;
+    rdfs:comment "This property defines any occurrences of this event" ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Occurrence ;
+    owl:inverseOf onto:occurrence-of .
+
+onto:has-shadow a owl:ObjectProperty ;
+    rdfs:label "Has Shadow" ;
+    rdfs:comment "This property indicates that the expression is a variation on another, very similar but not exactly the same. For example the different interpretations of the same character" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:is-shadow-of .
+
+onto:has-spin-off a owl:ObjectProperty ;
+    rdfs:label "Has Spin Off" ;
+    rdfs:comment "This property indicates that the expression has developed from another" ;
+    rdfs:domain onto:Item ;
+    rdfs:range onto:Item ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:is-spin-off-of .
+
+onto:inspired a owl:ObjectProperty ;
+    rdfs:label "Inspired" ;
+    rdfs:comment "This property indicates that the expression inspired another" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:inspired-by .
+
+onto:inspired-by a owl:ObjectProperty ;
+    rdfs:label "Inspired By" ;
+    rdfs:comment "This property indicates that the expression was inspired by another" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:inspired .
+
+onto:involved-in a owl:ObjectProperty ;
+    rdfs:label "Involves" ;
+    rdfs:comment "This property specifies the events involved in by this entity. Note that this includes the subject and object." ;
+    rdfs:domain onto:Entity ;
+    rdfs:range onto:Event ;
+    owl:inverseOf onto:involves .
+
+onto:involves a owl:ObjectProperty ;
+    rdfs:label "Involves" ;
+    rdfs:comment "This property specifies the entities involved in this event. Note that this includes the subject and object." ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Entity ;
+    owl:inverseOf onto:involved-in .
+
+onto:is a owl:ObjectProperty ;
+    rdfs:label "Is" ;
+    rdfs:comment "This property indicates that the expression is exactly the same as another" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:is-linked-to ;
+    owl:inverseOf onto:is .
+
+onto:is-not a owl:ObjectProperty ;
+    rdfs:label "Is Not" ;
+    rdfs:comment "This property indicates that the expression is entirely different to another" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:is-not-linked-to ;
+    owl:inverseOf onto:is-not .
+
+onto:is-shadow-of a owl:ObjectProperty ;
+    rdfs:label "Is Shadow Of" ;
+    rdfs:comment "This property indicates that the expression is a variation on another, very similar but not exactly the same. For example the different interpretations of the same character" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:has-shadow .
+
+onto:is-spin-off-of a owl:ObjectProperty ;
+    rdfs:label "Is Spin Off Of" ;
+    rdfs:comment "This property indicates that the expression has developed from another" ;
+    rdfs:domain onto:Item ;
+    rdfs:range onto:Item ;
+    rdfs:subPropertyOf onto:has-variant ;
+    owl:inverseOf onto:has-spin-off .
+
+onto:occurrence-of a owl:ObjectProperty ;
+    rdfs:label "Occurrence Of" ;
+    rdfs:comment "This property defines any the event that the occurrence relates to" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range onto:Event ;
+    owl:inverseOf onto:has-occurrence .
+
+onto:precedes a owl:ObjectProperty ;
+    rdfs:label "Precedes" ;
+    rdfs:comment "This property defines the occurrence which immediately follows this occurrence" ;
+    rdfs:domain onto:Occurrence ;
+    rdfs:range onto:Occurrence ;
+    owl:inverseOf onto:follows .
+
+onto:referenced-by a owl:ObjectProperty ;
+    rdfs:label "Refers To" ;
+    rdfs:comment "This property indicates that the expression is refered to by another expression." ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    owl:inverseOf onto:refers-to .
+
+onto:refers-to a owl:ObjectProperty ;
+    rdfs:label "Refers To" ;
+    rdfs:comment "This property indicates that the expression refers to another expression. This may be an event referring to a location, or a character refering to an event, etc." ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    owl:inverseOf onto:referenced-by .
+
+<http://contextus.net/ontology/ontomedia/ext/common/trait#Dimension> a owl:Class .
+
+onto:Abstract-Item a owl:Class ;
+    rdfs:label "Abstract Item" ;
+    rdfs:comment "This class represents an abstract entity which may participate in an event within the media" ;
+    rdfs:subClassOf onto:Item .
+
+onto:Context a owl:Class ;
+    rdfs:label "Context" ;
+    rdfs:comment "This class represents the context in which an event or entity exists" ;
+    rdfs:subClassOf onto:Abstract-Item .
+
+onto:Transformation a owl:Class ;
+    rdfs:label "Transformation" ;
+    rdfs:comment "This event class results in no gain or loss of attributes or entities, merely alteration" ;
+    rdfs:subClassOf onto:Event .
+
+onto:is-not-linked-to a owl:ObjectProperty ;
+    rdfs:label "Is Not Linked To" ;
+    rdfs:comment "This property indicates that there is some no link between the named Expressions" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    owl:inverseOf onto:is-linked-to .
+
+onto:Collection a owl:Class ;
+    rdfs:label "Collection" ;
+    rdfs:comment "This class represents a collection of entities" ;
+    rdfs:subClassOf onto:Abstract-Item .
+
+onto:is-linked-to a owl:ObjectProperty ;
+    rdfs:label "Is Linked To" ;
+    rdfs:comment "This property indicates that there is some type of link between the named Expressions" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    owl:inverseOf onto:is-not-linked-to .
+
+onto:Item a owl:Class ;
+    rdfs:label "Item" ;
+    rdfs:comment "This class represents an entity which may participate in an event within the media. An Item may be abstract or physical" ;
+    rdfs:subClassOf onto:Entity .
+
+<http://contextus.net/ontology/ontomedia/misc/locspec#LocSpec> a owl:Class .
+
+onto:has-variant a owl:ObjectProperty ;
+    rdfs:label "Has Variant" ;
+    rdfs:comment "This property indicates that the expression is a variation of another" ;
+    rdfs:domain onto:Expression ;
+    rdfs:range onto:Expression ;
+    rdfs:subPropertyOf onto:is-linked-to ;
+    owl:inverseOf <http://contextus.net/ontology/ontomedia/core/has-variant> .
+
+onto:Entity a owl:Class ;
+    rdfs:label "Entity" ;
+    rdfs:comment "A thing" ;
+    rdfs:subClassOf onto:Expression .
+
+onto:Occurrence a owl:Class ;
+    rdfs:label "Occurrence" ;
+    rdfs:comment "This class represents a single occurrence of an event, placing it at a position in a timeline" ;
+    rdfs:subClassOf onto:Entity .
+
+onto:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "This property defines an event" ;
+    rdfs:subClassOf onto:Expression .
+
+onto:Expression a owl:Class ;
+    rdfs:label "Expression" ;
+    rdfs:comment "This class represents a piece of information conveyed through a media" .
+

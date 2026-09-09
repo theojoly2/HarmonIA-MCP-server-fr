@@ -1,0 +1,281 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/vocommons/voaf#> .
+@prefix onto: <http://ns.inria.fr/nrv> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Compliance> a rdfs:Class ;
+    rdfs:label "compliance"@en ;
+    rdfs:comment "an indication that an Obligation has been fulfilled or a Prohibition has not been violated."@en,
+        "the result of normative requirement being respected."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> ;
+    owl:disjointWith <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Violation> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticModality> a rdfs:Class ;
+    rdfs:label "deontic modality"@en ;
+    rdfs:comment "a modality pertaining to Deontic Specifications."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Modality> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> a rdfs:Class ;
+    rdfs:label "deontic specification"@en ;
+    rdfs:comment "an Obligation, Permission, Prohibition, Right, ...."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#LogicalFormula> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Modality> a rdfs:Class ;
+    rdfs:label "modality"@en .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Obligation> a rdfs:Class ;
+    rdfs:label "obligation"@en ;
+    rdfs:comment "a Deontic Specification for a state, an act, or a course of action to which a Bearer is legally bound, and which, if it is not achieved or performed, results in a Violation."@en,
+        "a situation, an act, or a course of action(s) to which a bearer is legally bound, and if it is not achieved or performed results in a violation."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification>,
+        <http://ns.inria.fr/nrv#CompensableRequirement>,
+        <http://ns.inria.fr/nrv#ViolableRequirement> ;
+    owl:unionOf ( <http://ns.inria.fr/nrv#Achievement> <http://ns.inria.fr/nrv#Maintenance> ) .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#PenaltyStatement> a rdfs:Class ;
+    rdfs:label "penalty statement"@en .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Permission> a rdfs:Class ;
+    rdfs:label "permission"@en ;
+    rdfs:comment "a Deontic Specification for a state, an act, or a course of action where the Bearer has no Obligation or Prohibition to the contrary. A weak Permission is the absence of the Obligation or Prohibition to the contrary; a strong Permission is an exception or derogation of the Obligation or Prohibition to the contrary."@en,
+        "something is permitted if the obligation or the prohibition to the contrary does not hold."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification>,
+        <http://ns.inria.fr/nrv#NonCompensableRequirement>,
+        <http://ns.inria.fr/nrv#NonViolableRequirement> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#PrescriptiveStatement> a rdfs:Class ;
+    rdfs:label "prescriptive statement"@en .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Prohibition> a rdfs:Class ;
+    rdfs:label "prohibition"@en ;
+    rdfs:comment "a Deontic Specification for a state, an act, or a course of action to which a Bearer is legally bound, and which, if it is achieved or performed, results in a Violation."@en,
+        "a situation, an act, or a course of action(s) which a bearer should avoid, and if it is achieved results in a violation."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification>,
+        <http://ns.inria.fr/nrv#CompensableRequirement>,
+        <http://ns.inria.fr/nrv#ViolableRequirement> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Reparation> a rdfs:Class ;
+    rdfs:label "reparation"@en ;
+    rdfs:comment "an indication that a PenaltyStatement is linked with a PrescriptiveStatement. It indicates that a sanction may apply where the PrescriptiveStatement entails a Deontic Specification and when there is a Violation of the Deontic Specification."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#AtomicFormula> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Right> a rdfs:Class ;
+    rdfs:label "right"@en ;
+    rdfs:comment "(see also Permission) a Deontic Specification that gives a Permission to a party (the Bearer) and implies there are Obligations or Prohibitions on other parties (the AuxiliaryParty) such that the Bearer can (eventually) exercise the Right."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#SuborderList> a rdfs:Class ;
+    rdfs:label "suborder list"@en ;
+    rdfs:comment "a Deontic Specification for a sequence of Deontic Specifications, i.e., Obligations, Prohibitions, Permissions, Rights and/or Suborder Lists. When a SuborderList holds, a Deontic Specification in the SuborderList holds if all Deontic Specifications that precede it in the SuborderList have been violated."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Violation> a rdfs:Class ;
+    rdfs:label "violation"@en ;
+    rdfs:comment "an indication that an Obligation or Prohibition has been violated."@en,
+        "the result of a violated normative requirement."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> ;
+    owl:disjointWith <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Compliance> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#AtomicFormula> a rdfs:Class ;
+    rdfs:label "atomic formula"@en .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#LogicalFormula> a rdfs:Class ;
+    rdfs:label "logical formula"@en .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#Term> a rdfs:Class ;
+    rdfs:label "term"@en .
+
+<http://ns.inria.fr/nrv#Achievement> a rdfs:Class ;
+    rdfs:label "achievement"@en ;
+    rdfs:comment "an obligation for which achieving the content at least once is enough to fulfil it."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Obligation> ;
+    owl:disjointUnionOf ( <http://ns.inria.fr/nrv#PreemptiveAchievement> <http://ns.inria.fr/nrv#NonPreemptiveAchievement> ),
+        ( <http://ns.inria.fr/nrv#PerdurantAchievement> <http://ns.inria.fr/nrv#NonPerdurantAchievement> ) .
+
+<http://ns.inria.fr/nrv#CoOccurantPunctual> a rdfs:Class ;
+    rdfs:label "co-occurant punctual requirement"@en ;
+    rdfs:comment "TODO."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Punctual> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#NonCoOccurantPunctual> .
+
+<http://ns.inria.fr/nrv#CompensableRequirement> a rdfs:Class ;
+    rdfs:label "compensable requirement"@en ;
+    rdfs:comment "a requirement that can be compensated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#NonCompensableRequirement> .
+
+<http://ns.inria.fr/nrv#CompensatedRequirement> a rdfs:Class ;
+    rdfs:label "compensated requirement"@en ;
+    rdfs:comment "a requirement violated in a state of affairs and compensated in that same state of affairs."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#CompensableRequirement> .
+
+<http://ns.inria.fr/nrv#Compensation> a rdfs:Class ;
+    rdfs:label "compensation"@en ;
+    rdfs:comment "a set of penalties or sanctions imposed on the violator ; fulfilling them makes amends for the violation."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Obligation> .
+
+<http://ns.inria.fr/nrv#CompliantRequirement> a rdfs:Class ;
+    rdfs:label "compliant requirement"@en ;
+    rdfs:comment "a requirement being compliant with a state of affairs."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#ViolableRequirement> .
+
+<http://ns.inria.fr/nrv#Maintenance> a rdfs:Class ;
+    rdfs:label "maintenance"@en ;
+    rdfs:comment "an obligation that needs to be obeyed for the whole duration within the interval in which it is in force."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Obligation> .
+
+<http://ns.inria.fr/nrv#NonCoOccurantPunctual> a rdfs:Class ;
+    rdfs:label "non co-occurant punctual requirement"@en ;
+    rdfs:comment "TODO."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Punctual> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#CoOccurantPunctual> .
+
+<http://ns.inria.fr/nrv#NonCompensableRequirement> a rdfs:Class ;
+    rdfs:label "non compensable requirement"@en ;
+    rdfs:comment "a requirement that cannot be compensated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#CompensableRequirement> .
+
+<http://ns.inria.fr/nrv#NonPerdurantAchievement> a rdfs:Class ;
+    rdfs:label "non perdurant requirement"@en ;
+    rdfs:comment "achievement requirement that does not persist after being violated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Achievement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#PerdurantAchievement> .
+
+<http://ns.inria.fr/nrv#NonPersistentRequirement> a rdfs:Class ;
+    rdfs:label "non persistent requirement"@en ;
+    rdfs:comment "a requirement that is in force at a particular time point only or for the instance it is in force."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#PersistentRequirement> .
+
+<http://ns.inria.fr/nrv#NonPreemptiveAchievement> a rdfs:Class ;
+    rdfs:label "non preemptive achievement requirement"@en ;
+    rdfs:comment "an achievement requirement that cannot be fulfilled even before it is actually in force."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Achievement> .
+
+<http://ns.inria.fr/nrv#NonViolableRequirement> a rdfs:Class ;
+    rdfs:label "non violable requirement"@en ;
+    rdfs:comment "a requirement that cannot be violated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#ViolableRequirement> .
+
+<http://ns.inria.fr/nrv#NormativeRequirement> a rdfs:Class ;
+    rdfs:label "Normative Requirement"@en ;
+    rdfs:comment "a requirement implying, creating, or prescribing a norm."@en ;
+    rdfs:subClassOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> ;
+    owl:disjointUnionOf ( <http://ns.inria.fr/nrv#CompensableRequirement> <http://ns.inria.fr/nrv#NonCompensableRequirement> ),
+        ( <http://ns.inria.fr/nrv#ViolableRequirement> <http://ns.inria.fr/nrv#NonViolableRequirement> ),
+        ( <http://ns.inria.fr/nrv#PersistentRequirement> <http://ns.inria.fr/nrv#NonPersistentRequirement> ) .
+
+<http://ns.inria.fr/nrv#PerdurantAchievement> a rdfs:Class ;
+    rdfs:label "perdurant achievement requirement"@en ;
+    rdfs:comment "achievement requirement that persists after being violated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Achievement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#NonPerdurantAchievement> .
+
+<http://ns.inria.fr/nrv#PersistentRequirement> a rdfs:Class ;
+    rdfs:label "persistent requirement"@en ;
+    rdfs:comment "a requirement that needs to be obeyed for the whole duration within the interval in which it is in force."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#NonPersistentRequirement> .
+
+<http://ns.inria.fr/nrv#PreemptiveAchievement> a rdfs:Class ;
+    rdfs:label "preemptive achievement requirement"@en ;
+    rdfs:comment "an achievement requirement that can be fulfilled even before it is actually in force."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#Achievement> .
+
+<http://ns.inria.fr/nrv#Punctual> a rdfs:Class ;
+    rdfs:label "punctual"@en ;
+    rdfs:comment "an obligation for which the contents must be immediately achieved."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NonPersistentRequirement> ;
+    owl:disjointUnionOf ( <http://ns.inria.fr/nrv#CoOccurantPunctual> <http://ns.inria.fr/nrv#NonCoOccurantPunctual> ) ;
+    owl:intersectionOf ( <http://ns.inria.fr/nrv#Achievement> <http://ns.inria.fr/nrv#Maintenance> ) .
+
+<http://ns.inria.fr/nrv#ViolableRequirement> a rdfs:Class ;
+    rdfs:label "violable requirement"@en ;
+    rdfs:comment "a requirement that can be violated."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#NormativeRequirement> ;
+    owl:disjointWith <http://ns.inria.fr/nrv#NonViolableRequirement> .
+
+<http://ns.inria.fr/nrv#ViolatedRequirement> a rdfs:Class ;
+    rdfs:label "violated requirement"@en ;
+    rdfs:comment "a requirement violated by a state of affairs."@en ;
+    rdfs:subClassOf <http://ns.inria.fr/nrv#ViolableRequirement> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Bearer> a owl:ObjectProperty ;
+    rdfs:label "bearer"@en ;
+    rdfs:comment "a role in a Deontic Specification to which the Deontic Specification is primarily directed."@en ;
+    rdfs:subPropertyOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticRole> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#appliesModality> a owl:ObjectProperty ;
+    rdfs:label "applies modality"@en ;
+    rdfs:comment "the deontic mode that applies to a Deontic Specification in a Context or \\tAssociation."@en ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Modality> ;
+    rdfs:subPropertyOf <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#applies> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#appliesPenalty> a owl:ObjectProperty ;
+    rdfs:label "applies penalty"@en ;
+    rdfs:comment "the PenaltyStatement that is linked to a LegalRule in a Reparation."@en ;
+    rdfs:domain <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Reparation> ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#PenaltyStatement> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#toPrescriptiveStatement> a owl:ObjectProperty ;
+    rdfs:label "to prescriptive statement"@en ;
+    rdfs:comment "the PrescriptiveStatement that is linked to a PenaltyStatement in a Reparation."@en ;
+    rdfs:domain <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Reparation> ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#PrescriptiveStatement> .
+
+<http://ns.inria.fr/nrv#> a ns1:Vocabulary,
+        owl:Ontology ;
+    dcterms:contributor "Fabien Gandon",
+        "Guido Governatori" ;
+    dcterms:created "2017-07-26"^^xsd:date ;
+    dcterms:creator <http://ns.inria.fr/fabien.gandon/foaf.html#me>,
+        "Fabien Gandon" ;
+    dcterms:description "An OWL vocabulary for describing normative requirements."@en ;
+    dcterms:modified "2017-08-18"^^xsd:date ;
+    dcterms:publisher "Inria" ;
+    dcterms:status <http://purl.org/adms/status/UnderDevelopment> ;
+    dcterms:title "Normative Requirements Vocabulary"@en ;
+    dcterms:type <http://purl.org/adms/assettype/Ontology> ;
+    vann:preferredNamespacePrefix "nrv" ;
+    vann:preferredNamespaceUri "http://ns.inria.fr/nrv#" ;
+    ns1:specializes <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#> ;
+    rdfs:comment "This file specifies the set of OWL classes and properties proposed by the MIREL project to represent normative requirements."@en ;
+    rdfs:isDefinedby onto: ;
+    rdfs:seeAlso <http://www.mirelproject.eu/> ;
+    foaf:homepage onto: .
+
+<http://ns.inria.fr/nrv#hasCompensation> a owl:ObjectProperty ;
+    rdfs:label "has for compensation"@en ;
+    rdfs:comment "links a compensable requirement to a compensation."@en ;
+    rdfs:domain <http://ns.inria.fr/nrv#CompensableRequirement> ;
+    rdfs:range <http://ns.inria.fr/nrv#Compensation> .
+
+<http://ns.inria.fr/nrv#hasCompliance> a owl:ObjectProperty ;
+    rdfs:label "has for compliance"@en ;
+    rdfs:comment "links a violable requirement to compliance."@en ;
+    rdfs:domain <http://ns.inria.fr/nrv#ViolableRequirement> ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Compliance> ;
+    owl:propertyDisjointWith <http://ns.inria.fr/nrv#hasViolation> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticRole> a owl:ObjectProperty ;
+    rdfs:label "deontic role"@en ;
+    rdfs:comment "a role in a Deontic Specification"@en ;
+    rdfs:domain <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#DeonticSpecification> ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/rule-metamodel#Term> .
+
+<http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#applies> a owl:ObjectProperty ;
+    rdfs:label "applies"@en .
+
+<http://ns.inria.fr/nrv#hasViolation> a owl:ObjectProperty ;
+    rdfs:label "has for violation"@en ;
+    rdfs:comment "links a violable requirement to a violation."@en ;
+    rdfs:domain <http://ns.inria.fr/nrv#ViolableRequirement> ;
+    rdfs:range <http://docs.oasis-open.org/legalruleml/ns/v1.0/metamodel#Violation> .
+

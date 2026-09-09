@@ -1,0 +1,233 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+<https://www.w3.org/2019/wot/td#ActionAffordance> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "ActionAffordance" ;
+    rdfs:comment "An Interaction Affordance that allows to invoke a function of the Thing, which manipulates state (e.g., toggling a lamp on or off) or triggers a process on the Thing (e.g., dimm a lamp over time)."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subClassOf <https://www.w3.org/2019/wot/td#InteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#EventAffordance> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "EventAffordance" ;
+    rdfs:comment "An Interaction Affordance that describes an event source, which asynchronously pushes event data to Consumers (e.g., overheating alerts)."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subClassOf <https://www.w3.org/2019/wot/td#InteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#InteractionAffordance> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "InteractionAffordance" ;
+    rdfs:comment "Metadata of a Thing that shows the possible choices to Consumers, thereby suggesting how Consumers may interact with the Thing. There are many types of potential affordances, but W3C WoT defines three types of Interaction Affordances: Properties, Actions, and Events."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#OperationType> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "OperationType" ;
+    rdfs:comment "Enumeration of well-known operation types necessary to implement the WoT interaction model"@en ;
+    rdfs:subClassOf ns1:Enumeration .
+
+<https://www.w3.org/2019/wot/td#PropertyAffordance> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "PropertyAffordance" ;
+    rdfs:comment "An Interaction Affordance that exposes state of the Thing. This state can then be retrieved (read) and optionally updated (write). Things can also choose to make Properties observable by pushing the new state after a change."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subClassOf <https://www.w3.org/2019/wot/td#InteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#Thing> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Thing"@en ;
+    rdfs:comment "An abstraction of a physical or a virtual entity whose metadata and interfaces are described by a WoT Thing Description, whereas a virtual entity is the composition of one or more Things."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasActionAffordance> a owl:ObjectProperty ;
+    rdfs:label "hasActionAffordance" ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/td#ActionAffordance> ;
+    rdfs:comment "All Action-based interaction affordance of the Thing."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subPropertyOf <https://www.w3.org/2019/wot/td#hasInteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#hasCancellationSchema> a owl:ObjectProperty ;
+    rdfs:label "hasCancellationSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#EventAffordance> ;
+    rdfs:comment "Defines any data that needs to be passed to cancel a subscription, e.g., a specific message to remove a Webhook"@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasEventAffordance> a owl:ObjectProperty ;
+    rdfs:label "hasEventAffordance" ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/td#EventAffordance> ;
+    rdfs:comment "All Event-based interaction affordance of the Thing."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subPropertyOf <https://www.w3.org/2019/wot/td#hasInteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#hasForm> a owl:ObjectProperty ;
+    rdfs:label "hasForm" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#InteractionAffordance>,
+        <https://www.w3.org/2019/wot/td#Thing> ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/hypermedia#Form> ;
+    rdfs:comment "Set of form hypermedia controls that describe how an operation can be performed. Forms are serializations of Protocol Bindings."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasInputSchema> a owl:ObjectProperty ;
+    rdfs:label "hasInputSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#ActionAffordance> ;
+    rdfs:comment "Used to define the input data schema of the action."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasLink> a owl:ObjectProperty ;
+    rdfs:label "hasLink" ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/hypermedia#Link> ;
+    rdfs:comment "Provides Web links to arbitrary resources that relate to the specified Thing Description."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasNotificationSchema> a owl:ObjectProperty ;
+    rdfs:label "hasNotificationSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#EventAffordance> ;
+    rdfs:comment "Defines the data schema of the Event instance messages pushed by the Thing."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasOutputSchema> a owl:ObjectProperty ;
+    rdfs:label "hasOutputSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#ActionAffordance> ;
+    rdfs:comment "Used to define the output data schema of the action."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasPropertyAffordance> a owl:ObjectProperty ;
+    rdfs:label "hasPropertyAffordance" ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/td#PropertyAffordance> ;
+    rdfs:comment "All Property-based interaction affordance of the Thing."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:subPropertyOf <https://www.w3.org/2019/wot/td#hasInteractionAffordance> .
+
+<https://www.w3.org/2019/wot/td#hasSecurityConfiguration> a owl:ObjectProperty ;
+    rdfs:label "hasSecurityConfiguration" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#Thing> ;
+    rdfs:comment "Set of security definition names, chosen from those defined in securityDefinitions.  These must all be satisfied for access to resources."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasSubscriptionSchema> a owl:ObjectProperty ;
+    rdfs:label "hasSubscriptionSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#EventAffordance> ;
+    rdfs:comment "Defines data that needs to be passed upon subscription, e.g., filters or message format for setting up Webhooks."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#hasUriTemplateSchema> a owl:ObjectProperty ;
+    rdfs:label "hasUriTemplateSchema" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#InteractionAffordance> ;
+    rdfs:comment "Define URI template variables as collection based on schema specifications."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#instance> a owl:AnnotationProperty ;
+    rdfs:label "instance" ;
+    rdfs:comment "Provides a version identicator of this TD instance."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#invokeAction> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "invokeAction" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#isIdempotent> a owl:DatatypeProperty ;
+    rdfs:label "isIdempotent" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#ActionAffordance> ;
+    ns1:rangeIncludes ns1:Boolean ;
+    rdfs:comment "Indicates whether the action is idempotent (=true) or not. Informs whether the action can be called repeatedly with the same result, if present, based on the same input."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#isObservable> a owl:DatatypeProperty ;
+    rdfs:label "isObservable" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#PropertyAffordance> ;
+    ns1:rangeIncludes ns1:Boolean ;
+    rdfs:comment "A hint that indicates whether Servients hosting the Thing and Intermediaries should provide a Protocol Binding that supports the <code>observeproperty</code> operation for this Property."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#isSafe> a owl:DatatypeProperty ;
+    rdfs:label "isSafe" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#ActionAffordance> ;
+    ns1:rangeIncludes ns1:Boolean ;
+    rdfs:comment "Signals if the action is safe (=true) or not. Used to signal if there is no internal state (cf. resource state) is changed when invoking an Action. In that case responses can be cached as example."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#name> a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#InteractionAffordance> ;
+    ns1:rangeIncludes ns1:Text ;
+    rdfs:comment "Indexing property to store entity names when serializing them in a JSON-LD @index container."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#observeProperty> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "observeProperty" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#readAllProperties> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "readAllProperties" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#readMultipleProperties> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "readMultipleProperties" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#readProperty> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "readProperty" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#subscribeEvent> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "subscribeEvent" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#supportContact> a owl:AnnotationProperty ;
+    rdfs:label "supportContact" ;
+    rdfs:comment "Provides information about the TD maintainer as URI scheme (e.g., mailto [[RFC6068]], tel [[RFC3966]], https)."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:seeAlso ns1:contactPoint .
+
+<https://www.w3.org/2019/wot/td#unobserveProperty> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "unobserveProperty" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#unsubscribeEvent> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "unsubscribeEvent" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#versionInfo> a owl:AnnotationProperty ;
+    rdfs:label "versionInfo" ;
+    rdfs:comment "Provides version information."@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> ;
+    rdfs:seeAlso ns1:version .
+
+<https://www.w3.org/2019/wot/td#writeAllProperties> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "writeAllProperties" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#writeMultipleProperties> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "writeMultipleProperties" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#writeProperty> a <https://www.w3.org/2019/wot/td#OperationType> ;
+    rdfs:label "writeProperty" ;
+    rdfs:comment "Operation type of forms used to read a property value"@en .
+
+<https://www.w3.org/2019/wot/td#hasInteractionAffordance> a owl:ObjectProperty ;
+    rdfs:label "hasInteractionAffordance" ;
+    ns1:domainIncludes <https://www.w3.org/2019/wot/td#Thing> ;
+    ns1:rangeIncludes <https://www.w3.org/2019/wot/td#InteractionAffordance> ;
+    rdfs:comment "Offers an affordance to interact with the Thing"@en ;
+    rdfs:isDefinedBy <https://www.w3.org/2019/wot/td#> .
+
+<https://www.w3.org/2019/wot/td#> a owl:Ontology ;
+    dc:publisher [ a ns1:Organization ;
+            ns1:name "W3C Web of Things Working Group" ;
+            ns1:url <https://www.w3.org/WoT/WG/> ] ;
+    dc:title "Thing Description Ontology"@en ;
+    dcterms:author <https://vcharpenay.link/#me> ;
+    dcterms:contributor <http://maxime-lefrancois.info/me#>,
+        <http://purl.org/net/mpoveda> ;
+    dcterms:license <http://purl.org/NET/rdflicense/cc-by4.0> ;
+    vann:preferredNamespacePrefix "td" ;
+    vann:preferredNamespaceUri "https://www.w3.org/2019/wot/td#" ;
+    rdfs:comment "This ontology aims to model the Web of Things domain according to the W3C Interest Group (http://w3c.github.io/wot/)"@en ;
+    owl:versionInfo "0.9.0" .
+

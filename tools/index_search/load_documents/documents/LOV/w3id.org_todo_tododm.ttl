@@ -1,0 +1,736 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/todo/tododm> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns2:license a owl:AnnotationProperty .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+xsd:time a rdfs:Datatype .
+
+owl:versionIRI a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    ns2:license "http://purl.org/NET/rdflicense/cc-by4.0" ;
+    dcterms:contributor "Izaskun Fernández (Tekniker) <mailto:izaskun.fernandez@tekniker.es>"^^xsd:string ;
+    dcterms:created "2020-04-21T00:00:00" ;
+    dcterms:creator "Cristina Aceta (Tekniker) <mailto:cristina.aceta@tekniker.es>"^^xsd:string ;
+    dcterms:description "Module for dialogue process and system output management."^^xsd:string ;
+    dcterms:issued "" ;
+    dcterms:modified "2021-09-23T10:00:00" ;
+    dcterms:title "TODODM: Dialogue Management Module for Task-Oriented Dialogue management Ontology (TODO)"^^xsd:string ;
+    vann:preferredNamespacePrefix "tododm"^^xsd:string ;
+    vann:preferredNamespaceUri "https://w3id.org/todo/tododm" ;
+    owl:priorVersion "" ;
+    owl:versionInfo 2.1 .
+
+<https://w3id.org/todo/tododm#ActionOptionsAvailable> a owl:Class ;
+    rdfs:label "ActionOptionsAvailable" ;
+    rdfs:comment "Response in which the system tells the user that it has several options for an Action."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ActionDisambiguationRequest> ],
+        <https://w3id.org/todo/tododm#OptionsAvailableResponse> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#ActionOptionsResponse> a owl:Class ;
+    rdfs:label "ActionOptionsResponse" ;
+    rdfs:comment "Response that the system gives when a command can be associated to more than one action."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ActionDisambiguationRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Your command can be associated to many actions!"@en .
+
+<https://w3id.org/todo/tododm#AlternativeArgumentSuggestionRequest> a owl:Class ;
+    rdfs:label "AlternativeArgumentSuggestionRequest" ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Request: \"Take me to a laboratory with microphone\".\\n\\n\"I cannot find any {Item} with {Complement} as {ArgumentTag}, but I can suggest {IDval_AlternativeItem}, which it does have it. Do you want me to take you there?\"\\n\\n\"I cannot find any {laboratory} with {microphone} as {the destination you want to go}, but I can suggest {meeting room 1}, which it does have it. Do you want me to take you there?\""@en .
+
+<https://w3id.org/todo/tododm#ArgumentAssignationRequest> a owl:Class ;
+    rdfs:label "ArgumentAssignationRequest" ;
+    rdfs:comment "Request made to reassure the assignation of a value from the KEE to an Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "The {Argument} is {Argument_value}, isn't it?\\n\\n\"The Destination is \"Auditorium\", isn't it?\""@en .
+
+<https://w3id.org/todo/tododm#ArgumentCharacteristicRequest> a owl:Class ;
+    rdfs:label "ArgumentCharacteristicRequest" ;
+    rdfs:comment "Request that demands a specific characteristic of the argument. This request is used when the argument provided is too broad and the system needs some characteristic that allows determining the specific element the user is refering to.\\n\\nFor example, the user would require a \"piece\", and the system includes data for 300 types of pieces."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Which {characteristic} is {too_broad_argument}?\"\\n\\n\"Which {colour} is (the) {piece}?\""@en .
+
+<https://w3id.org/todo/tododm#ArgumentExplanationResponse> a owl:Class ;
+    rdfs:label "ArgumentExplanationResponse" ;
+    rdfs:comment "Response that gives details about an Argument. For example, when the user does not understand what information conveys said Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"The {Argument} corresponds to {ArgDescription}\"\\n\\n\"The {Error} corresponds to {the ID of the error that appears in the machine}\""@en .
+
+<https://w3id.org/todo/tododm#ArgumentNotCompatibleResponse> a owl:Class ;
+    rdfs:label "ArgumentNotCompatibleResponse" ;
+    rdfs:comment "The system informs the user the Argument value provided is not valid according to what has been modelled in the KB."@en,
+        "This would imply an ArgumentRequest."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#VerifyInfoRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"{ArgumentValue} cannot be the {Argument}.\"\\n\\n\"{Toilet} cannot be the {Error}.\""@en .
+
+<https://w3id.org/todo/tododm#ArgumentNotGuessedResponse> a owl:Class ;
+    rdfs:label "ArgumentNotGuessedResponse" ;
+    rdfs:comment "Response given when the system has not been able to guess the value of the Argument through its characteristics."@en,
+        "This would imply an ArgumentRequest/ArgumentCharacteristicRequest"@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ArgumentOptionsAvailable> a owl:Class ;
+    rdfs:label "ArgumentOptionsAvailable" ;
+    rdfs:comment "Response in which the system tells the user that it has several options for an Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentSpecifyRequest> ],
+        <https://w3id.org/todo/tododm#OptionsAvailableResponse> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#ArgumentOptionsResponse> a owl:Class ;
+    rdfs:label "ArgumentOptionsResponse" ;
+    rdfs:comment "Response that the system gives when an item can be associated to more than one argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentSpecifyRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "The item {item} can be associated to many arguments!"@en .
+
+<https://w3id.org/todo/tododm#ArgumentValueOptionsAvailable> a owl:Class ;
+    rdfs:label "ArgumentValueOptionsAvailable" ;
+    rdfs:comment "Response in which the system tells the user that it has several options for an argument value."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentValueDisambiguationRequest> ],
+        <https://w3id.org/todo/tododm#OptionsAvailableResponse> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#CannotResolveActionResponse> a owl:Class ;
+    rdfs:label "CannotResolveActionResponse" ;
+    rdfs:comment "Response that the system gives when it cannot associate an action/target to one or more actions."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#UserCommandRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "I couldn't associate your command to an action. Can you please be more specific?"@en .
+
+<https://w3id.org/todo/tododm#CannotResolveCommandResponse> a owl:Class ;
+    rdfs:label "CannotResolveCommandResponse" ;
+    rdfs:comment "Response that informs the user that the command could not be resolved.\\n\\n[to be followed by an ArgRequest]"@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "I could not resolve your command."@en .
+
+<https://w3id.org/todo/tododm#Continue> a owl:Class ;
+    rdfs:label "Continue" ;
+    rdfs:comment "Marker that conveys the idea of continuing with the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#DialogueControlMarker> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#DialogueFinished> a owl:Class ;
+    rdfs:label "DialogueFinished" ;
+    rdfs:comment "Response given by the system when the dialogue process has finished (i.e., when the user confirms the action and argument values)" ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable" ;
+    skos:example "Done!"@en .
+
+<https://w3id.org/todo/tododm#DialogueStep> a owl:Class ;
+    rdfs:label "DialogueStep" ;
+    rdfs:comment "Step in the dialogue process that requires a system interaction with the user (SystemStep)." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#initiatedBy> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#SystemStep> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#order> ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#IDval> ;
+            owl:someValuesFrom xsd:string ] ;
+    owl:disjointWith <https://w3id.org/todo/tododm#ProcessStep> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#FinishDial> a owl:Class ;
+    rdfs:label "FinishDial" ;
+    rdfs:comment "Marker that establishes that the dialogue must be finished." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#DialogueControlMarker> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#GreetingResponse> a owl:Class ;
+    rdfs:label "GreetingResponse" ;
+    rdfs:comment "Welcome message."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#UserCommandRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Hi! I am {SystemName}. I am happy to help you.\"\\n\\n\"Hi! I am {Teknibot}. I am happy to help you.\""@en .
+
+<https://w3id.org/todo/tododm#IncorrectArgumentRequest> a owl:Class ;
+    rdfs:label "IncorrectArgumentRequest" ;
+    rdfs:comment "Request that checks which is the Argument/Action that has not been interpreter correctly, after a negative ReassureFeedbackRequest."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Have I missed the {Argument}?\"\\n\\n\"Have I missed the {Origin}?\""@en .
+
+<https://w3id.org/todo/tododm#IntentRequest> a owl:Class ;
+    rdfs:label "IntentRequest" ;
+    rdfs:comment "Request made when a UserRequest can belong to different Intents. The strategy is asking for each Intent option until the user confirms."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Situation: the Intent for the Request could be \"Information\" or \"Guiding\"\\n\\n\"So many interpretations! See if you can help me! Do you need {Intent}?\"\\n\"Then do you need {Intent}?\\n\\n\\nSYS: \"So many interpretations! See if you can help me! Do you need {Information}?\"\\n\\nUSR: \"No\"\\n\\nSYS: \"Then do you need {Guiding}?\\n\\nUSR: \"Yes\""@en .
+
+<https://w3id.org/todo/tododm#ItemNotCompatibleAnyArgResponse> a owl:Class ;
+    rdfs:label "ItemNotCompatibleAnyArgResponse" ;
+    rdfs:comment "The system informs the user the Item value provided is not compatible with any action argument, according to what has been modelled in the KB.",
+        "The item {item} is not compatible with any argument for this action."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#VerifyInfoRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#MissingInformationResponse> a owl:Class ;
+    rdfs:label "MissingInformationResponse" ;
+    rdfs:comment "Response that is given when, after checking if all the core Arguments have been provided by the user command, there are core Arguments that are missing."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#NewDialogue> a owl:Class ;
+    rdfs:label "NewDialogue" ;
+    rdfs:comment "Request that asks the user whether they want to initiate a new dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable" ;
+    skos:example "Do you need anything else?"@en .
+
+<https://w3id.org/todo/tododm#NoMoreOptionsContinueResponse> a owl:Class ;
+    rdfs:label "NoMoreOptionsContinueResponse" ;
+    rdfs:comment "Response that the system displays when it runs out of options. It is intended to continue with a full request of the element that the previous options corresponded to."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "I do not have more options to offer you!"@en .
+
+<https://w3id.org/todo/tododm#NoMoreOptionsRestartResponse> a owl:Class ;
+    rdfs:label "NoMoreOptionsRestartResponse" ;
+    rdfs:comment "Response that the system displays when it runs out of options. It finishes the current Dialogue."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#UserCommandRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "I do not have more options to offer you! Can you reformulate your command so I can understand better?"@en .
+
+<https://w3id.org/todo/tododm#NoResultsClarificationResponse> a owl:Class ;
+    rdfs:label "NoResultsClarificationResponse" ;
+    rdfs:comment "Response that the system returns when the clarification step of the value of an Argument does not return any results."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#RepeatArgumentRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "I cannot find anything that corresponds to your demand."@en .
+
+<https://w3id.org/todo/tododm#ReassureFeedbackRequest> a owl:Class ;
+    rdfs:label "ReassureFeedbackRequest" ;
+    rdfs:comment "Request that is sent in order to obtain feedback whether the interpretation obtained is correct or not."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"So, you want me {Action} {ArgumentConnector} {Argument}, right?\"\\n\\n\"So, you want me {to take you} {to} {the toilet}, right?\""@en .
+
+<https://w3id.org/todo/tododm#Restart> a owl:Class ;
+    rdfs:label "Restart" ;
+    rdfs:comment "Marker that requires the dialogue to restart." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#DialogueControlMarker> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#Return> a owl:Class ;
+    rdfs:label "Return" ;
+    rdfs:comment "Marker that returns to the last SystemResponse+Request/SystemRequest performed."^^xsd:string ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#DialogueControlMarker> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#TooManyActionOptionsResponse> a owl:Class ;
+    rdfs:label "TooManyActionOptionsResponse" ;
+    rdfs:comment "Response given when the number of possible Actions is too big."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#UserCommandRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Your command can be associated to too many actions! Can you repeat and be more specific, please?"@en .
+
+<https://w3id.org/todo/tododm#TooManyAlternativesResponse> a owl:Class ;
+    rdfs:label "TooManyAlternativesResponse" ;
+    rdfs:comment "Response given when the alternatives (in general) are too big."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentClarificationRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"I have too many options taking into account the information you provided to me.\"\\n\\n\"I have too many options taking into account the information you provided to me.\""@en .
+
+<https://w3id.org/todo/tododm#TooManyArgumentOptionsResponse> a owl:Class ;
+    rdfs:label "TooManyArgumentOptionsResponse" ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#UserCommandRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Response given when the number of possible Arguments is too big."@en,
+        "Your command can be associated to too many arguments! Can you repeat and be more specific, please?"@en .
+
+<https://w3id.org/todo/tododm#TooManyWorldElementOptionsResponse> a owl:Class ;
+    rdfs:label "TooManyWorldElementOptionsResponse" ;
+    rdfs:comment "Response given when the number of possible World Elements is too big."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ArgumentClarificationRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Your command can be associated to too many elements!"@en .
+
+<https://w3id.org/todo/tododm#UnderstoodResponse> a owl:Class ;
+    rdfs:label "UnderstoodResponse" ;
+    rdfs:comment "Response given by the system to reassure the user that it has understood the request." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ValueNotCompatibleWithArgumentResponse> a owl:Class ;
+    rdfs:label "ValueNotCompatibleWithArgumentResponse" ;
+    rdfs:comment "Response given when the ArgValue for an Argument provided by the user is not compatible with said Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#implies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#VerifyInfoRequest> ],
+        <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"It cannot be the {Argument}\".\\n\\n\"It cannot be the {destination you want me to take you}\"."@en .
+
+<https://w3id.org/todo/tododm#isRequiredBy> a owl:ObjectProperty ;
+    rdfs:label "isRequiredBy" ;
+    rdfs:comment "Establishes the SystemRequest that requires a given UserResponse type." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    owl:inverseOf <https://w3id.org/todo/tododm#requires> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#lessMaxOptionsImplies> a owl:ObjectProperty ;
+    rdfs:label "lessMaxOptionsImplies" ;
+    rdfs:comment "Establishes the implications when a StepFunction, in the Dialogue Manager code, returns more than one result as output and the length of the output is smaller than the number of maximum results previously defined." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#multipleOptionsImplies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#moreMaxOptionsImplies> a owl:ObjectProperty ;
+    rdfs:label "moreMaxOptionsImplies" ;
+    rdfs:comment "Establishes the implications when a StepFunction, in the Dialogue Manager code, returns more than one result as output and the length of the output is higher than the number of maximum results previously defined." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#multipleOptionsImplies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#noOptionsImplies> a owl:ObjectProperty ;
+    rdfs:label "noOptionsImplies" ;
+    rdfs:comment "Establishes the implications when a StepFunction, in the Dialogue Manager code, returns no results as output." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#noUserResponseTypeImplies> a owl:ObjectProperty ;
+    rdfs:label "noUserResponseTypeImplies" ;
+    rdfs:comment "Establishes the implications of a negative UserResponse." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#singleOptionImplies> a owl:ObjectProperty ;
+    rdfs:label "singleOptionImplies" ;
+    rdfs:comment "Establishes the implications when a StepFunction, in the Dialogue Manager code, returns one result as output." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#yesUserResponseTypeImplies> a owl:ObjectProperty ;
+    rdfs:label "YesUserResponseImplies" ;
+    rdfs:comment "Establishes the implications of a positive UserResponse." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#ArgumentValueDisambiguationRequest> a owl:Class ;
+    rdfs:label "ArgumentValueDisambiguationRequest" ;
+    rdfs:comment "Request that tries to obtain the value of the argument when it is ambiguous (e.g. \"sala\" may apply to \"sala Ura\", \"sala Sua\", etc.)."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Do you want {Action} {ArgumentConnector} {WorldElement}?\"\\n\\n\"Do you want {to go} {to} {Sala Ura}?\""@en .
+
+<https://w3id.org/todo/tododm#ContentRequestStepFunction> a owl:Class ;
+    rdfs:label "ContentRequestStepFunction" ;
+    rdfs:comment "Step Function associated to a ContentRequest." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#isStepFunctionOf> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ContentRequest> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#userResponseNotUnderstoodImplies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#NotUnderstoodResponse> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#incorrectUserResponseTypeImplies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#YesNoResponseNotExpected> ],
+        <https://w3id.org/todo/tododm#StepFunction> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ContentResponseNotExpected> a owl:Class ;
+    rdfs:label "ContentResponseNotExpected" ;
+    rdfs:comment "\"You only need me to tell me yes or no, please\""@en,
+        "Reponse given to the user when the UserResponse is a ContentResponse and the SystemRequest requires a YesNoResponse."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ResponseTypeNotExpectedResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ProcessStepStepFunction> a owl:Class ;
+    rdfs:label "ProcessStepStepFunction" ;
+    rdfs:comment "Step Function associated to a ProcessStep." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#order> ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#isStepFunctionOf> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ProcessStep> ],
+        <https://w3id.org/todo/tododm#StepFunction> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#RepeatArgumentRequest> a owl:Class ;
+    rdfs:label "RepeatArgumentRequest" ;
+    rdfs:comment "Request that demands the user to repeat the value of an Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Can you repeat the {Argument}?\\n\\n\"Can you repeat the {Destination}?\""@en .
+
+<https://w3id.org/todo/tododm#YesNoRequestStepFunction> a owl:Class ;
+    rdfs:label "YesNoRequestStepFunction" ;
+    rdfs:comment "Step Function associated to a YesNoRequest." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#isStepFunctionOf> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#YesNoRequest> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#userResponseNotUnderstoodImplies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#NotUnderstoodResponse> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#incorrectUserResponseTypeImplies> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ContentResponseNotExpected> ],
+        <https://w3id.org/todo/tododm#StepFunction> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#YesNoResponseNotExpected> a owl:Class ;
+    rdfs:label "YesNoResponseNotExpected" ;
+    rdfs:comment "\"I think I haven't understood. Can you be more specific?"@en,
+        "Reponse given to the user when the UserResponse is a YesNoResponse and the SystemRequest requires a ContentResponse."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ResponseTypeNotExpectedResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#initiatedBy> a owl:ObjectProperty ;
+    rdfs:label "initiatedBy" ;
+    rdfs:comment "Establishes the SystemRequest/Response that initiates a DialogueStep." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#outputSentence> a owl:DatatypeProperty ;
+    rdfs:label "outputSentence" ;
+    rdfs:comment "String to be output by the system in order to communicate a SystemRequest/Response to the user." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#requires> a owl:ObjectProperty ;
+    rdfs:label "requires" ;
+    rdfs:comment "Establishes the type of UserResponse required by a SystemRequest." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#ActionDisambiguationRequest> a owl:Class ;
+    rdfs:label "ActionDisambiguationRequest" ;
+    rdfs:comment "Request that makes the user choose from a set of Actions obtained through inference."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "[Previous SysResp: \"I couldn't resolve the action from your request\".]\\n\"Do you want to {ActionTag}?\\n\\n\"Do you want to {go somewhere}?"@en .
+
+<https://w3id.org/todo/tododm#ArgumentClarificationRequest> a owl:Class ;
+    rdfs:label "ArgumentClarificationRequest" ;
+    rdfs:comment "Request that asks the user for some clarification for the value of an argument when a previously saved value generates too many options."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ArgumentSpecifyRequest> a owl:Class ;
+    rdfs:label "ArgumentSpecifyRequest" ;
+    rdfs:comment "Request made when a value for an Argument can belong to different Arguments. The strategy is asking for each Argument option until the user confirms."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "[Situation: the value \"Repairing table\" could be Origin or Destination]\\n\\n[Previous SysResponse: \"What you told me could correspond to many elements!\"]\\n\\n\"Is it {the place you want me to take you}?\"\\n\\n\"Is it {Argument}?\""@en .
+
+<https://w3id.org/todo/tododm#NotUnderstoodResponse> a owl:Class ;
+    rdfs:label "NotUnderstoodResponse" ;
+    rdfs:comment "Response that informs the user that the system has not understood the user command."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"I am sorry, but I haven't understood. Can you repeat, please?\""@en .
+
+<https://w3id.org/todo/tododm#ProcessStep> a owl:Class ;
+    rdfs:label "ProcessStep" ;
+    rdfs:comment "Step in the dialogue process that does not require a system interaction with the user (SystemStep)." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#hasStepFunction> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ProcessStepStepFunction> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#IDval> ;
+            owl:someValuesFrom xsd:string ] ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ResponseTypeNotExpectedResponse> a owl:Class ;
+    rdfs:label "ResponseTypeNotExpectedResponse" ;
+    rdfs:comment "Reponse given to the user when the UserResponse does not correspond with the expected response of the SystemRequest."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#SystemRequest> a owl:Class ;
+    rdfs:label "SystemRequest" ;
+    rdfs:comment "Act in which the system requires user input."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemStep> ;
+    owl:disjointWith <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Ask for missing information, ask for confirmation." .
+
+<https://w3id.org/todo/tododm#incorrectUserResponseTypeImplies> a owl:ObjectProperty ;
+    rdfs:label "incorrectUserResponseTypeImplies" ;
+    rdfs:comment "Establishes the implications of an incorrect UserResponseType (e.g. when the request requires Yes/No as response and the user provides a ContentResponse)." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#multipleOptionsImplies> a owl:ObjectProperty ;
+    rdfs:label "multipleOptionsImplies" ;
+    rdfs:comment "Establishes the implications when a StepFunction, in the Dialogue Manager code, returns more than one result as output." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#order> a owl:DatatypeProperty ;
+    rdfs:label "order" ;
+    rdfs:comment "Sets the order for StepFunctions/DialogueSteps." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#userResponseNotUnderstoodImplies> a owl:ObjectProperty ;
+    rdfs:label "userResponseNotUnderstoodImplies" ;
+    rdfs:comment "Establishes the implications when the system does not understand a UserResponse." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododm#implies> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#ArgumentRequest> a owl:Class ;
+    rdfs:label "ArgumentRequest" ;
+    rdfs:comment "Request that demands for the value of an Argument."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"Can you tell me the {argument}?\\n\\n\"Can you tell me the {Destination}?\""@en .
+
+<https://w3id.org/todo/tododm#OptionsAvailableResponse> a owl:Class ;
+    rdfs:label "OptionsAvailableResponse" ;
+    rdfs:comment "Response in which the system tells the user that it has several options for a specific element (e.g. WorldElement).\\n\\nNote the difference between OptionsAvailableResponse and TooManyAlternativesResponse: the first implies that there is a fair amount of options, whereas the latter implies that the options that are available are too many and it will require the user to be more specific."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemResponse> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "\"I have many options for your request.\""@en .
+
+<https://w3id.org/todo/tododm#StepFunction> a owl:Class ;
+    rdfs:label "StepFunction" ;
+    rdfs:comment "Element that is linked to a function in the Dialogue Manager code. This element also determines the implications of the output of said function in the code." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#IDval> ;
+            owl:someValuesFrom xsd:string ] ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#SystemStep> a owl:Class ;
+    rdfs:label "SystemStep" ;
+    rdfs:comment "Step performed by the system in order to request information to the user or simply outputting information." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#outputSentence> ;
+            owl:someValuesFrom xsd:string ] ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#VerifyInfoRequest> a owl:Class ;
+    rdfs:label "VerifyInfoRequest" ;
+    rdfs:comment "Request that requires the user to repeat some information."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "[Previous SysResponse: \"This item cannot be {ArgTag}\"]\\n\"Can you verify?\"\\n\\n[Previous SysResponse: \"This item cannot be {the destination}\"]\\n\"Can you verify?\""@en,
+        "[PreviousSysResponse: \"Este elemento no puede ser {ArgTag}\"]\\n\"¿Puedes verificarlo?\"\\n\\n[PreviousSysResponse: \"Este elemento no puede ser {el destino}\"]\\n\"¿Puedes verificarlo?\""@en .
+
+<https://w3id.org/todo/tododm#hasStepFunction> a owl:ObjectProperty ;
+    rdfs:label "hasStepFunction" ;
+    rdfs:comment "Establishes the StepFunction corresponding to a SystemRequest or a ProcessStep." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    owl:inverseOf <https://w3id.org/todo/tododm#isStepFunctionOf> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#DialogueControlMarker> a owl:Class ;
+    rdfs:label "DialogueControlMarkers" ;
+    rdfs:comment "Elements that correspond to predefined or generic actions in dialogue control." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#IDval> ;
+            owl:someValuesFrom xsd:string ] ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Continue, restart dialogue" .
+
+<https://w3id.org/todo/tododm#IDval> a owl:DatatypeProperty ;
+    rdfs:label "IDval" ;
+    rdfs:comment "Unique identification value for individuals." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#isStepFunctionOf> a owl:ObjectProperty ;
+    rdfs:label "isStepFunctionOf" ;
+    rdfs:comment "Establishes the SystemRequest or a ProcessStep corresponding to a StepFunction." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododm#UserCommandRequest> a owl:Class ;
+    rdfs:label "UserCommandRequest" ;
+    rdfs:comment "Request to the user to provide their (initial) command."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#ContentRequest> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#ContentRequest> a owl:Class ;
+    rdfs:label "ContentRequest" ;
+    rdfs:comment "Request that asks for specific information, other than \"Yes\" or \"No\" (and equivalents).\\n\\nAlso known as \"Non polar/Open question\" in linguistics."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#hasStepFunction> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#ContentRequestStepFunction> ],
+        <https://w3id.org/todo/tododm#SystemRequest> ;
+    owl:disjointWith <https://w3id.org/todo/tododm#YesNoRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Which is the error code?"@en .
+
+<https://w3id.org/todo/tododm#YesNoRequest> a owl:Class ;
+    rdfs:label "YesNoRequest" ;
+    rdfs:comment "Request the response of which is expected to be limited to \"Yes\" or \"No\" (and equivalents).\\n\\nAlso known as \"Polar question\" in linguistics."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododm#hasStepFunction> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododm#YesNoRequestStepFunction> ],
+        <https://w3id.org/todo/tododm#SystemRequest> ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Do you want to go to the laboratory?"@en .
+
+<https://w3id.org/todo/tododm#SystemResponse> a owl:Class ;
+    rdfs:label "SystemResponse" ;
+    rdfs:comment "Information that the system provides in response to a UserRequest or as a piece of information directed to the user without a prior UserRequest."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododm#SystemStep> ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododm#implies> a owl:ObjectProperty ;
+    rdfs:label "implies" ;
+    rdfs:comment "Establishes the implications of the output of a StepFunction in the Dialogue Manager code." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododm#" ;
+    ns1:term_status "stable" .
+

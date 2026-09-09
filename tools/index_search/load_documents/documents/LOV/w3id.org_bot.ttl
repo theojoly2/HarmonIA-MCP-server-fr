@@ -1,0 +1,367 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://www.w3.org/2006/vcard/ns#> .
+@prefix onto: <https://w3id.org/bot> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+ns2:fn a owl:AnnotationProperty .
+
+schema:domainIncludes a owl:AnnotationProperty .
+
+schema:name a owl:AnnotationProperty .
+
+schema:rangeIncludes a owl:AnnotationProperty .
+
+<https://w3id.org/bot#has3DModel> a owl:ObjectProperty ;
+    rdfs:label "has 3D model"@en,
+        "a modèle 3D"@fr ;
+    rdfs:comment "Links any bot:Zone or bot:Element to a IRI that identifies its 3D Model. This 3D Model can then be described using some dedicated RDF vocabulary. Else, the 3D Model IRI could be dereferenceable, and when looking up the IRI one could retrieve a representation of the 3D Model with some existing data format for 3D models."@en,
+        "Relie tout bot:Zone ou bot:Element à un IRI qui identifie son modèle 3D. Ce modèle 3D peut ensuite être décrit à l'aide d'un vocabulaire RDF spécifique. Sinon, le modèle 3D de l'IRI pourrait être déréférencé, et en recherchant l'IRI, on pourrait obtenir une représentation du modèle 3D basée sur un format de données existant pour modèles 3D."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:term_status "unstable" ;
+    schema:domainIncludes <https://w3id.org/bot#Element>,
+        <https://w3id.org/bot#Zone> .
+
+<https://w3id.org/bot#hasBuilding> a owl:ObjectProperty ;
+    rdfs:label "has building"@en,
+        "contient bâtiment"@fr ;
+    rdfs:comment "Relation to buildings contained in a zone. The typical domains of bot:hasBuilding are instances of bot:Site."@en,
+        "Relation à définir entre les bâtiments d'une même zone. Cette propriété s'applique typiquement sur des instances de bot:Site."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Building> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#containsZone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Site> .
+
+<https://w3id.org/bot#hasSimple3DModel> a owl:DatatypeProperty ;
+    rdfs:label "has simple 3D model"@en,
+        "a modèle 3D simple"@fr ;
+    rdfs:comment "Links any bot:Zone or bot:Element to a 3D Model encoded as a literal."@en,
+        "Relie tout bot:Zone ou bot:Element à un modèle 3D encodé comme"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:term_status "unstable" ;
+    schema:domainIncludes <https://w3id.org/bot#Element>,
+        <https://w3id.org/bot#Zone> .
+
+<https://w3id.org/bot#hasSpace> a owl:ObjectProperty ;
+    rdfs:label "has space"@en,
+        "contient pièce"@fr ;
+    rdfs:comment "Relation to spaces contained in a zone. The typical domains of bot:hasSpace are instances of bot:Storey or bot:Building."@en,
+        "Relation à définir entre les pièces d'une même zone. Cette propriété s'applique typiquement sur des instances de bot:Storey et bot:Building."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Space> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#containsZone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Storey> .
+
+<https://w3id.org/bot#hasStorey> a owl:ObjectProperty ;
+    rdfs:label "has storey"@en,
+        "a étage"@fr ;
+    rdfs:comment "Relation to storeys contained in a zone. The typical domains of bot:hasStorey are instances of bot:Building."@en,
+        "Relation à définir entre les étages d'une même zone. Cette propriété s'applique typiquement sur des instances de bot:Building."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Storey> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#containsZone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Building> .
+
+<https://w3id.org/bot#hasSubElement> a owl:ObjectProperty ;
+    rdfs:label "has sub-element"@en,
+        "a sous-élément"@fr ;
+    rdfs:comment "Relation between two building elements, either one element hosting another (e.g. a wall hosts a window) or a subcomposition of a building element into smaller parts (e.g. an air handling unit has as a part a fan)."@en,
+        "Relation entre deux éléments du bâti, soit un élément hébergeant un autre (ex., un mur héberge une fenêtre), ou une décomposition d'un élément en sous-parties (ex., un système de gestion de l'air et un ventilateur qu'il contient)"@fr ;
+    rdfs:domain <https://w3id.org/bot#Element> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Element> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#hasZeroPoint> a owl:ObjectProperty ;
+    rdfs:label "has zero point"@en,
+        "a point origine"@fr ;
+    rdfs:comment "Links a bot:Site to an instance that encodes the latitude and longitude of the Zero Point of the building site. This could be an instance of a wgs84:Point. The definition of GIS and geometry is not within the scope of BOT and an appropriate ontology needs to be selected here by the user. The use of this property is potentially ambiguous and it might be removed or revised in future editions of the ontology."@en,
+        "Lie un bot:Site à un individu qui encode la latitude et la longitude du point zéro du site du bâtiment. Ceci peut être une instance de wgs84:Point. La définition du système de coordonnée géographique et de la géométrie n'est pas défini par BOT et l'utilisateur doit choisir l'ontologie appropriée. L'utilisation de cette propriété est potentiellement ambigue et elle pourrait être supprimée ou modifiée dans les prochaines versions de l'ontologie."@fr ;
+    rdfs:domain <https://w3id.org/bot#Site> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:seeAlso <https://github.com/w3c-lbd-cg/bot/issues/41> ;
+    ns1:term_status "unstable" .
+
+<https://w3id.org/bot#interfaceOf> a owl:ObjectProperty ;
+    rdfs:label "interface of"@en,
+        "interface de"@fr ;
+    rdfs:comment "Relationship between an interface and another thing (building zone, element or owl:Thing)"@en,
+        "Relation à définir entre une interface et une zone ou un élément adjacents."@fr ;
+    rdfs:domain <https://w3id.org/bot#Interface> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:term_status "stable" .
+
+<http://maxime-lefrancois.info/me#> a ns2:Individual,
+        schema:Person ;
+    ns2:fn "Maxime Lefrançois" ;
+    schema:name "Maxime Lefrançois" .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+<https://orcid.org/0000-0001-8020-4609> a ns2:Individual,
+        schema:Person ;
+    ns2:fn "Pieter Pauwels" ;
+    schema:name "Pieter Pauwels" .
+
+<https://orcid.org/0000-0002-2033-859X> a ns2:Individual,
+        schema:Person ;
+    ns2:fn "Georg Ferdinand Schneider" ;
+    schema:name "Georg Ferdinand Schneider" .
+
+<https://orcid.org/0000-0002-6519-7057> a ns2:Individual,
+        schema:Person ;
+    ns2:fn "Mads Holten Rasmussen" ;
+    schema:name "Mads Holten Rasmussen" .
+
+<https://w3id.org/bot#adjacentElement> a owl:ObjectProperty ;
+    rdfs:label "adjacent element"@en,
+        "élément adjacent"@fr ;
+    rdfs:comment "Relation between a zone and its adjacent building elements, bounding the zone."@en,
+        "Relation entre une zone et ses éléments adjacents, délimitant l'espace physique"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#hasElement> ;
+    owl:propertyDisjointWith <https://w3id.org/bot#intersectingElement> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#adjacentZone> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "adjacent zone"@en,
+        "zone adjacente"@fr ;
+    rdfs:comment "Relationship between two zones that share a common interface, but do not intersect."@en,
+        "Relation entre deux zones partageant une interface commune, sans intersection"@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Zone> ;
+    owl:propertyDisjointWith <https://w3id.org/bot#intersectsZone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> ;
+    schema:rangeIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> .
+
+<https://w3id.org/bot#containsElement> a owl:ObjectProperty ;
+    rdfs:label "contains element"@en,
+        "contient élément"@fr ;
+    rdfs:comment "Relation to a building element contained in a zone."@en,
+        "Relation à définir entre un élément de bâti et la zone le contenant"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#hasElement> ;
+    owl:propertyChainAxiom ( <https://w3id.org/bot#containsZone> <https://w3id.org/bot#containsElement> ) ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#intersectingElement> a owl:ObjectProperty ;
+    rdfs:label "intersecting element"@en,
+        "élément intersectant"@fr ;
+    rdfs:comment "Relation between a Zone and a building Element that intersects it."@en,
+        "Relation entre une zone et un élément du bâtiment qui la traverse."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subPropertyOf <https://w3id.org/bot#hasElement> ;
+    owl:propertyDisjointWith <https://w3id.org/bot#adjacentElement> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#intersectsZone> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "intersects zone"@en,
+        "intersecte zone"@fr ;
+    rdfs:comment "Relationship between two zones whose 3D extent intersect. For example, a stairwell intersects different storeys."@en,
+        "Relation entre deux zones dont l'étendue 3D se croise. Par exemple, une cage d'escalier croise différents étages."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Zone> ;
+    owl:propertyDisjointWith <https://w3id.org/bot#adjacentZone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> ;
+    schema:rangeIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> .
+
+<https://w3id.org/bot#Interface> a owl:Class ;
+    rdfs:label "Interface"@en,
+        "Interface"@fr ;
+    rdfs:comment "A generic concept to qualify the relationship of two or more things in the world, where at least one is a building element or zone. Examples:\\n    - Qualification of heat transmission between zones through one or more building elements. This includes one-dimensional (surface) heat losses from one zone to another through a single building element, a two dimensional (line) loss from one zone to another through the connection in which the two elements meet or a three dimensional (point) loss from one zone to another through the connection where three elements (typically two walls and a slab) meet. \\n    - Connection of an electric device to the electric system of a building. \\n    - A door between one room and another."@en,
+        "Une interface correspond à la surface où se rencontrent a) deux éléments d'un bâtiment, b) deux zones ou  encore c) un élément d'un bâtiment avec une zone. Un cas d'utilisation type est constituée par la qualification de la zone de transmission de chaleur entre une zone et un mur couvrant plusieurs zones."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    owl:disjointWith <https://w3id.org/bot#Element>,
+        <https://w3id.org/bot#Zone> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#hasElement> a owl:ObjectProperty ;
+    rdfs:label "has element"@en,
+        "a élément"@fr ;
+    rdfs:comment "Links a Zone to an Element that is either contained in, adjacent to or intersecting with the Zone. The intended use of this relationship is not to be stated explicitly, but to be inferred from its sub-properties. It will, for example, allow one to query for all the doors of a building given that they have an adjacency to spaces of the building."@en,
+        "Relie une zone à un élément qui est soit contenu dans la zone, adjacent à celle-ci, ou intersectant. L'utilisation prévue de cette relation ne doit pas être indiquée explicitement, mais doit être déduite de ses sous-propriétés. Elle permettra, par exemple, d'interroger toutes les portes d'un bâtiment si elles sont adjacentes à certains des espaces du bâtiment."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Element> ;
+    owl:propertyChainAxiom ( <https://w3id.org/bot#containsZone> <https://w3id.org/bot#hasElement> ) ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#containsZone> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "contains zone"@en,
+        "contient zone"@fr ;
+    rdfs:comment "Relationship to the subzones of a major zone. A space zone could for instance be contained in a storey zone which is further contained in a building zone. bot:containsZone is a transitive property. This implies that in the previous example a bot:containsZone relationship holds between the space zone and the building zone."@en,
+        "Relation entre les sous-zones composant une zone plus grande. Cette propriété est transitive."@fr ;
+    rdfs:domain <https://w3id.org/bot#Zone> ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:range <https://w3id.org/bot#Zone> ;
+    ns1:term_status "stable" ;
+    schema:domainIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> ;
+    schema:rangeIncludes <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> .
+
+<https://w3id.org/bot#Element> a owl:Class ;
+    rdfs:label "Building element"@en,
+        "Élément d'un bâtiment"@fr ;
+    rdfs:comment "Constituent of a construction entity with a characteristic technical function, form or position [ISO 12006-2:2015, 3.4.7]"@en,
+        "Constituant d'un bâtiment remplissant une fonction technique spécifique ou ayant une forme ou une position spécifiques [ISO 12006-2:2015, 3.4.7]"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    owl:disjointWith <https://w3id.org/bot#Interface>,
+        <https://w3id.org/bot#Zone> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#Space> a owl:Class ;
+    rdfs:label "Space"@en,
+        "Pièce"@fr ;
+    rdfs:comment "A part of the physical world or a virtual world whose 3D spatial extent is bounded actually or theoretically, and provides for certain functions within the zone it is contained in."@en,
+        "Une partie du monde physique ou virtuel dont l'extension 3D est limitée réellement ou théoriquement, et apporte des fonctions aux zones dans laquelle elle est contenue."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subClassOf <https://w3id.org/bot#Zone> ;
+    owl:disjointWith <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Storey> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#Building> a owl:Class ;
+    rdfs:label "Building"@en,
+        "Bâtiment"@fr ;
+    rdfs:comment "An independent unit of the built environment with a characteristic spatial structure, intended to serve at least one function or user activity [ISO 12006-2:2013]. A bot:Building is a part of the physical world or a virtual world that is inherently both located in this world and having a 3D spatial extent, is contained in a building site, and can contain one or more storeys that are vertically connected."@en,
+        "Une unité indépendante de l'environnement bâti avec une structure spatiale caractéristique, conçue pour répondre à une fonction ou une activité de l'utilisateur [ISO 12006-2:2013]"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subClassOf <https://w3id.org/bot#Zone> ;
+    owl:disjointWith <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#Site> a owl:Class ;
+    rdfs:label "Site"@en,
+        "Site"@fr ;
+    rdfs:comment "A part of the physical world or a virtual world that is inherently both located in this world and having a 3D spatial extent. It is intended to contain or contains one or more buildings."@en,
+        "Un site comprend un ou plusieurs bâtiments"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subClassOf <https://w3id.org/bot#Zone> ;
+    owl:disjointWith <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Space>,
+        <https://w3id.org/bot#Storey> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#Storey> a owl:Class ;
+    rdfs:label "Storey"@en,
+        "Étage"@fr ;
+    rdfs:comment "A part of the physical world or a virtual world that is inherently both located in this world and having a 3D spatial extent. A bot:Storey is contained in one or more buildings, and is intended to contain one or more spaces that are horizontally connected. Storeys of a building are connected by means of vertical connections such as elevators and stairs. A bot:Storey encompasses both zones above and below ground, for example, a building with 21 floors above ground, one ground floor and 3 basements is equal to the sentence: A building has 25 instances of bot:Storey."@en,
+        "Correspond à un niveau du bâtiment"@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    rdfs:subClassOf <https://w3id.org/bot#Zone> ;
+    owl:disjointWith <https://w3id.org/bot#Building>,
+        <https://w3id.org/bot#Site>,
+        <https://w3id.org/bot#Space> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#Zone> a owl:Class ;
+    rdfs:label "Zone"@en,
+        "Zone"@fr ;
+    rdfs:comment "A part of the physical world or a virtual world that is inherently both located in this world and has a 3D spatial extent; Sub-classes of bot:Zone include bot:Site, bot:Building, bot:Storey, or bot:Space.  An instance of bot:Zone can contain other bot:Zone instances, making it possible to group or subdivide zones. An instance of bot:Zone can be adjacent to or intersecting other bot:Zone instances. Finally, a bot:Zone can instantiate three relations to bot:Element, which are either contained in (bot:containsElement), adjacent to it (bot:adjacentElement) or intersecting (bot:intersectingElement)."@en,
+        "Une partie du monde physique ou virtuel qui est inhéremment à la fois localisé dans ce monde et a une étendue spatiale 3D; les sous-classes de bot:Zone incluent bot:Site, bot:Building, bot:Storey, ou bot:Space. Une instance de bot:Zone peut contenir d'autres instances de bot:Zone, ce qui permet de grouper ou sub-diviser les zones. Une instance de bot:Zone peut être adjacente ou intersectante à d'autres bot:Zone. Enfin, une bot:Zone peut contenir (bot:containsElement), être adjacent (bot:adjacentElement) ou intersecter (bot:intersectingElement) un bot:Element."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    owl:disjointWith <https://w3id.org/bot#Element>,
+        <https://w3id.org/bot#Interface> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/bot#> a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    dcterms:contributor "Ali Kücükavci",
+        "All contributing members of the W3C Linked Building Data Community Group",
+        "Ana Roxin",
+        "Edison Chung",
+        "Gonçal Costa",
+        "Hervé Pruvost",
+        "Jyrki Oraskari",
+        "Karl Hammar",
+        "Katja Breitenfelder",
+        "Lars Wikström",
+        "María Poveda-Villalón",
+        "Mathias Bonduel",
+        "Pouya Zangeneh",
+        "Richard Pinka",
+        "Rui Ma",
+        "Rui de Klerk",
+        "Sjoerd Rongen",
+        "Ville Kukkonen",
+        "Walter Terkaj" ;
+    dcterms:creator <http://maxime-lefrancois.info/me#>,
+        <https://orcid.org/0000-0001-8020-4609>,
+        <https://orcid.org/0000-0002-2033-859X>,
+        <https://orcid.org/0000-0002-6519-7057>,
+        "Georg Ferdinand Schneider",
+        "Mads Holten Rasmussen",
+        "Maxime Lefrançois",
+        "Pieter Pauwels" ;
+    dcterms:description "The Building Topology Ontology (BOT) is a simple ontology defining the core concepts of a building.\\nIt is a simple, easy to extend ontology for the construction industry to document and exchange building data on the web.\\nChanges since version 0.2.0 of the ontology are documented in:\\nhttps://w3id.org/bot/bot.html#changes\\nThe version 0.2.0 of the ontology is documented in:\\nMads Holten Rasmussen, Pieter Pauwels, Maxime Lefrançois, Georg Ferdinand Schneider, Christian Anker Hviid and Jan Karlshøj (2017) Recent changes in the Building Topology Ontology, 5th Linked Data in Architecture and Construction Workshop (LDAC2017), November 13-15, 2017, Dijon, France, https://www.researchgate.net/publication/320631574_Recent_changes_in_the_Building_Topology_Ontology\\nThe initial version 0.1.0 of the ontology was documented in:\\nMads Holten Rasmussen, Pieter Pauwels, Christian Anker Hviid and Jan Karlshøj (2017) Proposing a Central AEC Ontology That Allows for Domain Specific Extensions, Lean and Computing in Construction Congress (LC3): Volume I – Proceedings of the Joint Conference on Computing in Construction (JC3), July 4-7, 2017, Heraklion, Greece, pp. 237-244 https://doi.org/10.24928/JC3-2017/0153"@en ;
+    dcterms:issued "2018-06-21T12:00:00"^^xsd:dateTime ;
+    dcterms:license <https://creativecommons.org/licenses/by/1.0/> ;
+    dcterms:modified "2020-07-31T08:51:00"^^xsd:dateTime ;
+    dcterms:title "The Building Topology Ontology (BOT)"@en ;
+    vann:preferredNamespacePrefix "bot" ;
+    vann:preferredNamespaceUri <https://w3id.org/bot#> ;
+    rdfs:seeAlso <http://www.semantic-web-journal.net/system/files/swj2279.pdf>,
+        <https://doi.org/10.24928/JC3-2017/0153>,
+        <https://www.researchgate.net/publication/320631574_Recent_changes_in_the_Building_Topology_Ontology> ;
+    owl:priorVersion onto:-0.3.1 ;
+    owl:versionIRI onto:-0.3.2 ;
+    owl:versionInfo "0.3.2" .
+

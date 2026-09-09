@@ -1,0 +1,75 @@
+@prefix ns1: <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#> .
+@prefix onto: <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> a owl:ObjectProperty ;
+    rdfs:label "directly follows"@en ;
+    rdfs:comment "The intransitive follows relation. For example, Wednesday directly precedes Thursday. Directness of precedence depends on the designer conceptualization." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#follows> ;
+    owl:inverseOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> .
+
+ns1:coversRequirements a owl:AnnotationProperty .
+
+ns1:extractedFrom a owl:AnnotationProperty .
+
+ns1:hasAuthor a owl:AnnotationProperty .
+
+ns1:hasConsequences a owl:AnnotationProperty .
+
+ns1:hasIntent a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> a owl:ObjectProperty ;
+    rdfs:label "directly precedes"@en ;
+    rdfs:comment "The intransitive precedes relation. For example, Monday directly precedes Tuesday. Directness of precedence depends on the designer conceptualization." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#precedes> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#precedes> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "precedes"@en ;
+    rdfs:comment "A relation between entities, expressing a 'sequence' schema. \\nE.g. 'year 1999 precedes 2000', 'deciding what coffee to use' precedes 'preparing coffee', 'World War II follows World War I', 'in the Milan to Rome autoroute, Bologna precedes Florence', etc.\\nIt can then be used between tasks, processes, time intervals, spatially locate objects, situations, etc. \\nSubproperties can be defined in order to distinguish the different uses."^^xsd:string ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#follows> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#follows> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "follows"@en ;
+    rdfs:comment "A relation between entities, expressing a 'sequence' schema. \\nE.g. 'year 2000 follows 1999', 'preparing coffee' follows 'deciding what coffee to use', 'II World War follows I World War', etc. \\nIt can be used between tasks, processes or time intervals, and subproperties would fit best in order to distinguish the different uses."^^xsd:string ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto: a owl:Ontology ;
+    rdfs:label "ordering"^^rdf:PlainLiteral,
+        "precedence"^^rdf:PlainLiteral,
+        "sequence"^^rdf:PlainLiteral ;
+    ns1:coversRequirements "What is before what?,What's next?,What's immediately following this?"^^rdf:PlainLiteral ;
+    ns1:extractedFrom "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl"^^rdf:PlainLiteral ;
+    ns1:hasAuthor "Sara Bernardini"^^rdf:PlainLiteral,
+        "Valentina Presutti"^^rdf:PlainLiteral ;
+    ns1:hasConsequences "We can represent and reason over transitive or intransitive sequences of any kind. However, since coreference cannot be expressed in OWL, it is not possible to represent and reason over loops and other sequences involving coreference."^^rdf:PlainLiteral ;
+    ns1:hasIntent "To represent sequence schemas. It defines the notion of transitive and intransitive precedence and their inverses. \\nIt can then be used between tasks, processes, time intervals, spatially locate objects, situations, etc."^^rdf:PlainLiteral ;
+    owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl> ;
+    owl:versionInfo "1.1\\n- Revised and annotated for ODP submission by Aldo Gangemi\\n1.0\\n- Created by Valentina Presutti and Sara Bernardini"^^rdf:PlainLiteral,
+        "1.1 added rdfs:isDefinedBy for all named entities"^^xsd:string .
+
+owl:Thing a owl:Class .
+

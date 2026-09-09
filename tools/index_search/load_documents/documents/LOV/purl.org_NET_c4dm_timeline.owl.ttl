@@ -1,0 +1,556 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/NET/c4dm/timeline.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology,
+        owl:Thing ;
+    rdfs:label "The Timeline ontology" ;
+    rdfs:comment "\\n    \\tExtends owl-time ontology (http://www.w3.org/2006/time) with  \\n\\tsupport for several timelines, acting as a backbone to adress \\n\\ttime interval/instants. \\n\\n\\tMainly designed with a multimedia use-case in mind.\\n\\n\\tCopyright (c) Yves Raimond, Samer Abdallah, Centre for Digital Music, Queen Mary, University of London\\n\\t" ;
+    owl:imports <http://www.w3.org/2006/time>,
+        <http://www.w3.org/2006/time-entry> ;
+    foaf:maker <http://moustaki.org/foaf.rdf#moustaki> .
+
+<http://purl.org/NET/c4dm/timeline.owl#AbstractInstant> a owl:Class ;
+    rdfs:label "abstract instant" ;
+    rdfs:comment "An instant defined on an abstract timeline" ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#Instant> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#AbstractTimeLine> ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#AbstractInterval> a owl:Class ;
+    rdfs:label "abstract interval" ;
+    rdfs:comment "\\n\\tAn interval defined on an abstract time-line.\\n    " ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#AbstractTimeLine> ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#DiscreteInstant> a owl:Class ;
+    rdfs:label "discrete instant" ;
+    rdfs:comment "An instant defined on a discrete timeline" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atInt> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+                        owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ] <http://purl.org/NET/c4dm/timeline.owl#Instant> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#DiscreteInterval> a owl:Class ;
+    rdfs:label "discrete interval" ;
+    rdfs:comment "An interval defined on a discrete timeline, like the one backing a digital signal" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasBeginning ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasEnd ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtInt> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#endsAtInt> ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtInt> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#durationInt> ] ) ] ) ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+                        owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ] <http://purl.org/NET/c4dm/timeline.owl#Interval> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#RelativeInstant> a owl:Class ;
+    rdfs:label "relative instant" ;
+    rdfs:comment "An instant defined on a relative timeline" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atDuration> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+                        owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ] <http://purl.org/NET/c4dm/timeline.owl#Instant> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#RelativeInterval> a owl:Class ;
+    rdfs:label "relative interval" ;
+    rdfs:comment "an interval defined on a relative timeline" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasBeginning ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasEnd ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtDuration> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#durationXSD> ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtDuration> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#endsAtDuration> ] ) ] ) ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ;
+                        owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ] <http://purl.org/NET/c4dm/timeline.owl#Interval> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#UTInstant> a owl:Class ;
+    rdfs:label "instant on the universal timeline" ;
+    rdfs:comment "This concept expresses that an instant defined on the universal timeline must be associated to a dateTime value" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atDateTime> ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.org/NET/c4dm/timeline.owl#universaltimeline> ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ] <http://purl.org/NET/c4dm/timeline.owl#Instant> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#UTInterval> a owl:Class ;
+    rdfs:label "universal timeline interval" ;
+    rdfs:comment "an interval defined on the universal time line" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:int ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atYear> ] [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:int ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atYearMonth> ] [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:int ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#atDate> ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#durationXSD> ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasBeginning ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty time:hasEnd ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime> ] [ a owl:Restriction ;
+                                    owl:cardinality "1"^^xsd:int ;
+                                    owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime> ] ) ] ) ] ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:hasValue <http://purl.org/NET/c4dm/timeline.owl#universaltimeline> ;
+                        owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> ] <http://purl.org/NET/c4dm/timeline.owl#Interval> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#after> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalAfter .
+
+<http://purl.org/NET/c4dm/timeline.owl#atReal> a owl:DatatypeProperty ;
+    rdfs:label "at (real)" ;
+    rdfs:comment "subproperty of :at, having xsd:float as a range" ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#before> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalBefore .
+
+<http://purl.org/NET/c4dm/timeline.owl#beginsAt> a owl:DatatypeProperty ;
+    owl:equivalentProperty <http://purl.org/NET/c4dm/timeline.owl#start> .
+
+<http://purl.org/NET/c4dm/timeline.owl#contains> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalContains .
+
+<http://purl.org/NET/c4dm/timeline.owl#delay> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "delay" ;
+    rdfs:comment "associate a shift map to a particular delay" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#ShiftMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#during> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalDuring .
+
+<http://purl.org/NET/c4dm/timeline.owl#endsAt> a owl:DatatypeProperty ;
+    owl:equivalentProperty <http://purl.org/NET/c4dm/timeline.owl#end> .
+
+<http://purl.org/NET/c4dm/timeline.owl#equals> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalEquals .
+
+<http://purl.org/NET/c4dm/timeline.owl#finishedBy> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalFinishedBy .
+
+<http://purl.org/NET/c4dm/timeline.owl#finishes> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalFinishes .
+
+<http://purl.org/NET/c4dm/timeline.owl#meets> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalMeets .
+
+<http://purl.org/NET/c4dm/timeline.owl#metBy> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalMetBy .
+
+<http://purl.org/NET/c4dm/timeline.owl#onTimeLine> a owl:ObjectProperty ;
+    owl:equivalentProperty <http://purl.org/NET/c4dm/timeline.owl#timeline> .
+
+<http://purl.org/NET/c4dm/timeline.owl#origin> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "origin" ;
+    rdfs:comment "associate an origin map to its origin on the domain physical timeline" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#OriginMap> ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#overlappedBy> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalOverlappedBy .
+
+<http://purl.org/NET/c4dm/timeline.owl#overlaps> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalOverlaps .
+
+<http://purl.org/NET/c4dm/timeline.owl#startedBy> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalStartedBy .
+
+<http://purl.org/NET/c4dm/timeline.owl#starts> a owl:ObjectProperty ;
+    owl:equivalentProperty time:intervalStarts .
+
+dc:description a owl:DatatypeProperty .
+
+dc:title a owl:DatatypeProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+foaf:maker a owl:ObjectProperty .
+
+<http://moustaki.org/foaf.rdf#moustaki> a foaf:Person .
+
+<http://purl.org/NET/c4dm/timeline.owl#OriginMap> a owl:Class ;
+    rdfs:label "origin map" ;
+    rdfs:comment "A timeline map linking a physical timeline to a relative one (originating at some point on the physical timeline)" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#rangeTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#domainTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#PhysicalTimeLine> ],
+        <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#ShiftMap> a owl:Class ;
+    rdfs:label "shift map" ;
+    rdfs:comment "a map just shifting one timeline to another" ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atDate> a owl:DatatypeProperty ;
+    rdfs:label "at (date)" ;
+    rdfs:comment "A subproperty of :at, allowing to address a date (beginning of it for an instant, all of it for an interval)" ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atDateTime> a owl:DatatypeProperty ;
+    rdfs:label "at date/time" ;
+    rdfs:comment "This property links an instant defined on the universal time line to an XSD date/time value" ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atDuration> a owl:DatatypeProperty ;
+    rdfs:label "at (duration)" ;
+    rdfs:comment "A property enabling to adress a time point P through the duration of the interval [0,P] on a continuous timeline" ;
+    rdfs:range xsd:duration ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atInt> a owl:DatatypeProperty ;
+    rdfs:label "at (integer)" ;
+    rdfs:comment "A subproperty of :at, having as a specific range xsd:int" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atYear> a owl:DatatypeProperty ;
+    rdfs:label "at (year)" ;
+    rdfs:comment "A subproperty of :at, allowing to address a year (beginning of it for an instant, all of it for an interval)" ;
+    rdfs:range xsd:gYear ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#atYearMonth> a owl:DatatypeProperty ;
+    rdfs:label "at (year/month)" ;
+    rdfs:comment "A subproperty of :at, allowing to address a year/month (beginning of it for an instant, all of it for an interval)" ;
+    rdfs:range xsd:gYearMonth ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#at> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#durationInt> a owl:DatatypeProperty ;
+    rdfs:label "duration (integer)" ;
+    rdfs:comment "A subproperty of :duration, having xsd:int as a range" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#duration> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime> a owl:DatatypeProperty ;
+    rdfs:label "ends at (date/time)" ;
+    rdfs:comment "A subproperty of :endsAt, allowing to address the end of an interval as a date/time" ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#end> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#endsAtDuration> a owl:DatatypeProperty ;
+    rdfs:label "ends at (xsd:duration)" ;
+    rdfs:comment "A property enabling to adress an end time point P of an interval [S,P] through the duration of the interval [0,P] on a continuous timeline" ;
+    rdfs:range xsd:duration ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#end> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#endsAtInt> a owl:DatatypeProperty ;
+    rdfs:label "ends at (integer)" ;
+    rdfs:comment "A subproperty of :endsAt, having xsd:int as a range" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#end> ;
+    ns1:term_status "stable" .
+
+foaf:Person a owl:Class .
+
+<http://purl.org/NET/c4dm/timeline.owl#AbstractTimeLine> a owl:Class ;
+    rdfs:label "abstract timeline" ;
+    rdfs:comment "\\n    \\tAbstract time lines may be used as a backbone for Score, Works, ... \\n\\tThis allows for TimeLine maps to relate works to a given \\n\\tperformance (this part was played at this time)." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime> a owl:DatatypeProperty ;
+    rdfs:label "begins at (date/time)" ;
+    rdfs:comment "A subproperty of :beginsAt, allowing to address the beginning of an interval as a date/time" ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#start> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#beginsAtDuration> a owl:DatatypeProperty ;
+    rdfs:label "begins at (xsd:duration)" ;
+    rdfs:comment "A property enabling to adress a start time point P of an interval [P,E] through the duration of the interval [0,P] on a continuous timeline" ;
+    rdfs:range xsd:duration ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#start> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#beginsAtInt> a owl:DatatypeProperty ;
+    rdfs:label "begins at (integer)" ;
+    rdfs:comment "A subproperty of :beginsAt, having xsd:int as a range" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#start> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#duration> a owl:DatatypeProperty ;
+    rdfs:label "duration" ;
+    rdfs:comment "the duration of a time interval" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#durationXSD> a owl:DatatypeProperty ;
+    rdfs:label "duration (xsd:duration)" ;
+    rdfs:comment "A subproperty of :duration, having xsd:duration as a range" ;
+    rdfs:range xsd:duration ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/timeline.owl#duration> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#hopSize> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "hop size" ;
+    rdfs:comment "hop size, associated to a uniform windowing map" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#UniformWindowingMap> <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap> ) ] ;
+    rdfs:range xsd:int ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#sampleRate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "sample rate" ;
+    rdfs:comment "associates a sample rate value to a uniform sampling map" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingMap> <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap> ) ] ;
+    rdfs:range xsd:int ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#universaltimeline> a <http://purl.org/NET/c4dm/timeline.owl#PhysicalTimeLine> ;
+    dc:description "The timeline one can addresss \"the 1st of July, 2007\"" ;
+    dc:title "the universal time line" ;
+    rdfs:comment "this is the `universal' time line -- can adress time intervals on it using date/dateTime -- UTC" ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#windowLength> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "window length" ;
+    rdfs:comment "window length, associated to a uniform windowing map" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#UniformWindowingMap> <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap> ) ] ;
+    rdfs:range xsd:int ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#UniformSamplingMap> a owl:Class ;
+    rdfs:label "uniform sampling map" ;
+    rdfs:comment "Describe the relation between a continuous time-line and its sampled equivalent" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#rangeTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#domainTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#sampleRate> ],
+        <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap>,
+        <http://purl.org/NET/c4dm/timeline.owl#UniformWindowingMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#ContinuousTimeLine> a owl:Class ;
+    rdfs:label "continuous timeline" ;
+    rdfs:comment "A continuous timeline, like the universal one, or the one backing an analog signal" ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#PhysicalTimeLine> <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#PhysicalTimeLine> a owl:Class ;
+    rdfs:label "physical timeline" ;
+    rdfs:comment "A \"physical\" time-line (the universal time line (UTC)) is an instance of this class. Other time zones consists in instances of this class as well, with a \"shifting\" time line map relating them to the universal time line map." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#ContinuousTimeLine> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#UniformWindowingMap> a owl:Class ;
+    rdfs:label "uniform windowing map" ;
+    rdfs:comment "Describes the relation between a discrete time line and its windowed equivalent" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#domainTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#rangeTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#hopSize> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#windowLength> ],
+        <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingMap>,
+        <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#domainTimeLine> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "domain timeline" ;
+    rdfs:comment "associates a timeline map to its domain timeline" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    rdfs:range <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#end> a owl:DatatypeProperty ;
+    rdfs:label "ends at" ;
+    rdfs:comment "refers to the end of a time interval, through an explicit datatype. time:hasEnd can be used as well, if you want to associate the end of the interval to an explicit time point resource" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#rangeTimeLine> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "range timeline" ;
+    rdfs:comment "associates a timeline map to its range timeline" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    rdfs:range <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#start> a owl:DatatypeProperty ;
+    rdfs:label "begins at" ;
+    rdfs:comment "refers to the beginning of a time interval, through an explicit datatype. time:hasBeginning can be used as well, if you want to associate the beginning of the interval to an explicit time point resource" ;
+    rdfs:domain <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#UniformSamplingWindowingMap> a owl:Class ;
+    rdfs:label "Uniform sampling and windowing map" ;
+    rdfs:comment "Describes the relation between a continuous time-line, and a time-line that corresponds to its sampled and windowed equivalent" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#domainTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#ContinuousTimeLine> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#sampleRate> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#hopSize> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#rangeTimeLine> ;
+            owl:someValuesFrom <http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://purl.org/NET/c4dm/timeline.owl#windowLength> ],
+        <http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#UniformSamplingMap>,
+        <http://purl.org/NET/c4dm/timeline.owl#UniformWindowingMap> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#Instant> a owl:Class ;
+    rdfs:label "instant" ;
+    rdfs:comment "An instant (same as in OWL-Time)" ;
+    owl:equivalentClass time:Instant ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#RelativeTimeLine> a owl:Class ;
+    rdfs:label "relative timeline" ;
+    rdfs:comment "Semi infinite time line...canonical coordinate system --> adressed through xsd:duration since the instant 0." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#ContinuousTimeLine> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#PhysicalTimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#TimeLine> a owl:Class ;
+    rdfs:label "timeline" ;
+    rdfs:comment "Represents a linear and coherent piece of time -- can be either abstract (such as the one behind a score) or concrete (such as the universal time line).\\nTwo timelines can be mapped using timeline maps." ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#DiscreteTimeLine> a owl:Class ;
+    rdfs:label "discrete time line" ;
+    rdfs:comment "A discrete time line (like the time line backing a digital signal" ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    owl:disjointWith <http://purl.org/NET/c4dm/timeline.owl#ContinuousTimeLine> ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#TimeLineMap> a owl:Class ;
+    rdfs:label "timeline map" ;
+    rdfs:comment "Allows to map two time lines together" ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#at> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "at" ;
+    rdfs:comment "refers to a point or an interval on the time line, through an explicit datatype" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#Interval> <http://purl.org/NET/c4dm/timeline.owl#Instant> ) ] ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#Interval> a owl:Class ;
+    rdfs:label "interval" ;
+    rdfs:comment "An interval (same as in OWL-Time). Allen's relationships are defined in OWL-Time." ;
+    owl:equivalentClass time:ProperInterval ;
+    ns1:term_status "stable" .
+
+<http://purl.org/NET/c4dm/timeline.owl#timeline> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "on timeline" ;
+    rdfs:comment "\\n\\tRelates an interval or an instant to the timeline on which it is defined.\\n\\n\\tThe 29th of August, 2007 would be linked through this property to the universal timeline, whereas\\n\\t\"from 2s to 5s on this particular signal\" would be defined on the signal' timeline.\\n\\n    " ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/NET/c4dm/timeline.owl#Instant> <http://purl.org/NET/c4dm/timeline.owl#Interval> ) ] ;
+    rdfs:range <http://purl.org/NET/c4dm/timeline.owl#TimeLine> ;
+    ns1:term_status "stable" .
+

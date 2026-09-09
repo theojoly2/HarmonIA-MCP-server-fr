@@ -1,0 +1,270 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <https://vocab.eccenca.com/revision/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty ;
+    rdfs:isDefinedBy <http://creativecommons.org/ns> .
+
+dcterms:creator a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:description a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:issued a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:modified a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:publisher a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:rights a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:title a owl:AnnotationProperty ;
+    rdfs:isDefinedBy dcterms: .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty ;
+    rdfs:isDefinedBy vann: .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty ;
+    rdfs:isDefinedBy vann: .
+
+onto:sha256 a owl:DatatypeProperty ;
+    rdfs:label "sha256 digest"@en ;
+    dcterms:issued "2014-12-19"^^xsd:date ;
+    dcterms:modified "2014-12-19"^^xsd:date ;
+    rdfs:comment "A sha256 digest of a commit based on the RDF NC14 algorithm described in \"Signing RDF Graphs\" by Jeremy J. Carroll (DOI: 10.1007/F978-3-540-39718-2_24)."@en ;
+    rdfs:domain onto:Commit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:base64Binary ;
+    rdfs:seeAlso <http://link.springer.com/chapter/10.1007%2F978-3-540-39718-2_24> .
+
+<http://aksw.org/MarvinFrommhold> a dcterms:Agent,
+        foaf:Person ;
+    foaf:name "Marvin Frommhold" .
+
+<http://creativecommons.org/licenses/by/3.0/> rdfs:label "Creative Commons Attribution 3.0 Unported" .
+
+<http://sebastian.tramp.name> a dcterms:Agent,
+        foaf:Person ;
+    foaf:name "Sebastian Tramp" .
+
+prov:Activity a owl:Class ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:Entity a owl:Class ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:InstantaneousEvent a owl:Class ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:atTime a owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+    rdfs:range xsd:date .
+
+prov:generated a owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:wasAssociatedWith a owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:wasDerivedFrom a owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+prov:wasRevisionOf a owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+<https://ns.eccenca.com/eccenca-GmbH> a dcterms:Agent,
+        foaf:Organization ;
+    foaf:name "eccenca GmbH" .
+
+<https://ns.eccenca.com/rnavarropiris> a dcterms:Agent,
+        foaf:Person ;
+    foaf:name "Rubén Navarro Piris" .
+
+onto:commitAuthor a owl:ObjectProperty ;
+    rdfs:label "commit author"@en ;
+    dcterms:issued "2014-12-29"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "The author of the commit"@en ;
+    rdfs:domain onto:Commit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:commitMessage a owl:DatatypeProperty ;
+    rdfs:label "commit message"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "A message describing the commit"@en ;
+    rdfs:domain onto:Commit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:deltaDelete a owl:ObjectProperty ;
+    rdfs:label "delete delta"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-16"^^xsd:date ;
+    rdfs:comment "The IRI of the named graph containing the deleted triples of a revision (compared to its previous revision)"@en ;
+    rdfs:domain onto:Revision ;
+    rdfs:isDefinedBy onto: .
+
+onto:deltaInsert a owl:ObjectProperty ;
+    rdfs:label "insert delta"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-16"^^xsd:date ;
+    rdfs:comment "The IRI of the named graph containing the inserted triples of a revision (compared to its previous revision)"@en ;
+    rdfs:domain onto:Revision ;
+    rdfs:isDefinedBy onto: .
+
+onto:hasRevision a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has revision"@en ;
+    dcterms:issued "2014-12-16"^^xsd:date ;
+    dcterms:modified "2014-12-16"^^xsd:date ;
+    rdfs:comment "A named graph revision belonging to the commit"@en ;
+    rdfs:domain onto:Commit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Revision ;
+    rdfs:subPropertyOf prov:generated .
+
+onto:hasRevisionGraph a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has revision graph"@en ;
+    dcterms:issued "2014-12-29"^^xsd:date ;
+    dcterms:modified "2014-12-29"^^xsd:date ;
+    rdfs:comment "The named graph the revision refers to"@en ;
+    rdfs:domain onto:Revision ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf prov:wasRevisionOf .
+
+onto:previousCommit a owl:ObjectProperty ;
+    rdfs:label "previous commit"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-16"^^xsd:date ;
+    rdfs:comment "Connects to the previous commit (or pair of commits in the case of a merge commit)"@en ;
+    rdfs:domain onto:Commit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Commit ;
+    rdfs:subPropertyOf prov:wasDerivedFrom .
+
+onto:referencesCommit a owl:ObjectProperty ;
+    rdfs:label "references commit"@en ;
+    dcterms:issued "2014-12-22"^^xsd:date ;
+    dcterms:modified "2014-12-22"^^xsd:date ;
+    rdfs:comment "The commit to which this branch or tag references"@en ;
+    rdfs:domain [ owl:unionOf ( onto:Branch onto:Tag ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Commit .
+
+onto:Branch a owl:Class ;
+    rdfs:label "Branch"@en ;
+    dcterms:issued "2014-12-22"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "Represents a branch"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:referencesCommit ] ;
+    owl:disjointWith onto:Commit,
+        onto:Revision,
+        onto:Tag .
+
+onto:Tag a owl:Class ;
+    rdfs:label "Tag"@en ;
+    dcterms:issued "2014-12-22"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "Represents a tag"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:referencesCommit ] ;
+    owl:disjointWith onto:Branch,
+        onto:Commit,
+        onto:Revision .
+
+onto:Revision a owl:Class ;
+    rdfs:label "Revision"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "Represents a modification on a specific named graph"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:deltaInsert ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty prov:atTime ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:deltaDelete ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:hasRevisionGraph ],
+        prov:Entity ;
+    owl:disjointWith onto:Branch,
+        onto:Commit,
+        onto:Tag .
+
+onto:Commit a owl:Class ;
+    rdfs:label "Commit"@en ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2014-12-30"^^xsd:date ;
+    rdfs:comment "Represents a modification of the datastore. A commit consists typically on a collection of :Revision (connected with a :hasRevision relationship"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:commitAuthor ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:hasRevision ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "2"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:previousCommit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:commitMessage ],
+        prov:Activity,
+        prov:InstantaneousEvent ;
+    owl:disjointWith onto:Branch,
+        onto:Revision,
+        onto:Tag .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "eccrev: RDF changes and revisions vocabulary"@en ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:contributor <http://aksw.org/MarvinFrommhold> ;
+    dcterms:creator <http://sebastian.tramp.name>,
+        <https://ns.eccenca.com/rnavarropiris> ;
+    dcterms:issued "2014-12-15"^^xsd:date ;
+    dcterms:modified "2016-03-11"^^xsd:date ;
+    dcterms:publisher <https://ns.eccenca.com/eccenca-GmbH> ;
+    dcterms:rights "Copyright © 2014 - 2016 eccenca GmbH" ;
+    vann:preferredNamespacePrefix "eccrev" ;
+    vann:preferredNamespaceUri "https://vocab.eccenca.com/revision/" ;
+    vann:usageNote "The expressiveness of the vocabulary is compliant with the OWL 2 DL profile, but in order to achieve this, used ontologies (dct, prov, vann) are not directly imported (since that leads to non-conformance with the OWL 2 DL profile). Instead, their classes and properties are declared (with the corresponding necessary OWL property type) with a reference to the original ontology that defined them."@en ;
+    void:vocabulary dcterms:,
+        vann:,
+        prov:,
+        foaf: ;
+    doap:bug-database <https://github.com/eccenca/eccrev-vocab/issues> ;
+    doap:download-page <https://github.com/eccenca/eccrev-vocab/releases> ;
+    doap:homepage <https://github.com/eccenca/eccrev-vocab> ;
+    doap:repository <https://github.com/eccenca/eccrev-vocab.git> ;
+    doap:wiki <https://github.com/eccenca/eccrev-vocab/wiki> ;
+    rdfs:comment "A vocabulary & data model for describing RDF changes and revisions. It defines the Commit & Revision classes together with their expected properties."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:versionInfo "v1.0.2" .
+

@@ -1,0 +1,256 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/ontology/bibo/> .
+@prefix onto: <https://privatealpha.com/ontology/ibis/1#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://privatealpha.com/ontology/ibis/1> a ns1:Webpage .
+
+onto:Invariant a owl:Class ;
+    rdfs:label "Invariant"@en ;
+    rdfs:comment "An Issue or Position can be marked Invariant to denote that it has been deemed outside of the influence of the Agents in the system, i.e., something to be steered around."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:Concept .
+
+onto:Network a owl:Class ;
+    rdfs:label "Network"@en ;
+    rdfs:comment "A network of issues, positions, and arguments."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:ConceptScheme .
+
+onto:concerns a owl:ObjectProperty ;
+    rdfs:label "concerns"@en ;
+    rdfs:comment "The subject is an issue concerning the object, which can be any resource."@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+<http://danny.ayers.name/index.rdf#me> foaf:name "Danny Ayers"@en .
+
+<http://doriantaylor.com/person/dorian-taylor#me> foaf:name "Dorian Taylor"@en .
+
+<http://hyperdata.org/xmlns/ibis/> dcterms:creator <http://danny.ayers.name/index.rdf#me> .
+
+<http://www.cc.gatech.edu/~ellendo/rittel/rittel-issues.pdf> dcterms:creator "Horst Rittel"@en,
+        "Werner Kunz"@en ;
+    dcterms:date "1970"@en ;
+    dcterms:title "Issues as Elements of Information Systems"@en .
+
+<http://www.cs.hut.fi/Opinnot/T-93.850/2005/Papers/gIBIS1988-conklin.pdf> dcterms:creator "Jeff Conklin"@en,
+        "Michael L. Begeman"@en ;
+    dcterms:date "1988"@en ;
+    dcterms:title "gIBIS: a hypertext tool for exploratory policy discussion"@en .
+
+onto:endorsed-by a owl:ObjectProperty ;
+    rdfs:label "endorsed by"@en ;
+    rdfs:comment "A concept can be endorsed by an Agent without said Agent having mentioned or advanced it initially, and without any additional comment."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf onto:endorses ;
+    skos:note "This term, along with ibis:endorses, enables an Agent to signal its agreement with a concept. To signal disagreement, explain why with an ibis:Argument that ibis:opposes the concept."@en .
+
+onto:endorses a owl:ObjectProperty ;
+    rdfs:label "endorses"@en ;
+    rdfs:comment "An Agent can endorse a concept without having initially mentioned or advanced it, and without any additional comment."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    owl:inverseOf onto:endorsed-by ;
+    skos:note "This term, along with ibis:endorsed-by, enables an Agent to signal its agreement with a concept. To signal disagreement, explain why with an ibis:Argument that ibis:opposes the concept."@en .
+
+onto:generalizes a owl:ObjectProperty ;
+    rdfs:label "generalizes"@en ;
+    rdfs:comment "The subject is a more generic form of the object."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentProperty skos:narrower ;
+    owl:inverseOf onto:specializes ;
+    skos:note "The equivalent property skos:narrower asserts that the object is narrower than the subject, while the subject of ibis:generalizes is more general than the object."@en .
+
+onto:opposed-by a owl:ObjectProperty ;
+    rdfs:label "opposed by"@en ;
+    rdfs:comment "Indicates a subject position opposed by an object argument."@en ;
+    rdfs:domain onto:Position ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Argument ;
+    owl:inverseOf onto:opposes .
+
+onto:opposes a owl:ObjectProperty ;
+    rdfs:label "opposes"@en ;
+    rdfs:comment "Indicates a subject argument that opposes an object position."@en ;
+    rdfs:domain onto:Argument ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Position ;
+    owl:inverseOf onto:opposed-by .
+
+onto:questioned-by a owl:ObjectProperty ;
+    rdfs:label "questioned by"@en ;
+    rdfs:comment "Indicates a belief called into question by an issue."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Issue ;
+    owl:inverseOf onto:questions .
+
+onto:questions a owl:ObjectProperty ;
+    rdfs:label "questions"@en ;
+    rdfs:comment "Indicates an issue that raises doubt on a belief."@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    owl:inverseOf onto:questioned-by .
+
+onto:responds-to a owl:ObjectProperty ;
+    rdfs:label "responds to"@en ;
+    rdfs:comment "Indicates an issue to which the subject position responds."@en ;
+    rdfs:domain onto:Position ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Issue ;
+    owl:inverseOf onto:response .
+
+onto:response a owl:ObjectProperty ;
+    rdfs:label "response"@en ;
+    rdfs:comment "Indicates a position that responds to the subject issue."@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Position ;
+    owl:inverseOf onto:responds-to .
+
+onto:specializes a owl:ObjectProperty ;
+    rdfs:label "specializes"@en ;
+    rdfs:comment "The subject is a more specific form of the object."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentProperty skos:broader ;
+    owl:inverseOf onto:generalizes ;
+    skos:note "The equivalent property skos:broader asserts that the object is broader than the subject, while the subject of ibis:specializes is more specific than the object."@en .
+
+onto:suggested-by a owl:ObjectProperty ;
+    rdfs:label "suggested by"@en ;
+    rdfs:comment "Indicates when the subject issue is suggested by the object belief."@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    owl:inverseOf onto:suggests .
+
+onto:suggests a owl:ObjectProperty ;
+    rdfs:label "suggests"@en ;
+    rdfs:comment "Indicates when the subject belief suggests the object issue."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Issue ;
+    owl:inverseOf onto:suggested-by .
+
+onto:supported-by a owl:ObjectProperty ;
+    rdfs:label "supported by"@en ;
+    rdfs:comment "Indicates a subject position supported by an object argument."@en ;
+    rdfs:domain onto:Position ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Argument ;
+    owl:inverseOf onto:supports .
+
+onto:supports a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    rdfs:comment "Indicates a subject argument that supports an object position."@en ;
+    rdfs:domain onto:Argument ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Position ;
+    owl:inverseOf onto:supported-by .
+
+onto:replaced-by a owl:ObjectProperty ;
+    rdfs:label "replaced by"@en ;
+    rdfs:comment "Indicates when a concept is replaced by another concept of the same type."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:isReplacedBy ;
+    owl:inverseOf onto:replaces .
+
+onto:replaces a owl:ObjectProperty ;
+    rdfs:label "replaces"@en ;
+    rdfs:comment "Indicates when a concept replaces another concept of the same type."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:replaces ;
+    owl:inverseOf onto:replaced-by .
+
+onto:Argument a owl:Class ;
+    rdfs:label "Argument"@en ;
+    rdfs:comment "An Argument is a type of Issue that explicitly supports or refutes a Position."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Argument ;
+            owl:onProperty onto:replaced-by ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Argument ;
+            owl:onProperty onto:replaces ],
+        onto:Issue ;
+    owl:disjointWith onto:Position ;
+    skos:usageNote "An Argument need not only relate in scope to another Argument, but it must only be replaced by another argument."@en .
+
+onto:Position a owl:Class ;
+    rdfs:label "Position"@en ;
+    rdfs:comment "A Position asserts a moral, ethical, pragmatic, or similar kind of assertion, typically identifying what, if anything, should be done about an Issue."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Position ;
+            owl:onProperty skos:broaderTransitive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Position ;
+            owl:onProperty onto:replaced-by ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Position ;
+            owl:onProperty onto:replaces ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Position ;
+            owl:onProperty skos:narrowerTransitive ],
+        skos:Concept ;
+    owl:disjointWith onto:Argument,
+        onto:Issue .
+
+onto:Issue a owl:Class ;
+    rdfs:label "Issue"@en ;
+    rdfs:comment "An Issue is a state of affairs, claimed by one or more Agents to either be a misfit itself, or affecting some other Issue or Position."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Issue ;
+            owl:onProperty skos:broaderTransitive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Issue ;
+            owl:onProperty skos:narrowerTransitive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Issue ;
+            owl:onProperty onto:replaces ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Issue ;
+            owl:onProperty onto:replaced-by ],
+        skos:Concept ;
+    owl:disjointWith onto:Position .
+
+onto: a owl:Ontology ;
+    rdfs:label "IBIS"@en ;
+    dcterms:created "2012-12-11T22:22:53-08:00"^^xsd:dateTime ;
+    dcterms:creator <http://doriantaylor.com/person/dorian-taylor#me> ;
+    dcterms:modified "2012-12-12T16:04:50-08:00"^^xsd:dateTime,
+        "2014-02-24T21:14:13+00:00"^^xsd:dateTime,
+        "2018-02-22T03:39:14+00:00"^^xsd:dateTime ;
+    dcterms:title "IBIS (bis) Vocabulary"@en ;
+    ns1:uri onto: ;
+    vann:preferredNamespacePrefix "ibis"^^xsd:string ;
+    rdfs:comment "This document specifies a vocabulary for describing an IBIS (issue-based information system)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dublincore.org/documents/dcmi-terms/>,
+        <http://en.wikipedia.org/wiki/Issue-Based_Information_System>,
+        <http://hyperdata.org/xmlns/ibis/>,
+        <http://www.cc.gatech.edu/~ellendo/rittel/rittel-issues.pdf>,
+        <http://www.cs.hut.fi/Opinnot/T-93.850/2005/Papers/gIBIS1988-conklin.pdf>,
+        <http://www.w3.org/TR/prov-o/>,
+        <https://privatealpha.com/ontology/ibis/1.n3>,
+        <https://privatealpha.com/ontology/ibis/1.rdf>,
+        <https://privatealpha.com/ontology/process-model/1#> ;
+    owl:imports skos: ;
+    owl:versionInfo "0.3"@en .
+

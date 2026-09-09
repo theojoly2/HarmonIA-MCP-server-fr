@@ -1,0 +1,108 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.oegov.org/core/owl/cc#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://www.oegov.org/core/owl/cc> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns2:deprecatedOn a owl:AnnotationProperty .
+
+ns2:jurisdiction a owl:ObjectProperty .
+
+ns2:legalcode a owl:ObjectProperty .
+
+ns2:morePermissions a owl:ObjectProperty .
+
+ns2:permits a owl:ObjectProperty .
+
+ns2:prohibits a owl:ObjectProperty .
+
+ns2:requires a owl:ObjectProperty .
+
+onto: a owl:Ontology ;
+    ns2:attributionURL "http://www.topquadrant.com"^^xsd:anyURI ;
+    ns2:license ns1:CreativeCommonsAttributionShareAlike3.0_UnitedStatesLicense ;
+    dc:creator "Ralph Hodgson"^^xsd:string ;
+    dc:date "$Date: 2009-08-20 02:39:32 +0200 (Thu, 20 Aug 2009) $"^^xsd:string ;
+    dc:description "Creative Commons Ontology, extending RDF file at http://creativecommons.org/schema.rdf"^^xsd:string ;
+    dc:rights "Creative Commons Attribution-Share Alike 3.0 United States License"^^xsd:string ;
+    dc:source "www.oegov.org"^^xsd:string ;
+    dc:title "Creative Commons Ontology"^^xsd:string ;
+    ns1:attributedSource ns1:TopQuadrantAttribution ;
+    ns1:revision "$Revision: 1348 $"^^xsd:string ;
+    owl:imports <http://creativecommons.org/schema.rdf>,
+        dc: ;
+    owl:versionInfo "$Id: cc.n3 1348 2009-08-20 00:39:32Z RalphHodgson $"^^xsd:string .
+
+ns1:image a owl:AnnotationProperty ;
+    rdfs:range xsd:anyURI .
+
+ns1:licence a owl:DatatypeProperty ;
+    rdfs:label "licence"^^xsd:string ;
+    rdfs:range xsd:string .
+
+ns1:revision a owl:AnnotationProperty ;
+    rdfs:range xsd:string .
+
+ns1:url a owl:DatatypeProperty ;
+    rdfs:label "url"^^xsd:string ;
+    rdfs:range xsd:anyURI .
+
+ns2:attributionName a owl:DatatypeProperty .
+
+ns2:image a owl:AnnotationProperty ;
+    rdfs:range xsd:anyURI .
+
+ns1:CreativeCommonsAttributionShareAlike3.0_UnitedStatesLicense a ns2:License ;
+    rdfs:label "Creative Commons Attribution-Share Alike 3.0 United States License"^^xsd:string ;
+    ns2:image "http://i.creativecommons.org/l/by-sa/3.0/us/88x31.png"^^xsd:anyURI ;
+    ns2:permits ns2:DerivativeWorks,
+        ns2:Distribution ;
+    ns2:requires ns2:Attribution,
+        ns2:ShareAlike .
+
+ns1:TopQuadrantAttribution a ns1:AttributedSource ;
+    rdfs:label "TopQuadrant attribution"^^xsd:string ;
+    ns2:attributionName "TopQuadrant, Inc."^^xsd:string ;
+    ns2:attributionURL "http://www.topquadrant.com"^^xsd:anyURI ;
+    ns1:pointOfContact "Ralph Hodgson"^^xsd:string .
+
+ns1:attributedSource a owl:ObjectProperty ;
+    rdfs:label "attributed source"^^xsd:string .
+
+ns1:pointOfContact a owl:DatatypeProperty ;
+    rdfs:label "point of contact"^^xsd:string ;
+    rdfs:range xsd:string .
+
+owl:Ontology rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:int ;
+            owl:onProperty ns2:license ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:License ;
+            owl:onProperty ns2:license ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:AttributedSource ;
+            owl:onProperty ns1:attributedSource ] .
+
+ns2:License a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:int ;
+            owl:onProperty ns2:image ] .
+
+ns2:license a owl:ObjectProperty .
+
+ns1:AttributedSource a owl:Class ;
+    rdfs:label "Attributed Source"^^xsd:string ;
+    rdfs:comment "The name, url and other details of an attribution."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:int ;
+            owl:onProperty ns2:attributionURL ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty ns2:attributionName ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty ns1:pointOfContact ],
+        owl:Thing .
+

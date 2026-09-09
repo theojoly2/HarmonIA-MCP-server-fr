@@ -1,0 +1,114 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/ontology/olo/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:OrderedList a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Ordered List"@en ;
+    rdfs:comment "An ordered list with a given length an indexed items."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:length ],
+        owl:Thing ;
+    ns1:term_status "stable"@en .
+
+onto:Slot a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Slot"@en ;
+    rdfs:comment "A slot in an ordered list with a fixed index."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:previous ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:ordered_list ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:next ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:index ],
+        owl:Thing ;
+    ns1:term_status "stable"@en .
+
+onto:item a rdf:Property ;
+    rdfs:label "has item"@en ;
+    rdfs:comment "An item of a slot in an ordered list."@en ;
+    rdfs:domain onto:Slot ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable"@en .
+
+onto:index a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has index"@en ;
+    rdfs:comment "An index of a slot in an ordered list."@en ;
+    rdfs:domain onto:Slot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:positiveInteger ;
+    ns1:term_status "stable"@en .
+
+onto:length a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has length"@en ;
+    rdfs:comment "The length of an ordered list."@en ;
+    rdfs:domain onto:OrderedList ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns1:term_status "stable"@en .
+
+onto:ordered_list a rdf:Property,
+        owl:FunctionalProperty ;
+    rdfs:label "has ordered list"@en ;
+    rdfs:comment "An ordered list of an slot."@en ;
+    rdfs:domain onto:Slot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:OrderedList ;
+    owl:inverseOf onto:slot ;
+    ns1:term_status "testing"@en .
+
+onto:previous a rdf:Property,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "has previous"@en ;
+    rdfs:comment "Associates the previous slot in an ordered list"@en ;
+    rdfs:domain onto:Slot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Slot ;
+    owl:inverseOf onto:next ;
+    ns1:term_status "testing"@en .
+
+onto:slot a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has slot"@en ;
+    rdfs:comment "A slot in an ordered list."@en ;
+    rdfs:domain onto:OrderedList ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Slot ;
+    ns1:term_status "stable"@en .
+
+onto:next a rdf:Property,
+        owl:FunctionalProperty ;
+    rdfs:label "has next"@en ;
+    rdfs:comment "Associates the next slot in an ordered list."@en ;
+    rdfs:domain onto:Slot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Slot ;
+    ns1:term_status "testing"@en .
+
+onto: a owl:Ontology ;
+    dc:creator <http://foaf.me/zazi#me>,
+        "Samer Abdallah"^^xsd:string ;
+    dc:date "2010-07-23T13:30:52+01:00"^^xsd:dateTime ;
+    dc:description "The Ordered Lists Ontology Specification provides basic concepts and properties \\nfor describing ordered lists as semantic graph. This document contains a RDF description of the Ordered Lists Ontology\\nas proposed by Samer Abdallah."@en ;
+    dc:title "The Ordered Lists Ontology"@en ;
+    owl:imports dc:,
+        <http://www.w3.org/2003/06/sw-vocab-status/ns> ;
+    owl:versionInfo 0.72 .
+

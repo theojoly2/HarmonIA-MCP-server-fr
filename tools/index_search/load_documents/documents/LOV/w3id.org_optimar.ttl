@@ -1,0 +1,619 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://w3id.org/optimar#> .
+@prefix onto: <https://w3id.org/optimar> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+prov:generated rdfs:label "Generates"@en ;
+    rdfs:comment "Relates an event to the generated data by the same."@en ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:Data .
+
+ns1:AnalyticalRole a owl:Class ;
+    rdfs:label "Analytical Role"@en ;
+    rdfs:comment "Role focused on data analysis and generation of useful information for decision-making."@en ;
+    rdfs:subClassOf ns1:Role .
+
+ns1:CloudAdministrator a owl:Class ;
+    rdfs:label "Cloud Administrator"@en ;
+    rdfs:comment "Responsible for managing and securing cloud services that process data from the platform."@en ;
+    rdfs:subClassOf ns1:Actor .
+
+ns1:ComponentBreakage a owl:Class ;
+    rdfs:label "Component Breakage"@en ;
+    rdfs:comment "Failure caused by the fracture or breakage of an offshore wind turbine component."@en ;
+    rdfs:subClassOf ns1:Failure .
+
+ns1:DataAnalyst a owl:Class ;
+    rdfs:label "Data Analyst"@en ;
+    rdfs:comment "Specialist who analyzes collected data to detect patterns, failures, and optimization opportunities."@en ;
+    rdfs:subClassOf ns1:Actor .
+
+ns1:FloatingPlatform a owl:Class ;
+    rdfs:label "Floating Platform"@en ;
+    rdfs:comment "A floating platform that serves as a base for the wind turbine."@en ;
+    rdfs:subClassOf ns1:Component .
+
+ns1:GaugeSystem a owl:Class ;
+    rdfs:label "Gauge System"@en ;
+    rdfs:comment "Strain gauge system used to measure stresses and deformations in the structure."@en ;
+    rdfs:subClassOf ns1:Sensor .
+
+ns1:ISUMSystem a owl:Class ;
+    rdfs:label "ISUM System"@en ;
+    rdfs:comment "Specialized system for integrated monitoring of the offshore platform."@en ;
+    rdfs:subClassOf ns1:Sensor .
+
+ns1:ManagementRole a owl:Class ;
+    rdfs:label "Management Role"@en ;
+    rdfs:comment "Role responsible for coordination, planning, and resource management in the wind platform."@en ;
+    rdfs:subClassOf ns1:Role .
+
+ns1:MonitoringTask a owl:Class ;
+    rdfs:label "Monitoring Task"@en ;
+    rdfs:comment "A task aimed at supervising the condition of the platform through sensors and monitoring systems."@en ;
+    rdfs:subClassOf ns1:Task .
+
+ns1:ParkOwner a owl:Class ;
+    rdfs:label "Park Owner"@en ;
+    rdfs:comment "Entity or individual owning the offshore wind farm and responsible for its overall operation."@en ;
+    rdfs:subClassOf ns1:Actor .
+
+ns1:PlatformActuator a owl:Class ;
+    rdfs:label "Platform Actuator"@en ;
+    rdfs:comment "Responsible for making adjustments on the platform, such as mechanical or hydraulic adjustments."@en ;
+    rdfs:subClassOf ns1:Actor .
+
+ns1:StructuralInstability a owl:Class ;
+    rdfs:label "Structural Instability"@en ;
+    rdfs:comment "Failure that compromises the structural stability of the floating platform."@en ;
+    rdfs:subClassOf ns1:Failure .
+
+ns1:TechnicalRole a owl:Class ;
+    rdfs:label "Technical Role"@en ;
+    rdfs:comment "Role associated with technical activities such as operation, repair, and system supervision."@en ;
+    rdfs:subClassOf ns1:Role .
+
+ns1:adjusts a owl:ObjectProperty ;
+    rdfs:label "Adjusts"@en ;
+    rdfs:comment "Indicas that an actor makes adjustments on a component or pitch system."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range [ owl:unionOf ( ns1:Component ns1:PitchSystem ) ] .
+
+ns1:analyzes a owl:ObjectProperty ;
+    rdfs:label "Analyzes"@en ;
+    rdfs:comment "Relates an actor to the data or failures that it studies or interprets."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range [ owl:unionOf ( ns1:Data ns1:Failure ) ] .
+
+ns1:connectedTo a owl:ObjectProperty ;
+    rdfs:label "Connected to"@en ;
+    rdfs:comment "Indicates that a component is connected to another."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range ns1:Component .
+
+ns1:darkCorrosion a owl:DatatypeProperty ;
+    rdfs:label "Dark corrosion"@en ;
+    rdfs:comment "Level of dark corrosion detected on the mmaterial surface."@en ;
+    rdfs:domain ns1:CorrosionEvent ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf ns1:Corrosion .
+
+ns1:dateTime a owl:DatatypeProperty ;
+    rdfs:label "Date and time"@en ;
+    rdfs:comment "Associated temporal mark to the measurement."@en ;
+    rdfs:domain ns1:Measurement ;
+    rdfs:range xsd:dateTime .
+
+ns1:detectedBy a owl:ObjectProperty ;
+    rdfs:label "Detected by"@en ;
+    rdfs:comment "Relates an event to the sensor that detected it."@en ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:Sensor .
+
+ns1:detectsCorrosion a owl:ObjectProperty ;
+    rdfs:label "Detects corrosion"@en ;
+    rdfs:comment "Relates a sensor with the detected corrosion measurement."@en ;
+    rdfs:domain ns1:Sensor ;
+    rdfs:range ns1:Corrosion .
+
+ns1:diameter a owl:ObjectProperty ;
+    rdfs:label "Diameter"@en ;
+    rdfs:comment "Diameter of the component measured in QUDT units."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:displacement a owl:DatatypeProperty ;
+    rdfs:label "Displacement"@en ;
+    rdfs:comment "Displacement or position change recorded in the component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:externalShape a owl:DatatypeProperty ;
+    rdfs:label "External shape"@en ;
+    rdfs:comment "Describe the external shape or geometric of the component."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range xsd:string .
+
+ns1:failureObservation a owl:ObjectProperty ;
+    rdfs:label "Failure observation"@en ;
+    rdfs:comment "Relationship between a failure event and the observation made by a sensor."@en ;
+    rdfs:domain ns1:FailureEvent ;
+    rdfs:range ns1:Observation .
+
+ns1:hasCapacity a owl:DatatypeProperty ;
+    rdfs:label "Capacity"@en ;
+    rdfs:comment "Rated generation capacity of the turbine."@en ;
+    rdfs:domain ns1:Turbine ;
+    rdfs:range xsd:string .
+
+ns1:hasFailureCause a owl:ObjectProperty ;
+    rdfs:label "Failure cause"@en ;
+    rdfs:comment "Indicates that a failure is caused by a specific environmental condition."@en ;
+    rdfs:domain ns1:Failure ;
+    rdfs:range ns1:EnvironmentalCondition .
+
+ns1:hasRole a owl:ObjectProperty ;
+    rdfs:label "Has role"@en ;
+    rdfs:comment "Indicas the role that an actor performs within the system."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range ns1:Role .
+
+ns1:height a owl:ObjectProperty ;
+    rdfs:label "Height"@en ;
+    rdfs:comment "Height of the component expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:houses a owl:ObjectProperty ;
+    rdfs:label "Houses"@en ;
+    rdfs:comment "Indicates that a component contains or houses physically another in its structure."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range ns1:Component .
+
+ns1:imageURL a owl:DatatypeProperty ;
+    rdfs:label "Image URL"@en ;
+    rdfs:comment "Access URL of the generated or stored image."@en ;
+    rdfs:domain ns1:Image ;
+    rdfs:range xsd:string .
+
+ns1:length a owl:ObjectProperty ;
+    rdfs:label "Length"@en ;
+    rdfs:comment "Length of a component, expressed as a QUDT quantity value"@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:lightCorrosion a owl:DatatypeProperty ;
+    rdfs:label "Light corrosion"@en ;
+    rdfs:comment "Level of light corrosion detected on the material surface."@en ;
+    rdfs:domain ns1:CorrosionEvent ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf ns1:Corrosion .
+
+ns1:locatedIn a owl:ObjectProperty ;
+    rdfs:label "Located in"@en ;
+    rdfs:comment "Indicates the location where the wind power platform is located."@en ;
+    rdfs:domain ns1:WindPowerPlatform ;
+    rdfs:range ns1:Location .
+
+ns1:madeBySensor a owl:ObjectProperty ;
+    rdfs:label "Made by sensor"@en ;
+    rdfs:comment "Relates an observation to the sensor that made it."@en ;
+    rdfs:domain <https://www.w3.org/ns/sosa/Observation> ;
+    rdfs:range <https://www.w3.org/ns/sosa/Sensor> .
+
+ns1:manages a owl:ObjectProperty ;
+    rdfs:label "Manages"@en ;
+    rdfs:comment "Indicates that an actor is responsible for managing a wind power platform or its mooring system."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range [ owl:unionOf ( ns1:WindPowerPlatform ns1:MooringSystem ) ] .
+
+ns1:mass a owl:ObjectProperty ;
+    rdfs:label "Mass"@en ;
+    rdfs:comment "Mass of the component expressed as a QUDT quantity value"@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:material a owl:DatatypeProperty ;
+    rdfs:label "Material"@en ;
+    rdfs:comment "Material of manufacturing of the component (e.g. steel, composite, fiberglass, etc.)."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range xsd:string .
+
+ns1:materialFatigue a owl:DatatypeProperty ;
+    rdfs:label "Material fatigue"@en ;
+    rdfs:comment "Accumulated material fatigue degree."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:materialWear a owl:DatatypeProperty ;
+    rdfs:label "Material wear"@en ;
+    rdfs:comment "Degree of material wear in a component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:measuresStress a owl:ObjectProperty ;
+    rdfs:label "Measures stress"@en ;
+    rdfs:comment "Indicates that a sensor measures the stress exerted on a component."@en ;
+    rdfs:domain ns1:Sensor ;
+    rdfs:range ns1:StressData .
+
+ns1:measuresVibration a owl:ObjectProperty ;
+    rdfs:label "Measures vibration"@en ;
+    rdfs:comment "Indicates that a sensor collects vibration data from a component."@en ;
+    rdfs:domain ns1:Sensor ;
+    rdfs:range ns1:VibrationData .
+
+ns1:measuresWind a owl:ObjectProperty ;
+    rdfs:label "Measures wind"@en ;
+    rdfs:comment "Relates a sensor with the measurement of wind speed or direction."@en ;
+    rdfs:domain ns1:Sensor ;
+    rdfs:range ns1:EnvironmentalCondition .
+
+ns1:misalignment a owl:DatatypeProperty ;
+    rdfs:label "Misalignment"@en ;
+    rdfs:comment "Measure of the misalignment detected in a component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:monitors a owl:ObjectProperty ;
+    rdfs:label "Monitors"@en ;
+    rdfs:comment "Relates an actor to the components or sensors they monitor."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range [ owl:unionOf ( ns1:Component ns1:Sensor ) ] .
+
+ns1:monitorsDeformation a owl:ObjectProperty ;
+    rdfs:label "Monitors deformation"@en ;
+    rdfs:comment "Relates a sensor to the structural deformation it measures or monitors."@en ;
+    rdfs:domain ns1:Sensor ;
+    rdfs:range ns1:Deformation .
+
+ns1:operationalStatus a owl:DatatypeProperty ;
+    rdfs:label "Operational status"@en ;
+    rdfs:comment "Current operational status of the turbine (e.g. operative, stopped, under maintenance, etc.)."@en ;
+    rdfs:domain ns1:Turbine ;
+    rdfs:range xsd:string .
+
+ns1:performedMaintenance a owl:ObjectProperty ;
+    rdfs:label "Performs maintenance"@en ;
+    rdfs:comment "Relates an actor with the maintenance that it performs."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range ns1:Maintenance .
+
+ns1:performsTask a owl:ObjectProperty ;
+    rdfs:label "Performs task"@en ;
+    rdfs:comment "Relates an actor with a task that it performs as part of its role."@en ;
+    rdfs:domain ns1:Actor ;
+    rdfs:range ns1:Task .
+
+ns1:pressure a owl:DatatypeProperty ;
+    rdfs:label "Pressure"@en ;
+    rdfs:comment "Pressure exerted on a component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:relatedToComponent a owl:ObjectProperty ;
+    rdfs:label "Related to component"@en ;
+    rdfs:comment "Relates an event to the platform component that is affected."@en ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:Component .
+
+ns1:rotationSpeed a owl:ObjectProperty ;
+    rdfs:label "Rotation speed"@en ;
+    rdfs:comment "Angular speed of a component expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:stress a owl:DatatypeProperty ;
+    rdfs:label "Stress"@en ;
+    rdfs:comment "Stress level recorded in a component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:supports a owl:ObjectProperty ;
+    rdfs:label "Supports"@en ;
+    rdfs:comment "Indicates that a component provides structural or functional support to another."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range ns1:Component ;
+    owl:inverseOf ns1:isSupportedBy .
+
+ns1:temperature a owl:ObjectProperty ;
+    rdfs:label "Temperature"@en ;
+    rdfs:comment "Temperature recorded expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:thickness a owl:ObjectProperty ;
+    rdfs:label "Thickness"@en ;
+    rdfs:comment "Thickness of the section or wall of a component measured in QUDT units."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:transmitsMovementTo a owl:ObjectProperty ;
+    rdfs:label "Transmits movement to"@en ;
+    rdfs:comment "Indicates that a component transmits mechanical movement to another."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range ns1:Component .
+
+ns1:unit a owl:DatatypeProperty ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "Measurement unit of the recorded value (e.g. m/s, rpm, °C, etc.)."@en ;
+    rdfs:domain ns1:Measurement ;
+    rdfs:range xsd:string .
+
+ns1:value a owl:DatatypeProperty ;
+    rdfs:label "Value"@en ;
+    rdfs:comment "Numeric value of the measurement taken by a sensor."@en ;
+    rdfs:domain ns1:Measurement ;
+    rdfs:range xsd:decimal .
+
+ns1:vibrations a owl:DatatypeProperty ;
+    rdfs:label "Vibrations"@en ;
+    rdfs:comment "Level of vibrations recorded in a component or system."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:width a owl:ObjectProperty ;
+    rdfs:label "Width"@en ;
+    rdfs:comment "Width of the component expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:windDirection a owl:ObjectProperty ;
+    rdfs:label "Wind direction"@en ;
+    rdfs:comment "Direction from which the wind blows expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:EnvironmentalCondition ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+ns1:windSpeed a owl:ObjectProperty ;
+    rdfs:label "Wind speed"@en ;
+    rdfs:comment "Wind speed expressed as a QUDT quantity value."@en ;
+    rdfs:domain ns1:EnvironmentalCondition ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+onto: a owl:Ontology ;
+    dc:creator "Alejandro Flores (USAL), Alberto Montero (USAL), Oihana Garcia (Tekniker) and Cristina Aceta (Tekniker)" ;
+    dc:date "2025-10-06"^^xsd:date ;
+    dc:description "This ontology describes the components, failures, sensors, and events related to offshore wind platforms."@en ;
+    dc:language "en" ;
+    dc:name "OPTiMAR Offshore Wind Ontology"@en ;
+    dc:title "Offshore Wind Power Platform Ontology for OPTiMAR"@en ;
+    dcterms:abstract "Ontology modeling structural elements, sensors, events, and failures in offshore wind platforms, including measurement data and involved actors."@en ;
+    dcterms:bibliographicCitation "Flores, A., Montero, A., Garcia, O., & Aceta, C. (2025). Offshore Wind Power Platform Ontology for OPTiMAR. DOI: 10.1234/abcd"@en ;
+    dcterms:created "2025-09-30"^^xsd:date ;
+    dcterms:issued "2025-09-30"^^xsd:date ;
+    dcterms:license <https://opensource.org/licenses/MIT> ;
+    dcterms:modified "2025-10-06"^^xsd:date ;
+    dcterms:publisher "University of Salamanca, Technology and Research Centre - Tekniker"@en ;
+    dcterms:rights "This work is distributed under the MIT License. It may be copied, modified, and distributed under the terms of this license."@en ;
+    dcterms:status "stable"@en ;
+    vann:preferredNamespacePrefix "ex" ;
+    vann:preferredNamespaceUri ns1: ;
+    owl:backwardCompatibleWith <https://w3id.org/optimar/0.2> ;
+    owl:versionIRI <https://w3id.org/optimar/1.0> ;
+    owl:versionInfo "Version 1.0 of the Ontology"@en ;
+    foaf:homepage onto: .
+
+ns1:Base a owl:Class ;
+    rdfs:label "Base (floating substructure)"@en ;
+    rdfs:comment "The base that supports the floating platform."@en ;
+    rdfs:subClassOf ns1:StructuralComponent .
+
+ns1:Blade a owl:Class ;
+    rdfs:label "Blade"@en ;
+    rdfs:comment "The blades of the turbine that capture the wind energy."@en ;
+    rdfs:subClassOf ns1:TurbineComponent .
+
+ns1:CorrosionCamera a owl:Class ;
+    rdfs:label "Corrosion Camera"@en ;
+    rdfs:comment "Camera used to detect and monitor corrosion in the platform structure."@en ;
+    rdfs:subClassOf ns1:Sensor ;
+    owl:disjointWith ns1:Anemometer,
+        ns1:DynamicMonitor,
+        ns1:StructuralCamera .
+
+ns1:Deformation a owl:DatatypeProperty ;
+    rdfs:label "Deformation"@en ;
+    rdfs:comment "Degree of deformation recorded in the component."@en ;
+    rdfs:domain ns1:Data ;
+    rdfs:range xsd:decimal .
+
+ns1:FloatingSubstructure a owl:Class ;
+    rdfs:label "Floating Substructure"@en ;
+    rdfs:comment "The floating substructure that allows the platform to be stable at sea."@en ;
+    rdfs:subClassOf ns1:StructuralComponent .
+
+ns1:Hub a owl:Class ;
+    rdfs:label "Hub"@en ;
+    rdfs:comment "The central part of the turbine where the blades are connected."@en ;
+    rdfs:subClassOf ns1:TurbineComponent .
+
+ns1:Image a owl:Class ;
+    rdfs:label "Image"@en ;
+    rdfs:comment "A class that represents an image that supports the measurement."@en ;
+    rdfs:subClassOf ns1:Data .
+
+ns1:Location a owl:Class ;
+    rdfs:label "Location"@en ;
+    rdfs:comment "The geographic location of the wind platform."@en .
+
+ns1:Maintenance a owl:Class ;
+    rdfs:label "Maintenance"@en ;
+    rdfs:comment "A class that represents the maintenance of the wind platform."@en ;
+    ns1:performedBy ns1:MaintenanceOperator .
+
+ns1:MaintenanceOperator a owl:Class ;
+    rdfs:label "Maintenance Operator"@en ;
+    rdfs:comment "Person responsible for carrying out preventive and corrective maintenance on the platform."@en ;
+    rdfs:subClassOf ns1:Actor .
+
+ns1:Nacelle a owl:Class ;
+    rdfs:label "Nacelle"@en ;
+    rdfs:comment "The turbine component that houses the generator and other mechanical components."@en ;
+    rdfs:subClassOf ns1:TurbineComponent .
+
+ns1:Observation a owl:Class ;
+    rdfs:label "Observation"@en ;
+    rdfs:comment "The result of recording a phenomenon or condition, usually through a sensor or monitoring system."@en ;
+    rdfs:subClassOf <https://www.w3.org/ns/sosa/Observation> ;
+    ns1:madeBySensor <https://www.w3.org/ns/sosa/Sensor> .
+
+ns1:PitchSystem a owl:Class ;
+    rdfs:label "Pitch System"@en ;
+    rdfs:comment "The system that adjusts the angle of the blades of the turbine."@en ;
+    rdfs:subClassOf ns1:Component .
+
+ns1:StressData a owl:Class ;
+    rdfs:label "Stress Data"@en ;
+    rdfs:comment "Stress data measured by a sensor."@en ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:StructuralCamera a owl:Class ;
+    rdfs:label "Structural Camera"@en ;
+    rdfs:comment "Camera dedicated to visual inspection of the structural condition of the platform."@en ;
+    rdfs:subClassOf ns1:Sensor ;
+    owl:disjointWith ns1:Anemometer,
+        ns1:CorrosionCamera,
+        ns1:DynamicMonitor .
+
+ns1:Tower a owl:Class ;
+    rdfs:label "Tower"@en ;
+    rdfs:comment "The structure that supports the wind turbine."@en ;
+    rdfs:subClassOf ns1:TurbineComponent .
+
+ns1:VibrationData a owl:Class ;
+    rdfs:label "Vibration Data"@en ;
+    rdfs:comment "Vibration data measured by a sensor."@en ;
+    rdfs:subClassOf ns1:Measurement .
+
+ns1:causedBy a owl:ObjectProperty ;
+    rdfs:label "Caused by"@en ;
+    rdfs:comment "Relates an event with the failure that caused it."@en ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:Failure .
+
+ns1:isSupportedBy a owl:ObjectProperty ;
+    rdfs:label "Is supported by"@en ;
+    rdfs:comment "Indicates that a component is structurally or functionally supported by another."@en ;
+    rdfs:domain ns1:Component ;
+    rdfs:range ns1:Component .
+
+ns1:Anemometer a owl:Class ;
+    rdfs:label "Anemometer"@en ;
+    rdfs:comment "Sensor that measures wind speed and direction in the wind farm."@en ;
+    rdfs:subClassOf ns1:Sensor .
+
+ns1:DynamicMonitor a owl:Class ;
+    rdfs:label "Dynamic Monitor"@en ;
+    rdfs:comment "Device that measures dynamic parameters of the platform, such as vibrations and movements."@en ;
+    rdfs:subClassOf ns1:Sensor .
+
+ns1:FailureEvent a owl:Class ;
+    rdfs:label "Failure Event"@en ;
+    rdfs:comment "Event that represents a detected failure in the system, must be caused by at least one failure."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:causedBy ;
+            owl:someValuesFrom ns1:Failure ],
+        ns1:Event .
+
+ns1:MaterialFatigue a owl:Class ;
+    rdfs:label "Material Fatigue"@en ;
+    rdfs:comment "Structural material failure caused by repeated load cycles."@en ;
+    rdfs:subClassOf ns1:Failure ;
+    owl:disjointWith ns1:CorrosionEvent,
+        ns1:Misalignment .
+
+ns1:Misalignment a owl:Class ;
+    rdfs:label "Misalignment"@en ;
+    rdfs:comment "Failure caused by misalignment or lack of proper adjustment between platform components."@en ;
+    rdfs:subClassOf ns1:Failure ;
+    owl:disjointWith ns1:CorrosionEvent,
+        ns1:MaterialFatigue .
+
+ns1:MooringSystem a owl:Class ;
+    rdfs:label "Mooring System"@en ;
+    rdfs:comment "The mooring system that keeps the floating platform in place."@en ;
+    rdfs:subClassOf ns1:StructuralComponent .
+
+ns1:Task a owl:Class ;
+    rdfs:label "Task"@en ;
+    rdfs:comment "A general task related to the operation, monitoring, or maintenance of the wind platform."@en .
+
+ns1:Turbine a owl:Class ;
+    rdfs:label "Turbine"@en ;
+    rdfs:comment "A wind turbine that is part of the wind platform."@en ;
+    rdfs:subClassOf ns1:Component .
+
+ns1:WindPowerPlatform a owl:Class ;
+    rdfs:label "Offshore Wind Power Platform"@en ;
+    rdfs:comment "An offshore wind power platform that generates electricity from wind."@en .
+
+ns1:Corrosion a owl:DatatypeProperty ;
+    rdfs:label "Corrosion"@en ;
+    rdfs:comment "General corrosion index detected in a component."@en ;
+    rdfs:domain ns1:CorrosionEvent ;
+    rdfs:range xsd:decimal .
+
+ns1:StructuralComponent a owl:Class ;
+    rdfs:label "Structural Components"@en ;
+    rdfs:comment "The structural components that make up the basic infrastructure of the wind platform."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( ns1:Base ns1:MooringSystem ns1:FloatingSubstructure ) ] .
+
+ns1:EnvironmentalCondition a owl:Class ;
+    rdfs:label "Environmental Condition"@en ;
+    rdfs:comment "The environmental conditions that affect the offshore wind power platform, such as wind speed, temperature, etc."@en .
+
+ns1:Role a owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:comment "The roles of the actors that manage, operate or maintain the offshore wind power platform."@en .
+
+ns1:TurbineComponent a owl:Class ;
+    rdfs:label "Turbine Components"@en ;
+    rdfs:comment "The turbine components that generate energy from the wind."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( ns1:Hub ns1:Nacelle ns1:Blade ns1:Tower ) ] .
+
+ns1:CorrosionEvent a owl:Class ;
+    rdfs:label "Corrosion Event"@en ;
+    rdfs:comment "Degradation of the platform's metallic structure due to corrosion effects."@en ;
+    rdfs:subClassOf ns1:FailureEvent ;
+    owl:disjointWith ns1:MaterialFatigue,
+        ns1:Misalignment .
+
+ns1:Event a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:comment "An event that occurs in the offshore wind power platform, such as a failure detection."@en .
+
+ns1:Measurement a owl:Class ;
+    rdfs:label "Measurement"@en ;
+    rdfs:comment "Represents a measurement taken by a sensor."@en ;
+    rdfs:subClassOf ns1:Data .
+
+ns1:Failure a owl:Class ;
+    rdfs:label "Failure"@en ;
+    rdfs:comment "A class that represents identified failures in the wind platform."@en .
+
+ns1:Actor a owl:Class ;
+    rdfs:label "Actor"@en ;
+    rdfs:comment "An actor that interacts or manages the offshore wind power platform."@en .
+
+ns1:Data a owl:Class ;
+    rdfs:label "Data"@en ;
+    rdfs:comment "A class for representing the measurement data collected by sensors or other systems."@en .
+
+ns1:Sensor a owl:Class ;
+    rdfs:label "Sensor"@en ;
+    rdfs:comment "A device that measures or monitors parameters of the wind platform, such as wind, corrosion, vibrations, etc."@en ;
+    rdfs:subClassOf <https://www.w3.org/ns/sosa/Sensor> .
+
+ns1:Component a owl:Class ;
+    rdfs:label "Component"@en ;
+    rdfs:comment "An component of an offshore wind power platform, such as blades, towers, pitch system, etc."@en .
+

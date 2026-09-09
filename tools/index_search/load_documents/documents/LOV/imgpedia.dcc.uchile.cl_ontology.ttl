@@ -1,0 +1,105 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#CLD> a owl:Class ;
+    rdfs:label "Color Layout Descriptor"@en ;
+    rdfs:subClassOf <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#GHD> a owl:Class ;
+    rdfs:label "Gray Histogram Descriptor"@en ;
+    rdfs:subClassOf <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#HOG> a owl:Class ;
+    rdfs:label "Histogram of Oriented Gradient"@en ;
+    rdfs:subClassOf <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#appearsIn> a owl:ObjectProperty ;
+    rdfs:label "Tha image appears in the resource"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf <http://dbpedia.org/ontology/related> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#describes> a owl:ObjectProperty ;
+    rdfs:label "Describes an image"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> ;
+    rdfs:range <http://imgpedia.dcc.uchile.cl/ontology#Image> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#distance> a owl:DatatypeProperty ;
+    rdfs:label "The distance between the images in the relation"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#ImageRelation> ;
+    rdfs:range xsd:float .
+
+<http://imgpedia.dcc.uchile.cl/ontology#fileURL> a owl:ObjectProperty ;
+    rdfs:label "The URL of the image in Wikimedia Commons"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:subPropertyOf <http://ogp.me/ns#image> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#height> a owl:DatatypeProperty ;
+    rdfs:label "Image height in pixels"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf <http://ogp.me/ns#image:height>,
+        <http://schema.org/height> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#similar> a owl:ObjectProperty ;
+    rdfs:label "A similar image"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:range <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:subPropertyOf <http://dbpedia.org/ontology/similar> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#sourceImg> a owl:ObjectProperty ;
+    rdfs:label "The source of an image relation"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#ImageRelation> ;
+    rdfs:range <http://imgpedia.dcc.uchile.cl/ontology#Image> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#targetImg> a owl:ObjectProperty ;
+    rdfs:label "The target of an image relation"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#ImageRelation> ;
+    rdfs:range <http://imgpedia.dcc.uchile.cl/ontology#Image> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#usesDescriptor> a owl:ObjectProperty ;
+    rdfs:label "The descriptor used in the relation"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#ImageRelation> ;
+    rdfs:range <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> .
+
+<http://imgpedia.dcc.uchile.cl/ontology#value> a owl:DatatypeProperty ;
+    rdfs:label "Descriptor value"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Descriptor> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf rdf:value .
+
+<http://imgpedia.dcc.uchile.cl/ontology#width> a owl:DatatypeProperty ;
+    rdfs:label "Image width in pixels"@en ;
+    rdfs:domain <http://imgpedia.dcc.uchile.cl/ontology#Image> ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf <http://ogp.me/ns#image:width>,
+        <http://schema.org/width> .
+
+<http://njh.me/> a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "The IMGpedia Ontology"@en ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:creator <http://aidanhogan.com/foaf.rdf#me>,
+        <http://scferrada.github.io/rdf/foaf.ttl#me> ;
+    dcterms:issued "2016-05-06"^^xsd:date ;
+    dcterms:modified "2018-01-12"^^xsd:date ;
+    vann:preferredNamespacePrefix "imo" ;
+    vann:preferredNamespaceUri "http://imgpedia.dcc.uchile.cl/ontology#"^^xsd:anyURI ;
+    rdfs:comment "The IMGpedia Ontology provides terms to describe descriptors and similarity relations between images"@en .
+
+<http://imgpedia.dcc.uchile.cl/ontology#ImageRelation> a owl:Class ;
+    rdfs:label "Image Relation"@en .
+
+<http://imgpedia.dcc.uchile.cl/ontology#Descriptor> a owl:Class ;
+    rdfs:label "Descriptor"@en .
+
+<http://imgpedia.dcc.uchile.cl/ontology#Image> a owl:Class ;
+    rdfs:label "Image"@en ;
+    rdfs:subClassOf <http://dbpedia.org/ontology/StillImage>,
+        <http://schema.org/ImageObject> .
+

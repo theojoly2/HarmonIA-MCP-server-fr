@@ -1,0 +1,1408 @@
+@prefix ns1: <https://w3id.org/nen2660/def#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:AbstractConcept a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#AbstractConcept> ;
+    rdfs:subClassOf ns1:TopConcept ;
+    skos:definition "Concept that forms a manifestation and demarcation in an abstract space. An abstract concept has no life cycle"@en ;
+    skos:prefLabel "Abstract concept"@en .
+
+ns1:Activity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Activity> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Activity ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "Entity that takes place or can take place in a concrete space-time. An activity transforms objects, and is executed by an object"@en ;
+    skos:prefLabel "Activity"@en ;
+    sh:property [ sh:class ns1:Activity ;
+            sh:path ns1:hasPart ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasInterior ],
+        [ sh:class ns1:Object ;
+            sh:path ns1:transforms ],
+        [ sh:class time:TemporalEntity ;
+            sh:path ns1:hasPeriod ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasBoundary ] .
+
+ns1:AggregationStateType a rdfs:Class,
+        owl:Class,
+        sh:NodeShape,
+        ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#AggregationStateType> ;
+    owl:oneOf ( ns1:Solid ns1:Liquid ns1:Gas ns1:Plasma ) ;
+    skos:definition "One of the four fundamental states of matter being a solid, liquid, gas or plasma"@en ;
+    skos:prefLabel "Aggregation state type"@en ;
+    sh:in ( ns1:Solid ns1:Liquid ns1:Gas ns1:Plasma ) .
+
+ns1:AmountOfBulkMatter a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#AmountOfBulkMatter> ;
+    rdfs:subClassOf ns1:RealObject ;
+    skos:definition "A real object that consists of a continuous amount of non-rigid matter, held together primarily by external forces (gravity or confinement)"@en ;
+    skos:prefLabel "Amount of bulk matter"@en .
+
+ns1:ChemicalCompound a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#ChemicalBonding> ;
+    rdfs:subClassOf ns1:PureSubstance ;
+    skos:definition "Pure substance consisting of two or more chemical elements that have a chemical bond with each other. In a chemical compound, the elements occur in a fixed ratio. A compound can be broken down into simpler substances by means of chemical reactions"@en ;
+    skos:prefLabel "Chemical compound"@en .
+
+ns1:ChemicalElement a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#ChemicalElement> ;
+    rdfs:subClassOf ns1:PureSubstance ;
+    skos:definition "Pure substance that is made up of atoms with the same atomic number. A chemical element cannot be decomposed through chemical reactions"@en ;
+    skos:prefLabel "Chemical element"@en .
+
+ns1:ConceptType a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#ConceptType> ;
+    rdfs:subClassOf ns1:Type ;
+    skos:definition "A meta-concept having concepts as instances that can have attributes or relations"@en ;
+    skos:prefLabel "Concept type"@en .
+
+ns1:ConcreteConcept a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#ConcreteConcept> ;
+    rdfs:subClassOf ns1:TopConcept ;
+    skos:definition "Concept that forms a manifestation and a demarcation in a concrete space-time. A concrete concept has a life cycle"@en ;
+    skos:prefLabel "Concrete concept"@en ;
+    sh:property [ sh:class time:TemporalEntity ;
+            sh:path ns1:hasTemporalEntity ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasInterior ],
+        [ sh:class rdfs:Container ;
+            sh:path ns1:hasPartsGroup ],
+        [ sh:class ns1:ConcreteConcept ;
+            sh:path ns1:hasPart ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasBoundary ] .
+
+ns1:Connection a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Connection> ;
+    rdfs:subClassOf ns1:PhysicalObject ;
+    skos:definition "A physical object (real object or spatial area) that connects two other physical objects and over which interaction takes place, namely the transfer of matter, energy, information or forces"@en ;
+    skos:prefLabel "Connection"@en ;
+    sh:property [ sh:class ns1:PhysicalObject ;
+            sh:path ns1:connectsObject ],
+        [ sh:class ns1:Port ;
+            sh:path ns1:connectsPort ] .
+
+ns1:DiscreteObject a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#DiscreteObject> ;
+    rdfs:subClassOf ns1:RealObject ;
+    skos:definition "A real object consisting of a contiguous amount of form-retaining matter, held together primarily by internal forces (gravity or electromagnetic force)"@en ;
+    skos:prefLabel "Discrete object"@en .
+
+ns1:Entity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Entity> ;
+    rdfs:subClassOf ns1:ConcreteConcept ;
+    skos:definition "Concept that forms a manifestation and a demarcation in a concrete space-time, and which has a certain state at any moment in time. An entity has a unique identity that remains constant throughout its life cycle. The life cycle of an entity is made up of the sequence of states of that entity, which follow each other in time. An entity is an object or an activity. An object exists, an activity takes place"@en ;
+    skos:prefLabel "Entity"@en ;
+    sh:property [ sh:class ns1:Event ;
+            sh:path ns1:triggers ],
+        [ sh:class ns1:State ;
+            sh:path ns1:hasState ] .
+
+ns1:EnumerationType a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#EnumerationType> ;
+    rdfs:subClassOf rdfs:Container,
+        ns1:Type ;
+    skos:definition "A meta-concept having concepts as instances having no further attributes or relations (annotations only)"@en ;
+    skos:prefLabel "Enumeration type"@en .
+
+ns1:Event a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Event> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Event ;
+            owl:onProperty ns1:hasPart ],
+        ns1:ConcreteConcept ;
+    skos:definition "Transition between two successive states of an entity (object or activity). An event is triggered in a state"@en ;
+    skos:prefLabel "Event"@en ;
+    sh:property [ sh:class ns1:Event ;
+            sh:path ns1:hasPart ],
+        [ sh:class ns1:State ;
+            sh:path ns1:begins ],
+        [ sh:class ns1:State ;
+            sh:path ns1:ends ] .
+
+ns1:FunctionalEntity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#FunctionalEntity> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Entity ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "An entity involving the external behavior where the output contributes to stakeholder objectives implemented/played by one or more technical entities"@en ;
+    skos:prefLabel "Functional entity"@en ;
+    sh:property [ sh:class ns1:FunctionalEntity ;
+            sh:path ns1:hasFunctionalPart ],
+        [ sh:class ns1:Entity ;
+            sh:path ns1:hasPart ],
+        [ sh:class ns1:TechnicalEntity ;
+            sh:path ns1:hasSolution ] .
+
+ns1:GeometricEntity a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#GeometricEntity> ;
+    rdfs:subClassOf ns1:Representation ;
+    skos:definition "Named concept, which forms an actual or virtual demarcation in a concrete (physical, three-dimensional) space, which we experience in reality"@en ;
+    skos:prefLabel "Geometric entity"@en .
+
+ns1:HeterogeneousMixture a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#HeterogeneousMixture> ;
+    rdfs:subClassOf ns1:Mixture ;
+    skos:definition "A mixture that is separated into different regions or phases that have different compositions or properties"@en ;
+    skos:prefLabel "Heterogeneous mixture"@en .
+
+ns1:HomogeneousMixture a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#HomogeneousMixture> ;
+    rdfs:subClassOf ns1:Mixture ;
+    skos:definition "A mixture that is uniform throughout, and has only one phase"@en ;
+    skos:prefLabel "Homogeneous mixture"@en .
+
+ns1:InformationObject a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#InformationObject> ;
+    rdfs:subClassOf ns1:Object ;
+    skos:definition "Object which describes a thing in reality"@en ;
+    skos:prefLabel "Information object"@en .
+
+ns1:Interaction a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Interaction> ;
+    rdfs:subClassOf ns1:Activity ;
+    skos:definition "The activity being a combination of sub-activities performed by physical objects between which a transfer of matter, information, energy or force takes place, typically over a connection or interface (directly or through ports)"@en ;
+    skos:prefLabel "Interaction"@en ;
+    sh:property [ sh:class ns1:TransferType ;
+            sh:path ns1:transferType ],
+        [ sh:class ns1:Connection ;
+            sh:path ns1:overConnection ],
+        [ sh:class ns1:Interface ;
+            sh:path ns1:overInterface ] .
+
+ns1:Interface a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Interface> ;
+    rdfs:subClassOf ns1:SpatialRegion ;
+    skos:definition "A spatial object, typically a thin 2D physical space (but also 0D or 1D) that connects two physical objects or ports of physical objects through which a static or dynamic interaction or interaction between those elements can take place"@en ;
+    skos:prefLabel "Interface"@en ;
+    sh:property [ sh:class ns1:Port ;
+            sh:path ns1:connectsPort ],
+        [ sh:class ns1:PhysicalObject ;
+            sh:path ns1:connectsObject ] .
+
+ns1:Matter a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Matter> ;
+    rdfs:subClassOf ns1:PhysicalObject ;
+    skos:definition "A pure chemical substance, chemical compound or mixture from which real objects are made"@en ;
+    skos:prefLabel "Matter"@en ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:path ns1:chemicalFormula ],
+        [ sh:class ns1:AggregationStateType ;
+            sh:path ns1:aggregationStateType ] .
+
+ns1:MatterPortion a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#MatterPortion> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass ns1:Matter ;
+            owl:onProperty rdf:value ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:portion ],
+        ns1:RelationReference ;
+    skos:definition "An objectified relation reference for the consists of relation"@en ;
+    skos:prefLabel "Matter portion"@en ;
+    sh:property [ sh:class ns1:QuantityValue ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path ns1:portion ] .
+
+ns1:Mixture a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Mixture> ;
+    rdfs:subClassOf ns1:Matter ;
+    skos:definition "The combination of two or more different pure substances without the molecules losing their identity"@en ;
+    skos:prefLabel "Mixture"@en ;
+    sh:property [ sh:or ( [ sh:class ns1:Matter ] [ sh:class ns1:MatterPortion ] ) ;
+            sh:path ns1:consistsOf ] .
+
+ns1:Object a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Object> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Object ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "Entity that exists or can exist within a concrete space-time. An object executes an activity, and is transformed by an activity"@en ;
+    skos:prefLabel "Object"@en ;
+    sh:property [ sh:class ns1:Object ;
+            sh:path ns1:hasPart ] .
+
+ns1:Objectification a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Objectification> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty rdf:value ],
+        ns1:AbstractConcept ;
+    skos:definition "An attribute (quality or quantity) or relation represented as an individual defined by a concept"@en ;
+    skos:prefLabel "Objectification"@en ;
+    sh:property [ sh:maxCount 1 ;
+            sh:path rdf:value ] .
+
+ns1:PhysicalObject a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#PhysicalObject> ;
+    rdfs:subClassOf ns1:Object ;
+    skos:definition "Object that exists or may exist within physical 4D space-time. A physical object forms a manifestation and a demarcation of matter and/or energy, and is (in)directly perceptible by the senses"@en ;
+    skos:prefLabel "Physical object"@en ;
+    sh:property [ sh:class ns1:PhysicalObject ;
+            sh:path ns1:isConnectedTo ],
+        [ sh:class ns1:Interaction ;
+            sh:path ns1:participatesIn ],
+        [ sh:class ns1:Activity ;
+            sh:path ns1:executes ],
+        [ sh:class ns1:InformationObject ;
+            sh:path ns1:isDescribedBy ] .
+
+ns1:PlannedEntity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#PlannedEntity> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:PlannedEntity ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "An entity that does not yet exist in physical reality, but which exists in mental or conceptual reality"@en ;
+    skos:prefLabel "Planned entity"@en ;
+    sh:property [ sh:class ns1:RealizedEntity ;
+            sh:path ns1:isPlanFor ],
+        [ sh:class ns1:PlannedEntity ;
+            sh:path ns1:hasPart ] .
+
+ns1:Port a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Port> ;
+    rdfs:subClassOf ns1:PhysicalObject ;
+    skos:definition "A physical or logical point of interaction as part of a physical object where, through a connection or interface, an interaction can take place"@en ;
+    skos:prefLabel "Port"@en .
+
+ns1:PureSubstance a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#PureSubstance> ;
+    rdfs:subClassOf ns1:Matter ;
+    skos:definition "Chemical matter that has an equal chemical composition and recognizable uniform and isotropic properties"@en ;
+    skos:prefLabel "Pure substance"@en .
+
+ns1:QualityValue a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#QualityValue> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( xsd:string xsd:boolean xsd:anyURI ) ] ;
+            owl:onProperty rdf:value ],
+        ns1:Objectification ;
+    skos:definition "The objectification of a value of a quality having a complex value like a simple value sec combined with other metadata or just a combination of simple values"@en ;
+    skos:prefLabel "Quality value"@en ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:path rdf:value ] .
+
+ns1:QuantityValue a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#QuantityValue> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( xsd:decimal xsd:float xsd:double xsd:integer ) ] ;
+            owl:onProperty rdf:value ],
+        ns1:Objectification ;
+    skos:definition "The objectification of a value of a quantity (typically involving a quantity kind and a unit) having a complex value like a simple value sec combined with other metadata or just a combination of simple values"@en ;
+    skos:prefLabel "Quantity value"@en ;
+    sh:property [ sh:or ( [ sh:datatype xsd:decimal ] [ sh:datatype xsd:float ] [ sh:datatype xsd:double ] ) ;
+            sh:path rdf:value ] .
+
+ns1:RealObject a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RealObject> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns1:RealObject ns1:Port ) ] ;
+            owl:onProperty ns1:hasPart ],
+        ns1:PhysicalObject ;
+    skos:definition "physical object (rigid or non-rigid) that is (or can be) tangible and visible in reality, man-made or naturally occurring"@en ;
+    skos:prefLabel "Real object"@en ;
+    sh:property [ sh:or ( [ sh:class ns1:Matter ] [ sh:class ns1:MatterPortion ] ) ;
+            sh:path ns1:consistsOf ],
+        [ sh:or ( [ sh:class ns1:RealObject ] [ sh:class ns1:Port ] ) ;
+            sh:path ns1:hasPart ] .
+
+ns1:RealizedEntity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RealizedEntity> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:RealizedEntity ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "An entity that exists or has existed in the physical reality"@en ;
+    skos:prefLabel "Realized entity"@en ;
+    sh:property [ sh:class ns1:RealizedEntity ;
+            sh:path ns1:hasPart ] .
+
+ns1:RelationReference a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RelationReference> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty rdf:value ],
+        ns1:Objectification ;
+    skos:definition "The objectification of a reference for a relation having a complex value like a simple reference sec combined with other metadata or just a combination of simple references (n-ary relation)"@en ;
+    skos:prefLabel "Relation reference"@en ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:path rdf:value ] .
+
+ns1:Representation a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Representation> ;
+    rdfs:subClassOf ns1:InformationObject ;
+    skos:definition "That which represents something else"@en ;
+    skos:prefLabel "Representation"@en .
+
+ns1:Requirement a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Requirement> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass xsd:string ;
+            owl:onProperty rdf:value ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:InformationObject ;
+    skos:definition "A rule that should hold for something, defined via its attributes or relations" ;
+    skos:prefLabel "Requirement"@en ;
+    sh:property [ sh:class ns1:RequirementTopicType ;
+            sh:path ns1:requirementTopicType ],
+        [ sh:class ns1:RequirementSeverityType ;
+            sh:path ns1:requirementSeverityType ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path rdf:value ],
+        [ sh:class ns1:RequirementSourceType ;
+            sh:path ns1:requirementSourceType ] .
+
+ns1:RequirementSeverityType a rdfs:Class,
+        owl:Class,
+        ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RequirementSeverityType> ;
+    skos:definition "The seriousness of a requirement like demanded or wished"@en ;
+    skos:prefLabel "Requirement severity type"@en .
+
+ns1:RequirementSourceType a rdfs:Class,
+        owl:Class,
+        ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RequirementSourceType> ;
+    skos:definition "The type of source from which a requirement comes like a client, by definition, recommended by the sector or demanded by law/regulation"@en ;
+    skos:prefLabel "Requirement source type"@en .
+
+ns1:RequirementTopicType a rdfs:Class,
+        owl:Class,
+        ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#RequirementTopicType> ;
+    skos:definition "The entity aspect a requirement applies to"@en ;
+    skos:prefLabel "Requirement topic type"@en .
+
+ns1:SpatialRegion a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#SpatialRegion> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns1:SpatialRegion ns1:Port ) ] ;
+            owl:onProperty ns1:hasPart ],
+        ns1:PhysicalObject ;
+    skos:definition "A physical object that encloses a particular area such as a room, roadway and river, that is bounded by real objects or other spatial areas (e.g., by usage or convention) and that contains primarily liquid or gaseous amount of matter"@en ;
+    skos:prefLabel "Spatial region"@en ;
+    sh:property [ sh:class ns1:PhysicalObject ;
+            sh:path ns1:isBoundBy ],
+        [ sh:class ns1:RealObject ;
+            sh:path ns1:contains ],
+        [ sh:or ( [ sh:class ns1:SpatialRegion ] [ sh:class ns1:Port ] ) ;
+            sh:path ns1:hasPart ] .
+
+ns1:State a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#State> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:State ;
+            owl:onProperty ns1:hasPart ],
+        ns1:ConcreteConcept ;
+    skos:definition "Temporal part of an entity during a period between two events. A state is characterized by the properties and relations of the entity"@en ;
+    skos:prefLabel "State"@en ;
+    sh:property [ sh:class ns1:State ;
+            sh:path ns1:hasPart ],
+        [ sh:class time:TemporalEntity ;
+            sh:path ns1:hasPeriod ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasBoundary ],
+        [ sh:class ns1:GeometricEntity ;
+            sh:path ns1:hasInterior ] .
+
+ns1:TechnicalEntity a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#TechnicalEntity> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Entity ;
+            owl:onProperty ns1:hasPart ],
+        ns1:Entity ;
+    skos:definition "An entity concerned with technical properties and relations that implements or plays functional entities"@en ;
+    skos:prefLabel "Technical entity"@en ;
+    sh:property [ sh:class ns1:Entity ;
+            sh:path ns1:hasPart ],
+        [ sh:class ns1:TechnicalEntity ;
+            sh:path ns1:hasTechnicalPart ] .
+
+ns1:TopConcept a rdfs:Class,
+        owl:Class,
+        sh:NodeShape ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#TopConcept> ;
+    skos:definition "The most generic concept"@en ;
+    skos:prefLabel "Top concept"@en ;
+    sh:property [ sh:class ns1:Requirement ;
+            sh:path ns1:hasRequirement ],
+        [ sh:class ns1:InformationObject ;
+            sh:path ns1:isDescribedBy ],
+        [ sh:datatype xsd:string ;
+            sh:path ns1:abbreviation ] .
+
+ns1:TransferType a rdfs:Class,
+        owl:Class,
+        sh:NodeShape,
+        ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#TransferType> ;
+    owl:oneOf ( ns1:MaterialFlow ns1:EnergyFlow ns1:InformationFlow ns1:Force ) ;
+    skos:definition "The type of thing being transferred, here: material, information, energy or force"@en ;
+    skos:prefLabel "Transfer type"@en ;
+    sh:in ( ns1:MaterialFlow ns1:EnergyFlow ns1:InformationFlow ns1:Force ) .
+
+ns1:Type a rdfs:Class,
+        owl:Class ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Type> ;
+    rdfs:subClassOf ns1:AbstractConcept ;
+    skos:definition "A meta-concept which instances are concepts (not individuals)"@en ;
+    skos:prefLabel "Type"@en .
+
+ns1:AllDisjointClassesShape a sh:NodeShape ;
+    sh:property [ sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:in ( ns1:RealObject ns1:SpatialRegion ) ] ],
+        [ sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:in ( ns1:FunctionalEntity ns1:TechnicalEntity ) ] ],
+        [ sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:in ( ns1:PhysicalObject ns1:InformationObject ns1:State ns1:Event ns1:Activity ) ] ],
+        [ sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:in ( ns1:PlannedEntity ns1:RealizedEntity ) ] ] ;
+    sh:targetSubjectsOf rdf:type .
+
+ns1:AllDisjointClasses_1 a owl:AllDisjointClasses ;
+    owl:members ( ns1:PhysicalObject ns1:InformationObject ns1:Activity ns1:Event ns1:State ) .
+
+ns1:AllDisjointClasses_2 a owl:AllDisjointClasses ;
+    owl:members ( ns1:RealObject ns1:SpatialRegion ) .
+
+ns1:AllDisjointClasses_3 a owl:AllDisjointClasses ;
+    owl:members ( ns1:FunctionalEntity ns1:TechnicalEntity ) .
+
+ns1:AllDisjointClasses_4 a owl:AllDisjointClasses ;
+    owl:members ( ns1:PlannedEntity ns1:RealizedEntity ) .
+
+ns1:hasQuantityKindShape a sh:NodeShape ;
+    sh:class <http://qudt.org/schema/qudt/QuantityKind> ;
+    sh:targetObjectsOf ns1:hasQuantityKind .
+
+ns1:hasUnitShape a sh:NodeShape ;
+    sh:class <http://qudt.org/schema/qudt/Unit> ;
+    sh:targetObjectsOf ns1:hasUnit .
+
+ns1:isImplementedBy a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:FunctionalEntity ;
+    rdfs:range ns1:TechnicalEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isImplementedBy> ;
+    rdfs:subPropertyOf ns1:hasSolution ;
+    skos:definition "The technical entity that implements a functional entity"@en ;
+    skos:prefLabel "is implemented by"@en .
+
+ns1:isRealizedBy a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:PlannedEntity ;
+    rdfs:range ns1:RealizedEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isRealizedBy> ;
+    rdfs:subPropertyOf ns1:isPlanFor ;
+    skos:definition "The realized entity that realizes a planned entity"@en ;
+    skos:prefLabel "is realized by"@en .
+
+<https://w3id.org/nen2660/owl/def> a owl:Ontology ;
+    owl:imports <http://qudt.org/2.1/schema/qudt>,
+        <http://qudt.org/2.1/vocab/quantitykind>,
+        <http://qudt.org/2.1/vocab/unit>,
+        <http://www.w3.org/2004/02/skos/core>,
+        <http://www.w3.org/2006/time>,
+        <http://www.w3.org/ns/shacl>,
+        <https://w3id.org/nen2660/rdfs/def> .
+
+<https://w3id.org/nen2660/shacl/def> a owl:Ontology ;
+    owl:imports <http://qudt.org/2.1/schema/qudt>,
+        <http://qudt.org/2.1/vocab/quantitykind>,
+        <http://qudt.org/2.1/vocab/unit>,
+        <http://www.w3.org/2004/02/skos/core>,
+        <http://www.w3.org/2006/time>,
+        <http://www.w3.org/ns/shacl>,
+        <https://w3id.org/nen2660/rdfs/def> .
+
+<https://w3id.org/nen2660/term#ChemicalCompound> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#PureSubstance> ;
+    skos:definition "Pure substance consisting of two or more chemical elements that have a chemical bond with each other. In a chemical compound, the elements occur in a fixed ratio. A compound can be broken down into simpler substances by means of chemical reactions"@en ;
+    skos:prefLabel "Chemical compound"@en .
+
+<https://w3id.org/nen2660/term#hasPartsGroup> a skos:Concept ;
+    skos:definition "The possession of an group of, potentially implicit, parts"@en ;
+    skos:prefLabel "has parts group"@en .
+
+ns1:abbreviation a rdf:Property,
+        owl:AnnotationProperty ;
+    rdfs:domain ns1:TopConcept ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#abbreviation> ;
+    rdfs:subPropertyOf skos:altLabel ;
+    skos:definition "Acronym or initial word as special case of an external name"@en ;
+    skos:prefLabel "abbreviation"@en .
+
+ns1:aggregationStateType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Matter ;
+    rdfs:range ns1:AggregationStateType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#aggregationStateType> ;
+    skos:definition "The possession of an aggregation state type"@en ;
+    skos:prefLabel "aggregation state type"@en .
+
+ns1:begins a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:State ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#begins> ;
+    skos:definition "The state that is started by an event"@en ;
+    skos:prefLabel "begins"@en .
+
+ns1:chemicalFormula a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:domain ns1:Matter ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#chemicalFormula> ;
+    skos:definition "The possession of information about the chemical proportions of atoms that constitute a particular chemical compound"@en ;
+    skos:prefLabel "chemical formula"@en .
+
+ns1:contains a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:SpatialRegion ;
+    rdfs:range ns1:RealObject ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#contains> ;
+    skos:definition "The real objects located in a spatial region, typically the gaseous amount of bulk matter present in that region"@en ;
+    skos:prefLabel "contains"@en .
+
+ns1:ends a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Event ;
+    rdfs:range ns1:State ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#ends> ;
+    skos:definition "The state that is ended by an event"@en ;
+    skos:prefLabel "ends"@en .
+
+ns1:executes a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:PhysicalObject ;
+    rdfs:range ns1:Activity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#executes> ;
+    skos:definition "The activity executed by a physical object"@en ;
+    skos:prefLabel "executes"@en .
+
+ns1:hasFunctionalPart a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:FunctionalEntity ;
+    rdfs:range ns1:FunctionalEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasFunctionalPart> ;
+    rdfs:subPropertyOf ns1:hasPart ;
+    skos:definition "The hasPart relation of a functional nature"@en ;
+    skos:prefLabel "has functional part"@en .
+
+ns1:hasPartsGroup a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:ConcreteConcept ;
+    rdfs:range rdfs:Container ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasPart> ;
+    skos:definition "The possession of an group of, potentially implicit, parts"@en ;
+    skos:prefLabel "has parts group"@en .
+
+ns1:hasQuantityKind a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityKind> ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasQuantityKind> ;
+    skos:definition "The possession of a quantity kind"@en ;
+    skos:prefLabel "has quantity kind"@en .
+
+ns1:hasRequirement a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:TopConcept ;
+    rdfs:range ns1:Requirement ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasRequirement> ;
+    skos:definition "The (unstructured) requirement for something"@en ;
+    skos:prefLabel "has requirement"@en .
+
+ns1:hasState a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Entity ;
+    rdfs:range ns1:State ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasState> ;
+    skos:definition "The state of an entity in a certain point or period of time"@en ;
+    skos:prefLabel "has state"@en .
+
+ns1:hasTechnicalPart a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:TechnicalEntity ;
+    rdfs:range ns1:TechnicalEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasTechnicalPart> ;
+    rdfs:subPropertyOf ns1:hasPart ;
+    skos:definition "A hasPart relation of a technical nature"@en ;
+    skos:prefLabel "has technical part"@en .
+
+ns1:hasTemporalEntity a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:ConcreteConcept ;
+    rdfs:range time:TemporalEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasTemporalEntity> ;
+    skos:definition "The abstract temporal entity representing a concrete concept in time"@en ;
+    skos:prefLabel "has temporal entity"@en .
+
+ns1:hasUnit a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:range <http://qudt.org/schema/qudt/Unit> ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasUnit> ;
+    skos:definition "The possession of a unit"@en ;
+    skos:prefLabel "has unit"@en .
+
+ns1:isBoundBy a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:SpatialRegion ;
+    rdfs:range ns1:PhysicalObject ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isBoundBy> ;
+    skos:definition "The physical object that bounds a spatial region"@en ;
+    skos:prefLabel "is bound by"@en .
+
+ns1:isConnectedTo a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:PhysicalObject ;
+    rdfs:range ns1:PhysicalObject ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isConnectedTo> ;
+    skos:definition "The topological relationship between physical objects"@en ;
+    skos:prefLabel "is connected to"@en .
+
+ns1:overConnection a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Interaction ;
+    rdfs:range ns1:Connection ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#overConnection> ;
+    skos:definition "The connection over which an interaction between physical objects takes place"@en ;
+    skos:prefLabel "over connection"@en .
+
+ns1:overInterface a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Interaction ;
+    rdfs:range ns1:Interface ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#overInterface> ;
+    skos:definition "The interface over which an interaction between physical objects takes place"@en ;
+    skos:prefLabel "over interface"@en .
+
+ns1:participatesIn a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:PhysicalObject ;
+    rdfs:range ns1:Interaction ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#participatesIn> ;
+    skos:definition "The interaction a physical object participates in"@en ;
+    skos:prefLabel "participates in"@en .
+
+ns1:requirementSeverityType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Requirement ;
+    rdfs:range ns1:RequirementSeverityType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#requirementSeverityType> ;
+    skos:definition "The possession of a severity type by a requirement"@en ;
+    skos:prefLabel "requirement severity type"@en .
+
+ns1:requirementSourceType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Requirement ;
+    rdfs:range ns1:RequirementSourceType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#requirementSourceType> ;
+    skos:definition "The possession of a source type by a requirement"@en ;
+    skos:prefLabel "requirement source type"@en .
+
+ns1:requirementTopicType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Requirement ;
+    rdfs:range ns1:RequirementTopicType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#requirementTopicType> ;
+    skos:definition "The possession of a topic type by a requirement"@en ;
+    skos:prefLabel "requirement topic type"@en .
+
+ns1:transferType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Interaction ;
+    rdfs:range ns1:TransferType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#transferType> ;
+    skos:definition "The possession of a transfer type by an interaction"@en ;
+    skos:prefLabel "transfer type"@en .
+
+ns1:transforms a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Activity ;
+    rdfs:range ns1:Object ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#transforms> ;
+    skos:definition "The object transformed by an activity"@en ;
+    skos:prefLabel "transforms"@en .
+
+ns1:triggers a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Entity ;
+    rdfs:range ns1:Event ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#triggers> ;
+    skos:definition "The event triggert by an entity"@en ;
+    skos:prefLabel "triggers"@en .
+
+<https://w3id.org/nen2660/skos/term> a skos:ConceptScheme ;
+    owl:imports <http://qudt.org/2.1/schema/qudt>,
+        <http://qudt.org/2.1/vocab/quantitykind>,
+        <http://qudt.org/2.1/vocab/unit>,
+        <http://www.w3.org/2004/02/skos/core>,
+        <http://www.w3.org/2006/time>,
+        <http://www.w3.org/ns/shacl> ;
+    skos:hasTopConcept <https://w3id.org/nen2660/term#TopConcept> .
+
+<https://w3id.org/nen2660/term#AmountOfBulkMatter> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#RealObject> ;
+    skos:definition "A real object that consists of a continuous amount of non-rigid matter, held together primarily by external forces (gravity or confinement)"@en ;
+    skos:prefLabel "Amount of bulk matter"@en .
+
+<https://w3id.org/nen2660/term#ChemicalElement> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#PureSubstance> ;
+    skos:definition "Pure substance that is made up of atoms with the same atomic number. A chemical element cannot be decomposed through chemical reactions"@en ;
+    skos:prefLabel "Chemical element"@en .
+
+<https://w3id.org/nen2660/term#ConceptType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Type> ;
+    skos:definition "A meta-concept having concepts as instances that can have attributes or relations"@en ;
+    skos:prefLabel "Concept type"@en .
+
+<https://w3id.org/nen2660/term#Connection> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#PhysicalObject> ;
+    skos:definition "A physical object (real object or spatial area) that connects two other physical objects and over which interaction takes place, namely the transfer of matter, energy, information or forces"@en ;
+    skos:prefLabel "Connection"@en .
+
+<https://w3id.org/nen2660/term#DiscreteObject> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#RealObject> ;
+    skos:definition "A real object consisting of a contiguous amount of form-retaining matter, held together primarily by internal forces (gravity or electromagnetic force)"@en ;
+    skos:prefLabel "Discrete object"@en .
+
+<https://w3id.org/nen2660/term#EnergyFlow> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TransferType> ;
+    skos:definition "The movement of an amount of energy (as capacity to do work)"@en ;
+    skos:prefLabel "Energy flow"@en .
+
+<https://w3id.org/nen2660/term#Event> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#ConcreteConcept> ;
+    skos:definition "Transition between two successive states of an entity (object or activity). An event is triggered in a state"@en ;
+    skos:prefLabel "Event"@en .
+
+<https://w3id.org/nen2660/term#Force> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TransferType> ;
+    skos:definition "Physical quantity which, when exerted on a body, causes tension or pressure to arise therein, or which causes the body to change motion, accelerate"@en ;
+    skos:prefLabel "Force"@en .
+
+<https://w3id.org/nen2660/term#FunctionalEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "An entity involving the external behavior where the output contributes to stakeholder objectives implemented/played by one or more technical entities"@en ;
+    skos:prefLabel "Functional entity"@en .
+
+<https://w3id.org/nen2660/term#Gas> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AggregationStateType> ;
+    skos:definition "Matter in an intermediate state between liquid and plasma that can be contained only if it is fully surrounded by a solid (or in a bubble of liquid) (or held together by gravitational pull); it can condense into a liquid, or can (rarely) become a solid directly by deposition"@en ;
+    skos:prefLabel "Gas"@en .
+
+<https://w3id.org/nen2660/term#GeometricEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Representation> ;
+    skos:definition "Named concept, which forms an actual or virtual demarcation in a concrete (physical, three-dimensional) space, which we experience in reality"@en ;
+    skos:prefLabel "Geometric entity"@en .
+
+<https://w3id.org/nen2660/term#HeterogeneousMixture> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Mixture> ;
+    skos:definition "A mixture that is separated into different regions or phases that have different compositions or properties"@en ;
+    skos:prefLabel "Heterogeneous mixture"@en .
+
+<https://w3id.org/nen2660/term#HomogeneousMixture> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Mixture> ;
+    skos:definition "A mixture that is uniform throughout, and has only one phase"@en ;
+    skos:prefLabel "Homogeneous mixture"@en .
+
+<https://w3id.org/nen2660/term#InformationFlow> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TransferType> ;
+    skos:definition "The movement of information represented in some medium"@en ;
+    skos:prefLabel "Information flow"@en .
+
+<https://w3id.org/nen2660/term#Interaction> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Activity> ;
+    skos:definition "The activity being a combination of sub-activities performed by physical objects between which a transfer of matter, information, energy or force takes place, typically over a connection or interface (directly or through ports)"@en ;
+    skos:prefLabel "Interaction"@en .
+
+<https://w3id.org/nen2660/term#Interface> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#SpatialRegion> ;
+    skos:definition "A spatial object, typically a thin 2D physical space (but also 0D or 1D) that connects two physical objects or ports of physical objects through which a static or dynamic interaction or interaction between those elements can take place"@en ;
+    skos:prefLabel "Interface"@en .
+
+<https://w3id.org/nen2660/term#Liquid> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AggregationStateType> ;
+    skos:definition "A liquid is a nearly incompressible fluid that conforms to the shape of its container but retains a (nearly) constant volume independent of pressure"@en ;
+    skos:prefLabel "Liquid"@en .
+
+<https://w3id.org/nen2660/term#MaterialFlow> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TransferType> ;
+    skos:definition "The movement of an amount of material"@en ;
+    skos:prefLabel "Material flow"@en .
+
+<https://w3id.org/nen2660/term#MatterPortion> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#RelationReference> ;
+    skos:definition "An objectified relation reference for the consists of relation"@en ;
+    skos:prefLabel "Matter portion"@en .
+
+<https://w3id.org/nen2660/term#PlannedEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "An entity that does not yet exist in physical reality, but which exists in mental or conceptual reality"@en ;
+    skos:prefLabel "Planned entity"@en .
+
+<https://w3id.org/nen2660/term#Plasma> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AggregationStateType> ;
+    skos:definition "A phase in which the particles of a gaseous substance are ionised"@en ;
+    skos:prefLabel "Plasma"@en .
+
+<https://w3id.org/nen2660/term#Port> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#PhysicalObject> ;
+    skos:definition "A physical or logical point of interaction as part of a physical object where, through a connection or interface, an interaction can take place"@en ;
+    skos:prefLabel "Port"@en .
+
+<https://w3id.org/nen2660/term#QualityValue> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Objectification> ;
+    skos:definition "The objectification of a value of a quality having a complex value like a simple value sec combined with other metadata or just a combination of simple values"@en ;
+    skos:prefLabel "Quality value"@en .
+
+<https://w3id.org/nen2660/term#QuantityKind> a skos:Concept ;
+    skos:definition "Any observable property that can be measured and quantified numerically"@en ;
+    skos:prefLabel "Quantity kind"@en .
+
+<https://w3id.org/nen2660/term#QuantityValue> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Objectification> ;
+    skos:definition "The objectification of a value of a quantity (typically involving a quantity kind and a unit) having a complex value like a simple value sec combined with other metadata or just a combination of simple values"@en ;
+    skos:prefLabel "Quantity value"@en .
+
+<https://w3id.org/nen2660/term#RealizedEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "An entity that exists or has existed in the physical reality"@en ;
+    skos:prefLabel "Realized entity"@en .
+
+<https://w3id.org/nen2660/term#Requirement> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#InformationObject> ;
+    skos:definition "A rule that should hold for something, defined via its attributes or relations"@en ;
+    skos:prefLabel "Requirement"@en .
+
+<https://w3id.org/nen2660/term#RequirementSeverityType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#EnumerationType> ;
+    skos:definition "The seriousness of a requirement like demanded or wished"@en ;
+    skos:prefLabel "Requirement severity type"@en .
+
+<https://w3id.org/nen2660/term#RequirementSourceType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#EnumerationType> ;
+    skos:definition "The type of source from which a requirement comes like a client, by definition, recommended by the sector or demanded by law/regulation"@en ;
+    skos:prefLabel "Requirement source type"@en .
+
+<https://w3id.org/nen2660/term#RequirementTopicType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#EnumerationType> ;
+    skos:definition "The entity aspect a requirement applies to"@en ;
+    skos:prefLabel "Requirement topic type"@en .
+
+<https://w3id.org/nen2660/term#Solid> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AggregationStateType> ;
+    skos:definition "Matter that can be picked up or held, having a texture, and usually firm. Unlike a liquid, gas or plasma"@en ;
+    skos:prefLabel "Solid"@en .
+
+<https://w3id.org/nen2660/term#State> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#ConcreteConcept> ;
+    skos:definition "Temporal part of an entity during a period between two events. A state is characterized by the properties and relations of the entity"@en ;
+    skos:prefLabel "State"@en .
+
+<https://w3id.org/nen2660/term#TechnicalEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "An entity concerned with technical properties and relations that implements or plays functional entities"@en ;
+    skos:prefLabel "Technical entity"@en .
+
+<https://w3id.org/nen2660/term#TemporalEntity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Representation> ;
+    skos:definition "A temporal interval or instant"@en ;
+    skos:prefLabel "Temporal entity"@en .
+
+<https://w3id.org/nen2660/term#Unit> a skos:Concept ;
+    skos:definition "A particular quantity value that has been chosen as a scale for measuring other quantities the same kind"@en ;
+    skos:prefLabel "Unit"@en .
+
+<https://w3id.org/nen2660/term#abbreviation> a skos:Concept ;
+    skos:broader skos:altLabel ;
+    skos:definition "Acronym or initial word as special case of a name"@en ;
+    skos:prefLabel "abbreviation"@en .
+
+<https://w3id.org/nen2660/term#aggregationStateType> a skos:Concept ;
+    skos:definition "The possession of an aggregation state type"@en ;
+    skos:prefLabel "aggregation state type"@en .
+
+<https://w3id.org/nen2660/term#begins> a skos:Concept ;
+    skos:definition "The state that is started by an event"@en ;
+    skos:prefLabel "begins"@en .
+
+<https://w3id.org/nen2660/term#chemicalFormula> a skos:Concept ;
+    skos:definition "The possession of information about the chemical proportions of atoms that constitute a particular chemical compound"@en ;
+    skos:prefLabel "chemical formula"@en .
+
+<https://w3id.org/nen2660/term#connectsObject> a skos:Concept ;
+    skos:definition "The physical objects connected by a connection or interface"@en ;
+    skos:prefLabel "connects object"@en .
+
+<https://w3id.org/nen2660/term#connectsPort> a skos:Concept ;
+    skos:definition "The ports (as part of physical objects) connected by a connection or interface"@en ;
+    skos:prefLabel "connects port"@en .
+
+<https://w3id.org/nen2660/term#consistsOf> a skos:Concept ;
+    skos:definition "The matter a real object or mixture is made of"@en ;
+    skos:prefLabel "consists of"@en .
+
+<https://w3id.org/nen2660/term#contains> a skos:Concept ;
+    skos:definition "The real objects located in a spatial region, typically the gaseous amount of bulk matter present in that region"@en ;
+    skos:prefLabel "contains"@en .
+
+<https://w3id.org/nen2660/term#ends> a skos:Concept ;
+    skos:definition "The state that is ended by an event"@en ;
+    skos:prefLabel "ends"@en .
+
+<https://w3id.org/nen2660/term#executes> a skos:Concept ;
+    skos:definition "The activity executed by a physical object"@en ;
+    skos:prefLabel "executes"@en .
+
+<https://w3id.org/nen2660/term#hasBoundary> a skos:Concept ;
+    skos:definition "The geometric entity representing the boundary of a concrete concept"@en ;
+    skos:prefLabel "has boundary"@en .
+
+<https://w3id.org/nen2660/term#hasFunctionalPart> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#hasPart> ;
+    skos:definition "The hasPart relation of a functional nature"@en ;
+    skos:prefLabel "has functional part"@en .
+
+<https://w3id.org/nen2660/term#hasInterior> a skos:Concept ;
+    skos:definition "The geometric entity representing the interior of a concrete concept"@en ;
+    skos:prefLabel "has interior"@en .
+
+<https://w3id.org/nen2660/term#hasQuantityKind> a skos:Concept ;
+    skos:definition "The possession of a quantity kind"@en ;
+    skos:prefLabel "has quantity kind"@en .
+
+<https://w3id.org/nen2660/term#hasRequirement> a skos:Concept ;
+    skos:definition "The (unstructured) requirement for something"@en ;
+    skos:prefLabel "has requirement"@en .
+
+<https://w3id.org/nen2660/term#hasState> a skos:Concept ;
+    skos:definition "The state of an entity in a certain point or period of time"@en ;
+    skos:prefLabel "has state"@en .
+
+<https://w3id.org/nen2660/term#hasTechnicalPart> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#hasPart> ;
+    skos:definition "A hasPart relation of a technical nature"@en ;
+    skos:prefLabel "has technical part"@en .
+
+<https://w3id.org/nen2660/term#hasTemporalEntity> a skos:Concept ;
+    skos:definition "The abstract temporal entity representing a concrete concept in time"@en ;
+    skos:prefLabel "has temporal entity"@en .
+
+<https://w3id.org/nen2660/term#hasUnit> a skos:Concept ;
+    skos:definition "The possession of a unit"@en ;
+    skos:prefLabel "has unit"@en .
+
+<https://w3id.org/nen2660/term#isBoundBy> a skos:Concept ;
+    skos:definition "The physical object that bounds a spatial region"@en ;
+    skos:prefLabel "is bound by"@en .
+
+<https://w3id.org/nen2660/term#isConnectedTo> a skos:Concept ;
+    skos:definition "The topological relation between physical objects"@en ;
+    skos:prefLabel "is connected to"@en .
+
+<https://w3id.org/nen2660/term#isDescribedBy> a skos:Concept ;
+    skos:definition "The information object that describes something"@en ;
+    skos:prefLabel "is described by"@en .
+
+<https://w3id.org/nen2660/term#isImplementedBy> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#hasSolution> ;
+    skos:definition "The technical entity that implements a functional entity"@en ;
+    skos:prefLabel "is implemented by"@en .
+
+<https://w3id.org/nen2660/term#isRealizedBy> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#isPlanFor> ;
+    skos:definition "The realized entity that realizes a planned entity"@en ;
+    skos:prefLabel "is realized by"@en .
+
+<https://w3id.org/nen2660/term#overConnection> a skos:Concept ;
+    skos:definition "The connection over which an interaction between physical objects takes place"@en ;
+    skos:prefLabel "over connection"@en .
+
+<https://w3id.org/nen2660/term#overInterface> a skos:Concept ;
+    skos:definition "The interface over which an interaction between physical objects takes place"@en ;
+    skos:prefLabel "over interface"@en .
+
+<https://w3id.org/nen2660/term#participatesIn> a skos:Concept ;
+    skos:definition "The interaction a physical object participates in"@en ;
+    skos:prefLabel "participates in"@en .
+
+<https://w3id.org/nen2660/term#portion> a skos:Concept ;
+    skos:definition "The relative portion of a matter portion"@en ;
+    skos:prefLabel "portion"@en .
+
+<https://w3id.org/nen2660/term#requirementSeverityType> a skos:Concept ;
+    skos:definition "The possession of a severity type by a requirement"@en ;
+    skos:prefLabel "requirement severity type"@en .
+
+<https://w3id.org/nen2660/term#requirementSourceType> a skos:Concept ;
+    skos:definition "The possession of a source type by a requirement"@en ;
+    skos:prefLabel "requirement source type"@en .
+
+<https://w3id.org/nen2660/term#requirementTopicType> a skos:Concept ;
+    skos:definition "The possession of a topic type by a requirement"@en ;
+    skos:prefLabel "requirement topic type"@en .
+
+<https://w3id.org/nen2660/term#transferType> a skos:Concept ;
+    skos:definition "The possession of a transfer type by an interaction"@en ;
+    skos:prefLabel "transfer type"@en .
+
+<https://w3id.org/nen2660/term#transforms> a skos:Concept ;
+    skos:definition "The object transformed by an activity"@en ;
+    skos:prefLabel "transforms"@en .
+
+<https://w3id.org/nen2660/term#triggers> a skos:Concept ;
+    skos:definition "The event triggert by an entity"@en ;
+    skos:prefLabel "triggers"@en .
+
+<http://qudt.org/schema/qudt/QuantityKind> a ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#QuantityKind> ;
+    skos:definition "Any observable property that can be measured and quantified numerically"@en ;
+    skos:prefLabel "Quantity kind"@en .
+
+<http://qudt.org/schema/qudt/Unit> a ns1:EnumerationType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Unit> ;
+    skos:definition "A particular quantity value that has been chosen as a scale for measuring other quantities the same kind"@en ;
+    skos:prefLabel "Unit"@en .
+
+ns1:EnergyFlow a ns1:TransferType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#EnergyFlow> ;
+    skos:definition "The movement of an amount of energy (as capacity to do work)"@en ;
+    skos:prefLabel "Energy flow"@en .
+
+ns1:Force a ns1:TransferType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Force> ;
+    skos:definition "Physical quantity which, when exerted on a body, causes tension or pressure to arise therein, or which causes the body to change motion, accelerate"@en ;
+    skos:prefLabel "Force"@en .
+
+ns1:Gas a ns1:AggregationStateType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Gas> ;
+    skos:definition "Matter in an intermediate state between liquid and plasma that can be contained only if it is fully surrounded by a solid (or in a bubble of liquid) (or held together by gravitational pull); it can condense into a liquid, or can (rarely) become a solid directly by deposition"@en ;
+    skos:prefLabel "Gas"@en .
+
+ns1:InformationFlow a ns1:TransferType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#InformationFlow> ;
+    skos:definition "The movement of information represented in some medium"@en ;
+    skos:prefLabel "Information flow"@en .
+
+ns1:Liquid a ns1:AggregationStateType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Liquid> ;
+    skos:definition "A liquid is a nearly incompressible fluid that conforms to the shape of its container but retains a (nearly) constant volume independent of pressure"@en ;
+    skos:prefLabel "Liquid"@en .
+
+ns1:MaterialFlow a ns1:TransferType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#MaterialFlow> ;
+    skos:definition "The movement of an amount of material"@en ;
+    skos:prefLabel "Material flow"@en .
+
+ns1:Plasma a ns1:AggregationStateType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Plasma> ;
+    skos:definition "A phase in which the particles of a gaseous substance are ionised"@en ;
+    skos:prefLabel "Plasma"@en .
+
+ns1:Solid a ns1:AggregationStateType ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#Solid> ;
+    skos:definition "Matter that can be picked up or held, having a texture, and usually firm. Unlike a liquid, gas or plasma"@en ;
+    skos:prefLabel "Solid"@en .
+
+ns1:connectsObject a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Connection ns1:Interface ) ] ;
+    rdfs:range ns1:PhysicalObject ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#connectsObject> ;
+    skos:definition "The physical objects connected by a connection or interface"@en ;
+    skos:prefLabel "connects object"@en .
+
+ns1:connectsPort a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Connection ns1:Interface ) ] ;
+    rdfs:range ns1:Port ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#connectsPort> ;
+    skos:definition "The ports (as part of physical objects) connected by a connection or interface"@en ;
+    skos:prefLabel "connects port"@en .
+
+ns1:consistsOf a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:RealObject ns1:Mixture ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns1:Matter ns1:MatterPortion ) ] ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#consistsOf> ;
+    skos:definition "The matter a real object or mixture is made of"@en ;
+    skos:prefLabel "consists of"@en .
+
+ns1:hasSolution a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:FunctionalEntity ;
+    rdfs:range ns1:TechnicalEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasSolution> ;
+    skos:definition "A technical entity that is a potential solution for a functional entity"@en ;
+    skos:prefLabel "has solution"@en .
+
+ns1:isDescribedBy a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:TopConcept ;
+    rdfs:range ns1:InformationObject ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isDescribedBy> ;
+    skos:definition "The information object that describes something"@en ;
+    skos:prefLabel "is described by"@en .
+
+ns1:isPlanFor a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:PlannedEntity ;
+    rdfs:range ns1:RealizedEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#isPlanFor> ;
+    skos:definition "A potentially realized entity according to this planned entity"@en ;
+    skos:prefLabel "is plan for"@en .
+
+ns1:portion a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:MatterPortion ;
+    rdfs:range ns1:QuantityValue ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#portion> ;
+    skos:definition "The relative portion of a matter portion"@en ;
+    skos:prefLabel "portion"@en ;
+    ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> .
+
+<https://w3id.org/nen2660/rdfs/def> a owl:Ontology ;
+    owl:imports <http://qudt.org/2.1/schema/qudt>,
+        <http://qudt.org/2.1/vocab/quantitykind>,
+        <http://qudt.org/2.1/vocab/unit>,
+        <http://www.w3.org/2004/02/skos/core>,
+        <http://www.w3.org/2006/time>,
+        <http://www.w3.org/ns/shacl>,
+        <https://w3id.org/nen2660/skos/term> .
+
+<https://w3id.org/nen2660/term#Activity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "Entity that takes place or can take place in a concrete space-time. An activity transforms objects, and is executed by an object"@en ;
+    skos:prefLabel "Activity"@en .
+
+<https://w3id.org/nen2660/term#RelationReference> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Objectification> ;
+    skos:definition "The objectification of a reference for a relation having a complex value like a simple reference sec combined with other metadata or just a combination of simple references (n-ary relation)"@en ;
+    skos:prefLabel "Relation reference"@en .
+
+<https://w3id.org/nen2660/term#SpatialRegion> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#PhysicalObject> ;
+    skos:definition "A physical object that encloses a particular area such as a room, roadway and river, that is bounded by real objects or other spatial areas (e.g., by usage or convention) and that contains primarily liquid or gaseous amount of matter"@en ;
+    skos:prefLabel "Spatial region"@en .
+
+<https://w3id.org/nen2660/term#hasSolution> a skos:Concept ;
+    skos:definition "A technical entity that is a potential solution for a functional entity"@en ;
+    skos:prefLabel "has solution"@en .
+
+<https://w3id.org/nen2660/term#isPlanFor> a skos:Concept ;
+    skos:definition "A potentially realized entity according to this planned entity"@en ;
+    skos:prefLabel "is plan for"@en .
+
+ns1:hasBoundary a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:ConcreteConcept ;
+    rdfs:range ns1:GeometricEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasBoundary> ;
+    skos:definition "The geometric entity representing the boundary of a concrete concept"@en ;
+    skos:prefLabel "has boundary"@en .
+
+ns1:hasInterior a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:ConcreteConcept ;
+    rdfs:range ns1:GeometricEntity ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasInterior> ;
+    skos:definition "The geometric entity representing the interior of a concrete concept"@en ;
+    skos:prefLabel "has interior"@en .
+
+<https://w3id.org/nen2660/term#AbstractConcept> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TopConcept> ;
+    skos:definition "Concept that forms a manifestation and demarcation in an abstract space. An abstract concept has no life cycle"@en ;
+    skos:prefLabel "Abstract concept"@en .
+
+<https://w3id.org/nen2660/term#InformationObject> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Object> ;
+    skos:definition "Object which describes a thing in reality"@en ;
+    skos:prefLabel "Information object"@en .
+
+<https://w3id.org/nen2660/term#Matter> a skos:Concept ;
+    skos:altLabel "Chemical substance"@en ;
+    skos:broader <https://w3id.org/nen2660/term#PhysicalObject> ;
+    skos:definition "A pure chemical substance, chemical compound or mixture from which real objects are made"@en ;
+    skos:prefLabel "Matter"@en .
+
+<https://w3id.org/nen2660/term#Mixture> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Matter> ;
+    skos:definition "The combination of two or more different pure substances without the molecules losing their identity"@en ;
+    skos:prefLabel "Mixture"@en .
+
+<https://w3id.org/nen2660/term#Object> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Entity> ;
+    skos:definition "Entity that exists or can exist within a concrete space-time. An object executes an activity, and is transformed by an activity"@en ;
+    skos:prefLabel "Object"@en .
+
+<https://w3id.org/nen2660/term#PureSubstance> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Matter> ;
+    skos:definition "Chemical matter that has an equal chemical composition and recognizable uniform and isotropic properties"@en ;
+    skos:prefLabel "Pure substance"@en .
+
+<https://w3id.org/nen2660/term#RealObject> a skos:Concept ;
+    skos:altLabel "Amount of matter"@en ;
+    skos:broader <https://w3id.org/nen2660/term#PhysicalObject> ;
+    skos:definition "physical object (rigid or non-rigid) that is (or can be) tangible and visible in reality, man-made or naturally occurring"@en ;
+    skos:prefLabel "Real object"@en .
+
+<https://w3id.org/nen2660/term#Representation> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#InformationObject> ;
+    skos:definition "That which represents something else"@en ;
+    skos:prefLabel "Representation"@en .
+
+<https://w3id.org/nen2660/term#Type> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AbstractConcept> ;
+    skos:definition "A meta-concept which instances are concepts (not individuals)"@en ;
+    skos:prefLabel "Type"@en .
+
+time:TemporalEntity rdfs:seeAlso <https://w3id.org/nen2660/term#TemporalEntity> ;
+    rdfs:subClassOf ns1:Representation ;
+    skos:definition "A temporal interval or instant"@en ;
+    skos:prefLabel "Temporal entity"@en .
+
+<https://w3id.org/nen2660/term#ConcreteConcept> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#TopConcept> ;
+    skos:definition "Concept that forms a manifestation and a demarcation in a concrete space-time. A concrete concept has a life cycle"@en ;
+    skos:prefLabel "Concrete concept"@en .
+
+<https://w3id.org/nen2660/term#Objectification> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#AbstractConcept> ;
+    skos:definition "An attribute (quality or quantity) or relation represented as an individual defined by a concept"@en ;
+    skos:prefLabel "Objectification"@en .
+
+<https://w3id.org/nen2660/term#TopConcept> a skos:Concept ;
+    skos:definition "The most generic concept"@en ;
+    skos:prefLabel "Top concept"@en .
+
+<https://w3id.org/nen2660/term#hasPart> a skos:Concept ;
+    skos:definition "A decomposition (hasPart) relation between concrete concepts"@en ;
+    skos:prefLabel "has part"@en .
+
+<https://w3id.org/nen2660/term#AggregationStateType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#EnumerationType> ;
+    skos:definition "One of the four fundamental states of matter being a solid, liquid, gas or plasma"@en ;
+    skos:prefLabel "Aggregation state type"@en .
+
+<https://w3id.org/nen2660/term#TransferType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#EnumerationType> ;
+    skos:definition "The type of thing being transferred, here: material, information, energy or force"@en ;
+    skos:prefLabel "Transfer type"@en .
+
+<https://w3id.org/nen2660/term#EnumerationType> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Type> ;
+    skos:definition "A meta-concept having concepts as instances having no further attributes or relations (annotations only)"@en ;
+    skos:prefLabel "Enumeration type"@en .
+
+<https://w3id.org/nen2660/term#PhysicalObject> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#Object> ;
+    skos:definition "Object that exists or may exist within physical 4D space-time. A physical object forms a manifestation and a demarcation of matter and/or energy, and is (in)directly perceptible by the senses"@en ;
+    skos:prefLabel "Physical object"@en .
+
+<https://w3id.org/nen2660/term#Entity> a skos:Concept ;
+    skos:broader <https://w3id.org/nen2660/term#ConcreteConcept> ;
+    skos:definition "Concept that forms a manifestation and a demarcation in a concrete space-time, and which has a certain state at any moment in time. An entity has a unique identity that remains constant throughout its life cycle. The life cycle of an entity is made up of the sequence of states of that entity, which follow each other in time. An entity is an object or an activity. An object exists, an activity takes place"@en ;
+    skos:prefLabel "Entity"@en .
+
+ns1:hasPart a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:ConcreteConcept ;
+    rdfs:range ns1:ConcreteConcept ;
+    rdfs:seeAlso <https://w3id.org/nen2660/term#hasPart> ;
+    skos:definition "A decomposition (hasPart) relation between concrete concepts"@en ;
+    skos:prefLabel "has part"@en .
+

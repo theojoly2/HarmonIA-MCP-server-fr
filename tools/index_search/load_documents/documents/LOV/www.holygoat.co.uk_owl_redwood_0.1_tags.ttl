@@ -1,0 +1,118 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://www.holygoat.co.uk/owl/redwood/0.1/tags/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "An ontology for tags."@en ;
+    dc:contributor "Danny Ayers",
+        "Seth Russell" ;
+    dc:creator "Richard Newman" ;
+    dc:description "An ontology that describes tags, as used in the popular del.icio.us and Flickr systems, and allows for relationships between tags to be described."@en ;
+    dc:title "Tag ontology"@en ;
+    dcterms:issued "2005-03-23" ;
+    dcterms:modified "2005-05-19",
+        "2005-11-27",
+        "2005-12-21" ;
+    foaf:maker <http://www.holygoat.co.uk/foaf.rdf#RichardNewman> .
+
+onto:RestrictedTagging a owl:Class ;
+    rdfs:label "restricted tagging"@en ;
+    rdfs:comment "A Tagging which has precisely one associated resource, and one associated tag."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:associatedTag ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:taggedResource ],
+        onto:Tagging .
+
+onto:equivalentTag a owl:ObjectProperty ;
+    rdfs:label "equivalent tag"@en ;
+    rdfs:comment "The two tags are asserted to be equivalent --- that is, that whenever one is associated with a resource, the other tag can be logically inferred to also be associated. Be very careful with this. I'm not sure if this should be a subproperty of owl:sameAs."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf owl:sameAs ;
+    ns1:term_status "testing" .
+
+onto:isTagOf a owl:ObjectProperty ;
+    rdfs:label "is tag of"@en ;
+    rdfs:comment "Indicates that the subject tag applies to the object resource. This does not assert by who, when, or why the tagging occurred. For that information, use a reified Tagging resource."@en ;
+    rdfs:domain onto:Tag ;
+    owl:inverseOf onto:taggedWithTag .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "tag name"@en ;
+    rdfs:comment "The name of a tag. Note that we can't relate this to skos:prefLabel because we cannot guarantee that tags have unique labels in a given conceptual scheme. Or can we?"@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:subPropertyOf dc:title,
+        rdfs:label .
+
+onto:relatedTag a owl:ObjectProperty ;
+    rdfs:label "related tag"@en ;
+    rdfs:comment "The two tags are asserted as being related. This might be symmetric, but it certainly isn't transitive."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf skos:semanticRelation ;
+    ns1:term_status "testing" .
+
+onto:tag a owl:ObjectProperty ;
+    rdfs:label "tag"@en ;
+    rdfs:comment "The relationship between a resource and a Tagging. Note, of course, that this allows us to tag tags and taggings themselves..."@en ;
+    rdfs:range onto:Tagging .
+
+onto:tagName a owl:DatatypeProperty ;
+    rdfs:label "tag name"@en ;
+    rdfs:comment "The name of a tag. Note that we can't relate this to skos:prefLabel because we cannot guarantee that tags have unique labels in a given conceptual scheme. Or can we? DEPRECATED 2005-05-19: redundant 'tag'."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:subPropertyOf dc:title,
+        rdfs:label .
+
+onto:taggedBy a owl:ObjectProperty ;
+    rdfs:label "tagged by"@en ;
+    rdfs:comment "The object plays the role of the tagger in the subject Tagging."@en ;
+    rdfs:domain onto:Tagging ;
+    rdfs:range foaf:Agent ;
+    ns1:term_status "testing" .
+
+onto:taggedOn a owl:DatatypeProperty ;
+    rdfs:label "tagged on"@en ;
+    rdfs:comment "The subject Tagging occurred at the subject time and date."@en ;
+    rdfs:domain onto:Tagging ;
+    rdfs:subPropertyOf dc:date ;
+    ns1:term_status "testing" .
+
+onto:associatedTag a owl:ObjectProperty ;
+    rdfs:label "associated tag" ;
+    rdfs:comment "The object is a Tag which plays a role in the subject Tagging."@en ;
+    rdfs:domain onto:Tagging ;
+    rdfs:range onto:Tag ;
+    ns1:term_status "testing" .
+
+onto:taggedResource a owl:ObjectProperty ;
+    rdfs:label "tagged resource"@en ;
+    rdfs:comment "The object is a resource which plays a role in the subject Tagging."@en ;
+    rdfs:domain onto:Tagging ;
+    ns1:term_status "testing" .
+
+onto:taggedWithTag a owl:ObjectProperty ;
+    rdfs:label "tagged with tag"@en ;
+    rdfs:comment "Indicates that the subject has been tagged with the object tag. This does not assert by who, when, or why the tagging occurred. For that information, use a reified Tagging resource."@en ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf skos:subject .
+
+onto:Tagging a owl:Class ;
+    rdfs:label "tagging"@en ;
+    rdfs:comment "A reified class which defines an instance of a tagging by an agent of a resource with one or more tags."@en ;
+    ns1:term_status "testing" .
+
+onto:Tag a owl:Class ;
+    rdfs:label "Tag"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "A natural-language concept which is used to annotate another resource."@en .
+

@@ -1,0 +1,219 @@
+@prefix ns1: <http://www.tele.pw.edu.pl/~sims-onto/ConnectivityType.owl#> .
+@prefix onto: <http://www.tele.pw.edu.pl/~sims-onto/ConnectivityType.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Connectivity types"^^xsd:string ;
+    rdfs:comment "Defines types of connectivity used in communication and bearer services accessible in certain connectivity."^^xsd:string ;
+    owl:imports <http://www.tele.pw.edu.pl/~sims-onto/ParticipantCharacteristic.owl> ;
+    owl:priorVersion "Version 1.0 (2006-10-24), first phase"^^xsd:string ;
+    owl:versionInfo "1.4"^^xsd:string .
+
+ns1:BluetoothConnectivity a ns1:ShortRangeConnectivityType ;
+    rdfs:comment "Defines Bluetooth connectivity."^^xsd:string .
+
+ns1:GSMConnectivity a ns1:CellularConnectivityType ;
+    ns1:hasNetworkBearerService ns1:GSM_CSD_IPv4,
+        ns1:GSM_CSD_MSISDN,
+        ns1:GSM_GPRS_IPV4,
+        ns1:GSM_SMS_MSISDN ;
+    rdfs:comment "Defines GSM connectivity."^^xsd:string .
+
+ns1:GSM_EDGE_IPv4 a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:EDGE ;
+    ns1:referesToAddress ns1:IPv4 ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines EDGE bearer service in GSM network with IPv4 address protocol."^^xsd:string .
+
+ns1:GSM_HSCSD_IPv4 a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:HSCSD ;
+    ns1:referesToAddress ns1:IPv4 ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines HSCSD bearer service in GSM network with IP v4 address protocol."^^xsd:string .
+
+ns1:GSM_USSD a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:USSD ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "USSD is a technology built into the GSM standard for support of transmitting information over the signaling channels of the GSM network. USSD provides session-based communication. Defined within the GSM standard in the documents GSM 02.90 (USSD Stage 1) and GSM 03.90 (USSD Stage 2)."^^xsd:string .
+
+ns1:IPv6 a ns1:BearerAddressType ;
+    rdfs:comment "IP address (Internet Protocol address) is a unique address that certain electronic devices use in order to identify and communicate with each other on a computer network utilizing the Internet Protocol standard (IP). IPv6 uses 128-bit addresses."^^xsd:string .
+
+ns1:IS-95 a ns1:Network ;
+    rdfs:comment "Interim Standard 95 (IS-95), is the first CDMA-based digital cellular standard pioneered by Qualcomm. CDMA or \"code division multiple access\" is a digital radio system that transmits streams of bits (PN Sequences)."^^xsd:string .
+
+ns1:IrDAConnectivity a ns1:ShortRangeConnectivityType ;
+    rdfs:comment "Defines IrDA connectivity."^^xsd:string .
+
+ns1:UMTS a ns1:Network ;
+    rdfs:comment "Universal Mobile Telecommunications System (UMTS) is one of the third-generation (3G) cell phone technologies."^^xsd:string .
+
+ns1:UMTSConnectivity a ns1:CellularConnectivityType ;
+    ns1:hasNetworkBearerService ns1:UMTS_Video_IPv6 ;
+    rdfs:comment "Defines UMTS connectivity"^^xsd:string .
+
+ns1:UMTS_VideoBearer a ns1:BearerType ;
+    rdfs:comment "Defines bearer capable to tansfer video data in UMTS networks."^^xsd:string .
+
+ns1:WLAN_IPv4 a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:WLANBearer ;
+    ns1:referesToAddress ns1:IPv4 ;
+    ns1:referesToNetwork ns1:WLAN ;
+    rdfs:comment "Defines bearer service in WLAN networks with IPv4 address protocol."^^xsd:string .
+
+ns1:WiFiConnectivity a ns1:ShortRangeConnectivityType ;
+    rdfs:comment "Defines wi-fi connectivity."^^xsd:string .
+
+ns1:WiMAXConnectivity a ns1:LongRangeConnectivityType ;
+    rdfs:comment "Defines WiMax connectivity."^^xsd:string .
+
+ns1:WirelineConnectivityType a owl:Class ;
+    rdfs:comment "Fixed, wireline connectivity type (e.g., PSTN)"^^xsd:string ;
+    rdfs:subClassOf <http://www.tele.pw.edu.pl/~sims-onto/TelecomEntity.owl#ConnectivityType> .
+
+ns1:hasBearerType a owl:ObjectProperty ;
+    rdfs:comment "Defines transmission technology."^^xsd:string ;
+    rdfs:domain ns1:NetworkBearerService ;
+    rdfs:range ns1:BearerType .
+
+ns1:referesToAddress a owl:ObjectProperty ;
+    rdfs:comment "Defines network address type used by network bearer type."^^xsd:string ;
+    rdfs:domain ns1:NetworkBearerService ;
+    rdfs:range ns1:BearerAddressType .
+
+ns1:referesToNetwork a owl:ObjectProperty ;
+    rdfs:comment "Defines network which supports bearer."^^xsd:string ;
+    rdfs:domain ns1:NetworkBearerService ;
+    rdfs:range ns1:Network .
+
+ns1:EDGE a ns1:BearerType ;
+    rdfs:comment "Defnes Enhanced Data rates for GSM Evolution technology which allows to increase data transmission rate."^^xsd:string .
+
+ns1:GPRS a ns1:BearerType ;
+    rdfs:comment "General Packet Radio Service (GPRS) is a Mobile Data Service available to users of Global System for Mobile Communications (GSM) and IS-136 mobile phones."^^xsd:string .
+
+ns1:GSM_CSD_IPv4 a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:CSD ;
+    ns1:referesToAddress ns1:IPv4 ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines bearer service in GSM network which use IPv4 address type and CSD bearer. Type of data transfer bearer in GSM network."^^xsd:string .
+
+ns1:GSM_CSD_MSISDN a ns1:VoiceBearerService ;
+    ns1:hasBearerType ns1:CSD ;
+    ns1:referesToAddress ns1:GSM_MSISDN ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines bearer service in GSM network which use MSISDN address type and CSD bearer. Type of voice transfer bearer in GSM network."^^xsd:string .
+
+ns1:GSM_GPRS_IPV4 a ns1:DataBearerService ;
+    ns1:hasBearerType ns1:GPRS ;
+    ns1:referesToAddress ns1:IPv4 ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines GPRS bearer service in GSM network using IPv4 address type. Type of data transfer bearer in GSM network."^^xsd:string .
+
+ns1:GSM_SMS_MSISDN a ns1:TextBearerService ;
+    ns1:hasBearerType ns1:SMS_BearerType ;
+    ns1:referesToAddress ns1:GSM_MSISDN ;
+    ns1:referesToNetwork ns1:GSM ;
+    rdfs:comment "Defines SMS bearer service in GSM network using GSM_MSISDN address type."^^xsd:string .
+
+ns1:HSCSD a ns1:BearerType ;
+    rdfs:comment "Defines High-Speed Circuit-Switched Data, data transmission mechanism in GSM Network, enhancement of CSD."^^xsd:string .
+
+ns1:SMS_BearerType a ns1:BearerType ;
+    rdfs:comment "Defines transmission technology used in GSM network to transmit SMS messages."^^xsd:string .
+
+ns1:TextBearerService a owl:Class ;
+    rdfs:comment "Defines bearer capable to transmit text. E.g. bearer responsible for SMS transfer."^^xsd:string ;
+    rdfs:subClassOf ns1:NetworkBearerService .
+
+ns1:UMTS_Video_IPv6 a ns1:VideoBearerService ;
+    rdfs:comment "Defines video bearer in UMTS network which use IPv6 address type. It is bearer capable to transfer video."^^xsd:string .
+
+ns1:USSD a ns1:BearerType ;
+    rdfs:comment "Defines bearer capable to transmit information over the signaling channels of the GSM network."^^xsd:string .
+
+ns1:VideoBearerService a owl:Class ;
+    rdfs:comment "Defines bearer capable to transmit video."^^xsd:string ;
+    rdfs:subClassOf ns1:VoiceBearerService .
+
+ns1:WLAN a ns1:Network ;
+    rdfs:comment "Defines wireless LAN network type."^^xsd:string .
+
+ns1:WLANBearer a ns1:BearerType ;
+    rdfs:comment "Defines bearer accessible in wireless LAN networks specified in 802.11 IEEE standars."^^xsd:string .
+
+ns1:CSD a ns1:BearerType ;
+    rdfs:comment "Circuit Switched Data (CSD) is the original form of data transmission developed for the time division multiple access (TDMA)-based mobile phone systems like Global System for Mobile Communications (GSM)."^^xsd:string .
+
+ns1:CellularConnectivityType a owl:Class ;
+    rdfs:comment "Cellular connectivity, e.g., GSM"^^xsd:string ;
+    rdfs:subClassOf ns1:LongRangeConnectivityType .
+
+ns1:GSM_MSISDN a ns1:BearerAddressType ;
+    rdfs:comment "MSISDN (Mobile Subscriber ISDN Number) refers to the telephone number of a mobile subscriber. MSISDN by ITU-T is at most 15 digits long and consists of: * CC - Country Code ( 1-3 digits e.g.\"48\" for Poland), * NDC - National Destination Code (e.g. 3 digits in Poland), * SN - Subscriber Number (e.g. 6 remaining digits (123456))."^^xsd:string .
+
+ns1:LongRangeConnectivityType a owl:Class ;
+    rdfs:comment "Long range wireless connectivity, such as WiMAX or GSM"^^xsd:string ;
+    rdfs:subClassOf ns1:WirelessConnectivityType .
+
+ns1:VoiceBearerService a owl:Class ;
+    rdfs:comment "Defines bearer capable to transmit voice."^^xsd:string ;
+    rdfs:subClassOf ns1:NetworkBearerService .
+
+ns1:WirelessConnectivityType a owl:Class ;
+    rdfs:comment "Wireless connectivity type (e.g., GSM connectivity)"^^xsd:string ;
+    rdfs:subClassOf <http://www.tele.pw.edu.pl/~sims-onto/TelecomEntity.owl#ConnectivityType> .
+
+ns1:ShortRangeConnectivityType a owl:Class ;
+    rdfs:comment "Short range wireless connectivity type (WiFi, Bluetooth)"^^xsd:string ;
+    rdfs:subClassOf ns1:WirelessConnectivityType .
+
+<http://www.tele.pw.edu.pl/~sims-onto/TelecomEntity.owl#ConnectivityType> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:NetworkBearerService ;
+            owl:onProperty ns1:hasNetworkBearerService ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasNetworkBearerService ;
+            owl:someValuesFrom ns1:NetworkBearerService ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasNetworkBearerService ;
+            owl:someValuesFrom ns1:NetworkBearerService ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:NetworkBearerService ;
+            owl:onProperty ns1:hasNetworkBearerService ] .
+
+ns1:BearerAddressType a owl:Class ;
+    rdfs:comment "Defines type of address supported in network and associated with bearer. Specific addresses are modelled as instances e.g. GSM_MSISDN describe type of address used in GSM network."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:hasNetworkBearerService a owl:ObjectProperty ;
+    rdfs:comment "Defines network bearers supported by connectivity type."^^xsd:string ;
+    rdfs:domain <http://www.tele.pw.edu.pl/~sims-onto/TelecomEntity.owl#ConnectivityType> ;
+    rdfs:range ns1:NetworkBearerService .
+
+owl:Thing a owl:Class .
+
+ns1:IPv4 a ns1:BearerAddressType ;
+    rdfs:comment "IP address (Internet Protocol address) is a unique address that certain electronic devices use in order to identify and communicate with each other on a computer network utilizing the Internet Protocol standard (IP). IPv4 uses 32-bit (4 byte) addresses."^^xsd:string .
+
+ns1:Network a owl:Class ;
+    rdfs:comment "Defines general term for telecommunication network."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:DataBearerService a owl:Class ;
+    rdfs:comment "Defines bearer capable to transmit data."^^xsd:string ;
+    rdfs:subClassOf ns1:NetworkBearerService .
+
+ns1:GSM a ns1:Network ;
+    rdfs:comment "The Global System for Mobile communications is the most popular standard for mobile phones in the world. GSM is a cellular network, which means that mobile phones connect to it by searching for cells in the immediate vicinity."^^xsd:string .
+
+ns1:BearerType a owl:Class ;
+    rdfs:comment "Defines transmission technology used to transfer voice or data in network."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+ns1:NetworkBearerService a owl:Class ;
+    rdfs:comment "Defines network bearer service that allows transmission of information signals between network interfaces. E.g. transmission of MMS in GSM network is modelled as instance 'GSM_GPRS_IPV4'. Bearer capabilities are modeled as sublasses."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+

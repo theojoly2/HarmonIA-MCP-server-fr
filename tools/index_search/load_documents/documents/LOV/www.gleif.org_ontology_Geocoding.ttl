@@ -1,0 +1,226 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://www.gleif.org/ontology/Base/> .
+@prefix onto: <https://www.gleif.org/ontology/Geocoding/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:hasGeocodedAddress a owl:ObjectProperty ;
+    rdfs:label "has geocoded address" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GeocodedAddress ;
+    rdfs:subPropertyOf ns1:hasAddress ;
+    skos:definition "A geocoded address for the legal entity." .
+
+onto:matchLevel a owl:AnnotationProperty ;
+    rdfs:label "match level" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:DatatypeProperty ;
+    skos:definition "The most detailed address field that the geocoding was able to provide." .
+
+onto:bottomRight a owl:ObjectProperty ;
+    rdfs:label "bottom right" ;
+    rdfs:domain onto:BoundingBox ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ;
+    skos:definition "The bottom right point of a bounding box." .
+
+onto:formattedAddressText a owl:DatatypeProperty ;
+    rdfs:label "formatted address text" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "An aggregated textual representation of the the fields produced by the geocoding as a comma-separated list of fields." .
+
+onto:hasBoundingBox a owl:ObjectProperty ;
+    rdfs:label "has bounding box" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:BoundingBox ;
+    skos:definition "The geographic area represented by the address." .
+
+onto:hasDistrict a owl:DatatypeProperty ;
+    rdfs:label "has district" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A textual representation of the district." .
+
+onto:hasRegionText a owl:DatatypeProperty ;
+    rdfs:label "has region text" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    skos:altLabel "has state text" ;
+    skos:definition "A textual representation of the state or region." ;
+    skos:prefLabel "has region text" .
+
+onto:hasStreet a owl:DatatypeProperty ;
+    rdfs:label "has street" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "The name of a street, as opposed to a house within it." .
+
+onto:locationId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "location ID" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf ns1:hasTag ;
+    skos:definition "A unique identifier representing a hash of the location." .
+
+onto:matchDate a owl:DatatypeProperty ;
+    rdfs:label "has end"@en ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "The date of the geocoding from the original address." .
+
+onto:matchType a owl:ObjectProperty ;
+    rdfs:label "match type" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MatchType ;
+    skos:definition "Quality of the location match, either pointAddress or interpolated." .
+
+onto:originalAddress a owl:ObjectProperty ;
+    rdfs:label "original address" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:PhysicalAddress ;
+    skos:definition "The original address(es) from which the geocoding was derived." .
+
+onto:originalAddressText a owl:DatatypeProperty ;
+    rdfs:label "original address text" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "An aggregated textual representation of the original address(es) from which the geocoding was derived, as a comma-separated list of fields with null where the field did not have a value." .
+
+onto:relevance a owl:DatatypeProperty ;
+    rdfs:label "bottom right" ;
+    rdfs:domain onto:GeocodedAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    skos:definition "A value from 0 to 1 representing the percentage of the input that matched the returned address. 1 means that all input tokens were matched." .
+
+onto:topLeft a owl:ObjectProperty ;
+    rdfs:label "top left" ;
+    rdfs:domain onto:BoundingBox ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ;
+    skos:definition "The top left point of a bounding box." .
+
+onto:MatchTypeInterpolated a onto:MatchType ;
+    rdfs:label "match type interpolated" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "The location was interpolated from known locations of adjacent addresses." ;
+    ns1:hasTag "interpolated" .
+
+onto:MatchTypePointAddress a onto:MatchType ;
+    rdfs:label "match type point address" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "The location matches the specific address." ;
+    ns1:hasTag "pointAddress" .
+
+onto:BoundingBox a owl:Class ;
+    rdfs:label "bounding box" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ;
+            owl:onProperty onto:bottomRight ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> ;
+            owl:onProperty onto:topLeft ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    skos:definition "A geographic rectangular area bounded by its top left and bottom right points." .
+
+onto:MatchType a owl:Class ;
+    rdfs:label "match type" ;
+    rdfs:isDefinedBy onto: ;
+    owl:oneOf ( onto:MatchTypePointAddress onto:MatchTypeInterpolated ) ;
+    skos:definition "Quality of the location match, either pointAddress or interpolated." .
+
+onto:GeocodedAddress a owl:Class ;
+    rdfs:label "geocoded address"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:MatchType ;
+            owl:onProperty onto:matchType ;
+            owl:qualifiedCardinality "1" ],
+        [ a owl:Restriction ;
+            owl:cardinality "1" ;
+            owl:onProperty onto:locationId ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty onto:formattedAddressText ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty onto:hasDistrict ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty onto:hasRegionText ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty onto:relevance ;
+            owl:qualifiedCardinality "1" ],
+        [ a owl:Restriction ;
+            owl:onClass <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/Country> ;
+            owl:onProperty ns1:hasCountry ;
+            owl:qualifiedCardinality "1" ],
+        [ a owl:Restriction ;
+            owl:onClass onto:BoundingBox ;
+            owl:onProperty onto:hasBoundingBox ;
+            owl:qualifiedCardinality "1" ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty onto:hasStreet ],
+        [ a owl:Restriction ;
+            owl:cardinality "1" ;
+            owl:onProperty ns1:hasCity ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "0" ;
+            owl:onClass ns1:PhysicalAddress ;
+            owl:onProperty onto:originalAddress ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty ns1:hasPostalCode ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty onto:matchDate ;
+            owl:qualifiedCardinality "1" ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1" ;
+            owl:onProperty ns1:hasAddressNumber ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0" ;
+            owl:onProperty onto:originalAddressText ],
+        ns1:PhysicalAddress ;
+    skos:definition "A geocoded address, derived from a physical address, with latitude and longitude information." .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "GLEIF Geocoding Ontology" ;
+    dcterms:abstract "Ontology defining concepts for Geocoding of addresses. It is based on the geocoding  used in the Global Legal Entity Identifier Foundation (GLEIF) Golden Copy Data, but is more broadly applicable." ;
+    dcterms:contributor <http://purl.org/bryon>,
+        <http://www.workingontologist.com>,
+        <https://www.linkedin.com/in/peterivett/> ;
+    dcterms:creator ns1:GLEIF ;
+    dcterms:issued "2019-02-01T00:00:00+00:00"^^xsd:dateTime ;
+    dcterms:license "https://www.gleif.org/en/meta/lei-data-terms-of-use/"^^xsd:anyURI ;
+    dcterms:rights "Copyright (c) 2019 Global Legal Entity Identifier Foundation (GLEIF)" ;
+    dcterms:rightsHolder ns1:GLEIF ;
+    dcterms:source "https://developer.here.com/documentation/geocoder/topics/reading-geocoding-response.html"^^xsd:anyURI,
+        "https://www.gleif.org/en/lei-data/gleif-golden-copy"^^xsd:anyURI ;
+    dcterms:title "Global Legal Entity Identifier Foundation Geocoding Ontology"@en ;
+    vann:preferredNamespacePrefix "gleif-geo" ;
+    vann:preferredNamespaceUri "https://www.gleif.org/ontology/Geocoding/" ;
+    owl:imports ns1:,
+        <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/> ;
+    owl:versionIRI <https://www.gleif.org/ontology/Geocoding-v1.0/Geocoding/> .
+
+[] a owl:AllDifferent ;
+    owl:members ( onto:MatchTypePointAddress onto:MatchTypeInterpolated ) .
+

@@ -1,0 +1,254 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://code-research.eu/ontology/visual-analytics#> .
+@prefix onto: <http://code-research.eu/ontology/visual-analytics> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:Axis a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Axis"@en ;
+    rdfs:comment "Is a line segment that is part of a chart in which the position along the line corresponds to a numeric or categorical value. "@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:VisualChannel ;
+    owl:equivalentClass <http://semanticscience.org/ontology/sio.owlSIO_000450> .
+
+ns1:Chart a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Chart"@en ;
+    ns1:hasChartName ns1:ChartName ;
+    ns1:hasVisualChannel ns1:VisualChannel ;
+    ns1:supportedDimension ns1:SupportedDimension ;
+    rdfs:comment "Is the graphical representation of numerical or qualitative data."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://semanticscience.org/ontology/sio.owlSIO_000904> .
+
+ns1:ChartName a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Chart Name"@en ;
+    rdfs:comment "Represents the name of a chart."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Chart .
+
+ns1:Color a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Color"@en ;
+    rdfs:comment "Represents a visual dimension of a chart."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:VisualChannel .
+
+ns1:ComponentMapping a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Component mapping"@en ;
+    ns1:hasComponentMapping ns1:ComponentMapping ;
+    ns1:representsChart ns1:MappedChartName ;
+    rdfs:comment "Represents a mapping for a particular chart."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Dashboard a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Dashboard"@en ;
+    rdfs:comment "Represents a collection of one or more charts that visualize the same Data Cube."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:DataType a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Data type"@en ;
+    rdfs:comment "Data type identifies a type of data represented in chart’s visual channel."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Mandatory a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Mandatory Persistence "@en ;
+    rdfs:comment "Denotes that a visual channel must be specified."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Persistence .
+
+ns1:Mapping a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Mapping"@en ;
+    ns1:hasComponentMapping ns1:ComponentMapping ;
+    rdfs:comment "This class contains all mappings created for an RDF Data Cube."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Multiplicity a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Occurence multiplicity"@en ;
+    rdfs:comment "Denotes that a visual channel can set at multiple times."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Occurrence .
+
+ns1:Occurrence a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Occurrence"@en ;
+    rdfs:comment "Occurrence denotes whether a visual channel can be set only one times or multiple times."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:One a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Occurence one"@en ;
+    rdfs:comment "Denotes that a visual channel can only set at one times."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Occurrence .
+
+ns1:Optional a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Optional Persistence"@en ;
+    rdfs:comment "Denotes that a visual channel must be specified."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Persistence .
+
+ns1:Persistence a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Persistence"@en ;
+    rdfs:comment "Persistence denotes whether a visual channel is permanently present in the chart and must be specified or it might be defined if needed."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Size a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Size"@en ;
+    rdfs:comment "Represents a visual dimension of a chart."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:VisualChannel .
+
+ns1:SupportedDimension a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Supported dimension"@en ;
+    rdfs:comment "Denotes how many dimensions can be visualize by a chart."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Chart .
+
+ns1:Symbol a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Symbol"@en ;
+    rdfs:comment "Represents a visual dimension of a chart."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:VisualChannel .
+
+ns1:VisualChannel a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Visual channel"@en ;
+    ns1:hasDataType ns1:DataType ;
+    ns1:hasOccurrence ns1:Occurence ;
+    ns1:hasPersistence ns1:Persistence ;
+    rdfs:comment "Represents a visual dimension of a chart."@en ;
+    rdfs:isDefinedBy onto: .
+
+ns1:cubeDimensionNominal a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Nominal cube dimension" ;
+    rdfs:comment "This class can be used as a fallback for nominal dimensions. It should be avoided in favor of more specific dimension properties." ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: .
+
+ns1:hasComponentMapping a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has components mapping"@en ;
+    rdfs:comment "Displays a particular mapping of a RDF Data Cube."@en ;
+    rdfs:domain ns1:Mapping ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:ComponentMapping .
+
+owl:Restriction owl:maxCardinality 1 ;
+    owl:minCardinality 1 ;
+    owl:onProperty ns1:getMapping,
+        ns1:hasChartName,
+        ns1:hasComponentsMapping,
+        ns1:hasDataType,
+        ns1:hasOccurrence,
+        ns1:hasPersistence,
+        ns1:hasVisualChannel,
+        ns1:representsCubeProperty,
+        ns1:unit,
+        ns1:visualizes .
+
+ns1:getMapping a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Get Mapping"@en ;
+    rdfs:comment "Displays the mappings for a RDF Data Cube."@en ;
+    rdfs:domain ns1:RDFDataCube ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Mappig .
+
+ns1:hasChartName a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has chart label"@en ;
+    rdfs:comment "Represents which name a chart has."@en ;
+    rdfs:domain ns1:Chart ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:ChartName .
+
+ns1:hasDataType a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has data type"@en ;
+    rdfs:comment "Defines which data type a visual channel has."@en ;
+    rdfs:domain ns1:VisualChannel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:DataType .
+
+ns1:hasOccurrence a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has occurrrence"@en ;
+    rdfs:comment "Denotes whether a visual channel can be set only at one times or multiple times."@en ;
+    rdfs:domain ns1:VisualChannel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Occurence .
+
+ns1:hasPersistence a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has persistence"@en ;
+    rdfs:comment "Denotes which visual channel of a chart must be specified or might be defined if needed."@en ;
+    rdfs:domain ns1:VisualChannel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Persistence .
+
+ns1:hasVisualChannel a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Has visual channel"@en ;
+    rdfs:comment "Represents which visual channel a chart has."@en ;
+    rdfs:domain ns1:Chart ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:VisualChannel .
+
+ns1:representsCubeProperty a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Represents chart"@en ;
+    rdfs:comment "Represents the component (dimension,measure) of a RDF Data Cube, which has been mapped."@en ;
+    rdfs:domain ns1:Mapping ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range qb:DimensionProperty,
+        qb:MeasureProperty .
+
+ns1:unit a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "Defines the unit measure of a visual channel."@en ;
+    rdfs:domain ns1:VisualChannel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+ns1:visualizes a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "visualizes"@en ;
+    rdfs:comment "Links a Visual Analytics Dashboard with a Data Cube or Data Slice"@en ;
+    rdfs:domain ns1:Dashboard ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range qb:DataSet,
+        qb:Slice .
+
+onto: a owl:Ontology ;
+    rdfs:label "The Visual Analytics Vocabulary" ;
+    dc:contributor "Michael Granitzer" ;
+    dc:creator "Belgin Mutlu, Patrick Hoefler" ;
+    dcterms:created "2012-10-31"^^xsd:date ;
+    dcterms:modified "2014-03-24"^^xsd:date ;
+    vann:preferredNamespacePrefix "va" ;
+    vann:preferredNamespaceUri "http://code-research.eu/ontology/visual-analytics#" ;
+    rdfs:comment "This vocabulary allows the semantic description of visual analytics applications. It is based on the RDF Data Cube Vocabulary and the Semanticscience Integrated Ontology." ;
+    owl:versionInfo "0.1.20121122" .
+

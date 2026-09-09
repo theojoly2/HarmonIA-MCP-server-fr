@@ -1,0 +1,307 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://w3id.org/con-tax#> .
+@prefix ns2: <http://www.w3.org/2006/vcard/ns#> .
+@prefix ns3: <http://schema.org/> .
+@prefix ns4: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/con-tax> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns3:Product a rdfs:Class .
+
+<http://pi.pauwel.be/voc/buildingelement#BuildingElement> a owl:Class ;
+    rdfs:isDefinedBy <http://pi.pauwel.be/voc/buildingelement> ;
+    rdfs:subClassOf ns1:ConstructionComponent .
+
+<http://pi.pauwel.be/voc/buildingelement#ElementComponent> a owl:Class ;
+    rdfs:isDefinedBy <http://pi.pauwel.be/voc/buildingelement> ;
+    rdfs:subClassOf ns1:ConstructionSubComponent .
+
+<http://pi.pauwel.be/voc/buildingelement#TransportElement> a owl:Class ;
+    rdfs:isDefinedBy <http://pi.pauwel.be/voc/buildingelement> ;
+    rdfs:subClassOf ns1:ConstructionComponent .
+
+<http://pi.pauwel.be/voc/distributionelement#DistributionElement> a owl:Class ;
+    rdfs:isDefinedBy <http://pi.pauwel.be/voc/distributionelement> ;
+    rdfs:subClassOf ns1:ConstructionComponent .
+
+<http://pi.pauwel.be/voc/furniture#Furniture> a owl:Class ;
+    rdfs:isDefinedBy <http://pi.pauwel.be/voc/furniture> ;
+    rdfs:subClassOf ns1:ConstructionComponent .
+
+<http://purl.org/vocommons/voaf#generalizes> a owl:ObjectProperty .
+
+ns3:domainIncludes a rdf:Property .
+
+ns3:rangeIncludes a rdf:Property .
+
+dcat:distribution a owl:ObjectProperty .
+
+dcat:downloadURL a owl:ObjectProperty .
+
+<https://w3id.org/bot#Building> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/zones/aat-buildings>,
+        <https://w3id.org/con-tax/zones/et-buildings> .
+
+<https://w3id.org/bot#Element> a owl:Class .
+
+<https://w3id.org/bot#Site> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/zones/aat-buildingSites> .
+
+<https://w3id.org/bot#Space> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/zones/aat-spaces> .
+
+<https://w3id.org/bot#Storey> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/zones/aat-storeys> .
+
+<https://w3id.org/bot#Zone> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/bot#> .
+
+ns1:Material a owl:Class ;
+    rdfs:label "building material"@en ;
+    rdfs:comment "A material of which a construction component is made. It excludes subcomponents of larger construction components, e.g. a brick in a wall (see contax:ConstructionSubComponent)."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/aat-materials> .
+
+ns1:containsConcept a owl:AnnotationProperty ;
+    rdfs:label "contains concept"@en ;
+    rdfs:comment "Property to connect a gvp:GuideTerm instance to a class that is part of the main taxonomy hierarchy. The guide term represents a grouping of terms to provide alternative means for finding classes (object of this property) besides the main taxonomy hierarchy."@en ;
+    rdfs:domain <http://vocab.getty.edu/ontology#GuideTerm> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Class .
+
+ns1:containsGuideTerm a owl:AnnotationProperty ;
+    rdfs:label "contains guide term "@en ;
+    rdfs:comment "Property to connect a class that is based on a concept from the Getty AAT to a gvp:GuideTerm, i.e. an individual node that represents a grouping of terms to provide alternative means for finding classes besides the main taxonomy hierarchy. The guide term specializes a more general class from the taxonomy."@en ;
+    rdfs:domain owl:Class ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://vocab.getty.edu/ontology#GuideTerm> .
+
+ns1:domainOrSubjectIncludes a owl:AnnotationProperty ;
+    rdfs:label "domain or subject includes"@en ;
+    rdfs:comment "An annotation property to connect a property definition to a class that is either in the domain of this property (instance property) or is a potential subject (or superclass of a potential subject) of this property (type property)."@en ;
+    rdfs:domain rdf:Property ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Class .
+
+ns1:hasProperty a owl:ObjectProperty ;
+    rdfs:label "has property"@en ;
+    rdfs:comment "A relation to connect an object to the first intermediate node of a level 2 or 3 property when using approach 4 or 5 for assigning the property name."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/opm#Property> .
+
+ns1:hasPropertyContext a owl:ObjectProperty ;
+    rdfs:label "has property context (grouping)"@en ;
+    ns3:domainIncludes <https://w3id.org/opm#Property>,
+        <https://w3id.org/opm#PropertyState> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:PropertyContext .
+
+ns1:isDerivedFromProperty a owl:ObjectProperty ;
+    rdfs:label "is derived from property "@en ;
+    rdfs:domain <https://w3id.org/opm#Property> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/opm#Property> .
+
+ns1:isDerivedFromPropertyState a owl:ObjectProperty ;
+    rdfs:label "is derived from property state"@en ;
+    rdfs:domain <https://w3id.org/opm#PropertyState> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/opm#PropertyState> .
+
+ns1:isRootOfTaxonomy a owl:AnnotationProperty ;
+    rdfs:label "root of taxonomy"@en ;
+    ns3:domainIncludes owl:AnnotationProperty,
+        owl:Class,
+        owl:DatatypeProperty,
+        owl:ObjectProperty,
+        skos:Concept ;
+    rdfs:comment "Annotation property to store references to the known (external) taxonomies for root classes, properties or SKOS concepts defined or mentioned in ConTax. The URI of each taxonomy is the object of this property."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/vocommons/voaf#Vocabulary> .
+
+ns1:potentialInterventionType a owl:AnnotationProperty ;
+    rdfs:label "potential intervention type"@en ;
+    rdfs:comment "An annotation property used in taxonomies of damage types to connect a damage type class (subclass of dot:ClassifiedDamage) to a reparation task (subclass of cto:RepairTask)."@en ;
+    rdfs:domain owl:Class ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Class .
+
+ns1:potentialSubComponent a owl:AnnotationProperty ;
+    rdfs:label "potential sub component"@en ;
+    rdfs:comment "An annotation property used in taxonomies of construction components to connect a construction component type such as a stairs that can consists of smaller sub components such as railings and steps."@en ;
+    rdfs:domain owl:Class ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Class .
+
+ns1:propertyName a owl:ObjectProperty ;
+    rdfs:label "property name "@en ;
+    rdfs:comment "A relation to connect the first intermediate node of a level 2 or 3 property to its actual property name"@en ;
+    rdfs:domain <https://w3id.org/opm#Property> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+ns1:property_DP a owl:DatatypeProperty ;
+    rdfs:label "property (datatype) "@en ;
+    rdfs:comment "A root property for taxonomies of datatype properties. Subproperties should be defined from this base property to specify the type of property. Via this root property and its counterpart for object properties (contax:property_OP), it is possible to retrieve all properties of construction components, spatial zones, damages, etc. excluding the linking relations that form the construction topology, damage topology, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/properties/bhp> .
+
+ns1:property_OP a owl:ObjectProperty ;
+    rdfs:label "property (object) "@en ;
+    rdfs:comment "A root property for taxonomies of object properties. Subproperties should be defined from this base property to specify the type of property. Via this root property and its counterpart for datatype properties (contax:property_DP), it is possible to retrieve all properties of construction components, spatial zones, damages, etc. excluding the linking relations that form the construction topology, damage topology, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/properties/bhp>,
+        <https://w3id.org/con-tax/properties/cp> .
+
+ns1:rangeOrObjectIncludes a owl:AnnotationProperty ;
+    rdfs:label "range or object includes"@en ;
+    ns3:rangeIncludes owl:Class,
+        skos:Concept ;
+    rdfs:comment "An annotation property to connect a property definition to a class or datatype that is either in the range of this property (instance property) or is a potential object (or superclass of a potential object) of this property (type property). It can also refer to a skos:Concept node that represents a node in a SKOS taxonomy; this node and all its descendants (skos:narrower or inverse skos:broader) can be used as an object of the property (instance or type property). In the case of properties level 2 or 3, this property refers to the range or object for the generic schema:value property of the entire property pattern."@en ;
+    rdfs:domain rdf:Property ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/cto#InspectionTask> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/cto> .
+
+<https://w3id.org/cto#InstallmentTask> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/cto> .
+
+<https://w3id.org/cto#ModificationTask> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/cto> .
+
+<https://w3id.org/cto#RemovalTask> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/cto> .
+
+<https://w3id.org/cto#RepairTask> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/cto> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/con-tax/tasks/mwv> .
+
+<https://w3id.org/dot#ClassifiedDamage> a owl:Class ;
+    rdfs:isDefinedBy <https://w3id.org/dot#> ;
+    ns1:isRootOfTaxonomy [ a <http://purl.org/vocommons/voaf#Vocabulary> ;
+            dcat:distribution [ dcat:downloadURL <https://raw.githubusercontent.com/Alhakam/dot/master/Extension/cdo.ttl> ] ],
+        <https://mdcs.monumentenkennis.nl/damageatlas/ontology>,
+        <https://w3id.org/con-tax/damages/mwv> .
+
+<https://w3id.org/dot#Damage> a owl:Class .
+
+<https://w3id.org/omg#hasComplexGeometryDescription> a owl:ObjectProperty ;
+    rdfs:isDefinedBy <https://w3id.org/omg> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/fog> .
+
+<https://w3id.org/omg#hasReferencedGeometryId> a owl:DatatypeProperty ;
+    rdfs:isDefinedBy <https://w3id.org/omg> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/fog> .
+
+<https://w3id.org/omg#hasSimpleGeometryDescription> a owl:DatatypeProperty ;
+    rdfs:isDefinedBy <https://w3id.org/omg> ;
+    ns1:isRootOfTaxonomy <https://w3id.org/fog> .
+
+<https://mdcs.monumentenkennis.nl/damageatlas/ontology> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+ns1:ConstructionSubComponent a owl:Class ;
+    rdfs:label "construction sub component"@en ;
+    rdfs:comment "A construction component that forms, formed or has the potential to form a part of another construction component. It can be distinguished from other types of construction components since they are, in normal situations, no individual components. An example are the steps and railings as sub components of a stairs component. Use a more specific subclass from a dedicated taxonomy such as BEO based on IFC or AAT-ARCH based on the Getty AAT concepts related to constructions."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:ConstructionComponent .
+
+ns1:PropertyContext a owl:Class ;
+    rdfs:label "property context (grouping) "@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/con-tax/aat-materials> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/components/aat-arch> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/components/aat-furn> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/components/aat-mep> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/damages/mwv> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/properties/cp> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/tasks/mwv> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/zones/aat-buildingSites> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/zones/aat-buildings> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/zones/aat-spaces> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/zones/aat-storeys> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/con-tax/zones/et-buildings> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/dot#> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<http://pi.pauwel.be/voc/distributionelement> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<http://pi.pauwel.be/voc/furniture> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<http://vocab.getty.edu/ontology#GuideTerm> a owl:Class .
+
+<https://w3id.org/con-tax/properties/bhp> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+skos:Concept a owl:Class .
+
+<https://w3id.org/fog> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/omg> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/opm#PropertyState> a owl:Class .
+
+<http://pi.pauwel.be/voc/buildingelement> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/bot#> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+ns1:ConstructionComponent a owl:Class ;
+    rdfs:label "construction component"@en ;
+    rdfs:comment "An object that forms, formed or has the potential to form a part of a construction. Use a more specific subclass from a dedicated taxonomy such as BEO/FURN/MEP based on IFC or AAT-ARCH/AAT-FURN/AAT-MEP based on the Getty AAT concepts related to constructions."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:isRootOfTaxonomy <http://pi.pauwel.be/voc/buildingelement>,
+        <http://pi.pauwel.be/voc/distributionelement>,
+        <http://pi.pauwel.be/voc/furniture>,
+        <https://w3id.org/con-tax/components/aat-arch>,
+        <https://w3id.org/con-tax/components/aat-furn>,
+        <https://w3id.org/con-tax/components/aat-mep> .
+
+<https://w3id.org/cto> a <http://purl.org/vocommons/voaf#Vocabulary> .
+
+<https://w3id.org/opm#Property> a owl:Class .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns4:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator [ a ns2:Individual ;
+            ns2:family-name "Bonduel" ;
+            ns2:fn "Mathias Bonduel" ;
+            ns2:given-name "Mathias" ;
+            ns2:hasOrganizationName [ a ns2:Organization ;
+                    owl:sameAs <http://dbpedia.org/resource/Katholieke_Universiteit_Leuven> ;
+                    ns2:hasURL <https://www.kuleuven.be> ;
+                    ns2:organization-name "KU Leuven" ] ;
+            ns2:hasURL <https://orcid.org/0000-0002-3313-924X>,
+                <https://www.kuleuven.be/wieiswie/nl/person/00110827>,
+                <https://www.researchgate.net/profile/Mathias_Bonduel> ] ;
+    dcterms:description "An ontology containing additional terminology for structuring and annotating RDFS/OWL taxonomies for describing constructions (components, materials, spatial zones, damages, construction tasks and properties). It also functions as an index for known taxonomies starting from root classes and properties."@en ;
+    dcterms:issued "2020-11-29"^^xsd:date ;
+    dcterms:title "ConTax ontology"@en ;
+    vann:preferredNamespacePrefix "contax" ;
+    vann:preferredNamespaceUri "https://w3id.org/con-tax#" ;
+    rdfs:comment "- Version 0.0.1: initial version"@en ;
+    owl:versionInfo "0.0.1" .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+

@@ -1,0 +1,299 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://premon.fbk.eu/ontology/pb> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dcterms:creator "Francesco Corcoglioniti",
+        "Marco Rospocher <https://dkm.fbk.eu/rospocher>" ;
+    dcterms:description <http://premon.fbk.eu/images/pb.svg>,
+        "We define classes [pmopb:Roleset](http://premon.fbk.eu/ontology/pb#Roleset) and [pmopb:SemanticRole](http://premon.fbk.eu/ontology/pb#SemanticRole) as subclasses of [pmo:SemanticClass](http://premon.fbk.eu/ontology/core#SemanticClass) and [pmo:SemanticRole](http://premon.fbk.eu/ontology/core#SemanticRole), respectively.\\n\\nEach [pmopb:SemanticRole](http://premon.fbk.eu/ontology/pb#SemanticRole) instance is related (via property [pmopb:argument](http://premon.fbk.eu/ontology/pb#argument)) to exactly one [pmopb:Argument](http://premon.fbk.eu/ontology/pb#Argument), which is defined as the disjoint union of three subclasses: \\n\\n* [pmopb:NumberedArgument](http://premon.fbk.eu/ontology/pb#NumberedArgument), containing the individuals corresponding to numbered arguments (e.g., *Arg0*, *Arg1*); \\n* [pmopb:Modifier](http://premon.fbk.eu/ontology/pb#Modifier), containing the\\nindividuals corresponding to modifiers (e.g., *ArgM-LOC*, *ArgM-TMP*). While PB annotation guidelines define a single modifier (*ArgM*) with multiple function tags (e.g., *LOC*, *TMP*), we opt to specialize the modifier for each function tag, similarly to the way these arguments are actually annotated by state-of-the-art SRL tools; and, \\n* [pmopb:SecondaryAgent](http://premon.fbk.eu/ontology/pb#SecondaryAgent), containing the single individual annotating secondary agents (*ArgA*). \\n\\nProperty [pmopb:tag](http://premon.fbk.eu/ontology/pb#tag) enables associating possible tags, either a [pmopb:Modifier](http://premon.fbk.eu/ontology/pb#Modifier) or some additional tag defined in class [pmopb:Tag](http://premon.fbk.eu/ontology/pb#Tag), to [pmopb:SemanticRole](http://premon.fbk.eu/ontology/pb#SemanticRole)s, or [nif:Annotation](http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Annotation)s of semantic roles in examples.\\n\\nAdditional classes (and related properties) are defined to represent inflectional information about examples: [pmopb:Inflection](http://premon.fbk.eu/ontology/pb#Inflection), [pmopb:Person](http://premon.fbk.eu/ontology/pb#Person), [pmopb:Tense](http://premon.fbk.eu/ontology/pb#Tense), [pmopb:Aspect](http://premon.fbk.eu/ontology/pb#Aspect), [pmopb:Voice](http://premon.fbk.eu/ontology/pb#Voice), and [pmopb:Form](http://premon.fbk.eu/ontology/pb#Form)."@en ;
+    dcterms:issued "2015-10-28"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:modified "2017-05-01"^^xsd:date ;
+    dcterms:publisher "DKM, Fondazione Bruno Kessler <http://dkm.fbk.eu/>" ;
+    dcterms:rights "This ontology is licensed under CC-BY-SA <http://creativecommons.org/licenses/by-sa/4.0/>"@en ;
+    dcterms:title "Predicate Model for Ontologies (PreMOn) - PropBank ontology module"@en ;
+    vann:preferredNamespacePrefix "pmopb" ;
+    vann:preferredNamespaceUri "http://premon.fbk.eu/ontology/pb#" ;
+    rdfs:comment "The PropBank module of the PreMOn ontology extends the core module for representing concepts specific to PropBank. The modelling is based on the [PropBank guidelines] (http://clear.colorado.edu/compsem/documents/propbank_guidelines.pdf)."@en ;
+    rdfs:isDefinedBy onto:.ttl ;
+    owl:imports <http://premon.fbk.eu/ontology/core>,
+        <http://www.w3.org/ns/lemon/ontolex> ;
+    owl:versionInfo "2017a" .
+
+<http://premon.fbk.eu/ontology/pb#arga> a <http://premon.fbk.eu/ontology/pb#SecondaryAgent>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#aspect> a owl:ObjectProperty ;
+    rdfs:label "aspect"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#Inflection> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Aspect> .
+
+<http://premon.fbk.eu/ontology/pb#core> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "core"@en ;
+    rdfs:comment "Set to true if the semantic role explicitly occurs in a frame file"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/core#SemanticRole> ;
+    rdfs:range xsd:boolean .
+
+<http://premon.fbk.eu/ontology/pb#form> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "form"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#Inflection> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Form> .
+
+<http://premon.fbk.eu/ontology/pb#inflection> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "inflection"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/core#Example> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Inflection> .
+
+<http://premon.fbk.eu/ontology/pb#person> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "person"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#Inflection> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Person> .
+
+<http://premon.fbk.eu/ontology/pb#tag> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "tag"@en ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://premon.fbk.eu/ontology/pb#Modifier> <http://premon.fbk.eu/ontology/pb#Tag> <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#tag-pag> a <http://premon.fbk.eu/ontology/pb#Tag>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#tag-ppt> a <http://premon.fbk.eu/ontology/pb#Tag>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#tag-vsp> a <http://premon.fbk.eu/ontology/pb#Tag>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#tense> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "tense"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#Inflection> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Tense> .
+
+<http://premon.fbk.eu/ontology/pb#voice> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "voice"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#Inflection> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Voice> .
+
+<http://premon.fbk.eu/ontology/pb#Roleset> a owl:Class ;
+    rdfs:label "Roleset (PB)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/pb#SemanticRole> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#semRole> ],
+        <http://premon.fbk.eu/ontology/core#SemanticClass> .
+
+<http://premon.fbk.eu/ontology/pb#active> a <http://premon.fbk.eu/ontology/pb#Voice>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg0> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg1> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg2> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg3> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg4> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg5> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#arg6> a <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-adj> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-adv> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-cau> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-com> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-cxn> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-dir> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-dis> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-dsp> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-ext> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-gol> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-loc> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-lvb> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-mnr> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-mod> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-neg> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-pnc> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-prd> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-prn> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-prp> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-rcl> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-rec> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-slc> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-tmp> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argm-vsp> a <http://premon.fbk.eu/ontology/pb#Modifier>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#argument> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "argument"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/pb#SemanticRole> ;
+    rdfs:range <http://premon.fbk.eu/ontology/pb#Argument> .
+
+<http://premon.fbk.eu/ontology/pb#full> a <http://premon.fbk.eu/ontology/pb#Form>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#future> a <http://premon.fbk.eu/ontology/pb#Tense>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#gerund> a <http://premon.fbk.eu/ontology/pb#Form>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#infinitive> a <http://premon.fbk.eu/ontology/pb#Form>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#other> a <http://premon.fbk.eu/ontology/pb#Person>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#participle> a <http://premon.fbk.eu/ontology/pb#Form>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#passive> a <http://premon.fbk.eu/ontology/pb#Voice>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#past> a <http://premon.fbk.eu/ontology/pb#Tense>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#perfect> a <http://premon.fbk.eu/ontology/pb#Aspect>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#present> a <http://premon.fbk.eu/ontology/pb#Tense>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#progressive> a <http://premon.fbk.eu/ontology/pb#Aspect>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#third> a <http://premon.fbk.eu/ontology/pb#Person>,
+        owl:NamedIndividual .
+
+<http://premon.fbk.eu/ontology/pb#SemanticRole> a owl:Class ;
+    rdfs:label "Semantic Role (PB)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://premon.fbk.eu/ontology/pb#argument> ;
+            owl:someValuesFrom <http://premon.fbk.eu/ontology/pb#Argument> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/pb#Roleset> ;
+            owl:onProperty [ owl:inverseOf <http://premon.fbk.eu/ontology/core#semRole> ] ],
+        <http://premon.fbk.eu/ontology/core#SemanticRole> .
+
+<http://premon.fbk.eu/ontology/pb#Aspect> a owl:Class ;
+    rdfs:label "Aspect"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#perfect> <http://premon.fbk.eu/ontology/pb#progressive> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#Person> a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#other> <http://premon.fbk.eu/ontology/pb#third> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#Voice> a owl:Class ;
+    rdfs:label "Voice"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#passive> <http://premon.fbk.eu/ontology/pb#active> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#SecondaryAgent> a owl:Class ;
+    rdfs:label "Secondary Agent"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/pb#Argument> .
+
+<http://premon.fbk.eu/ontology/pb#Tag> a owl:Class ;
+    rdfs:label "Tag"@en .
+
+<http://premon.fbk.eu/ontology/pb#Tense> a owl:Class ;
+    rdfs:label "Tense"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#future> <http://premon.fbk.eu/ontology/pb#past> <http://premon.fbk.eu/ontology/pb#present> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#Argument> a owl:Class ;
+    rdfs:label "Argument (PB)"@en ;
+    rdfs:subClassOf skos:Concept ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( <http://premon.fbk.eu/ontology/pb#Modifier> <http://premon.fbk.eu/ontology/pb#NumberedArgument> <http://premon.fbk.eu/ontology/pb#SecondaryAgent> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#Form> a owl:Class ;
+    rdfs:label "Form"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#gerund> <http://premon.fbk.eu/ontology/pb#full> <http://premon.fbk.eu/ontology/pb#participle> <http://premon.fbk.eu/ontology/pb#infinitive> ) ] .
+
+<http://premon.fbk.eu/ontology/pb#Inflection> a owl:Class ;
+    rdfs:label "Inflection"@en .
+
+<http://premon.fbk.eu/ontology/pb#NumberedArgument> a owl:Class ;
+    rdfs:label "Numbered Argument (PB)"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#arg4> <http://premon.fbk.eu/ontology/pb#arg3> <http://premon.fbk.eu/ontology/pb#arg2> <http://premon.fbk.eu/ontology/pb#arg1> <http://premon.fbk.eu/ontology/pb#arg0> <http://premon.fbk.eu/ontology/pb#arg5> <http://premon.fbk.eu/ontology/pb#arg6> ) ],
+        <http://premon.fbk.eu/ontology/pb#Argument> ;
+    owl:disjointWith <http://premon.fbk.eu/ontology/pb#SecondaryAgent> .
+
+<http://premon.fbk.eu/ontology/pb#Modifier> a owl:Class ;
+    rdfs:label "Modifier (PB)"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/pb#argm-lvb> <http://premon.fbk.eu/ontology/pb#argm-cau> <http://premon.fbk.eu/ontology/pb#argm-tmp> <http://premon.fbk.eu/ontology/pb#argm-rcl> <http://premon.fbk.eu/ontology/pb#argm-loc> <http://premon.fbk.eu/ontology/pb#argm-gol> <http://premon.fbk.eu/ontology/pb#argm-mod> <http://premon.fbk.eu/ontology/pb#argm-prd> <http://premon.fbk.eu/ontology/pb#argm-com> <http://premon.fbk.eu/ontology/pb#argm-dsp> <http://premon.fbk.eu/ontology/pb#argm-ext> <http://premon.fbk.eu/ontology/pb#argm-adj> <http://premon.fbk.eu/ontology/pb#argm-pnc> <http://premon.fbk.eu/ontology/pb#argm-slc> <http://premon.fbk.eu/ontology/pb#argm-neg> <http://premon.fbk.eu/ontology/pb#argm-rec> <http://premon.fbk.eu/ontology/pb#argm-dis> <http://premon.fbk.eu/ontology/pb#argm-prp> <http://premon.fbk.eu/ontology/pb#argm-dir> <http://premon.fbk.eu/ontology/pb#argm-adv> <http://premon.fbk.eu/ontology/pb#argm-mnr> <http://premon.fbk.eu/ontology/pb#argm-prn> <http://premon.fbk.eu/ontology/pb#argm-cxn> <http://premon.fbk.eu/ontology/pb#argm-vsp> ) ],
+        <http://premon.fbk.eu/ontology/pb#Argument> ;
+    owl:disjointWith <http://premon.fbk.eu/ontology/pb#NumberedArgument>,
+        <http://premon.fbk.eu/ontology/pb#SecondaryAgent> .
+

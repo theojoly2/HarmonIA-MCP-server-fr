@@ -1,0 +1,1477 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <https://ns.verisav.fr/dpp#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:accuracy a owl:DatatypeProperty ;
+    rdfs:label "accuracy"@en,
+        "précision"@fr ;
+    rdfs:comment "Accuracy or uncertainty of the metric value (optional)."@en,
+        "Précision ou incertitude de la valeur de la métrique (optionnel)."@fr ;
+    rdfs:domain onto:Metric ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:assessmentCriteria a owl:ObjectProperty ;
+    rdfs:label "assessment criteria"@en,
+        "critères d'évaluation"@fr ;
+    rdfs:comment "Criteria within the standard or regulation against which the claim is evaluated."@en,
+        "Critères dans le standard ou réglementation contre lesquels la déclaration est évaluée."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Criterion ;
+    ns1:term_status "stable" .
+
+onto:assessmentDate a owl:DatatypeProperty ;
+    rdfs:label "assessment date"@en,
+        "date d'évaluation"@fr ;
+    rdfs:comment "Date when the claim was assessed."@en,
+        "Date à laquelle la déclaration a été évaluée."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "stable" .
+
+onto:batchLotNumber a owl:DatatypeProperty ;
+    rdfs:label "Batch/Lot Number"@en,
+        "Numéro de Lot"@fr ;
+    rdfs:comment "The batch or lot number (GS1 AI 10) for production batches. Used with GTIN for batch-level granularity."@en,
+        "Le numéro de lot ou batch (GS1 AI 10) pour les lots de production. Utilisé avec GTIN pour la granularité au niveau lot."@fr ;
+    rdfs:domain onto:CompoundIdentifier,
+        onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://www.gs1.org/standards/barcodes/application-identifiers/10> ;
+    ns1:term_status "stable" .
+
+onto:belongsTo a owl:ObjectProperty ;
+    rdfs:label "belongs to"@en,
+        "appartient à"@fr ;
+    rdfs:comment "Inverse property: links a WorkOrder or Intervention to its ProductPassport."@en,
+        "Propriété inverse : lie un WorkOrder ou Intervention à son ProductPassport."@fr ;
+    rdfs:domain onto:Intervention,
+        onto:WorkOrder ;
+    rdfs:range onto:ProductPassport ;
+    owl:inverseOf onto:hasIntervention,
+        onto:hasWorkOrder .
+
+onto:carbonFootprint a owl:DatatypeProperty ;
+    rdfs:label "carbon footprint"@en,
+        "empreinte carbone"@fr ;
+    rdfs:comment "Carbon footprint of the product in kg CO2eq per declared unit."@en,
+        "Empreinte carbone du produit en kg CO2eq par unité déclarée."@fr ;
+    rdfs:domain onto:EmissionsPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:claimDescription a owl:DatatypeProperty ;
+    rdfs:label "claim description"@en,
+        "description de la réclamation"@fr ;
+    rdfs:comment "A description of the service request or claim."@en,
+        "Une description de la demande de service ou réclamation."@fr ;
+    rdfs:domain onto:ServiceRequest ;
+    rdfs:range xsd:string .
+
+onto:claimPriority a owl:DatatypeProperty ;
+    rdfs:label "claim priority"@en,
+        "priorité de la réclamation"@fr ;
+    rdfs:comment "The priority of the service request (normal, high, urgent)."@en,
+        "La priorité de la demande de service (normal, haute, urgente)."@fr ;
+    rdfs:domain onto:ServiceRequest ;
+    rdfs:range xsd:string .
+
+onto:claimStatus a owl:DatatypeProperty ;
+    rdfs:label "claim status"@en,
+        "statut de la réclamation"@fr ;
+    rdfs:comment "The status of a service request (soumise, en_cours, approuvee, resolue)."@en,
+        "Le statut d'une demande de service (soumise, en cours, approuvée, résolue)."@fr ;
+    rdfs:domain onto:ServiceRequest ;
+    rdfs:range xsd:string .
+
+onto:classificationCode a owl:DatatypeProperty ;
+    rdfs:label "classification code"@en,
+        "code de classification"@fr ;
+    rdfs:comment "Classification code according to the specified scheme."@en,
+        "Code de classification selon le schéma spécifié."@fr ;
+    rdfs:domain onto:ProductClassification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:classificationScheme a owl:DatatypeProperty ;
+    rdfs:label "classification scheme"@en,
+        "schéma de classification"@fr ;
+    rdfs:comment "URI or identifier of the classification scheme (e.g., 'UN-CPC', 'GS1', 'NACE')."@en,
+        "URI ou identifiant du schéma de classification (ex: 'UN-CPC', 'GS1', 'NACE')."@fr ;
+    rdfs:domain onto:ProductClassification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:conformance a owl:DatatypeProperty ;
+    rdfs:label "conformance"@en,
+        "conformité"@fr ;
+    rdfs:comment "Indicates whether the product meets the specified criteria (true/false)."@en,
+        "Indique si le produit est conforme aux critères spécifiés (true/false)."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    ns1:term_status "stable" .
+
+onto:conformityEvidence a owl:ObjectProperty ;
+    rdfs:label "conformity evidence"@en,
+        "preuve de conformité"@fr ;
+    rdfs:comment "Link to second or third party attestation, such as a UNTP Digital Conformity Credential, PDF, or other evidence format."@en,
+        "Lien vers attestation de deuxième ou troisième partie, comme un Digital Conformity Credential UNTP, PDF, ou autre format de preuve."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document,
+        onto:SecureLink ;
+    ns1:term_status "stable" .
+
+onto:conformityTopic a owl:DatatypeProperty ;
+    rdfs:label "conformity topic"@en,
+        "thème de conformité"@fr ;
+    rdfs:comment "Topic category of the claim (e.g., 'environment.emissions', 'social.working_conditions')."@en,
+        "Catégorie thématique de la déclaration (ex: 'environment.emissions', 'social.working_conditions')."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:credentialIssuer a owl:ObjectProperty ;
+    rdfs:label "credential issuer"@en,
+        "émetteur de credential"@fr ;
+    rdfs:comment "The authority or EconomicOperator that issued a VerifiableCredential via EU Business Wallet (EBW)."@en,
+        "L'autorité ou Opérateur Économique qui a émis un VerifiableCredential via EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:ConformityClaim,
+        onto:VerifiableCredential ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:EconomicOperator ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:criterionId a owl:DatatypeProperty ;
+    rdfs:label "criterion ID"@en,
+        "ID critère"@fr ;
+    rdfs:comment "Unique identifier for the criterion (typically a URI)."@en,
+        "Identifiant unique du critère (typiquement une URI)."@fr ;
+    rdfs:domain onto:Criterion ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable" .
+
+onto:criterionName a owl:DatatypeProperty ;
+    rdfs:label "criterion name"@en,
+        "nom du critère"@fr ;
+    rdfs:comment "Name of the criterion."@en,
+        "Nom du critère."@fr ;
+    rdfs:domain onto:Criterion ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:dataIntegrityHash a owl:DatatypeProperty ;
+    rdfs:label "data integrity hash"@en,
+        "hash d'intégrité des données"@fr ;
+    rdfs:comment "Cryptographic hash digest ensuring the integrity of shared DPP data via EU Business Wallet (EBW). Used in SecureDataShare for tamper detection."@en,
+        "Digest de hash cryptographique garantissant l'intégrité des données DPP partagées via EU Business Wallet (EBW). Utilisé dans SecureDataShare pour la détection de falsification."@fr ;
+    rdfs:domain onto:SecureDataShare ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:declaredUnit a owl:DatatypeProperty ;
+    rdfs:label "declared unit"@en,
+        "unité déclarée"@fr ;
+    rdfs:comment "Unit of measure for carbon footprint (e.g., 'KGM' for kg, 'C62' for unit)."@en,
+        "Unité de mesure pour l'empreinte carbone (ex: 'KGM' pour kg, 'C62' pour unité)."@fr ;
+    rdfs:domain onto:EmissionsPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:declaredValue a owl:ObjectProperty ;
+    rdfs:label "declared value"@en,
+        "valeur déclarée"@fr ;
+    rdfs:comment "Actual measured values, optionally including accuracy."@en,
+        "Valeurs mesurées réelles, incluant optionnellement la précision."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Metric ;
+    ns1:term_status "stable" .
+
+onto:diagnosticDescription a owl:DatatypeProperty ;
+    rdfs:label "diagnostic description"@en,
+        "description du diagnostic"@fr ;
+    rdfs:comment "A description of the diagnostic process and findings."@en,
+        "Une description du processus de diagnostic et des résultats."@fr ;
+    rdfs:domain onto:Diagnostic ;
+    rdfs:range xsd:string .
+
+onto:diagnosticResult a owl:DatatypeProperty ;
+    rdfs:label "diagnostic result"@en,
+        "résultat du diagnostic"@fr ;
+    rdfs:comment "The result or conclusion of the diagnostic."@en,
+        "Le résultat ou conclusion du diagnostic."@fr ;
+    rdfs:domain onto:Diagnostic ;
+    rdfs:range xsd:string .
+
+onto:encryptionMethod a owl:DatatypeProperty ;
+    rdfs:label "encryption method"@en,
+        "méthode de cryptage"@fr ;
+    rdfs:comment "Encryption method if applicable (e.g., 'AES', 'none')."@en,
+        "Méthode de cryptage si applicable (ex: 'AES', 'none')."@fr ;
+    rdfs:domain onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:euid a owl:DatatypeProperty ;
+    rdfs:label "European Unique Identifier (EUID)"@en,
+        "Identifiant Unique Européen (EUID)"@fr ;
+    rdfs:comment "The European Unique Identifier (EUID) for a legal entity, issued via EU Business Wallet (EBW). Provides a unified digital identity across all 27 EU member states."@en,
+        "L'Identifiant Unique Européen (EUID) pour une entité légale, émis via EU Business Wallet (EBW). Fournit une identité numérique unifiée dans les 27 États membres de l'UE."@fr ;
+    rdfs:domain onto:EconomicOperator ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:follows a owl:ObjectProperty ;
+    rdfs:label "follows"@en,
+        "suit"@fr ;
+    rdfs:comment "Links an Intervention to a previous Intervention (creates a chain of interventions)."@en,
+        "Lie une Intervention à une Intervention précédente (crée une chaîne d'interventions)."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range onto:Intervention .
+
+onto:granularityLevel a owl:DatatypeProperty ;
+    rdfs:label "Granularity Level"@en,
+        "Niveau de Granularité"@fr ;
+    rdfs:comment "The level of identification granularity: 'model' (GTIN only), 'batch' (GTIN + batch/lot number), or 'serial' (GTIN + serial number). Determined by EU delegated acts per product category."@en,
+        "Le niveau de granularité d'identification : 'model' (GTIN seul), 'batch' (GTIN + numéro de lot), ou 'serial' (GTIN + numéro de série). Déterminé par les actes délégués UE par catégorie de produit."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:gs1DigitalLink a owl:DatatypeProperty ;
+    rdfs:label "GS1 Digital Link URI"@en,
+        "URI GS1 Digital Link"@fr ;
+    rdfs:comment "The standard GS1 Digital Link URI for the product, resolving to the DPP. Uses uncompressed GS1 Digital Link URI syntax per GS1 standards."@en,
+        "L'URI standard GS1 Digital Link pour le produit, résolvant vers le DPP. Utilise la syntaxe GS1 Digital Link URI non compressée selon les standards GS1."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    rdfs:seeAlso <https://www.gs1.org/standards/Digital-Link/> ;
+    ns1:term_status "stable" .
+
+onto:hasCircularityScorecard a owl:ObjectProperty ;
+    rdfs:label "has circularity scorecard"@en,
+        "a pour tableau de bord circularité"@fr ;
+    rdfs:comment "Links a ProductPassport to its circularity scorecard. Aligned with UNTP DPP."@en,
+        "Lie un ProductPassport à son tableau de bord de circularité. Aligné avec UNTP DPP."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:CircularityPerformance ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasCompoundIdentifier a owl:ObjectProperty ;
+    rdfs:label "has compound identifier"@en,
+        "a pour identifiant composé"@fr ;
+    rdfs:comment "Links a ProductPassport to a CompoundIdentifier (GTIN + variant/batch/serial)."@en,
+        "Lie un ProductPassport à un Identifiant Composé (GTIN + variant/lot/série)."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:CompoundIdentifier .
+
+onto:hasConformityClaim a owl:ObjectProperty ;
+    rdfs:label "has conformity claim"@en,
+        "a pour déclaration de conformité"@fr ;
+    rdfs:comment "Links a ProductPassport to a conformity claim. Aligned with UNTP DPP."@en,
+        "Lie un ProductPassport à une déclaration de conformité. Aligné avec UNTP DPP."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ConformityClaim ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasConstituentProduct a owl:ObjectProperty ;
+    rdfs:label "has constituent product"@en,
+        "a pour produit constituant"@fr ;
+    rdfs:comment "Link to a DPP of a constituent product in the value chain. Enables multi-level traceability."@en,
+        "Lien vers un DPP de produit constituant dans la chaîne de valeur. Permet la traçabilité multi-niveau."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ProductPassport ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasConsumer a owl:ObjectProperty ;
+    rdfs:label "has consumer"@en,
+        "a pour consommateur"@fr ;
+    rdfs:comment "Links a ProductPassport to its Consumer."@en,
+        "Lie un ProductPassport à son Consommateur."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Consumer .
+
+onto:hasCurrentStatus a owl:ObjectProperty ;
+    rdfs:label "has current status"@en,
+        "a pour statut actuel"@fr ;
+    rdfs:comment "Links a ProductPassport to its current ProductStatus."@en,
+        "Lie un ProductPassport à son ProductStatus actuel."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:ProductStatus .
+
+onto:hasDiagnostic a owl:ObjectProperty ;
+    rdfs:label "has diagnostic"@en,
+        "a pour diagnostic"@fr ;
+    rdfs:comment "Links an Intervention to a Diagnostic."@en,
+        "Lie une Intervention à un Diagnostic."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range onto:Diagnostic .
+
+onto:hasDocument a owl:ObjectProperty ;
+    rdfs:label "has document"@en,
+        "a pour document"@fr ;
+    rdfs:comment "Links a ProductPassport to a Document."@en,
+        "Lie un ProductPassport à un Document."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Document .
+
+onto:hasEconomicOperator a owl:ObjectProperty ;
+    rdfs:label "has economic operator"@en,
+        "a pour opérateur économique"@fr ;
+    rdfs:comment "Links a ProductPassport to its EconomicOperator (manufacturer, importer, distributor, etc.)."@en,
+        "Lie un ProductPassport à son Opérateur Économique (fabricant, importateur, distributeur, etc.)."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:EconomicOperator .
+
+onto:hasEmissionsScorecard a owl:ObjectProperty ;
+    rdfs:label "has emissions scorecard"@en,
+        "a pour tableau de bord émissions"@fr ;
+    rdfs:comment "Links a ProductPassport to its emissions scorecard. Aligned with UNTP DPP."@en,
+        "Lie un ProductPassport à son tableau de bord d'émissions. Aligné avec UNTP DPP."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:EmissionsPerformance ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasFacility a owl:ObjectProperty ;
+    rdfs:label "has facility"@en,
+        "a pour installation"@fr ;
+    rdfs:comment "Links a ProductPassport to the Facility where it was produced."@en,
+        "Lie un ProductPassport à l'Installation où il a été produit."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Facility .
+
+onto:hasGln a owl:DatatypeProperty ;
+    rdfs:label "Global Location Number (GLN)"@en,
+        "Code Lieu International (GLN)"@fr ;
+    rdfs:comment "The GS1 Global Location Number identifying the organization or facility. Used for economic operators and facilities per EU ESPR regulation."@en,
+        "Le Code Lieu International GS1 identifiant l'organisation ou l'installation. Utilisé pour les opérateurs économiques et installations selon la réglementation européenne ESPR."@fr ;
+    rdfs:domain onto:EconomicOperator,
+        onto:Facility,
+        schema:Organization,
+        schema:Place ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://www.gs1.org/standards/id-keys/gln> ;
+    rdfs:subPropertyOf schema:globalLocationNumber ;
+    ns1:term_status "stable" .
+
+onto:hasGtin a owl:DatatypeProperty ;
+    rdfs:label "Global Trade Item Number (GTIN)"@en,
+        "Numéro d'Article Global (GTIN)"@fr ;
+    rdfs:comment "The GS1 Global Trade Item Number (GTIN) in one of the formats: GTIN-8, GTIN-12, GTIN-13, or GTIN-14. Used with AI (01) for Made-to-Stock products or AI (03) for Made-to-Order products."@en,
+        "Le Numéro d'Article Global GS1 (GTIN) dans l'un des formats : GTIN-8, GTIN-12, GTIN-13 ou GTIN-14. Utilisé avec AI (01) pour produits Made-to-Stock ou AI (03) pour produits Made-to-Order."@fr ;
+    rdfs:domain onto:CompoundIdentifier,
+        onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://www.gs1.org/standards/id-keys/gtin> ;
+    rdfs:subPropertyOf schema:gtin ;
+    ns1:term_status "stable" .
+
+onto:hasLifecycleStage a owl:ObjectProperty ;
+    rdfs:label "has lifecycle stage"@en,
+        "a pour étape de cycle de vie"@fr ;
+    rdfs:comment "Links a ProductPassport to a ProductLifecycleStage."@en,
+        "Lie un ProductPassport à une Étape du Cycle de Vie."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:ProductLifecycleStage .
+
+onto:hasManufacturer a owl:ObjectProperty ;
+    rdfs:label "has manufacturer"@en,
+        "a pour fabricant"@fr ;
+    rdfs:comment "Links a ProductPassport to its Manufacturer."@en,
+        "Lie un ProductPassport à son Fabricant."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Manufacturer .
+
+onto:hasMaterialProvenance a owl:ObjectProperty ;
+    rdfs:label "has material provenance"@en,
+        "a pour provenance de matériau"@fr ;
+    rdfs:comment "Links a ProductPassport to material provenance information. Aligned with UNTP DPP-03."@en,
+        "Lie un ProductPassport à des informations de provenance des matériaux. Aligné avec UNTP DPP-03."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MaterialProvenance ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasProductClassification a owl:ObjectProperty ;
+    rdfs:label "has product classification"@en,
+        "a pour classification produit"@fr ;
+    rdfs:comment "Links a ProductPassport to product classification. Aligned with UNTP DPP-02."@en,
+        "Lie un ProductPassport à une classification produit. Aligné avec UNTP DPP-02."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ProductClassification ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasRecyclingInstructions a owl:ObjectProperty ;
+    rdfs:label "has recycling instructions"@en,
+        "a pour consignes de recyclage"@fr ;
+    rdfs:comment "Links a ProductPassport to RecyclingInstructions."@en,
+        "Lie un ProductPassport à des Consignes de Recyclage."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:RecyclingInstructions .
+
+onto:hasRepairer a owl:ObjectProperty ;
+    rdfs:label "has repairer"@en,
+        "a pour réparateur"@fr ;
+    rdfs:comment "Links an Intervention to its Repairer."@en,
+        "Lie une Intervention à son Réparateur."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range onto:Repairer .
+
+onto:hasReplacementPart a owl:ObjectProperty ;
+    rdfs:label "has replacement part"@en,
+        "a pour pièce de rechange"@fr ;
+    rdfs:comment "Links an Intervention to a ReplacementPart."@en,
+        "Lie une Intervention à une Pièce de Rechange."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range onto:ReplacementPart .
+
+onto:hasRetailer a owl:ObjectProperty ;
+    rdfs:label "has retailer"@en,
+        "a pour distributeur"@fr ;
+    rdfs:comment "Links a ProductPassport to its Retailer."@en,
+        "Lie un ProductPassport à son Distributeur."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Retailer .
+
+onto:hasSecureDataShare a owl:ObjectProperty ;
+    rdfs:label "has secure data share"@en,
+        "a pour partage de données sécurisé"@fr ;
+    rdfs:comment "Links a ProductPassport to a SecureDataShare action via EU Business Wallet (EBW)."@en,
+        "Lie un ProductPassport à une action SecureDataShare via EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:SecureDataShare ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:hasServiceRequest a owl:ObjectProperty ;
+    rdfs:label "has service request"@en,
+        "a pour demande de service"@fr ;
+    rdfs:comment "Links a ProductPassport to a ServiceRequest."@en,
+        "Lie un ProductPassport à une Demande de Service."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:ServiceRequest .
+
+onto:hasTraceabilityEvent a owl:ObjectProperty ;
+    rdfs:label "has traceability event"@en,
+        "a pour événement de traçabilité"@fr ;
+    rdfs:comment "Links a ProductPassport or TraceabilityPerformance to a traceability event. Aligned with UNTP DPP-06."@en,
+        "Lie un ProductPassport ou TraceabilityPerformance à un événement de traçabilité. Aligné avec UNTP DPP-06."@fr ;
+    rdfs:domain onto:ProductPassport,
+        onto:TraceabilityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TraceabilityEvent ;
+    ns1:term_status "stable" .
+
+onto:hasTraceabilityInformation a owl:ObjectProperty ;
+    rdfs:label "has traceability information"@en,
+        "a pour information traçabilité"@fr ;
+    rdfs:comment "Links a ProductPassport to traceability information. Aligned with UNTP DPP-06."@en,
+        "Lie un ProductPassport à des informations de traçabilité. Aligné avec UNTP DPP-06."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TraceabilityPerformance ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:hasVerifiableCredential a owl:ObjectProperty ;
+    rdfs:label "has verifiable credential"@en,
+        "a pour credential vérifiable"@fr ;
+    rdfs:comment "Links a VerifiableProductPassport or ConformityClaim to its W3C Verifiable Credential (VCDM 2.0) stored in EU Business Wallet (EBW)."@en,
+        "Lie un VerifiableProductPassport ou ConformityClaim à son W3C Verifiable Credential (VCDM 2.0) stocké dans EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:ConformityClaim,
+        onto:VerifiableProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:VerifiableCredential ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets>,
+        <https://www.w3.org/TR/vc-data-model-2.0/> ;
+    ns1:term_status "stable" .
+
+onto:hasVerifiedIdentity a owl:DatatypeProperty ;
+    rdfs:label "has verified identity"@en,
+        "a identité vérifiée"@fr ;
+    rdfs:comment "Indicates whether the EconomicOperator's identity has been verified via EU Business Wallet (EBW)."@en,
+        "Indique si l'identité de l'Opérateur Économique a été vérifiée via EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:EconomicOperator ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:hasWarranty a owl:ObjectProperty ;
+    rdfs:label "has warranty"@en,
+        "a pour garantie"@fr ;
+    rdfs:comment "Links a ProductPassport to its Warranty."@en,
+        "Lie un ProductPassport à sa Garantie."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:Warranty .
+
+onto:hasWarrantyClaim a owl:ObjectProperty ;
+    rdfs:label "has warranty claim"@en,
+        "a pour réclamation"@fr ;
+    rdfs:comment "Links a ProductPassport to a WarrantyClaim."@en,
+        "Lie un ProductPassport à une Réclamation de Garantie."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:WarrantyClaim .
+
+onto:hashDigest a owl:DatatypeProperty ;
+    rdfs:label "hash digest"@en,
+        "digest de hash"@fr ;
+    rdfs:comment "Hash digest for verification of link integrity."@en,
+        "Digest de hash pour vérification de l'intégrité du lien."@fr ;
+    rdfs:domain onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hashMethod a owl:DatatypeProperty ;
+    rdfs:label "hash method"@en,
+        "méthode de hash"@fr ;
+    rdfs:comment "Method used for hashing (e.g., 'SHA-256', 'SHA-512')."@en,
+        "Méthode utilisée pour le hash (ex: 'SHA-256', 'SHA-512')."@fr ;
+    rdfs:domain onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:interventionDuration a owl:DatatypeProperty ;
+    rdfs:label "intervention duration"@en,
+        "durée d'intervention"@fr ;
+    rdfs:comment "The duration of the intervention in minutes."@en,
+        "La durée de l'intervention en minutes."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:integer .
+
+onto:interventionEndDate a owl:DatatypeProperty ;
+    rdfs:label "intervention end date"@en,
+        "date de fin d'intervention"@fr ;
+    rdfs:comment "The end date and time of the intervention."@en,
+        "La date et heure de fin de l'intervention."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:dateTime .
+
+onto:interventionStartDate a owl:DatatypeProperty ;
+    rdfs:label "intervention start date"@en,
+        "date de début d'intervention"@fr ;
+    rdfs:comment "The start date and time of the intervention."@en,
+        "La date et heure de début de l'intervention."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:dateTime .
+
+onto:interventionType a owl:DatatypeProperty ;
+    rdfs:label "intervention type"@en,
+        "type d'intervention"@fr ;
+    rdfs:comment "The type of intervention (diagnostic, reparation, maintenance, remplacement, retour_fabricant)."@en,
+        "Le type d'intervention (diagnostic, réparation, maintenance, remplacement, retour fabricant)."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:string .
+
+onto:issueDate a owl:DatatypeProperty ;
+    rdfs:label "issue date"@en,
+        "date de publication"@fr ;
+    rdfs:comment "Date when the standard or regulation was issued."@en,
+        "Date à laquelle le standard ou réglementation a été publié."@fr ;
+    rdfs:domain onto:Regulation,
+        onto:Standard ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "stable" .
+
+onto:issuedBy a owl:ObjectProperty ;
+    rdfs:label "issued by"@en,
+        "émis par"@fr ;
+    rdfs:comment "Links a VerifiableProductPassport to the EconomicOperator that issued it via EU Business Wallet (EBW)."@en,
+        "Lie un VerifiableProductPassport à l'Opérateur Économique qui l'a émis via EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:VerifiableProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:EconomicOperator ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:issuingParty a owl:ObjectProperty ;
+    rdfs:label "issuing party"@en,
+        "partie émettrice"@fr ;
+    rdfs:comment "Organization that issued the standard or regulation."@en,
+        "Organisation qui a publié le standard ou réglementation."@fr ;
+    rdfs:domain onto:Regulation,
+        onto:Standard ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:Organization ;
+    ns1:term_status "stable" .
+
+onto:laborCost a owl:DatatypeProperty ;
+    rdfs:label "labor cost"@en,
+        "coût main d'œuvre"@fr ;
+    rdfs:comment "The cost of labor for the intervention."@en,
+        "Le coût de la main d'œuvre pour l'intervention."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:decimal .
+
+onto:lifecycleStageDate a owl:DatatypeProperty ;
+    rdfs:label "lifecycle stage date"@en,
+        "date de l'étape du cycle de vie"@fr ;
+    rdfs:comment "The date when the product entered this lifecycle stage."@en,
+        "La date à laquelle le produit est entré dans cette étape du cycle de vie."@fr ;
+    rdfs:domain onto:ProductLifecycleStage ;
+    rdfs:range xsd:date .
+
+onto:lifecycleStageName a owl:DatatypeProperty ;
+    rdfs:label "lifecycle stage name"@en,
+        "nom de l'étape du cycle de vie"@fr ;
+    rdfs:comment "The name of the lifecycle stage (manufacturing, purchase, usage, end_of_life, recycling)."@en,
+        "Le nom de l'étape du cycle de vie (fabrication, achat, usage, fin de vie, recyclage)."@fr ;
+    rdfs:domain onto:ProductLifecycleStage ;
+    rdfs:range xsd:string .
+
+onto:linkName a owl:DatatypeProperty ;
+    rdfs:label "link name"@en,
+        "nom du lien"@fr ;
+    rdfs:comment "Human-readable name for the link."@en,
+        "Nom lisible par humain pour le lien."@fr ;
+    rdfs:domain onto:CircularityPerformance,
+        onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:linkType a owl:DatatypeProperty ;
+    rdfs:label "link type"@en,
+        "type de lien"@fr ;
+    rdfs:comment "Type identifier for the link (e.g., URI to a vocabulary term)."@en,
+        "Identifiant de type pour le lien (ex: URI vers un terme de vocabulaire)."@fr ;
+    rdfs:domain onto:CircularityPerformance,
+        onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable" .
+
+onto:linkURL a owl:DatatypeProperty ;
+    rdfs:label "link URL"@en,
+        "URL du lien"@fr ;
+    rdfs:comment "URL or link to a resource."@en,
+        "URL ou lien vers une ressource."@fr ;
+    rdfs:domain onto:CircularityPerformance,
+        onto:SecureLink ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable" .
+
+onto:manufacturingDate a owl:DatatypeProperty ;
+    rdfs:label "manufacturing date"@en,
+        "date de fabrication"@fr ;
+    rdfs:comment "The date when the product was manufactured."@en,
+        "La date à laquelle le produit a été fabriqué."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range xsd:date .
+
+onto:manufacturingLocation a owl:DatatypeProperty ;
+    rdfs:label "manufacturing location"@en,
+        "lieu de fabrication"@fr ;
+    rdfs:comment "The location where the product was manufactured."@en,
+        "Le lieu où le produit a été fabriqué."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range xsd:string .
+
+onto:massFraction a owl:DatatypeProperty ;
+    rdfs:label "mass fraction"@en,
+        "fraction massique"@fr ;
+    rdfs:comment "Mass fraction of the material in the product (decimal value between 0 and 1)."@en,
+        "Fraction massique du matériau dans le produit (valeur décimale entre 0 et 1)."@fr ;
+    rdfs:domain onto:MaterialProvenance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    ns1:term_status "stable" .
+
+onto:materialCircularityIndicator a owl:DatatypeProperty ;
+    rdfs:label "material circularity indicator"@en,
+        "indicateur de circularité matérielle"@fr ;
+    rdfs:comment "Overall circularity score (MCI) calculated as 1 - (V + W) / (2 * D), where V = virgin material proportion, W = waste leakage proportion, D = utility factor (0-1)."@en,
+        "Score global de circularité (MCI) calculé comme 1 - (V + W) / (2 * D), où V = proportion matériaux vierges, W = proportion pertes, D = facteur d'utilité (0-1)."@fr ;
+    rdfs:domain onto:CircularityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.ellenmacarthurfoundation.org/resources/apply/material-circularity-indicator> ;
+    ns1:term_status "stable" .
+
+onto:materialName a owl:DatatypeProperty ;
+    rdfs:label "material name"@en,
+        "nom du matériau"@fr ;
+    rdfs:comment "Name of the material (e.g., 'Aluminum', 'Steel', 'Plastic')."@en,
+        "Nom du matériau (ex: 'Aluminium', 'Acier', 'Plastique')."@fr ;
+    rdfs:domain onto:MaterialProvenance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:metricName a owl:DatatypeProperty ;
+    rdfs:label "metric name"@en,
+        "nom de la métrique"@fr ;
+    rdfs:comment "Name of the metric (e.g., 'GHG Emissions Intensity')."@en,
+        "Nom de la métrique (ex: 'Intensité Émissions GES')."@fr ;
+    rdfs:domain onto:Metric ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:metricValue a owl:ObjectProperty ;
+    rdfs:label "metric value"@en,
+        "valeur de la métrique"@fr ;
+    rdfs:comment "Value of the metric with unit."@en,
+        "Valeur de la métrique avec unité."@fr ;
+    rdfs:domain onto:Metric ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:QuantitativeValue ;
+    ns1:term_status "stable" .
+
+onto:operationalScope a owl:DatatypeProperty ;
+    rdfs:label "operational scope"@en,
+        "périmètre opérationnel"@fr ;
+    rdfs:comment "Scope of emissions calculation (e.g., 'CradleToGate', 'CradleToGrave', 'GateToGate')."@en,
+        "Périmètre du calcul d'émissions (ex: 'CradleToGate', 'CradleToGrave', 'GateToGate')."@fr ;
+    rdfs:domain onto:EmissionsPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:originCountry a owl:DatatypeProperty ;
+    rdfs:label "origin country"@en,
+        "pays d'origine"@fr ;
+    rdfs:comment "Origin country code of the material (ISO 3166-1 alpha-2 or alpha-3)."@en,
+        "Code pays d'origine du matériau (ISO 3166-1 alpha-2 ou alpha-3)."@fr ;
+    rdfs:domain onto:MaterialProvenance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:originRegion a owl:DatatypeProperty ;
+    rdfs:label "origin region"@en,
+        "région d'origine"@fr ;
+    rdfs:comment "Specific region of origin for the material (optional)."@en,
+        "Région spécifique d'origine du matériau (optionnel)."@fr ;
+    rdfs:domain onto:MaterialProvenance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:partName a owl:DatatypeProperty ;
+    rdfs:label "part name"@en,
+        "nom de la pièce"@fr ;
+    rdfs:comment "The name of the replacement part."@en,
+        "Le nom de la pièce de rechange."@fr ;
+    rdfs:domain onto:ReplacementPart ;
+    rdfs:range xsd:string .
+
+onto:partReference a owl:DatatypeProperty ;
+    rdfs:label "part reference"@en,
+        "référence de pièce"@fr ;
+    rdfs:comment "The reference number of the replacement part."@en,
+        "Le numéro de référence de la pièce de rechange."@fr ;
+    rdfs:domain onto:ReplacementPart ;
+    rdfs:range xsd:string .
+
+onto:partsCost a owl:DatatypeProperty ;
+    rdfs:label "parts cost"@en,
+        "coût des pièces"@fr ;
+    rdfs:comment "The cost of replacement parts for the intervention."@en,
+        "Le coût des pièces de rechange pour l'intervention."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:decimal .
+
+onto:primarySourcedRatio a owl:DatatypeProperty ;
+    rdfs:label "primary sourced ratio"@en,
+        "ratio de sourcing primaire"@fr ;
+    rdfs:comment "Ratio of materials from primary sources (0-1)."@en,
+        "Ratio de matériaux provenant de sources primaires (0-1)."@fr ;
+    rdfs:domain onto:EmissionsPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:productStatus a owl:DatatypeProperty ;
+    rdfs:label "product status"@en,
+        "statut du produit"@fr ;
+    rdfs:comment "The status of the product (sous_garantie, hors_garantie, contrat_maintenance, en_panne, repare)."@en,
+        "Le statut du produit (sous garantie, hors garantie, contrat maintenance, en panne, réparé)."@fr ;
+    rdfs:domain onto:ProductStatus ;
+    rdfs:range xsd:string .
+
+onto:productStatusDate a owl:DatatypeProperty ;
+    rdfs:label "product status date"@en,
+        "date du statut produit"@fr ;
+    rdfs:comment "The date when the product status was set."@en,
+        "La date à laquelle le statut du produit a été défini."@fr ;
+    rdfs:domain onto:ProductStatus ;
+    rdfs:range xsd:date .
+
+onto:purchaseDate a owl:DatatypeProperty ;
+    rdfs:label "purchase date"@en,
+        "date d'achat"@fr ;
+    rdfs:comment "The date when the product was purchased."@en,
+        "La date à laquelle le produit a été acheté."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range xsd:date .
+
+onto:purchasePrice a owl:DatatypeProperty ;
+    rdfs:label "purchase price"@en,
+        "prix d'achat"@fr ;
+    rdfs:comment "The price paid for the product."@en,
+        "Le prix payé pour le produit."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range xsd:decimal .
+
+onto:recyclableContent a owl:DatatypeProperty ;
+    rdfs:label "recyclable content"@en,
+        "contenu recyclable"@fr ;
+    rdfs:comment "Proportion of product mass designed to be recyclable or reusable (0-1)."@en,
+        "Proportion de la masse du produit conçue pour être recyclable ou réutilisable (0-1)."@fr ;
+    rdfs:domain onto:CircularityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:recycledContent a owl:DatatypeProperty ;
+    rdfs:label "recycled content"@en,
+        "contenu recyclé"@fr ;
+    rdfs:comment "Proportion of product mass made from recycled or repurposed materials (0-1)."@en,
+        "Proportion de la masse du produit faite de matériaux recyclés ou réutilisés (0-1)."@fr ;
+    rdfs:domain onto:CircularityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:referenceRegulation a owl:ObjectProperty ;
+    rdfs:label "reference regulation"@en,
+        "référence réglementation"@fr ;
+    rdfs:comment "Reference regulation for the conformity claim."@en,
+        "Réglementation de référence pour la déclaration de conformité."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Regulation ;
+    ns1:term_status "stable" .
+
+onto:referenceStandard a owl:ObjectProperty ;
+    rdfs:label "reference standard"@en,
+        "référence standard"@fr ;
+    rdfs:comment "Reference standard for the conformity claim."@en,
+        "Standard de référence pour la déclaration de conformité."@fr ;
+    rdfs:domain onto:ConformityClaim ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Standard ;
+    ns1:term_status "stable" .
+
+onto:repairInformation a owl:ObjectProperty ;
+    rdfs:label "repair information"@en,
+        "information réparation"@fr ;
+    rdfs:comment "Link to repair instructions for end users or repair service centers."@en,
+        "Lien vers instructions de réparation pour utilisateurs finaux ou centres de service de réparation."@fr ;
+    rdfs:domain onto:CircularityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:SecureLink,
+        schema:URL ;
+    ns1:term_status "stable" .
+
+onto:repairStatus a owl:DatatypeProperty ;
+    rdfs:label "repair status"@en,
+        "statut de réparation"@fr ;
+    rdfs:comment "The status of a repair event (pending, in_progress, completed, failed)."@en,
+        "Le statut d'un événement de réparation (en attente, en cours, complété, échoué)."@fr ;
+    rdfs:domain onto:RepairEvent ;
+    rdfs:range xsd:string .
+
+onto:replaces a owl:ObjectProperty ;
+    rdfs:label "replaces"@en,
+        "remplace"@fr ;
+    rdfs:comment "Links a ReplacementPart to the original part it replaces."@en,
+        "Lie une Pièce de Rechange à la pièce originale qu'elle remplace."@fr ;
+    rdfs:domain onto:ReplacementPart ;
+    rdfs:range onto:ReplacementPart .
+
+onto:reportingStandard a owl:ObjectProperty ;
+    rdfs:label "reporting standard"@en,
+        "standard de reporting"@fr ;
+    rdfs:comment "Standard used for emissions reporting."@en,
+        "Standard utilisé pour le reporting des émissions."@fr ;
+    rdfs:domain onto:EmissionsPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Standard ;
+    ns1:term_status "stable" .
+
+onto:resolutionDescription a owl:DatatypeProperty ;
+    rdfs:label "resolution description"@en,
+        "description de la résolution"@fr ;
+    rdfs:comment "A description of how the issue was resolved."@en,
+        "Une description de la façon dont le problème a été résolu."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:string .
+
+onto:serialNumber a owl:DatatypeProperty ;
+    rdfs:label "serial number"@en,
+        "numéro de série"@fr ;
+    rdfs:comment "The serial number of the product."@en,
+        "Le numéro de série du produit."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range xsd:string .
+
+onto:sharedWith a owl:ObjectProperty ;
+    rdfs:label "shared with"@en,
+        "partagé avec"@fr ;
+    rdfs:comment "Links a SecureDataShare to the EconomicOperator with whom DPP data is shared via EU Business Wallet (EBW)."@en,
+        "Lie un SecureDataShare à l'Opérateur Économique avec qui les données DPP sont partagées via EU Business Wallet (EBW)."@fr ;
+    rdfs:domain onto:SecureDataShare ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:EconomicOperator ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    ns1:term_status "stable" .
+
+onto:standardId a owl:DatatypeProperty ;
+    rdfs:label "standard ID"@en,
+        "ID standard"@fr ;
+    rdfs:comment "Unique identifier for the standard (URI or string)."@en,
+        "Identifiant unique du standard (URI ou chaîne)."@fr ;
+    rdfs:domain onto:Standard ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:standardName a owl:DatatypeProperty ;
+    rdfs:label "standard name"@en,
+        "nom du standard"@fr ;
+    rdfs:comment "Name of the standard."@en,
+        "Nom du standard."@fr ;
+    rdfs:domain onto:Standard ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:totalCost a owl:DatatypeProperty ;
+    rdfs:label "total cost"@en,
+        "coût total"@fr ;
+    rdfs:comment "The total cost of the intervention (labor + parts)."@en,
+        "Le coût total de l'intervention (main d'œuvre + pièces)."@fr ;
+    rdfs:domain onto:Intervention ;
+    rdfs:range xsd:decimal .
+
+onto:utilityFactor a owl:DatatypeProperty ;
+    rdfs:label "utility factor"@en,
+        "facteur d'utilité"@fr ;
+    rdfs:comment "Product durability relative to industry average (e.g., 1.2 = 20% more durable)."@en,
+        "Durabilité du produit relative à la moyenne de l'industrie (ex: 1.2 = 20% plus durable)."@fr ;
+    rdfs:domain onto:CircularityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:valueChainProcess a owl:DatatypeProperty ;
+    rdfs:label "value chain process"@en,
+        "processus chaîne de valeur"@fr ;
+    rdfs:comment "Human-readable description of the specific value chain step (e.g., 'Canning', 'Assembly')."@en,
+        "Description lisible par humain de l'étape spécifique de la chaîne de valeur (ex: 'Mise en conserve', 'Assemblage')."@fr ;
+    rdfs:domain onto:TraceabilityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:verifiedRatio a owl:DatatypeProperty ;
+    rdfs:label "verified ratio"@en,
+        "ratio vérifié"@fr ;
+    rdfs:comment "Proportion of materials or components in this step that have been verifiably traced using digital traceability events (0-1)."@en,
+        "Proportion de matériaux ou composants dans cette étape qui ont été tracés de manière vérifiable avec des événements de traçabilité numériques (0-1)."@fr ;
+    rdfs:domain onto:TraceabilityPerformance ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:versionNumber a owl:DatatypeProperty ;
+    rdfs:label "Version Number"@en,
+        "Numéro de Version"@fr ;
+    rdfs:comment "The GTIN version number (GS1 AI 22) for product changes that do not require a GTIN change per GTIN Management Standard."@en,
+        "Le numéro de version GTIN (GS1 AI 22) pour les changements de produit qui ne nécessitent pas un changement de GTIN selon le GTIN Management Standard."@fr ;
+    rdfs:domain onto:CompoundIdentifier,
+        onto:ProductPassport ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <https://www.gs1.org/standards/barcodes/application-identifiers/22> ;
+    ns1:term_status "stable" .
+
+onto:warrantyDurationMonths a owl:DatatypeProperty ;
+    rdfs:label "warranty duration in months"@en,
+        "durée de garantie en mois"@fr ;
+    rdfs:comment "The duration of the warranty in months."@en,
+        "La durée de la garantie en mois."@fr ;
+    rdfs:domain onto:Warranty ;
+    rdfs:range xsd:integer .
+
+onto:warrantyEndDate a owl:DatatypeProperty ;
+    rdfs:label "warranty end date"@en,
+        "date de fin de garantie"@fr ;
+    rdfs:comment "The end date of the warranty."@en,
+        "La date de fin de la garantie."@fr ;
+    rdfs:domain onto:Warranty ;
+    rdfs:range xsd:date .
+
+onto:warrantyStartDate a owl:DatatypeProperty ;
+    rdfs:label "warranty start date"@en,
+        "date de début de garantie"@fr ;
+    rdfs:comment "The start date of the warranty."@en,
+        "La date de début de la garantie."@fr ;
+    rdfs:domain onto:Warranty ;
+    rdfs:range xsd:date .
+
+onto:warrantyStatus a owl:DatatypeProperty ;
+    rdfs:label "warranty status"@en,
+        "statut de garantie"@fr ;
+    rdfs:comment "The status of the warranty (active, expiree, suspendue, annulee)."@en,
+        "Le statut de la garantie (active, expirée, suspendue, annulée)."@fr ;
+    rdfs:domain onto:Warranty ;
+    rdfs:range xsd:string .
+
+onto:warrantyType a owl:DatatypeProperty ;
+    rdfs:label "warranty type"@en,
+        "type de garantie"@fr ;
+    rdfs:comment "The type of warranty (constructeur, retailer, extension, maintenance)."@en,
+        "Le type de garantie (constructeur, distributeur, extension, maintenance)."@fr ;
+    rdfs:domain onto:Warranty ;
+    rdfs:range xsd:string .
+
+onto:workOrderNumber a owl:DatatypeProperty ;
+    rdfs:label "work order number"@en,
+        "numéro d'ordre de travail"@fr ;
+    rdfs:comment "The unique identifier for the work order."@en,
+        "L'identifiant unique de l'ordre de travail."@fr ;
+    rdfs:domain onto:WorkOrder ;
+    rdfs:range xsd:string .
+
+onto:workOrderPriority a owl:DatatypeProperty ;
+    rdfs:label "work order priority"@en,
+        "priorité de l'ordre de travail"@fr ;
+    rdfs:comment "The priority of the work order (basse, normale, haute, urgente)."@en,
+        "La priorité de l'ordre de travail (basse, normale, haute, urgente)."@fr ;
+    rdfs:domain onto:WorkOrder ;
+    rdfs:range xsd:string .
+
+onto:workOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "work order status"@en,
+        "statut de l'ordre de travail"@fr ;
+    rdfs:comment "The status of the work order (cree, assigne, en_cours, en_attente_pieces, complete, facture, annule)."@en,
+        "Le statut de l'ordre de travail (créé, assigné, en cours, en attente de pièces, complété, facturé, annulé)."@fr ;
+    rdfs:domain onto:WorkOrder ;
+    rdfs:range xsd:string .
+
+onto:Consumer a owl:Class ;
+    rdfs:label "Consumer"@en,
+        "Consommateur"@fr ;
+    rdfs:comment "A consumer who owns or uses a product."@en,
+        "Un consommateur qui possède ou utilise un produit."@fr ;
+    rdfs:subClassOf schema:Person .
+
+onto:Manufacturer a owl:Class ;
+    rdfs:label "Manufacturer"@en,
+        "Fabricant"@fr ;
+    rdfs:comment "The manufacturer of a product."@en,
+        "Le fabricant d'un produit."@fr ;
+    rdfs:subClassOf schema:Organization .
+
+onto:RecyclingInstructions a owl:Class ;
+    rdfs:label "Recycling Instructions"@en,
+        "Consignes de Recyclage"@fr ;
+    rdfs:comment "Instructions for recycling or disposing of a product at end of life."@en,
+        "Instructions pour recycler ou éliminer un produit en fin de vie."@fr ;
+    rdfs:subClassOf schema:CreativeWork .
+
+onto:Repairer a owl:Class ;
+    rdfs:label "Repairer"@en,
+        "Réparateur"@fr ;
+    rdfs:comment "A person or organization that repairs products."@en,
+        "Une personne ou organisation qui répare des produits."@fr ;
+    rdfs:subClassOf schema:Organization,
+        schema:Person .
+
+onto:Retailer a owl:Class ;
+    rdfs:label "Retailer"@en,
+        "Distributeur"@fr ;
+    rdfs:comment "A retailer or distributor who sells products."@en,
+        "Un distributeur qui vend des produits."@fr ;
+    rdfs:subClassOf schema:Organization .
+
+onto:TraceabilityEvent a owl:Class ;
+    rdfs:label "Traceability Event"@en,
+        "Événement de Traçabilité"@fr ;
+    rdfs:comment "Traceability event based on ISO/IEC 19987 (EPCIS) or similar standards. Aligned with UNTP DPP-06."@en,
+        "Événement de traçabilité basé sur ISO/IEC 19987 (EPCIS) ou standards similaires. Aligné avec UNTP DPP-06."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/>,
+        <https://www.iso.org/standard/71507.html> ;
+    rdfs:subClassOf schema:Event ;
+    ns1:term_status "stable" .
+
+onto:WarrantyClaim a owl:Class ;
+    rdfs:label "Warranty Claim"@en,
+        "Réclamation de Garantie"@fr ;
+    rdfs:comment "A claim made under a warranty."@en,
+        "Une réclamation effectuée sous garantie."@fr ;
+    rdfs:subClassOf schema:Claim .
+
+onto:hasIntervention a owl:ObjectProperty ;
+    rdfs:label "has intervention"@en,
+        "a pour intervention"@fr ;
+    rdfs:comment "Links a WorkOrder to an Intervention."@en,
+        "Lie un WorkOrder à une Intervention."@fr ;
+    rdfs:domain onto:WorkOrder ;
+    rdfs:range onto:Intervention .
+
+onto:hasWorkOrder a owl:ObjectProperty ;
+    rdfs:label "has work order"@en,
+        "a pour ordre de travail"@fr ;
+    rdfs:comment "Links a ProductPassport to a WorkOrder."@en,
+        "Lie un ProductPassport à un Ordre de Travail."@fr ;
+    rdfs:domain onto:ProductPassport ;
+    rdfs:range onto:WorkOrder .
+
+onto:Document a owl:Class ;
+    rdfs:label "Document"@en,
+        "Document"@fr ;
+    rdfs:comment "A document associated with a product (manuals, invoices, certificates, etc.)."@en,
+        "Un document associé à un produit (manuels, factures, certificats, etc.)."@fr ;
+    rdfs:subClassOf schema:DigitalDocument .
+
+onto:Facility a owl:Class ;
+    rdfs:label "Facility"@en,
+        "Installation"@fr ;
+    rdfs:comment "A location or building involved in the value chain of a product (manufacturing facility, warehouse, etc.) as per EU ESPR regulation. Aligned with UNTP DPP-04."@en,
+        "Un lieu ou bâtiment impliqué dans la chaîne de valeur d'un produit (usine de fabrication, entrepôt, etc.) selon la réglementation européenne ESPR. Aligné avec UNTP DPP-04."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:Place ;
+    ns1:term_status "stable" .
+
+onto:RepairEvent a owl:Class ;
+    rdfs:label "Repair Event"@en,
+        "Événement de Réparation"@fr ;
+    rdfs:comment "A specific repair or maintenance intervention performed on a product."@en,
+        "Une intervention de réparation ou maintenance spécifique effectuée sur un produit."@fr ;
+    rdfs:subClassOf schema:Service .
+
+onto:VerifiableCredential a owl:Class ;
+    rdfs:label "Verifiable Credential"@en,
+        "Credential Vérifiable"@fr ;
+    rdfs:comment "A W3C Verifiable Credential (VCDM 2.0) that can be used to verify claims about a product passport or economic operator. Stored and managed via EU Business Wallet (EBW)."@en,
+        "Un W3C Verifiable Credential (VCDM 2.0) qui peut être utilisé pour vérifier des déclarations sur un passeport produit ou un opérateur économique. Stocké et géré via EU Business Wallet (EBW)."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets>,
+        <https://www.w3.org/TR/vc-data-model-2.0/> ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:VerifiableProductPassport a owl:Class ;
+    rdfs:label "Verifiable Product Passport"@en,
+        "Passeport Produit Vérifiable"@fr ;
+    rdfs:comment "A Digital Product Passport issued as a W3C Verifiable Credential (VCDM 2.0) via EU Business Wallet (EBW). Provides cryptographic proof of authenticity and integrity."@en,
+        "Un Passeport Produit Numérique émis comme W3C Verifiable Credential (VCDM 2.0) via EU Business Wallet (EBW). Fournit une preuve cryptographique d'authenticité et d'intégrité."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets>,
+        <https://www.w3.org/TR/vc-data-model-2.0/> ;
+    rdfs:subClassOf onto:ProductPassport ;
+    ns1:term_status "stable" .
+
+onto:Criterion a owl:Class ;
+    rdfs:label "Criterion"@en,
+        "Critère"@fr ;
+    rdfs:comment "A criterion or rule within a standard or regulation against which a claim is evaluated."@en,
+        "Critère ou règle dans un standard ou réglementation contre lequel une déclaration est évaluée."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:Diagnostic a owl:Class ;
+    rdfs:label "Diagnostic"@en,
+        "Diagnostic"@fr ;
+    rdfs:comment "A diagnostic assessment performed on a product to identify issues."@en,
+        "Une évaluation de diagnostic effectuée sur un produit pour identifier les problèmes."@fr ;
+    rdfs:subClassOf schema:Thing .
+
+onto:ProductClassification a owl:Class ;
+    rdfs:label "Product Classification"@en,
+        "Classification Produit"@fr ;
+    rdfs:comment "Product classification according to a standardized scheme (UN-CPC, GS1, NACE, etc.). Aligned with UNTP DPP-02."@en,
+        "Classification d'un produit selon un schéma standardisé (UN-CPC, GS1, NACE, etc.). Aligné avec UNTP DPP-02."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:ProductLifecycleStage a owl:Class ;
+    rdfs:label "Product Lifecycle Stage"@en,
+        "Étape du Cycle de Vie du Produit"@fr ;
+    rdfs:comment "A stage in the product lifecycle (manufacturing, purchase, usage, end of life, recycling)."@en,
+        "Une étape dans le cycle de vie du produit (fabrication, achat, usage, fin de vie, recyclage)."@fr ;
+    rdfs:subClassOf schema:Enumeration .
+
+onto:ProductStatus a owl:Class ;
+    rdfs:label "Product Status"@en,
+        "Statut Produit"@fr ;
+    rdfs:comment "The current status of a product (under warranty, out of warranty, broken, repaired, etc.)."@en,
+        "Le statut actuel d'un produit (sous garantie, hors garantie, en panne, réparé, etc.)."@fr ;
+    rdfs:subClassOf schema:Enumeration .
+
+onto:Regulation a owl:Class ;
+    rdfs:label "Regulation"@en,
+        "Réglementation"@fr ;
+    rdfs:comment "Reference regulation for a conformity claim."@en,
+        "Réglementation de référence pour une déclaration de conformité."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:SecureDataShare a owl:Class ;
+    rdfs:label "Secure Data Share"@en,
+        "Partage de Données Sécurisé"@fr ;
+    rdfs:comment "A secure sharing of DPP data between economic operators via EU Business Wallet (EBW). Includes cryptographic integrity verification and timestamping."@en,
+        "Un partage sécurisé de données DPP entre opérateurs économiques via EU Business Wallet (EBW). Inclut la vérification d'intégrité cryptographique et l'horodatage."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    rdfs:subClassOf schema:Action ;
+    ns1:term_status "stable" .
+
+onto:CompoundIdentifier a owl:Class ;
+    rdfs:label "Compound Identifier"@en,
+        "Identifiant Composé"@fr ;
+    rdfs:comment "A complex identifier combining a GTIN with a variant, batch, or serial number (Made-to-Order products)."@en,
+        "Un identifiant complexe combinant un GTIN avec un variant, lot ou numéro de série (produits sur mesure)."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:PropertyValue ;
+    ns1:term_status "stable" .
+
+onto:Metric a owl:Class ;
+    rdfs:label "Metric"@en,
+        "Métrique"@fr ;
+    rdfs:comment "A metric defining actual measured values, optionally including accuracy."@en,
+        "Métrique définissant les valeurs mesurées réelles, incluant optionnellement la précision."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:QuantitativeValue ;
+    ns1:term_status "stable" .
+
+onto:ServiceRequest a owl:Class ;
+    rdfs:label "Service Request"@en,
+        "Demande de Service"@fr ;
+    rdfs:comment "A request for after-sales service (SAV) for a product."@en,
+        "Une demande de service après-vente (SAV) pour un produit."@fr ;
+    rdfs:subClassOf schema:Service .
+
+onto:TraceabilityPerformance a owl:Class ;
+    rdfs:label "Traceability Performance"@en,
+        "Performance Traçabilité"@fr ;
+    rdfs:comment "Traceability information for a specific value chain process. Aligned with UNTP DPP."@en,
+        "Information de traçabilité pour un processus spécifique de la chaîne de valeur. Aligné avec UNTP DPP."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:MaterialProvenance a owl:Class ;
+    rdfs:label "Material Provenance"@en,
+        "Provenance des Matériaux"@fr ;
+    rdfs:comment "Information about material provenance: name, mass fraction, origin country. Aligned with UNTP DPP-03."@en,
+        "Information sur la provenance d'un matériau : nom, fraction massique, pays d'origine. Aligné avec UNTP DPP-03."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:ReplacementPart a owl:Class ;
+    rdfs:label "Replacement Part"@en,
+        "Pièce de Rechange"@fr ;
+    rdfs:comment "A part used to replace a component in a product during repair or maintenance."@en,
+        "Une pièce utilisée pour remplacer un composant dans un produit lors d'une réparation ou maintenance."@fr ;
+    rdfs:subClassOf schema:Product .
+
+onto:EmissionsPerformance a owl:Class ;
+    rdfs:label "Emissions Performance"@en,
+        "Performance Émissions"@fr ;
+    rdfs:comment "Greenhouse gas emissions scorecard for a product. Aligned with UNTP DPP."@en,
+        "Tableau de bord des émissions de gaz à effet de serre du produit. Aligné avec UNTP DPP."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:QuantitativeValue ;
+    ns1:term_status "stable" .
+
+onto:Standard a owl:Class ;
+    rdfs:label "Standard"@en,
+        "Standard"@fr ;
+    rdfs:comment "Standard, norm, or reference scheme for a conformity claim."@en,
+        "Standard, norme ou schéma de référence pour une déclaration de conformité."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:Warranty a owl:Class ;
+    rdfs:label "Warranty"@en,
+        "Garantie"@fr ;
+    rdfs:comment "A warranty covering a product, which can be of different types (manufacturer, retailer, extension, maintenance)."@en,
+        "Une garantie couvrant un produit, qui peut être de différents types (constructeur, distributeur, extension, maintenance)."@fr ;
+    rdfs:subClassOf schema:WarrantyScope .
+
+onto:WorkOrder a owl:Class ;
+    rdfs:label "Work Order"@en,
+        "Ordre de Travail"@fr ;
+    rdfs:comment "An order for work to be performed on a product (repair, maintenance, etc.)."@en,
+        "Un ordre de travail à effectuer sur un produit (réparation, maintenance, etc.)."@fr ;
+    rdfs:subClassOf schema:Service .
+
+onto:EconomicOperator a owl:Class ;
+    rdfs:label "Economic Operator"@en,
+        "Opérateur Économique"@fr ;
+    rdfs:comment "An economic operator in the value chain (manufacturer, importer, distributor, dealer, repairer) as per EU ESPR regulation. Can be authenticated via EU Business Wallet (EBW) with EUID (European Unique Identifier)."@en,
+        "Un opérateur économique dans la chaîne de valeur (fabricant, importateur, distributeur, revendeur, réparateur) selon la réglementation européenne ESPR. Peut être authentifié via EU Business Wallet (EBW) avec EUID (European Unique Identifier)."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets> ;
+    rdfs:subClassOf schema:Organization ;
+    ns1:term_status "stable" .
+
+onto:SecureLink a owl:Class ;
+    rdfs:label "Secure Link"@en,
+        "Lien Sécurisé"@fr ;
+    rdfs:comment "A secure link with hash digest and encryption method for verification."@en,
+        "Lien sécurisé avec digest de hash et méthode de cryptage pour vérification."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:URL ;
+    ns1:term_status "stable" .
+
+onto:CircularityPerformance a owl:Class ;
+    rdfs:label "Circularity Performance"@en,
+        "Performance Circularité"@fr ;
+    rdfs:comment "Product circularity scorecard. Aligned with UNTP DPP."@en,
+        "Tableau de bord de la circularité du produit. Aligné avec UNTP DPP."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/>,
+        <https://www.ellenmacarthurfoundation.org/resources/apply/material-circularity-indicator> ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:ConformityClaim a owl:Class ;
+    rdfs:label "Conformity Claim"@en,
+        "Déclaration de Conformité"@fr ;
+    rdfs:comment "Claim of conformity to a standard or regulation. Aligned with UNTP DPP."@en,
+        "Déclaration de conformité à un standard ou réglementation. Aligné avec UNTP DPP."@fr ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://untp.unece.org/docs/specification/DigitalProductPassport/> ;
+    rdfs:subClassOf schema:Claim ;
+    ns1:term_status "stable" .
+
+onto:Intervention a owl:Class ;
+    rdfs:label "Intervention"@en,
+        "Intervention"@fr ;
+    rdfs:comment "A technical intervention on a product (diagnostic, repair, maintenance, replacement, return to manufacturer)."@en,
+        "Une intervention technique sur un produit (diagnostic, réparation, maintenance, remplacement, retour fabricant)."@fr ;
+    rdfs:subClassOf onto:RepairEvent .
+
+onto:ProductPassport a owl:Class ;
+    rdfs:label "Product Passport"@en,
+        "Passeport Produit"@fr ;
+    rdfs:comment "A Digital Product Passport that tracks a product throughout its entire lifecycle."@en,
+        "Un Passeport Produit Numérique qui suit un produit tout au long de son cycle de vie."@fr ;
+    rdfs:subClassOf schema:Product .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "Verisav Digital Product Passport Vocabulary"@en,
+        "Vocabulaire Passeport Produit Numérique Verisav"@fr ;
+    ns2:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:created "2025-12-16"^^xsd:date ;
+    dcterms:creator [ a foaf:Person ;
+            rdfs:seeAlso <https://orcid.org/0009-0001-0356-4421>,
+                <https://www.linkedin.com/in/kévinboutillier>,
+                <https://www.verisav.fr/en/founders/kevin-boutillier> ;
+            foaf:name "Kévin Boutillier" ] ;
+    dcterms:description "Vocabulary for Digital Product Passports (DPP) managing product lifecycle, warranties, repairs, and compliance with EU regulations (ESPR EU 2024/1781). Aligned with GS1 Digital Link standards, UNTP (United Nations Transparency Protocol) for sustainability and traceability, and EU Business Wallet (EBW) for verifiable credentials and enterprise identity. Includes GTIN, GLN, granularity (model/batch/serial), compound identifier support, material provenance, emissions, circularity, conformity claims, W3C Verifiable Credentials (VCDM 2.0), and EUID (European Unique Identifier) support."@en,
+        "Vocabulaire pour les Passeports Produit Numérique (DPP) gérant le cycle de vie des produits, garanties, réparations et conformité avec les réglementations européennes (ESPR EU 2024/1781). Aligné avec les standards GS1 Digital Link, UNTP (United Nations Transparency Protocol) pour la durabilité et la traçabilité, et EU Business Wallet (EBW) pour les credentials vérifiables et l'identité d'entreprise. Inclut GTIN, GLN, granularité (modèle/lot/série), support des identifiants composés, provenance des matériaux, émissions, circularité, déclarations de conformité, W3C Verifiable Credentials (VCDM 2.0), et support EUID (European Unique Identifier)."@fr ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2026-01-23"^^xsd:date ;
+    dcterms:publisher <https://www.verisav.fr> ;
+    dcterms:rights "Copyright © 2025 Verisav SAS. All rights reserved."@en,
+        "Copyright © 2025 Verisav SAS. Tous droits réservés."@fr ;
+    dcterms:title "Verisav DPP Vocabulary"@en ;
+    vann:preferredNamespacePrefix "dpp" ;
+    vann:preferredNamespaceUri "https://ns.verisav.fr/dpp#" ;
+    rdfs:comment "This vocabulary is accessible via GraphQL API at https://www.verisav.fr/api/graphql. Use the 'vocabulary(id: \"dpp\")' query to access DPP vocabulary data."@en,
+        "This vocabulary is aligned with UNTP DPP specification for sustainability and traceability, EU Business Wallet (EBW) for verifiable credentials and enterprise identity, while maintaining a specific focus on after-sales service (SAV)."@en,
+        "Version 1.2.0 (2026-01-23): Added EU Business Wallet (EBW) support - VerifiableProductPassport, VerifiableCredential, EUID support for EconomicOperator, SecureDataShare. Version 1.1.0 (2025-01-XX): Added UNTP alignment - Material Provenance, Product Classification, Emissions Performance, Circularity Performance, Conformity Claims, Traceability Events. Initial release (1.0.0) with GS1 Digital Link alignment and ESPR (EU 2024/1781) support. Added properties: gs1DigitalLink, hasGln, hasGtin, granularityLevel, batchLotNumber, versionNumber. Added classes: EconomicOperator, Facility, CompoundIdentifier."@en,
+        "Ce vocabulaire est accessible via l'API GraphQL à https://www.verisav.fr/api/graphql. Utilisez la requête 'vocabulary(id: \"dpp\")' pour accéder aux données du vocabulaire DPP."@fr,
+        "Ce vocabulaire est aligné avec la spécification UNTP DPP pour la durabilité et la traçabilité, EU Business Wallet (EBW) pour les credentials vérifiables et l'identité d'entreprise, tout en conservant un focus spécifique sur le service après-vente (SAV)."@fr,
+        "Version 1.2.0 (2026-01-23): Ajout support EU Business Wallet (EBW) - VerifiableProductPassport, VerifiableCredential, support EUID pour EconomicOperator, SecureDataShare. Version 1.1.0 (2025-01-XX): Ajout alignement UNTP - Provenance Matériaux, Classification Produit, Performance Émissions, Performance Circularité, Déclarations Conformité, Événements Traçabilité. Version initiale (1.0.0) avec alignement GS1 Digital Link et support ESPR (EU 2024/1781). Propriétés ajoutées : gs1DigitalLink, hasGln, hasGtin, granularityLevel, batchLotNumber, versionNumber. Classes ajoutées : EconomicOperator, Facility, CompoundIdentifier."@fr ;
+    rdfs:seeAlso <https://digital-strategy.ec.europa.eu/en/policies/business-wallets>,
+        <https://untp.unece.org/docs/specification/DigitalProductPassport/>,
+        <https://www.gs1.org/standards/Digital-Link/>,
+        <https://www.gs1.org/standards/id-keys>,
+        <https://www.w3.org/TR/vc-data-model-2.0/> ;
+    owl:imports schema: ;
+    owl:versionInfo "1.2.0" ;
+    dcat:accessURL <https://www.verisav.fr/api/graphql> ;
+    dcat:distribution [ a dcat:Distribution ;
+            dcterms:format "application/ld+json" ;
+            dcterms:title "DPP Vocabulary (JSON-LD via API)"@en ;
+            dcat:accessURL <https://www.verisav.fr/api/dpp/dpp.jsonld> ],
+        [ a dcat:Distribution ;
+            dcterms:format "application/ld+json" ;
+            dcat:downloadURL <https://ns.verisav.fr/dpp/dpp.jsonld> ],
+        [ a dcat:Distribution ;
+            dcterms:format "application/rdf+xml" ;
+            dcat:downloadURL <https://ns.verisav.fr/dpp/dpp.xml> ],
+        [ a dcat:Distribution ;
+            dcterms:description "GraphQL API for querying all Verisav vocabularies (DPP, RMA, WTY). Supports introspection, multilingual labels, and real-time vocabulary access."@en,
+                "API GraphQL pour interroger tous les vocabulaires Verisav (DPP, RMA, WTY). Supporte l'introspection, les labels multilingues et l'accès en temps réel aux vocabulaires."@fr ;
+            dcterms:format "application/graphql" ;
+            dcterms:title "Verisav Vocabularies GraphQL API"@en,
+                "API GraphQL Vocabulaires Verisav"@fr ;
+            dcat:accessURL <https://www.verisav.fr/api/graphql> ;
+            dcat:endpointURL <https://www.verisav.fr/api/graphql> ],
+        [ a dcat:Distribution ;
+            dcterms:format "text/turtle" ;
+            dcat:downloadURL <https://ns.verisav.fr/dpp/dpp.ttl> ] ;
+    dcat:endpointURL <https://www.verisav.fr/api/graphql> ;
+    schema:potentialAction [ a schema:SearchAction ;
+            schema:query-input "required name=query" ;
+            schema:target <https://www.verisav.fr/api/v1/vocabulary/dpp/search?q=%7Bquery%7D> ] .
+

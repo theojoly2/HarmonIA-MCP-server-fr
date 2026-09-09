@@ -1,0 +1,438 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/procurement/public-contracts> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:description vann:usageNote "Use for attaching plain text description of public contracts (instances of pc:Contract). The domain is pc:Contract."@en .
+
+dcterms:title vann:usageNote "Use for labelling states of public contracts (instances of pc:Contract). The domain is pc:Contract."@en .
+
+<http://purl.org/procurement/public-contracts#actualEndDate> a owl:FunctionalProperty ;
+    rdfs:label "Actual end date of contract realization"@en ;
+    rdfs:comment "Property for actual end date of public contract's realization. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf dcterms:date .
+
+<http://purl.org/procurement/public-contracts#actualPrice> a owl:FunctionalProperty ;
+    rdfs:label "Actual price after contract realization"@en ;
+    rdfs:comment "Property for actual price of the public contract. Cardinality 0..1"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#PriceSpecification> ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#contractPrice> .
+
+<http://purl.org/procurement/public-contracts#additionalObject> a rdf:Property ;
+    rdfs:label "Additional object of contract"@en ;
+    rdfs:comment "CPV (Common Procurement Vocabulary) code describing an additional object of a public contract. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:subject .
+
+<http://purl.org/procurement/public-contracts#agreedPrice> a owl:FunctionalProperty ;
+    rdfs:label "Agreed price"@en ;
+    rdfs:comment "Property for a price stated on the contract with the supplier. Cardinality 0..1"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#PriceSpecification> ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#contractPrice> .
+
+<http://purl.org/procurement/public-contracts#agreement> a rdf:Property ;
+    rdfs:label "Contract agreement"@en ;
+    rdfs:comment "Property for attachment of documents containing the agreement between supplier and contractor. Cardinality 0..*"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#attachment> .
+
+<http://purl.org/procurement/public-contracts#authorityKind> a qb:CodedProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Kind of contracting authority"@en ;
+    rdfs:comment "Property for a kind of a contracting authority. Only a predefined SKOS concept can be used. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/goodrelations/v1#BusinessEntity> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-authority-kinds#> ;
+            owl:onProperty skos:inScheme ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-authority-kinds#> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept .
+
+<http://purl.org/procurement/public-contracts#awardCriteriaCombination> a owl:FunctionalProperty ;
+    rdfs:label "Criteria combination for tender evaluation."@en ;
+    rdfs:comment "Property for criteria combination for tender evaluation. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#AwardCriteriaCombination> .
+
+<http://purl.org/procurement/public-contracts#awardCriterion> a rdf:Property ;
+    rdfs:label "Criterion for contract award."@en,
+        "Critères d'attribution"@fr ;
+    rdfs:comment "Property for setting a criterion for tender evaluation. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#AwardCriteriaCombination> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#CriterionWeighting> ;
+    owl:equivalentProperty <http://www.loted.eu/ontology#AC> .
+
+<http://purl.org/procurement/public-contracts#awardDate> a owl:FunctionalProperty ;
+    rdfs:label "Date of contract award"@en ;
+    rdfs:comment "Property for date of contract award to a bidder. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf dcterms:date .
+
+<http://purl.org/procurement/public-contracts#awardedTender> a owl:FunctionalProperty ;
+    rdfs:label "Awarded tender"@en ;
+    rdfs:comment "Property for awarded tender submitted by a bidder. Cardinality 0..1"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#tender> .
+
+<http://purl.org/procurement/public-contracts#bidder> a rdf:Property ;
+    rdfs:label "Tender bidder"@en ;
+    rdfs:comment "Property for bidder submitting the tender. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Tender> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#BusinessEntity> .
+
+<http://purl.org/procurement/public-contracts#contact> a rdf:Property ;
+    rdfs:label "Contact person"@en ;
+    rdfs:comment "Property for contact information for a person or place responsible for a communication with the public and bidders. If there are more contact places or persons (e.g., for collecting documentation to the public contract), there is a separate contact for each person. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/2006/vcard/ns#VCard> .
+
+<http://purl.org/procurement/public-contracts#contract> a rdf:Property ;
+    rdfs:label "Public contract"@en ;
+    rdfs:comment "Public contract, for which tenders are opened"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#TendersOpening> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#Contract> .
+
+<http://purl.org/procurement/public-contracts#contractingAuthority> a owl:FunctionalProperty ;
+    rdfs:label "Contracting authority"@en ;
+    rdfs:comment "Institution which issues a public contract, receives tenders to the contract and chooses a suitable supplier on the base of the conditions given by the contract. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#BusinessEntity> .
+
+<http://purl.org/procurement/public-contracts#criterionWeight> a owl:FunctionalProperty ;
+    rdfs:label "Contract award criterion weight"@en ;
+    rdfs:comment "Property for criterion weight for tender evaluation. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#CriterionWeighting> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts-datatypes#percentage> .
+
+<http://purl.org/procurement/public-contracts#documentationPrice> a owl:FunctionalProperty ;
+    rdfs:label "Price of documentation for public contract"@en ;
+    rdfs:comment "Property for price of documentation for public contract. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#PriceSpecification> .
+
+<http://purl.org/procurement/public-contracts#documentationRequestDeadline> a owl:FunctionalProperty ;
+    rdfs:label "Time-limit for receipt of requests for documentation"@en ;
+    rdfs:comment "Property for time limit for receipt of requests for documentation. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf dcterms:date .
+
+<http://purl.org/procurement/public-contracts#duration> a owl:FunctionalProperty ;
+    rdfs:label "Duration of contract"@en ;
+    rdfs:comment "Property for duration of contract. The duration may be described in days, months, years, etc. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:duration .
+
+<http://purl.org/procurement/public-contracts#estimatedEndDate> a owl:FunctionalProperty ;
+    rdfs:label "Estimated end date of contract"@en ;
+    rdfs:comment "Property for estimated end date of public contract realization. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf dcterms:date .
+
+<http://purl.org/procurement/public-contracts#estimatedPrice> a owl:FunctionalProperty ;
+    rdfs:label "Exact estimated price"@en ;
+    rdfs:comment "Property for estimated price of public contract. It can be an exact estimation or an interval. Cardinality 0..1"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#contractPrice> .
+
+<http://purl.org/procurement/public-contracts#expectedNumberOfOperators> a owl:FunctionalProperty ;
+    rdfs:label "Expected number of operators of framework agreement"@en ;
+    rdfs:comment "Expected number of operators of framework agreement. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#FrameworkAgreement> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#QuantitativeValueInteger> .
+
+<http://purl.org/procurement/public-contracts#frameworkAgreement> a rdf:Property ;
+    rdfs:label "On the base of a framework agreement"@en ;
+    rdfs:comment "Property for a framework agreement on which base a public contract was issued. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#FrameworkAgreement> .
+
+<http://purl.org/procurement/public-contracts#item> a rdf:Property ;
+    rdfs:comment "An item inquired by a public contract. It can be a combination of several products or services which can be expressed using properties of gr:Offering. Cardinality 0..*"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/procurement/public-contracts#Contract> <http://purl.org/procurement/public-contracts#Tender> ) ],
+        [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/procurement/public-contracts#Contract> <http://purl.org/procurement/public-contracts#Tender> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#Offering> ;
+    rdfs:subPropertyOf dcterms:hasPart .
+
+<http://purl.org/procurement/public-contracts#kind> a qb:CodedProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Contract kind"@en ;
+    rdfs:comment "Kind of a public contract specifies a basic focus of the contract on works, supplies or services. Only a predefined SKOS concept can be used. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-kinds#> ;
+            owl:onProperty skos:inScheme ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-kinds#> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept ;
+    rdfs:subPropertyOf dcterms:type .
+
+<http://purl.org/procurement/public-contracts#location> a rdf:Property ;
+    rdfs:label "Place of contract's realization"@en ;
+    rdfs:comment "Place of delivery of contracted product or performance of contracted service. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://schema.org/Place> ;
+    rdfs:subPropertyOf <http://schema.org/location> .
+
+<http://purl.org/procurement/public-contracts#lot> a rdf:Property ;
+    rdfs:label "Contract lot"@en ;
+    rdfs:comment "Property for specifying contract lot. When contract is too big, it is split to lots by contracting authority. Bidders then tender each lot separately. For each lot the authority awards a separate tender. The contract itself has no tenders. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#Contract> .
+
+<http://purl.org/procurement/public-contracts#mainActivity> a qb:CodedProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Hlavní aktivita"@en ;
+    rdfs:comment "Property for main activity of contracting authority. Only a predefined SKOS concept can be used. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/goodrelations/v1#BusinessEntity> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-activities#> ;
+            owl:onProperty skos:inScheme ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-activities#> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept .
+
+<http://purl.org/procurement/public-contracts#mainObject> a owl:FunctionalProperty ;
+    rdfs:label "Main object of contract"@en ;
+    rdfs:comment "CPV (Common Procurement Vocabulary) code describing the main object of a public contract. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:subject .
+
+<http://purl.org/procurement/public-contracts#numberOfTenders> a owl:FunctionalProperty ;
+    rdfs:label "Number of tenders received"@en ;
+    rdfs:comment "Property for number of tenders received. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://purl.org/procurement/public-contracts#offeredPrice> a owl:FunctionalProperty ;
+    rdfs:label "Offered price in tender"@en ;
+    rdfs:comment "Property for price offered by supplier. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Tender> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#PriceSpecification> ;
+    rdfs:subPropertyOf <http://purl.org/goodrelations/v1#hasPriceSpecification> .
+
+<http://purl.org/procurement/public-contracts#onBehalfOf> a rdf:Property ;
+    rdfs:label "On behalf of"@en ;
+    rdfs:comment "Contract award on behalf of other contracting authorities. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#BusinessEntity> .
+
+<http://purl.org/procurement/public-contracts#procedureType> a qb:CodedProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Procedure type"@en ;
+    rdfs:comment "Type of procedure of a public contract specifies a procedure which is applied to publish information about the contract and choose a supplier. Only a predefined value can be used. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-procedure-types#> ;
+            owl:onProperty skos:inScheme ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://purl.org/procurement/public-contracts-procedure-types#> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept .
+
+<http://purl.org/procurement/public-contracts#profile> a owl:InverseFunctionalProperty ;
+    rdfs:label "Profile web site of contracting authority"@en ;
+    rdfs:comment "Property for the internet address of the profile of contracting authority (URL). Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/goodrelations/v1#BusinessEntity> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:Resource ;
+    rdfs:subPropertyOf foaf:homepage .
+
+<http://purl.org/procurement/public-contracts#specification> a rdf:Property ;
+    rdfs:label "Contract specification"@en ;
+    rdfs:comment "Property for attachment of documents containing the contract specification. Cardinality 0..*"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/procurement/public-contracts#attachment> .
+
+<http://purl.org/procurement/public-contracts#startDate> a owl:FunctionalProperty ;
+    rdfs:label "Start date of contract"@en ;
+    rdfs:comment "Property for start date of public contract realization coming from the contract's text. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf dcterms:date .
+
+<http://purl.org/procurement/public-contracts#subsidy> a rdf:Property ;
+    rdfs:label "Subsidy supplemented for contract"@en ;
+    rdfs:comment "Property for used tender subsidy. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://reference.data.gov.uk/def/payment#Payment> .
+
+<http://purl.org/procurement/public-contracts#tenderDeadline> a owl:FunctionalProperty ;
+    rdfs:label "Time-limit for receipt of tenders or requests to participate"@en ;
+    rdfs:comment "Property for time limit for receipt of tenders or requests to participate. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf dcterms:date ;
+    owl:equivalentProperty <http://www.loted.eu/ontology#DT> .
+
+<http://purl.org/procurement/public-contracts#tenderMaintenanceDuration> a owl:FunctionalProperty ;
+    rdfs:label "Duration of tender validity"@en ;
+    rdfs:comment "Property for expressing minimum time frame during which the tenderer must maintain the tender. The duration may be described in days, months, years, etc. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:duration .
+
+<http://purl.org/procurement/public-contracts#weightedCriterion> a owl:FunctionalProperty ;
+    rdfs:label "Weighted criterion"@en ;
+    rdfs:comment "Property for attaching criterion that is weighted. Cardinality 0..1"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#CriterionWeighting> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:subject .
+
+<http://www.w3.org/ns/adms#identifier> vann:usageNote "Use for attaching identifiers (instances of adms:Identifier) to contracting authorities and bidders (instances of gr:BusinessEntity). The property should be used for official numbers assigned to public contracts in national public procurement systems, reference numbers of public contracts assigned by their contracting authorities, notice number in EU TED, etc. The domain is a union of gr:BusinessEntity and pc:Contract."@en .
+
+<http://keg.vse.cz/resource/person/jindrich-mynarz> a foaf:Person ;
+    foaf:mbox <mailto:mynarzjindrich@gmail.com> ;
+    foaf:name "Jindřich Mynarz" .
+
+<http://keg.vse.cz/resource/person/josef-petrak> a foaf:Person ;
+    foaf:mbox <mailto:me@jspetrak.name> ;
+    foaf:name "Josef Petrák" .
+
+<http://keg.vse.cz/resource/person/vojtech-svatek> a foaf:Person ;
+    foaf:mbox <mailto:svatek@vse.cz> ;
+    foaf:name "Vojtěch Svátek" .
+
+<http://purl.org/klimek#me> a foaf:Person ;
+    foaf:mbox <mailto:klimek.mff@gmail.com> ;
+    foaf:name "Jakub Klímek" .
+
+<http://purl.org/knap#me> a foaf:Person ;
+    foaf:mbox <mailto:toknap@gmail.com> ;
+    foaf:name "Tomáš Knap" .
+
+<http://purl.org/procurement/public-contracts#TendersOpening> a owl:Class ;
+    rdfs:label "Tenders' opening"@en ;
+    rdfs:comment "Opening of tenders submitted for a public contract"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://schema.org/Event> .
+
+<http://purl.org/procurement/public-contracts#tender> a rdf:Property ;
+    rdfs:label "Tender"@en ;
+    rdfs:comment "Property for a tender submitted by a bidder. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/procurement/public-contracts#Tender> .
+
+<http://schema.org/location> vann:usageNote "Use for location, where tenders are opened. The domain is pc:TendersOpening. Cardinality 0..1"@en .
+
+<http://www.facebook.com/nohis> a foaf:Person ;
+    foaf:mbox <mailto:nohejl.pavel@gmail.com> ;
+    foaf:name "Pavel Nohejl" .
+
+<http://www.ksi.mff.cuni.cz/~necasky> a foaf:Person ;
+    foaf:mbox <mailto:martinnec@gmail.com> ;
+    foaf:name "Martin Nečaský" .
+
+<http://purl.org/procurement/public-contracts#AwardCriteriaCombination> a owl:Class ;
+    rdfs:label "Combination of contract award criteria"@en ;
+    rdfs:comment "Class for description of criteria combination used for tender evaluation"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.loted.eu/ontology#AwardCriteria> .
+
+<http://purl.org/procurement/public-contracts#FrameworkAgreement> a owl:Class ;
+    rdfs:label "Framework agreement"@en ;
+    rdfs:comment "Class for decribing a framework agreement"@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/procurement/public-contracts#attachment> a rdf:Property ;
+    rdfs:label "Contract attachment"@en ;
+    rdfs:comment "Property for attachment of other documents. For attachment of contract specification use pc:specification. For attachment of contract agreement use pc:agreement. Cardinality 0..*"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document .
+
+<http://purl.org/procurement/public-contracts#CriterionWeighting> a owl:Class ;
+    rdfs:label "Contract award weighted criterion"@en ;
+    rdfs:comment "Class for description of one criterion and its weight"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://vocab.deri.ie/c4n#Condition> .
+
+<http://purl.org/procurement/public-contracts#contractPrice> a rdf:Property ;
+    rdfs:label "Price"@en ;
+    rdfs:comment "Abstract property for price of public contract"@en ;
+    rdfs:domain <http://purl.org/procurement/public-contracts#Contract> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/goodrelations/v1#PriceSpecification> .
+
+<http://purl.org/procurement/public-contracts#Tender> a owl:Class ;
+    rdfs:label "Tender"@en ;
+    rdfs:comment "Basic class for decribing a tender submitted by a bidder"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Offering> .
+
+dcterms:date vann:usageNote "Use for date and time, when tenders are opened. The domain is pc:TendersOpening. Cardinality 0..1"@en .
+
+<http://purl.org/procurement/public-contracts#Contract> a owl:Class ;
+    rdfs:label "Public contract"@en ;
+    rdfs:comment "An instance of this class is an abstract information entity about a public contract. It consists of all currently known information about a contract, e.g., a contracting authority, services or supplies which shall be purchased, and contract conditions (e.g., important dates, expected price, etc.). It also informs about tenders received from particular bidders and about an accepted tender. If the contract has already been realized it also informs about an actual price of realization, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.loted.eu/ontology#Tender> .
+
+onto: a owl:Ontology ;
+    dcterms:creator <http://keg.vse.cz/resource/person/jindrich-mynarz>,
+        <http://keg.vse.cz/resource/person/josef-petrak>,
+        <http://keg.vse.cz/resource/person/vojtech-svatek>,
+        <http://purl.org/klimek#me>,
+        <http://purl.org/knap#me>,
+        <http://www.facebook.com/nohis>,
+        <http://www.ksi.mff.cuni.cz/~necasky> ;
+    dcterms:description "Public Contracts Ontology offers a means of expression for describing public contracts in the public sector."@en ;
+    dcterms:modified "2012-10-10"^^xsd:date ;
+    dcterms:rights <http://creativecommons.org/licenses/by/3.0/cz/> ;
+    dcterms:title "Public Contracts Ontology"@en ;
+    vann:preferredNamespacePrefix "pc" ;
+    vann:preferredNamespaceUri "http://purl.org/procurement/public-contracts#" ;
+    rdfs:seeAlso <http://code.google.com/p/public-contracts-ontology/>,
+        <http://prefix.cc/pc> .
+

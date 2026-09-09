@@ -1,0 +1,108 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/wai#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:date a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:rights a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dcterms:contributor "Diego Berrueta",
+        "Emilio Rubiera",
+        "Marcos Sacristán",
+        "Pablo López" ;
+    dcterms:creator "Ivan Mínguez",
+        "Luis Polo" ;
+    dcterms:date "2010-10-11" ;
+    dcterms:description ""@en ;
+    dcterms:rights "(c) TreeLogic, 2009" ;
+    dcterms:title "Roles and Profiles Ontology"@en ;
+    rdfs:isDefinedBy <http://purl.org/wai.owl> .
+
+onto:atContext a owl:ObjectProperty ;
+    rdfs:label "at context"@en ;
+    rdfs:comment "This property enables to relate a profile with a given context (geographical, temporal, spatial, social, etc.)."@en ;
+    rdfs:domain onto:Profile ;
+    rdfs:range onto:Context .
+
+onto:isActive a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "is active"@en ;
+    rdfs:comment "This property allows to specify which is the user profile that is active, \\ngiven a interaction between two applications."@en ;
+    rdfs:domain onto:Profile ;
+    rdfs:range xsd:boolean .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+foaf:member owl:propertyChainAxiom ( onto:profiles onto:participates ),
+        ( onto:profiles onto:participates ) .
+
+onto:Context a owl:Class ;
+    rdfs:label "Context"@en ;
+    rdfs:comment "Contexts are similar to situations or state of affairs providing interpretation coordinates for profiles. In the most simple case, these coordinates are just geographical/spatial or temporal coordinates. WAI does not impose a fixed definition of context. It is deliberately wide in order to enable third-parties the adequation of the meaning of context according to their modeling needs and requirements."@en .
+
+onto:participates a owl:ObjectProperty ;
+    rdfs:label "participates"@en ;
+    rdfs:comment "This property encodes the participation relation between profiles and the communities they are member of."@en ;
+    rdfs:domain onto:Profile ;
+    rdfs:range foaf:Group .
+
+onto:personalizes a owl:ObjectProperty ;
+    rdfs:label "personalizes"@en ;
+    rdfs:comment "A role is personalized by means of a profile, which wrap the role in the identity of the person behind the profile."@en ;
+    rdfs:domain onto:Profile ;
+    rdfs:range onto:Role .
+
+onto:requires a owl:ObjectProperty ;
+    rdfs:label "requires"@en ;
+    rdfs:comment "This property relates roles and their requisites, i.e. other roles."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:range onto:Role .
+
+onto:specializes a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "specializes"@en ;
+    rdfs:comment "This property allows to express hierarchies of roles, through of role specialization: if role A specializes role B, and B specializes C, then role A specializes role C."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:range onto:Role .
+
+onto:plays a owl:ObjectProperty ;
+    rdfs:label "plays"@en ;
+    rdfs:comment "This property relates roles and their players, who can be any foaf:Agent (a person, a group, etc.)"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range onto:Role ;
+    owl:propertyChainAxiom ( onto:plays onto:requires ),
+        ( onto:plays onto:specializes ),
+        ( onto:plays onto:requires ),
+        ( onto:profiles onto:personalizes ),
+        ( onto:plays onto:specializes ),
+        ( onto:profiles onto:personalizes ) .
+
+onto:profiles a owl:ObjectProperty ;
+    rdfs:label "profiles"@en ;
+    rdfs:comment "This property relates people and the featured profiles."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range onto:Profile .
+
+onto:Profile a owl:Class ;
+    rdfs:label "Profile"@en ;
+    rdfs:comment "A profile represents a particular person playing a given role. In the literature it is also known as a \"qua-individual\". WAI extends the meaning of profile to capture \"person-as-role\", \"person-at-context\" and \"person-in-community\"."@en ;
+    owl:disjointWith onto:Role .
+
+onto:Role a owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:comment "A property that can be predicated of a person. In WAI ontology, roles are reified as first order individuals and relations between roles and players are expressed by means of the wai:plays property. WAI does not impose any subclassification of roles. The concept is open to be refined according to domain or application requirements."@en ;
+    owl:disjointWith onto:Profile .
+

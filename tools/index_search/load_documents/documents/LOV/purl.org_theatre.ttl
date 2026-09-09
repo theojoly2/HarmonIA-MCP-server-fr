@@ -1,0 +1,282 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/theatre#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator <http://lukeblaney.co.uk/#me> ;
+    rdfs:comment "A vocabulary for theatrical data.  It defines concepts such as shows, productions, seasons etc." ;
+    owl:priorVersion <http://bedlamtheatre.co.uk/schema#> .
+
+onto:Meeting a owl:Class ;
+    rdfs:label "Meeting" ;
+    rdfs:comment "An event which involves discussion/planning, often with a formal tone." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto:PerformableProject a owl:Class ;
+    rdfs:label "PerformableProject" ;
+    rdfs:comment "A Project which intends to evoke a response from an Audience." ;
+    rdfs:subClassOf foaf:Project ;
+    ns1:term_status "archaic" .
+
+onto:PressNight a owl:Class ;
+    rdfs:label "PressNight" ;
+    rdfs:comment "A performance which reviewers are encouraged to attend." ;
+    rdfs:subClassOf <http://purl.org/ontology/mo/Performance> .
+
+onto:Rehearsal a owl:Class ;
+    rdfs:label "Rehearsal" ;
+    rdfs:comment "An event which involves preparatory work for a Performance." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto:RehearsalReading a owl:Class ;
+    rdfs:label "RehearsalReading" ;
+    rdfs:comment "An unpolished performance in which the cast read from scripts." ;
+    rdfs:subClassOf <http://purl.org/ontology/mo/Performance> .
+
+onto:Rehersal a owl:Class ;
+    rdfs:label "Rehersal" ;
+    rdfs:comment "An event which involves preparatory work for a Performance." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> ;
+    ns1:term_status "archaic" .
+
+onto:RehersalReading a owl:Class ;
+    rdfs:label "RehersalReading" ;
+    rdfs:comment "An unpolished performance in which the cast read from scripts." ;
+    rdfs:subClassOf <http://purl.org/ontology/mo/Performance> ;
+    ns1:term_status "archaic" .
+
+onto:Show a owl:Class ;
+    rdfs:label "Show" ;
+    rdfs:comment "The writing/devising which may enable a Production." ;
+    rdfs:subClassOf <http://purl.org/vocab/frbr/core#Work> ;
+    ns1:term_status "archaic" .
+
+onto:Workshop a owl:Class ;
+    rdfs:label "Workshop" ;
+    rdfs:comment "An event which involves participation, mainly with an educational focus." ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto:accessibility_provision a owl:ObjectProperty ;
+    rdfs:label "accessibility_provision" ;
+    rdfs:comment "Associates an Accessibility Provision with an Event" ;
+    rdfs:domain <http://purl.org/NET/c4dm/event.owl#Event> ;
+    rdfs:range onto:AccessibilityProvision .
+
+onto:agent a owl:ObjectProperty ;
+    rdfs:label "agent" ;
+    rdfs:comment "Associates a Role with an Agent." ;
+    rdfs:domain <http://purl.org/vocab/participation/schema#Role> ;
+    rdfs:range foaf:Agent ;
+    owl:sameAs <http://purl.org/vocab/participation/schema#holder> ;
+    ns1:term_status "archaic" .
+
+onto:audience_restriction a owl:ObjectProperty ;
+    rdfs:label "audience_restriction" ;
+    rdfs:comment "A restriction on who can attend a particular performance" ;
+    rdfs:domain onto:Performance ;
+    rdfs:range xsd:string .
+
+onto:based_on a owl:ObjectProperty ;
+    rdfs:label "based_on" ;
+    rdfs:comment "Indicates a Work that another Work was based on ." ;
+    rdfs:domain <http://purl.org/vocab/frbr/core#Work> ;
+    rdfs:range <http://purl.org/vocab/frbr/core#Work> .
+
+onto:genre a owl:ObjectProperty ;
+    rdfs:label "genre" ;
+    rdfs:comment "Associates a Genre with a Work." ;
+    rdfs:domain <http://purl.org/vocab/frbr/core#Work> ;
+    rdfs:range <http://purl.org/ontology/mo/Genre> .
+
+onto:manifestation a owl:ObjectProperty ;
+    rdfs:label "manifestation" ;
+    rdfs:comment "Associates a Performableproject with a Production." ;
+    rdfs:domain onto:Performableproject ;
+    rdfs:range onto:Production ;
+    ns1:term_status "archaic" .
+
+onto:parent_season a owl:ObjectProperty ;
+    rdfs:label "parent_season" ;
+    rdfs:comment "Associates a season with its commissioning season." ;
+    rdfs:domain onto:Season ;
+    rdfs:range onto:Season ;
+    ns1:term_status "archaic" .
+
+onto:parent_venue a owl:ObjectProperty ;
+    rdfs:label "parent_venue" ;
+    rdfs:comment "Associates a Venue with its containing Venue." ;
+    rdfs:domain onto:Venue ;
+    rdfs:range onto:Venue .
+
+onto:part_of_season a owl:TransitiveProperty ;
+    rdfs:label "part_of_season" ;
+    rdfs:comment "Indicates that something is part of a season" ;
+    rdfs:range onto:Season ;
+    owl:unionOf ( [ a rdfs:domain ] [ a rdfs:domain ] [ a rdfs:domain ] ) .
+
+onto:portrays a owl:ObjectProperty ;
+    rdfs:label "portrays" ;
+    rdfs:comment "Associates a Portrayal with a Character." ;
+    rdfs:domain onto:Portrayal ;
+    rdfs:range <http://purl.org/ontomedia/ext/common/being#Character> .
+
+onto:position a owl:ObjectProperty ;
+    rdfs:label "position" ;
+    rdfs:comment "Associates a Role with a Position." ;
+    rdfs:domain <http://purl.org/vocab/participation/schema#Role> ;
+    rdfs:range onto:Position .
+
+onto:primary_season a owl:ObjectProperty ;
+    rdfs:label "primary_season" ;
+    rdfs:comment "Associates a production with its commissioning season." ;
+    rdfs:domain onto:Production ;
+    rdfs:range onto:Season ;
+    ns1:term_status "archaic" .
+
+onto:production a owl:ObjectProperty ;
+    rdfs:label "production" ;
+    rdfs:comment "Associates a Season with a Production." ;
+    rdfs:domain onto:Season ;
+    rdfs:range onto:Production ;
+    ns1:term_status "archaic" .
+
+onto:production_of a owl:ObjectProperty ;
+    rdfs:label "production_of" ;
+    rdfs:comment "Indicates that a Production is an expression of a given work or production." ;
+    rdfs:domain onto:Production ;
+    owl:unionOf ( [ a rdfs:range ] [ a rdfs:range ] ) .
+
+onto:put_on_by a owl:ObjectProperty ;
+    rdfs:label "put_on_by" ;
+    rdfs:comment "The Company which puts on a Production" ;
+    rdfs:domain onto:Production ;
+    rdfs:range onto:ProductionCompany .
+
+onto:recorded_for a owl:ObjectProperty ;
+    rdfs:label "recorded_for" ;
+    rdfs:comment "A performance recorded for either Simulcast or later broadcast." ;
+    rdfs:domain <http://purl.org/ontology/mo/Performance> ;
+    rdfs:range <http://purl.org/ontology/po/Broadcast> .
+
+onto:scored_voice a owl:ObjectProperty ;
+    rdfs:label "scored_voice" ;
+    rdfs:comment "Indicates the voice classification that a particular Operatic character has been written for." ;
+    rdfs:domain <http://purl.org/ontomedia/ext/common/being#Character> ;
+    rdfs:range onto:Voice .
+
+onto:sponsor a owl:ObjectProperty ;
+    rdfs:label "sponsor" ;
+    rdfs:comment "The Person or Organisation who sponsors a given production or performance" ;
+    rdfs:range foaf:Agent ;
+    owl:unionOf ( [ a rdfs:domain ] [ a rdfs:domain ] ) .
+
+onto:time_of_day a owl:ObjectProperty ;
+    rdfs:label "time_of_day" ;
+    rdfs:comment "A human readable indication of when in the day a performance occurs" ;
+    rdfs:domain onto:Performance ;
+    rdfs:range xsd:string .
+
+onto:venue a owl:ObjectProperty ;
+    rdfs:label "venue" ;
+    rdfs:comment "Associates an Event with the Venue it is held in." ;
+    rdfs:domain onto:Event ;
+    rdfs:range onto:Venue ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#place> .
+
+onto:worldPremiere a owl:ObjectProperty ;
+    rdfs:label "worldPremiere" ;
+    rdfs:comment "Indicates the first performance of a Show or Production on a particular planet." ;
+    rdfs:range <http://purl.org/ontology/mo/Performance> ;
+    rdfs:subPropertyOf onto:premiere ;
+    owl:unionOf ( [ a rdfs:domain ] ) ;
+    ns1:term_status "unstable" .
+
+onto:AccessibilityProvision a owl:Class ;
+    rdfs:label "AccessibilityProvision" ;
+    rdfs:comment "A Provision which makes an ev:Event more accessible" .
+
+onto:Portrayal a owl:Class ;
+    rdfs:label "Portrayal" ;
+    rdfs:comment "A Position which involes portraying a Character." ;
+    rdfs:subClassOf onto:Position .
+
+onto:ProductionCompany a owl:Class ;
+    rdfs:label "ProductionCompany" ;
+    rdfs:comment "An Organisation which puts on Productions." ;
+    rdfs:subClassOf foaf:Organization .
+
+onto:Voice a owl:Class ;
+    rdfs:label "Voice" ;
+    rdfs:comment "The voice classification for a Singer or singing part." ;
+    rdfs:subClassOf <http://purl.org/ontology/mo/Instrument> .
+
+onto:credit a owl:ObjectProperty ;
+    rdfs:label "credit" ;
+    rdfs:comment "Associates a Project with a Role." ;
+    rdfs:range <http://purl.org/vocab/participation/schema#Role> ;
+    owl:inverseOf onto:project ;
+    owl:unionOf ( [ a rdfs:domain ] [ a rdfs:domain ] [ a rdfs:domain ] [ a rdfs:domain ] ) ;
+    ns1:term_status "unstable" .
+
+onto:event a owl:ObjectProperty ;
+    rdfs:label "event" ;
+    rdfs:comment "Associates a Project with an Event." ;
+    rdfs:domain foaf:Project ;
+    rdfs:range <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto:performance a owl:ObjectProperty ;
+    rdfs:label "performance" ;
+    rdfs:comment "Associates a Production with a Performance." ;
+    rdfs:domain onto:Production ;
+    rdfs:range onto:Performance ;
+    rdfs:subPropertyOf onto:event ;
+    owl:inverseOf onto:performance_of .
+
+onto:performance_of a owl:ObjectProperty ;
+    rdfs:label "performance_of" ;
+    rdfs:comment "Associates a Production with a Performance." ;
+    rdfs:domain onto:Performance ;
+    rdfs:range onto:Production ;
+    owl:inverseOf onto:performance .
+
+onto:premiere a owl:ObjectProperty ;
+    rdfs:label "premiere" ;
+    rdfs:comment "Indicates the first performance of a Show or Production in a particular area." ;
+    rdfs:range <http://purl.org/ontology/mo/Performance> ;
+    owl:unionOf ( [ a rdfs:domain ] ) ;
+    ns1:term_status "unstable" .
+
+onto:project a owl:ObjectProperty ;
+    rdfs:label "project" ;
+    rdfs:comment "Associates a Role with a Project." ;
+    rdfs:domain <http://purl.org/vocab/participation/schema#Role> ;
+    owl:inverseOf onto:credit ;
+    owl:unionOf ( [ a rdfs:range ] [ a rdfs:range ] [ a rdfs:range ] [ a rdfs:range ] ) .
+
+onto:Position a owl:Class ;
+    rdfs:label "Position" ;
+    rdfs:comment "A set of responibilities." .
+
+onto:Venue a owl:Class ;
+    rdfs:label "Venue" ;
+    rdfs:comment "A Nestable Spatial Thing used for Theatrical Events." ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://purl.org/vocab/participation/schema#Role> a owl:Class ;
+    rdfs:label "Role" ;
+    rdfs:comment "The occupation of a Position by an Agent for a particular Project." .
+
+onto:Season a owl:Class ;
+    rdfs:label "Season" ;
+    rdfs:comment "A collection of Productions and/or Performances" .
+
+onto:Production a owl:Class ;
+    rdfs:label "Production" ;
+    rdfs:comment "The realisation of a theatrical work." ;
+    rdfs:subClassOf <http://purl.org/vocab/frbr/core#Expression> .
+

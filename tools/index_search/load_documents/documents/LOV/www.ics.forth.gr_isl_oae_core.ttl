@@ -1,0 +1,77 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://www.ics.forth.gr/isl/oae/core> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Open NEE Model"@en ;
+    dcterms:contributor <http://users.ics.forth.gr/~tzitzik> ;
+    dcterms:creator <http://users.ics.forth.gr/~fafalios> ;
+    dcterms:description "The Open NEE Model defines an extension of the Open Annotation Data Model (http://www.openannotation.org/spec/core) that allows describing in RDF the result of a Named Entity Extraction (NEE) process, enabling thereby an application to run advanced (SPARQL) queries over the annotated data. The model also exploits the Open NEE Configuration Model (http://www.ics.forth.gr/isl/oncm) for relating the output of a NEE process with an applied configuration (serving provenance information to the output of the entire NEE process)."@en ;
+    dcterms:title "Open NEE Model (Open Annotation Extension)"@en ;
+    rdfs:comment "The Open NEE Model defines an extension of the Open Annotation Data Model (http://www.openannotation.org/spec/core) that allows describing in RDF the result of a Named Entity Extraction (NEE) process, enabling thereby an application to run advanced (SPARQL) queries over the annotated data. The model also exploits the Open NEE Configuration Model (http://www.ics.forth.gr/isl/oncm) for relating the output of a NEE process with an applied configuration (serving provenance information to the output of the entire NEE process)."@en ;
+    rdfs:seeAlso <http://users.ics.forth.gr/~fafalios/files/pubs/fafalios_2015_ijait.pdf> ;
+    owl:imports <http://www.ics.forth.gr/isl/oncm/core>,
+        <http://www.w3.org/ns/oa#> ;
+    owl:versionInfo "1.0" .
+
+<http://www.ics.forth.gr/isl/oae/core#NEE> a owl:NamedIndividual,
+        <http://www.w3.org/ns/oa#Motivation> ;
+    rdfs:label "Named Entity Extraction (NEE)"@en ;
+    dcterms:description "Represents the result of the Named Entity Extraction (NEE) process."@en ;
+    skos:broader <http://www.w3.org/ns/oa#tagging> ;
+    skos:prefLabel "Result of Named Entity Extraction (NEE) process."@en .
+
+<http://www.ics.forth.gr/isl/oae/core#belongsTo> a owl:ObjectProperty ;
+    rdfs:label "belongs to"@en ;
+    dcterms:description "Relates an entity to a category."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range <http://www.ics.forth.gr/isl/oncm/core#Category> .
+
+<http://www.ics.forth.gr/isl/oae/core#confidence> a owl:DatatypeProperty ;
+    rdfs:label "confidence"@en ;
+    dcterms:description "Relates an entity to a literal representing the confidence of an ambiguous entity."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.ics.forth.gr/isl/oae/core#detectedAs> a owl:DatatypeProperty ;
+    rdfs:label "detected as"@en ;
+    dcterms:description "Relates an entity to a literal representing the string in the document that was detected and considered an entity."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.ics.forth.gr/isl/oae/core#hasMatchedURI> a owl:ObjectProperty ;
+    rdfs:label "has matched URI"@en ;
+    dcterms:description "Relates an entity to a URI."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range rdfs:Resource .
+
+<http://www.ics.forth.gr/isl/oae/core#position> a owl:DatatypeProperty ;
+    rdfs:label "position"@en ;
+    dcterms:description "Relates an entity to one or more literals representing the positions in the document in which the entity name was detected."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.ics.forth.gr/isl/oae/core#regardsEntityName> a owl:DatatypeProperty ;
+    rdfs:label "regards entity name"@en ;
+    dcterms:description "Relates an entity to a literal representing the actual entity name that exists in a gazetteer of the NEE system."@en ;
+    rdfs:domain <http://www.ics.forth.gr/isl/oae/core#Entity> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.ics.forth.gr/isl/oae/core#score> a owl:DatatypeProperty ;
+    rdfs:label "score"@en ;
+    dcterms:description "Relates an entity to a literal (or a URI to a literal) representing the score of an entity (or of URI)."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.ics.forth.gr/isl/oae/core#usingConfiguration> a owl:ObjectProperty ;
+    rdfs:label "using configuration"@en ;
+    dcterms:description "Relates the annotation process to a configuration."@en ;
+    rdfs:domain <http://www.w3.org/ns/oa#Annotation> ;
+    rdfs:range <http://www.ics.forth.gr/isl/oncm/core#Configuration> .
+
+<http://www.ics.forth.gr/isl/oae/core#Entity> a owl:Class ;
+    rdfs:label "entity"@en ;
+    dcterms:description "Represents an identified entity."@en ;
+    rdfs:subClassOf <http://www.w3.org/ns/oa#SemanticTag> .
+

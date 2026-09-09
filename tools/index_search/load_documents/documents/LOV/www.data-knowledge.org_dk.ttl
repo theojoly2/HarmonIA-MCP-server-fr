@@ -1,0 +1,742 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix ns2: <http://purl.org/vocommons/voaf#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix onto: <http://www.data-knowledge.org/dk/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:hasPart a owl:AnnotationProperty .
+
+dcterms:isPartOf a owl:AnnotationProperty .
+
+<http://purl.org/dqm-vocabulary/v1/dqm#DataQualityScore> a owl:Class ;
+    owl:equivalentClass onto:KpiMeasurement .
+
+<http://purl.org/dqm-vocabulary/v1/dqm#DataRequirement> a owl:Class ;
+    owl:equivalentClass onto:BusinessRule .
+
+qb:DataSet a owl:Class ;
+    owl:equivalentClass onto:DataAsset .
+
+vann:example a owl:AnnotationProperty .
+
+<http://purl.org/wai#Role> a owl:Class ;
+    owl:equivalentClass onto:Role .
+
+onto:BusinessRuleAssessment a owl:Class ;
+    rdfs:label "Business Rule Assessment"@en ;
+    vann:example "The sum of open purchases from customer X does not exceed his credit line."@en,
+        "foo-at-bar.com is not a valid email address."@en ;
+    rdfs:comment "Represents the evaluation of a certain Business Rule on a specific Data Asset"@en .
+
+onto:affects a owl:ObjectProperty ;
+    rdfs:label "affects"@en ;
+    vann:example "Change Request 'add field 'age' to customer' affects BOT 'Customer'"@en ;
+    rdfs:comment "A Change Requests affects a Business Object Type or an Application"@en ;
+    rdfs:domain onto:ChangeRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:answersQuestionAbout a owl:ObjectProperty ;
+    rdfs:label "answers question about"@en ;
+    vann:example "How much improvisation in data management processes is allowed?"@en,
+        "What is Master Data?"@en,
+        "What is a Data Owner?"@en,
+        "What is a training opportunity?"@en,
+        "Where do I find Mr. Doe?"@en ;
+    rdfs:comment "FAQ answer questions about various model areas"@en ;
+    rdfs:domain onto:FAQ ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:appliesTo a owl:ObjectProperty ;
+    rdfs:label "applies to"@en ;
+    vann:example "Internal regulations on Report design"@en,
+        "Safety at work when executing specific tasks"@en,
+        "Shipping regulations concerning BOT 'customer' with non-EU address"@en ;
+    rdfs:comment "Regulations can apply to all kinds of instances"@en ;
+    rdfs:domain onto:Regulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:associatesWith a owl:ObjectProperty ;
+    rdfs:label "associates with"@en ;
+    vann:example "BO A is linked with BO B"@en ;
+    rdfs:comment "unspecified association between entities"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:basedOn a owl:ObjectProperty ;
+    rdfs:label "based on"@en ;
+    vann:example "KPI Definition: 'Number of customers without tax ID' is based on BR: 'Tax ID must be provided'"@en ;
+    rdfs:comment "A KPI Definition is based on a Business Rule (BR)"@en ;
+    rdfs:domain onto:KpiDefinition ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:BusinessRule .
+
+onto:carries a owl:ObjectProperty ;
+    rdfs:label "carries"@en ;
+    vann:example "Data manager for procurement carries responsibility 'ProcurementDataResponsibility' which refers to BOT 'supplier' and BOT 'procurement order'"@en ;
+    rdfs:comment "Roles and Organizational Units can carry specific responsibilites"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Responsibility .
+
+onto:comprises a owl:ObjectProperty ;
+    rdfs:label "comprises"@en ;
+    vann:example "Spread sheet with charts showing various quality aspects of customer data"@en ;
+    rdfs:comment "A Report comprises certain KPI Measurements and their definitions"@en ;
+    rdfs:domain onto:Report ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:computedOn a owl:NamedIndividual,
+        owl:ObjectProperty,
+        <http://www.w3.org/ns/dqv#computedOn> ;
+    rdfs:label "computed on"@en ;
+    vann:example "KPI '75% of customer data is complete' is computed on the data asset comprising DOs 'customer 1', 'customer 2' and 'customer 3'"@en ;
+    rdfs:comment "A KPI Measurement and Business Rule Assessments is computed on a Data Asset"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataAsset .
+
+onto:cooperatesWith a owl:ObjectProperty ;
+    rdfs:label "cooperates with"@en ;
+    vann:example "Privacy manager cooperates with global data owner"@en ;
+    rdfs:comment "Organizational Units and Roles can cooperate"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:definesIntegrityOf a owl:ObjectProperty ;
+    rdfs:label "defines integrity of"@en ;
+    vann:example "BR: 'Tax ID must be provided' defines the integrity of BOs of Type 'customer'"@en ;
+    rdfs:comment "A Business Rule (BR) defines the integrity of Business Objects (BOs), Business Object Types (BOTs) and Business Object Attributes (BOAs)"@en ;
+    rdfs:domain onto:BusinessRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:definesLifecycleOfInstances a owl:ObjectProperty ;
+    rdfs:label "defines lifecycle of instances"@en ;
+    vann:example "The life cycle of Business Objects of BOT 'Shipment' is defined by the Shipment Life Cycle: 'Shipment data collected', 'Handled at start parcel center', 'Handled at destination parcel center', 'Delivered'"@en ;
+    rdfs:comment "Specifies the life cycle of the Business Object instances on the conceptual type level. The current life cycle state of an individual Business Object is referred to from each Business Object via the property lifecycle:state."@en ;
+    rdfs:domain onto:DataLifecycle ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataConceptualization .
+
+onto:documents a owl:ObjectProperty ;
+    rdfs:label "documents"@en ;
+    vann:example "Graphic representation of data flows"@en,
+        "Presentations of past trainings"@en,
+        "Video about how to initiate a project"@en,
+        "Wiki-Page with best practices"@en ;
+    rdfs:comment "Supplementary documentation documents various model areas"@en ;
+    rdfs:domain onto:SupplementaryDocumentation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:flowsFrom a owl:ObjectProperty ;
+    rdfs:label "flows from"@en ;
+    vann:example "Master data repository sends out dataset 324"@en ;
+    rdfs:comment "Interface A sends data"@en ;
+    rdfs:domain onto:DataFlow ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ApplicationInterface .
+
+onto:flowsTo a owl:ObjectProperty ;
+    rdfs:label "flows to"@en ;
+    vann:example "Dataset 324 is sent to ERP system"@en ;
+    rdfs:comment "Data is sent to Interface B"@en ;
+    rdfs:domain onto:DataFlow ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ApplicationInterface .
+
+onto:hasApplicationLifecycle a rdfs:Property,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "has application lifecycle"@en ;
+    vann:example "The CRM system is managed according to the 'Default Application Lifecycle': test, production, deprecated"@en ;
+    rdfs:comment "Specifies the life cycle of an individual Application instance. The current life cycle state of the instance is referred to via the property lifecycle:state."@en ;
+    rdfs:domain onto:Application ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ApplicationLifecycle .
+
+onto:hasDataLifecycle a rdfs:Property,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "has data lifecycle"@en ;
+    vann:example "A specific 'Shipment' Business Object with SSCC = 12345678 has a differing life cycle than defined by the Business Object Type 'Shipment'. It is the 'High value shipment life cycle' including additional life cycle phases."@en ;
+    rdfs:comment "Specifies the life cycle of an individual instance of a Business Object, Data Object or Data Asset. This property can be used to override the general type level life cycle definition expressed by definesLifecycleOfInstances. The current life cycle state of the instance is referred to via the property lifecycle:state"@en ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DataLifecycle .
+
+onto:hasKnowledgeLifecycle a rdfs:Property,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "has Knowledge Lifecycle"@en ;
+    vann:example "A general knowledge life cycle would not have a specific subject, i.e. apply to all resources in this namespace."@en,
+        "A lifecycle for data definitions would have a Business Object Domain, Business Object Type or Business Object Type Attribute as the property's subject."@en ;
+    rdfs:comment "May be used to define a general life cycle that applies to all classes of the model or certain classes."@en ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:KnowledgeLifecycle .
+
+onto:hasTerms a rdfs:Property,
+        owl:NamedIndividual,
+        owl:ObjectProperty,
+        odrl:hasPolicy ;
+    rdfs:label "has Terms of Use"@en ;
+    vann:example "Duty to encrypt a stored data asset by using AES-256 or stronger"@en ;
+    rdfs:comment "Resources can have specific Terms of Use"@en ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TermsOfUse .
+
+onto:illustrates a owl:ObjectProperty ;
+    rdfs:label "illustrates"@en ;
+    vann:example "Example 'DE' for BOTA 'country' indicates correct use of BOTA"@en ;
+    rdfs:comment "An example illustrates a BOT/A"@en ;
+    rdfs:domain onto:Example ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:initiates a owl:ObjectProperty ;
+    rdfs:label "initiates"@en ;
+    vann:example "Project 'Improvement of data distribution' makes change request 'Add new distribution channel X'"@en ;
+    rdfs:comment "A project or a Data Management Process initiates a change request"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ChangeRequest .
+
+onto:isMeasurementOf a owl:NamedIndividual,
+        owl:ObjectProperty,
+        <http://www.w3.org/ns/dqv#isMeasurementOf> ;
+    rdfs:label "is measurement of"@en ;
+    vann:example "The KPI Measurement '75% are valid customer records' is a measure resulting from the KPI Definition: 'Ratio of customers with address and tax ID to total number of customers'"@en ;
+    rdfs:comment "A KPI Measurement is computed according to a KPI Definition on a given data asset at a given time. Similarly, a Business Rule Assessment results from a Business Rule"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:maintains a owl:ObjectProperty ;
+    rdfs:label "maintains"@en ;
+    vann:example "'Customer data consistency management, group 4' maintains consistency between BOs 'customer A', 'customer B' and 'customer C'"@en ;
+    rdfs:comment "Specific Data Management Processes maintain specific BO/T/As or BODs"@en ;
+    rdfs:domain onto:DataManagementProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:mapsFrom a owl:ObjectProperty ;
+    rdfs:label "maps from"@en ;
+    vann:example "Mapping class 'GlobalMasterDataMapping' maps from DOT 'MstrDat8' and maps to BOT 'Global Master Data' with usage comments and documentation added"@en ;
+    rdfs:comment "A specific Mapping Class assigns various representations of the same concepts, i.e in a conceptual vs. technical view (possibly in different data formats, e.g. Java or XML objects). \\n Code Mappings map from Code to NamedValue ;\\n Type Mappings map from BusinessObjectType to DataObjectType ;\\n Attribute Mappings map from BusinessObjectTypeAttribute to DataObjectTypeAttribute ;\\n Schema Mappings map from DataObjectTypeAttribute to DataObjectTypeAttribute ;\\n Key Mappings map from Business to DataObject"@en ;
+    rdfs:domain onto:Mapping ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+onto:mapsTo a owl:ObjectProperty ;
+    rdfs:label "maps to"@en ;
+    vann:example "Mapping class 'GlobalMasterDataMapping' maps from DOT 'MstrDat8' and maps to BOT 'Global Master Data' with usage comments and documentation added"@en ;
+    rdfs:comment "A specific Mapping Class assigns various representations of the same concepts, i.e in a conceptual vs. technical view (possibly in different data formats, e.g. Java or XML objects). \\n Code Mappings map from Code to NamedValue ;\\n Type Mappings map from BusinessObjectType to DataObjectType ;\\n Attribute Mappings map from BusinessObjectTypeAttribute to DataObjectTypeAttribute ;\\n Schema Mappings map from DataObjectTypeAttribute to DataObjectTypeAttribute ;\\n Key Mappings map from Business to DataObject"@en ;
+    rdfs:domain onto:Mapping ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+onto:participatesIn a owl:ObjectProperty ;
+    rdfs:label "participates in"@en ;
+    vann:example "Mr.Doe attends a web-based training session on the business effects of poor data quality"@en ;
+    rdfs:comment "A person or organizational unit can participate in trainings"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TrainingOpportunity .
+
+onto:processes a owl:ObjectProperty ;
+    rdfs:label "processes"@en ;
+    vann:example "CR 'additional field for related BOs' is processed by DM Process 'Field change'"@en ;
+    rdfs:comment "Change requests are processed by DM processes"@en ;
+    rdfs:domain onto:DataManagementProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ChangeRequest .
+
+onto:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to"@en ;
+    vann:example "BOTA 'country' refers to fixed Code List of country codes"@en ;
+    rdfs:comment "A reference from a BOTA to a Code List or from a DOTA to an Enumeration"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:represents a owl:ObjectProperty ;
+    rdfs:label "represents"@en ;
+    vann:example "BOA 'Mr. Smith' represents BOTA 'customer name'; BO 'Customer 2338' represents BOT 'Customer'"@en ;
+    rdfs:comment "Connection from specific instances (BOs, DOs, BOAs, DOAs) to conceptually coherent sets of entities (BOTs, DOTs, BOTAs, DOTAs)"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:responsibleFor a owl:ObjectProperty ;
+    rdfs:label "responsible for"@en ;
+    vann:example "Data manager for procurement data is responsible for BOT 'supplier' and BOT 'procurement order'"@en ;
+    rdfs:comment "Specific assignment of a responsibility for a particular scope"@en ;
+    rdfs:domain onto:Responsibility ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:takes a owl:ObjectProperty ;
+    rdfs:label "takes"@en ;
+    vann:example "Mrs. Miller is the data manager for department 'procurement'"@en ;
+    rdfs:comment "Persons can take Roles"@en ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Role .
+
+onto:tracks a owl:ObjectProperty ;
+    rdfs:label "tracks"@en ;
+    vann:example "New FAQ entry"@en,
+        "New name for organizational unit"@en ;
+    rdfs:comment "The change history keeps track of changes to instances"@en ;
+    rdfs:domain onto:ChangeHistory ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:transfersData a owl:ObjectProperty ;
+    rdfs:label "transfers data"@en ;
+    vann:example "There is a Data Flow from the ERP system to the WMS system that transfers material master data. The Schema Mapping referenced by this Data Flow specifies, that it involves the Data Object Type 'Material Master' on the ERP side with Data Object Type Attributes 'mat_nr', 'mat_descr', etc. On the WMS side, this data is represented by the Data Object Type 'ItemMaster' with Data Object Type Attributes 'im_id', 'im_nm', etc. The Schema may also specify that 'mat_nr' maps to 'im_id', 'mat_descr' to 'im_nm', etc."@en ;
+    rdfs:comment "This property specifies what data is actually transferred by the data flow. This requires the data from the source application, represented by a Data Object Type, to be mapped to the data expected by the target application, also represented by a Data Object Type. Consequently, this property links a Data Flow with a Schema Mapping that outlines the source and target Data Object Types and how they map."@en ;
+    rdfs:domain onto:DataFlow ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:SchemaMapping .
+
+onto:uses a owl:ObjectProperty ;
+    rdfs:label "uses"@en ;
+    vann:example "Business Process 'shipping of order 02917' uses BO 'customer Example Co. Ltd.' and its BOAs 'name' and 'address'"@en ;
+    rdfs:comment "Business Processes consume or use BO/T/As or BODs"@en ;
+    rdfs:domain onto:BusinessProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+onto:worksOn a owl:ObjectProperty ;
+    rdfs:label "works on"@en ;
+    vann:example "Project 'Modernization of transport-related data' works on BOTs 'LoadSecuring','Packaging', 'Shipment' and 'Transport'"@en ;
+    rdfs:comment "Projects work on Business Object Types or Applications, e.g. by creating or changing them"@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+<http://purl.org/vocab/lifecycle/schema#Lifecyle> a owl:Class .
+
+ns2:Vocabulary a owl:Class .
+
+onto:ApplicationLifecycle a <http://purl.org/vocab/lifecycle/schema#Lifecycle>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Application Lifecycle"@en ;
+    vann:example "test, production, deprecated"@en ;
+    rdfs:comment "Defines the life cycle of Applications. A life cycle is defined by a set of possible life cycle states (lifecycle:State). The life cycle definition may also specify constraints on the transitions between the life cycle states (lifecycle:possibleTransition)."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:AttributeMapping a owl:Class ;
+    rdfs:label "Attribute Mapping"@en ;
+    dcterms:isPartOf onto:Mapping ;
+    vann:example "The Business Object Type Attribute 'Customer name' is mapped to Data Object Type Attribute 'cust_nm' in the CRM system and DOTA 'company_name' in the ERP system."@en ;
+    rdfs:comment "Conceptual mapping of business definitions to technical representations for attributes."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessObject a owl:Class ;
+    rdfs:label "Business Object (BO)"@en ;
+    dcterms:hasPart onto:BusinessObjectAttribute ;
+    vann:example "Supplier 'Fluid Supply Ltd'"@en ;
+    rdfs:comment "Specific, individual instance of a Business Object Type (BOT)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessObjectAttribute a owl:Class ;
+    rdfs:label "Business Object Attribute (BOA)"@en ;
+    dcterms:isPartOf onto:BusinessObject ;
+    vann:example "Tax ID 'DE-123456-789'"@en ;
+    rdfs:comment "Specific, individual instance of a Business Object Type Attribute (BOTA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessObjectDomain a onto:DataConceptualization,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Business Object Domain (BOD)"@en ;
+    dcterms:hasPart onto:BusinessObjectType ;
+    vann:example "Business partner: customer and vendor data"@en ;
+    rdfs:comment "Clusters of coherent Business Object Types (BOTs), either from a subject matter or management point of view"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessObjectTypeAttribute a onto:DataConceptualization,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Business Object Type Attribute (BOTA)"@en ;
+    dcterms:isPartOf onto:BusinessObjectType ;
+    vann:example "Tax ID, Address"@en ;
+    rdfs:comment "Conceptually elementary piece of information as part of a Business Object Type (BOT)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessProcess a owl:Class ;
+    rdfs:label "Business Process"@en ;
+    vann:example "Ordering, delivering, invoicing"@en ;
+    rdfs:comment "Sequence of activities consuming or relying on data (data usage perspective)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ChangeHistory a owl:Class ;
+    rdfs:label "Change History"@en ;
+    vann:example "Field 'age' added to customer"@en ;
+    rdfs:comment "Information that allows to track the development of data definitions, processes, etc."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Code a owl:Class ;
+    rdfs:label "Code"@en ;
+    dcterms:isPartOf onto:CodeList ;
+    vann:example "DE"@en ;
+    rdfs:comment "Pre-defined value for a Business Object Type Attribute (BOTA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:CodeList a owl:Class ;
+    rdfs:label "Code List"@en ;
+    dcterms:hasPart onto:Code ;
+    vann:example "Incoterms, country codes"@en ;
+    rdfs:comment "List with pre-defined values (Codes) for a Business Object Type Attribute (BOTA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:CodeMapping a owl:Class ;
+    rdfs:label "Code Mapping"@en ;
+    dcterms:isPartOf onto:Mapping ;
+    vann:example "Country Code 'DEU' from Code List 'ISO 3166 Country Codes' is mapped to Named Value 'ger' of Enumeration 'CRM system countries' and Named Value 'duitsland' of Enumeration 'Dutch Accounting System countries'"@en ;
+    rdfs:comment "Conceptual mapping of business-related codes and terminology of Code Lists to named values of technical Enumerations."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataObjectAttribute a owl:Class ;
+    rdfs:label "Data Object Attribute (DOA)"@en ;
+    dcterms:isPartOf onto:DataObject ;
+    vann:example "'DE-123456-789' being the value of database column 'stceg' of record 'Fluid Supply Ltd'"@en ;
+    rdfs:comment "A piece of information being a part of a Data Object (DO), i.e. the technical representation of a Business Object Attribute (BOA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataObjectTypeAttribute a owl:Class ;
+    rdfs:label "Data Object Type Attribute (DOTA)"@en ;
+    dcterms:isPartOf onto:DataObjectType ;
+    vann:example "Database column 'stceg'"@en ;
+    rdfs:comment "Individual (atomic) field to store a piece of information"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Enumeration a owl:Class ;
+    rdfs:label "Enumeration"@en ;
+    dcterms:hasPart onto:NamedValue ;
+    vann:example "Incoterms, country codes"@en ;
+    rdfs:comment "List with pre-defined values (Named Values) for a Data Object Type Attribute (DOTA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Example a owl:Class ;
+    rdfs:label "Example"@en ;
+    vann:example "Example for invalid legal form: 'Limtd'"@en ;
+    rdfs:comment "Illustrative instances of a BOT/BOTA to indicate valid / invalid use"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:FAQ a owl:Class ;
+    rdfs:label "FAQ"@en ;
+    vann:example "What is master data?"@en ;
+    rdfs:comment "Frequently Asked Questions"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:KeyMapping a owl:Class ;
+    rdfs:label "Key Mapping"@en ;
+    dcterms:isPartOf onto:Mapping ;
+    vann:example "Customer 'Acme Ltd.' is represented by a Business Object with ID = 1234. This same customer is kept in the CRM system as a Data Object with ID = A324-4535, as another Data Object in the Accouting system with ID = 3534646 and as another Data Object in the ERP system with ID = acemeltd"@en ;
+    rdfs:comment "May be used to map data objects from different applications that represent the same business entity. This is useful for creation of 'golden records' and the distribution of data."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:KnowledgeLifecycle a <http://purl.org/vocab/lifecycle/schema#Lifecycle>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Knowledge Lifecycle"@en ;
+    vann:example "A life cycle for the Business Object Types and Business Object Type Attributes may define the workflow of data definitions by the life cycle states: Draft, Approved, Rejected, Withdrawn."@en ;
+    rdfs:comment "Defines the life cycle of a data knowledge entity, i.e. the instances from the classes of this model. This type of life cycles thus represents a metadata life cycle. A life cycle is defined by a set of possible life cycle states (lifecycle:State). The life cycle definition may also specify constraints on the transitions between the life cycle states (lifecycle:possibleTransition)."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:KpiDefinition a owl:Class ;
+    rdfs:label "KPI Definition"@en ;
+    vann:example "Number of customers without address or tax ID"@en ;
+    rdfs:comment "Defines a data quality (performance) measure based on a set of business rules"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:KpiMeasurement a owl:Class ;
+    rdfs:label "KPI Measurement"@en ;
+    vann:example "75% are valid customer records"@en ;
+    rdfs:comment "Actual performance values measured at a particular time"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.w3.org/ns/dqv#QualityMeasurement> .
+
+onto:NamedValue a owl:Class ;
+    rdfs:label "Named Value"@en ;
+    dcterms:isPartOf onto:Enumeration ;
+    vann:example "DE"@en ;
+    rdfs:comment "Pre-defined value of an Enumeration for a Data Object Type Attribute (DOTA)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:OrganizationalUnit a owl:Class ;
+    rdfs:label "Organizational Unit"@en ;
+    dcterms:hasPart onto:Person ;
+    vann:example "department A"@en ;
+    rdfs:comment "Unit of the organizational structure (hierarchy), group of individuals"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/2006/vcard/ns#Group>,
+        foaf:Group .
+
+onto:ProjectPlan a owl:Class ;
+    rdfs:label "Project Plan"@en ;
+    dcterms:isPartOf onto:Project ;
+    vann:example "Rollout of process or application"@en ;
+    rdfs:comment "Schedule illustrating when a particular action is taken on something"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Regulation a owl:Class ;
+    rdfs:label "Regulation"@en ;
+    vann:example "privacy policies"@en ;
+    rdfs:comment "Internal or external regulatory driver influencing data management"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Report a owl:Class ;
+    rdfs:label "Report"@en ;
+    vann:example "Spread sheet with charts"@en ;
+    rdfs:comment "Set of KPI measurements gathered for a particular purpose"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:SupplementaryDocumentation a owl:Class ;
+    rdfs:label "Supplementary Documentation"@en ;
+    vann:example "Concepts, presentations, videos"@en ;
+    rdfs:comment "Material to learn or use as a reference for data management operations"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:TermsOfUse a owl:Class,
+        owl:NamedIndividual,
+        odrl:Policy ;
+    rdfs:label "Terms of Use"@en ;
+    vann:example "Permission to use and share a data asset within the company who purchased it"@en,
+        "Prohibition to (re-) sell a certain data asset"@en,
+        "Prohibition to transfer or process a data asset to/in a certain country"@en ;
+    rdfs:comment "Terms of use specify the terms and conditions under which an Application or a Data Asset can or must be used."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.w3.org/ns/dqv#QualityPolicy> .
+
+onto:TrainingOpportunity a owl:Class ;
+    rdfs:label "Training Opportunity"@en ;
+    vann:example "web-based training session"@en ;
+    rdfs:comment "A planned event a person can participate in"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:TypeMapping a owl:Class ;
+    rdfs:label "Type Mapping"@en ;
+    dcterms:isPartOf onto:Mapping ;
+    vann:example "Mapping class 'GlobalMasterDataMapping' connects DOT 'MstrDat8' and BOT 'Global Master Data' with usage comments and documentation added"@en ;
+    rdfs:comment "Conceptual mapping of business definitions to technical representations for objects."@en ;
+    rdfs:isDefinedBy onto: .
+
+skos:Concept a owl:Class .
+
+<http://www.w3.org/2006/vcard/ns#Group> a owl:Class .
+
+<http://www.w3.org/2006/vcard/ns#Individual> a owl:Class .
+
+dcat:DataSet a owl:Class .
+
+<http://www.w3.org/ns/dqv#QualityMeasurement> a owl:Class .
+
+<http://www.w3.org/ns/dqv#computedOn> a owl:Class .
+
+<http://www.w3.org/ns/dqv#isMeasurementOf> a owl:Class .
+
+odrl:Asset a owl:Class .
+
+odrl:Policy a owl:Class .
+
+odrl:hasPolicy a owl:Class .
+
+foaf:Group a owl:Class .
+
+foaf:Person a owl:Class .
+
+foaf:Project a owl:Class .
+
+<http://purl.org/vocab/lifecycle/schema#Lifecycle> a owl:Class .
+
+onto:BusinessObjectType a onto:DataConceptualization,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Business Object Type (BOT)"@en ;
+    dcterms:hasPart onto:BusinessObjectTypeAttribute ;
+    dcterms:isPartOf onto:BusinessObjectDomain ;
+    vann:example "Customer, Employee, Bill of Material, Sales Region"@en ;
+    rdfs:comment "Conceptual (data) entity relevant to business that represents a coherent set of information about a group of real or virtual objects"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataLifecycle a <http://purl.org/vocab/lifecycle/schema#Lifecyle>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Data Lifecycle"@en ;
+    vann:example "Draft, active, inactive"@en,
+        "Life cycle of product master data reflecting the product's life cycles phases / states: Development, Production, After market, Phased out"@en ;
+    rdfs:comment "Defines the life cycle of Business Objects, Data Objects and Data Assets. A life cycle is defined by a set of possible life cycle states (lifecycle:State). The life cycle definition may also specify constraints on the transitions between the life cycle states (lifecycle:possibleTransition)."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataManagementProcess a owl:Class ;
+    rdfs:label "Data Management Process"@en ;
+    vann:example "Creation of customer master data"@en ;
+    rdfs:comment "Sequence of activities for data maintenance or data governance"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataObject a owl:Class ;
+    rdfs:label "Data Object (DO)"@en ;
+    dcterms:hasPart onto:DataObjectAttribute ;
+    dcterms:isPartOf onto:DataAsset ;
+    vann:example "Database record of 'Fluid Supply Ltd'"@en ;
+    rdfs:comment "Individual record of a Data Object Type (DOT), i.e. the technical representation of a Business Object (BO)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataObjectType a owl:Class ;
+    rdfs:label "Data Object Type (DOT)"@en ;
+    dcterms:hasPart onto:DataObjectTypeAttribute ;
+    dcterms:isPartOf onto:Application ;
+    vann:example "Database table 'kna1'"@en ;
+    rdfs:comment "Technical representation of a Business Object Type (BOT)"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    dcterms:isPartOf onto:OrganizationalUnit ;
+    vann:example "Mrs. Smith, Mr. Doe"@en ;
+    rdfs:comment "Individual of an organization assigned with certain roles"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.w3.org/2006/vcard/ns#Individual>,
+        foaf:Person .
+
+onto:Project a owl:Class ;
+    rdfs:label "Project"@en ;
+    dcterms:hasPart onto:ProjectPlan ;
+    vann:example "New distribution channel"@en ;
+    rdfs:comment "A project that implies changes to data or data management"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf foaf:Project .
+
+onto:Responsibility a owl:Class ;
+    rdfs:label "Responsibility"@en ;
+    vann:example "Manager of project 'new data distribution channel' is responsible for this project's results until 6 months after rollout"@en,
+        "Mr. Doe is the data quality responsible of Dataset x-325, he is accountable in case a customer is unsatisfied with the quality, responsible from 01/01/2016 to 31/12/2016, has to take measure X, Y and Z"@en ;
+    rdfs:comment "Specific description of a responsibility, including the particular scope, duration of accountability, measures to be taken and further information"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:Role a owl:Class ;
+    rdfs:label "Role"@en ;
+    vann:example "Data coordinator"@en ;
+    rdfs:comment "Abstract definition of a general function and its goals and authorities"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:SchemaMapping a owl:Class ;
+    rdfs:label "Schema Mapping"@en ;
+    dcterms:isPartOf onto:Mapping ;
+    vann:example "The DOTA 'ctxid' in the Accouting system maps to the DOTA 'cust_tax_id' in the CRM system"@en ;
+    rdfs:comment "Technical mapping specifiying data flows between Applications."@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.w3.org/ns/dqv#QualityPolicy> a owl:Class .
+
+onto:Application a owl:Class ;
+    rdfs:label "Application"@en ;
+    dcterms:hasPart onto:ApplicationInterface,
+        onto:DataObjectType ;
+    vann:example "Enterprise Resource Planning System (ERP)"@en ;
+    rdfs:comment "An installed instance of an application that stores or processes data"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:ApplicationInterface a owl:Class ;
+    rdfs:label "Application Interface"@en ;
+    dcterms:isPartOf onto:Application ;
+    vann:example "ERP system's web-service"@en ;
+    rdfs:comment "Technical specification of an application to exchange data"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:BusinessRule a owl:Class ;
+    rdfs:label "Business Rule"@en ;
+    vann:example "Tax ID must be provided"@en ;
+    rdfs:comment "Defines the integrity of a single Business Object or across them"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass <http://www.w3.org/ns/dqv#QualityPolicy> .
+
+onto:ChangeRequest a owl:Class ;
+    rdfs:label "Change Request"@en ;
+    vann:example "Add field 'age' to Business Object Type 'customer'"@en ;
+    rdfs:comment "Detailed description of a specific change requirement, resulting from projects or operations"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataAsset a owl:Class,
+        owl:NamedIndividual,
+        dcat:DataSet,
+        odrl:Asset ;
+    rdfs:label "Data Asset"@en ;
+    dcterms:hasPart onto:DataObject ;
+    vann:example "The entirety of customer master data from a particular CRM system or parts thereof."@en,
+        "The production schedules of German sites along with the bill of materials of the produced goods."@en ;
+    rdfs:comment "A Data Asset represents a collection of Data Objects serving an organizational or a business goal. The contained Data Objects may be of the same or of different Data Object Types."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataFlow a owl:Class ;
+    rdfs:label "Data Flow"@en ;
+    vann:example "Dataset2837 flows from Central master data repository to ERP system"@en ;
+    rdfs:comment "Indicates the actual connection and data exchange between particular applications"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:DataConceptualization a owl:Class,
+        owl:NamedIndividual,
+        skos:Concept ;
+    rdfs:label "Data Conceptualization"@en ;
+    vann:example "A Business Object Domain 'Material', a Business Object Type 'Indirect material', a business Object Type attribute 'Material number'"@en ;
+    rdfs:comment "A Data Conceptualization represents a business concept to specify and structure data. As this is an abstract superclass only its subclasses may be used."@en .
+
+rdfs:Property a owl:Class .
+
+rdfs:Resource a owl:Class .
+
+onto:Mapping a owl:Class ;
+    rdfs:label "Mapping"@en ;
+    dcterms:hasPart onto:AttributeMapping,
+        onto:CodeMapping,
+        onto:KeyMapping,
+        onto:SchemaMapping,
+        onto:TypeMapping ;
+    vann:example "Code Mapping"@en ;
+    rdfs:comment "Abstract class of different kinds of mappings"@en ;
+    rdfs:isDefinedBy onto: .
+
+onto: a ns2:Vocabulary,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "The Data Knowledge Vocabulary"@en ;
+    ns1:license <http://creativecommons.org/licenses/by-nc-sa/3.0/> ;
+    dcterms:creator "Agatha Dabrowski"^^xsd:string,
+        "Erik Thordsen"^^xsd:string,
+        "Martin Böhmer"^^xsd:string ;
+    dcterms:description "The Data Knowledge Vocabulary allows for a comprehensive description of data assets and enterprise data management. It covers a business data dictionary, data quality management, data governance, the technical infrastructure and many other aspects of enterprise data management. The vocabulary represents a linked data implementation of the Data Knowledge Model which resulted from extensive applied research."@en ;
+    dcterms:issued "2017-11-10"^^xsd:string ;
+    dcterms:modified "2017-12-08"^^xsd:string ;
+    dcterms:publisher <http://de.dbpedia.org/resource/Fraunhofer-Gesellschaft> ;
+    dcterms:rights "Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)"^^xsd:string ;
+    dcterms:title "The Data Knowledge Vocabulary"@en ;
+    vann:preferredNamespacePrefix "dk"^^xsd:string ;
+    vann:preferredNamespaceUri "http://www.data-knowledge.org/dk/"^^xsd:string ;
+    ns2:classNumber "37"^^xsd:string ;
+    ns2:propertyNumber "29"^^xsd:string ;
+    rdfs:seeAlso <http://www.data-knowledge.org/>,
+        <http://www.data-knowledge.org/dk/schema/rdf/latest/> ;
+    owl:priorVersion <http://www.data-knowledge.org/dk/1.0/> ;
+    owl:versionInfo "1.1"^^xsd:string .
+

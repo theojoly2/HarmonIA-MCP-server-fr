@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smart-data-models.github.io/dataModel.DataSpace/ParticipantAgent/schema.json",
+  "title": "Smart Data Models - Participant Agent Service",
+  "description": "A data model for a Participant Agent (Connector) tool. This tool can implement multiple services like Credential Store, Contract Negotiation, Transfer Process, and Data Plane. It extends the base ToolInformation model.",
+  "$schemaVersion": "0.0.1",
+  "modelTags": "",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/DataSovereignity-Commons"
+    },
+    {
+      "properties": {
+        "id": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+        },
+        "type": {
+          "type": "string",
+          "description": "Property. NGSI entity type. It has to be ParticipantAgent.",
+          "enum": [
+            "ParticipantAgent"
+          ]
+        },
+        "credentialStore": {
+          "description": "Property. Details of the credential store capabilities.",
+          "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/verifiableCredentials"
+        },
+        "contractNegotiation": {
+          "description": "Property. Details of the contract negotiation capabilities.",
+          "minItems": 1,
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+              }
+            },
+            {
+              "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+            }
+          ]
+        },
+        "transferProcess": {
+          "type": "object",
+          "description": "Property. Details of the transfer process capabilities.",
+          "properties": {
+            "protocol": {
+              "description": "Property. Details of protocol(s) defining the transfer process.",
+              "minItems": 1,
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                  }
+                },
+                {
+                  "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                }
+              ]
+            },
+            "authorization": {
+              "description": "Property. Details of authorization mechanisms used behind the transfer process.",
+              "minItems": 1,
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                  }
+                },
+                {
+                  "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                }
+              ]
+            }
+          }
+        },
+        "dataPlane": {
+          "type": "array",
+          "description": "Property. Details of the data plane capabilities, defining one or more data exchange APIs.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "apiSpecification": {
+                "description": "Property. Details of API specification mechanisms used on the data plane.",
+                "minItems": 1,
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                    }
+                  },
+                  {
+                    "$ref": "https://raw.githubusercontent.com/smart-data-models/dataModel.DataSpace/master/DataSpace-schema.json#/definitions/specification"
+                  }
+                ]
+              },
+              "accepts": {
+                "description": "Property. List of MIME types the data plane can accept for import. Corresponds to HTTP Accept header.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "contentType": {
+                "description": "Property. List of MIME types the data plane can export. Corresponds to HTTP Content-Type header.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "openAPI": {
+                "description": "Property. Link(s) to a machine-readable interface of the API. Corresponds to tcat:openAPI.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "required": [
+    "id",
+    "type"
+  ]
+}

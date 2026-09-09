@@ -1,0 +1,1032 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <https://w3id.org/fossr/ontology/bdi/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:description a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:publisher a owl:AnnotationProperty .
+
+dcterms:rights a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+rdf:type a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+onto:generates a owl:ObjectProperty ;
+    rdfs:label "generates"@en ;
+    rdfs:comment "The object property generates is a subproperty of :affects and captures \\nthe relation between a MentalProcess and a newly created MentalState. \\nIt is used when a cognitive process results in the formation of a \\npreviously non-existent state, such as the generation of a new Belief \\nafter perceiving a WorldState, the creation of a new Desire in response \\nto a motivational factor, or the commitment to a new Intention during \\ndeliberation. This property explicitly models the generative aspect of \\ncognition, ensuring that the ontology can represent the emergence of \\nmental states as part of an agent's reasoning dynamics."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalState ;
+    rdfs:subPropertyOf onto:affects ;
+    owl:inverseOf onto:isGeneratedBy ;
+    ns1:term_status "stable" .
+
+onto:hasBelief a owl:ObjectProperty ;
+    rdfs:label "has belief"@en ;
+    rdfs:comment "The hasBelief property links an agent to the belief(s) they hold, representing the agent’s informational state about the world."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Belief ;
+    rdfs:subPropertyOf onto:hasMentalState ;
+    owl:inverseOf onto:isBeliefOf ;
+    ns1:term_status "stable" .
+
+onto:hasBeliefProcess a owl:ObjectProperty ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:BeliefProcess ;
+    rdfs:subPropertyOf onto:hasMentalProcess ;
+    owl:inverseOf onto:isBeliefProcessOf ;
+    ns1:term_status "stable" .
+
+onto:hasDesire a owl:ObjectProperty ;
+    rdfs:label "has desire"@en ;
+    rdfs:comment "The hasDesire property links an agent to the desire(s) they aspire to achieve, representing the agent’s motivational preferences."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Desire ;
+    rdfs:subPropertyOf onto:hasMentalState ;
+    owl:inverseOf onto:isDesireOf ;
+    ns1:term_status "stable" .
+
+onto:hasDesireProcess a owl:ObjectProperty ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DesireProcess ;
+    rdfs:subPropertyOf onto:hasMentalProcess ;
+    owl:inverseOf onto:isDesireProcessOf ;
+    ns1:term_status "stable" .
+
+onto:hasIntention a owl:ObjectProperty ;
+    rdfs:label "has intention"@en ;
+    rdfs:comment "The hasIntention property links an agent to the intention(s) they commit to, representing the agent’s deliberative state for action."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Intention ;
+    rdfs:subPropertyOf onto:hasMentalState ;
+    owl:inverseOf onto:isIntentionOf ;
+    ns1:term_status "stable" .
+
+onto:hasIntentionProcess a owl:ObjectProperty ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:IntentionProcess ;
+    rdfs:subPropertyOf onto:hasMentalProcess ;
+    owl:inverseOf onto:isIntentionProcessOf ;
+    ns1:term_status "stable" .
+
+onto:hasPlanning a owl:ObjectProperty ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Planning ;
+    rdfs:subPropertyOf onto:hasMentalProcess ;
+    owl:inverseOf onto:isPlanningOf ;
+    ns1:term_status "stable" .
+
+onto:isModifiedBy a owl:ObjectProperty ;
+    rdfs:label "is modified by"@en ;
+    rdfs:comment "The object property :isModifiedBy is the inverse of :modifies. It links a MentalState to the MentalProcess that has altered it. This property is used to capture the history of changes that a mental state undergoes over time, such as updates, refinements, or adjustments. For instance, a Desire may be :isModifiedBy a DesireProcessing activity that adjusts its priority, or a Belief may be :isModifiedBy a BeliefProcessing activity that incorporates new evidence. The property ensures that modifications to cognitive states can be explicitly represented and traced for purposes of explainability and reasoning about cognitive dynamics."@en ;
+    rdfs:domain onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    rdfs:subPropertyOf onto:isAffectedBy ;
+    owl:inverseOf onto:modifies ;
+    ns1:term_status "stable" .
+
+onto:isProcessedBy a owl:ObjectProperty ;
+    rdfs:label "is processed by"@en ;
+    rdfs:comment "Indicates that a MentalProcess is performed or carried out by a specific Agent as part of its cognitive activities" ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    owl:inverseOf onto:processes ;
+    ns1:term_status "stable" .
+
+onto:isSpecifiedBy a owl:ObjectProperty ;
+    rdfs:label "is specified by"@en ;
+    rdfs:comment "The isSpecifiedBy property is the inverse of specifiesPlan. It links a plan to the intention it is designed to fulfil, enabling reasoning about the motivational context behind the plan."@en ;
+    rdfs:domain onto:Plan ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Intention ;
+    owl:inverseOf onto:specifies ;
+    ns1:term_status "stable" .
+
+onto:isSupportedBy a owl:ObjectProperty ;
+    rdfs:label "is intention supported by"@en ;
+    rdfs:comment "The isIntentionSupportedBy property is the inverse of supportsIntention. It links an intention to the belief(s) that justify or support the agent’s decision to pursue it."@en ;
+    rdfs:domain onto:Intention ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Belief ;
+    owl:inverseOf onto:supports ;
+    ns1:term_status "stable" .
+
+onto:isSuppressedBy a owl:ObjectProperty ;
+    rdfs:label "is suppressed by"@en ;
+    rdfs:comment "The object property :isSuppressedBy is the inverse of :suppresses. It links a MentalState to the MentalProcess that deactivated, abandoned, or removed it from the agent’s active repertoire. This property is particularly important for modelling cognitive adaptability, where agents discard outdated beliefs, abandon unfeasible desires, or drop intentions that are no longer relevant. For example, a Belief may be :isSuppressedBy a BeliefProcessing activity invalidating it, or an Intention may be :isSuppressedBy an IntentionProcessing activity that reprioritises goals. By making suppression explicit, the ontology can represent the disappearance of mental states and support reasoning about why they ceased to influence agent behaviour."@en ;
+    rdfs:domain onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    rdfs:subPropertyOf onto:isAffectedBy ;
+    owl:inverseOf onto:suppresses ;
+    ns1:term_status "stable" .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+onto:Action a owl:Class ;
+    rdfs:label "Action"@en ;
+    rdfs:comment "The class :Action represents a concrete activity carried out by an agent within the environment. Unlike :ActionDescription, which models the abstract or planned specification of an activity, :Action captures the actual execution or occurrence of that activity in time and space. Actions may be physical, communicative, or cognitive, and are typically associated with agents, plans, and goals. This class supports the representation of observable behaviours that result from deliberative processes such as planning and intention formation. By distinguishing between action descriptions and executed actions, the ontology enables clear reasoning over the alignment between what was intended and what was performed, supporting traceability, validation, and explanation of agent behaviour."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:atTime ;
+            owl:someValuesFrom onto:TemporalEntity ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:bringsAbout ;
+            owl:someValuesFrom onto:WorldState ] ;
+    owl:disjointWith onto:Task ;
+    ns1:term_status "stable" .
+
+onto:GoalProcess a owl:Class ;
+    rdfs:label "Goal Process"@en ;
+    rdfs:comment "GoalProcess is the mental process by which an agent generates, refines, or revises goals based on its current desires, beliefs, and contextual conditions. This process bridges the motivational layer of the agent, where desires express general preferences, and the deliberative layer, where  intentions represent committed courses of action. By elaborating and prioritising goals, the GoalProcess determines which desired outcomes are worth pursuing and prepares them for adoption as actionable intentions.\\n\\nFor example, an agent holding a general desire to improve its programming skills  undergoes a GoalProcess that refines this broad aspiration into a concrete and actionable goal: learning Python programming. This goal may subsequently lead to the formation of an intention: \\\\\"I intend to enrol in a Python course.\\\\\", triggering the planning of a structured sequence of learning activities."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Goal ;
+            owl:onProperty onto:affects ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:GoalProcess ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:addresses a owl:ObjectProperty ;
+    rdfs:label "addresses"@en ;
+    rdfs:comment "The object property :addresses links a Plan to the Goal it is intended to fulfil. It captures the teleological nature of planning, where a Plan is not arbitrary but constructed with the explicit purpose of realising a desired state of the world, as described by a Goal. This property formalises the intentional link between planning and goal-oriented behaviour in agents. For example, a Plan to deploy renewable energy subsidies may address a Goal of reducing greenhouse gas emissions. The :addresses relation supports reasoning about the relevance and suitability of plans with respect to their objectives, thereby enabling goal-driven agent behaviour and planning traceability."@en ;
+    rdfs:domain onto:Plan ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Goal ;
+    owl:inverseOf onto:isAddressedBy ;
+    ns1:term_status "stable" .
+
+onto:defines a owl:ObjectProperty ;
+    rdfs:label "defines"@en ;
+    rdfs:comment "Relates a Planning entity to one or more Plans, defining the structured actions an agent intends to execute to fulfill its intentions."@en ;
+    rdfs:domain onto:Planning ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Plan ;
+    owl:inverseOf onto:isDefinedBy ;
+    ns1:term_status "stable" .
+
+onto:executes a owl:ObjectProperty ;
+    rdfs:label "executes"@en ;
+    rdfs:comment "The object property :executes links an Agent to a PlanExecution, indicating that the agent is responsible for carrying out a specific instance of plan enactment. This property captures the realisation of an intended course of action, as described by a Plan, in the external world by the agent. For example, if an agent has committed to a plan for implementing a new policy, the actual execution of that plan is connected to the agent through :executes. This relation is essential for modelling the transition from intention to action and for enabling traceability and accountability of agent behaviour."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PlanExecution ;
+    owl:inverseOf onto:isExecutedBy ;
+    ns1:term_status "stable" .
+
+onto:follows a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "follows"@en ;
+    rdfs:comment "The object property :follows represents a temporal or logical ordering between two entities, where the subject is understood to occur or be positioned after the object. This property is transitive, allowing the expression of sequences in which multiple elements are ordered, such as actions within a plan, events in a process, or reasoning steps in a cognitive sequence. For example, in a plan composed of ordered actions, one ActionDescription may :follows another to indicate that it should be performed subsequently. This property supports temporal reasoning, process traceability, and structural consistency within ordered models."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:precedes ;
+    ns1:term_status "stable" .
+
+onto:fulfills a owl:ObjectProperty ;
+    rdfs:label "fulfills"@en ;
+    rdfs:comment "The fulfills property links an entity, such as an intention or a plan, to the goal it is designed to achieve. It represents the relationship between an agent's commitment or strategy and the desired outcome."@en ;
+    rdfs:domain onto:Intention ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Desire ;
+    owl:inverseOf onto:isFulfilledBy ;
+    ns1:term_status "stable" .
+
+onto:hasComponent a owl:AsymmetricProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has component"@en ;
+    rdfs:comment "The object property :hasComponent expresses a compositional relationship in which the subject entity includes the object as one of its components. It is used to model structural or functional parts that collectively form a more complex whole, allowing flexible representation of modular systems, compound entities, or hierarchical structures. This property applies broadly to both physical and abstract entities, such as a plan composed of multiple action descriptions, or a mental model composed of interrelated mental states. The use of :hasComponent supports reasoning over part-whole dependencies, system decomposition, and modular analysis."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf onto:hasPart ;
+    owl:inverseOf onto:isComponentOf ;
+    ns1:term_status "stable" .
+
+onto:hasEndTime a owl:ObjectProperty ;
+    rdfs:label "has end time"@en ;
+    rdfs:comment "Defines the temporal istant by specifying when a TimeInterval concludes. This is essential for modeling the execution timeframe of an agent’s plans, actions, or mental states."@en ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TimeInstant ;
+    ns1:term_status "stable" .
+
+onto:hasStartTime a owl:ObjectProperty ;
+    rdfs:label "has start time"@en ;
+    rdfs:comment "Defines the temporal istant by specifying when a TimeInterval starts. This is essential for modeling the execution timeframe of an agent’s plans, actions, or mental states." ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TimeInstant ;
+    ns1:term_status "stable" .
+
+onto:isBeliefProcessOf a owl:ObjectProperty ;
+    rdfs:domain onto:BeliefProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalProcessOf ;
+    ns1:term_status "stable" .
+
+onto:isComponentOf a owl:AsymmetricProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is component of"@en ;
+    rdfs:comment "The object property :isComponentOf is the inverse of :hasComponent and denotes that the subject entity functions as a component within a larger structure or system. It captures part-to-whole relationships in various contexts, such as an action step being part of a plan. This property facilitates structural reasoning, enabling the identification of higher-level entities to which a given component belongs. It is particularly useful for representing hierarchical, modular, or compositional models in both cognitive and operational domains."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf onto:isPartOf ;
+    ns1:term_status "stable" .
+
+onto:isDesireProcessOf a owl:ObjectProperty ;
+    rdfs:domain onto:DesireProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalProcessOf ;
+    ns1:term_status "stable" .
+
+onto:isFulfilledBy a owl:ObjectProperty ;
+    rdfs:comment "The isFulfilledBy property is the inverse of fulfills. It links a goal to the intention(s) or plan(s) that are committed to or designed to achieve it. This property enables reasoning from the perspective of goals to identify the entities working toward their fulfilment."@en,
+        "is fulfilled by"@en ;
+    rdfs:domain onto:Desire ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Intention ;
+    ns1:term_status "stable" .
+
+onto:isGeneratedBy a owl:ObjectProperty ;
+    rdfs:label "is generated by"@en ;
+    rdfs:comment "The object property :isGeneratedBy is the inverse of :generates. It links a MentalState to the MentalProcess that created it. This property enables reasoning over the origin of mental states, supporting explainability and traceability of cognitive dynamics. For example, a Belief may be :isGeneratedBy a BeliefProcessing activity triggered by the perception of a WorldState, while an Intention may be :isGeneratedBy an IntentionProcessing activity that selected a Desire for commitment. By modelling generative origins explicitly, the ontology provides mechanisms for explaining why and how specific mental states come into existence."@en ;
+    rdfs:domain onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    rdfs:subPropertyOf onto:isAffectedBy ;
+    ns1:term_status "stable" .
+
+onto:isIntentionProcessOf a owl:ObjectProperty ;
+    rdfs:domain onto:IntentionProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalProcessOf ;
+    ns1:term_status "stable" .
+
+onto:isMotivatedBy a owl:ObjectProperty ;
+    rdfs:label "is desire motivated by"@en ;
+    rdfs:comment "The isDesireMotivatedBy property is the inverse of motivatesDesire. It links a desire to the belief(s) that provide the motivational basis for its formation. This property captures the relationship where a belief influences an agent to form or hold a specific desire."@en ;
+    rdfs:domain onto:Desire ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Belief ;
+    owl:inverseOf onto:motivates ;
+    ns1:term_status "stable" .
+
+onto:isPerceivedBy a owl:ObjectProperty ;
+    rdfs:label "is perceived by"@en ;
+    rdfs:comment "The object property isPerceivedBy links a WorldState to an Agent,  indicating that the state of the world is perceived by that agent. This property allows world states to be contextualised with respect to specific agents, supporting reasoning about which agents have knowledge of, or awareness of, a given condition in the environment. For example, a WorldState describing 'the room is cold' may be \\n:isPerceivedBy an agent, which in turn can generate corresponding beliefs, desires, or intentions. This property is the inverse of perceives."@en ;
+    rdfs:domain onto:WorldState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    owl:inverseOf onto:perceives ;
+    ns1:term_status "stable" .
+
+onto:isPlanningOf a owl:ObjectProperty ;
+    rdfs:domain onto:Planning ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalProcessOf ;
+    ns1:term_status "stable" .
+
+onto:isReasonedUponBy a owl:ObjectProperty ;
+    rdfs:label "is reasoned upon by"@en ;
+    rdfs:comment "The object property :isReasonedUponBy is the inverse of :reasonsUpon. It links a MentalState to the MentalProcess that uses it as input for cognitive deliberation or transformation. This property supports reasoning from the perspective of the mental state, enabling the ontology to answer questions suc as which processes have operated on a given belief, desire, or intention. For example, a Desire may be :isReasonedUponBy an IntentionProcess that evaluates its feasibility and selects it for commitment. The property plays a key role in making explicit the dependency chains within an agent’s reasoning process, thus enhancing explainability and traceability of cognitive dynamics."@en ;
+    rdfs:domain onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    owl:inverseOf onto:reasonsUpon ;
+    ns1:term_status "stable" .
+
+onto:isReferredBy a owl:ObjectProperty ;
+    rdfs:label "is referred by"@en ;
+    rdfs:comment "The object property isReferredBy is defined as the inverse of :refersTo. It links a WorldState to the MentalEntities (beliefs, desires, intentions) that are directed toward it. This property is useful for tracing how a given world state is cognitively represented across different agents, thereby enabling reasoning over shared beliefs, conflicting desires, or multiple intentions that concern the same state of affairs."@en ;
+    rdfs:domain onto:WorldState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalEntity ;
+    owl:inverseOf onto:refersTo ;
+    ns1:term_status "stable" .
+
+onto:isSatisfiedBy a owl:ObjectProperty ;
+    rdfs:label "is satisfied by"@en ;
+    rdfs:comment "The object property :isSatisfiedBy links a Plan to its corresponding PlanExecution, representing the realisation of the plan in a concrete, time-bounded context. While a Plan describes a structured set of intended actions aimed at achieving a Goal, the PlanExecution represents the actual enactment of that plan by an agent. This property allows the ontology to trace how abstract intentions are translated into actions, enabling reasoning over whether and how a plan has been carried out. For example, a Plan for emergency response may have an associated PlanExecution that occurred during a specific crisis scenario. The :isSatisfiedBy relation supports temporal monitoring, evaluation, and explanation of agent behaviour."@en ;
+    rdfs:domain onto:Plan ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PlanExecution ;
+    owl:inverseOf onto:satisfies ;
+    ns1:term_status "stable" .
+
+onto:isTemporalValidityOf a owl:ObjectProperty ;
+    rdfs:label "is temporal validity of"@en ;
+    rdfs:comment "The isTemporalValidityOf property is the inverse of hasTemporalValidity. It links a TimeInterval to the entity it defines the temporal validity for, specifying the time period during which the entity is active or applicable."@en ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:isTriggeredBy a owl:ObjectProperty ;
+    rdfs:label "is triggered by"@en ;
+    rdfs:comment "Indicates that a MentalProcess is initiated or caused by a specific mental entity, leading to a modification in the agent’s cognitive state."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalEntity ;
+    owl:inverseOf onto:triggers ;
+    ns1:term_status "stable" .
+
+onto:modifies a owl:ObjectProperty ;
+    rdfs:label "modifies"@en ;
+    rdfs:comment "The object property modifies is a subproperty of :affects and describes \\nthe relation between a MentalProcess and an existing MentalState whose \\ncontent or structure is altered by the process. Modification can involve \\nrefinement, enrichment, or updating of a state in light of new information, \\nconstraints, or deliberative reasoning. For example, a BeliefProcessing \\nactivity may modify a Belief when new evidence is integrated, or an \\nIntentionProcessing activity may modify an Intention by refining its \\nscope or adjusting its temporal constraints. This property reflects the \\nfact that mental states are dynamic entities subject to continual revision."@en ;
+    rdfs:domain onto:MentalProcess,
+        onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf onto:affects ;
+    ns1:term_status "stable" .
+
+onto:processes a owl:ObjectProperty ;
+    rdfs:label "processes"@en ;
+    rdfs:comment "Represents the relationship where an Agent actively engages in a MentalProcess, such as evaluating beliefs, forming desires, or adopting intentions, as part of its cognitive functioning within a BDI framework."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:specifies a owl:ObjectProperty ;
+    rdfs:label "specifies"@en ;
+    rdfs:comment "The specifies property links an intention to the plan that operationalises it. This property represents how an agent’s commitment to achieving a goal (intention) is translated into a structured sequence of actions (plan)."@en ;
+    rdfs:domain onto:Intention ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Plan ;
+    ns1:term_status "stable" .
+
+onto:supports a owl:ObjectProperty ;
+    rdfs:label "supports intention"@en ;
+    rdfs:comment "The supportsIntention property links a belief to the intention it provides justification or epistemic support for, representing the reasoning or evidence behind the agent’s commitment to act."@en ;
+    rdfs:domain onto:Belief ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Intention ;
+    ns1:term_status "stable" .
+
+onto:suppresses a owl:ObjectProperty ;
+    rdfs:label "suppresses"@en ;
+    rdfs:comment "The object property suppresses is a subproperty of :affects and models \\nthe relation between a MentalProcess and a MentalState that is deactivated, \\nabandoned, or removed as a result of the process. Suppression may occur \\nwhen a Belief is invalidated, a Desire is judged unfeasible or conflicting, \\nor an Intention is abandoned due to changing priorities or resource \\nconstraints. By representing suppression explicitly, the ontology can \\ncapture the disappearance of mental states from the agent’s active \\ncognitive repertoire, which is essential for modelling realistic \\ndecision-making and adaptability."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalState ;
+    rdfs:subPropertyOf onto:affects ;
+    ns1:term_status "stable" .
+
+onto:time a owl:DatatypeProperty ;
+    rdfs:label "time"@en ;
+    rdfs:comment "Specifies the value of a temporal entity."@en ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:triggers a owl:ObjectProperty ;
+    rdfs:label "triggers"@en ;
+    rdfs:comment "Defines a causal relationship where a Mental Entity triggers a MentalProcess, leading to a change in the agent’s internal state, such as updating beliefs, forming new desires, or adopting intentions."@en ;
+    rdfs:domain onto:MentalEntity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:atTime a owl:ObjectProperty ;
+    rdfs:label "at time"@en ;
+    rdfs:comment "The 'at time' property represents the relationship between a mental entity (such as a belief, desire, or intention) and the temporal entity it produces  or influences. This property is used to model how mental states give rise to time-bound events, processes, or commitments."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TemporalEntity ;
+    ns1:term_status "stable" .
+
+onto:beginsWith a owl:ObjectProperty ;
+    rdfs:label "begins with"@en ;
+    rdfs:comment "The object property :beginsWith identifies the first element in a structured or ordered sequence. It is used to specify which component marks the starting point of a composite entity such as a plan. This property enables the ontology to model linear or sequential structures with clear entry points, which is essential for temporal reasoning, execution tracing, and validating ordering constraints. For example, a Plan may :beginsWith a specific ActionDescription, indicating the first step to be performed. The property is particularly useful in contexts where ordering, precedence, or flow control must be explicitly represented."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:endsWith ;
+    ns1:term_status "stable" .
+
+onto:bringsAbout a owl:ObjectProperty ;
+    rdfs:label "brings about"@en ;
+    rdfs:comment "The object property :bringsAbout links a PlanExecution or an Action to the resulting WorldState it produces, modifies, or realises. It models the causal effect that executing a plan has on the environment, enabling reasoning about how agent actions lead to specific changes in the world. This property supports traceability from intentional behaviour to outcomes, and is essential for representing goal achievement, environmental dynamics, and the effects of decision-making over time."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Action onto:PlanExecution ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:WorldState ;
+    ns1:term_status "stable" .
+
+onto:hasValidity a owl:ObjectProperty ;
+    rdfs:label "has temporal validity"@en ;
+    rdfs:comment "The hasValidity property links an entity to a TemporalEntity during which it is valid, active, or applicable. This property represents the temporal scope or extent of the entity's relevance or operation."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TimeInterval ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf onto:isTemporalValidityOf ;
+    ns1:term_status "stable" .
+
+onto:isAddressedBy a owl:ObjectProperty ;
+    rdfs:label "is addressed by"@en ;
+    rdfs:comment "The object property :isAddressedBy is the inverse of :addresses and links a Goal to the Plan(s) designed to fulfil it. This property allows reasoning from the perspective of goals, enabling identification of the plans formulated to achieve a given objective. For instance, a Goal such as ensuring public health safety may be :isAddressedBy multiple Plans representing different intervention strategies. The property supports goal monitoring, plan evaluation, and comparative analysis of alternative courses of action, facilitating transparency and justification in goal-oriented agent behaviour."@en ;
+    rdfs:domain onto:Goal ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Plan ;
+    ns1:term_status "stable" .
+
+onto:isBeliefOf a owl:ObjectProperty ;
+    rdfs:label "is belief of"@en ;
+    rdfs:comment "The isBeliefOf property links a belief to the agent that holds it."@en ;
+    rdfs:domain onto:Belief ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalStateOf ;
+    ns1:term_status "stable" .
+
+onto:isDefinedBy a owl:ObjectProperty ;
+    rdfs:label "is defined by"@en ;
+    rdfs:comment "Indicates that a Plan instance is defined by a specific Planning entity."@en ;
+    rdfs:domain onto:Plan ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Planning ;
+    ns1:term_status "stable" .
+
+onto:isDesireOf a owl:ObjectProperty ;
+    rdfs:label "is desire of"@en ;
+    rdfs:comment "The isDesireOf property links a desire to the agent that holds it."@en ;
+    rdfs:domain onto:Desire ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalStateOf ;
+    ns1:term_status "stable" .
+
+onto:isExecutedBy a owl:ObjectProperty ;
+    rdfs:label "is executed by"@en ;
+    rdfs:comment "The object property :isExecutedBy is the inverse of :executes and connects a PlanExecution to the Agent that performs it. It specifies who is enacting a particular plan in a given context. This property is crucial for understanding who is operationally responsible for turning a plan into action, allowing the ontology to support explanations of observed behaviours, audit processes, and verification of agent compliance. For instance, a PlanExecution aimed at deploying a new system may be :isExecutedBy the agent tasked with implementing it."@en ;
+    rdfs:domain onto:PlanExecution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    ns1:term_status "stable" .
+
+onto:isIntentionOf a owl:ObjectProperty ;
+    rdfs:label "is intention of"@en ;
+    rdfs:comment "The isIntentionOf property links an intention to the agent that holds it."@en ;
+    rdfs:domain onto:Intention ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isMentalStateOf ;
+    ns1:term_status "stable" .
+
+onto:isJustifiedBy a owl:ObjectProperty ;
+    rdfs:label "is justified by"@en ;
+    rdfs:comment "The isJustifiedBy property is the inverse of justifies. It links a mental entity to the justification(s) that support it, enabling reasoning about the basis for the mental entity."@en ;
+    rdfs:domain onto:MentalEntity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Justification ;
+    owl:inverseOf onto:justifies ;
+    ns1:term_status "stable" .
+
+onto:isPartOf a owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "is part of"@en ;
+    rdfs:comment "The object property isPartOf represents the inverse of hasPart, \\ncapturing the fact that a mental entity is a constituent part of another \\nmental entity. This property supports reasoning over hierarchical and \\ncompositional structures of cognition: for example, a propositional \\ncomponent may be part of a complex Belief, or a reasoning step may be \\npart of a broader PlanningProcess. The use of isPartOf allows the ontology \\nto reconstruct the larger cognitive structures to which a mental entity \\nbelongs, complementing the decomposition enabled by hasPart."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:justifies a owl:ObjectProperty ;
+    rdfs:label "justifies"@en ;
+    rdfs:comment "The justifies property links a justification to the mental entity it supports, providing the rationale, evidence, or explanation for why the mental entity is held."@en ;
+    rdfs:domain onto:Justification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalEntity ;
+    ns1:term_status "stable" .
+
+onto:motivates a owl:ObjectProperty ;
+    rdfs:label "motivates desire"@en ;
+    rdfs:comment "Beliefs often influence or motivate the formation of desires. For example, if an agent believes that exercising improves health, this belief may motivate a desire to exercise."@en ;
+    rdfs:domain onto:Belief ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Desire ;
+    ns1:term_status "stable" .
+
+onto:perceives a owl:ObjectProperty ;
+    rdfs:label "perceives"@en ;
+    rdfs:comment "The object property perceives links an Agent to a WorldState,  representing the act of perceiving or becoming aware of a state of the world. This property captures the epistemic grounding of beliefs: an agent's mental states are often derived from, or justified by, the world states it perceives. The relation is intended to model the cognitive act of perception in a broad sense, encompassing direct sensory input, mediated observations, or information received through communication. By asserting that an Agent :perceives a WorldState, the ontology enables reasoning over how mental entities such as beliefs are anchored in external conditions. This property is the inverse of isPerceivedBy."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:WorldState ;
+    ns1:term_status "stable" .
+
+onto:precedes a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "precedes"@en ;
+    rdfs:comment "The object property :precedes is the inverse of :follows and indicates that the subject occurs or is intended to occur before the object. It captures the precedence relation between entities, such as actions, events, or cognitive steps. This property is useful for representing structured sequences where the ordering of components is essential to understanding the process or plan. For example, one ActionDescription may :precedes another to define execution order. Used in combination with :follows, this property enables flexible modelling and reasoning over ordered structures in both physical and cognitive domains."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to"@en ;
+    rdfs:comment "The object property refersTo links a MentalEntity (e.g. belief, desire, intention) to the WorldState it is about. This property captures the intentional nature of mental states: they are always directed toward or concerned with some state of the world, whether actual, possible, or hypothetical. For example, a belief such as “the meeting is cancelled” refersTo a world state representing the cancellation of the meeting. Similarly, a desire or an intention can refersTo a world state describing a condition that the agent wishes to bring about. By introducing refersTo, the ontology formally encodes the aboutness relation, which is essential for modelling propositional attitudes and supporting explainability."@en ;
+    rdfs:domain onto:MentalEntity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:WorldState ;
+    ns1:term_status "stable" .
+
+onto:satisfies a owl:ObjectProperty ;
+    rdfs:label "satisfies"@en ;
+    rdfs:comment "The object property :satisfies is the inverse of :isSatisfiedBy and connects a PlanExecution to the Plan that it realises. This property captures the instantiation of an abstract plan into a concrete sequence of actions or behaviours carried out by an agent. It enables reasoning from the execution perspective, such as verifying which plan was implemented, comparing intended and actual outcomes, and auditing agent behaviour. For example, a PlanExecution performed by a response team may be :satisfies a Plan for disaster mitigation. This property is central to supporting traceability, accountability, and simulation of agent decision-making in dynamic environments."@en ;
+    rdfs:domain onto:PlanExecution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Plan ;
+    ns1:term_status "stable" .
+
+onto:BeliefProcess a owl:Class ;
+    rdfs:label "Belief Formation"@en ;
+    rdfs:comment "BeliefFormation is the cognitive process through which an agent generates, updates, or modifies beliefs based on perception, inference, or communication with other agents. This process allows agents to maintain a dynamically evolving mental representation of their environment and internal states.\\nFor example, an agent monitoring a public health database initially holds the belief that a disease outbreak is contained. However, upon processing new epidemiological reports, the agent updates its belief to reflect the risk of a wider spread and adjusts its reasoning accordingly."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Belief ;
+            owl:onProperty onto:affects ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:BeliefProcess ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:DesireProcess a owl:Class ;
+    rdfs:label "Desire Formation"@en ;
+    rdfs:comment "DesireFormation is the mental process by which an agent generates, modifies, or updates desires based on internal motivations, contextual changes, or interactions with external information sources. This process helps agents structure goal-oriented behaviour before intentions are formed.\\nFor example, a decision-support agent in a climate policy system initially lacks any specific desire regarding renewable energy subsidies. After analysing recent economic and environmental reports, it generates a new desire to advocate for increased subsidies, which may later influence its intentions and actions."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Desire ;
+            owl:onProperty onto:affects ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:DesireProcess ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:IntentionProcess a owl:Class ;
+    rdfs:label "Intention Formation"@en ;
+    rdfs:comment "IntentionFormation is the process by which an agent selects, commits to, and refines intentions based on its desires, available resources, and deliberative reasoning. It determines which desires are pursued as actionable commitments and adapts them as new information emerges.\\nFor example, an autonomous assistant tasked with monitoring policy compliance may develop a desire to verify the implementation of a new regulation. After assessing feasibility and priority, it forms an intention to generate a compliance report, refining it further as new data becomes available."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Intention ;
+            owl:onProperty onto:affects ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:IntentionProcess ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:cognises a owl:ObjectProperty ;
+    rdfs:label "cognises"@en ;
+    rdfs:comment "The object property :cognises links an Agent to a MentalEntity, capturing the act of mentally entertaining, holding, or being aware of a cognitive entity. It is intended as a general relation that covers different types of propositional attitudes, such as believing, desiring, or intending, without reducing them to specific cases. For example, when an agent has a Belief, a Desire, or an Intention, this can be represented as the agent :cognises the corresponding MentalEntity. Similarly, an agent may cognise a MentalProcess, such as a deliberation or planning activity, that structures its reasoning. By introducing :cognises, the ontology provides a unifying mechanism for relating agents to the mental entities they hold, enabling reasoning across different types of cognitive states and processes while preserving the intentional dimension of cognition."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalEntity ;
+    owl:inverseOf onto:isCognisedBy ;
+    ns1:term_status "stable" .
+
+onto:endsWith a owl:ObjectProperty ;
+    rdfs:label "ends with"@en ;
+    rdfs:comment "The object property :endsWith identifies the last element in a structured or ordered sequence. It is used to specify which component marks the ending point of a composite entity such as a plan. This property enables the ontology to model linear or sequential structures with clear entry points, which is essential for temporal reasoning, execution tracing, and validating ordering constraints. For example, a Plan may :endsWith a specific ActionDescription, indicating the last step to be performed. The property is particularly useful in contexts where ordering, precedence, or flow control must be explicitly represented."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Justification a owl:Class ;
+    rdfs:label "Justification"@en ;
+    rdfs:comment "A justification is a reason, evidence, or explanation that supports a mental state (e.g., belief, intention). It provides the grounds or basis for a mental state (e.g., why a belief is held or a goal is pursued) and Explains or supports mental states (e.g., \"I believe it will rain because the forecast says so\"). Justifications are typically agent-specific, reflecting the reasoning or evidence considered by an agent."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:justifies ;
+            owl:someValuesFrom onto:MentalEntity ] ;
+    ns1:term_status "stable" .
+
+onto:TimeInstant a owl:Class ;
+    rdfs:label "Time istant"@en ;
+    rdfs:comment "The TimeInstant class represents an exact time. It is used to specify the time when events occur, start and end."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty onto:time ],
+        onto:TemporalEntity ;
+    ns1:term_status "stable" .
+
+onto:hasMentalProcess a owl:ObjectProperty ;
+    rdfs:label "has mental process"@en ;
+    rdfs:comment "\"The hasMentalProcess property is an object property that links an agent to one or more of its mental process, such as beliefs formation, desires formation, or intentions formation. It establishes a relationship between the agent (as the holder of mental process) and the abstract representations of those states, enabling changing the agent's mental state."@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    rdfs:subPropertyOf onto:cognises ;
+    owl:inverseOf onto:isMentalProcessOf ;
+    ns1:term_status "stable" .
+
+onto:hasMentalState a owl:ObjectProperty ;
+    rdfs:comment "The hasMentalState property is an object property that links an agent to one or more of its mental states, such as beliefs, desires, or intentions. It establishes a relationship between the agent (as the holder of mental states) and the abstract representations of those states, enabling reasoning about the agent's internal cognitive or motivational processes."@en,
+        "has mental state"@en ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalState ;
+    rdfs:subPropertyOf onto:cognises ;
+    owl:inverseOf onto:isMentalStateOf ;
+    ns1:term_status "stable" .
+
+onto:isAffectedBy a owl:ObjectProperty ;
+    rdfs:label "is affected by"@en ;
+    rdfs:domain onto:MentalEntity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:isCognisedBy a owl:ObjectProperty ;
+    rdfs:label "is cognised by"@en ;
+    rdfs:comment "The object property :isCognisedBy is the inverse of :cognises. It links a MentalEntity to the Agent that entertains, holds, or is aware of it. This property makes explicit which agent is associated with a given mental entity, such as a Belief, Desire, Intention, or MentalProcess. For example, a Belief that 'the meeting is cancelled' may be :isCognisedBy an agent who holds that belief, while a Plan or Intention may be :isCognisedBy the agent that commits to it. This property is essential for reasoning from the perspective of mental entities, as it allows the ontology to trace mental content back to its cognitive bearer. Together with :cognises, it supports explainability by showing both the mental states an agent holds and the agents that cognise specific mental entities."@en ;
+    rdfs:domain onto:MentalEntity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    ns1:term_status "stable" .
+
+onto:reasonsUpon a owl:ObjectProperty ;
+    rdfs:label "reasons upon"@en ;
+    rdfs:comment "The object property :reasonsUpon links a MentalProcess to the MentalState(s) that serve as its cognitive basis. It captures the fact that a mental process — such as planning, deliberation, or belief revision — operates by drawing upon existing mental states, including beliefs, desires, or intentions. This property models the internal reasoning dynamics of an agent, where the mental process depends on or is triggered by certain mental states in order to produce new cognitive outcomes (e.g., new plans or revised beliefs). For example, an IntentionProcess may reason upon a Desire to form a commitment to action. This relation is essential for reconstructing cognitive explanations and supports transparency in decision-making and mental state transitions."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalState ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+onto:Goal a owl:Class ;
+    rdfs:label "Goal"@en ;
+    rdfs:comment "A Goal represents a desired state or outcome that an agent aspires to achieve. Goals reflect the agent's motivational preferences but do not imply any commitment to act or the feasibility of achieving them. Goals serve as the foundation for forming intentions when prioritised and deemed actionable.\\n\\nA example of goal is: \"Learn Python programming.\". This goal may later lead to an intention: \"I intend to enrol in a Python course.\"."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Plan ;
+            owl:onProperty onto:isAddressedBy ] ;
+    ns1:term_status "stable" .
+
+onto:isMentalStateOf a owl:ObjectProperty ;
+    rdfs:label "is mental state of"@en ;
+    rdfs:comment "The isMentalStateOf property is the inverse object property of hasMentalState. It links a mental state (such as a belief, desire, or intention) to the agent that holds it. This property allows for reasoning and querying in the opposite direction, starting from a mental state and identifying the associated agent."@en ;
+    rdfs:domain onto:MentalState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isCognisedBy ;
+    ns1:term_status "stable" .
+
+onto:Planning a owl:Class ;
+    rdfs:label "Planning"@en ;
+    rdfs:comment "Planning is the cognitive process through which an agent generates, structures, and organises a sequence of actions to achieve a desired goal. It transforms an agent’s intentions into a concrete plan that can guide execution. This process involves selecting appropriate steps, considering constraints, and adapting the plan based on available information.\\n\\nFor example, an autonomous agent responsible for disaster response may form the intention to deliver medical supplies to a remote area. Through the Planning process, it determines the optimal route, identifies necessary resources, and structures the sequence of actions required to execute the delivery efficiently."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:reasonsUpon ;
+            owl:someValuesFrom onto:Intention ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Planning ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Intention ;
+            owl:onProperty onto:reasonsUpon ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:defines ;
+            owl:someValuesFrom onto:Plan ],
+        onto:MentalProcess ;
+    ns1:term_status "stable" .
+
+onto:TemporalEntity a owl:Class ;
+    rdfs:label "Temporal entity"@en ;
+    rdfs:comment "The TemporalEntity class represents a general temporal concept that can be either a specific point in time (instant) or a time span (interval). \\nThis class is useful for modeling events, schedules, and historical data where time-related attributes are essential."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:TimeInterval a owl:Class ;
+    rdfs:label "Time interval"@en ;
+    rdfs:comment "The TimeInterval class represents a bounded period of time with a defined start and end. It is used to specify the temporal extent of events, states, or processes."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:TimeInstant ;
+            owl:onProperty onto:hasEndTime ],
+        [ a owl:Restriction ;
+            owl:onClass onto:TimeInstant ;
+            owl:onProperty onto:hasStartTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:TemporalEntity ;
+    ns1:term_status "stable" .
+
+onto:isMentalProcessOf a owl:ObjectProperty ;
+    rdfs:label "is mental process of"@en ;
+    rdfs:comment "The isMentalProcessOf property is the inverse object property of hasMentalProcess. It links a mental priocess (such as a belief formation, desire formation, or intentio formationn) to the agent that holds it. This property allows for reasoning and querying in the opposite direction, starting from a mental process and identifying the associated agent."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    rdfs:subPropertyOf onto:isCognisedBy ;
+    ns1:term_status "stable" .
+
+onto:affects a owl:ObjectProperty ;
+    rdfs:label "affects"@en ;
+    rdfs:comment "The object property affects links a MentalProcess to the MentalState(s) \\nthat it generates, modifies, or suppresses. This property captures the \\ndynamic aspect of cognition, where mental states do not remain static \\nbut evolve through processes such as BeliefProcessing, DesireProcessing, \\nand IntentionProcessing. For example, a BeliefProcessing activity may \\naffect a Belief by updating its content, while an IntentionProcessing \\nactivity may affect an Intention by refining or suppressing it. By \\nusing affects, the ontology provides a uniform mechanism to describe \\nthe causal or transformative impact of mental processes on mental states, \\nsupporting reasoning about the lifecycle of cognitive entities and \\nenhancing explainability of agent behaviour."@en ;
+    rdfs:domain onto:MentalProcess ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MentalEntity ;
+    owl:inverseOf onto:isAffectedBy ;
+    ns1:term_status "stable" .
+
+onto:PlanExecution a owl:Class ;
+    rdfs:label "Plan"@en ;
+    rdfs:comment "The class :PlanExecution represents the actual enactment of a Plan by an Agent within a specific temporal and environmental context.  While a Plan provides a structured description of actions or steps intended to achieve a Goal, a PlanExecution captures the situated, real-world unfolding of that plan. This includes the execution of actions, interaction with the environment, and the potential influence of contingencies or external events. By modelling PlanExecution explicitly, the ontology supports reasoning over whether, how, and to what extent plans have been carried out, enabling comparisons between intended and actual behaviour. It also provides a foundation for temporal monitoring, traceability, and post-hoc analysis of agent decisions, which is crucial for explainability and accountability in both human and artificial agents."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:satisfies ;
+            owl:someValuesFrom onto:Plan ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:atTime ;
+            owl:someValuesFrom onto:TemporalEntity ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:isExecutedBy ;
+            owl:someValuesFrom onto:Agent ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:bringsAbout ;
+            owl:someValuesFrom onto:WorldState ] ;
+    ns1:term_status "stable" .
+
+onto:Task a owl:Class ;
+    rdfs:label "Task"@en ;
+    rdfs:comment "The class :Task represents the abstract specification of an action within a plan. It defines the intended activity an agent should perform, including its purpose, expected effects, preconditions, and any constraints relevant to its execution. Unlike concrete actions or events that occur in the world, a Task is a descriptive construct that guides or informs PlanExecutions. This class enables the ontology to model the internal structure of plans as sequences of intentional steps, supporting reasoning over action dependencies, execution order, and alignment with goals. It is particularly useful for representing deliberative and goal-directed behaviour in agent-based systems."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Task ;
+            owl:onProperty onto:precedes ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Task ;
+            owl:onProperty onto:follows ] ;
+    ns1:term_status "stable" .
+
+onto:Belief a owl:Class ;
+    rdfs:label "Belief"@en ;
+    rdfs:comment "The Belief class represents the mental state of an agent regarding something that the agent holds to be true. It captures the subjective perception or understanding of the world by an agent, which may or may not align with objective reality. In this ontology, beliefs are modelled as descriptions that connect"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Agent ;
+            owl:onProperty onto:isBeliefOf ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:motivates ;
+            owl:someValuesFrom onto:Desire ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Belief ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalState ;
+    ns1:term_status "stable" .
+
+onto:Desire a owl:Class ;
+    rdfs:label "Desire"@en ;
+    rdfs:comment "The Desire class represents a motivational mental state of an agent, encapsulating what the agent wishes or aspires to bring about in the world. Desires are expressions of preferences or goals, but unlike intentions, they do not imply a commitment to act. Desires serve as the driving force behind an agent’s decision-making process, often interacting with beliefs and intentions to influence behaviour."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Agent ;
+            owl:onProperty onto:isDesireOf ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Desire ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:isMotivatedBy ;
+            owl:someValuesFrom onto:Belief ],
+        onto:MentalState ;
+    ns1:term_status "stable" .
+
+onto:WorldState a owl:Class ;
+    rdfs:label "World state"@en ;
+    rdfs:comment "A World state represents a temporally situated condition of the environment as perceived or described by an agent. It captures facts, circumstances, or events that hold at a given time, and serves as the basis upon which agents form their beliefs, generate desires, and adopt intentions. A world state can change over time, be influenced by agents’ actions or external events, and may function as a target outcome for plans aiming to realise a specific goal."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Agent ;
+            owl:onProperty onto:isPerceivedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:MentalEntity ;
+            owl:onProperty onto:isReferredBy ] ;
+    ns1:term_status "stable" .
+
+onto:Plan a owl:Class ;
+    rdfs:label "Plan"@en ;
+    rdfs:comment "A plan is a structured sequence of actions or steps devised by an agent to achieve a specific goal or fulfil an intention. It serves as an operational framework that translates an agent’s intentions into actionable strategies, guiding behaviour toward a desired goal."@en ;
+    rdfs:isDefinedBy "https://w3id.org/fossr/ontology/bdi/" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:addresses ;
+            owl:someValuesFrom onto:Goal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:endsWith ;
+            owl:someValuesFrom onto:Task ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Plan ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Task ;
+            owl:onProperty onto:hasComponent ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Task ;
+            owl:onProperty onto:beginsWith ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Task ;
+            owl:onProperty onto:endsWith ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:isDefinedBy ;
+            owl:someValuesFrom onto:Planning ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:PlanExecution ;
+            owl:onProperty onto:isSatisfiedBy ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:beginsWith ;
+            owl:someValuesFrom onto:Task ] ;
+    owl:disjointWith onto:PlanExecution ;
+    ns1:term_status "stable" .
+
+onto:Intention a owl:Class ;
+    rdfs:label "Intention"@en ;
+    rdfs:comment "The Intention class represents a deliberative mental state of an agent, characterised by the agent’s commitment to achieving a specific goal or executing a plan. Unlike a desire, which expresses a motivational preference, an intention reflects a higher degree of resolve, where the agent actively decides to pursue the desired outcome.\\n\\nIntentions bridge the gap between an agent’s desires and actions, driving goal-oriented behaviour based on the agent’s beliefs about feasibility and circumstances.\\n\\nIntentions depend on beliefs about feasibility and current conditions (e.g., \"I believe the store is open.\").\\nIntentions emerge from prioritised desires or goals (e.g., \"I desire to buy groceries.\")."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Intention ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:fulfills ;
+            owl:someValuesFrom onto:Goal ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Agent ;
+            owl:onProperty onto:isIntentionOf ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:MentalState ;
+    ns1:term_status "stable" .
+
+onto:hasPart a owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has part"@en ;
+    rdfs:comment "The object property hasPart formalises meronymic (part–whole) relations among mental entities. It is used to represent the fact that complex mental constructs—whether mental states or mental processes—can be decomposed into constituent parts. This allows the ontology to capture the compositional structure of cognition: for example, a Belief may have parts corresponding to different propositional components (e.g., time, location, agent), or a PlanningProcess may have parts representing successive reasoning steps. By asserting :hasPart relations, mental entities need not be treated as atomic, but can instead be modelled as structured and analyzable wholes, thereby supporting fine-grained reasoning, updates to specific components, and richer forms of explainability. The inverse relation of hasPart is partOf."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:isPartOf ;
+    ns1:term_status "stable" .
+
+onto:MentalEntity a owl:Class ;
+    rdfs:label "Mental entity"@en ;
+    rdfs:comment "MentalEntity is an abstract class that serves as a unifying concept for representing both mental states and mental processes within an agent's cognitive framework. It provides a high-level categorisation for all entities related to an agent’s reasoning, decision-making, and goal-directed behaviour.\\n\\nMental states, such as Belief, Desire, and Intention, represent the informational and motivational aspects of an agent’s cognition. These states can influence and be influenced by mental processes, such as BeliefFormation, DesireFormation, and IntentionFormation, which govern their generation, modification, and updating over time.\\n\\nBy structuring mental states and processes under a common superclass, MentalEntity facilitates a coherent representation of cognitive dynamics, supporting interoperability and reasoning within the ontology."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:isJustifiedBy ;
+            owl:someValuesFrom onto:Justification ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:isCognisedBy ;
+            owl:someValuesFrom onto:Agent ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:refersTo ;
+            owl:someValuesFrom onto:WorldState ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:MentalEntity ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasValidity ;
+            owl:someValuesFrom onto:TemporalEntity ] ;
+    ns1:term_status "stable" .
+
+onto:MentalState a owl:Class ;
+    rdfs:label "Mental state"@en ;
+    rdfs:comment "A mental state is a conceptual representation of an agent's internal condition, which encompasses beliefs, desires, intentions, emotions, and other cognitive or affective states. It is the foundation of an agent’s reasoning, decision-making, and behaviour. Mental states are dynamic and context-dependent, changing in response to external stimuli, internal deliberations, or interactions with other agents."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:MentalState ;
+            owl:onProperty onto:hasPart ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasValidity ;
+            owl:someValuesFrom onto:TimeInterval ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Agent ;
+            owl:onProperty onto:isMentalStateOf ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:MentalProcess ;
+            owl:onProperty onto:isReasonedUponBy ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:isJustifiedBy ;
+            owl:someValuesFrom onto:Justification ],
+        onto:MentalEntity ;
+    ns1:term_status "stable" .
+
+onto:MentalProcess a owl:Class ;
+    rdfs:label "Mental Process"@en ;
+    rdfs:comment "The class :MentalProcess represents the cognitive operations through which an agent reasons upon, transforms, or generates mental content. It encompasses processes such as belief revision, desire formation, intention refinement, and planning. Each MentalProcess is understood as a type of activity (subclass of d0:Activity) that operates over one or more MentalStates and may lead to the creation, modification, or suppression of new or existing mental entities. For example, an agent may engage in a BeliefProcess that updates its beliefs in response to new perceptions, or perform a Planning process that generates a Plan from a set of intentions. By modelling such cognitive activities explicitly, :MentalProcess enables the ontology to describe not only the states held by agents, but also the reasoning dynamics and deliberative mechanisms that underpin agent behaviour. This class is essential for supporting explainability, simulation, and agent-based modelling of mental state evolution."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:isTriggeredBy ;
+            owl:someValuesFrom onto:MentalEntity ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:reasonsUpon ;
+            owl:someValuesFrom onto:MentalState ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Agent ;
+            owl:onProperty onto:isMentalProcessOf ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:MentalProcess ;
+            owl:onProperty onto:hasPart ],
+        onto:MentalEntity ;
+    owl:disjointWith onto:MentalState ;
+    ns1:term_status "stable" .
+
+onto:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "An Agent is an autonomous entity capable of perceiving its environment, reasoning about it, and acting upon it to achieve specific goals or objectives. Agents can hold mental states such as beliefs, desires, and intentions, which guide their decision-making processes and interactions with the world. Agents may be individuals, organisations, or artificial systems, depending on the context."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:executes ;
+            owl:someValuesFrom onto:PlanExecution ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:cognises ;
+            owl:someValuesFrom onto:MentalEntity ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:perceives ;
+            owl:someValuesFrom onto:WorldState ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasMentalState ;
+            owl:someValuesFrom onto:MentalState ] ;
+    owl:disjointWith onto:WorldState ;
+    ns1:term_status "stable" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "Belief-Desire-Intention Ontology"@en ;
+    dc:description <https://raw.githubusercontent.com/fossr-project/ontology/refs/heads/main/bdi/bdi.png>,
+        "The BDI Ontology provides a formal framework to model the Belief-Desire-Intention (BDI) architecture for rational agents. It defines key mental states—Beliefs, Desires, and Intentions—and their relationships, capturing the agent’s reasoning, motivation, and commitment to action. Supporting classes include Propositions (content of mental states), Justifications (rationale for mental states), Plans (action sequences for goals), and TimeIntervals (temporal validity of entities).\\n\\nKey properties like hasBelief, hasDesire, and hasIntention link agents to mental states, while fulfills, adoptsIntention, and motivatesDesire model dynamic interactions. Temporal properties enable reasoning about time-sensitive states and plans. Axioms ensure consistency, such as disjointness between mental states and domain-specific constraints.\\n\\nThis ontology supports reasoning, querying, and analysis of agent behaviour, enabling applications in AI, multi-agent systems, and decision support."@en ;
+    dcterms:creator <https://orcid.org/0000-0001-6577-5606>,
+        <https://orcid.org/0000-0001-8505-5040>,
+        <https://orcid.org/0000-0001-9816-5839>,
+        <https://orcid.org/0000-0002-0266-3452>,
+        <https://orcid.org/0000-0002-2536-8659>,
+        <https://orcid.org/0000-0002-5074-2112>,
+        <https://orcid.org/0000-0003-2928-9496>,
+        <https://orcid.org/0009-0006-3298-6232>,
+        <https://orcid.org/0009-0009-3976-0107> ;
+    dcterms:issued "2025-10-28" ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2026-04-13" ;
+    dcterms:publisher <https://w3id.org/italia/data/organization/support-unit/cnr-Z6HZEH/stlab> ;
+    dcterms:rights "Copyright © 2025 CNR-ISTC, STLab" ;
+    dcterms:title "Belief-Desire-Intention Ontology"@en ;
+    vann:preferredNamespacePrefix "bdi",
+        "https://w3id.org/fossr/ontology/bdi/" ;
+    rdfs:comment "The BDI Ontology provides a formal framework to model the Belief-Desire-Intention (BDI) architecture for rational agents. It defines key mental states—Beliefs, Desires, and Intentions—and their relationships, capturing the agent’s reasoning, motivation, and commitment to action. Supporting classes include Propositions (content of mental states), Justifications (rationale for mental states), Plans (action sequences for goals), and TimeIntervals (temporal validity of entities).\\n\\nKey properties like hasBelief, hasDesire, and hasIntention link agents to mental states, while fulfills, adoptsIntention, and motivatesDesire model dynamic interactions. Temporal properties enable reasoning about time-sensitive states and plans. Axioms ensure consistency, such as disjointness between mental states and domain-specific constraints.\\n\\nThis ontology supports reasoning, querying, and analysis of agent behaviour, enabling applications in AI, multi-agent systems, and decision support."@en ;
+    owl:versionIRI <https://w3id.org/fossr/bdi/ontology/0.4/> ;
+    owl:versionInfo 0.4 .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Belief onto:Desire onto:Intention ) .
+

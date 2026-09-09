@@ -1,0 +1,594 @@
+@prefix ns1: <http://securitytoolbox.appspot.com/MASO#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+ns1:AVG a ns1:Antivirus .
+
+ns1:Adresse-iP a owl:Class ;
+    rdfs:subClassOf ns1:Adresse .
+
+ns1:Algorithme-checksum a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme .
+
+ns1:BlowFish a ns1:Cryptage-symetrique .
+
+ns1:CAST a ns1:Cryptage-symetrique .
+
+ns1:Cle-privee a owl:Class ;
+    rdfs:subClassOf ns1:Cle-de-cryptage .
+
+ns1:Cle-publique a owl:Class ;
+    rdfs:subClassOf ns1:Cle-de-cryptage .
+
+ns1:Cle-secrete a owl:Class ;
+    rdfs:subClassOf ns1:Cle-de-cryptage .
+
+ns1:Composant a owl:Class ;
+    rdfs:subClassOf ns1:Software .
+
+ns1:Contremesure-reseau a owl:Class ;
+    rdfs:subClassOf ns1:Contremesure .
+
+
+ns1:Data a owl:Class ;
+    rdfs:subClassOf ns1:Asset .
+
+ns1:Defaut-interaction a owl:Class ;
+    rdfs:subClassOf ns1:Defaut .
+
+ns1:Defaut-physique a owl:Class ;
+    rdfs:subClassOf ns1:Defaut .
+
+ns1:Deni_de_service a ns1:Attaque .
+
+ns1:Description-logiciel a owl:DatatypeProperty ;
+    rdfs:domain ns1:Software ;
+    rdfs:range xsd:string .
+
+ns1:Domaine a owl:Class ;
+    rdfs:subClassOf ns1:Adresse .
+
+ns1:Echec-technique a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:ElGamal a ns1:Cryptage-asymetrique .
+
+ns1:Elliptic_curve a ns1:Cryptage-asymetrique .
+
+ns1:Erreur a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:Firewall a owl:Class ;
+    rdfs:subClassOf ns1:Contremesure .
+
+ns1:Gestion-cles a ns1:Mecanisme .
+
+ns1:HMAC a ns1:MAC .
+
+ns1:IDEA a ns1:Cryptage-symetrique .
+
+ns1:KEA a ns1:Algorithme-gestion-cles .
+
+ns1:MD4 a ns1:Hash .
+
+ns1:MD5 a ns1:Hash .
+
+ns1:Norton a ns1:Antivirus .
+
+ns1:Protocole-cryptage a owl:Class ;
+    rdfs:subClassOf ns1:Protocole .
+
+ns1:Protocole-gestion-reseau a owl:Class ;
+    rdfs:subClassOf ns1:Protocole .
+
+ns1:RBAC a owl:Class ;
+    rdfs:subClassOf ns1:Certificat .
+
+ns1:RC2 a ns1:Rivest .
+
+ns1:RC4 a ns1:Rivest .
+
+ns1:RC5 a ns1:Rivest .
+
+ns1:RC6 a ns1:Rivest .
+
+ns1:RSA a ns1:Cryptage-asymetrique .
+
+ns1:SSH a ns1:Protocole-gestion-cles .
+
+ns1:SSL a ns1:Protocole-gestion-cles ;
+    ns1:Objectif ns1:Confidentialite .
+
+ns1:Service a owl:Class ;
+    rdfs:subClassOf ns1:Software .
+
+ns1:Signature-numerique a owl:Class ;
+    rdfs:subClassOf ns1: .
+
+ns1:TPE a ns1:Protection-physique .
+
+ns1:Trojan-horse a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:TwoFish a ns1:Cryptage-symetrique .
+
+ns1:Worm a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+
+ns1:assureAuthentification a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole-authentification ;
+    rdfs:range ns1:Objectif .
+
+ns1:assureObjectif a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Mecanisme ns1:Protocole ) ],
+        [ a owl:Class ;
+            owl:unionOf ( ns1:Mecanisme ns1:Protocole ) ] ;
+    rdfs:range ns1:Objectif .
+
+ns1:capableMecanisme a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Mecanisme .
+
+ns1:capableObjectif a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Objectif .
+
+ns1:capacite a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Memoire ns1:Storage ) ],
+        [ a owl:Class ;
+            owl:unionOf ( ns1:Memoire ns1:Storage ) ] ;
+    rdfs:range xsd:int .
+
+ns1:chemin a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Cookie ;
+    rdfs:range xsd:string .
+
+ns1:cible a owl:ObjectProperty ;
+    rdfs:domain ns1:Menace ;
+    rdfs:range ns1:Asset .
+
+ns1:date-expiration a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Carte-credit ;
+    rdfs:range xsd:date .
+
+ns1:dispose a owl:ObjectProperty ;
+    rdfs:domain ns1:Hôte ;
+    rdfs:range ns1:Asset .
+
+ns1:email a owl:DatatypeProperty ;
+    rdfs:domain ns1:Proprietaire ;
+    rdfs:range xsd:string .
+
+ns1:eninteractionAvec a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Entite .
+
+ns1:estAssureMecanisme a owl:ObjectProperty ;
+    rdfs:domain ns1:Objectif ;
+    rdfs:range ns1:Mecanisme .
+
+ns1:estAssureProtocole a owl:ObjectProperty ;
+    rdfs:domain ns1:Objectif ;
+    rdfs:range ns1:Protocole .
+
+ns1:estexigeProtocole a owl:ObjectProperty ;
+    rdfs:domain ns1:Passeport ;
+    rdfs:range ns1:Protocole ;
+    owl:inverseOf ns1:exigePasseport .
+
+ns1:estexploitePar a owl:ObjectProperty ;
+    rdfs:domain ns1:Vulnerabilite ;
+    rdfs:range ns1:Menace ;
+    owl:inverseOf ns1:exploite .
+
+ns1:exigeMecanisme a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Mecanisme .
+
+ns1:exigeObjectif a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Objectif .
+
+ns1:fax a owl:DatatypeProperty ;
+    rdfs:domain ns1:Proprietaire ;
+    rdfs:range xsd:string .
+
+ns1:identification a ns1:Mecanisme .
+
+ns1:initialise a owl:ObjectProperty ;
+    rdfs:domain ns1:Entite ;
+    rdfs:range ns1:Menace .
+
+ns1:intrusion a ns1:Attaque .
+
+ns1:issuer a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:X.509 ;
+    rdfs:range xsd:string .
+
+ns1:longueur-cle a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Cle-de-Cryptage ;
+    rdfs:range xsd:int .
+
+ns1:longueur-minimum a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Mot-de-passe ;
+    rdfs:range xsd:int .
+
+ns1:marque a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Microprocesseur ;
+    rdfs:range xsd:string .
+
+ns1:modele a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Microprocesseur ;
+    rdfs:range xsd:string .
+
+ns1:nom a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Antivirus ns1:Cookie ns1:Proprietaire ns1:Software ns1:Virus ) ],
+        [ a owl:Class ;
+            owl:unionOf ( ns1:Antivirus ns1:Cookie ns1:Proprietaire ns1:Software ns1:Virus ) ] ;
+    rdfs:range xsd:string .
+
+ns1:notAfter a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:X.509 ;
+    rdfs:range xsd:date .
+
+ns1:notBefore a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:X.509 ;
+    rdfs:range xsd:date .
+
+ns1:numero-de-serie a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:X.509 ;
+    rdfs:range xsd:string .
+
+ns1:prenom a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Personne ;
+    rdfs:range xsd:string .
+
+ns1:reduit a owl:ObjectProperty ;
+    rdfs:domain ns1:Contremesure ;
+    rdfs:range ns1:Vulnerabilite .
+
+ns1:telephone a owl:DatatypeProperty ;
+    rdfs:domain ns1:Proprietaire ;
+    rdfs:range xsd:string .
+
+ns1:utilisePasseport a owl:ObjectProperty ;
+    rdfs:domain ns1:Algorithme ;
+    rdfs:range ns1:Passeport .
+
+ns1:valeur-cookie a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Cookie ;
+    rdfs:range xsd:int .
+
+ns1:version a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Antivirus ns1:X.509 ) ],
+        [ a owl:Class ;
+            owl:unionOf ( ns1:Antivirus ns1:X.509 ) ] ;
+    rdfs:range xsd:string .
+
+ns1:vitesse a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Microprocesseur ;
+    rdfs:range xsd:int .
+
+ns1:Algorithme-cryptage a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme .
+
+ns1:Algorithme-gestion-cles a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme .
+
+ns1:Carte-credit a owl:Class ;
+    rdfs:subClassOf ns1:Token-physique .
+
+ns1:Cle-de-Cryptage a owl:Class ;
+    rdfs:subClassOf ns1:Token-electronique .
+
+ns1:MAC a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme-signature .
+
+ns1:Mot-de-passe a owl:Class ;
+    rdfs:subClassOf ns1:Token-electronique .
+
+ns1:Protection-physique a owl:Class ;
+    rdfs:subClassOf ns1:Contremesure .
+
+ns1:Protocole-authentification a owl:Class ;
+    rdfs:subClassOf ns1:Protocole .
+
+ns1:Societe a owl:Class ;
+    rdfs:subClassOf ns1:Proprietaire ;
+    owl:disjointWith ns1:Personne .
+
+ns1:Token-physique a owl:Class ;
+    rdfs:subClassOf ns1:Passeport .
+
+ns1:estProtegePar a owl:ObjectProperty ;
+    rdfs:domain ns1:Asset ;
+    rdfs:range ns1:Contremesure ;
+    owl:inverseOf ns1:protege .
+
+ns1:estUtiliseProtocoleCryptage a owl:ObjectProperty ;
+    rdfs:domain ns1:Algorithme-cryptage ;
+    rdfs:range ns1:Protocole-Cryptage ;
+    rdfs:subPropertyOf ns1:estUtiliseProtocole ;
+    owl:inverseOf ns1:utilisecryptage .
+
+ns1:estUtiliseProtocoleSignature a owl:ObjectProperty ;
+    rdfs:domain ns1:Algorithme-signature ;
+    rdfs:range ns1:Protocole-signature ;
+    rdfs:subPropertyOf ns1:estUtiliseProtocole ;
+    owl:inverseOf ns1:utiliseSignature .
+
+ns1:execute a owl:ObjectProperty ;
+    rdfs:domain ns1:Hôte ;
+    rdfs:range ns1:Agent ;
+    owl:inverseOf ns1:s_execute .
+
+ns1:exigePasseport a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole ;
+    rdfs:range ns1:Passeport ;
+    owl:inverseOf ns1:estExigeProtocole .
+
+ns1:exploite a owl:ObjectProperty ;
+    rdfs:domain ns1:Menace ;
+    rdfs:range ns1:Vulnerabilite ;
+    owl:inverseOf ns1:estExploitePar .
+
+ns1:proprietaireDe a owl:ObjectProperty,
+        owl:inverseFunctionalProperty ;
+    rdfs:domain ns1:Proprietaire ;
+    rdfs:range ns1:Agent ;
+    owl:inverseOf ns1:estPropriete .
+
+ns1:protege a owl:ObjectProperty ;
+    rdfs:domain ns1:Contremesure ;
+    rdfs:range ns1:Asset ;
+    owl:inverseOf ns1:estProtegePar .
+
+ns1:utiliseMecanisme a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole ;
+    rdfs:range ns1:Mecanisme ;
+    owl:inverseOf ns1:utiliseProtocole .
+
+ns1:utiliseProtocole a owl:ObjectProperty ;
+    rdfs:domain ns1:Mecanisme ;
+    rdfs:range ns1:Protocole ;
+    owl:inverseOf ns1:utiliseMecanisme .
+
+ns1:utiliseSignature a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole-signature ;
+    rdfs:range ns1:Algorithme-signature ;
+    rdfs:subPropertyOf ns1:utiliseAlgorithme ;
+    owl:inverseOf ns1:estUtiliseProtocoleSignature .
+
+ns1:utilisecryptage a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole-Cryptage ;
+    rdfs:range ns1:Algorithme-Cryptage ;
+    rdfs:subPropertyOf ns1:utiliseAlgorithme ;
+    owl:inverseOf ns1:estUtiliseProtocoleCryptage .
+
+ns1:Adresse a owl:Class ;
+    rdfs:subClassOf ns1:Token-electronique .
+
+ns1:Attaque a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:Authentification a ns1:Mecanisme ;
+    ns1:Objectif ns1:Confidentialite .
+
+ns1:Autorisation a ns1:Mecanisme .
+
+ns1:Certificat a owl:Class ;
+    rdfs:subClassOf ns1:Token-electronique .
+
+ns1:Confiance a ns1:Objectif ;
+    ns1:estMecanisme ns1:Identification .
+
+ns1:Controle-dacces a ns1:Mecanisme ;
+    ns1:Objectif ns1:Disponibilite .
+
+ns1:Defaut a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:Hash a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme-signature .
+
+ns1:Imputabilite a ns1:Objectif .
+
+ns1:Integrite a ns1:Objectif .
+
+ns1:Memoire a owl:Class ;
+    rdfs:subClassOf ns1:Hardware .
+
+ns1:Non-repudiation a ns1:Objectif .
+
+ns1:Personne a owl:Class ;
+    rdfs:subClassOf ns1:Proprietaire ;
+    owl:disjointWith ns1:Societe .
+
+ns1:Protocole-gestion-cles a owl:Class ;
+    rdfs:subClassOf ns1:Protocole .
+
+ns1:Protocole-signature a owl:Class ;
+    rdfs:subClassOf ns1:Protocole .
+
+ns1:Storage a owl:Class ;
+    rdfs:subClassOf ns1:Hardware .
+
+ns1:Virus a owl:Class ;
+    rdfs:subClassOf ns1:Menace .
+
+ns1:utiliseAlgorithme a owl:ObjectProperty ;
+    rdfs:domain ns1:Protocole ;
+    rdfs:range ns1:Algorithme .
+
+ns1:Disponibilite a ns1:Objectif .
+
+ns1:Hardware a owl:Class ;
+    rdfs:subClassOf ns1:Asset .
+
+ns1:Microprocesseur a owl:Class ;
+    rdfs:subClassOf ns1:Hardware .
+
+ns1:Vulnerabilite a owl:Class .
+
+ns1:estPropriete a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ns1:Agent ;
+    rdfs:range ns1:Proprietaire ;
+    owl:inverseOf ns1:proprietaireDe .
+
+ns1:estUtiliseProtocole a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:domain ns1:Algorithme ;
+    rdfs:range ns1:Protocole ;
+    owl:inverseOf ns1:estUtiliseProtocole .
+
+ns1:s_execute a owl:ObjectProperty ;
+    rdfs:domain ns1:Agent ;
+    rdfs:range ns1:Hôte ;
+    owl:inverseOf ns1:execute .
+
+ns1:Algorithme-signature a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme .
+
+ns1:Confidentialite a ns1:Objectif .
+
+ns1:Cookie a owl:Class ;
+    rdfs:subClassOf ns1:Token-electronique .
+
+ns1:Cryptage-asymetrique a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme-Cryptage .
+
+ns1:Rivest a owl:Class ;
+    rdfs:subClassOf ns1:Cryptage-asymetrique .
+
+ns1:Passeport a owl:Class .
+
+ns1:Software a owl:Class ;
+    rdfs:subClassOf ns1:Asset .
+
+ns1:Token-electronique a owl:Class ;
+    rdfs:subClassOf ns1:Passeport .
+
+ns1:Antivirus a owl:Class ;
+    rdfs:subClassOf ns1:Contremesure .
+
+ns1:Hôte a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:complementOf ns1:Agent ],
+        [ a owl:Class ;
+            owl:complementOf ns1:Agent ],
+        ns1:Entite ;
+    owl:disjointWith ns1:Agent .
+
+ns1:X.509 a owl:Class ;
+    rdfs:subClassOf ns1:Certificat .
+
+ns1:Algorithme a owl:Class ;
+    rdfs:label ""^^xsd:string .
+
+ns1:Asset a owl:Class .
+
+ns1:Contremesure a owl:Class .
+
+ns1:Cryptage-symetrique a owl:Class ;
+    rdfs:subClassOf ns1:Algorithme-Cryptage .
+
+ns1:Agent a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:int ;
+            owl:onProperty ns1:s_execute ],
+        [ a owl:Class ;
+            owl:complementOf ns1:Hote ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:int ;
+            owl:onProperty ns1:estPropriete ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:int ;
+            owl:onProperty ns1:s_execute ],
+        [ a owl:Class ;
+            owl:complementOf ns1:Hote ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:int ;
+            owl:onProperty ns1:estPropriete ],
+        ns1:Entite ;
+    owl:disjointWith ns1:Hôte .
+
+ns1:Entite a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( ns1:Agent ns1:Hôte ) ],
+        [ a owl:Class ;
+            owl:unionOf ( ns1:Agent ns1:Hôte ) ],
+        owl:Thing .
+
+ns1:Proprietaire a owl:Class .
+
+ns1:Menace a owl:Class .
+
+ns1:Mecanisme a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:oneOf ( ns1:Authentification ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Autorisation ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Controle-dacces ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Gestion-cle ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Identification ) ] ) ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:oneOf ( ns1:Authentification ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Autorisation ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Controle-dacces ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Gestion-cle ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Identification ) ] ) ],
+        owl:Thing .
+
+ns1:Objectif a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:oneOf ( ns1:Confiance ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Confidentialite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Disponibilite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Imputabilite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Integrite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Non-repudiation ) ] ) ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:oneOf ( ns1:Confiance ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Confidentialite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Disponibilite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Imputabilite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Integrite ) ] [ a owl:Class ;
+                        owl:oneOf ( ns1:Non-repudiation ) ] ) ],
+        owl:Thing .
+
+ns1:Protocole a owl:Class .
+
+[] a owl:Ontology ;
+    rdfs:comment "Ontologie pour le domaine de la securite: application aux agents mobiles" .
+
+[] a owl:Ontology ;
+    rdfs:comment "Ontologie pour le domaine de la securite: application aux agents mobiles" .
+

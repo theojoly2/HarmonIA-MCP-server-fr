@@ -1,0 +1,296 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://w3id.org/mod#> .
+@prefix onto: <https://w3id.org/tido#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+owl:versionIRI a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+skos:altLabel a owl:AnnotationProperty .
+
+ns1:createdWith a owl:AnnotationProperty .
+
+<https://w3id.org/tido> a owl:Ontology ;
+    dcterms:contributor <https://orcid.org/0000-0002-1091-8486>,
+        <https://orcid.org/0000-0002-2146-4803>,
+        <https://orcid.org/0000-0002-3282-1597> ;
+    dcterms:created "2025-05-07"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0009-0008-7843-6513> ;
+    dcterms:description "The TIDO ontology can be used to describe the decision processes within the threat intelligence domain"@en ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:publisher <https://kai.cs.vu.nl> ;
+    dcterms:title "The Threat Intelligence Decision Ontology"@en ;
+    vann:preferredNamespacePrefix "tido" ;
+    vann:preferredNamespaceUri onto: ;
+    owl:versionIRI <https://w3id.org/tido/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    ns1:createdWith <https://chowlk.linkeddata.es/> .
+
+onto:Agent a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "The tido:Agent class is directly inherited from PROV-O. Here, an agent is defined as something that bears some form of responsibility for an activity taking place, for the existence of an entity, or for another agent's activity" ;
+    rdfs:isDefinedBy "https://www.w3.org/TR/2013/REC-prov-o-20130430/#Agent" ;
+    rdfs:subClassOf prov:Agent .
+
+onto:Cost a owl:Class ;
+    rdfs:label "Cost" ;
+    rdfs:comment "The outlay or expenditure (as of effort or sacrifice) made to achieve an object" ;
+    rdfs:isDefinedBy "https://www.merriam-webster.com/dictionary/cost" ;
+    rdfs:subClassOf onto:Consideration .
+
+onto:Evidence a owl:Class ;
+    rdfs:label "Evidence" ;
+    rdfs:comment "A piece of information that is either a testamony, an observation, or a sensory measurement." ;
+    rdfs:isDefinedBy "http://eturwg.c4i.gmu.edu/files/ontologies/URREF#SingularEvidence" ;
+    rdfs:subClassOf onto:PieceOfInformation ;
+    owl:disjointWith onto:Hypothesis .
+
+onto:Goal a owl:Class ;
+    rdfs:label "Goal" ;
+    rdfs:comment "A clearly directed intent or purpose" ;
+    rdfs:isDefinedBy "https://www.merriam-webster.com/dictionary/aim" ;
+    rdfs:subClassOf onto:Consideration .
+
+onto:answers a owl:ObjectProperty ;
+    rdfs:label "answers" ;
+    rdfs:comment "A piece of information can be used to answer a research question. This piece of information can be anything, as long as it can be expressed in a sentence" ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:RQ .
+
+onto:assumes a owl:ObjectProperty ;
+    rdfs:label "assumes" ;
+    rdfs:comment "A relationship indicating how an option would take an hypothesis as granted or true" ;
+    rdfs:domain onto:Option ;
+    rdfs:range onto:Hypothesis ;
+    rdfs:seeAlso "https://www.merriam-webster.com/dictionary/assume" .
+
+onto:disputes a owl:ObjectProperty ;
+    rdfs:label "disputes" ;
+    rdfs:comment "A relationship indicating how a piece of information calls into question or casts doubt upon a hypothesis" ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:Hypothesis ;
+    rdfs:seeAlso "https://www.merriam-webster.com/dictionary/dispute" ;
+    rdfs:subPropertyOf onto:providesInsightsInto .
+
+onto:hasConsideration a owl:ObjectProperty ;
+    rdfs:label "has consideration" ;
+    rdfs:comment "An option can have multiple considerations that help in deciding on whether on not to select that option" ;
+    rdfs:domain onto:Option ;
+    rdfs:range onto:Consideration .
+
+onto:hasContext a owl:ObjectProperty ;
+    rdfs:label "has context" ;
+    rdfs:comment "A relationship indicating how one piece of information provides relevant context to another piece of information." ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:PieceOfInformation .
+
+onto:informs a owl:ObjectProperty ;
+    rdfs:label "informs" ;
+    rdfs:comment "A relationship that indicates which options would aid answering a research question. " ;
+    rdfs:domain onto:Option ;
+    rdfs:range onto:RQ .
+
+onto:questions a owl:ObjectProperty ;
+    rdfs:label "questions" ;
+    rdfs:comment "A research question can be raised by a piece of information" ;
+    rdfs:domain onto:RQ ;
+    rdfs:range onto:PieceOfInformation .
+
+onto:supports a owl:ObjectProperty ;
+    rdfs:label "supports" ;
+    rdfs:comment "A relationship indicating how a piece of information provides a hypothesis with substantiation/to support with evidence or authority, making it more certain" ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:Hypothesis ;
+    rdfs:seeAlso "https://www.merriam-webster.com/dictionary/supports and https://www.merriam-webster.com/dictionary/corroborate" ;
+    rdfs:subPropertyOf onto:providesInsightsInto .
+
+onto:wasExecutedBy a owl:ObjectProperty ;
+    rdfs:label "was executed by" ;
+    rdfs:comment "Once an option is selected, it could be excecuted by an activity. " ;
+    rdfs:domain onto:Option ;
+    rdfs:range onto:Activity .
+
+onto:wasRecalledBy a owl:ObjectProperty ;
+    rdfs:label "was recalled by" ;
+    rdfs:comment "During an orientation step, no new informatoin is generated but only pre-existing information is recalled" ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:Orientation .
+
+onto:wasSelectedBy a owl:ObjectProperty ;
+    rdfs:label "was selected by" ;
+    rdfs:comment "An option can be selected during a resolution step. This selection of an option is what constitudes a decision." ;
+    rdfs:domain onto:Option ;
+    rdfs:range onto:Resolution .
+
+<http://eturwg.c4i.gmu.edu/files/ontologies/URREF_v5_dev.owl#Information> a owl:Class ;
+    rdfs:label "Information" .
+
+prov:Activity a owl:Class ;
+    rdfs:label "Activity" .
+
+prov:Agent a owl:Class ;
+    rdfs:label "Agent" .
+
+prov:Collection a owl:Class ;
+    rdfs:label "Collection" .
+
+prov:Entity a owl:Class ;
+    rdfs:label "Entity" .
+
+prov:wasMemberOf a owl:ObjectProperty ;
+    rdfs:label "was member of" .
+
+<https://kai.cs.vu.nl> a foaf:Organization ;
+    foaf:name "knowledge in AI group"@en .
+
+<https://orcid.org/0000-0002-1091-8486> a foaf:Person ;
+    foaf:name "Fabio Massacci"@en .
+
+<https://orcid.org/0000-0002-2146-4803> a foaf:Person ;
+    foaf:name "Lise Stork"@en .
+
+<https://orcid.org/0000-0002-3282-1597> a foaf:Person ;
+    foaf:name "Stefan Schlobach"@en .
+
+<https://orcid.org/0009-0008-7843-6513> a foaf:Person ;
+    foaf:name "Ritten Roothaert"@en .
+
+onto:Orientation a owl:Class ;
+    rdfs:label "Orientation" ;
+    rdfs:comment "A step in the decision process where available information is shared, repeated, clarified or confirmed." ;
+    rdfs:isDefinedBy "Bales' 1st phase of group-decision making" ;
+    rdfs:subClassOf onto:Activity ;
+    skos:altLabel "Orientation step" .
+
+onto:Resolution a owl:Class ;
+    rdfs:label "Resolution" ;
+    rdfs:comment "A step in the decision process where a possible direction is chosen" ;
+    rdfs:isDefinedBy "Bales' 3rd phase of group decision making" ;
+    rdfs:subClassOf onto:Activity ;
+    skos:altLabel "Resolution step" .
+
+onto:contributesTo a owl:ObjectProperty ;
+    rdfs:label "contributes to" ;
+    rdfs:comment "Every activity should contribute to one or more cases/investigations. " ;
+    rdfs:domain onto:Activity ;
+    rdfs:range onto:Case .
+
+onto:investigates a owl:ObjectProperty ;
+    rdfs:label "investigates" ;
+    rdfs:comment "An investigation, or case, investigates one or more research questions" ;
+    rdfs:domain onto:Case ;
+    rdfs:range onto:RQ .
+
+onto:providesInsightsInto a owl:ObjectProperty ;
+    rdfs:label "provides insights into" ;
+    rdfs:comment "The super-property of tido:supports and tido:disputes" ;
+    rdfs:domain onto:PieceOfInformation ;
+    rdfs:range onto:Hypothesis ;
+    skos:altLabel "provides insight into" .
+
+onto:Consideration a owl:Class ;
+    rdfs:label "Consideration" ;
+    rdfs:comment "A matter weighed or taken into account when formulating an opinion or plan" ;
+    rdfs:isDefinedBy "https://www.merriam-webster.com/dictionary/consideration" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Evaluation ;
+            owl:onProperty prov:wasGeneratedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:PieceOfInformation .
+
+prov:wasGeneratedBy a owl:ObjectProperty ;
+    rdfs:label "was generated by" .
+
+onto:Case a owl:Class ;
+    rdfs:label "Case" ;
+    rdfs:comment "A collection of pieces of information that were recalled, inferred, deduced or produced during an investigation. " ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:RQ ;
+            owl:onProperty onto:investigates ],
+        prov:Collection ;
+    skos:altLabel "Investigation" .
+
+onto:Evaluation a owl:Class ;
+    rdfs:label "Evaluation" ;
+    rdfs:comment "A step in the decision process where opinions, evaluations and analysis are expressed. " ;
+    rdfs:isDefinedBy "Bales' 2nd phase of group-decision making" ;
+    rdfs:subClassOf onto:Activity ;
+    skos:altLabel "Evaluation step" .
+
+onto:Activity a owl:Class ;
+    rdfs:label "Activity" ;
+    rdfs:comment "The tido:Activity class is directly inherited from PROV-O. Here, an activity is defined as something that occurs over a period of time and acts upon or with pieces of information; it may include consuming, processing, transforming, modifying, relocating, using, or generating pieces of information." ;
+    rdfs:isDefinedBy "https://www.w3.org/TR/2013/REC-prov-o-20130430/#Action" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Case ;
+            owl:onProperty onto:contributesTo ],
+        prov:Activity .
+
+onto:Hypothesis a owl:Class ;
+    rdfs:label "Hypothesis" ;
+    rdfs:comment "A possible interpretation of the availble information that forms the ground for further action. Other pieces of information could be used to either support or dispute a hypothesis." ;
+    rdfs:isDefinedBy "https://www.merriam-webster.com/dictionary/hypothesis" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Evaluation ;
+            owl:onProperty prov:wasGeneratedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:PieceOfInformation .
+
+onto:Option a owl:Class ;
+    rdfs:label "Option" ;
+    rdfs:comment "Something that could be chosen. In the domain of Threat Intelligence, this could mean a course of action, but also an assesment of the situation or the answer to a research question." ;
+    rdfs:isDefinedBy "https://www.merriam-webster.com/dictionary/option" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Evaluation ;
+            owl:onProperty prov:wasGeneratedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:PieceOfInformation .
+
+onto:RQ a owl:Class ;
+    rdfs:label "R Q" ;
+    rdfs:comment "A question that arrises during an investigation." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Evaluation ;
+            owl:onProperty prov:wasGeneratedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:PieceOfInformation ;
+    skos:altLabel "RQ",
+        "Research question" .
+
+onto:PieceOfInformation a owl:Class ;
+    rdfs:label "Piece Of Information" ;
+    rdfs:comment "The term “piece of information” is used in this paper in its most general meaning covering other notions such as evidence, knowledge and/or data. A piece of information can be as simple as a measurement (on the scale of real numbers) but could be a fact (i.e., an observation, known to be true), an uncertain statement already modeled into a given mathematical formalism (i.e., a probability distribution), an unstructured statement in natural language" ;
+    rdfs:isDefinedBy "URREF (Costa et al. 2018)" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Case ;
+            owl:onProperty prov:wasMemberOf ],
+        <http://eturwg.c4i.gmu.edu/files/ontologies/URREF_v5_dev.owl#Information>,
+        prov:Entity ;
+    skos:altLabel "Piece of information",
+        "PoI",
+        "Sentence" .
+

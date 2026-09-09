@@ -1,0 +1,736 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/11/swrl#> .
+@prefix onto: <http://purl.org/eem> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator "Monika Solanki" ;
+    dc:title "The EPCIS Event Model" ;
+    dcterms:created "16/07/2013" ;
+    rdfs:seeAlso "http://www.gs1.org/gsmp/kc/epcglobal/epcis/epcis_1_0_1-standard-20070921.pdf" ;
+    owl:imports <http://purl.oclc.org/NET/ssnx/ssn>,
+        <http://purl.org/cbv#>,
+        <http://purl.org/co>,
+        <http://purl.org/goodrelations/v1>,
+        <http://www.w3.org/2006/vcard/ns> ;
+    owl:versionInfo "1.1" .
+
+<http://purl.org/eem#AggregationID> a owl:Class ;
+    rdfs:comment "A concept represent the aggregation identifier of a packagaing unit" ;
+    rdfs:subClassOf <http://purl.org/eem#EPC> .
+
+<http://purl.org/eem#DestinationLocation> a owl:Class ;
+    rdfs:comment "Added in version 1.1" ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Location> .
+
+<http://purl.org/eem#EPCClass> a owl:Class ;
+    rdfs:comment "A class-level identifier for the class to which the specified quantity of objects belongs." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithItem> ;
+                        owl:someValuesFrom <http://www.loa-cnr.it/ontologies/DUL.owl#Collection> ] [ a owl:Restriction ;
+                        owl:allValuesFrom <http://www.loa-cnr.it/ontologies/DUL.owl#Collection> ;
+                        owl:onProperty <http://purl.org/eem#associatedWithItem> ] ) ] .
+
+<http://purl.org/eem#OBSERVE> a <http://purl.org/eem#Action>,
+        owl:NamedIndividual ;
+    rdfs:comment "The entity in question has not been changed: it has neither been created, added to, destroyed, or removed from." .
+
+<http://purl.org/eem#SetOfEvents> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://purl.org/eem#EPCISEvent> ;
+            owl:onProperty <http://purl.org/co/element> ],
+        <http://purl.org/co/Set> .
+
+<http://purl.org/eem#SourceLocation> a owl:Class ;
+    rdfs:comment "Added in version 1.1" ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Location> .
+
+<http://purl.org/eem#associatedWithEPC> a owl:ObjectProperty ;
+    rdfs:comment "A product is associated with an EPC" ;
+    rdfs:domain <http://schema.org/Product> ;
+    rdfs:range <http://purl.org/eem#EPC> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://purl.org/eem#directlyFollowsEvent> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:subPropertyOf <http://www.loa-cnr.it/ontologies/DUL.owl#directlyFollows> ;
+    owl:inverseOf <http://purl.org/eem#directlyPrecedesEvent> .
+
+<http://purl.org/eem#hasChildAddress> a owl:ObjectProperty ;
+    rdfs:range <http://www.w3.org/2006/vcard/ns#Address> .
+
+<http://purl.org/eem#hasClassLevelMasterData> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#EPC> .
+
+<http://purl.org/eem#hasDispositionType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:range <http://purl.org/cbv#Disposition> .
+
+<http://purl.org/eem#hasEPCID> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#EPC> ;
+    rdfs:range xsd:anyURI,
+        xsd:string .
+
+<http://purl.org/eem#hasTransactionReference> a owl:ObjectProperty .
+
+<http://purl.org/eem#locationType> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#BusinessLocation>,
+        <http://purl.org/eem#ReadPointLocation> .
+
+<http://purl.org/eem#recordedByReader> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range <http://purl.org/eem#EPCReader> .
+
+<http://purl.org/eem#TransformationEvent> a owl:Class ;
+    rdfs:comment "Added in version 1.1. Represents an event in which input\\nobjects are fully or partially consumed and output objects are produced, such that any of the input objects may have contributed to all of the output objects." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:intersectionOf ( <http://purl.org/eem#EPCISEvent> [ a owl:Class ;
+                                    owl:unionOf ( [ a owl:Class ;
+                                                owl:unionOf ( [ a owl:Restriction ;
+                                                            owl:allValuesFrom <http://purl.org/eem#SetofEPCs> ;
+                                                            owl:onProperty <http://purl.org/eem#associatedWithInputEPCList> ] [ a owl:Restriction ;
+                                                            owl:allValuesFrom <http://purl.org/eem#InputQuantityList> ;
+                                                            owl:onProperty <http://purl.org/eem#hasInputQuantityList> ] ) ] [ a owl:Class ;
+                                                owl:unionOf ( [ a owl:Restriction ;
+                                                            owl:allValuesFrom <http://purl.org/eem#SetofEPCs> ;
+                                                            owl:onProperty <http://purl.org/eem#associatedWithOutputEPCList> ] [ a owl:Restriction ;
+                                                            owl:allValuesFrom <http://purl.org/eem#OutputQuantityList> ;
+                                                            owl:onProperty <http://purl.org/eem#hasOutputQuantityList> ] ) ] ) ] [ a owl:Restriction ;
+                                    owl:onProperty <http://purl.org/eem#associatedWithTransformationEvent> ;
+                                    owl:someValuesFrom <http://purl.org/eem#TransformationEvent> ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( <http://purl.org/eem#EPCISEvent> [ a owl:Class ;
+                                    owl:unionOf ( [ a owl:Restriction ;
+                                                owl:onProperty <http://purl.org/eem#associatedWithInputEPCList> ;
+                                                owl:someValuesFrom <http://purl.org/eem#SetofEPCs> ] [ a owl:Restriction ;
+                                                owl:onProperty <http://purl.org/eem#hasInputQuantityList> ;
+                                                owl:someValuesFrom <http://purl.org/eem#InputQuantityList> ] ) ] [ a owl:Class ;
+                                    owl:unionOf ( [ a owl:Restriction ;
+                                                owl:onProperty <http://purl.org/eem#associatedWithOutputEPCList> ;
+                                                owl:someValuesFrom <http://purl.org/eem#SetofEPCs> ] [ a owl:Restriction ;
+                                                owl:onProperty <http://purl.org/eem#hasOutputQuantityList> ;
+                                                owl:someValuesFrom <http://purl.org/eem#OutputQuantityList> ] ) ] ) ] ) ] .
+
+<http://purl.org/eem#associatedEPCAndTransaction> a owl:ObjectProperty .
+
+<http://purl.org/eem#associatedWithAggregationID> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/eem#SetofEPCs> ;
+    rdfs:range xsd:anyURI,
+        xsd:string .
+
+<http://purl.org/eem#associatedWithTransformationEvent> a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty .
+
+<http://purl.org/eem#commissioned> a owl:ObjectProperty .
+
+<http://purl.org/eem#decommissioned> a owl:ObjectProperty ;
+    rdfs:comment "The EPC(s) named in the event have been decommissioned as part of this event; that is, the EPC(s) do not exist subsequent to the event and should not be observed again" .
+
+<http://purl.org/eem#directlyPrecedesEvent> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range <http://purl.org/eem#EPCISEvent> ;
+    rdfs:subPropertyOf <http://www.loa-cnr.it/ontologies/DUL.owl#directlyPrecedes> .
+
+<http://purl.org/eem#disassociatedWithAggregationID> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/eem#SetofEPCs> ;
+    rdfs:range xsd:anyURI,
+        xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<http://purl.org/eem#eventOccurredAt> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/eem#eventRecordedAt> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/eem#eventTimeZoneOffset> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/eem#hasBusinessStepType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#EPCISEvent> ;
+    rdfs:range <http://purl.org/cbv#BusinessStep> .
+
+<http://purl.org/eem#hasTransactionType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#Transaction> ;
+    rdfs:range <http://purl.org/cbv#TransactionType> .
+
+<http://purl.org/eem#logicalReaderID> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/eem#EPCReader> .
+
+<http://purl.org/eem#physicalReaderID> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/eem#EPCReader> .
+
+<http://purl.org/eem#transactionID> a owl:DatatypeProperty,
+        owl:FunctionalProperty .
+
+<http://purl.org/eem#BusinessLocation> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Location> .
+
+<http://purl.org/eem#DELETE> a <http://purl.org/eem#Action>,
+        owl:NamedIndividual ;
+    rdfs:comment "The entity in question has been removed from or destroyed\\naltogether. " .
+
+<http://purl.org/eem#InputQuantityList> a owl:Class ;
+    rdfs:comment "Added in version 1.1" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/co/element> ;
+            owl:someValuesFrom <http://purl.org/eem#QuantityElement> ],
+        <http://purl.org/co/Bag> .
+
+<http://purl.org/eem#OutputQuantityList> a owl:Class ;
+    rdfs:comment "Added in version 1.1" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://purl.org/co/element> ;
+            owl:someValuesFrom <http://purl.org/eem#QuantityElement> ],
+        <http://purl.org/co/Bag> .
+
+<http://purl.org/eem#QuantityElement> a owl:Class ;
+    rdfs:comment "Added in version 1.1" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onDataRange xsd:anyURI ;
+                        owl:onProperty <http://purl.org/eem#hasEPCClass> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:integer ;
+                        owl:onProperty <http://purl.org/eem#quantity> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
+        <http://purl.org/co/Item> .
+
+<http://purl.org/eem#ReadPointLocation> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Location> .
+
+<http://purl.org/eem#SetOfTransactions> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://purl.org/eem#Transaction> ;
+            owl:onProperty <http://purl.org/co/element> ],
+        <http://purl.org/co/Set> .
+
+<http://purl.org/eem#Transaction> a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass <http://purl.org/cbv#TransactionType> ;
+                        owl:onProperty <http://purl.org/eem#hasTransactionType> ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:anyURI ;
+                        owl:onProperty <http://purl.org/eem#transactionID> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://purl.org/eem#associatedWithInputEPCList> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:subPropertyOf <http://purl.org/eem#associatedWithEPCList> .
+
+<http://purl.org/eem#associatedWithOutputEPCList> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:subPropertyOf <http://purl.org/eem#associatedWithEPCList> .
+
+<http://purl.org/eem#associatedWithTransactionList> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#TransactionEvent> ;
+    rdfs:range <http://purl.org/eem#SetOfTransactions> .
+
+<http://purl.org/eem#hasEPCClass> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#QuantityEvent> ;
+    rdfs:range xsd:anyURI .
+
+<http://purl.org/eem#hasInputQuantityList> a owl:ObjectProperty .
+
+<http://purl.org/eem#hasOutputQuantityList> a owl:ObjectProperty .
+
+<http://purl.org/eem#quantity> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/eem#QuantityEvent> ;
+    rdfs:range xsd:integer .
+
+<urn:swrl#pdm> a ns1:Variable .
+
+<urn:swrl#transaction> a ns1:Variable .
+
+<http://purl.org/eem#ADD> a <http://purl.org/eem#Action>,
+        owl:NamedIndividual ;
+    rdfs:comment "The entity in question has been created or added to" .
+
+<http://purl.org/eem#AggregationEvent> a owl:Class ;
+    rdfs:comment "Represents an event that happened to one or more entities denoted by EPCs that are phys\\nically aggregated together (physically constrained to be in the same place at the same time, as when cases are aggregated to a pallet). " ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#action> ;
+                        owl:someValuesFrom <http://purl.org/eem#Action> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithEPCList> ;
+                        owl:someValuesFrom <http://purl.org/eem#SetofEPCs> ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:string ;
+                        owl:onProperty <http://purl.org/eem#aggregationID> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
+        <http://purl.org/eem#EPCISEvent> .
+
+<http://purl.org/eem#EPCReader> a owl:Class ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onDataRange xsd:anyURI ;
+                        owl:onProperty <http://purl.org/eem#logicalReaderID> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:anyURI ;
+                        owl:onProperty <http://purl.org/eem#physicalReaderID> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
+        <http://purl.oclc.org/NET/ssnx/ssn#SensingDevice> .
+
+<http://purl.org/eem#ObjectEvent> a owl:Class ;
+    rdfs:comment "An ObjectEvent captures information about an event pertaining to one or more\\nphysical objects identified by EPCs. " ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#action> ;
+                        owl:someValuesFrom <http://purl.org/eem#Action> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithEPCList> ;
+                        owl:someValuesFrom <http://purl.org/eem#SetofEPCs> ] ) ],
+        <http://purl.org/eem#EPCISEvent> .
+
+<http://purl.org/eem#QuantityEvent> a owl:Class ;
+    rdfs:comment "represents an event concerned with a specific\\nquantity of entities sharing a common EPC class" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onDataRange xsd:anyURI ;
+                        owl:onProperty <http://purl.org/eem#hasEPCClass> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onDataRange xsd:integer ;
+                        owl:onProperty <http://purl.org/eem#quantity> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ],
+        <http://purl.org/eem#EPCISEvent> .
+
+<http://purl.org/eem#TransactionEvent> a owl:Class ;
+    rdfs:comment "represents an event in which one or more entities \\ndenoted by EPCs become associated\\nor disassociated with one or more\\nidentified business transactions. " ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#action> ;
+                        owl:someValuesFrom <http://purl.org/eem#Action> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithEPCList> ;
+                        owl:someValuesFrom <http://purl.org/eem#SetofEPCs> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithTransactionList> ;
+                        owl:someValuesFrom <http://purl.org/eem#SetOfTransactions> ] ) ],
+        <http://purl.org/eem#EPCISEvent> .
+
+<http://purl.org/eem#aggregationID> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:string .
+
+<http://purl.org/eem#hasBusinessLocation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:range <http://purl.org/eem#BusinessLocation> .
+
+<http://purl.org/eem#hasReadPointLocation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:range <http://purl.org/eem#ReadPointLocation> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> a owl:DatatypeProperty .
+
+<http://www.w3.org/2006/vcard/ns#long> a owl:DatatypeProperty .
+
+<urn:swrl#adr1> a ns1:Variable .
+
+<urn:swrl#adr2> a ns1:Variable .
+
+<urn:swrl#e1> a ns1:Variable .
+
+<urn:swrl#e2> a ns1:Variable .
+
+<urn:swrl#id> a ns1:Variable .
+
+<urn:swrl#list> a ns1:Variable .
+
+<http://purl.org/eem#EPC> a owl:Class ;
+    rdfs:label "Electronic Product Code" ;
+    rdfs:comment "A class for encapsulating the EPC for a physical thing through the datatype property\\nhasEPCValue. " ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://purl.org/eem#associatedWithItem> ;
+                        owl:someValuesFrom <http://purl.org/goodrelations/v1#Individual> ] [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty <http://purl.org/eem#associatedWithItem> ] ) ] .
+
+<http://purl.org/eem#associatedWithItem> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/eem#EPC> ;
+    rdfs:range <http://schema.org/Product> .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> a owl:DatatypeProperty .
+
+<urn:swrl#lat> a ns1:Variable .
+
+<urn:swrl#lng> a ns1:Variable .
+
+<http://purl.org/eem#Action> a owl:Class ;
+    rdfs:comment "The Action type says how an event relates to the lifecycle of the entity being described." .
+
+<http://purl.org/eem#action> a owl:ObjectProperty ;
+    rdfs:range <http://purl.org/eem#Action> .
+
+<urn:swrl#set> a ns1:Variable .
+
+<http://purl.org/eem#SetofEPCs> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://purl.org/eem#EPC> ;
+            owl:onProperty <http://purl.org/co/element> ],
+        <http://purl.org/co/Set> .
+
+<http://purl.org/eem#associatedWithEPCList> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:range <http://purl.org/eem#SetofEPCs> .
+
+<urn:swrl#loc1> a ns1:Variable .
+
+<urn:swrl#loc2> a ns1:Variable .
+
+<http://purl.org/eem#EPCISEvent> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty <http://purl.org/eem#eventOccurredAt> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty <http://purl.org/eem#eventRecordedAt> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty <http://purl.org/eem#eventTimeZoneOffset> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+<urn:swrl#e> a ns1:Variable .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#ObjectEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <http://purl.org/eem#ADD> ;
+                            ns1:propertyPredicate <http://purl.org/eem#action> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#set> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#e> ;
+                                            ns1:argument2 <http://purl.org/cbv#commissioning> ;
+                                            ns1:propertyPredicate <http://purl.org/eem#hasBusinessStepType> ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:argument2 <urn:swrl#set> ;
+                    ns1:propertyPredicate <http://purl.org/eem#commissioned> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e1> ;
+                    ns1:classPredicate <http://purl.org/eem#EPCISEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 <urn:swrl#e2> ;
+                            ns1:classPredicate <http://purl.org/eem#EPCISEvent> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e1> ;
+                                    ns1:argument2 <urn:swrl#list> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#e2> ;
+                                            ns1:argument2 <urn:swrl#list> ;
+                                            ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 <urn:swrl#e1> ;
+                                                    ns1:argument2 <urn:swrl#pdm> ;
+                                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithItem> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 <urn:swrl#e1> ;
+                                                            ns1:argument2 <urn:swrl#e2> ;
+                                                            ns1:propertyPredicate <http://www.loa-cnr.it/ontologies/DUL.owl#directlyPrecedes> ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#e2> ;
+                    ns1:argument2 <urn:swrl#pdm> ;
+                    ns1:propertyPredicate <http://purl.org/eem#associatedWithItem> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#EPCISEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <urn:swrl#loc2> ;
+                            ns1:propertyPredicate <http://purl.org/eem#hasBusinessLocation> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#loc1> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#hasReadPointLocation> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#loc2> ;
+                                            ns1:argument2 <urn:swrl#adr2> ;
+                                            ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 <urn:swrl#loc1> ;
+                                                    ns1:argument2 <urn:swrl#lat> ;
+                                                    ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                            ns1:argument1 <urn:swrl#loc1> ;
+                                                            ns1:argument2 <urn:swrl#lng> ;
+                                                            ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#long> ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 <urn:swrl#loc2> ;
+                                                                    ns1:argument2 <urn:swrl#lat> ;
+                                                                    ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#long> ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                            ns1:argument1 <urn:swrl#loc2> ;
+                                                                            ns1:argument2 <urn:swrl#lng> ;
+                                                                            ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#long> ] ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#loc1> ;
+                    ns1:argument2 <urn:swrl#adr2> ;
+                    ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#EPCISEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <urn:swrl#loc2> ;
+                            ns1:propertyPredicate <http://purl.org/eem#hasBusinessLocation> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#loc1> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#hasReadPointLocation> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#loc1> ;
+                                            ns1:argument2 <urn:swrl#adr1> ;
+                                            ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 <urn:swrl#loc1> ;
+                                                    ns1:argument2 <urn:swrl#lat> ;
+                                                    ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                            ns1:argument1 <urn:swrl#loc1> ;
+                                                            ns1:argument2 <urn:swrl#lng> ;
+                                                            ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 <urn:swrl#loc2> ;
+                                                                    ns1:argument2 <urn:swrl#lat> ;
+                                                                    ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                            ns1:argument1 <urn:swrl#loc2> ;
+                                                                            ns1:argument2 <urn:swrl#lng> ;
+                                                                            ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#loc2> ;
+                    ns1:argument2 <urn:swrl#adr1> ;
+                    ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#ObjectEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <http://purl.org/eem#DELETE> ;
+                            ns1:propertyPredicate <http://purl.org/eem#action> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#set> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:argument2 <urn:swrl#set> ;
+                    ns1:propertyPredicate <http://purl.org/eem#decommissioned> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#AggregationEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <http://purl.org/eem#DELETE> ;
+                            ns1:propertyPredicate <http://purl.org/eem#action> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#set> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#e> ;
+                                            ns1:argument2 <urn:swrl#id> ;
+                                            ns1:propertyPredicate <http://purl.org/eem#aggregationID> ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <urn:swrl#set> ;
+                    ns1:argument2 <urn:swrl#id> ;
+                    ns1:propertyPredicate <http://purl.org/eem#disassociatedWithAggregationID> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#TransactionEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <http://purl.org/eem#ADD> ;
+                            ns1:propertyPredicate <http://purl.org/eem#action> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#list> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#e> ;
+                                            ns1:argument2 <urn:swrl#transaction> ;
+                                            ns1:propertyPredicate <http://purl.org/eem#associatedWithTransactionList> ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl#list> ;
+                    ns1:argument2 <urn:swrl#transaction> ;
+                    ns1:propertyPredicate <http://purl.org/eem#associatedEPCAndTransaction> ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#EPCISEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <urn:swrl#loc2> ;
+                            ns1:propertyPredicate <http://purl.org/eem#hasBusinessLocation> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#loc1> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#hasReadPointLocation> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#loc1> ;
+                                            ns1:argument2 <urn:swrl#adr1> ;
+                                            ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 <urn:swrl#loc2> ;
+                                                    ns1:argument2 <urn:swrl#adr2> ;
+                                                    ns1:propertyPredicate <http://www.w3.org/2006/vcard/ns#adr> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                            ns1:argument1 <urn:swrl#loc1> ;
+                                                            ns1:argument2 <urn:swrl#lat> ;
+                                                            ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 <urn:swrl#loc1> ;
+                                                                    ns1:argument2 <urn:swrl#lng> ;
+                                                                    ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                            ns1:argument1 <urn:swrl#loc2> ;
+                                                                            ns1:argument2 <urn:swrl#lat> ;
+                                                                            ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                                    ns1:argument1 <urn:swrl#loc2> ;
+                                                                                    ns1:argument2 <urn:swrl#lng> ;
+                                                                                    ns1:propertyPredicate <http://www.w3.org/2003/01/geo/wgs84_pos#long> ] ;
+                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:SameIndividualAtom ;
+                    ns1:argument1 <urn:swrl#adr1> ;
+                    ns1:argument2 <urn:swrl#adr2> ] ;
+            rdf:rest () ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <http://purl.org/eem#AggregationEvent> <http://purl.org/eem#ObjectEvent> <http://purl.org/eem#QuantityEvent> <http://purl.org/eem#TransactionEvent> ) .
+
+[] a ns1:Imp ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 <urn:swrl#e> ;
+                    ns1:classPredicate <http://purl.org/eem#AggregationEvent> ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl#e> ;
+                            ns1:argument2 <http://purl.org/eem#ADD> ;
+                            ns1:propertyPredicate <http://purl.org/eem#action> ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 <urn:swrl#e> ;
+                                    ns1:argument2 <urn:swrl#set> ;
+                                    ns1:propertyPredicate <http://purl.org/eem#associatedWithEPCList> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 <urn:swrl#e> ;
+                                            ns1:argument2 <urn:swrl#id> ;
+                                            ns1:propertyPredicate <http://purl.org/eem#aggregationID> ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <urn:swrl#set> ;
+                    ns1:argument2 <urn:swrl#id> ;
+                    ns1:propertyPredicate <http://purl.org/eem#associatedWithAggregationID> ] ;
+            rdf:rest () ] .
+

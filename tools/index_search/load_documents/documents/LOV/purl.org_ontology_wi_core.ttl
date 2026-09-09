@@ -1,0 +1,180 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/ontology/wi/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:InterestDynamics a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Interest Dynamics"@en ;
+    rdfs:comment "An event concept for describing dynamics of interests, e.g. weight changes, periods of interest."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/wo/core#Weight> ;
+    ns1:term_status "testing"@en .
+
+onto:WeightedInterest a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Weighted Interest"@en ;
+    rdfs:comment "A weighted interest object, which also can have interest dynamics etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/scovo#Item> ;
+    ns1:term_status "unstable"@en .
+
+onto:ExplicitMining a <http://purl.org/NET/scovo#Dimension> ;
+    dc:description "An explicitly mined user interest"@en ;
+    dc:title "Explicit Mining"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing"@en .
+
+onto:ImplicitMining a <http://purl.org/NET/scovo#Dimension> ;
+    dc:description "An implicitly mined user interest"@en ;
+    dc:title "Implicit Mining"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing"@en .
+
+onto:agent a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has agent"@en ;
+    rdfs:comment "A link from a mined interest to the related person"@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf onto:preference ;
+    ns1:term_status "testing"@en .
+
+onto:appear_time a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has appear time"@en ;
+    rdfs:comment "The time when the interest appears in a certain kind of scenario."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:WeightedInterest onto:InterestDynamics ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#time> ;
+    ns1:term_status "testing"@en .
+
+onto:evidence a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has evidence"@en ;
+    rdfs:comment "A link between a context and evidence supporting the interpretation of preferences in a context"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:WeightedInterest onto:InterestDynamics ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#factor> ;
+    ns1:term_status "unstable"@en .
+
+onto:interest_dynamics a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has interest dynamics"@en ;
+    rdfs:comment "To relate a weighted interest to its temporal dynamics."@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:InterestDynamics ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#sub_event> ;
+    ns1:term_status "testing"@en .
+
+onto:longest_duration a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has longest duration"@en ;
+    rdfs:comment "The longest continuous interval of attention for an interest, e.g. for an interest, if it appears in the following years: 1990, 1991, 1995, 1996, 1997, 1998, 2001, then the longest duration is 4 years."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf onto:attention_duration ;
+    ns1:term_status "testing"@en .
+
+onto:not_interested_in a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "is not interested in"@en ;
+    rdfs:comment "A link between an agent and a topic of no interest to them"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "unstable"@en .
+
+onto:overall_weight a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has overall weight"@en ;
+    rdfs:comment "This weight reflects the overall interest in a topic and should be different from the actual weight of interest."@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/ontology/wo/core#weight> ;
+    ns1:term_status "testing"@en .
+
+onto:statistical_item a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has statistical item"@en ;
+    rdfs:comment "A link from an interest to statistics about itself"@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/NET/scovo#Item> ;
+    ns1:term_status "testing"@en .
+
+onto:ultimative_duration a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has ultimative duration"@en ;
+    rdfs:comment "The overall duration of attention for an interest, e.g. for an interest, if it appears in the following years: 1990, 1991, 1995, 1996, 1997, 1998, 2001, then the longest duration is 7 years."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf onto:attention_duration ;
+    ns1:term_status "testing"@en .
+
+foaf:topic_interest owl:propertyChainAxiom ( onto:preference onto:topic ) .
+
+onto:topic a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has topic"@en ;
+    rdfs:comment "A topic of the weighted interest"@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "unstable"@en .
+
+onto:attention_duration a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has attention duration"@en ;
+    rdfs:comment "An interval of attention for an interest."@en ;
+    rdfs:domain onto:WeightedInterest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range time:Interval ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#time> ;
+    ns1:term_status "testing"@en .
+
+onto:preference a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has preference"@en ;
+    rdfs:comment "A link between an agent and a weighted interest"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:WeightedInterest ;
+    ns1:term_status "unstable"@en .
+
+onto: a owl:Ontology ;
+    dc:creator <http://danbri.org/foaf.rdf#danbri>,
+        <http://foaf.me/zazi#me>,
+        <http://sw.deri.org/~sheila/foaf.rdf#me>,
+        <http://swordfish.rdfweb.org/people/libby/rdfweb/webwho.xrdf#me>,
+        <http://tobyinkster.co.uk/#i>,
+        <http://www.johnbreslin.com/foaf/foaf.rdf#me>,
+        "Danica Damljanovic"^^xsd:string,
+        "Yan Wang"^^xsd:string,
+        "Yi Zeng"^^xsd:string,
+        "Zhisheng Huang"^^xsd:string ;
+    dc:date "2010-09-14T15:20:52+01:00"^^xsd:dateTime ;
+    dc:description "A vocabulary for describing preferences (interests) within contexts, their temporal dynamics and their origin"@en ;
+    dc:title "Weighted Interests Vocabulary"@en ;
+    vann:preferredNamespacePrefix "wi" ;
+    vann:preferredNamespaceUri "http://purl.org/ontology/wi/core#" ;
+    owl:imports <http://purl.org/NET/c4dm/event.owl>,
+        <http://purl.org/NET/scovo>,
+        dc:,
+        dcterms:,
+        <http://purl.org/ontology/wo/core>,
+        vann:,
+        <http://www.w3.org/2003/06/sw-vocab-status/ns>,
+        <http://www.w3.org/2006/time>,
+        foaf: ;
+    owl:versionInfo 0.5 .
+

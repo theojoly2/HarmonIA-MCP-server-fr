@@ -1,0 +1,151 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://owlrep.eu01.aws.af.cm/fridge> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.oclc.org/NET/ssnx/ssn#FeatureOfInterest> a rdfs:Class .
+
+<http://purl.oclc.org/NET/ssnx/ssn#MeasurementProperty> a rdfs:Class .
+
+<http://purl.oclc.org/NET/ssnx/ssn#Observation> a rdfs:Class .
+
+<http://purl.oclc.org/NET/ssnx/ssn#SensingDevice> a rdfs:Class .
+
+<http://purl.org/goodrelations/v1#ActualProductOrServiceInstance> a rdfs:Class .
+
+<http://purl.org/goodrelations/v1#Individual> a rdfs:Class ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#ActualProductOrServiceInstance> .
+
+<http://purl.org/opdm/refrigerator#Fridge> a rdfs:Class ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#FeatureOfInterest> .
+
+<http://schema.org/Person> a rdfs:Class .
+
+<http://schema.org/Residence> a rdfs:Class .
+
+<http://www.loa-cnr.it/ontologies/DUL.owl#Person> a rdfs:Class .
+
+onto: a owl:Ontology ;
+    rdfs:label "Open Fridge vocabulary"^^xsd:string ;
+    dc:creator "Christian Mayr"^^xsd:string ;
+    dc:subject "fridge plugwise energy measurement"^^xsd:string ;
+    rdfs:comment "Ontology for Open Fridge project"^^xsd:string ;
+    rdfs:isDefinedBy "http://owlrep.eu01.aws.af.cm/fridge"^^xsd:string ;
+    owl:imports <http://purl.oclc.org/NET/ssnx/ssn>,
+        <http://purl.org/opdm/refrigerator#>,
+        <http://schema.org/> ;
+    owl:versionInfo "V 0.6.0, Release 2012-12-30"^^xsd:string,
+        "Version: Freezing Snowy Owl"^^xsd:string .
+
+<http://owlrep.eu01.aws.af.cm/fridge#dateBringIntoService> a owl:DatatypeProperty ;
+    rdfs:comment "The date when an product or service was bought or brought into service."^^xsd:string ;
+    rdfs:domain <http://purl.org/goodrelations/v1#ProductOrService> ;
+    rdfs:range xsd:date .
+
+<http://owlrep.eu01.aws.af.cm/fridge#energySensingDeviceID> a owl:DatatypeProperty ;
+    rdfs:comment "The appliance ID of an energy sensing device"^^xsd:string ;
+    rdfs:domain <http://owlrep.eu01.aws.af.cm/fridge#EnergySensingDevice> ;
+    rdfs:range xsd:string .
+
+<http://owlrep.eu01.aws.af.cm/fridge#numberOfPeople> a owl:DatatypeProperty ;
+    rdfs:comment "Number of people that live in the household"^^xsd:string ;
+    rdfs:domain <http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeHousehold> ;
+    rdfs:range xsd:int .
+
+<http://owlrep.eu01.aws.af.cm/fridge#observationPropertyFillingLevel> a owl:DatatypeProperty ;
+    rdfs:comment "The average filling level of a fridge in the time period of observation."^^xsd:string ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://owlrep.eu01.aws.af.cm/fridge#observationProperty> .
+
+<http://owlrep.eu01.aws.af.cm/fridge#observationPropertyNumberOfOpening> a owl:DatatypeProperty ;
+    rdfs:comment "The number of door openings of a fridge in the time period of observation."^^xsd:string ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://owlrep.eu01.aws.af.cm/fridge#observationProperty> .
+
+<http://owlrep.eu01.aws.af.cm/fridge#observationPropertyRoomTemperature> a owl:DatatypeProperty ;
+    rdfs:comment "The average temperature of the room where the refrigerator stands observed in a time period."^^xsd:string ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf <http://owlrep.eu01.aws.af.cm/fridge#observationProperty> .
+
+<http://owlrep.eu01.aws.af.cm/fridge#observationPropertyTemperature> a owl:DatatypeProperty ;
+    rdfs:comment "The average temperature of a fridge in the time period of observation."^^xsd:string ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf <http://owlrep.eu01.aws.af.cm/fridge#observationProperty> .
+
+<http://owlrep.eu01.aws.af.cm/fridge#ownsFridge> a owl:ObjectProperty ;
+    rdfs:comment "An open user owns a refrigerator."^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.loa-cnr.it/ontologies/DUL.owl#Person> <http://schema.org/Person> ) ] ;
+    rdfs:range <http://purl.org/opdm/refrigerator#Fridge> .
+
+<http://owlrep.eu01.aws.af.cm/fridge#standSouth> a owl:DatatypeProperty ;
+    rdfs:comment "Is the refrigerator located to the southwards or not."^^xsd:string ;
+    rdfs:domain <http://purl.org/opdm/refrigerator#Fridge> ;
+    rdfs:range xsd:boolean .
+
+<http://owlrep.eu01.aws.af.cm/fridge#EnergyObservation> a owl:Class ;
+    rdfs:label "Energy Observation"^^xsd:string ;
+    rdfs:comment "An energy observation is the main class of the measurment system. The observation connects to the sensing device, the measurement property, the observed appliance, the measurment result, and the time of measurement."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( <http://purl.oclc.org/NET/ssnx/ssn#Observation> [ a owl:Restriction ;
+                        owl:allValuesFrom <http://owlrep.eu01.aws.af.cm/fridge#Power> ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#observedProperty> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#observedBy> ;
+                        owl:someValuesFrom <http://owlrep.eu01.aws.af.cm/fridge#EnergySensingDevice> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#observationResult> ;
+                        owl:someValuesFrom <http://purl.oclc.org/NET/ssnx/ssn#SensorOutput> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#endTime> ;
+                        owl:someValuesFrom <http://www.loa-cnr.it/ontologies/DUL.owl#SpatioTemporalRegion> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#startTime> ;
+                        owl:someValuesFrom <http://www.loa-cnr.it/ontologies/DUL.owl#SpatioTemporalRegion> ] [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#featureOfInterest> ;
+                        owl:someValuesFrom <http://purl.org/opdm/refrigerator#Fridge> ] ) ],
+        owl:Thing .
+
+<http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeUser> a owl:Class ;
+    rdfs:label "Open Fridge User"^^xsd:string ;
+    rdfs:comment "The main user of the system, which lives in a household with a energy consumption measuring system."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( <http://schema.org/Person> [ a owl:Class ;
+                        owl:intersectionOf ( <http://www.loa-cnr.it/ontologies/DUL.owl#Person> [ a owl:Restriction ;
+                                    owl:allValuesFrom <http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeHousehold> ;
+                                    owl:onProperty <http://owlrep.eu01.aws.af.cm/fridge#hasHousehold> ] ) ] ) ],
+        owl:Thing .
+
+<http://owlrep.eu01.aws.af.cm/fridge#hasHousehold> a owl:ObjectProperty ;
+    rdfs:comment "Open fridge user has an open fridge household"^^xsd:string ;
+    rdfs:domain <http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeUser> ;
+    rdfs:range <http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeHousehold> .
+
+<http://purl.oclc.org/NET/ssnx/ssn#ofFeature> a rdf:Property .
+
+<http://owlrep.eu01.aws.af.cm/fridge#EnergySensingDevice> a owl:Class ;
+    rdfs:label "Energy Sensing Device"^^xsd:string ;
+    rdfs:comment "An energy sensing device is sensing device for sensing energy consumption data"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( <http://purl.oclc.org/NET/ssnx/ssn#SensingDevice> [ a owl:Restriction ;
+                        owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#observedBy> ;
+                        owl:someValuesFrom <http://owlrep.eu01.aws.af.cm/fridge#EnergyObservation> ] ) ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://owlrep.eu01.aws.af.cm/fridge#Power> ;
+            owl:onProperty <http://purl.oclc.org/NET/ssnx/ssn#ofFeature> ],
+        owl:Thing .
+
+<http://owlrep.eu01.aws.af.cm/fridge#Power> a owl:Class ;
+    rdfs:label "Power"^^xsd:string ;
+    rdfs:comment "Power is the observed measurment property"^^xsd:string ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#MeasurementProperty>,
+        owl:Thing .
+
+<http://owlrep.eu01.aws.af.cm/fridge#OpenFridgeHousehold> a owl:Class ;
+    rdfs:label "Open Fridge Household"^^xsd:string ;
+    rdfs:comment "Information about the household of the open fridge user"^^xsd:string ;
+    rdfs:subClassOf <http://schema.org/Residence>,
+        owl:Thing .
+
+<http://owlrep.eu01.aws.af.cm/fridge#observationProperty> a owl:DatatypeProperty ;
+    rdfs:comment "Property of a fridge in the time period of observation."^^xsd:string ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Observation> .
+

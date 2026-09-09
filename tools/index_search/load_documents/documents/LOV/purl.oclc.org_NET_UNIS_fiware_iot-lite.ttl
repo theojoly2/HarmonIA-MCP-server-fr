@@ -1,0 +1,195 @@
+@prefix ns1: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix onto: <http://purl.oclc.org/NET/UNIS/fiware/iot-lite#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "iot-lite" ;
+    rdfs:comment "iot-lite is a lightweight ontology based on SSN to describe Internet of Things (IoT) concepts and relationships."@en ;
+    owl:versionInfo "0.3 fiesta" .
+
+onto:ActuatingDevice a owl:Class ;
+    rdfs:comment "Device that can actuate over an object or QuantityKind."@en ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#Device> .
+
+onto:Polygon a owl:Class ;
+    rdfs:comment "The coverage is made up by linking several points by strait lines."@en ;
+    rdfs:subClassOf onto:Coverage .
+
+onto:Rectangle a owl:Class ;
+    rdfs:comment "Teh coverage is made up by giving two points which are the oposite corners of a rentangle."@en ;
+    rdfs:subClassOf onto:Coverage .
+
+onto:TagDevice a owl:Class ;
+    rdfs:comment "Tag Device such as QR code or bar code."@en ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#Device> .
+
+onto:VirtualEntity a owl:Class ;
+    rdfs:subClassOf onto:Entity .
+
+onto:altRelative a owl:AnnotationProperty ;
+    rdfs:domain ns1:Point ;
+    rdfs:range xsd:string .
+
+onto:endpoint a owl:DatatypeProperty ;
+    rdfs:comment "Endpoint of the service. It is usually a URL where the service is available." ;
+    rdfs:domain onto:Service ;
+    rdfs:range xsd:anyURI .
+
+onto:exposes a owl:ObjectProperty ;
+    rdfs:comment "For service-oriented queries. The inverse of exposedBy." ;
+    rdfs:domain onto:Service ;
+    rdfs:range <http://purl.oclc.org/NET/ssnx/ssn#Device> ;
+    owl:inverseOf onto:exposedBy .
+
+onto:hasAttribute a owl:ObjectProperty ;
+    rdfs:comment "Links the devices with their attributes." ;
+    rdfs:domain onto:Entity,
+        onto:Object ;
+    rdfs:range onto:Attribute .
+
+onto:hasCoverage a owl:ObjectProperty ;
+    rdfs:comment "Links the devices with their coverages." ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Device> ;
+    rdfs:range onto:Coverage .
+
+onto:hasMetadata a owl:ObjectProperty ;
+    rdfs:comment "Links any concept with metadata about that concept." ;
+    rdfs:range onto:Metadata .
+
+onto:hasQuantityKind a owl:ObjectProperty ;
+    rdfs:comment "Links a sensor or an attribute with the quantity  kind it measures (e.g. A sensor -sensor1- measures temperature: sensor1 hasQuantityKind temperature)." ;
+    rdfs:domain onto:Attribute,
+        <http://purl.oclc.org/NET/ssnx/ssn#Sensor> ;
+    rdfs:range <http://purl.org/NET/ssnx/qu/qu#QuantityKind> .
+
+onto:hasSensingDevice a owl:ObjectProperty ;
+    rdfs:comment "Links a sensor with a sensing device the same way as SSN." ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Sensor> ;
+    rdfs:range <http://purl.oclc.org/NET/ssnx/ssn#SensingDevice> .
+
+onto:hasUnit a owl:ObjectProperty ;
+    rdfs:comment "Links the sensor with the units of the quantity kind it measures (e.g. A sensor -sensor1- measures temperature in Celsius: senso1 hasUnit celsius)." ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Sensor> ;
+    rdfs:range <http://purl.org/NET/ssnx/qu/qu#Unit> .
+
+onto:id a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Device> ;
+    rdfs:range xsd:string .
+
+onto:interfaceDescription a owl:DatatypeProperty ;
+    rdfs:comment "Description of the service." ;
+    rdfs:domain onto:Service ;
+    rdfs:range xsd:anyURI .
+
+onto:interfaceType a owl:DatatypeProperty ;
+    rdfs:comment "Defines the type of interface of the service endpoint." ;
+    rdfs:domain onto:Service ;
+    rdfs:range xsd:string .
+
+onto:isAssociatedWith a owl:ObjectProperty ;
+    rdfs:comment "Defines the associations between objects and sensors (e.g. A table (object) has an attribute (temperature at the table) which is associated with a sensor (the temperature sensor of the room). " ;
+    rdfs:domain onto:Entity,
+        onto:Object ;
+    rdfs:range onto:Service .
+
+onto:isMobile a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Platform> ;
+    rdfs:range xsd:boolean .
+
+onto:isSubSystemOf a owl:ObjectProperty ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#System> ;
+    rdfs:range <http://purl.oclc.org/NET/ssnx/ssn#System> ;
+    owl:inverseOf <http://purl.oclc.org/NET/ssnx/ssn#hasSubSystem> .
+
+onto:metadataType a owl:DatatypeProperty ;
+    rdfs:comment "Defines the type pf the metadata value (e.g. resolution of the sensor)." ;
+    rdfs:domain onto:Metadata ;
+    rdfs:range xsd:string .
+
+onto:metadataValue a owl:DatatypeProperty ;
+    rdfs:comment "Value of the metadata" ;
+    rdfs:domain onto:Metadata ;
+    rdfs:range xsd:string .
+
+onto:radius a owl:DatatypeProperty ;
+    rdfs:comment "Specifies the radius of a circle coverage defined by a point -the center of the circle- and its radius." ;
+    rdfs:domain onto:Circle ;
+    rdfs:range xsd:double .
+
+onto:relativeLocation a owl:AnnotationProperty ;
+    rdfs:domain ns1:Point ;
+    rdfs:range xsd:string .
+
+<http://purl.oclc.org/NET/ssnx/ssn#onPlatform> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#System> ;
+    rdfs:range <http://purl.oclc.org/NET/ssnx/ssn#Platform> .
+
+ns1:alt a owl:AnnotationProperty ;
+    rdfs:domain ns1:Point .
+
+ns1:lat a owl:AnnotationProperty ;
+    rdfs:domain ns1:Point .
+
+ns1:location a owl:ObjectProperty ;
+    rdfs:range ns1:Point .
+
+ns1:long a owl:AnnotationProperty ;
+    rdfs:domain ns1:Point .
+
+onto:Circle a owl:Class ;
+    rdfs:comment "Circle coverage it needs the location of the sensor as the centre of the circle and the radius as a DataProperty."@en ;
+    rdfs:subClassOf onto:Coverage .
+
+onto:exposedBy a owl:ObjectProperty ;
+    rdfs:comment "A device is exposed by a service." ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#Device> ;
+    rdfs:range onto:Service .
+
+<http://purl.oclc.org/NET/ssnx/ssn#SensingDevice> a owl:Class ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#Device>,
+        <http://purl.oclc.org/NET/ssnx/ssn#Sensor> .
+
+<http://purl.oclc.org/NET/ssnx/ssn#hasSubSystem> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.oclc.org/NET/ssnx/ssn#System> ;
+    rdfs:range <http://purl.oclc.org/NET/ssnx/ssn#System> .
+
+<http://purl.org/NET/ssnx/qu/qu#QuantityKind> a owl:Class .
+
+<http://purl.org/NET/ssnx/qu/qu#Unit> a owl:Class .
+
+onto:Attribute a owl:Class ;
+    rdfs:comment "An attribute of an IoT object that can be exposed by an IoT service (i.e. a room (IoT Object) has a temperature (Attribute), that can be exposed by a temperature sensor (IoT device)."@en .
+
+<http://purl.oclc.org/NET/ssnx/ssn#Platform> a owl:Class .
+
+onto:Entity a owl:Class ;
+    owl:equivalentClass onto:Object .
+
+onto:Metadata a owl:Class ;
+    rdfs:comment "Class used to describe properties that cannot be described by QuantityKind and Units. i.e. the resolution of a sensor."@en .
+
+onto:Object a owl:Class ;
+    rdfs:comment "IoT entity"@en .
+
+onto:Coverage a owl:Class ;
+    rdfs:comment "The coverage of an IoT device (i.e. a temperature sensor inside a room has a coverage of that room)."@en .
+
+<http://purl.oclc.org/NET/ssnx/ssn#Sensor> a owl:Class .
+
+onto:Service a owl:Class ;
+    rdfs:comment "Service provided by an IoT Device"@en .
+
+<http://purl.oclc.org/NET/ssnx/ssn#System> a owl:Class .
+
+ns1:Point a owl:Class ;
+    onto:altRelative "" ;
+    onto:relativeLocation "" ;
+    ns1:alt "" ;
+    ns1:lat "" ;
+    ns1:long "" .
+
+<http://purl.oclc.org/NET/ssnx/ssn#Device> a owl:Class ;
+    rdfs:subClassOf <http://purl.oclc.org/NET/ssnx/ssn#System> .
+

@@ -1,0 +1,331 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://vocab.sindice.net/> .
+@prefix onto: <http://purl.org/gen/0.1#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+foaf:Person a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:comment "A person." ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:subClassOf foaf:Agent ;
+    ns1:term_status "stable" .
+
+<http://any23.org/tmp/> ns2:date "2012-01-26T19:01:48+00:00" ;
+    ns2:size "272"^^xsd:int .
+
+<http://purl.org/NET/c4dm/event.owl#Event> a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "\\n\\t\\tAn arbitrary classification of a space/time region, by a \\n\\t\\tcognitive agent. An event may have actively participating agents,\\n\\t\\tpassive factors, products, and a location in space/time.\\n\\t\\t" ;
+    rdfs:isDefinedBy <http://purl.org/NET/c4dm/event.owl> .
+
+onto: a owl:Ontology ;
+    dcterms:abstract "A simple RDF vocabulary containing terms to facilitate the linking of genealogical data."@en ;
+    dcterms:creator "Josh Hansen"@en ;
+    dcterms:date "2012-01-26"^^xsd:date ;
+    dcterms:issued "2012-01-26"^^xsd:date ;
+    dcterms:rights "Copyright Â© 2012 FamilySearch"@en ;
+    dcterms:title "Gen---A Vocabulary for Linked Genealogical Data"@en ;
+    vann:preferredNamespacePrefix "gen"@en ;
+    vann:preferredNamespaceUri "http://purl.org/gen/0.1#"@en .
+
+onto:FamilyTree a owl:Class ;
+    rdfs:label "Family Tree"@en ;
+    rdfs:comment "This container class should be populated with individual people, families, or other records\\n\\t\\tthat constitute a single 'family tree'. It is intended to help users in management of their\\n\\t\\tgenealogical data."@en ;
+    ns1:term_status "testing" .
+
+onto:FoafName a owl:Class ;
+    rdfs:label "FOAF Name"@en ;
+    rdfs:comment "A name class aiming for maximum compatibility with FOAF. Individuals in this class are intended\\n\\t\\tto be described using foaf's name properties, namely foaf:name, foaf:givenName, and\\n\\t\\tfoaf:familyName."@en ;
+    rdfs:subClassOf onto:Name ;
+    ns1:term_status "testing" .
+
+onto:GraveInscription a owl:Class ;
+    rdfs:label "Grave Inscription"@en ;
+    rdfs:comment "A grave inscription, such as on a tomb or headstone."@en ;
+    rdfs:subClassOf onto:MonumentalInscription ;
+    ns1:term_status "testing" .
+
+onto:Microfiche a owl:Class ;
+    rdfs:label "Microfiche"@en ;
+    rdfs:comment "'A microfiche is a flat film 105 x 148 mm in size, that is ISO A6.' (Wikipedia:Microform)"@en ;
+    rdfs:subClassOf onto:Microform ;
+    ns1:term_status "testing" .
+
+onto:Microfilm a owl:Class ;
+    rdfs:label "Microfilm"@en ;
+    rdfs:comment "A microfilm reel"@en ;
+    rdfs:subClassOf onto:Microform ;
+    ns1:term_status "testing" .
+
+onto:Place a owl:Class ;
+    rdfs:label "Place"@en ;
+    rdfs:comment "A geolocated position"@en ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    ns1:term_status "testing" .
+
+onto:Time a owl:Class ;
+    rdfs:label "Time"@en ;
+    rdfs:comment "A moment in time or a span of time"@en ;
+    rdfs:subClassOf time:TemporalEntity ;
+    ns1:term_status "testing" .
+
+onto:birthFather a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Birth> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:birthParent .
+
+onto:birthMother a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Birth> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:birthParent .
+
+onto:child a rdf:Property ;
+    rdfs:label "child"@en ;
+    rdfs:comment "A child in a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:familyMember .
+
+onto:deceased a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Death> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:participant,
+        <http://purl.org/vocab/bio/0.1/principal> ;
+    owl:inverseOf onto:death .
+
+onto:father a rdf:Property ;
+    rdfs:label "father"@en ;
+    rdfs:comment "A father of a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:parent .
+
+onto:mother a rdf:Property ;
+    rdfs:label "mother"@en ;
+    rdfs:comment "A mother of a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:parent .
+
+onto:name a rdf:Property ;
+    rdfs:label "name"@en ;
+    rdfs:comment "A person's name."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range onto:Name ;
+    ns1:term_status "testing" .
+
+onto:source a rdf:Property ;
+    rdfs:label "Source"@en ;
+    rdfs:comment "A source justifying some assertion or claim of fact. The range is deliberately left as general as possible\\n\\t\\t(owl:Thing) because of the unsettled state of bibliographic vocabularies. My recommendation is to use\\n\\t\\tbibo:Document and its associated vocabulary, though frbr:Work seems reasonable, too. Surely there are\\n\\t\\tmany other options---hopefully a clear standard emerges in the future."@en ;
+    rdfs:domain onto:Assertion ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "unstable" .
+
+onto:spouse a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Marriage> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:participant,
+        <http://purl.org/vocab/bio/0.1/partner> .
+
+onto:stepFather a rdf:Property ;
+    rdfs:label "stepFather"@en ;
+    rdfs:comment "A step-father of a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:stepParent .
+
+onto:stepMother a rdf:Property ;
+    rdfs:label "stepMother"@en ;
+    rdfs:comment "A step-mother of a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:stepParent .
+
+onto:subAssertion a rdf:Property ;
+    rdfs:domain onto:Assertion ;
+    rdfs:range onto:Assertion .
+
+<http://purl.org/vocab/bio/0.1/Baptism> a owl:Class ;
+    rdfs:label "Baptism"@en ;
+    rdfs:comment "The ceremonial event held to admit a person to membership of a Christian church."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/IndividualEvent> .
+
+<http://purl.org/vocab/bio/0.1/Burial> a owl:Class ;
+    rdfs:label "Burial"@en ;
+    rdfs:comment "The event of interring the remains of a person's body into the ground."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/IndividualEvent> .
+
+<http://purl.org/vocab/bio/0.1/Divorce> a owl:Class ;
+    rdfs:label "Divorce"@en ;
+    rdfs:comment "The event of legally dissolving a marriage."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/GroupEvent> .
+
+foaf:familyName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "familyName" ;
+    rdfs:comment "The family name of some person." ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range rdfs:Literal .
+
+foaf:givenName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Given name" ;
+    rdfs:comment "The given name of some person." ;
+    rdfs:isDefinedBy foaf: .
+
+foaf:name a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "A name for some thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf rdfs:label .
+
+onto:MonumentalInscription a owl:Class ;
+    rdfs:label "Monumental Inscription"@en ;
+    rdfs:comment "The general class of monumental inscriptions, defined by Wikipedia as 'an inscription, typically\\n\\t\\tcarved in stone, on a grave marker, cenotaph, memorial plaque, church monument or other memorial.'"@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> ;
+    ns1:term_status "testing" .
+
+onto:birth a rdf:Property ;
+    rdfs:label "birth"@en ;
+    rdfs:comment "Specifies a person's birth event."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range <http://purl.org/vocab/bio/0.1/Birth> ;
+    rdfs:subPropertyOf onto:lifeEvent,
+        <http://purl.org/vocab/bio/0.1/event> ;
+    owl:inverseOf onto:newborn .
+
+onto:death a rdf:Property ;
+    rdfs:label "death"@en ;
+    rdfs:comment "Specifies a person's death event."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range <http://purl.org/vocab/bio/0.1/Death> ;
+    rdfs:subPropertyOf onto:lifeEvent,
+        <http://purl.org/vocab/bio/0.1/death> .
+
+onto:newborn a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Birth> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:participant,
+        <http://purl.org/vocab/bio/0.1/principal> ;
+    owl:inverseOf onto:birth .
+
+<http://purl.org/vocab/bio/0.1/Marriage> a owl:Class ;
+    rdfs:label "Marriage"@en ;
+    rdfs:comment "The event of creating uniting the participants into a new family unit, sometimes accompanied by a formal wedding ceremony. This is intended to cover a broad range of marriages including those given formal legal standing, common-law, or by convention. It is not restricted to marriages of two people of the opposite gender, but also includes polygamous and same-sex unions."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/GroupEvent> .
+
+onto:Microform a owl:Class ;
+    rdfs:label "Microform"@en ;
+    rdfs:comment "The general class of microform media, defined by Wikipedia as 'any forms, either films or paper,\\n\\t\\tcontaining microreproductions of documents for transmission, storage, reading, and printing.'"@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> ;
+    ns1:term_status "testing" .
+
+onto:Name a owl:Class ;
+    rdfs:label "Name"@en ;
+    rdfs:comment "A personal name. Names are a class of their own to facilitate associating multiple names with\\n\\t\\tthe same individual, and to allow different types of names or ways of representing them."@en ;
+    ns1:term_status "testing" .
+
+onto:birthParent a rdf:Property ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Birth> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:participant,
+        <http://purl.org/vocab/bio/0.1/parent> .
+
+onto:familyMember a rdf:Property ;
+    rdfs:label "familyMember" ;
+    rdfs:comment "Indicates a member of a Family" ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf foaf:member ;
+    ns1:term_status "testing" .
+
+onto:stepParent a rdf:Property ;
+    rdfs:label "stepParent"@en ;
+    rdfs:comment "A step-parent of a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:parent .
+
+<http://purl.org/vocab/bio/0.1/Death> a owl:Class ;
+    rdfs:label "Death"@en ;
+    rdfs:comment "The event of a person's life ending."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/IndividualEvent> .
+
+<http://purl.org/vocab/bio/0.1/GroupEvent> a owl:Class ;
+    rdfs:label "Group Event"@en ;
+    rdfs:comment "A type of event that is principally about one or more agents and their partnership. Other agents may be involved but the event is most significant for the partner agent."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/vocab/bio/0.1/partner> ],
+        <http://purl.org/vocab/bio/0.1/Event> .
+
+onto:Assertion a owl:Class ;
+    rdfs:subClassOf rdf:Statement .
+
+onto:lifeEvent a rdf:Property ;
+    rdfs:label "lifeEvent"@en ;
+    rdfs:comment "The lifeEvent property is a slight variation on bio:event in which the domain is foaf:Person rather than foaf:Agent, since genealogy is about people."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range <http://purl.org/vocab/bio/0.1/Event> ;
+    rdfs:subPropertyOf <http://purl.org/vocab/bio/0.1/event> ;
+    owl:inverseOf onto:participant .
+
+onto:parent a rdf:Property ;
+    rdfs:label "parent"@en ;
+    rdfs:comment "A parent in a family."@en ;
+    rdfs:domain onto:Family ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf onto:familyMember .
+
+<http://purl.org/vocab/bio/0.1/Event> a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:comment "An event is an occurrence that brings about a change in the state of affairs for one or more people and/or other agents. Events are assumed to occur over a period of time and may not have precise start and end points."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> .
+
+<http://purl.org/vocab/bio/0.1/IndividualEvent> a owl:Class ;
+    rdfs:label "Individual Event"@en ;
+    rdfs:comment "A type of event that is principally about a single person, group or organization. Other agents may be involved but the event is most significant for the principal agent."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://purl.org/vocab/bio/0.1/principal> ],
+        <http://purl.org/vocab/bio/0.1/Event> .
+
+onto:participant a rdf:Property ;
+    rdfs:label "participant"@en ;
+    rdfs:comment "Adapts bio:agent by having a range of foaf:Person rather than foaf:Agent."@en ;
+    rdfs:domain <http://purl.org/vocab/bio/0.1/Event> ;
+    rdfs:range foaf:Person ;
+    rdfs:subPropertyOf <http://purl.org/vocab/bio/0.1/agent> ;
+    owl:inverseOf onto:lifeEvent .
+
+<http://purl.org/vocab/bio/0.1/Birth> a owl:Class ;
+    rdfs:label "Birth"@en ;
+    rdfs:comment "The event of a person entering into life."@en ;
+    rdfs:isDefinedBy <http://purl.org/vocab/bio/0.1/> ;
+    rdfs:subClassOf <http://purl.org/vocab/bio/0.1/IndividualEvent> .
+
+onto:Family a owl:Class ;
+    rdfs:label "Family"@en ;
+    rdfs:comment "Though it is preferred to represent families by describing the relationships between its members\\n\\t\\t(parent-child, husband-wife, etc.) this class can be used to represent a group of people who are\\n\\t\\tconsidered to be a family unit."@en ;
+    rdfs:subClassOf foaf:Group ;
+    ns1:term_status "testing" .
+

@@ -1,0 +1,312 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://reference.data.gov.uk/def/payment#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:ExpenditureCategory a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Expenditure categories"@en ;
+    rdfs:comment "The set of expenditure categories in the expenditure-category scheme for capital/revenue."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://www.hmrc.gov.uk/manuals/bimmanual/bim35010.htm> ;
+    rdfs:subClassOf skos:Concept ;
+    ns1:term_status "stable" .
+
+onto:ExpenditureLine a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Expenditure Line"@en ;
+    rdfs:comment "An item of expenditure that can be classified or assigned to a cost centre"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf qb:Observation ;
+    ns1:term_status "stable" .
+
+onto:Payment a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Payment"@en ;
+    rdfs:comment "A payment to a supplier for some goods or services, may correspond to one or more expenditure lines"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:payee ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:date ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:payer ],
+        qb:Slice ;
+    ns1:term_status "stable" .
+
+onto:PaymentDataset a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Payment data set"@en ;
+    rdfs:comment "A set of payments or expenditures, laid out as a cube of data"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf qb:DataSet ;
+    ns1:term_status "stable" .
+
+onto:Purchase a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Purchase"@en ;
+    rdfs:comment "The overall goods or service for which the payment was made"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:Redaction a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Redaction"@en ;
+    rdfs:comment "An instance of Redaction can be used in place of the actual value \\nin a dataset to indicate that this is a replacement for the true data value which has\\nbeen redacted. Typically the Redaction resource will be a blank note. It is recommended \\nthat it have an appropriate rdfs:label (e.g. REDACTED). If further information on the\\nreaction is available then dcterms properties should be used to carry those, in partcular\\ndct:description can be used to convey a description of the redaction and reasons"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "proposed" .
+
+onto:contract a rdf:Property ;
+    rdfs:label "contract"@en ;
+    rdfs:comment "Indicates a contract associated with this payment (optional)."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:expenditureCode a rdf:Property,
+        owl:DataTypeProperty ;
+    rdfs:label "expenditure code"@en ;
+    rdfs:comment "An (optional) internal code for the expenditure category. Such codes may not be useful across organizations but retaining them in a dataset may aid comparability of datasets within an organization and help with tracing back requests for further information. The internal code may actually be an amalgam of multiple different categories (e.g. may denote both the subjective and objective classifications of an expenditure)."@en ;
+    rdfs:domain onto:ExpenditureLine ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:expenditureLine a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "expenditure line"@en ;
+    rdfs:comment "Links a payment to the individual expenditure lines associated with it."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ExpenditureLine ;
+    rdfs:subPropertyOf qb:observation ;
+    ns1:term_status "stable" .
+
+onto:grossAmount a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "gross amount"@en ;
+    rdfs:comment "The amount paid, inclusive of any tax (whether reclaimable or not)"@en ;
+    rdfs:domain onto:ExpenditureLine ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:invoice a rdf:Property ;
+    rdfs:label "invoice"@en ;
+    rdfs:comment "Indicates an invoice associated with this payment (optional)."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:narrative a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "narrative"@en ;
+    rdfs:comment "A narrative description of the goods or services that were supplied."@en ;
+    rdfs:domain onto:Purchase ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:order a rdf:Property ;
+    rdfs:label "order"@en ;
+    rdfs:comment "Indicates an order associated with this payment (optional)."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:payment-slice a qb:SliceKey,
+        rdfs:Resource ;
+    rdfs:label "payment slice"@en ;
+    qb:componentProperty onto:date,
+        onto:payee,
+        onto:payer,
+        onto:payment ;
+    rdfs:comment "The definition of a slice through an expenditure cube that corresponds to all the expenditures in a single payment."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:payments-with-expenditure-structure a qb:DataStructureDefinition,
+        rdfs:Resource ;
+    rdfs:label "expenditure structure"@en ;
+    qb:component [ qb:dimension onto:expenditureCategory ],
+        [ qb:dimension onto:payment ],
+        [ qb:measure onto:netAmount ],
+        [ qb:dimension onto:date ],
+        [ qb:dimension onto:payee ],
+        [ qb:attribute onto:currency ],
+        [ qb:dimension onto:payer ] ;
+    rdfs:comment "The structure of a cube containing expenditure level information along with payments." ;
+    rdfs:isDefinedBy onto: .
+
+onto:procurementCategory a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "procurement category"@en ;
+    rdfs:comment "A classification for the goods or services for which the payment was made."@en ;
+    rdfs:domain onto:Purchase ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    ns1:term_status "stable" .
+
+onto:purchase a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "purchase"@en ;
+    rdfs:comment "Indicates the overall goods or service for which the payment was made."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Purchase ;
+    ns1:term_status "stable" .
+
+onto:reference a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "reference"@en ;
+    rdfs:comment "A reference number, code or label which identifies the payment. Not unique across different suppliers."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:totalGrossAmount a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total gross amount"@en ;
+    rdfs:domain qb:Slice ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:totalNetAmount a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total net amount"@en ;
+    rdfs:domain qb:Slice ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:unit a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "unit"@en ;
+    rdfs:comment "Optionally indicates a particular organizational \\nunit (Department, Directorate etc) of the payer organization associated with the payment.\\nUse org:classification to link the unit to a categorization of types of units to \\nsupport cross-comparison. For example, in the UK Local Authority spend application\\nthen the ESDToolkit-maintained list of Department Types may be a suitable code list."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:range org:OrganizationalUnit ;
+    ns1:term_status "stable" .
+
+onto:capital a onto:ExpenditureCategory,
+        rdfs:Resource,
+        skos:Concept ;
+    rdfs:label "Capital"@en ;
+    rdfs:comment "Indicates a capital expenditure."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://www.hmrc.gov.uk/manuals/bimmanual/bim35010.htm> ;
+    ns1:term_status "stable" ;
+    skos:inScheme onto:expenditure-category ;
+    skos:notation "Capital" ;
+    skos:topConceptOf onto:expenditure-category .
+
+onto:currency a qb:AttributeProperty ;
+    rdfs:label "currency"@en ;
+    qb:concept <http://purl.org/linked-data/sdmx/2009/concept#currency> ;
+    rdfs:comment "Currency in which a payment was made, typically attached to the dataset for single currency datasets."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:expenditureCategory a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "expenditure category"@en ;
+    rdfs:comment "The category of expenditure in some appropriate categorization scheme (such as the Best Value Account Code of Practice categories). If the scheme is hierarchical then this should at least designate the narrowest (most fine grain) applicable code and can additionally designate the broader codes. Multiple code schemes can be used within the same dataset and consuming applications can use the skos:inScheme (and the rdf:type) of the code to determine the scheme."@en ;
+    rdfs:domain onto:ExpenditureLine ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    ns1:term_status "stable" .
+
+onto:netAmount a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "net amount"@en ;
+    rdfs:comment "The net amount of the payment. This is the effective cost to the payer after any reclaimable tax has been deducted."@en ;
+    rdfs:domain onto:ExpenditureLine ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:revenue a onto:ExpenditureCategory,
+        rdfs:Resource,
+        skos:Concept ;
+    rdfs:label "Revenue"@en ;
+    rdfs:comment "Indicates a revenue expenditure."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://www.hmrc.gov.uk/manuals/bimmanual/bim35010.htm> ;
+    ns1:term_status "stable" ;
+    skos:inScheme onto:expenditure-category ;
+    skos:notation "Revenue" ;
+    skos:topConceptOf onto:expenditure-category .
+
+onto:payment a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "payment"@en ;
+    rdfs:comment "Indicates the payment of which this expenditure line is a part."@en ;
+    rdfs:domain onto:ExpenditureLine ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Payment ;
+    ns1:term_status "stable" .
+
+onto:date a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "date"@en ;
+    rdfs:comment "The date the payment is deemed to have occurred."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://reference.data.gov.uk/def/intervals/Interval> ;
+    ns1:term_status "stable" .
+
+onto:payee a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "payee"@en ;
+    rdfs:comment "The entity to which the payment was made."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    ns1:term_status "stable" .
+
+onto:payer a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "payer"@en ;
+    rdfs:comment "The entity which made the payment."@en ;
+    rdfs:domain onto:Payment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    ns1:term_status "stable" .
+
+onto:expenditure-category a rdfs:Resource,
+        skos:ConceptScheme ;
+    rdfs:label "Exenditure category scheme"@en ;
+    rdfs:comment "A code scheme for classifying expenditures as capital/revenue."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://www.hmrc.gov.uk/manuals/bimmanual/bim35010.htm> ;
+    ns1:term_status "stable" ;
+    skos:hasTopConcept onto:capital,
+        onto:revenue .
+
+onto: a owl:Ontology ;
+    rdfs:label "Payments ontology"@en ;
+    dcterms:contributor [ foaf:mbox "jeni@jenitennison.com" ;
+            foaf:name "Jeni Tennison" ],
+        [ foaf:mbox "dave@epimorphics.com" ;
+            foaf:name "Dave Reynolds" ] ;
+    dcterms:created "2010-08-06"^^xsd:date ;
+    dcterms:license <http://www.opendatacommons.org/licenses/pddl/1.0/> ;
+    dcterms:modified "2010-11-16"^^xsd:date ;
+    rdfs:comment "Vocabulary for representing payments, such as government expenditures, using the data cube representation."@en ;
+    owl:versionInfo "0.7" .
+

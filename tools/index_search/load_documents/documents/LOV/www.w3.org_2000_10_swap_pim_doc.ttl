@@ -1,0 +1,110 @@
+@prefix ns1: <http://www.w3.org/2000/10/swap/pim/doc#> .
+@prefix onto: <http://www.w3.org/2000/10/swap/pim/doc> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Work a rdfs:Class ;
+    rdfs:label "work" ;
+    rdfs:comment "An abstract information thing of value, typically intellectual property" .
+
+onto: ns1:creator <http://www.w3.org/People/Berners-Lee/card#i> ;
+    ns1:ipr <http://www.w3.org/2000/10/swap/LICENSE.n3> ;
+    ns1:version "$Id: doc.rdf,v 1.4 2006/07/29 20:18:43 timbl Exp $" .
+
+ns1:OpenSourceLicense rdfs:label "Opem Source licence" ;
+    rdfs:comment "Class of licenses which can be called Open Soutrce\\n                according to opensource.org" ;
+    rdfs:subClassOf ns1:Work .
+
+ns1:adminPage a rdf:Property ;
+    rdfs:label "administrative page" ;
+    rdfs:comment "A web page allowing a human user to administer this work,\\n            for example changing access control, version control information etc." ;
+    rdfs:domain ns1:Work .
+
+ns1:creator a rdf:Property ;
+    rdfs:label "creator" ;
+    rdfs:comment "The person (not string) who created this." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range <http://www.w3.org/2000/10/swap/pim/contact#SocialEntity> .
+
+ns1:dependsOn a rdf:Property ;
+    rdfs:label "depends on" ;
+    rdfs:comment "The meaning or value of this work depends on that of that work." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:derivativeWork a rdf:Property ;
+    rdfs:label "derivative work" ;
+    rdfs:comment "A work wholey or partly used in the creation of this one." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work ;
+    owl:inverseOf ns1:derivedFrom .
+
+ns1:ipr a rdf:Property ;
+    rdfs:label "rights" ;
+    rdfs:comment "Terms and intellectual property rights licensing conditions." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:mayControl a rdf:Property ;
+    rdfs:label "may control" ;
+    rdfs:comment "This may change that access control for that" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/contact#SocialEntity> ;
+    rdfs:range ns1:Work .
+
+ns1:mayRead a rdf:Property ;
+    rdfs:label "may read" ;
+    rdfs:comment "This may access that for read -- compare 'r' unix" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/contact#SocialEntity> ;
+    rdfs:range ns1:Work .
+
+ns1:mayWrite a rdf:Property ;
+    rdfs:label "may write" ;
+    rdfs:comment "This may access that to modify it -- compare 'w' unix" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/contact#SocialEntity> ;
+    rdfs:range ns1:Work .
+
+ns1:obsoletes a rdf:Property ;
+    rdfs:label "obsoletes" ;
+    rdfs:comment "This work is more upto date than that and makes it obsolete." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:persistencePolicy a rdf:Property ;
+    rdfs:label "persistence policy" ;
+    rdfs:comment "Publishers policy regarding the peristence of the mapping\\n                between URI and its meaning and/or representation in bits." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:rules a rdf:Property ;
+    rdfs:label "rules" ;
+    rdfs:comment "\\n\\tThe subject is a namespace document; the object is a document\\n\\tcontaining rules. The rules are valid information about the terms\\n\\tdefined in the namespace document.\\n\\t" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/contact#Work> ;
+    rdfs:range <http://www.w3.org/2000/10/swap/pim/contact#Work> .
+
+ns1:subLicense a rdf:Property,
+        owl:TransitiveProperty ;
+    rdfs:label "sub-license" ;
+    rdfs:comment "For any license, a sublicense is a licensing offering a subset of the rights. \\nIf A doc:sublicense B then anything under license A can be released under\\nlicence B." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:versionOf a rdf:Property ;
+    rdfs:comment "This work is a a specific version of the follwing generic document.\\n\\t\\tOBSOLETE - use its inverse, version." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work ;
+    owl:inverseOf ns1:version .
+
+ns1:derivedFrom a rdf:Property ;
+    rdfs:label "derived from" ;
+    rdfs:comment "A work wholey or partly used in the creation of this one." ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+
+ns1:version a rdf:Property ;
+    rdfs:label "version" ;
+    rdfs:comment "This generic work has a specific version in the\\n\\tfollwing specific document",
+        "This version of this document (eg number, date, etc). A string" ;
+    rdfs:domain ns1:Work ;
+    rdfs:range ns1:Work .
+

@@ -1,0 +1,109 @@
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://purl.org/ontology/service> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.org/ontology/service#delay> a owl:DatatypeProperty ;
+    rdfs:label "delay"@en ;
+    rdfs:domain <http://purl.org/ontology/service#Service> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso xsd:date,
+        xsd:dateTime,
+        xsd:duration .
+
+<http://purl.org/ontology/service#queue> a owl:DatatypeProperty ;
+    rdfs:label "queue"@en ;
+    rdfs:domain <http://purl.org/ontology/service#Service> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://purl.org/ontology/service#consumedBy> a owl:ObjectProperty ;
+    rdfs:label "consumedBy"@en ;
+    rdfs:domain <http://purl.org/ontology/service#Service> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#ServiceConsumer> ;
+    rdfs:seeAlso <http://schema.org/serviceAudience> ;
+    owl:inverseOf <http://purl.org/ontology/service#consumes> .
+
+<http://purl.org/ontology/service#consumes> a owl:ObjectProperty ;
+    rdfs:label "consumes"@en ;
+    rdfs:domain <http://purl.org/ontology/service#ServiceConsumer> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#Service> ;
+    owl:inverseOf <http://purl.org/ontology/service#consumedBy> .
+
+<http://purl.org/ontology/service#limitedBy> a owl:ObjectProperty ;
+    rdfs:label "limitedBy"@en ;
+    rdfs:domain <http://purl.org/ontology/service#Service> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#ServiceLimitation> ;
+    owl:inverseOf <http://purl.org/ontology/service#limits> .
+
+<http://purl.org/ontology/service#limits> a owl:ObjectProperty ;
+    rdfs:label "limits"@en ;
+    rdfs:domain <http://purl.org/ontology/service#ServiceLimitation> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#Service> ;
+    owl:inverseOf <http://purl.org/ontology/service#limitedBy> .
+
+<http://purl.org/ontology/service#providedBy> a owl:ObjectProperty ;
+    rdfs:label "providedBy"@en ;
+    rdfs:domain <http://purl.org/ontology/service#Service> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#ServiceProvider> ;
+    rdfs:seeAlso <http://schema.org/provider> ;
+    owl:inverseOf <http://purl.org/ontology/service#provides> .
+
+<http://purl.org/ontology/service#provides> a owl:ObjectProperty ;
+    rdfs:label "provides"@en ;
+    rdfs:domain <http://purl.org/ontology/service#ServiceProvider> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/service#Service> ;
+    owl:inverseOf <http://purl.org/ontology/service#providedBy> .
+
+<http://purl.org/ontology/service#ServiceConsumer> a owl:Class ;
+    rdfs:label "ServiceConsumer"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso dcmitype:Agent,
+        <http://purl.org/goodrelations/v1#BusinessEntity>,
+        <http://schema.org/Organization>,
+        <http://schema.org/Person>,
+        foaf:Agent .
+
+<http://purl.org/ontology/service#ServiceLimitation> a owl:Class ;
+    rdfs:label "ServiceLimitation"@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/service#ServiceProvider> a owl:Class ;
+    rdfs:label "ServiceProvider"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso dcmitype:Agent,
+        <http://purl.org/goodrelations/v1#BusinessEntity>,
+        <http://schema.org/Organization>,
+        <http://schema.org/Person>,
+        foaf:Agent .
+
+<http://purl.org/ontology/service#Service> a owl:Class ;
+    rdfs:label "Service"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://schema.org/Product>,
+        <http://schema.org/Service> ;
+    rdfs:subClassOf dcmitype:Service,
+        <http://purl.org/goodrelations/v1#ProductOrService> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:creator "Jakob Voß" ;
+    dcterms:description "A micro-ontology that defines the general concept of a service."@en ;
+    dcterms:modified "2013-11-24"^^xsd:date ;
+    dcterms:title "Service Ontology"@en ;
+    vann:preferredNamespacePrefix "service" ;
+    vann:preferredNamespaceUri "http://purl.org/ontology/service#" ;
+    owl:versionInfo "0.2.0" .
+

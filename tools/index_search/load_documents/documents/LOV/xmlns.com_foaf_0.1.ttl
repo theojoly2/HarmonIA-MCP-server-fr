@@ -1,0 +1,726 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+onto:Agent a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "An agent (eg. person, group, software or physical artifact)." ;
+    owl:equivalentClass dcterms:Agent ;
+    ns1:term_status "stable" .
+
+onto:Document a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "A document." ;
+    rdfs:isDefinedBy onto: ;
+    owl:disjointWith onto:Organization,
+        onto:Project ;
+    owl:equivalentClass <http://schema.org/CreativeWork> ;
+    ns1:term_status "stable" .
+
+onto:Group a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Group" ;
+    rdfs:comment "A class of Agents." ;
+    rdfs:subClassOf onto:Agent ;
+    ns1:term_status "stable" .
+
+onto:Image a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Image" ;
+    rdfs:comment "An image." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Document ;
+    owl:equivalentClass <http://schema.org/ImageObject> ;
+    ns1:term_status "stable" .
+
+onto:LabelProperty a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Label Property" ;
+    rdfs:comment "A foaf:LabelProperty is any RDF property with texual values that serve as labels." ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "unstable" .
+
+onto:OnlineAccount a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Online Account" ;
+    rdfs:comment "An online account." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:OnlineChatAccount a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Online Chat Account" ;
+    rdfs:comment "An online chat account." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:OnlineAccount ;
+    ns1:term_status "unstable" .
+
+onto:OnlineEcommerceAccount a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Online E-commerce Account" ;
+    rdfs:comment "An online e-commerce account." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:OnlineAccount ;
+    ns1:term_status "unstable" .
+
+onto:OnlineGamingAccount a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Online Gaming Account" ;
+    rdfs:comment "An online gaming account." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:OnlineAccount ;
+    ns1:term_status "unstable" .
+
+onto:Organization a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Organization" ;
+    rdfs:comment "An organization." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Agent ;
+    owl:disjointWith onto:Document,
+        onto:Person ;
+    ns1:term_status "stable" .
+
+onto:Person a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:comment "A person." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing>,
+        onto:Agent ;
+    owl:disjointWith onto:Organization,
+        onto:Project ;
+    owl:equivalentClass <http://schema.org/Person>,
+        <http://www.w3.org/2000/10/swap/pim/contact#Person> ;
+    ns1:term_status "stable" .
+
+onto:PersonalProfileDocument a rdfs:Class,
+        owl:Class ;
+    rdfs:label "PersonalProfileDocument" ;
+    rdfs:comment "A personal profile RDF document." ;
+    rdfs:subClassOf onto:Document ;
+    ns1:term_status "testing" .
+
+onto:Project a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Project" ;
+    rdfs:comment "A project (a collective endeavour of some kind)." ;
+    rdfs:isDefinedBy onto: ;
+    owl:disjointWith onto:Document,
+        onto:Person ;
+    ns1:term_status "testing" .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+onto:account a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "account" ;
+    rdfs:comment "Indicates an account held by this agent." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:OnlineAccount ;
+    ns1:term_status "testing" .
+
+onto:accountName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:comment "Indicates the name (identifier) associated with this online account." ;
+    rdfs:domain onto:OnlineAccount ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:accountServiceHomepage a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "account service homepage" ;
+    rdfs:comment "Indicates a homepage of the service provide for this online account." ;
+    rdfs:domain onto:OnlineAccount ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:age a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "age" ;
+    rdfs:comment "The age in years of some agent." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "unstable" .
+
+onto:aimChatID a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "AIM chat ID" ;
+    rdfs:comment "An AIM chat ID" ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf onto:nick ;
+    ns1:term_status "testing" .
+
+onto:based_near a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "based near" ;
+    rdfs:comment "A location that something is based near, for some broadly human notion of near." ;
+    rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    ns1:term_status "testing" .
+
+onto:birthday a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "birthday" ;
+    rdfs:comment "The birthday of this Agent, represented in mm-dd string form, eg. '12-31'." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "unstable" .
+
+onto:currentProject a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "current project" ;
+    rdfs:comment "A current project this person works on." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:dnaChecksum a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "DNA checksum" ;
+    rdfs:comment "A checksum for the DNA of some thing. Joke." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "archaic" .
+
+onto:familyName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "familyName" ;
+    rdfs:comment "The family name of some person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:family_name a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "family_name" ;
+    rdfs:comment "The family name of some person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "archaic" .
+
+onto:firstName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "firstName" ;
+    rdfs:comment "The first name of a person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:focus a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "focus" ;
+    rdfs:comment "The underlying or 'focal' entity associated with some SKOS-described concept." ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:fundedBy a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "funded by" ;
+    rdfs:comment "An organization funding a project or person." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "archaic" .
+
+onto:geekcode a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "geekcode" ;
+    rdfs:comment "A textual geekcode for this person, see http://www.geekcode.com/geek.html" ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "archaic" .
+
+onto:gender a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "gender" ;
+    rdfs:comment "The gender of this Agent (typically but not necessarily 'male' or 'female')." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:givenName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Given name" ;
+    rdfs:comment "The given name of some person." ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing" .
+
+onto:givenname a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Given name" ;
+    rdfs:comment "The given name of some person." ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "archaic" .
+
+onto:holdsAccount a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "account" ;
+    rdfs:comment "Indicates an account held by this agent." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:OnlineAccount ;
+    ns1:term_status "archaic" .
+
+onto:homepage a rdf:Property,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "homepage" ;
+    rdfs:comment "A homepage for some thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    rdfs:subPropertyOf onto:isPrimaryTopicOf,
+        onto:page ;
+    ns1:term_status "stable" .
+
+onto:icqChatID a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "ICQ chat ID" ;
+    rdfs:comment "An ICQ chat ID" ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf onto:nick ;
+    ns1:term_status "testing" .
+
+onto:img a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "image" ;
+    rdfs:comment "An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage)." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Image ;
+    rdfs:subPropertyOf onto:depiction ;
+    ns1:term_status "testing" .
+
+onto:interest a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "interest" ;
+    rdfs:comment "A page about a topic of interest to this person." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:jabberID a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "jabber ID" ;
+    rdfs:comment "A jabber ID for something." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:knows a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "knows" ;
+    rdfs:comment "A person known by this person (indicating some level of reciprocated interaction between the parties)." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Person ;
+    ns1:term_status "stable" .
+
+onto:lastName a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "lastName" ;
+    rdfs:comment "The last name of a person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:logo a rdf:Property,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "logo" ;
+    rdfs:comment "A logo representing some thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:mbox a rdf:Property,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "personal mailbox" ;
+    rdfs:comment "A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:mbox_sha1sum a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "sha1sum of a personal mailbox URI name" ;
+    rdfs:comment "The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:member a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "member" ;
+    rdfs:comment "Indicates a member of a Group" ;
+    rdfs:domain onto:Group ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    ns1:term_status "stable" .
+
+onto:membershipClass a rdf:Property,
+        owl:AnnotationProperty ;
+    rdfs:label "membershipClass" ;
+    rdfs:comment "Indicates the class of individuals that are a member of a Group" ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "unstable" .
+
+onto:msnChatID a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "MSN chat ID" ;
+    rdfs:comment "An MSN chat ID" ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf onto:nick ;
+    ns1:term_status "testing" .
+
+onto:myersBriggs a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "myersBriggs" ;
+    rdfs:comment "A Myers Briggs (MBTI) personality classification." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:name a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "A name for some thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf rdfs:label ;
+    ns1:term_status "testing" .
+
+onto:openid a rdf:Property,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "openid" ;
+    rdfs:comment "An OpenID for an Agent." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    rdfs:subPropertyOf onto:isPrimaryTopicOf ;
+    ns1:term_status "testing" .
+
+onto:pastProject a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "past project" ;
+    rdfs:comment "A project this person has previously worked on." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:phone a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "phone" ;
+    rdfs:comment "A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel)." ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing" .
+
+onto:plan a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "plan" ;
+    rdfs:comment "A .plan comment, in the tradition of finger and '.plan' files." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing" .
+
+onto:publications a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "publications" ;
+    rdfs:comment "A link to the publications of this person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:schoolHomepage a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "schoolHomepage" ;
+    rdfs:comment "A homepage of a school attended by the person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:sha1 a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "sha1sum (hex)" ;
+    rdfs:comment "A sha1sum hash, in hex." ;
+    rdfs:domain onto:Document ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "unstable" .
+
+onto:skypeID a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Skype ID" ;
+    rdfs:comment "A Skype ID" ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf onto:nick ;
+    ns1:term_status "testing" .
+
+onto:status a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "status" ;
+    rdfs:comment "A string expressing what the user is happy for the general public (normally) to know about their current activity." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "unstable" .
+
+onto:surname a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Surname" ;
+    rdfs:comment "The surname of some person." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "archaic" .
+
+onto:theme a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "theme" ;
+    rdfs:comment "A theme." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "archaic" .
+
+onto:thumbnail a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "thumbnail" ;
+    rdfs:comment "A derived thumbnail image." ;
+    rdfs:domain onto:Image ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Image ;
+    ns1:term_status "testing" .
+
+onto:tipjar a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tipjar" ;
+    rdfs:comment "A tipjar document for this agent, describing means for payment and reward." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    rdfs:subPropertyOf onto:page ;
+    ns1:term_status "testing" .
+
+onto:title a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "Title (Mr, Mrs, Ms, Dr. etc)" ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing" .
+
+onto:topic_interest a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "topic_interest" ;
+    rdfs:comment "A thing of interest to this person." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    ns1:term_status "testing" .
+
+onto:weblog a rdf:Property,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "weblog" ;
+    rdfs:comment "A weblog of some thing (whether person, group, company etc.)." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    rdfs:subPropertyOf onto:page ;
+    ns1:term_status "stable" .
+
+onto:workInfoHomepage a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "work info homepage" ;
+    rdfs:comment "A work info homepage of some person; a page about their work for some organization." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:workplaceHomepage a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "workplace homepage" ;
+    rdfs:comment "A workplace homepage of some person; the homepage of an organization they work for." ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    ns1:term_status "testing" .
+
+onto:yahooChatID a rdf:Property,
+        owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "Yahoo chat ID" ;
+    rdfs:comment "A Yahoo chat ID" ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf onto:nick ;
+    ns1:term_status "testing" .
+
+<http://xmlns.com/wot/0.1/assurance> a owl:AnnotationProperty .
+
+<http://xmlns.com/wot/0.1/src_assurance> a owl:AnnotationProperty .
+
+skos:Concept rdfs:label "Concept" .
+
+onto:depicts a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "depicts" ;
+    rdfs:comment "A thing depicted in this representation." ;
+    rdfs:domain onto:Image ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:depiction ;
+    ns1:term_status "testing" .
+
+onto:made a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "made" ;
+    rdfs:comment "Something that was made by this agent." ;
+    rdfs:domain onto:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:maker ;
+    ns1:term_status "stable" .
+
+onto:maker a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "maker" ;
+    rdfs:comment "An agent that  made this thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Agent ;
+    owl:equivalentProperty dcterms:creator ;
+    owl:inverseOf onto:made ;
+    ns1:term_status "stable" .
+
+onto:primaryTopic a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "primary topic" ;
+    rdfs:comment "The primary topic of some page or document." ;
+    rdfs:domain onto:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:isPrimaryTopicOf ;
+    ns1:term_status "stable" .
+
+onto:topic a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "topic" ;
+    rdfs:comment "A topic of some page or document." ;
+    rdfs:domain onto:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf onto:page ;
+    ns1:term_status "testing" .
+
+onto:depiction a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "depiction" ;
+    rdfs:comment "A depiction of some thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Image ;
+    owl:inverseOf onto:depicts ;
+    ns1:term_status "testing" .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> a owl:Class ;
+    rdfs:label "Spatial Thing" .
+
+onto:isPrimaryTopicOf a rdf:Property,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "is primary topic of" ;
+    rdfs:comment "A document that this thing is the primary topic of." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    rdfs:subPropertyOf onto:page ;
+    owl:inverseOf onto:primaryTopic ;
+    ns1:term_status "stable" .
+
+onto:nick a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "nickname" ;
+    rdfs:comment "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames)." ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "testing" .
+
+onto:page a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "page" ;
+    rdfs:comment "A page or document about this thing." ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Document ;
+    owl:inverseOf onto:topic ;
+    ns1:term_status "stable" .
+
+rdfs:Class a owl:Class .
+
+owl:Thing rdfs:label "Thing" .
+
+onto: a owl:Ontology ;
+    dc:description "The Friend of a Friend (FOAF) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language." ;
+    dc:title "Friend of a Friend (FOAF) vocabulary" .
+

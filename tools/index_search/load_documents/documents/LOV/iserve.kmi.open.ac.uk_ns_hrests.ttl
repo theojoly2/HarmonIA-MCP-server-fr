@@ -1,0 +1,92 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://iserve.kmi.open.ac.uk/ns/hrests> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#AuthenticationCredential> a rdfs:Class ;
+    rdfs:label "Authentication Credential"@en ;
+    rdfs:description "an input parameter that carries an authentication credential (this class is intended for use in sawsdl:modelReference on msm:MessagePart)"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#OutputFormatParameter> a rdfs:Class ;
+    rdfs:label "Output Format Parameter"@en ;
+    rdfs:description "an input parameter that dictates the output format that the service should return (this class is intended for use in sawsdl:modelReference on msm:MessagePart)"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#URITemplate> a rdfs:Class ;
+    rdfs:label "URI Template"@en ;
+    rdfs:description "URI template for use as a service address, possibly with parameters"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> .
+
+<http://www.w3.org/2011/http#Method> a rdfs:Class ;
+    rdfs:subClassOf <http://iserve.kmi.open.ac.uk/ns/hrests#Method> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Web API Grounding Model"@en ;
+    dcterms:created "2010-03-10"^^xsd:date ;
+    dcterms:creator <http://identifiers.kmi.open.ac.uk/people/carlos-pedrinaci/>,
+        <http://jacek.cz/#me>,
+        <http://kmi.open.ac.uk/>,
+        <http://vitvar.com/> ;
+    dcterms:description "This is a description of the Web API Grounding Model, a simple model for capturing Web API details relevant for invocation support"@en ;
+    dcterms:issued "2010-03-10"^^xsd:date ;
+    dcterms:modified "2011-12-03"^^xsd:date,
+        "2012-03-14"^^xsd:date,
+        "2013-05-08"^^xsd:date,
+        "2013-10-03"^^xsd:date ;
+    owl:imports <http://iserve.kmi.open.ac.uk/ns/msm>,
+        <http://www.w3.org/2011/http>,
+        <http://www.w3.org/2011/http-methods> ;
+    owl:priorVersion <http://purl.org/hrests/v2#> ;
+    owl:versionInfo "1.2" .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#acceptsContentType> a rdf:Property ;
+    rdfs:label "accepts Content Type"@en ;
+    rdfs:description "the content type accepted by the operation"@en ;
+    rdfs:domain <http://iserve.kmi.open.ac.uk/ns/msm#Operation> ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:range <http://iserve.kmi.open.ac.uk/ns/hrests#MediaType> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#automaticallyExtractedDescription> a rdf:Property ;
+    rdfs:label "automatically Extracted Description"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:range rdfs:Literal .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#hasAddress> a rdf:Property ;
+    rdfs:label "has Address"@en ;
+    rdfs:description "the address of the operation or service (expected to be used on msm:Service or msm:Operation)"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:range <http://iserve.kmi.open.ac.uk/ns/hrests#URITemplate> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#hasComment> a rdf:Property ;
+    rdfs:label "has Comment"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:subPropertyOf rdfs:comment .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#hasMethod> a rdf:Property ;
+    rdfs:label "has Method"@en ;
+    rdfs:description "the method of an operation"@en ;
+    rdfs:domain <http://iserve.kmi.open.ac.uk/ns/msm#Operation> ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:range <http://iserve.kmi.open.ac.uk/ns/hrests#Method> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#isGroundedIn> a rdf:Property ;
+    rdfs:label "is Grounded In"@en ;
+    rdfs:description "the URI template parameter in which a message part is grounded (may be accompanied by sawsdl lowering schema mapping)"@en ;
+    rdfs:domain <http://iserve.kmi.open.ac.uk/ns/msm#MessagePart> ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#producesContentType> a rdf:Property ;
+    rdfs:label "produces Content Type"@en ;
+    rdfs:description "the content type produced by the operation"@en ;
+    rdfs:domain <http://iserve.kmi.open.ac.uk/ns/msm#Operation> ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> ;
+    rdfs:range <http://iserve.kmi.open.ac.uk/ns/hrests#MediaType> .
+
+<http://iserve.kmi.open.ac.uk/ns/hrests#MediaType> a rdfs:Datatype ;
+    rdfs:label "Media Type"@en ;
+    rdfs:description "a data type for literals that specify media types"@en ;
+    rdfs:isDefinedBy <http://iserve.kmi.open.ac.uk/ns/hrests#> .
+

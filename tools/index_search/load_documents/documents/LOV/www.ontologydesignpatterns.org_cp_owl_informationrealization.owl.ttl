@@ -1,0 +1,83 @@
+@prefix ns1: <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#> .
+@prefix onto: <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:coversRequirements a owl:AnnotationProperty .
+
+ns1:extractedFrom a owl:AnnotationProperty .
+
+ns1:hasConsequences a owl:AnnotationProperty .
+
+ns1:hasIntent a owl:AnnotationProperty .
+
+ns1:relatedCPs a owl:AnnotationProperty .
+
+ns1:scenarios a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#realizes> a owl:ObjectProperty ;
+    rdfs:label "realizes"@en ;
+    rdfs:comment "A relation between an information realization and an information object, e.g. the paper copy of the Italian Constitution realizes the text of the Constitution." ;
+    rdfs:domain <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationObject> .
+
+onto: a owl:Ontology ;
+    rdfs:label "information realization"^^rdf:PlainLiteral ;
+    ns1:coversRequirements "what are the physical realizations of this information object?, what information objects are realized by this physical object?"^^rdf:PlainLiteral ;
+    ns1:extractedFrom "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl"^^rdf:PlainLiteral ;
+    ns1:hasConsequences "This CP allows designers to model information objects and their realizations. This allows to reason about physical objects and the information they realize, by keeping them distinguished."^^xsd:string ;
+    ns1:hasIntent "To represent information objects and physical entities that realize them."^^xsd:string ;
+    ns1:relatedCPs "It is specialized by multimedia data segment decomposition."^^xsd:string ;
+    ns1:scenarios "John Lennon’s biography I Me Mine has been realized in a limited 2000-copy edition."^^xsd:string ;
+    owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl> ;
+    owl:versionInfo "1.1 added rdfs:isDefinedBy for all named entities"^^xsd:string,
+        "Created by Aldo Gangemi and Valentina Presutti"^^xsd:string .
+
+<http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationObject> a owl:Class ;
+    rdfs:label "Information object"@en ;
+    rdfs:comment "A piece of information, such as a musical composition, a text, a word, a picture, independently from how it is concretely realized." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#isRealizedBy> ;
+            owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#isRealizedBy> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#isRealizedBy> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#isRealizedBy> ;
+            owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ] ;
+    owl:disjointWith <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#isRealizedBy> a owl:ObjectProperty ;
+    rdfs:label "is realized by"@en ;
+    rdfs:comment "A relation between an information realization and an information object, e.g. the paper copy of the Italian Constitution realizes the text of the Constitution." ;
+    rdfs:domain <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationObject> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> ;
+    owl:inverseOf <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#realizes> .
+
+<http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationRealization> a owl:Class ;
+    rdfs:label "Information realization"@en ;
+    rdfs:comment "A concrete realization of an information object, e.g. the written document containing the text of a law." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#realizes> ;
+            owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationObject> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#realizes> ;
+            owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#InformationObject> ] .
+

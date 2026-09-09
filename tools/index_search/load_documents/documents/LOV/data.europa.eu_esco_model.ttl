@@ -1,0 +1,1320 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://data.europa.eu/esco/model#> .
+@prefix onto: <http://data.europa.eu/esco/model> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.europa.eu/esco/Notation/EQF2012> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/FoET2013> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/ISCO08> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/ISCO88> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/NACEr2.code> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/NACEr2.section> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/NUTS.regionCode> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+<http://data.europa.eu/esco/Notation/eCF30> a rdfs:Datatype ;
+    rdfs:isDefinedBy onto: .
+
+ns2:ISCO88Code a owl:ObjectProperty ;
+    rdfs:label "ISCO88 Code"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The parent ISCO 88 codes of a specific occupation.\\nThe format is ''<code>[,<code>]*''^^xsd:string\\n\\ne.g ''3139,3131''^^xsd:string  means the occupation has 2 parent occupation groups in isco88. One with iscocode 3139 and one with iscocode 3131"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://data.europa.eu/esco/ConceptScheme/ISCO2008>,
+        ns2:memberOfISCOGroup ;
+    rdfs:subPropertyOf dcterms:subject ;
+    owl:deprecated true ;
+    skos:changeNote "ESCO v0 -> ESCO v1 must create http://data.europa.eu/esco/model#memberOfISCOGroup (esco:memberOfISCOGroup a sub-property of skos:broadMatch) based on the detailed list of ISCO codes.\\nRead also change note on: http://data.europa.eu/esco/ConceptScheme/ISCO2008\\n\\nEsco v0 has 4761 statements."@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+ns2:OverlappingSkillGroup a owl:Class ;
+    rdfs:label "Group of overlapping skills"@en ;
+    dcterms:issued "2014-08-10"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The class of collections of overlapping esco:Skill concepts. All skills within one collection of overlapping skills have overlapping semantics with each other.\\n\\nThe collection has a name using http://www.w3.org/2004/02/skos/core#prefLabel .\\n\\nAs clarifications about the overlapping emerge, a decision from ESCO editorial team may instruct to merge some or all of the member concepts of this collection or to relate its members in another way."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso skos:prefLabel ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/ESCO_Skills> ;
+            owl:onProperty skos:inScheme ],
+        skos:Collection ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:SectorBreakDownConcept a owl:Class ;
+    rdfs:label "ESCO concept used for sector breakdown."@en ;
+    dcterms:issued "2014-02-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "A sector breakdown concept can be used in the Occupation and in the Skill/Competences pillar to organize navigation.  As such, it may be related (or characterize) a group of occupations as well as a group of skills.\\nIt is not an industry sector, but it may be tagged with NACE codes.\\n\\nThis notion is specifically used for organizing the ESCO thesaurus creation (cfr. ESCO v1 methdology and SREF groups)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Concept ;
+    owl:deprecated true ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:awardingBodyDescription a owl:DatatypeProperty ;
+    rdfs:label "awarding body (descriptive)"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "An awarding body provided using a descriptive text.\\nA more precise definition of an awarding body known by ESCO can be given using http://data.europa.eu/esco/model#hasAwardingBody"@en ;
+    rdfs:domain ns2:Qualification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:XMLLiteral ;
+    owl:deprecated true ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:expirationNote a owl:AnnotationProperty ;
+    rdfs:label "ESCO expiration note"@en ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:expirationPeriod ;
+    rdfs:subPropertyOf skos:note ;
+    owl:deprecated true ;
+    skos:changeNote "ESCO v0 -> ESCO v1.\\nShould be part of http://www.w3.org/2004/02/skos/core#definition.\\nAn expiration period typically should be given formaly by the \"xsd:duration\" typed property http://data.europa.eu/esco/model#expirationPeriod\\n\\nESCO v0 has expiration notes on 3 qualifications (also having a definition).  These expiration notes need to be appended to the respective definition note.by:\\n- add two line breaks\\n- add the expiration note.\\nThe formal property esco:expirationPeriod needs to be set manually to express a duration."@en ;
+    skos:definition "A note documenting an expiry period or date"@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+ns2:hasAwardingBody a owl:ObjectProperty ;
+    rdfs:label "has awarding body"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The institutiution, organisation or company that issues the (subject) qualification (certification)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:AwardingBody ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "released" .
+
+ns2:hasDivisionCharacteristic a owl:ObjectProperty ;
+    rdfs:label "division characteristic"@en ;
+    dcterms:issued "2014-03-07"^^xsd:date ;
+    dcterms:modified "2014-03-07"^^xsd:date ;
+    rdfs:comment "The ESCO facet group the thesaurus array is being built from.\\n\\nWhen an ESCO concept is specialized by a facet group, the ESCO thesaurus introduces that set (or branch) of specializations with a Thesaurus.Array.\\n\\nExample: The occupation \"Teacher\" can be specialized by 'education level' or by 'education subject'.\\nAt concept development time this is typically specified with respective esco:facet properties, one identifying the facet-group for education level, anoher identifying the facet-group holding the instructed subject areas.\\nAt concept publication time, each specializing facet will be represented as an iso-thes:ThesaurusArray having as members the (compound) faceted concepts.\\nFor each ESCO thesaurus array this property (esco:hasDivisionCharacteristic) recalls the FacetGroup it was created for.\\n\\nNote: Complementary to esco:hasDivisionCharacteristic the iso-thes:superOrdinate identifies the ESCO member concept used to create the faceted concepts that are members of the thesaurus array."@en ;
+    rdfs:domain <http://purl.org/iso25964/skos-thes#ThesaurusArray> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:FacetConceptGroup ;
+    rdfs:seeAlso ns2:facet,
+        <http://purl.org/iso25964/skos-thes#superOrdinate> ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:hasEQFLevel a owl:ObjectProperty ;
+    rdfs:label "has EQF Level"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The level (as specified by the European Qualification Framework) applicable to the subject qualification."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:EQFLevel ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "released" .
+
+ns2:hasFoETCode a owl:ObjectProperty ;
+    rdfs:label "has FoET Code"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A tagging concept identifying the Field of Education Code as specified by the UNESCO Institute for Statistics (UIS)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:FoETCode ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:hasPolyHierarchy a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has poly-hierarchy"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "true: Indicates wether a ESCO thesaurus/taxonomy supports poly-hierarchy. Not present or false indicate mono-hierarchy."@en ;
+    rdfs:domain ns2:ConceptScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:hasRelationshipList a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has ESCO relationship list"@en ;
+    dcterms:issued "2014-10-23"^^xsd:date ;
+    dcterms:modified "2014-10-23"^^xsd:date ;
+    rdfs:comment "The ordered set of relationships starting at the subject ESCO pillar concept.\\n\\nFor any resource, every item in the list given as the value of the\\n      esco:hasRelationshipList property is also a value of the esco:hasRelationship property."@en ;
+    rdfs:domain ns2:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:List ;
+    rdfs:seeAlso ns2:Relationship,
+        ns2:hasRelationship ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:hasWorkContext a owl:ObjectProperty ;
+    rdfs:label "can have work context"@en ;
+    dcterms:issued "2014-08-10"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The possible working context of the (subject) occupation."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:WorkContext ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:isEssentialSkillFor a owl:ObjectProperty ;
+    rdfs:label "is essential skill for"@en ;
+    dcterms:issued "2014-08-10"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The inverse of esco:relatedEssentialSkill."@en ;
+    rdfs:domain ns2:Skill ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:subPropertyOf skos:related ;
+    owl:inverseOf ns2:relatedEssentialSkill ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:isIndirect a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "is indirectly included"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "True: Indicates the subject concept (like a qualification) is not directly managed by ESCO. instead the concept is loaded into ESCO when it is provided by an external (typical national) body or agent.\\n\\nCould also be applied (if unambiguous) to skills and occupations.\\n\\nAssertion (to 'true') is required in case external contribution must be affirmed."@en ;
+    rdfs:domain ns2:Concept ;
+    rdfs:range xsd:boolean ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:isOptionalSkillFor a owl:ObjectProperty ;
+    rdfs:label "is optional skill for"@en ;
+    dcterms:issued "2014-08-10"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The inverse of esco:relatedOptionalSkill."@en ;
+    rdfs:domain ns2:Skill ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:subPropertyOf skos:related ;
+    owl:inverseOf ns2:relatedOptionalSkill ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:isTransversal a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "is transversal"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Typical to indicate that a concept (like a skill) is not job or sector specific.  It is cross sector.\\n\\nMay also be applied (if unambiguous) to qualifications and occupations.\\n\\nAssertion (to 'true') is required in case transversality must be affirmed.\\n\\nSkill re-usability levels can be tagged in case the level implies transversal scope of the skills having the re-usability level."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Concept ns2:SkillReuseLevel ) ] ;
+    rdfs:range xsd:boolean ;
+    owl:deprecated true ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:iscoLabel a owl:AnnotationProperty ;
+    rdfs:label "isco label"@en ;
+    ns2:rule "There may be at most 1 iscoLabel per language for any OcupationGroup."^^xsd:string ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ISCO label of an occupation group.\\nProvided in case the preferred label has been replaced by an esco specific one.\\n\\nTypically this can happen in order not to have duplicate preferred labels in the ESCO thesaurus."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://data.europa.eu/esco/ConceptScheme/ISCO2008>,
+        ns2:originalLabel ;
+    rdfs:subPropertyOf rdfs:label ;
+    owl:deprecated true ;
+    ns1:term_status "rejected" ;
+    skos:changeNote "Generalized and replaced by: http://data.europa.eu/esco/model#originalLabel\\n\\nESCO v0 -> ESCO v1 (read also change note on: http://data.europa.eu/esco/ConceptScheme/ISCO2008)\\nThe ESCOv1 (= v0.0) concepts (that are a copy of ISCO2008 concepts) should keep existing label in ESCOv0 and iscoLabel is removed.\\nThe ISCO2008 concepts should keep the preferred label (per language) the property esco:iscoLabel is replaced by the property esco:originalLabel (http://data.europa.eu/esco/model#originalLabel)\\n\\nConversion needs to convert the existing ISCO labels in two ways: \\n- as esco:iscoLabel which MAY NOT be modified (READ-ONLY) \\n- as xl:label where ESCO can overrule the terminology from ISCO to conform to SKOS label requirements."@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+ns2:isoCountryCodeA2 a owl:DatatypeProperty ;
+    rdfs:label "country code (A2)"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "ISO 3166 country code - A2"@en ;
+    rdfs:domain ns2:Country ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:NMTOKEN ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:isoCountryCodeA3 a owl:DatatypeProperty ;
+    rdfs:label "country code (A3)"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "ISO 3166 country code - A3"@en ;
+    rdfs:domain ns2:Country ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:NMTOKEN ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:learningOutcomeNote a owl:AnnotationProperty ;
+    rdfs:label "editorial note"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "a note documenting the learning outcomes."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf skos:note ;
+    owl:deprecated true ;
+    skos:changeNote "The deprecated note must be transferred.\\n- either be part of the definition (http://www.w3.org/2004/02/skos/core#definition) of the subject\\n- or be part of the ESCO relationship (see http://data.europa.eu/esco/model#Relationship) providing the description of the subject.\\n\\nESCOv0 -> ESCOv\\nESCO v0 has two (subject) Qualification concepts with a learningOutcome Note (and no definition note).\\nOn conversion to ESCOv1 model, these should be replaced by a http://www.w3.org/2004/02/skos/core#definition"@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+ns2:narrowerInstance a owl:ObjectProperty ;
+    rdfs:label "narrower instance"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The ESCO concepts (occupation, skill or qualification) that are immediate (one step) narrower concepts of the (subject) leaf group.  These narrower concepts are top level (member) concepts of the subject leaf concept group.\\n\\nThe (subject) leaf group may have more members, not provided by its esco:narrowerInstance properties.  Typically, these other members are specializations (e.g. faceted concepts) of the top level members of the (subject) leaf concept group."@en ;
+    rdfs:domain ns2:LeafGroupConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:MemberConcept,
+        ns2:SimpleConcept ;
+    rdfs:subPropertyOf ns2:hasGroupMember,
+        <http://purl.org/iso25964/skos-thes#narrowerInstantial> ;
+    owl:inverseOf ns2:broaderInstance ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:noteLiteral a owl:DatatypeProperty ;
+    rdfs:label "note text"@en ;
+    ns2:rule "Embedded hyperlinks need to be parsed and validated on import.\\nContent needs to be XHTML validated on import."^^xsd:string ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "An xml literal taking a plain text or xhtml.body.type content type.\\n\\nThe property typically allows to validate the content of a SKOS note (or any of its SKOS sub-properties).\\nNotes are then provided as blank nodes with this property and with the ESCO language property.\\n\\nThe motivations for this complex approach are:\\n- Provides structure content (XML literal) according a format that can be validated.\\n- xml:lang and rdf:parseType=\"Literal\" can not be provided on the same property."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:XMLLiteral ;
+    rdfs:seeAlso "http://data.europa.eu/esco/model#language"^^xsd:anyURI ;
+    owl:deprecated true ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:referenceLanguage a owl:DatatypeProperty ;
+    rdfs:label "reference language"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "Reference language for a concept.\\n\\nTypically set when the concept is first loaded with PT in (at least) 1 language.  (If multiple but not all languages are provided, the reference language must be uniquely set to one of the loaded languages.)\\n\\nIn case the concept needs to be shown or translated in a new language (not having a PT yet), the label in the reference language is shown."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:language ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:regulatedProfessionNote a owl:AnnotationProperty ;
+    rdfs:label "regultated profession note"@en ;
+    dcterms:modified "2014-08-26"^^xsd:date ;
+    rdfs:comment "The subject occupation is regulated according the description in the note.  The note typically contains a hyperlink."@en ;
+    rdfs:domain ns2:Occupation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf skos:note ;
+    ns1:term_status "proposed" .
+
+ns2:relatedCompetence a owl:ObjectProperty ;
+    rdfs:label "competence"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The ESCO skill/competence related to (or asserted by) the subject ESCO qualification.\\nI.e. when asserted on a subject qualification, the related competence is a learning outcome of that qualification."@en ;
+    rdfs:domain ns2:Qualification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Skill ;
+    rdfs:subPropertyOf skos:related ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:relatedQualification a owl:ObjectProperty ;
+    rdfs:label "qualification"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO qualification (certification) that is required for the subject occupation or skill."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Qualification ;
+    rdfs:subPropertyOf skos:related ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:relevantURL a owl:DatatypeProperty ;
+    rdfs:label "relevant URL"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "A web site that is relevant for the subject (any modelled class, including an ESCO concept or term).\\n\\nSuch URL may be part literal content value of a description, a definition or a scope note.\\nA relevant URI may be language specific (hence the range is literal)."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Label skos:Concept ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:replaces a owl:ObjectProperty ;
+    rdfs:label "replaces"@en ;
+    dcterms:issued "2013-12-17"^^xsd:date ;
+    dcterms:modified "2013-12-17"^^xsd:date ;
+    rdfs:comment "Typical for a deprecated concept that replaces one or more other concepts.\\n\\nShould be made a sub-property of, or be replaced by: http://purl.org/dc/terms/replaces"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf ns2:replacesTransitive ;
+    owl:inverseOf ns2:replacedBy ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:sortString a owl:AnnotationProperty ;
+    rdfs:label "sorting string"@en ;
+    dcterms:issued "2014-04-08"^^xsd:date ;
+    dcterms:modified "2014-04-08"^^xsd:date ;
+    rdfs:comment "The formatted string used to establish sorting among concepts.\\nDeprecated by use of skos:OrderedCollection and iso-thes:subordinateArray"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:seeAlso <http://purl.org/iso25964/skos-thes#subordinateArray>,
+        skos:OrderedCollection ;
+    owl:deprecated true ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:supportedLanguage a owl:ObjectProperty ;
+    rdfs:label "supported language"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Denotes a description of the languages supported by the (subject) concept scheme.\\nRequired for ESCO taxonomy or thesauri."@en ;
+    rdfs:domain ns2:ConceptScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Language ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:topMember a owl:ObjectProperty ;
+    rdfs:label "has top member"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Typically specified in case the subject collection is a concept group having a hierarchical representation (hierarchy based on broader/narrower). The referenced concepts are the hierarchical entry points of the concept group hierarchy.\\nThe top may be concepts as well as collections."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf skos:member ;
+    ns1:term_status "proposed"^^xsd:string .
+
+dcterms:created a owl:AnnotationProperty ;
+    rdfs:label "Date Created"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Date of creation of the resource."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range xsd:dateTime .
+
+dcterms:description a owl:AnnotationProperty ;
+    rdfs:label "Description"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "An account of the resource.\\nDescription may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range rdfs:Literal .
+
+dcterms:issued a owl:AnnotationProperty ;
+    rdfs:label "Date Issued"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Date of formal issuance (e.g., publication) of the resource."@en-us ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/iso25964/skos-thes#PreferredTerm> rdfs:comment "By ESCO: Not directly set by ESCO applications, but inferred from the range of skos-xl:pref:Label or iso-thes:plusUse."@en .
+
+<http://purl.org/iso25964/skos-thes#SimpleNonPreferredTerm> rdfs:comment "By ESCO: Not directly set by ESCO applications, but inferred from the range of skos-xl:alt:Label."@en .
+
+ns1:term_status a owl:AnnotationProperty ;
+    rdfs:label "model axiom or term status"@en ;
+    dcterms:issued "2013-12-05"^^xsd:date ;
+    dcterms:modified "2013-12-05"^^xsd:date ;
+    rdfs:isDefinedBy <http://www.w3.org/2003/06/sw-vocab-status/ns> ;
+    rdfs:range ns2:termStatusDataType ;
+    ns1:term_status "proposed"^^xsd:string .
+
+foaf:homepage a rdf:Property ;
+    rdfs:label "homepage"@en ;
+    rdfs:comment "A homepage"@en ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable"^^xsd:string .
+
+foaf:mbox a owl:DatatypeProperty ;
+    rdfs:label "personal mailbox"@en ;
+    rdfs:comment "A personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.\\n\\nThe used URI format is according http://tools.ietf.org/html/rfc6068: \"mailto:...@...\""@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable"^^xsd:string .
+
+foaf:member a owl:ObjectProperty ;
+    rdfs:label "member"@en ;
+    rdfs:comment "Indicates a member of a Group"@en ;
+    rdfs:domain foaf:Group ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range foaf:Agent ;
+    ns1:term_status "stable"^^xsd:string .
+
+foaf:name a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    rdfs:comment "A name for an agent."@en ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "testing"^^xsd:string .
+
+foaf:nick a owl:DatatypeProperty ;
+    rdfs:label "nickname"@en ;
+    rdfs:comment "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames)."@en ;
+    rdfs:isDefinedBy foaf: ;
+    ns1:term_status "testing"^^xsd:string .
+
+foaf:phone a owl:DatatypeProperty ;
+    rdfs:label "phone"@en ;
+    rdfs:comment "A phone, specified using fully qualified tel: URI scheme \"tel:+##...##\" - see http://www.ietf.org/rfc/rfc2806.txt."@en ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "testing"^^xsd:string .
+
+ns2:AwardingBody a owl:Class ;
+    rdfs:label "Awarding body"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The class of awarding bodies registered by ESCO.\\n\\nAn ESCO registered awarding body is an official or otherwise recognized institution, organization or company that is issuing formal certificates of competence.  Some of these certificates are registered as ESCO qualifications (see http://data.europa.eu/esco/model#Qualification).  The relationship between an esco:Qualification and an esco:AwardingBody is given by http://data.europa.eu/esco/model#hasAwardingBody.\\n\\nThe geo-location(s) of an awarding body is given by http://data.europa.eu/esco/model#location"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:Qualification ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/AwardingBodies/cs> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept ;
+    owl:disjointWith ns2:Concept ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:LabelRole a owl:Class ;
+    rdfs:label "Label role"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Allows to capture one or more particular characteristics of a name.\\n\\nExample usage: Gender related terms.\\n- ESCO concepts may get a gender neutral term as preferred label.  The gender specific terms are provided as alternate labels.\\n- Relevant use cases: \\n  - concept look-up based on gender specific term\\n  - Job posting generation with gender neutral terms\\n  - CV generation with gender specific terms"@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:subClassOf skos:Concept ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/LabelRole> ;
+            owl:onProperty skos:inScheme ] ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:RelationshipType a owl:Class ;
+    rdfs:label "ESCO relationship type"@en ;
+    dcterms:issued "2014-04-16"^^xsd:date ;
+    dcterms:modified "2014-04-16"^^xsd:date ;
+    rdfs:comment "The class of the types of ESCO relations.\\nThe concepts having this type are managed in the small SKOS taxonomy (see http://data.europa.eu/esco/ConceptScheme/RelationshipType)."@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:subClassOf skos:Concept ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/RelationshipType> ;
+            owl:onProperty skos:inScheme ] ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:SkillCompetenceType a owl:Class ;
+    rdfs:label "Competence sub-type"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Sub-Typing of a Skill Concept:\\n- Skill/Competence\\n- Knowledge"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:Concept ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/SkillCompetenceType> ;
+            owl:onProperty skos:inScheme ] .
+
+ns2:WorkContext a owl:Class ;
+    rdfs:label "Work context"@en ;
+    dcterms:issued "2014-08-10"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The class of work contexts registered by ESCO\\nA work context iIdentifies types of business, environmental conditions, types of product, etc.\\nESCO manages and organizes work context in the concept scheme: http://data.europa.eu/esco/ConceptScheme/WorkContext/cs\\n"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/WorkContext/cs> ;
+            owl:onProperty skos:inScheme ],
+        skos:Concept ;
+    owl:disjointWith ns2:Concept ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:editorialStatus a owl:DatatypeProperty ;
+    rdfs:label "editorial status"@en ;
+    dcterms:issued "2014-07-03"^^xsd:date ;
+    dcterms:modified "2014-07-03"^^xsd:date ;
+    rdfs:comment "The business or editorial status of a concept or label"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( skos:Concept <http://www.w3.org/2008/05/skos-xl#Label> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:editorialStatusDataType ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:editorialStatusDataType a rdfs:Datatype ;
+    rdfs:label "thesaurus concept and label editorial status type"^^xsd:string ;
+    dcterms:modified "2013-12-05"^^xsd:string ;
+    rdfs:comment "list of status values used for managing ESCO vocabulary changes.\\nThe editorial status is only managed by a human with the role of taxonomy editor.\\n\\nOn creation, the default status is \"prepared\".  The label or concept is considered not final.\\nWhen finalizing the business releaavance and the related editorial review process, the status can be set to \"proposed\".\\nAfter a formal validation process by the business, the status can be set to approved.\\nWhen a review considers the label or concept not relevant any more, the publication status is (automatically) set to \"obsolete\" by the relevant deprecation action.\\n"@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:unionOf ( [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "prepared"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "proposed"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "approved"^^xsd:string ] ) ] ) ] ;
+    ns1:term_status "proposed" .
+
+ns2:hasFacet a owl:ObjectProperty ;
+    rdfs:label "has facet"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2014-04-16"^^xsd:date ;
+    rdfs:comment "A faceted ESCO concept (e.g.) is a compound concept constructed from an ESCO pillar concept and one or more facets.\\nThe typical example is the (foreign) language skills.\\n- The ESCO concept is the skill: foreign language expertise.\\nThe facets are:\\n  - the specific language of the expertise (en, fr, el, bg, nl ... )\\n  - the skill levels defined by CEFR (writing, understanding interactively, ...)."@en ;
+    rdfs:domain ns2:FacetedConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:hasGroupMember a owl:ObjectProperty ;
+    rdfs:label "has group member"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Identifies the member Concept of the (subject) Group concept."@en ;
+    rdfs:domain ns2:GroupConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:MemberConcept ;
+    rdfs:subPropertyOf skos:narrowerTransitive ;
+    owl:inverseOf ns2:memberOfGroup ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:hasLabelRole a owl:ObjectProperty ;
+    rdfs:label "has label role"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A tagging concept providing the gender specific typing of an ESCO label.\\nEach ESCO label can have\\n- at most 1 label that is standard male and zero or more labels that are male\\n- at most 1 label that is standard female and zero or more labels that are female\\n- any label that is not male or female is considered neutral\\n- a male respectively female preferred label is the standard male respectively standard female label\\n"@en ;
+    rdfs:domain ns2:Label ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:LabelRole ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:hasNACECode a owl:ObjectProperty ;
+    rdfs:label "has NACE code"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A tagging concept using the NACE codes to specify the industry sector of the tagged subject."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:NACECode ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:hasRelationshipType a owl:ObjectProperty ;
+    rdfs:label "has ESCO relationship type"@en ;
+    dcterms:issued "2014-04-16"^^xsd:date ;
+    dcterms:modified "2014-04-16"^^xsd:date ;
+    rdfs:comment "A tagging concept detailing the type of the (subject) ESCO relationship"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:RelationshipType ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:language a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "language"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The language of the subject resource."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:language ;
+    ns1:term_status "released"^^xsd:string ;
+    skos:changeNote "ESCO v0 -> ESCO v1 literals having XMLLiteral parsetype are now coded as pllain literal with mark-up escaped.  Hence the standard RDF language tagging of literals can be used.\\nsee http://data.europa.eu/esco/model#noteLiteral"@en .
+
+ns2:originalLabel a owl:AnnotationProperty ;
+    rdfs:label "original label"@en ;
+    ns2:rule "There may be at most 1 originalLabel per language for any Concept."^^xsd:string ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The original label of a concept of a support taxonomy.\\nProvided in case the preferred label has been replaced by an ESCO specific one.\\n\\nTypically used on arguable names for exceptional concepts like 'Country'"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:PlainLiteral ;
+    rdfs:subPropertyOf rdfs:label ;
+    ns1:term_status "proposed" .
+
+ns2:plusUF a owl:ObjectProperty ;
+    rdfs:label "compound term"@en ;
+    dcterms:issued "2014-02-18"^^xsd:date ;
+    dcterms:modified "2014-02-18"^^xsd:date ;
+    rdfs:comment "A compound equivalence label for the subject concept.\\nThe subject concept is a Simple ESCO concept used as a component of a Faceted ESCO concept (i.e. a compound concept).\\nThe label of this faceted concept is a compound term (i.e. a split non preferred term) and the value of esco:plusUF (i.e. a UF++).\\nThere can be any number of compound terms per language and per faceted concept."@en ;
+    rdfs:domain ns2:SimpleConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/iso25964/skos-thes#SplitNonPreferredTerm> ;
+    owl:propertyChainAxiom ( <http://www.w3.org/2008/05/skos-xl#prefLabel> <http://purl.org/iso25964/skos-thes#plusUFTerm> ) ;
+    ns1:term_status "proposed" .
+
+ns2:relatedEssentialSkill a owl:ObjectProperty ;
+    rdfs:label "has essential skill"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO skill or competence that is essential for the subject occupation or skill."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Skill ;
+    rdfs:subPropertyOf skos:related ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:relatedLegallyRequiredQualification a owl:ObjectProperty ;
+    rdfs:label "legally required qualification"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO qualification (certification) that is legally required for the subject occupation or skill.\\nDetails for the requirements must be given in the relationship description.\\n\\nOccasionally, such a description must hold a hyperlink to the relevant professions database (e.g. http://ec.europa.eu/internal_market/qualifications/regprof/index.cfm?action=profession&id_profession=12142).\\nIn case the legal requirement is region specific, the relationship:\\n- should detail the restriction in the relation description\\n- could be tagged with a location or NUTS code (see http://data.europa.eu/esco/model#location)"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Qualification ;
+    rdfs:seeAlso ns2:Relationship,
+        ns2:location ;
+    rdfs:subPropertyOf skos:related ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:relatedOptionalSkill a owl:ObjectProperty ;
+    rdfs:label "has optional skill"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO skill or competence that is relevant (but optional) for the subject occuption."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Occupation ns2:Skill ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Skill ;
+    rdfs:subPropertyOf skos:related ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:replacedBy a owl:ObjectProperty ;
+    rdfs:label "replaced by"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Typical for a deprecated concept that has been replaced by one or more other concepts.\\n\\nShould be made a sub-property of, or be replaced by: http://purl.org/dc/terms/isReplacedBy"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf ns2:replacedByTransitive ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:replacesTransitive a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "transitively replaces"@en ;
+    dcterms:issued "2014-05-30"^^xsd:date ;
+    dcterms:modified "2014-05-30"^^xsd:date ;
+    rdfs:comment "Typical for a chain of deprecated concepts that replaces one or more other concepts over more than one version."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    owl:inverseOf ns2:replacedByTransitive ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:skillReuseLevel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "skill reuseability level"@en ;
+    dcterms:issued "2014-06-05"^^xsd:date ;
+    dcterms:modified "2014-06-05"^^xsd:date ;
+    rdfs:comment "Reuseability level of a skill"@en ;
+    rdfs:domain ns2:Skill ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:SkillReuseLevel ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:skillType a owl:ObjectProperty ;
+    rdfs:label "skill type"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Type of competence (a tagging concept)"@en ;
+    rdfs:domain ns2:Skill ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:SkillCompetenceType ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "proposed" .
+
+ns2:statusDataType a rdfs:Datatype ;
+    rdfs:label "thesaurus concept and label publaction status type"^^xsd:string ;
+    dcterms:modified "2013-12-05"^^xsd:string ;
+    rdfs:comment "list of status values used for managing ESCO release status.\\nOn creation of a concept or label, the default state is \"to be reviewed\"\\nOn deprecation of a concept the concept state becomed \"obsolete\"\\nWhen a wrongly deprecated concept is revived, the state becomes \"to be reviewed\"\\nWhen the thesaurus is published, the statuss becomes \"released\"\\n\\nAll state changes are system managed."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:unionOf ( [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "obsolete"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "released"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "to be reviewed"^^xsd:string ] ) ] ) ] ;
+    ns1:term_status "proposed" .
+
+ns2:termStatusDataType a rdfs:Datatype ;
+    rdfs:label "term status type"^^xsd:string ;
+    dcterms:modified "2013-12-05"^^xsd:string ;
+    rdfs:comment "list of status values used for managing ESCO ontology changes."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:unionOf ( [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "approved"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "prepared"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "proposed"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "rejected"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "released"^^xsd:string ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "to be reviewed"^^xsd:string ] ) ] ) ] ;
+    ns1:term_status "proposed" .
+
+ns2:undefined a owl:ObjectProperty ;
+    rdfs:label "undefined"@en ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "undefined skill is a skill that has no optional, recommended or required property assigned to it."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf skos:related ;
+    owl:deprecated true ;
+    owl:inverseOf ns2:undefinedOf ;
+    ns1:term_status "released"^^xsd:string ;
+    skos:changeNote "ESCOv0 has 102K undefined relations.\\nThese cannot be inherited in v1 as occupations are redefined - maybe after merging a decision needs to be taken:\\n- make relatedOptionalSkill\\n- make relatedEssentialSkill\\n- remove the related:undefined."@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+ns2:undefinedOf a owl:ObjectProperty ;
+    rdfs:label "undefined skill of"@en ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:seeAlso ns2:undefined ;
+    rdfs:subPropertyOf skos:related ;
+    owl:deprecated true ;
+    ns1:term_status "released"^^xsd:string ;
+    skos:changeNote "ESCOv0 has 102K undefined relations.  See http://data.europa.eu/esco/model#undefined."@en ;
+    skos:historyNote "Deprecated with Model version 1."@en .
+
+dcterms:identifier a owl:DatatypeProperty ;
+    rdfs:label "Identifier"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "An unambiguous reference to the resource within a given context.\\n\\nRecommended best practice is to identify the resource by means of a string conforming to a formal identification system.\\n\\nESCO note:\\nESCO formats identiefers using\\n{qualifier}:{identifier}\\n\\n{qualifier} is one of:\\nCEFR: Common European Framework of Reference for Languages: Learning, Teaching, Assessment\\nEQF: European Qualifications Framework identifer\\nISCED 2013 FoET: UNESCO ISCED 2013/FoET identifier for \\nESCO-CTC: Esco tool CTC\\nESCO ITM: ESCO TMS tool (ITM - from Mondeca)\\nESCO-TM: Esco tool for Text Mining\\nISO 3166-1.A2: 2 character ISO 3166 country code\\nISO 3166-1.A3: 3 character ISO 3166 country code\\nISO 3166-1.num: Numeric ISO 3166 country identifier\\nISO 639.1: The ISO 639-1 code (2 characters)\\nISO 639.2T: The ISO 639-2 terminological code (3 characters)\\nISO 639.2B: The ISO 639-2 bibliographic code (3 characters)\\nISO 639.3: The ISO 639-3 code (3 characters) – typical for use on sign languages\\nNACE rev 2: NACE rev 2 industry sector identifiers\\nNUTS 2008: The NUTS classification (Nomenclature of territorial units for statistics) is a hierarchical system for dividing up the economic territory of the EU"@en ;
+    rdfs:isDefinedBy dcterms: ;
+    ns1:term_status "released"^^xsd:string .
+
+<http://purl.org/iso25964/skos-thes#SplitNonPreferredTerm> rdfs:comment "By ESCO: Captures the compound terms established by the ESCO taxonomists."@en ;
+    rdfs:seeAlso ns2:FacetedConcept .
+
+skos:ConceptScheme a owl:Class ;
+    rdfs:comment "All ESCO published taxonomies.\\n- either external but having a skossified clone on the ESCO platform, \\n- or constructed within ESCO\\nThese concept schemes have as base URI: http://data.europa.eu/esco/ConceptScheme/\\n\\nA skossified clone will only be maintained for external taxonomies that are not available as LOD."@en .
+
+foaf:Group a owl:Class ;
+    rdfs:label "Group"@en ;
+    rdfs:comment "A class of Agents.\\nGroup members are listed using http://xmlns.com/foaf/0.1/member"@en ;
+    rdfs:subClassOf foaf:Agent ;
+    ns1:term_status "stable"^^xsd:string .
+
+foaf:Organization a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "An organization."@en ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:subClassOf foaf:Agent ;
+    owl:disjointWith foaf:Person ;
+    ns1:term_status "stable"^^xsd:string .
+
+foaf:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A person."@en ;
+    rdfs:isDefinedBy foaf: ;
+    rdfs:subClassOf foaf:Agent ;
+    owl:disjointWith foaf:Organization ;
+    ns1:term_status "stable"^^xsd:string .
+
+ns2:ConceptScheme a owl:Class ;
+    rdfs:label "Concept scheme (ESCO pillar)"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO concept schemes (pillars)\\n\\nThe \"current\" ESCO scheme and historic versions of the ESCO scheme will be instances of this class.  Typically, these support poly-hierarchy.\\n\\nThe ISCO representations that are the backbone of at least one ESCO version (v0) also will be represented by this concept scheme.  Typically these do not have poly-hierarchy.\\nAs of ESCO v1 though, ISCO is not a part anymore of the ESCO hierarchy.  However, the ESCO v0 part corresponding to ISCO08 will be maintained a a separate versioned taxonomy.\\nESCO v1 occupations will be mapped (see http://data.europa.eu/esco/model#memberOfISCOGroup a sub-property of http://www.w3.org/2004/02/skos/core#broadMatch) to ISCO (level 4) concepts.\\n\\nProvenance information that may be added:\\n- rightsHolder: the owner (http://purl.org/dc/terms/rightsHolder) - required\\n- publishing status: (http://purl.org/iso25964/skos-thes#status) - required\\n- creator : the author (http://purl.org/dc/terms/creator) - required\\n- contributor : modifier (http://purl.org/dc/terms/contributor) - required\\n- modified : last modification date (http://purl.org/dc/terms/modified) - required"@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:seeAlso dcterms:contributor,
+        dcterms:creator,
+        dcterms:modified,
+        dcterms:rightsHolder,
+        <http://purl.org/iso25964/skos-thes#status> ;
+    rdfs:subClassOf skos:ConceptScheme .
+
+ns2:Country a owl:Class ;
+    rdfs:label "Country"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Relevant standards for country locations are documented under the super class: http://data.europa.eu/esco/model#Location"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns2:Location ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:EQFLevel a owl:Class ;
+    rdfs:label "Level (European Qualification Framework)"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The EQF levels have been published as recommendation by the EU Publication office under CELEX number 32008H0506(01)\\n See http://publications.europa.eu/resource/celex/32008H0506%2801%29"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://publications.europa.eu/resource/celex/32008H0506%2801%29> ;
+    rdfs:subClassOf skos:Concept ;
+    ns1:term_status "proposed"^^xsd:string ;
+    skos:changeNote "URI of  ESCO copy of EQF will need to be updated in order to get LOD properly working from ESCO platform."@en .
+
+ns2:FacetConceptGroup a owl:Class ;
+    rdfs:label "Facet concept group"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A Facet concept group (i.e. an instance of the class esco:FacetConceptGroup) is a sub-set of concepts from a facet.\\nA facet is a supporting taxonomy for ESCO.  Examples are:\\n- Languages\\n- Species\\n- Tools\\n\\nAn (instance of the) esco:FacetConceptGroup is a sub-set of concepts from a facet.\\nEach esco:FacetConceptGroup is defined by the ESCO concept scheme http://data.europa.eu/esco/ConceptScheme/FacetConceptGroups.\\nThe typical use of an esco:FacetConceptGroup is to specialize one or more ESCO pillar concepts. (see http://data.europa.eu/esco/model#facet).\\nThe specialization creates narrower (or transitive narrower) concepts of the specialized ESCO pillar concept.\\nEach specialization is a Faceted (or compound) concept (with type http://data.europa.eu/esco/model#FacetedConcept) having as component concepts:\\n- the ESCO pillar object being specialized and\\n- one member concept from the facet group.\\n\\nAn ESCO pillar concept is either an esco:SimpleConcept or an esco:FacetedConcept \\n\\nAn ESCO concept can be specialized in different ways using different Facet concept groups\\n\\nThe Facet concept group may be structured:\\n- members of an esco:FacetConceptGroup can have hierarchical relationships (skos:broader and skos:narrower) among its member concepts.\\n  If this is the case, the hierarchical structure among the specialized concepts constructed with this facet group will mirror the hierarchy of the facet group.\\n  See also skos:topMember.\\n- an esco:FacetConceptGroup can be an oredered collection.\\n  In this case, the order among the spicialized concepts constructed with this facet group will mirror the order of the facet group.\\n- an esco:FacetConceptGroup can have different sub-collections (i.e. have skos:member that are a skos:Collection and an iso-thes:ThesaurusArray).\\n  Collections only serve to organize the constructed faceted concepts such that the faceted concepts\\n  that are specializations based on the structured Facet concept group are organized by thesaurus arrays\\n  that each mirror an original thesaurus array of the Facet concept group.\\n\\nExample: the language FacetConceptGroup can have as members\\n- the (possibly ordered) collection of spoken languages\\n  having as members the language concepts\\n- the (possibly ordered) collection of sign languages\\n  having as members the sign language concepts\\n\\nThe name of the facet group is given by skos:prefLabel"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:FacetedConcept,
+        ns2:SimpleConcept,
+        ns2:facet,
+        skos:prefLabel ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/FacetConceptGroups> ;
+            owl:onProperty skos:inScheme ],
+        skos:Collection ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:FoETCode a owl:Class ;
+    rdfs:label "FoET code"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The class of ISCED 2013/FoET classificaton code (International Standard Classification of Education: Fields of Education and Training 2013)\\n\\nThe Fields of Education and Training have been submitted to the UNESCO Conference - session 37 - Paris.\\nThe version submitted for resolution is available from: http://unesdoc.unesco.org/images/0022/002218/221863e.pdf\\n\\nOther original source references:\\n- http://www.uis.unesco.org/Education/Documents/isced-37c-fos-review-222729e.pdf\\n- http://www.uis.unesco.org/EDUCATION/Pages/international-standard-classification-of-education.aspx"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://unesdoc.unesco.org/images/0022/002218/221863e.pdf>,
+        <http://www.uis.unesco.org/EDUCATION/Pages/international-standard-classification-of-education.aspx> ;
+    rdfs:subClassOf skos:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:Label a owl:Class ;
+    rdfs:label "ESCO pillar concept Label"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The class of labels used on esco pillar Concepts.\\n\\nCharacteristics\\n- An ESCO label may be motivated by relevant original sources.  These sources are referenced uising http://data.europa.eu/esco/model#relevantURL\\n- An ESCO label typically gets label roles detailing the gender specific characteristics of the label (see http://data.europa.eu/esco/model#hasLabelRole)\\n\\nProvenance information that may be added:\\n- rightsHolder: the owner (http://purl.org/dc/terms/rightsHolder) - optional\\n- editorial status (http://data.europa.eu/esco/model#editorialStatus) - optional\\n- workflow status (http://data.europa.eu/esco/flow#status) - required\\n- creator : the author (http://purl.org/dc/terms/creator) - optional\\n- contributor : modifier (http://purl.org/dc/terms/contributor) - required\\n- modified : last modification date (http://purl.org/dc/terms/modified) - required"@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:seeAlso <http://data.europa.eu/esco/flow#status>,
+        ns2:hasLabelRole,
+        dcterms:contributor,
+        dcterms:creator,
+        dcterms:modified,
+        dcterms:rightsHolder ;
+    rdfs:subClassOf <http://www.w3.org/2008/05/skos-xl#Label> ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:Language a owl:Class ;
+    rdfs:label "Language"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The class of language concepts. \\nEach language is \\n- labeled using skos:prefLabel in all of the other languages and \\n- identified using the ESCO esco:language property (value = ISO 2-char language code). \\n\\nThe class provides the set of languages that can be in use in the thesaurus. \\nTwo ESCO concept schemes provide language concepts:\\n- http://data.europa.eu/esco/ConceptScheme/ISO639/cs - all languages of ISO 639-1 and ISO 639-2\\n- http://data.europa.eu/esco/ConceptScheme/ISO639-3/cs - all sign languages listed in ISO 639-3\\n\\nThe esco:ConceptScheme identifies the languages actually used via its property esco:supportedLanguage."@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns2:language ],
+        skos:Concept ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:NACECode a owl:Class ;
+    rdfs:label "NACE code"@en ;
+    dcterms:issued "2013-12-05"^^xsd:date ;
+    dcterms:modified "2013-12-05"^^xsd:date ;
+    rdfs:comment "Industry sector code NACE rev2\\n\\nThe NACE codes are published in http://epp.eurostat.ec.europa.eu/cache/ITY_OFFPUB/KS-RA-07-015/EN/KS-RA-07-015-EN.PDF\\nThe RDF version is available from: http://ec.europa.eu/eurostat/ramon/rdfdata/nace_r2.rdf - Note, this is not SKOS but can be made SKOS compliant.\\nESCO keeps a SKOS compliant copy of NACE codes. These are organized in the concept scheme http://data.europa.eu/esco/ConceptScheme/NACErev2/cs"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://ec.europa.eu/eurostat/ramon/rdfdata/nace_r2.rdf>,
+        <http://epp.eurostat.ec.europa.eu/cache/ITY_OFFPUB/KS-RA-07-015/EN/KS-RA-07-015-EN.PDF> ;
+    rdfs:subClassOf skos:Concept .
+
+ns2:constructedFrom a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "constructed from ESCO concept"@en ;
+    ns2:rule "If:\\n- FC esco:constructedFrom SC\\n- FC esco:plusUF UF\\n- lang(UF/xl:literalForm) = L\\n- SC xl:prefLabel PLsc\\n- lang(PLsc/xl:literalForm) = L\\nThen\\n- PLsc iso-thes:plusUFTerm UF\\n- UF iso-thes:plusUseTerm PLsc"^^xsd:string ;
+    dcterms:issued "2014-02-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "The unique (simple) ESCO concept used to construct the (subject) faceted ESCO concept.\\n\\nExample (started): Simple concept Teacher is specialized to identify teacher at different education levels.\\n- The simple (member) occupation is: \"Teacher\"\\n- Assume we have a classification of the levels of education (e.g. \"primary school\", \"high school\", \"university\")\\n- The constructed faceted (member) concepts that will be:\\n  \"primary school teacher\", \"high school teacher\" and \"university teacher\" (this last one occasionally re-labeled as \"university professor\")\\n- Each of the constructed faceted (member) concepts will indicate the \"teacher\" also as a skos:broader concept.\\n- Each of the constructed faceted (member) concepts will indicate the \"teacher\" as the esco:constructedFrom concept.\\n\\nExample (completed): Nesting facets - Teacher of a subject at a school level\\n- Assume we have a classification of subjects of education (e.g. \"mother tongue\", \"mathematics\", \"theorethical quantum mechanics\").\\n  Two facet groups are created for this facet (education subject):\\n  1) Facet Group: Basic Education Subjects (with \"mother tongue\", \"mathematics\")\\n  2) Facet Group: Advanced Education Subjects (with \"mother tongue\", \"mathematics\", \"theorethical quantum mechanics\")\\n- The faceted concepts of the 'started' part of the example (\"primary school teacher\", \"high school teacher\", \"university teacher\")\\n   can be further specialized with the 'Basic Education Subjects' or 'Advanced Education Subjects'.\\n- The resulting constructed facets can be \"high school teacher mathematics\", \"university teacher mathematics\", \"university teacher theorethical quantum mechanics\", ...\\n- The skos:broader for the new faceted concepts are:\\n  1) for \"university teacher mathematics\" and for \"university teacher theorethical quantum mechanics\" : \"university teacher\"\\n  2) for \"high school teacher mathematics\" : \"high school teacher\"\\n  3) ... \\n- Each of these (more) specialized faceted concepts all have the (simple) ESCO occupation \"Teacher\" as value for esco:constructedFrom"@en ;
+    rdfs:domain ns2:FacetedConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:MemberConcept,
+        ns2:SimpleConcept ;
+    rdfs:subPropertyOf skos:broaderTransitive ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:expirationPeriod a owl:DatatypeProperty ;
+    rdfs:label "qualification expiration period"@en ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "Period how long a qualification is valid.\\n\\nExample: a qualification for aircraft pilot may be subject to hours flight and/or testing within a specified period in order to pro-long the qualification."@en ;
+    rdfs:domain ns2:Qualification ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:duration ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:hasRelationship a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has ESCO relationship"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The detailed (typed, annotated and documented) ESCO relationship (see http://data.europa.eu/esco/model#Relationship) for the subject ESCO concept.\\n\\nThe relationship identifies a related ESCO concept.\\nThe relationship properties provide formal semantics to the ESCO concept relationship."@en ;
+    rdfs:domain ns2:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Relationship ;
+    rdfs:seeAlso ns2:Relationship ;
+    owl:inverseOf ns2:isRelationshipFor ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:location a owl:ObjectProperty ;
+    rdfs:label "location"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The Country or region the subject is associated with.\\nTypically a tagging concept."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Location ;
+    rdfs:subPropertyOf dcterms:subject ;
+    ns1:term_status "released" .
+
+ns2:memberOfGroup a owl:ObjectProperty ;
+    rdfs:label "containing group"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The ESCO Group (pillar) concept containing the subject ESCO concept as a member."@en ;
+    rdfs:domain ns2:MemberConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:GroupConcept ;
+    rdfs:subPropertyOf skos:broaderTransitive ;
+    owl:propertyChainAxiom ( ns2:broaderInstance skos:broaderTransitive ),
+        ( ns2:constructedFrom ns2:broaderInstance skos:broaderTransitive ) ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:memberOfISCOGroup a owl:ObjectProperty ;
+    rdfs:label "belongs to ISCO Group with code"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The direct hierarchical broader ISCO concept of the (subject) ESCO occupation.\\nThe 'direct' (or one step) relationship is to be understood in terms of extending the ISCO taxonomy the (object) concept belongs to.\\n\\nThe ISCO concept may be of any ISCO version.  The ISCO version can be determined by the inScheme property on the ISCO concept and the version information on the ISCO concept scheme (referenced by the object - i.e. by the ISCO concept)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf skos:broadMatch ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:refersConcept a owl:ObjectProperty ;
+    rdfs:label "to ESCO concept"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "The ESCO concept referred by the (subject) ESCO relationship.\\nThe esco:Relationship gives a more elaborate semantic description of related ESCO concepts.  These related concepts are identied by the esco:Relationship propertief\\n- esco:isRelationshipFor\\n- esco:refersConcept\\nFurther semantics are provided by\\n- a relationshipt type\\n- a description\\n- .. (other possible extensions)"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:replacedByTransitive a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "transitive replaced by"@en ;
+    dcterms:issued "2014-05-30"^^xsd:date ;
+    dcterms:modified "2014-05-30"^^xsd:date ;
+    rdfs:comment "Typical for a chain of changes and deprecations of a concept over different versions."@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+<http://purl.org/iso25964/skos-thes#status> a owl:DatatypeProperty ;
+    rdfs:range ns2:statusDataType .
+
+ns2:Location a owl:Class ;
+    rdfs:label "Location"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-05"^^xsd:date ;
+    rdfs:comment "A teritorial area like a federation, a country, a region, a jurisdiction area.\\n\\nStandards useful for locations and regions:\\n- ISO 3166\\n- NUTS - http://epp.eurostat.ec.europa.eu/portal/page/portal/nuts_nomenclature/introduction (extends ISO 3166 with sub-regions)\\n- geonames - http://www.geonames.org/ (includes ISO 3166)\\n- EU publication Office - http://publications.europa.eu/mdr/authority/country/index.html"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:broaderInstance a owl:ObjectProperty ;
+    rdfs:label "broader instance"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The Leaf Group the (subject) ESCO member concept (Skill or Occupation or Qualification) belongs to.\\nOnly member properties having a Leaf Group type as broader concept must have this property,  Specializations of member concepts (like Faceted Concepts) do not have this property."@en ;
+    rdfs:domain ns2:MemberConcept,
+        ns2:SimpleConcept ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:LeafGroupConcept ;
+    rdfs:subPropertyOf ns2:memberOfGroup,
+        <http://purl.org/iso25964/skos-thes#broaderInstantial> ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:facet a owl:ObjectProperty ;
+    rdfs:label "specializing facet"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "The facet concept group, a group of concepts used to expand:\\n- the subject (ESCO) concept\\n  or\\n- all the members concepts of the subject Collection\\nto build ESCO (compound) faceted concepts.\\n\\nAn ESCO concept may have different aspects or facets that can specialize the ESCO concept.\\nA well known example is the (foreign) language skills.\\n- the main aspect of the (foreign) language skill is the identification of the foreign language\\n  The specialized concepts thus constructed are:\\n   - (foreign) language skill Albanian,\\n   - (foreign) labguage skill Bulgarian,\\n   - ...\\n- the (main) facet (e.g. a set of languages) occasional is extended by (sub-) facets that can be added. E.g. a (sub-) facet of language (skill) are the specialized levels defined by CEFR writing, understanding interactively, ...)\\n\\nThe relationship between facet groups (in the example above \"language\" and \"CEFR language skill level\" can be made 2-way (from \"language\" to \"language skill level\" and the inverse). In addition, the \"(foreign) language skill\" can have as facet (i.e. be specialized) by as well \"language\" as by \"CEFR language skill level\".  As a result, the ESCO concept \"(foreign) language skill\" can be specialized in two different ways:\\n- first by language then by language skill level\\n  or\\n- first by language skill level then by language\\nBoth navigation hierarchies ultimatly hold the same set of (compound) faceted concepts (e.g. \"(foreign) language skill\" \"writing\" \"Bulgarian\".\\nIn general:\\n- concept\\n- - &lt;concept by facet group 1&gt;\\n- - - [concept + facet group 1 member]\\n- - - - &lt;[concept + facet group 1 member] by facet group 2&gt;\\n- - - - - [concept + facet group 1 member + facet group 2 member]\\n- - - - - ... (other facet group 2 members)\\n- - - ... (other facet group 1 members)\\n- - &lt;concept by facet group 2&gt;\\n- - - [concept + facet group 2 member]\\n- - - - &lt;[concept + facet group 2 member] by facet group 1&gt;\\n- - - - - [concept + facet group 2 member + facet group 1 member]\\n- - - - - ... (other facet group 1 members)\\n- - - ... (other facet group 2 members)"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( skos:Collection skos:Concept ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:FacetConceptGroup ;
+    ns1:term_status "proposed"^^xsd:string .
+
+ns2:isRelationshipFor a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "from ESCO concept"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The ESCO concept the (subject) relationship starts from (see http://data.europa.eu/esco/model#Relationship)."@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns2:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+dcterms:creator a owl:AnnotationProperty ;
+    rdfs:label "Author"@en ;
+    dcterms:description "Examples of a Creator include a person, an organization, or a service."@en-us ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "An entity primarily responsible for making the resource."@en-us ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range dcterms:Agent ;
+    rdfs:subPropertyOf dcterms:contributor .
+
+dcterms:modified a owl:AnnotationProperty ;
+    rdfs:label "Date Modified"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Date on which the resource was changed."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range xsd:dateTime .
+
+dcterms:rightsHolder a owl:AnnotationProperty ;
+    rdfs:label "owner"@en,
+        "Rights Holder"@en-us ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A person or organization owning or managing rights over the resource."@en-us ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range dcterms:Agent .
+
+ns2:SkillReuseLevel a owl:Class ;
+    rdfs:label "Skill reuse level"@en ;
+    dcterms:issued "2013-06-05"^^xsd:date ;
+    dcterms:modified "2014-06-05"^^xsd:date ;
+    rdfs:comment "Re-usability level of a Skill or competence.\\nDetails are provided by the ESCOpedia article on Cross-sector skills and competences (see https://ec.europa.eu/esco/escopedia/-/escopedia/Cross-sector_skills_and_competences?resetLanguage=true&newLanguage=en\")\\n \\nThe concept hierarchy in the Skill Reuse Level concept scheme (http://data.europa.eu/esco/ConceptScheme/SkillReuseLevel) must detail the allowed skill hierarchy.\\nA skill with re-use level A can only be a broader of a skill with reuse level B if either of the following holds:\\n- reuse level A = reuse level B\\n- reuse level A is a broader transitive of reuse level B.\\nA skill can have at most one re-use level (see http://data.europa.eu/esco/model#Skill)."@en ;
+    rdfs:seeAlso ns2:Skill ;
+    rdfs:subClassOf skos:Concept ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/SkillReuseLevel> ;
+            owl:onProperty skos:inScheme ] .
+
+dcterms:Agent a owl:Class ;
+    rdfs:label "Agent (DCMI)"@en ;
+    dcterms:description "Examples of Agent include person, organization, and software agent."@en-us ;
+    dcterms:issued "2008-01-14"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "A resource that acts or has the power to act."@en-us ;
+    rdfs:isDefinedBy dcterms: .
+
+dcterms:contributor a owl:AnnotationProperty ;
+    rdfs:label "Contributor"@en ;
+    dcterms:description "Examples of a Contributor include a person, an organization, or a service."@en-us ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "An entity responsible for making contributions to the resource."@en-us ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range dcterms:Agent .
+
+ns2:LeafGroupConcept a owl:Class ;
+    rdfs:label "Leaf-group concept"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "A Group (or aggregation) concept, having no sub-groups anymore.\\n\\nNarrower concepts only can be members (or narrower instances) of the group concept.\\nThe specialization http://data.europa.eu/esco/model#narrowerInstance of skos:narrower is used to identify the top level members of the group."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:MemberConcept ;
+    rdfs:subClassOf ns2:GroupConcept ;
+    ns1:term_status "released"^^xsd:string .
+
+foaf:Agent a owl:Class ;
+    rdfs:label "Agent (foaf)"@en ;
+    rdfs:comment "An agent (eg. person, group, software or physical artifact).\\n\\nAgent characteristics used by ESCO:\\n- The (full and formal) name of the agent (required) - see http://xmlns.com/foaf/0.1/name\\n- The short name or nickname of the agent (optional) - see http://xmlns.com/foaf/0.1/nick\\n- The phone number(s) of the agent (optional) - see http://xmlns.com/foaf/0.1/phone\\n- The home page of the agent (optional) - see http://xmlns.com/foaf/0.1/homepage\\n- The e-mail of the agent (optional) - see http://xmlns.com/foaf/0.1/mbox\\n\\nSome Agent may represent groups. Group members are listed using http://xmlns.com/foaf/0.1/member\\n"@en ;
+    rdfs:isDefinedBy foaf: ;
+    owl:equivalentClass dcterms:Agent ;
+    ns1:term_status "stable"^^xsd:string .
+
+ns2:GroupConcept a owl:Class ;
+    rdfs:label "Group concept"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "Concepts\\n of this type are aggregations.  The property http://data.europa.eu/esco/model#hasGroupMember gives the members concepts of the group.  The member concepts have type http://data.europa.eu/esco/model#MemberConcept.  These member concepts are skos:narrowerTransitive spcializations of the group concept.  Among GroupConcept, the skos:broader/skos:narrower is like a super-group/sub-group relation meaning that all members of the (narrower) sub-group also are members of the (broader) super-group.\\n \\nTypically these group concepts are NOT used in CV or job postings, but serve organization, reporting and statiscal purposes.\\nThe member concepts of group concepts are used for coding or annotating CV or job postings.\\n\\nA Group concept typically will be\\n- in the upper levels of an ESCO pillar (or concept schema)\\n- in an external concept schema (e.g. ISCO)"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ""@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:GroupConcept ;
+            owl:onProperty skos:broader ],
+        skos:Concept ;
+    owl:disjointWith ns2:MemberConcept ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:FacetedConcept a owl:Class ;
+    rdfs:label "Faceted ESCO concept"@en ;
+    dcterms:issued "2014-02-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "The class of compound ESCO pillar concepts.\\nA compound concept is a concept that is broken down in a set of mare basic component concepts  (e.g. a pianist is a 'musician' performing on a 'piano')\\n\\nAn ESCO concept is either a faceted concept or a simple concept (see http://data.europa.eu/esco/model#SimpleConcept).\\n\\nAn ESCO faceted (or compound) concept is the specialization of an ESCO concept that identifies one or more specialization facets (see http://data.europa.eu/esco/model#facet).\\nA specializing facet is a group of concepts with a common characteristic (e.g. the group of music instruments).\\nThe specialization makes a compound of the ESCO concept and of one concept of each of its related specializing  facets.\\n\\n- During the editorial phase, one or more faceted concepts may be created ad hoc by the ESCO taxonomists.\\n- During the ESCO publishing phase all possible faceted concepts are generated by the publication process.  The process adds the possible compound conepts that were not created by the (human) taxonomist.\\n- Each faceted concept is the specialization (i.e. the skos:narrowerTransitive) of an ESCO simple concept (see http://data.europa.eu/esco/model#constructedFrom)\\n- All facet componets (i.e. the facet values) of the faceted conept are given by the property http://data.europa.eu/esco/model#hasFacet \\n\\nUniqueness rule: \\nTwo instances of esco:FacetedConcept are the same if and only if both instances\\n- refer the same simple ESCO concept using http://data.europa.eu/esco/model#constructedFrom\\n- refer the same set of components (facet values) using http://data.europa.eu/esco/model#hasFacet\\n\\nThe faceted concept inherits certain characteristics from the Simple Concept it is constructed from:\\n- the ESCO pillar type (Occupation, Skill or Qualification) of its simple concept it is constructed from (see esco:constructedFrom).\\n- the memberOfISCOGroup of the occasional Occupation it is constructed from\\n- the skillType and the skillReuseLevel of the occasional Skill it is constructed from\\nFurther, inheritance rules apply as on ESCO concepts (see http://data.europa.eu/esco/model#Concept)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass skos:Concept ;
+            owl:onProperty ns2:hasFacet ],
+        [ a owl:Restriction ;
+            owl:onClass ns2:SimpleConcept ;
+            owl:onProperty ns2:constructedFrom ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns2:Concept ;
+    owl:disjointWith ns2:SimpleConcept ;
+    ns1:term_status "proposed"^^xsd:string ;
+    skos:editorialNote "\\nThe preferred label of a Faceted concept need not be persisted in the editorial system. It may be automatically constructed on publishing as follows:\\n   {FacetedConcept prefLabel} :=  {SimpleConcept prefLabel} + ': ' + {facet prefLabel}  (  ' / ' + {facet prefLabel} ) *\\n   where facet prefLabels are ordered alhabetically.\\n   The (gender related) label roles are inherited from the prefered label of the SimplConcept.\\nOccasionally the automated pref label will be overruled by a compound label."@en .
+
+ns2:Relationship a owl:Class ;
+    rdfs:label "ESCO concepts Relationship"@en ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2014-08-10"^^xsd:date ;
+    rdfs:comment "The class of directed relationships between two ESCO Pillar concepts (e.g. between an esco:Occupation and an esco:Qualification).\\n\\nThe relationship:\\n- starts from the ESCO concept identified by http://data.europa.eu/esco/model#isRelationshipFor.\\n- is detailed using a descriptive text (http://purl.org/dc/terms/description).  This description may contain reference to external sources (see http://data.europa.eu/esco/model#relatedLegallyRequiredQualification)\\n- ends in the ESCO concept identified by http://data.europa.eu/esco/model#refersConcept.\\n- is typed by the tagging property http://data.europa.eu/esco/model#hasRelationshipType.\\nA relationship may be industry sector or location specific. This can be acieved by tagging the relationship using esco:hasNACECode or esco:location respectively."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:hasRelationshipType,
+        ns2:isRelationshipFor,
+        ns2:refersConcept,
+        ns2:relatedLegallyRequiredQualification ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass ns2:Concept ;
+            owl:onProperty ns2:refersConcept ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass ns2:Concept ;
+            owl:onProperty ns2:isRelationshipFor ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ;
+    ns1:term_status "approved"^^xsd:string .
+
+ns2:MemberConcept a owl:Class ;
+    rdfs:label "Member concept" ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "Concepts of this class are specifically used to be referenced in CV or job postings.  Typically these concepts are at the more specialized levels of the hierarchy.\\nExample: A particular occupation, not a group of occupations.\\nThese concepts in general have\\n- (1) a http://data.europa.eu/esco/model#broaderInstance relationship to http://data.europa.eu/esco/model#LeafGroupConcept\\n- (2) one or more http://data.europa.eu/esco/model#memberOfGroup relationships to http://data.europa.eu/esco/model#GroupConcept\\nHowever, some Member concept may be specializations of other ones.  In general these specializations will not comply to (1). General group membership within ESCO pillars is provided by esco:memberOfGroup."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:GroupConcept,
+        ns2:LeafGroupConcept ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns2:LeafGroupConcept ;
+            owl:onProperty skos:broader ],
+        skos:Concept ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:Occupation a owl:Class ;
+    rdfs:label "Occupation"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The class of ESCO Occupation concepts. An Occuaption is an ESCO pillar concept (see http://data.europa.eu/esco/model#Concept).\\nOccupation have an broader match relation to an ISCO level 4 code (see http://data.europa.eu/esco/model#memberOfISCOGroup).\\n\\nCharacteristics of an Occupation:\\n- The relevant industry sector for an occupation is given by the Eurostat NACE codes (see http://data.europa.eu/esco/model#hasNACECode)\\n- The different Work context applicable for an occupation (see http://data.europa.eu/esco/model#hasWorkContext).\\n\\nAn occupation may be related to\\n- esco:Skill (see http://data.europa.eu/esco/model#relatedEssentialSkill and http://data.europa.eu/esco/model#relatedOptionalSkill)\\n- esco:Qualification (see http://data.europa.eu/esco/model#relatedQualification and http://data.europa.eu/esco/model#relatedLegallyRequiredQualification)\\n\\nOccupations having a legal or other regulations in a specific region\\n- must identify these regulations in the occupation definition (and refer the professional DB stating that regulation - e.g. http://ec.europa.eu/internal_market/qualifications/regprof/index.cfm?action=profession&id_profession=12142)\\n- could identify such a region with the location property (see http://data.europa.eu/esco/model#location)\\n\\nESCO Occupations are maintained in the ESCO concept scheme http://data.europa.eu/esco/ConceptScheme/ESCO_Occupations."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:Concept,
+        ns2:hasNACECode,
+        ns2:hasRelationship,
+        ns2:location,
+        ns2:memberOfISCOGroup ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/ESCO_Occupations> ;
+            owl:onProperty skos:inScheme ],
+        ns2:Concept ;
+    owl:disjointWith ns2:Qualification,
+        ns2:Skill ;
+    ns1:term_status "released"^^xsd:string ;
+    skos:historyNote "2013-06-27\\nAn Occupation that is a MemberConcept:\\n- Initially coming from the Occupations listed by the Swedisch PES in tab of file Taxonomy 3 - Taxonomy db DB 20 l-corr.xls.\\nAn Occupation that is a GroupConcept:\\n- Initially coming from the file ISCO '88 codes 25l.xls"@en .
+
+ns2:Qualification a owl:Class ;
+    rdfs:label "Qualification" ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-06-27"^^xsd:date ;
+    rdfs:comment "The class of ESCO qualifications.\\nAn ESCO qualification is an ESCO concepts of the ESCO qualification pillar.\\n\\nA qualification is an official or formal certificaton of one or more aquired skills or competences (i.e the learning outcomes - see http://data.europa.eu/esco/model#relatedCompetence).\\n\\nAn qualification may be related to\\n- esco:Skill (see http://data.europa.eu/esco/model#relatedEssentialSkill and http://data.europa.eu/esco/model#relatedOptionalSkill)\\n- esco:Occupation (see http://data.europa.eu/esco/model#relatedQualification and http://data.europa.eu/esco/model#relatedLegallyRequiredQualification)\\nThe property http://data.europa.eu/esco/model#hasRelationship details the relationships (see http://data.europa.eu/esco/model#Relationship)\\n\\nCharacteristics of a qualification\\n- The certificate is issued by an awarding body (see http://data.europa.eu/esco/model#hasAwardingBody).\\n- The level of the qualification may be expressed according the European Qualification Framework (see http://data.europa.eu/esco/model#hasEQFLevel).\\n- The subject area of the qualification may be expressed according the UNESCO Institute of Statistics standard for the Fields of Education and Training (FoET - ISCED, see http://data.europa.eu/esco/model#hasFoETCode)\\n- The property http://data.europa.eu/esco/model#expirationPeriod indicates the qualification is limited for a period of time.  Such a limitation may be provided in a descriptive way using the qualification description (see http://www.w3.org/2004/02/skos/core#definition)\\n- The value 'true' of the boolean flag http://data.europa.eu/esco/model#isIndirect indicates the Qualifications is not managed by ESCO but represented by ESCO based on an external source (e.g. national qualifications)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:Skill ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:duration ;
+            owl:onProperty ns2:expirationPeriod ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/ESCO_Qualifications> ;
+            owl:onProperty skos:inScheme ],
+        ns2:Concept ;
+    owl:disjointWith ns2:Skill ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:SimpleConcept a owl:Class ;
+    rdfs:label "Simple ESCO concept"@en ;
+    dcterms:issued "2014-02-03"^^xsd:date ;
+    dcterms:modified "2014-02-03"^^xsd:date ;
+    rdfs:comment "The class of simple ESCO concepts.\\n\\nA simple ESCO concept is not decomposed into components (for compound ESCO concepts see http://data.europa.eu/esco/model#FacetedConcept).\\nA simple concept may be further specialized by faceted concepts.  The facets used for this specialization are represented by the property http://data.europa.eu/esco/model#facet."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:FacetedConcept,
+        ns2:facet ;
+    rdfs:subClassOf ns2:Concept ;
+    ns1:term_status "proposed"^^xsd:string .
+
+dcterms:subject a owl:ObjectProperty ;
+    rdfs:label "subject"@en-us ;
+    dcterms:description "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary. To describe the spatial or temporal topic of the resource, use the Coverage element."@en-us ;
+    dcterms:issued "2013-12-03"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The topic of the resource."@en-us ;
+    rdfs:isDefinedBy dcterms: ;
+    skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en-us .
+
+ns2:Concept a owl:Class ;
+    rdfs:label "ESCO pillar Concept"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The class of ESCO pillar concepts.\\n\\nESCO pillar concepts are divided in tree semantic classes: esco:Occupation, esco:Skill and esco:Qualification, each organized in a dedicated ConceptScheme.\\n\\nAll concepts are specializations of skos:Concept and are structured using the skos semantic relationships.\\n- skos:mappingRelation is used to relate ESCO concepts to similar concepts in other concept schemes (e.g. ISCO-08 or ROME). The mapping to ISCO has particular business relevance and uses a special mapping sub-property (see http://data.europa.eu/esco/model#Occupation and  http://data.europa.eu/esco/model#memberOfISCOGroup).\\n- sub-properties of skos:related are used to express special relations among ESCO pillar concepts. (e.g. http://data.europa.eu/esco/model#isEssentialSkillFor)\\n- sub-properties of the DCMI dcterms:subject capture codified characteristics of ESCO concepts (e.g. http://data.europa.eu/esco/model#hasNACECode, http://data.europa.eu/esco/model#skillType).\\n\\nThe skos:broader and skos:narrower concepts are the prime concepts organizing hierarchy among ESCO pillar concepts.\\nThe hierarchical structure is modelled according three classes\\n- esco:GroupConcept (see http://data.europa.eu/esco/model#GroupConcept) - the top level concepts, only used for strucutring. These concepts typically are not relevant for annotating CV or job postings.\\n- esco:LeafGroupConcept (see http://data.europa.eu/esco/model#LeafGroupConcept) - the lowest top level concept, a special esco:GroupConcept.\\n- esco:MemberConccept (see http://data.europa.eu/esco/model#MemberConcept) - the concepts used for coding or annotating CV and Job Postings.\\n\\nThe ESCO concepts are also divided according their analytical structure.  There are two sub-classes:\\n- simple concepts (see http://data.europa.eu/esco/model#SimpleConcept) and\\n- compound concepts (see http://data.europa.eu/esco/model#FacetedConcept).\\n\\nA concept specialized by faceted concepts holds the labels of each of the faceted concepts in the property http://data.europa.eu/esco/model#plusUF.  These labels are not synonyms or alternate labels.\\n\\nAmong hierarchical related ESCO pillar concepts the following inheritance rules apply\\n- the ESCO relationships from any broader transitive concept are inherited with the following restrictions\\n  in case a relationship with the same skill is typed as well essential as optional, only the essential skill relationship is inherited\\n  in case a relationship with the same qualification is typed as well required as legally required, only the legally required qualification relationship is inherited\\n- the occasional tagging of the faceted concept (with NUTS, NACE, FoET, ISCO, SkillType, SkillReuseLevel ... codes) must be equal or more specific (specialized) than the code of any of its broader transitive ESCO concepts.\\n\\nThe ESCO concepts are specializations of skos:Concepts and use skos:note specializations (see http://www.w3.org/2004/02/skos/core#note).\\n- the skos:definition gives the full description of the ESCO concept.\\n- the skos:scopeNote is the practical instruction for when to apply the ESCO concept.\\n- the skos:historyNote gives a system log of significant versioned changes to the ESCO concept.\\n- the skos:changeNote gives the human provided documentation for ESCO concept version modifications.\\n\\nCharacteristics:\\n- At the time of publication, the ESCO concepts are available in Icelandic and the official languages of the European Union, except Irish.  Per release, actual languages covered are provided by esco:supportedLanguage.  Some concepts are originally developped in a reference language.  This particular language is indicated by http://data.europa.eu/esco/model#referenceLanguage,\\n- Any ESCO concept may refer relevant hyperlinked sources of reference or of information. See http://data.europa.eu/esco/model#relevantURL.\\n\\nEach ESCO pillar concept may hold provenance and audit metadata:\\n- rightsHolder: the owner (http://purl.org/dc/terms/rightsHolder) - optional\\n- editorial status (http://data.europa.eu/esco/model#editorialStatus) - required\\n- publishing status (http://purl.org/iso25964/skos-thes#status) - required\\n- creator : the author (http://purl.org/dc/terms/creator) - optional\\n- contributor : modifier (http://purl.org/dc/terms/contributor) - required\\n- modified : last modification date (http://purl.org/dc/terms/modified) - required"@en ;
+    rdfs:isDefinedBy "http://data.europa.eu/esco/model"^^xsd:anyURI ;
+    rdfs:seeAlso ns2:FacetedConcept,
+        ns2:GroupConcept,
+        ns2:LeafGroupConcept,
+        ns2:MemberConcept,
+        ns2:SimpleConcept,
+        ns2:editorialStatus,
+        ns2:plusUF,
+        dcterms:contributor,
+        dcterms:creator,
+        dcterms:modified,
+        dcterms:rightsHolder,
+        dcterms:subject,
+        <http://purl.org/iso25964/skos-thes#status> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:identifier ],
+        skos:Concept ;
+    owl:disjointUnionOf ( ns2:Occupation ns2:Skill ns2:Qualification ),
+        ( ns2:FacetedConcept ns2:SimpleConcept ) ;
+    owl:disjointWith ns2:EQFLevel,
+        ns2:FoETCode,
+        ns2:Language,
+        ns2:Location,
+        ns2:NACECode ;
+    ns1:term_status "released"^^xsd:string .
+
+ns2:Skill a owl:Class ;
+    rdfs:label "Skill"@en ;
+    dcterms:issued "2013-06-27"^^xsd:date ;
+    dcterms:modified "2013-12-03"^^xsd:date ;
+    rdfs:comment "The class of ESCO Skill concepts.\\n\\nESCO skills are sub-typed (e.g. to differentiate between knowledge and competence).\\nThis sub-typing is modelled using the concept scheme http://data.europa.eu/esco/ConceptScheme/SkillCompetenceType and its concept class http://data.europa.eu/esco/model#SkillCompetenceType\\n\\nESCO skills are organized in accordance with their applicable re-use (potential) across the sectoral breakdown of occupations.\\nDetails are provided by https://ec.europa.eu/esco/escopedia/-/escopedia/Cross-sector_skills_and_competences?resetLanguage=true&newLanguage=en.\\nThis organization is modelled using the concept scheme http://data.europa.eu/esco/ConceptScheme/SkillReuseLevel and its concept class http://data.europa.eu/esco/model#SkillReuseLevel\\nESCO skills with a different re-use applicability across sectors can be put in a hierarchical relation (skos:broader and skos:narrower) in acordance with the rules detailed by http://data.europa.eu/esco/model#SkillReuseLevel.\\n\\nCharacteristics\\n- An ESCO skill sub-type is given by http://data.europa.eu/esco/model#skillType\\n- An ESCO skill re-use level is given by http://data.europa.eu/esco/model#skillReuseLevel\\n\\nAn ESCO Skill may be related to other ESCO concepts.\\n- Essential related concepts of class esco:Skills are indicated by http://data.europa.eu/esco/model#isEssentialSkillFor and http://data.europa.eu/esco/model#relatedEssentialSkill\\n- Optional related concepts of class esco:Skills are indicated http://data.europa.eu/esco/model#isOptionalSkillFor and http://data.europa.eu/esco/model#relatedOptionalSkill\\n- Related qualifications are given by http://data.europa.eu/esco/model#relatedQualification\\n- Occupations a skill is essential for are concepts of type esco:Occupation indicated by http://data.europa.eu/esco/model#isEssentialSkillFor\\n- Occupations a skill is optional for are concepts of type esco:Occupation indicated by http://data.europa.eu/esco/model#isEssentialSkillFor\\nThe property http://data.europa.eu/esco/model#hasRelationship details the relationships (see http://data.europa.eu/esco/model#Relationship)"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso ns2:Qualification,
+        ns2:SkillReuseLevel,
+        ns2:skillType ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns2:SkillReuseLevel ;
+            owl:onProperty ns2:skillReuseLevel ],
+        [ a owl:Restriction ;
+            owl:hasValue <http://data.europa.eu/esco/ConceptScheme/ESCO_Skills> ;
+            owl:onProperty skos:inScheme ],
+        ns2:Concept ;
+    ns1:term_status "released"^^xsd:string ;
+    skos:definition "A skill may also be an informal recognition of a competence.\\nThe recognition typically is obtained by experience, practice or informal tests."@en ;
+    skos:historyNote "2013-06-27:\\nA Skill that is a MemberConcept:\\n- Initially (i.e. ESCOv0) coming from the Swedisch PES Skills tab in file Taxonomy 3 - Taxonomy db DB 20 l-corr.xls.\\n- Initially (i.e. ESCOv0) linked as related concepts to leaf occupation groups as described in ISCO_SKILLS.xls.\\nA Skill that is a GroupConcept:\\n- Is created by ESCO"@en .
+
+onto: a owl:Ontology ;
+    dcterms:contributor "Agis Papantoniou (TenForce)",
+        "Martin Le Vrang (DG-EMPL, Approver)",
+        "Massimiliano Molinari (DG-EMPL, Reviewer)",
+        "Pieter Fannes (TenForce)" ;
+    dcterms:creator "Johan De Smedt (TenForce)" ;
+    dcterms:modified "2014-04-08"^^xsd:date,
+        "2014-10-23"^^xsd:date ;
+    dcterms:title "The ESCO ontology"@en ;
+    rdfs:comment "The ontology of the taxonomy \"European Skills, Competences, qualifications and Occupations\".\\n\\nThe ontology considers three ESCO pillars (or taxonomy) and 2 registers.\\nThe three pillars are:\\n- Occupation\\n- Skill (and competences)\\n- Qualification\\n\\nFor the construction and use of the ESCO pillars, the following modelling artefacts are used:\\n- Facetting support to specialize ESCO pillar concepts based on bussiness relevant Concept Groups (e.g. species, languages, ...)\\n- Conept Groups, Thesaurus array and Compound terms (as detailed in ISO 25964) to organize faceted concepts\\n- SKOS mapping properties to relate ESCO pillar concepts to concepts in other (external) taxonomies (e.g. FoET, ISCO88 and ISCO08.  More mappings can be added in the future.)\\n- Tagging ESCO pillar concepts by other (external) taxonomies (NUTS, EQF, NACE, ...)\\n- Capture gender specifics on the labels of the ESCO pillar concepts\\n- Rich ESCO concept relationships holding a description and other specific characteristics of the relation between two ESCO pillar concepts.\\n\\nESCO maintains two additional registers:\\n- Awarding Body\\n- Work Context\\nAwarding Bodies typically are referenced by ESCO qualifications.\\nOccupations can have one or more work context."@en ;
+    owl:imports <http://data.europa.eu/esco/flow>,
+        <http://data.europa.eu/esco/skos2>,
+        <http://purl.org/iso25964/skos-thes> ;
+    owl:versionInfo "1.0"^^xsd:string .
+

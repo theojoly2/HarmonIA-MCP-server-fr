@@ -1,0 +1,108 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.rddl.org/purposes#> .
+@prefix ns2: <http://webns.net/mvcb/> .
+@prefix onto: <http://www.w3.org/2003/g/data-view> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://www.w3.org/2003/g/data-view#InformationResource> a rdfs:Class ;
+    rdfs:label "InformationResource" ;
+    rdfs:comment "A resource which has the property that all of its essential characteristics can be conveyed in a message" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/2004/REC-webarch-20041215/#def-information-resource> .
+
+<http://www.w3.org/2003/g/data-view#RDFGraph> a rdfs:Class ;
+    rdfs:label "RDF graphs",
+        "RDFGraph" ;
+    rdfs:comment "a\\n    set of RDF triples" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-rdf-graph> .
+
+<http://www.w3.org/2003/g/data-view#RootNode> a rdfs:Class ;
+    rdfs:label "RootNode",
+        "XML document root nodes" ;
+    rdfs:comment "the root of the tree in the XPath data\\n    model" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/1999/REC-xpath-19991116#root-node> .
+
+<http://www.w3.org/2003/g/data-view#Transformation> a rdfs:Class ;
+    rdfs:label "Transformation" ;
+    rdfs:comment "an InformationResource that specifies\\n    a transformation from a set of XML documents to RDF graphs" ;
+    rdfs:subClassOf <http://www.w3.org/2003/g/data-view#InformationResource> ;
+    owl:onProperty <http://www.w3.org/2003/g/data-view#transformationProperty> ;
+    owl:someValuesFrom <http://www.w3.org/2003/g/data-view#TransformationProperty> .
+
+<http://www.w3.org/2003/g/data-view#TransformationProperty> a rdfs:Class ;
+    rdfs:label "TransformationProperty" ;
+    rdfs:comment "a FunctionalProperty that relates\\n    XML document root nodes to\\n    RDF graphs" ;
+    rdfs:domain <http://www.w3.org/2003/g/data-view#RootNode> ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#RDFGraph> ;
+    rdfs:subClassOf owl:FunctionalProperty .
+
+<http://www.w3.org/2003/g/data-view#danc> foaf:homepage <http://www.w3.org/People/Connolly/> ;
+    foaf:name "Dan Connolly" .
+
+<http://www.w3.org/2003/g/data-view#grddlProject> doap:homepage onto: ;
+    doap:mailing-list <http://lists.w3.org/Archives/Public/public-grddl-comments/> ;
+    doap:shortdesc "GRDDL\\n    is a technique for gleaning resource\\n    descriptions from dialects of\\n    languages. It's a way of extracting Semantic Web\\n    data in RDF from XML formats (especially\\n    XHTML dialects or microformats) via\\n    transformations identified by URIs and typically expressed in\\n    XSLT." .
+
+<http://www.w3.org/2003/g/data-view#namespaceTransformation> a rdf:Property ;
+    rdfs:label "namespaceTransformation" ;
+    rdfs:comment "relates a namespace to a transformation for\\n    all documents in that namespace" ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#Transformation> .
+
+<http://www.w3.org/2003/g/data-view#profileTransformation> a rdf:Property ;
+    rdfs:label "profileTransformation" ;
+    rdfs:comment "relates a profile document to a\\n    transformation for all documents bearing that profile" ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#Transformation> .
+
+<http://www.w3.org/2003/g/data-view#result> a rdf:Property ;
+    rdfs:label "result" ;
+    rdfs:comment "an\\n    RDF graph obtained from an information resource by directly\\n    parsing a representation in the standard RDF/XML syntax or\\n    indirectly by parsing some other dialect using a transformation\\n    nominated by the document" ;
+    rdfs:domain <http://www.w3.org/2003/g/data-view#InformationResource> ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#RDFGraph> .
+
+<http://www.w3.org/2003/g/data-view#transformation> a rdf:Property ;
+    rdfs:label "transformation" ;
+    rdfs:comment "relates a source document to a\\n    transformation, usually represented in XSLT, that relates the source document syntax\\n    to the RDF graph syntax" ;
+    rdfs:domain <http://www.w3.org/2003/g/data-view#RootNode> ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#Transformation> .
+
+<http://lists.w3.org/Archives/Public/public-grddl-comments/> rdfs:label "public-grddl-comments" .
+
+<http://www.w3.org/2001/sw-grddl-wg/> rdfs:label "the GRDDL Working Group" .
+
+onto: ns2:generatorAgent <http://purl.org/NET/erdf/extract> ;
+    ns1:normative-reference <http://www.w3.org/TR/grddl/>,
+        <http://www.w3.org/TR/rdf-concepts/>,
+        <http://www.w3.org/TR/xslt> ;
+    foaf:maker <http://www.w3.org/2003/g/data-view#grddl-wg> .
+
+<http://www.w3.org/2003/g/data-view#grddl-wg> foaf:homepage <http://www.w3.org/2001/sw-grddl-wg/> .
+
+<http://www.w3.org/2003/g/data-view#transformationProperty> a owl:FunctionalProperty ;
+    rdfs:label "transformationProperty" ;
+    rdfs:comment "relates a transformation to the algorithm\\n    specified by the property that computes an RDF graph from an XML\\n    document node" ;
+    rdfs:domain <http://www.w3.org/2003/g/data-view#Transformation> ;
+    rdfs:range <http://www.w3.org/2003/g/data-view#TransformationProperty> .
+
+<http://www.w3.org/People/Connolly/> rdfs:label "Dan Connolly" .
+
+<http://www.w3.org/TR/1999/REC-xpath-19991116#root-node> rdfs:label "section\\n    5.1 Root Node in XML Path Language (XPath) Version\\n    1.0" .
+
+<http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-rdf-graph> rdfs:label "definition\\n    in Resource Description Framework (RDF): Concepts and\\n    Abstract Syntax" .
+
+<http://www.w3.org/TR/2004/REC-webarch-20041215/#def-information-resource> rdfs:label "definition in Architecture of the World Wide Web, Volume One" .
+
+<http://www.w3.org/TR/grddl/> rdfs:label "Gleaning\\n        Resource Descriptions from Dialects of Languages\\n        (GRDDL), 16\\n        May 2005" ;
+    dc:date "2005-05-15" ;
+    dc:title "Gleaning\\n        Resource Descriptions from Dialects of Languages\\n        (GRDDL)" .
+
+<http://www.w3.org/TR/rdf-concepts/> rdfs:label "Resource\\n      Description Framework (RDF): Concepts and Abstract\\n      Syntax, 10\\n      February 2004" ;
+    dc:date "2004-02-10" ;
+    dc:title "Resource\\n      Description Framework (RDF): Concepts and Abstract\\n      Syntax" .
+
+<http://www.w3.org/TR/xslt> rdfs:label "XSLT" .
+
+owl:FunctionalProperty rdfs:label "FunctionalProperty" .
+

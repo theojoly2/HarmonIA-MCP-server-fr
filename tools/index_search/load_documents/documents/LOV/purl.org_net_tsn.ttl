@@ -1,0 +1,305 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://purl.org/net/tsn#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Level a owl:Class ;
+    rdfs:label "Level"@en ;
+    rdfs:comment "The Level concept describes a level of observation of the Territory defined within the Nomenclature. Several levels of observation may be defined (e.g., region or district levels)"@en ;
+    rdfs:subClassOf onto:TSNComponent .
+
+onto:Nomenclature a owl:Class ;
+    rdfs:label "Nomenclature"@en ;
+    rdfs:comment "The Nomenclature concept describes an abstract representation of the subdivisions of a territory into Levels and Territorial Units (i.e. also called 'Structure'). A Nomenclature can be seen as a hierarchy of sets of Units with at least one Level. It is designed to answer administrative, electoral and especially statistical needs. "@en ;
+    rdfs:subClassOf onto:TSNComponent .
+
+onto:Territory a owl:Class ;
+    rdfs:label "Territory"@en ;
+    rdfs:comment "The Territory concept describes an abstract representation of a portion of geographic space that is claimed or occupied by a person or group of persons or by an institution (source http://www.oxfordbibliographies.com/view/document/obo-9780199874002/obo-9780199874002-0076.xml). For instance, the European Union is a territory, the Grenoble metropole is a territory, etc."@en ;
+    rdfs:subClassOf onto:TSNComponent .
+
+onto:Unit a owl:Class ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "The Unit concept describes a piece of geographic space that belongs to one Level of a Nomenclature, and may in turn contain sub-units (or not, if the unit belongs to the lowest level of the nomenclature). Statistical observation are made on Unit."@en ;
+    rdfs:subClassOf onto:TSNComponent ;
+    owl:sameAs <http://ec.europa.eu/eurostat/ramon/ontologies/geographic.rdf#Unit> .
+
+onto:belongsToLevel a rdf:Property ;
+    rdfs:label "belongsToLevel"@en ;
+    rdfs:comment "Indicates the LevelVersion the described UnitVersion resource belongs to."@en ;
+    rdfs:domain onto:UnitVersion ;
+    rdfs:range onto:LevelVersion ;
+    owl:inverseOf onto:hasUnit .
+
+onto:belongsToNomenclatureVersion a rdf:Property ;
+    rdfs:label "belongsToNomenclatureVersion"@en ;
+    rdfs:comment "Indicates the NomenclatureVersion the described LevelVersion resource belongs to."@en ;
+    rdfs:domain onto:LevelVersion ;
+    rdfs:range onto:NomenclatureVersion ;
+    owl:inverseOf onto:hasLevel .
+
+onto:hasAcronym a rdf:Property ;
+    rdfs:label "hasAcronym"@en ;
+    rdfs:comment "Indicates an Acronym of a TSNComponent (e.g., EU27 is the prefered acronym used to designate the European Union made of 27 members)."@en ;
+    rdfs:domain onto:TSNComponent ;
+    rdfs:range rdfs:Literal .
+
+onto:hasDescription a rdf:Property ;
+    rdfs:label "hasDescription"@en ;
+    rdfs:comment "Indicates a Description of a TSNComponent. It may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the TSNComponent."@en ;
+    rdfs:domain onto:TSNComponent ;
+    rdfs:subPropertyOf dcterms:description .
+
+onto:hasGeometry a rdf:Property ;
+    rdfs:label "hasGeometry"@en ;
+    rdfs:comment "Indicates a Geometry of a spatial resource (i.e., TSNFeature (TerritoryVersion, LevelVersion or UnitVersion) resource)"@en ;
+    rdfs:domain onto:TSNFeature ;
+    rdfs:range geo:Geometry ;
+    owl:sameAs geo:hasGeometry .
+
+onto:hasIdentifier a rdf:Property ;
+    rdfs:label "hasIdentifier"@en ;
+    rdfs:comment "Indicates an unambiguous reference to a TSNComponent, throughout the TSN versions. This attribut holds the identity of the TSNComponent i.e., if this identifier changes then the TSNComponent ceases to exist."@en ;
+    rdfs:domain onto:TSNComponent ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+onto:hasName a rdf:Property ;
+    rdfs:label "hasName"@en ;
+    rdfs:comment "Indicates the Name of a TSNComponent."@en ;
+    rdfs:domain onto:TSNComponent ;
+    rdfs:range rdfs:Literal .
+
+onto:hasSuperUnit a rdf:Property ;
+    rdfs:label "hasSuperUnit"@en ;
+    rdfs:comment "Indicates the UnitVersion that is immediately above/contains the described UnitVersion."@en ;
+    rdfs:domain onto:UnitVersion ;
+    rdfs:range onto:UnitVersion ;
+    owl:inverseOf onto:hasSubUnit ;
+    owl:sameAs <http://ec.europa.eu/eurostat/ramon/ontologies/geographic.rdf#hasParentRegion> .
+
+onto:nomenclatureVersionSource a rdf:Property ;
+    rdfs:label "nomenclatureVersionSource"@en ;
+    rdfs:comment "A related resource from which the described resource is derived. Example: European Commission - http://ec.europa.eu/eurostat/ramon/nuts/codelist_en.cfm?list=nuts"@en ;
+    rdfs:domain onto:NomenclatureVersion ;
+    rdfs:subPropertyOf dcterms:source .
+
+onto:referencePeriod a rdf:Property ;
+    rdfs:label "referencePeriod"@en ;
+    rdfs:comment "Indicates the period of time (i.e., Interval defined with two point in time <https://www.w3.org/2006/time#hasBeginning> and <https://www.w3.org/2006/time#hasEnd>) to which a Version resource  is stable and considered as the official one."@en ;
+    rdfs:domain onto:Version ;
+    rdfs:range <https://www.w3.org/2006/time#Interval> .
+
+onto:versionRights a rdf:Property ;
+    rdfs:label "versionRights"@en ;
+    rdfs:comment "Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."@en ;
+    rdfs:domain onto:NomenclatureVersion ;
+    rdfs:range dcterms:RightsStatement ;
+    rdfs:subPropertyOf dcterms:rights .
+
+dcterms:description a rdf:Property ;
+    rdfs:label "dcterms:description"@en ;
+    dcterms:description "Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."@en ;
+    dcterms:hasVersion <http://dublincore.org/usage/terms/history/#descriptionT-001> ;
+    dcterms:issued "2008-01-14"^^xsd:date ;
+    dcterms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An account of the resource."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:subPropertyOf dc:description .
+
+dcterms:identifier a rdf:Property ;
+    rdfs:label "dcterms:identifier"@en ;
+    dcterms:description "Recommended best practice is to identify the resource by means of a string conforming to a formal identification system. "@en ;
+    dcterms:hasVersion <http://dublincore.org/usage/terms/history/#identifierT-001> ;
+    dcterms:issued "2008-01-14"^^xsd:date ;
+    dcterms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "An unambiguous reference to the resource within a given context."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dc:identifier .
+
+dcterms:isVersionOf a rdf:Property ;
+    rdfs:label "dcterms:isVersionOf"@en ;
+    dcterms:description "Changes in version imply substantive changes in content rather than differences in format."@en ;
+    dcterms:hasVersion <http://dublincore.org/usage/terms/history/#isVersionOf-003> ;
+    dcterms:issued "2000-07-11"^^xsd:date ;
+    dcterms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A related resource of which the described resource is a version, edition, or adaptation."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:subPropertyOf dc:relation,
+        dcterms:relation ;
+    skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en .
+
+dcterms:rights a rdf:Property ;
+    rdfs:label "dcterms:rights"@en ;
+    dcterms:description "Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."@en ;
+    dcterms:hasVersion <http://dublincore.org/usage/terms/history/#rightsT-001> ;
+    dcterms:issued "2008-01-14"^^xsd:date ;
+    dcterms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "Information about rights held in and over the resource."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:range dcterms:RightsStatement ;
+    rdfs:subPropertyOf dc:rights .
+
+dcterms:source a rdf:Property ;
+    rdfs:label "dcterms:source"@en ;
+    dcterms:description "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."@en ;
+    dcterms:hasVersion <http://dublincore.org/usage/terms/history/#sourceT-001> ;
+    dcterms:issued "2008-01-14"^^xsd:date ;
+    dcterms:modified "2008-01-14"^^xsd:date ;
+    rdfs:comment "A related resource from which the described resource is derived."@en ;
+    rdfs:isDefinedBy dcterms: ;
+    rdfs:subPropertyOf dc:source,
+        dcterms:relation ;
+    skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:license <http://creativecommons.org/licenses/by/4.0/>,
+        <http://www.data.gouv.fr/Licence-Ouverte-Open-Licence> ;
+    dcterms:creator [ a foaf:Person ;
+            foaf:homepage <http://lig-membres.imag.fr/gensel/> ;
+            foaf:name "Jérôme GENSEL" ],
+        [ a foaf:Person ;
+            foaf:homepage <http://lig-membres.imag.fr/villanov/> ;
+            foaf:name "Marlène VILLANOVA-OLIVER" ],
+        [ a foaf:Person ;
+            foaf:homepage <https://unige.ch/gedt/membres/dao/> ;
+            foaf:name "Hy DAO" ],
+        [ a foaf:Person ;
+            foaf:homepage <http://lig-membres.imag.fr/bernardc/> ;
+            foaf:name "Camille BERNARD" ] ;
+    dcterms:description "This RDF ontology allows describing any Territorial Statistical Nomenclature (TSN) (i.e., partition of the territory) used as a support to socio-economic data (statistical data that describe territory in terms of population, unemployement rate, transport access, etc.)."@en ;
+    dcterms:issued "2017-01-31"^^xsd:date ;
+    dcterms:modified "2017-01-31"^^xsd:date ;
+    dcterms:publisher <http://steamer.imag.fr> ;
+    dcterms:title "Territorial Statistical Nomenclature Ontology"@en ;
+    vann:preferredNamespacePrefix "tsn" ;
+    vann:preferredNamespaceUri onto: ;
+    rdfs:comment "First version of the vocabulary" ;
+    owl:versionInfo 1.0 .
+
+onto:covers a rdf:Property ;
+    rdfs:label "covers"@en ;
+    rdfs:comment "Indicates a TerritoryVersion covered by a NomenclatureVersion i.e., the TerritoryVersion is the spatial applicability of the NomenclatureVersion."@en ;
+    rdfs:domain onto:NomenclatureVersion ;
+    rdfs:range onto:TerritoryVersion ;
+    owl:inverseOf onto:isCoveredBy .
+
+onto:hasLevel a rdf:Property ;
+    rdfs:label "hasLevel"@en ;
+    rdfs:comment "Indicates a LevelVersion in the NomenclatureVersion hierarchy."@en ;
+    rdfs:domain onto:NomenclatureVersion ;
+    rdfs:range onto:LevelVersion .
+
+onto:hasLowerLevel a rdf:Property ;
+    rdfs:label "hasLowerLevel"@en ;
+    rdfs:comment "Indicates the LevelVersion that is immediately below the described LevelVersion."@en ;
+    rdfs:domain onto:LevelVersion ;
+    rdfs:range onto:LevelVersion ;
+    owl:inverseOf onto:hasUpperLevel .
+
+onto:hasSubUnit a rdf:Property ;
+    rdfs:label "hasSubUnit"@en ;
+    rdfs:comment "Indicates a UnitVersion that is contained (spatially or not, as, for instance, an administrative hierarchy may be based on other criteria than spatial criteria) in the described UnitVersion."@en ;
+    rdfs:domain onto:UnitVersion ;
+    rdfs:range onto:UnitVersion ;
+    owl:sameAs <http://ec.europa.eu/eurostat/ramon/ontologies/geographic.rdf#hasSubRegion> .
+
+onto:hasUnit a rdf:Property ;
+    rdfs:label "hasUnit"@en ;
+    rdfs:comment "Indicates a UnitVersion that belongs to the described LevelVersion."@en ;
+    rdfs:domain onto:LevelVersion ;
+    rdfs:range onto:UnitVersion .
+
+onto:hasUpperLevel a rdf:Property ;
+    rdfs:label "hasUpperLevel"@en ;
+    rdfs:comment "Indicates the LevelVersion that is immediately above the described LevelVersion."@en ;
+    rdfs:domain onto:LevelVersion ;
+    rdfs:range onto:LevelVersion ;
+    owl:inverseOf onto:hasLowerLevel .
+
+onto:hasVersion a rdf:Property ;
+    rdfs:label "hasVersion"@en ;
+    rdfs:comment "Indicates a resource is a Version, edition, or adaptation of the described resource."@en ;
+    rdfs:domain onto:TSNComponent ;
+    rdfs:range onto:Version ;
+    rdfs:subPropertyOf <http://purl.org/pav/hasVersion> ;
+    owl:inverseOf onto:isVersionOf .
+
+onto:isCoveredBy a rdf:Property ;
+    rdfs:label "isCoveredBy"@en ;
+    rdfs:comment "Indicates a NomenclatureVersion that covers a TerritoryVersion i.e., the TerritoryVersion is the spatial applicability of the NomenclatureVersion."@en ;
+    rdfs:domain onto:TerritoryVersion ;
+    rdfs:range onto:NomenclatureVersion ;
+    owl:inverseOf onto:covers .
+
+onto:isVersionOf a rdf:Property ;
+    rdfs:label "isVersionOf"@en ;
+    rdfs:comment "Indicates a TSNComponent of which the described resource is a version, edition, or adaptation."@en ;
+    rdfs:domain onto:Version ;
+    rdfs:range onto:TSNComponent ;
+    rdfs:subPropertyOf dcterms:isVersionOf ;
+    owl:inverseOf onto:hasVersion .
+
+<http://purl.org/pav/hasVersion> a rdf:Property ;
+    rdfs:label "pav:hasVersion"@en ;
+    rdfs:comment "This resource has a more specific, versioned resource. This property is intended for relating a non-versioned or abstract resource to several versioned resources, e.g. snapshots. For instance, if there are two snapshots of the News page, made on 23rd and 24th of December, then: <http://news.example.com/> pav:hasVersion <http://news.example.com/2013-12-23/> ; pav:hasVersion <http://news.example.com/2013-12-24/> . If one of the versions has somewhat the equivalent content to this resource (e.g. can be used as a permalink for this resource), then it should instead be indicated with the subproperty pav:hasCurrentVersion: <http://news.example.com/> pav:hasCurrentVersion <http://news.example.com/2013-12-25 > . To order the versions, use pav:previousVersion: <http://news.example.com/2013-12-25/> pav:previousVersion <http://news.example.com 2013-12-24/> . <http://news.example.com/2013-12-24/> pav:previousVersion <http://news.example.com/2013-12-23/> . Note that it might be confusing to also indicate pav:previousVersion from a resource that has pav:hasVersion relations, as such a resource is intended to be a long-living 'unversioned' resource. The PAV ontology does however not formally restrict this, to cater for more complex scenarios with multiple abstraction levels. pav:hasVersion is a subproperty of dcterms:hasVersion to more strongly define this hierarchical pattern. It is therefore also a subproperty of pav:generalizationOf (inverse of prov:specializationOf). To indicate the existence of other, non-hierarchical kind of editions and adaptations of this resource that are not versioned snapshots (e.g. Powerpoint slides has a video recording version), use instead dcterms:hasVersion or prov:alternateOf."@en ;
+    rdfs:isDefinedBy <http://purl.org/pav/> ;
+    rdfs:subPropertyOf dcterms:hasVersion .
+
+geo:Feature rdfs:label "geosparql:Feature"@en ;
+    dcterms:description "This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types. "@en ;
+    rdfs:comment "This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types." .
+
+geo:hasGeometry rdfs:label "geosparql:hasGeometry"@en ;
+    dcterms:description "A spatial representation for a given feature."@en ;
+    rdfs:comment "A spatial representation for a given feature."@en ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> .
+
+onto:TerritoryVersion a owl:Class ;
+    rdfs:label "TerritoryVersion"@en ;
+    rdfs:comment "The TerritoryVersion concept describes a unique representation of a Territory at a specified period of time. As the boundaries of a territory may vary (e.g., fusion with another territory), it results succesives versions of it. A territory may have as many versions as it underwent modifications. For instance, the European Union of 27 and the European Union of 28 member states are two versions of the European Union territory."@en ;
+    rdfs:subClassOf onto:TSNFeature,
+        onto:Version .
+
+onto:TSNFeature a owl:Class ;
+    rdfs:label "TSNFeature"@en ;
+    rdfs:comment "The TSNFeature concept is the super class of features of a TSN (i.e., a geographic resource). The features of a TSN may be TerritoryVersion, LevelVersion and UnitVersion resources. The TSNFeature concept is a sub class of the geosparql:Feature concept of the OGC Geosparql ontology (please consult http://www.opengis.net/ont/geosparql#Feature for a definition of this concept)"@en ;
+    rdfs:subClassOf onto:TSNComponent,
+        geo:Feature .
+
+onto:NomenclatureVersion a owl:Class ;
+    rdfs:label "NomenclatureVersion"@en ;
+    rdfs:comment "The NomenclatureVersion concept describes a unique representation of a Nomenclature, stable for a period of time. Stability ensures that statistical data refer to the same territorial units for a certain period of time (source http://ec.europa.eu/eurostat/web/nuts/history) (i.e., the reference period of the NomenclatureVersion)."@en ;
+    rdfs:subClassOf onto:Version .
+
+onto:UnitVersion a owl:Class ;
+    rdfs:label "UnitVersion"@en ;
+    rdfs:comment "The UnitVersion concept describes a unique representation of a Unit, stable for a period of time. This period of time is inherited from the reference period of the NomenclatureVersion the UnitVersion belongs to."@en ;
+    rdfs:subClassOf onto:TSNFeature,
+        onto:Version .
+
+onto:Version a owl:Class ;
+    rdfs:label "Version"@en ;
+    rdfs:comment "The Version concept describes one Version of a TSNComponent, valid for a period of time. A Version resource hold all the attributs of a TSNComponent that may vary, i.e., all attributs except those that hold the identity of the resource (i.e. Identifier of the TSNComponent). The Version concept is closed to the TimeSlice concept of ontologies of fluent. "@en ;
+    rdfs:subClassOf onto:TSNComponent .
+
+onto:LevelVersion a owl:Class ;
+    rdfs:label "LevelVersion"@en ;
+    rdfs:comment "The LevelVersion concept describes a unique representation of a Level, stable for a period of time. This period of time is inherited from the reference period of the NomenclatureVersion the LevelVersion belongs to."@en ;
+    rdfs:subClassOf onto:TSNFeature,
+        onto:Version .
+
+onto:TSNComponent a owl:Class ;
+    rdfs:label "TSNComponent"@en ;
+    rdfs:comment "The TSNComponent concept is the super class of any Territorial Statistical Nomenclature components." .
+

@@ -1,0 +1,944 @@
+@prefix : <https://saref.etsi.org/saref4dmgt/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix saref: <https://saref.etsi.org/core/> .
+@prefix s4dmgt: <https://saref.etsi.org/saref4dmgt/> .
+@prefix s4syst: <https://saref.etsi.org/saref4syst/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <https://saref.etsi.org/saref4dmgt/> .
+
+<https://saref.etsi.org/saref4dmgt/> rdf:type owl:Ontology ;
+                                      owl:versionIRI <https://saref.etsi.org/saref4dmgt/v1.1.1/> ;
+                                      owl:imports <https://saref.etsi.org/core/v4.1.1/> ,
+                                                  <https://saref.etsi.org/saref4syst/v1.1.2/> ;
+                                      dcterms:abstract """The Device Management (DM) domain consists in the remote administration of devices for an operator, such as a service provider or device manufacturer. 
+
+The proposal for an ontology for standardization in Device Management is motivated by the need to address challenges arising from the evolution of DM and the emergence of the Internet of Things (IoT).
+
+Initially, DM was introduced by manufacturers and telecommunication operators to ensure the proper functioning of devices like gateways and set-top boxes, focusing on firmware management due to the high replacement costs of these devices. Over time, the scope of DM expanded to include configuration and customer care, enabling Telcos to configure value-added services, improve Quality of Service (QoS), and reduce costs. 
+
+With the rise of IoT, the DM landscape has shifted significantly. The proliferation of heterogeneous IoT devices and the temptation to produce disposable devices have highlighted the need for remote management for economic and ecological reasons. However, existing DM solutions face challenges due to the scale and diversity of IoT devices, as well as the prevalence of proprietary protocols and siloed solutions from various manufacturers. This has created issues with heterogeneity in device capabilities, DM protocols, and management solutions. Standardization becomes essential to facilitate common, interoperable protocols for DM, simplifying device integration and benefiting both operators and manufacturers.
+
+The proposed IoT Device Management Ontology provides an abstract semantic model of DM domain-specific concepts, enabling cross-system data interoperability and knowledge enrichment through reasoning. This ontology aims to unify and streamline IoT DM practices, overcoming the limitations of existing approaches."""@en ;
+                                      dcterms:creator <https://dblp.org/pid/52/1343.html> ,
+                                                      <https://orcid.org/0000-0001-6772-2161> ,
+                                                      <https://orcid.org/0000-0003-0788-9837> ,
+                                                      <https://www.researchgate.net/profile/Marc-Douet> ;
+                                      dcterms:description """The ontology aims to define concepts within the Device Management domain, facilitating the remote administration of devices and ensuring their proper functioning. It addresses challenges related to the heterogeneity of management protocols by representing execution paths for commands and modeling the information exchanged between devices and the management system.
+
+This ontology is developed as a SAREF extension."""@en ;
+                                      dcterms:license <https://forge.etsi.org/etsi-software-license> ;
+                                      dcterms:publisher <https://www.etsi.org/> ;
+                                      dcterms:title "SAREF4DMGT : SAREF extension for the Device Management domain"@en ;
+                                      vann:preferredNamespacePrefix "s4dmgt" ;
+                                      vann:preferredNamespaceUri "https://saref.etsi.org/saref4dmgt/" ;
+                                      owl:versionInfo "v1.1.1" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/abstract
+dcterms:abstract rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+vann:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+
+###  http://xmlns.com/foaf/0.1/homepage
+foaf:homepage rdf:type owl:AnnotationProperty .
+
+
+###  http://xmlns.com/foaf/0.1/name
+foaf:name rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#narrower
+skos:narrower rdf:type owl:ObjectProperty .
+
+
+###  https://saref.etsi.org/core/hasCommand
+saref:hasCommand rdf:type owl:ObjectProperty .
+
+
+###  https://saref.etsi.org/saref4dmgt/connectedToServer
+s4dmgt:connectedToServer rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf s4syst:connectedTo ;
+                         owl:inverseOf s4dmgt:hasConnectedClient ;
+                         rdfs:domain s4dmgt:Client ;
+                         rdfs:range s4dmgt:Server ;
+                         rdfs:comment "Relationship between a Client and a Server when the Client is connected and authenticated to a Server, enabling the exposition of its DM Functions. This relationship could be inferred when a Management Service connects both the Client and the Server. Inverse of saref4dmgt:hasConnectedClient."@en ;
+                         rdfs:label "connected to server"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/enablesDeviceModule
+s4dmgt:enablesDeviceModule rdf:type owl:ObjectProperty ;
+                           owl:inverseOf s4dmgt:hasDevicePackage ;
+                           rdfs:comment "A relationship between a DevicePackage and a DeviceModule that represents the fact that the DeviceModule only exists thanks to the DevicePackage. If the DevicePackage is uninstalled, the DeviceModule does not exist anymore."@en ;
+                           rdfs:label "enables device module"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/enablesManagementService
+s4dmgt:enablesManagementService rdf:type owl:ObjectProperty ;
+                                owl:inverseOf s4dmgt:hasConnection ;
+                                rdfs:domain s4dmgt:ManagementConnection ;
+                                rdfs:range s4dmgt:ManagementService ;
+                                rdfs:comment "A relationship between a Management Service and Management Connection that represents the fact that a Management Service only exists thanks to the Management Connection. If the Management Connection is closed, the Management Service does not exist anymore."@en ;
+                                rdfs:label "enables management service"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/hasConnectedClient
+s4dmgt:hasConnectedClient rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf s4syst:connectedTo ;
+                          rdfs:domain s4dmgt:Server ;
+                          rdfs:range s4dmgt:Client ;
+                          rdfs:comment "Relationship between a Server and a Client when the Client is connected and authenticated to the Server, enabling the exposition of its DM Functions. This relationship could be inferred when a Management Service connects both the Client and the Server. Inverse of saref4dmgt:connectedToServer."@en ;
+                          rdfs:label "has connected client"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/hasConnection
+s4dmgt:hasConnection rdf:type owl:ObjectProperty ;
+                     rdfs:domain s4dmgt:ManagementService ;
+                     rdfs:range s4dmgt:ManagementConnection ;
+                     rdfs:comment "A relationship between a Management Service and a Management Connection, indicating that the Management Service exists solely because of the Management Connection. If the Management Connection ceases to exist, the Management Service will also cease to exist.."@en ;
+                     rdfs:label "has connection"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/hasDevicePackage
+s4dmgt:hasDevicePackage rdf:type owl:ObjectProperty ;
+                        rdfs:comment "A relationship between a DeviceModule and a DevicePackage that represents the fact that the DeviceModule only exists thanks to the DevicePackage. If the DevicePackage is uninstalled, the DeviceModule does not exist anymore."@en ;
+                        rdfs:label "has device package"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/isRepresentedBy
+s4dmgt:isRepresentedBy rdf:type owl:ObjectProperty ;
+                       owl:inverseOf s4dmgt:representsDevice ;
+                       rdfs:domain s4dmgt:ManageableDevice ;
+                       rdfs:range s4dmgt:Client ;
+                       rdfs:comment "A relationship between a Manageable Device and one of the Clients that expose its DM functions to DM servers."@en ;
+                       rdfs:label "is represented by"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/representsDevice
+s4dmgt:representsDevice rdf:type owl:ObjectProperty ;
+                        rdfs:domain s4dmgt:Client ;
+                        rdfs:range s4dmgt:ManageableDevice ;
+                        rdfs:comment "A relationship between a Client and the Device whose DM functions the Client exposes to DM servers."@en ;
+                        rdfs:label "represents device"@en .
+
+
+###  https://saref.etsi.org/saref4syst/connectsSystem
+s4syst:connectsSystem rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://saref.etsi.org/core/Command
+saref:Command rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/Device
+saref:Device rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/FeatureOfInterest
+saref:FeatureOfInterest rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/Function
+saref:Function rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/Property
+saref:Property rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/Service
+saref:Service rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/core/State
+saref:State rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/saref4dmgt/Client
+s4dmgt:Client rdf:type owl:Class ;
+              rdfs:subClassOf s4syst:System ;
+              rdfs:comment """Software entity which represents a Device by exposing its DM Functions to one or more DM Server(s). 
+
+It is responsible for the triggering of the DM Functions when a Command targeting the represented Device is received by the Server. The Client is also responsible for the reporting of the results of the Function execution to the Server.
+
+The Client has an identifier that is unique only relatively to each Server it is connected to."""@en ;
+              rdfs:label "Client"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterCommandCategory
+s4dmgt:DatamodelParameterCommandCategory rdf:type owl:Class ;
+                                         rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                         rdfs:comment "Category of commands enabling the manipulation of one or more Datamodel Parameters."@en ;
+                                         rdfs:label "Datamodel Parameter Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceControlCommandCategory
+s4dmgt:DeviceControlCommandCategory rdf:type owl:Class ;
+                                    rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                    rdfs:comment "Category of commands enabling the manipulation of the device state, for instance the power state with a Reboot or Shutdown command."@en ;
+                                    rdfs:label "Device Control Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceIdentityCommandCategory
+s4dmgt:DeviceIdentityCommandCategory rdf:type owl:Class ;
+                                     rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                     rdfs:comment "Category of commands enabling the manipulation of device identification properties."@en ;
+                                     rdfs:label "Device Identity Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceManagementCommandCategory
+s4dmgt:DeviceManagementCommandCategory rdf:type owl:Class ;
+                                       rdfs:subClassOf saref:Command ;
+                                       rdfs:comment "Category of Commands that are specific to the Device Management domain."@en ;
+                                       rdfs:label "Device Management Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceManagementFunctionCategory
+s4dmgt:DeviceManagementFunctionCategory rdf:type owl:Class ;
+                                        rdfs:subClassOf saref:Function ;
+                                        rdfs:comment """Category of Functions related to the Device Management domain.
+
+These Functions correspond to the capabilities of the Device to perform its own diagnostics, maintenance, configuration, monitoring and control."""@en ;
+                                        rdfs:label "Device Management Function Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceManagementState
+s4dmgt:DeviceManagementState rdf:type owl:Class ;
+                             rdfs:subClassOf saref:State ;
+                             rdfs:comment "This is a class of states for Device Management."@en ;
+                             rdfs:label "Device Management State"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceModule
+s4dmgt:DeviceModule rdf:type owl:Class ;
+                    rdfs:subClassOf saref:FeatureOfInterest ;
+                    rdfs:comment """A DeviceModule is an executable software entity on the Device, i.e. a DeviceModule may be activated and deactivated on demand through dedicated Functions.
+
+As such, the DeviceModule implements specific Functions that are available to the Device when the DeviceModule is activated.
+
+A DeviceModule may be supported by a DevicePackage: deleting the corresponding DevicePackage will in turn remove the DeviceModule and its related Functions."""@en ;
+                    rdfs:label "Device Module"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceModuleState
+s4dmgt:DeviceModuleState rdf:type owl:Class ;
+                         rdfs:subClassOf s4dmgt:DeviceManagementState ;
+                         owl:disjointWith s4dmgt:DevicePackageState ;
+                         rdfs:comment "State of a DeviceModule"@en ;
+                         rdfs:label "Device Module State"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackage
+s4dmgt:DevicePackage rdf:type owl:Class ;
+                     rdfs:subClassOf saref:FeatureOfInterest ;
+                     rdfs:comment """A DevicePackage is an archive file that may contain resource files, code, libraries or executable files.
+It is a resource that the Device should retrieve or receive from an external source.
+
+A DevicePackage is only actionable once it has been downloaded and installed.
+
+It may allow a Device to support additional Functions by instantiating a DeviceModule.
+
+A DevicePackage may be uninstalled and then removed from the Device."""@en ;
+                     rdfs:label "Device Package"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageState
+s4dmgt:DevicePackageState rdf:type owl:Class ;
+                          rdfs:subClassOf s4dmgt:DeviceManagementState ;
+                          rdfs:comment "State of a DevicePackage"@en ;
+                          rdfs:label "Device Package State"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareManagementCommandCategory
+s4dmgt:FirmwareManagementCommandCategory rdf:type owl:Class ;
+                                         rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                         rdfs:comment "Category of commands enabling the manipulation of device firmwares."@en ;
+                                         rdfs:label "Firmware Management Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ManageableDevice
+s4dmgt:ManageableDevice rdf:type owl:Class ;
+                        rdfs:subClassOf saref:Device ;
+                        rdfs:comment """A tangible object that has at least one Device Management Function.
+
+This class extends the saref:Device class, it is a Feature of Interest by definition."""@en ;
+                        rdfs:label "Manageable Device"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ManagementConnection
+s4dmgt:ManagementConnection rdf:type owl:Class ;
+                            rdfs:subClassOf [ owl:intersectionOf ( s4syst:Connection
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty s4syst:connectsSystem ;
+                                                                     owl:someValuesFrom s4dmgt:Client
+                                                                   ]
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty s4syst:connectsSystem ;
+                                                                     owl:someValuesFrom s4dmgt:Server
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                            rdfs:comment """Abstract representation of the connection between a Client and a Server. It does not necessarily imply that a persistent connection is established between the entities - such as a TCP connection. It represents the link and the capability of the Server to interact with the Client.
+
+For instance, the Client has been authenticated by the Server with a certificate, and/or the client has received a configuration for access rights to its functions for the Server."""@en ;
+                            rdfs:label "Management Connection"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ManagementService
+s4dmgt:ManagementService rdf:type owl:Class ;
+                         rdfs:subClassOf saref:Service ;
+                         rdfs:comment """A saref:Service that represents functions or functions of interest of the Device Management Function Category.
+
+The ManagementService exposes these functions through a Connection, between a Client and a Server."""@en ;
+                         rdfs:label "Management Service"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleManagementCommandCategory
+s4dmgt:ModuleManagementCommandCategory rdf:type owl:Class ;
+                                       rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                       rdfs:comment "Category of commands enabling the manipulation of device modules."@en ;
+                                       rdfs:label "Module Management Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageManagementCommandCategory
+s4dmgt:PackageManagementCommandCategory rdf:type owl:Class ;
+                                        rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                        rdfs:comment "Category of commands enabling the manipulation of device packages."@en ;
+                                        rdfs:label "Package Management Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/Server
+s4dmgt:Server rdf:type owl:Class ;
+              rdfs:subClassOf s4syst:System ;
+              rdfs:comment """A DM Server is the software entity which is responsible for performing DM operations on a fleet of Devices. It exposes the set of available operations to an entity that needs to trigger an operation, such as a manufacturer or a Customer Care service. 
+
+The DM Server is a endpoint, generally secured, with which DM Clients communicate. 
+
+The protocol used between Server and Client is not in the scope of this ontology. It can follow a DM standard such as CWMP or LwM2M, or be completely proprietary."""@en ;
+              rdfs:label "Server"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelCommandCategory
+s4dmgt:SupportedDatamodelCommandCategory rdf:type owl:Class ;
+                                         rdfs:subClassOf s4dmgt:DeviceManagementCommandCategory ;
+                                         rdfs:comment "Category of commands enabling the manipulation of supported datamodels."@en ;
+                                         rdfs:label "Supported Datamodel Command Category"@en .
+
+
+###  https://saref.etsi.org/saref4syst/Connection
+s4syst:Connection rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/saref4syst/System
+s4syst:System rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterCreationCommand
+s4dmgt:DatamodelParameterCreationCommand rdf:type owl:NamedIndividual ,
+                                                  s4dmgt:DatamodelParameterCommandCategory ;
+                                         saref:controls s4dmgt:DatamodelParameterInstanceProperty ;
+                                         rdfs:comment "Command to create a datamodel parameter instance."@en ;
+                                         rdfs:label "Datamodel parameter creation command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterDeletionCommand
+s4dmgt:DatamodelParameterDeletionCommand rdf:type owl:NamedIndividual ,
+                                                  s4dmgt:DatamodelParameterCommandCategory ;
+                                         saref:controls s4dmgt:DatamodelParameterInstanceProperty ;
+                                         rdfs:comment "Command to delete a datamodel parameter instance."@en ;
+                                         rdfs:label "Datamodel parameter deletion command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterFunction
+s4dmgt:DatamodelParameterFunction rdf:type owl:NamedIndividual ,
+                                           s4dmgt:DeviceManagementFunctionCategory ;
+                                  saref:hasCommand s4dmgt:DatamodelParameterCreationCommand ,
+                                                   s4dmgt:DatamodelParameterDeletionCommand ,
+                                                   s4dmgt:DatamodelParameterOperateCommand ,
+                                                   s4dmgt:DatamodelParameterRetrievalCommand ,
+                                                   s4dmgt:DatamodelParameterUpdateCommand ;
+                                  rdfs:comment "Function kind for the manipulation of datamodel parameters."@en ;
+                                  rdfs:label "Datamodel parameter function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterInstanceName
+s4dmgt:DatamodelParameterInstanceName rdf:type owl:NamedIndividual ,
+                                               saref:Property ;
+                                      skos:narrower s4dmgt:DatamodelParameterInstanceProperty ;
+                                      rdfs:comment "Name for an instance of a datamodel parameter."@en ;
+                                      rdfs:label "Datamodel parameter instance name"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterInstanceProperty
+s4dmgt:DatamodelParameterInstanceProperty rdf:type owl:NamedIndividual ,
+                                                   saref:Property ;
+                                          skos:broader s4dmgt:DatamodelParameterInstanceName ,
+                                                       s4dmgt:DatamodelParameterInstanceValue ;
+                                          rdfs:comment """Property kind that represents the properties of a Datamodel Parameter Instance.
+
+These parameter instances represent the actionable capabilities of the Device in a format specific to the datamodel implemented by the Device, and exposed by the Client.
+
+It should not be confused with the Supported Datamodel Parameter, which represents the abstract capabilities of the Device."""@en ;
+                                          rdfs:label "Datamodel parameter instance property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterInstanceValue
+s4dmgt:DatamodelParameterInstanceValue rdf:type owl:NamedIndividual ,
+                                                saref:Property ;
+                                       skos:narrower s4dmgt:DatamodelParameterInstanceProperty ;
+                                       rdfs:comment "Value of a datamodel parameter instance, obtained as the result of the execution of a Datamodel parameter retrieval command."@en ;
+                                       rdfs:label "Datamodel parameter instance value"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterOperateCommand
+s4dmgt:DatamodelParameterOperateCommand rdf:type owl:NamedIndividual ,
+                                                 s4dmgt:DatamodelParameterCommandCategory ;
+                                        saref:controls s4dmgt:DatamodelParameterInstanceProperty ;
+                                        rdfs:comment "Command to trigger the execution of a datamodel parameter instance that corresponds to an executable process on a device."@en ;
+                                        rdfs:label "Datamodel parameter operate command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterRetrievalCommand
+s4dmgt:DatamodelParameterRetrievalCommand rdf:type owl:NamedIndividual ,
+                                                   s4dmgt:DatamodelParameterCommandCategory ;
+                                          saref:observes s4dmgt:DatamodelParameterInstanceProperty ;
+                                          rdfs:comment "Command to retrieve the value of a Datamodel parameter instance."@en ;
+                                          rdfs:label "Datamodel parameter retrieval command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DatamodelParameterUpdateCommand
+s4dmgt:DatamodelParameterUpdateCommand rdf:type owl:NamedIndividual ,
+                                                s4dmgt:DatamodelParameterCommandCategory ;
+                                       saref:controls s4dmgt:DatamodelParameterInstanceProperty ;
+                                       rdfs:comment "Command to update the value of a Datamodel parameter instance."@en ;
+                                       rdfs:label "Datamodel parameter update command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceControlFunction
+s4dmgt:DeviceControlFunction rdf:type owl:NamedIndividual ,
+                                      s4dmgt:DeviceManagementFunctionCategory ;
+                             saref:hasCommand s4dmgt:RebootCommand ,
+                                              s4dmgt:ResetCommand ;
+                             rdfs:comment "Function kind to control the global state of the device, e.g. its power state through the Reboot function, or the global configuration through the Reset function."@en ;
+                             rdfs:label "Device control function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceIdentityFunction
+s4dmgt:DeviceIdentityFunction rdf:type owl:NamedIndividual ,
+                                       s4dmgt:DeviceManagementFunctionCategory ;
+                              saref:hasCommand s4dmgt:DeviceInfoRetrievalCommand ;
+                              rdfs:comment "Function kind that represents the capabilities of a device to expose its own identity."@en ;
+                              rdfs:label "Device identity function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceIdentityProperty
+s4dmgt:DeviceIdentityProperty rdf:type owl:NamedIndividual ,
+                                       saref:Property ;
+                              skos:broader s4dmgt:HardwareVersion ,
+                                           s4dmgt:Manufacturer ,
+                                           s4dmgt:ModelName ,
+                                           s4dmgt:ModelNumber ,
+                                           s4dmgt:SerialNumber ;
+                              rdfs:comment "Set of properties that constitutes a Device Identity."@en ;
+                              rdfs:label "Device identity property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceInfoRetrievalCommand
+s4dmgt:DeviceInfoRetrievalCommand rdf:type owl:NamedIndividual ,
+                                           s4dmgt:DeviceIdentityCommandCategory ;
+                                  saref:observes s4dmgt:DeviceIdentityProperty ;
+                                  rdfs:comment "A command to retrieve any Device identity property."@en ;
+                                  rdfs:label "Device info retrieval command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceModuleActivated
+s4dmgt:DeviceModuleActivated rdf:type owl:NamedIndividual ,
+                                      s4dmgt:DeviceModuleState ;
+                             rdfs:comment "State of a Device Module whose related functions were made available on a device, either automatically after the Device Module installation, or through a Module activation command."@en ;
+                             rdfs:label "Device module activated"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DeviceModuleDeactivated
+s4dmgt:DeviceModuleDeactivated rdf:type owl:NamedIndividual ,
+                                        s4dmgt:DeviceModuleState ;
+                               rdfs:comment "State of a Device Module whose related functions were made unavailable through a Module Deactivation Command."@en ;
+                               rdfs:label "Device module deactivated"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageDownloaded
+s4dmgt:DevicePackageDownloaded rdf:type owl:NamedIndividual ,
+                                        s4dmgt:DevicePackageState ;
+                               rdfs:comment "State of a Device Package whose set of required files are available of on the device, either through a download process from a Client, or an upload process from a Server. This is a transitory state, that changes to the either the Device Package Validated state, or returns to the Device Package Initialized state in case of error."@en ;
+                               rdfs:label "Device package downloaded"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageDownloading
+s4dmgt:DevicePackageDownloading rdf:type owl:NamedIndividual ,
+                                         s4dmgt:DevicePackageState ;
+                                rdfs:comment "State of a Device Package that represents that the process of transferring the required package files is in progress. This state is attained through the Device Package Initialized state either automatically, or through the execution of a Package Download Command. This is a transitory state, that changes to either the Device Package Downloaded or returns to the Device Package Initialized state in case of error."@en ;
+                                rdfs:label "Device package downloading"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageInitialized
+s4dmgt:DevicePackageInitialized rdf:type owl:NamedIndividual ,
+                                         s4dmgt:DevicePackageState ;
+                                rdfs:comment "State of a Device Package that represents that the process of creating the required package on the device. This state is attained through the execution of the Package Creation Command. This may be a transitory state, that changes to the Device Package Downloading state automatically."@en ;
+                                rdfs:label "Device package initialized"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageInstalled
+s4dmgt:DevicePackageInstalled rdf:type owl:NamedIndividual ,
+                                       s4dmgt:DevicePackageState ;
+                              rdfs:comment "State of a Device package whose resources have been made ready for their final purpose, after the download and install processes are completed."@en ;
+                              rdfs:label "Device package installed"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageInstalling
+s4dmgt:DevicePackageInstalling rdf:type owl:NamedIndividual ,
+                                        s4dmgt:DevicePackageState ;
+                               rdfs:comment "State of a Device Package that represents that the process of readying the required package files is in progress. This state is attained through the execution of the Package Install Command, from the Device Package Validated state. This is a transitory state, that changes to the Device Package Installed state, or returns to the Device Package Validated state in case of error."@en ;
+                               rdfs:label "Device package installing"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageUninstalling
+s4dmgt:DevicePackageUninstalling rdf:type owl:NamedIndividual ,
+                                          s4dmgt:DevicePackageState ;
+                                 rdfs:comment "State of a Device Package that represents that the process of removing the associated package files is in progress. This is a transitory state, that either changes to the Device Package Initialized or Device Package Validated states depending on implementation."@en ;
+                                 rdfs:label "Device package uninstalling"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/DevicePackageValidated
+s4dmgt:DevicePackageValidated rdf:type owl:NamedIndividual ,
+                                       s4dmgt:DevicePackageState ;
+                              rdfs:comment "State of a Device Package that represents that the required package files are available on the device, and actually correspond to the expected files, without corruption. The transition from the Device Package Downloaded state is automatic, and depends on the client and package implementations."@en ;
+                              rdfs:label "Device package validated"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareInformationRetrievalCommand
+s4dmgt:FirmwareInformationRetrievalCommand rdf:type owl:NamedIndividual ,
+                                                    s4dmgt:FirmwareManagementCommandCategory ;
+                                           owl:differentFrom s4dmgt:FirmwareUpdateCommand ;
+                                           saref:observes s4dmgt:FirmwareProperty ;
+                                           rdfs:comment "Command to retrieve firmware information such as the current firmware version for a device."@en ;
+                                           rdfs:label "Firmware information retrieval command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareManagementFunction
+s4dmgt:FirmwareManagementFunction rdf:type owl:NamedIndividual ,
+                                           s4dmgt:DeviceManagementFunctionCategory ;
+                                  saref:hasCommand s4dmgt:FirmwareInformationRetrievalCommand ,
+                                                   s4dmgt:FirmwareUpdateCommand ;
+                                  rdfs:comment "Set of functions related to the management of the firmware for a device."@en ;
+                                  rdfs:label "Firmware management function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareProperty
+s4dmgt:FirmwareProperty rdf:type owl:NamedIndividual ,
+                                 saref:Property ;
+                        skos:broader s4dmgt:FirmwareVersion ;
+                        rdfs:comment """Property kind that represents the properties of the firmware of a device.
+
+The device firmware is the running base software for a device, which is automatically loaded into memory and executed at boot."""@en ;
+                        rdfs:label "Firmware property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareUpdateCommand
+s4dmgt:FirmwareUpdateCommand rdf:type owl:NamedIndividual ,
+                                      s4dmgt:FirmwareManagementCommandCategory ;
+                             saref:controls s4dmgt:FirmwareProperty ;
+                             rdfs:comment "Command to trigger the update of the firmware of a device."@en ;
+                             rdfs:label "Firmware update command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/FirmwareVersion
+s4dmgt:FirmwareVersion rdf:type owl:NamedIndividual ,
+                                saref:Property ;
+                       skos:narrower s4dmgt:FirmwareProperty ;
+                       rdfs:comment "The firmware version of a device."@en ;
+                       rdfs:label "Firmware version"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/HardwareVersion
+s4dmgt:HardwareVersion rdf:type owl:NamedIndividual ,
+                                saref:Property ;
+                       skos:narrower s4dmgt:DeviceIdentityProperty ;
+                       rdfs:comment "Device identity property referring to the specific version of the set of physical components of a device, known as hardware version."@en ;
+                       rdfs:label "Hardware version"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/Manufacturer
+s4dmgt:Manufacturer rdf:type owl:NamedIndividual ,
+                             saref:Property ;
+                    skos:narrower s4dmgt:DeviceIdentityProperty ;
+                    rdfs:comment "Device identity property representing the manufacturer of the device."@en ;
+                    rdfs:label "Manufacturer"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModelName
+s4dmgt:ModelName rdf:type owl:NamedIndividual ,
+                          saref:Property ;
+                 skos:narrower s4dmgt:DeviceIdentityProperty ;
+                 rdfs:comment "Device identity property that represents the device model, i.e. the denomination for a specific hardware design for this device, in a human-readable format."@en ;
+                 rdfs:label "Model name"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModelNumber
+s4dmgt:ModelNumber rdf:type owl:NamedIndividual ,
+                            saref:Property ;
+                   skos:narrower s4dmgt:DeviceIdentityProperty ;
+                   rdfs:comment "The unique identifier assigned to a device model, used to distinguish it from other models and versions within a manufacturer's product lineup."@en ;
+                   rdfs:label "Model number"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleActivationCommand
+s4dmgt:ModuleActivationCommand rdf:type owl:NamedIndividual ,
+                                        s4dmgt:ModuleManagementCommandCategory ;
+                               rdfs:comment "Command to trigger the activation of a Device Module."@en ;
+                               rdfs:label "Module activation command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleDeactivationCommand
+s4dmgt:ModuleDeactivationCommand rdf:type owl:NamedIndividual ,
+                                          s4dmgt:ModuleManagementCommandCategory ;
+                                 rdfs:comment "Command to trigger the deactivation of a Device Module."@en ;
+                                 rdfs:label "Module deactivation command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleDiscoveryCommand
+s4dmgt:ModuleDiscoveryCommand rdf:type owl:NamedIndividual ,
+                                       s4dmgt:ModuleManagementCommandCategory ;
+                              saref:observes s4dmgt:ModuleProperty ;
+                              rdfs:comment "Command to retrieve the list of  Device Modules available on a device."@en ;
+                              rdfs:label "Module discovery command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleInformationRetrievalCommand
+s4dmgt:ModuleInformationRetrievalCommand rdf:type owl:NamedIndividual ,
+                                                  s4dmgt:ModuleManagementCommandCategory ;
+                                         saref:observes s4dmgt:ModuleProperty ;
+                                         rdfs:comment "Command to retrieve device module information such as the name of the module or its version."@en ;
+                                         rdfs:label "Module information retrieval command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleManagementFunction
+s4dmgt:ModuleManagementFunction rdf:type owl:NamedIndividual ,
+                                         s4dmgt:DeviceManagementFunctionCategory ;
+                                saref:hasCommand s4dmgt:ModuleActivationCommand ,
+                                                 s4dmgt:ModuleDeactivationCommand ,
+                                                 s4dmgt:ModuleDiscoveryCommand ,
+                                                 s4dmgt:ModuleInformationRetrievalCommand ;
+                                rdfs:comment "Function kind for the management of Device Modules."@en ;
+                                rdfs:label "Module management function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleName
+s4dmgt:ModuleName rdf:type owl:NamedIndividual ,
+                           saref:Property ;
+                  skos:narrower s4dmgt:ModuleProperty ;
+                  rdfs:comment "The name of a device module."@en ;
+                  rdfs:label "Module name"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleProperty
+s4dmgt:ModuleProperty rdf:type owl:NamedIndividual ,
+                               saref:Property ;
+                      skos:broader s4dmgt:ModuleName ,
+                                   s4dmgt:ModuleVersion ;
+                      rdfs:comment "Property kind that represents the properties of a Device Module."@en ;
+                      rdfs:label "Module property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ModuleVersion
+s4dmgt:ModuleVersion rdf:type owl:NamedIndividual ,
+                              saref:Property ;
+                     skos:narrower s4dmgt:ModuleProperty ;
+                     rdfs:comment "The version of a Device Module."@en ;
+                     rdfs:label "Module version"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageCreationCommand
+s4dmgt:PackageCreationCommand rdf:type owl:NamedIndividual ,
+                                       s4dmgt:PackageManagementCommandCategory ;
+                              saref:controls s4dmgt:PackageProperty ;
+                              rdfs:comment "Command to trigger the creation of a Device Package on a device."@en ;
+                              rdfs:label "Package creation command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageDeletionCommand
+s4dmgt:PackageDeletionCommand rdf:type owl:NamedIndividual ,
+                                       s4dmgt:PackageManagementCommandCategory ;
+                              saref:controls s4dmgt:PackageProperty ;
+                              rdfs:comment "Command to trigger the deletion of a Device Package on a device."@en ;
+                              rdfs:label "Package deletion command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageDiscoveryCommand
+s4dmgt:PackageDiscoveryCommand rdf:type owl:NamedIndividual ,
+                                        s4dmgt:PackageManagementCommandCategory ;
+                               saref:observes s4dmgt:PackageProperty ;
+                               rdfs:comment "Command to retrieve the list of available Device Packages on a device."@en ;
+                               rdfs:label "Package discovery command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageDownloadCommand
+s4dmgt:PackageDownloadCommand rdf:type owl:NamedIndividual ,
+                                       s4dmgt:PackageManagementCommandCategory ;
+                              saref:controls s4dmgt:PackageProperty ;
+                              rdfs:comment "Command to trigger the download of a Device Package in the Device Package Initialized state."@en ;
+                              rdfs:label "Package download command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageInformationRetrievalCommand
+s4dmgt:PackageInformationRetrievalCommand rdf:type owl:NamedIndividual ,
+                                                   s4dmgt:PackageManagementCommandCategory ;
+                                          saref:observes s4dmgt:PackageProperty ;
+                                          rdfs:comment "Command to retrieve device package information such as the name of the package or its version."@en ;
+                                          rdfs:label "Package information retrieval command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageInstallCommand
+s4dmgt:PackageInstallCommand rdf:type owl:NamedIndividual ,
+                                      s4dmgt:PackageManagementCommandCategory ;
+                             saref:controls s4dmgt:PackageProperty ;
+                             rdfs:comment "Command to trigger the installation of Device Package on a device."@en ;
+                             rdfs:label "Package install command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageManagementFunction
+s4dmgt:PackageManagementFunction rdf:type owl:NamedIndividual ,
+                                          s4dmgt:DeviceManagementFunctionCategory ;
+                                 saref:hasCommand s4dmgt:PackageCreationCommand ,
+                                                  s4dmgt:PackageDeletionCommand ,
+                                                  s4dmgt:PackageDiscoveryCommand ,
+                                                  s4dmgt:PackageDownloadCommand ,
+                                                  s4dmgt:PackageInformationRetrievalCommand ,
+                                                  s4dmgt:PackageInstallCommand ,
+                                                  s4dmgt:PackageUninstallCommand ,
+                                                  s4dmgt:PackageUpdateCommand ;
+                                 rdfs:comment "Function kind related to the management of Device Packages on a device."@en ;
+                                 rdfs:label "Package management function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageName
+s4dmgt:PackageName rdf:type owl:NamedIndividual ,
+                            saref:Property ;
+                   skos:narrower s4dmgt:PackageProperty ;
+                   rdfs:comment "The name of a Device Package."@en ;
+                   rdfs:label "Package name"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageProperty
+s4dmgt:PackageProperty rdf:type owl:NamedIndividual ,
+                                saref:Property ;
+                       skos:broader s4dmgt:PackageName ,
+                                    s4dmgt:PackageVersion ;
+                       rdfs:comment "Property kind that represents the properties of a DevicePackage"@en ;
+                       rdfs:label "Package property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageUninstallCommand
+s4dmgt:PackageUninstallCommand rdf:type owl:NamedIndividual ,
+                                        s4dmgt:PackageManagementCommandCategory ;
+                               saref:controls s4dmgt:PackageProperty ;
+                               rdfs:comment "Command to trigger the uninstallation of a Device Package on a device."@en ;
+                               rdfs:label "Package uninstall command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageUpdateCommand
+s4dmgt:PackageUpdateCommand rdf:type owl:NamedIndividual ,
+                                     s4dmgt:PackageManagementCommandCategory ;
+                            saref:controls s4dmgt:PackageProperty ;
+                            rdfs:comment "Command to trigger the update of a Device Package on a device. This corresponds to the action of replacing, on a device, a Device Package by another Device Package with the same name, but a different version."@en ;
+                            rdfs:label "Package update command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/PackageVersion
+s4dmgt:PackageVersion rdf:type owl:NamedIndividual ,
+                               saref:Property ;
+                      skos:narrower s4dmgt:PackageProperty ;
+                      rdfs:comment "The version of a device package."@en ;
+                      rdfs:label "Package version"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/RebootCommand
+s4dmgt:RebootCommand rdf:type owl:NamedIndividual ,
+                              s4dmgt:DeviceControlCommandCategory ;
+                     rdfs:comment "Command to trigger the reboot process of a device."@en ;
+                     rdfs:label "Reboot command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/ResetCommand
+s4dmgt:ResetCommand rdf:type owl:NamedIndividual ,
+                             s4dmgt:DeviceControlCommandCategory ;
+                    rdfs:comment "Command to change the entire state of a device and its resources to another state as predefined according to the device manufacturer policy."@en ;
+                    rdfs:label "Reset command"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SerialNumber
+s4dmgt:SerialNumber rdf:type owl:NamedIndividual ,
+                             saref:Property ;
+                    skos:narrower s4dmgt:DeviceIdentityProperty ;
+                    rdfs:comment "Device identity property referring to the unique identifier assigned to an individual device, used for tracking, warranty, and support purposes, distinguishing it from all other units produced."@en ;
+                    rdfs:label "Serial number"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelFunction
+s4dmgt:SupportedDatamodelFunction rdf:type owl:NamedIndividual ,
+                                           s4dmgt:DeviceManagementFunctionCategory ;
+                                  saref:hasCommand s4dmgt:SupportedDatamodelRetrievalCommand ;
+                                  rdfs:comment "Function kind to manage the supported datamodel of a device."@en ;
+                                  rdfs:label "Supported datamodel function"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelParameterName
+s4dmgt:SupportedDatamodelParameterName rdf:type owl:NamedIndividual ,
+                                                saref:Property ;
+                                       skos:narrower s4dmgt:SupportedDatamodelParameterProperty ;
+                                       rdfs:comment "Name of a supported datamodel parameter."@en ;
+                                       rdfs:label "Supported datamodel parameter name"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelParameterPrimitives
+s4dmgt:SupportedDatamodelParameterPrimitives rdf:type owl:NamedIndividual ,
+                                                      saref:Property ;
+                                             skos:narrower s4dmgt:SupportedDatamodelParameterProperty ;
+                                             rdfs:comment """Property of a supported datamodel parameter listing the different available primitives for the manipulation of the corresponding Datamodel parameter instance(s).
+
+These primitives will for instance include the basic \"Create\", \"Read\", \"Update\", \"Delete\" operations and their corresponding names in the different Device Management protocols."""@en ;
+                                             rdfs:label "supported datamodel parameter primitives"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelParameterProperty
+s4dmgt:SupportedDatamodelParameterProperty rdf:type owl:NamedIndividual ,
+                                                    saref:Property ;
+                                           skos:broader s4dmgt:SupportedDatamodelParameterName ,
+                                                        s4dmgt:SupportedDatamodelParameterPrimitives ,
+                                                        s4dmgt:SupportedDatamodelParameterType ;
+                                           rdfs:comment """Property kind that represents the properties of a Supported Datamodel Parameter.
+
+These parameters represent the capabilities of the Device in a format specific to the datamodel implemented by the Device, and exposed by the Client.
+
+It should not be confused with the Datamodel Parameter Instance, which represents the actionable capabilities of the Device."""@en ;
+                                           rdfs:label "Supported datamodel parameter property"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelParameterType
+s4dmgt:SupportedDatamodelParameterType rdf:type owl:NamedIndividual ,
+                                                saref:Property ;
+                                       skos:narrower s4dmgt:SupportedDatamodelParameterProperty ;
+                                       rdfs:comment """Type of a supported datamodel parameter. 
+
+For instance, this type can represent that the supported datamodel parameter is a reference to an executable resource. The corresponding type would be 'command' in the CWMP standard protocol, and its TR-181 technical report.
+
+This type can represent a reference to a measurement process on the device that retrieves a value. In that case, the supported datamodel parameter also describes the unit of that value.
+
+The type 'object' corresponds to a supported datamodel parameter that contains other supported datamodel parameters, creating a hierarchical structure.
+
+A final example would be a 'table', i.e. the corresponding datamodel parameter is a list of instances of the same object.
+
+For more information, please refer to the specification documents of DM protocol standards such as TR-181 from the BroadBand Forum."""@en ;
+                                       rdfs:label "Supported datamodel parameter type"@en .
+
+
+###  https://saref.etsi.org/saref4dmgt/SupportedDatamodelRetrievalCommand
+s4dmgt:SupportedDatamodelRetrievalCommand rdf:type owl:NamedIndividual ,
+                                                   s4dmgt:SupportedDatamodelCommandCategory ;
+                                          saref:observes s4dmgt:SupportedDatamodelParameterProperty ;
+                                          rdfs:comment "Command to retrieve a supported datamodel parameter, which corresponds to the information required to access a datamodel parameter instance and interpret its value."@en ;
+                                          rdfs:label "Supported datamodel retrieval command"@en .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+<https://dblp.org/pid/52/1343.html> foaf:homepage "https://dblp.org/pid/52/1343.html" ;
+                                    foaf:name "Cyrille Bareau" .
+
+
+<https://orcid.org/0000-0001-6772-2161> foaf:homepage "https://orcid.org/0000-0001-6772-2161" ;
+                                        foaf:name "François Aïssaoui" .
+
+
+<https://orcid.org/0000-0003-0788-9837> foaf:homepage "https://orcid.org/0000-0003-0788-9837" ;
+                                        foaf:name "Samuel Berlemont" .
+
+
+<https://www.researchgate.net/profile/Marc-Douet> foaf:homepage "https://www.researchgate.net/profile/Marc-Douet" ;
+                                                  foaf:name "Marc Douet" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( s4dmgt:DatamodelParameterCommandCategory
+                s4dmgt:DeviceControlCommandCategory
+                s4dmgt:DeviceIdentityCommandCategory
+                s4dmgt:FirmwareManagementCommandCategory
+                s4dmgt:ModuleManagementCommandCategory
+                s4dmgt:PackageManagementCommandCategory
+                s4dmgt:SupportedDatamodelCommandCategory
+              )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( s4dmgt:DatamodelParameterFunction
+                        s4dmgt:DeviceControlFunction
+                        s4dmgt:DeviceIdentityFunction
+                        s4dmgt:FirmwareManagementFunction
+                        s4dmgt:ModuleManagementFunction
+                        s4dmgt:PackageManagementFunction
+                        s4dmgt:SupportedDatamodelFunction
+                      )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

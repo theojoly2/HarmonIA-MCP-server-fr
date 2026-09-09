@@ -1,0 +1,58 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://purl.org/net/wf-invocation> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:creator a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "Workflow Invocation Ontology"@en ;
+    dcterms:created "2013-05-17"^^xsd:date ;
+    dcterms:creator "http://delicias.dia.fi.upm.es/members/DGarijo/#me"^^xsd:anyURI,
+        "http://www.isi.edu/~gil/"^^xsd:anyURI,
+        "http://www.isi.edu/~varunr/resume.html"^^xsd:anyURI ;
+    dcterms:description "Wf-invoc is a simple profile of the P-plan ontology to describe how workflow steps are invoked within a workflow execution."@en ;
+    dcterms:license "http://creativecommons.org/licenses/by-nc-sa/2.0/" ;
+    dcterms:title "The Workflow Invocation Ontology"@en ;
+    vann:preferredNamespacePrefix "wf-invoc" ;
+    vann:preferredNamespaceUri "http://purl.org/net/wf-invocation#" ;
+    rdfs:comment "Workflow Invocation Ontology, an extension of P-Plan for representing the invocation of the workflow steps when submitting a template to an execution engine."@en ;
+    owl:imports <http://purl.org/net/p-plan#> ;
+    owl:versionInfo "1.1"@en .
+
+<http://purl.org/net/wf-invocation#hasCodeBinding> a owl:DatatypeProperty .
+
+<http://purl.org/net/wf-invocation#hasCustomData> a owl:DatatypeProperty ;
+    rdfs:label "has Custom Data"@en ;
+    rdfs:comment "Data property used to link a wf-invoc:Step with any particular metadata that will be used in the execution of the Step (e.g., environment requirements, memory, etc.)"@en ;
+    rdfs:domain <http://purl.org/net/wf-invocation#Step> ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/net/wf-invocation#hasDataBinding> a owl:DatatypeProperty ;
+    rdfs:label "has Data Binding"@en ;
+    rdfs:comment "Data property used to bind a wf-invoc:Variable with the path or URL where the data is available for the execution."@en ;
+    rdfs:domain <http://purl.org/net/wf-invocation#Variable> ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/net/wf-invocation#hasInvocationLine> a owl:DatatypeProperty ;
+    rdfs:label "has Invocation Line"@en ;
+    rdfs:comment "Data property used to link a wf-invoc:Step with the Literal representing the invocation line of the current Step."@en ;
+    rdfs:domain <http://purl.org/net/wf-invocation#Step> ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/net/p-plan#Step> a owl:Class .
+
+<http://purl.org/net/p-plan#Variable> a owl:Class .
+
+<http://purl.org/net/wf-invocation#Variable> a owl:Class ;
+    rdfs:label "Variable"@en ;
+    rdfs:comment "Specialization of p-plan:Variable in order to be able to assert specific properties. A wf-invoc:Variable refers to those p-plan:Variables related to the scientific workflow invocation."@en ;
+    rdfs:subClassOf <http://purl.org/net/p-plan#Variable> .
+
+<http://purl.org/net/wf-invocation#Step> a owl:Class ;
+    rdfs:label "Step"@en ;
+    rdfs:comment "Specialization of p-plan:Step in order to be able to assert domain specific properties. A wf-invoc:Step refers to those p-plan:Steps related to the scientific workflow invocation."@en ;
+    rdfs:subClassOf <http://purl.org/net/p-plan#Step> .
+

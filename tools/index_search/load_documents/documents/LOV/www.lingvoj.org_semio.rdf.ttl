@@ -1,0 +1,147 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://www.lingvoj.org/semio.rdf> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.lingvoj.org/semio#Icon> a owl:Class ;
+    rdfs:label "Icon"@en ;
+    rdfs:comment "An image which is a symbolic representation of something. Flags, logos, coat of arms ..."@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#Image> .
+
+<http://www.lingvoj.org/semio#Multimedia> a owl:Class ;
+    rdfs:label "Multimedia"@en ;
+    rdfs:comment "For example a video representation"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#ObjectSign> .
+
+<http://www.lingvoj.org/semio#Sound> a owl:Class ;
+    rdfs:label "Sound"@en ;
+    rdfs:comment "Typically, the sound rendering of a phrase"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#ObjectSign> .
+
+<http://www.lingvoj.org/semio#URI> a owl:Class ;
+    rdfs:label "Uniform Resource Identifier"@en ;
+    rdfs:comment "A URI is a code used in the context of the Web"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#Code> .
+
+<http://www.lingvoj.org/semio#USE> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "use"@en ;
+    rdfs:comment "Links to a preferred sign for the same signified"@en,
+        "Use this property for signs defined in the same context"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> ;
+    rdfs:range <http://www.lingvoj.org/semio#Sign> ;
+    owl:inverseOf <http://www.lingvoj.org/semio#UF> .
+
+<http://www.lingvoj.org/semio#coreferentWith> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "coreference"@en ;
+    rdfs:comment "Links two signs considered as having the same referent, even if they have different signifiers. Useful to link different and possibly inconsistent views of the referent."@en,
+        "Use this property for signs defined in different contexts"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> ;
+    rdfs:range <http://www.lingvoj.org/semio#Sign> .
+
+<http://www.lingvoj.org/semio#significationContext> a owl:ObjectProperty ;
+    rdfs:label "signification context"@en ;
+    rdfs:comment "A resource defining the signification context, in the scope of which the signifier-signified association is asserted as valid."@en,
+        "Typically, the context ressource should be constructed as a blank node"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> ;
+    rdfs:range <http://www.lingvoj.org/semio#Context> .
+
+<http://www.lingvoj.org/semio#signified> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "signified"@en ;
+    rdfs:comment "The resource for which the sign stands for"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> .
+
+<http://www.lingvoj.org/semio#translation> a owl:ObjectProperty ;
+    rdfs:label "translation"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Phrase> ;
+    rdfs:range <http://www.lingvoj.org/semio#Phrase> ;
+    rdfs:subPropertyOf <http://www.lingvoj.org/semio#transcription> .
+
+onto: a <http://labs.mondeca.com/vocab/voaf#Vocabulary>,
+        owl:Ontology ;
+    dcterms:creator <http://labs.mondeca.com/vocab/mondeca.rdf#bvatant> ;
+    dcterms:description "An ontology of signs"@en ;
+    dcterms:modified "2012-02-20" ;
+    dcterms:title "SEMIO Ontology"@en ;
+    rdfs:comment "This is a very preliminary draft. Use cases for such an ontology are not  clear."@en .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://labs.mondeca.com/vocab/mondeca.rdf#bvatant> a foaf:Person ;
+    foaf:name "Bernard Vatant" .
+
+<http://www.lingvoj.org/semio#Code> a owl:Class ;
+    rdfs:label "Code"@en ;
+    rdfs:comment "A string of characters, generally intended to be a unique identifier in some context"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#DataSign> .
+
+<http://www.lingvoj.org/semio#Context> a owl:Class ;
+    rdfs:label "Context"@en ;
+    rdfs:comment "A resource describing the context. May gather any relevant piece of information: linguistic system context, space-time restrictions, information system, community of users ... "@en .
+
+<http://www.lingvoj.org/semio#Image> a owl:Class ;
+    rdfs:label "Image"@en ;
+    rdfs:comment "Any image used as a sign. Either by direct denotation (a photograph of a cat for the concept of cat), or symbolic conotation (icons)."@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#ObjectSign>,
+        foaf:Image .
+
+<http://www.lingvoj.org/semio#UF> a owl:ObjectProperty ;
+    rdfs:label "used for"@en ;
+    rdfs:comment "Links to an alternative, non-preferred sign for the same signified"@en,
+        "Use this property for signs defined in the same context"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> ;
+    rdfs:range <http://www.lingvoj.org/semio#Sign> .
+
+<http://www.lingvoj.org/semio#signifierData> a owl:DatatypeProperty ;
+    rdfs:label "signifier data"@en ;
+    rdfs:comment "A data which is the signifier, such as a word, code or any kind of identifier. URI strings can be used as signifiers. In such a case, the default signified is the resource identified by the URI."@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#DataSign> .
+
+<http://www.lingvoj.org/semio#signifierObject> a owl:ObjectProperty ;
+    rdfs:label "signifier object"@en ;
+    rdfs:comment "A resource which is the signifier. Typical examples include images or icons, or sound tracks for natural language words."@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#ObjectSign> .
+
+<http://www.lingvoj.org/semio#transcription> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "transcription"@en ;
+    rdfs:comment "A transcription links two signs with the same signified in different formats or supports. For example a phrase to its sound rendering, or a trade mark to a logo."@en,
+        "Translation is considered as a particular case of transcription (debatable)"@en ;
+    rdfs:domain <http://www.lingvoj.org/semio#Sign> ;
+    rdfs:range <http://www.lingvoj.org/semio#Sign> .
+
+<http://www.lingvoj.org/semio#Phrase> a owl:Class ;
+    rdfs:label "Phrase"@en ;
+    rdfs:comment "A string making sense in some natural language. Typically a term from a vocabulary. Other exemples include assertions, slogans, taglines ..."@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#DataSign> .
+
+<http://www.lingvoj.org/semio#DataSign> a owl:Class ;
+    rdfs:label "Data Sign"@en ;
+    rdfs:comment "A sign of which signifier is defined as the value of the Datatype Property 'signifierData'"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#Sign> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.lingvoj.org/semio#signifierData> ] .
+
+<http://www.lingvoj.org/semio#ObjectSign> a owl:Class ;
+    rdfs:label "Object Sign"@en ;
+    rdfs:comment "A sign of which signifier is defined as the value of the Object Property 'signifierObject'"@en ;
+    rdfs:subClassOf <http://www.lingvoj.org/semio#Sign> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.lingvoj.org/semio#signifierObject> ] .
+
+<http://www.lingvoj.org/semio#Sign> a owl:Class ;
+    rdfs:label "Sign"@en ;
+    rdfs:comment "A sign has exactly one signifier, either 'signifier data' or 'signifier resource' attribute"@en,
+        "A sign is an information resource. As such, it can be useful to attach metadata using Dublin Core attributes such as creator, creation date etc ..."@en,
+        "Something that stands for something else in a given context. A sign has a signifier (physical data which can be communicated), a signified (a concept, or formal representation), both indicating a referent, which is outside the language scope, and a context in which the signification is asserted."@en .
+

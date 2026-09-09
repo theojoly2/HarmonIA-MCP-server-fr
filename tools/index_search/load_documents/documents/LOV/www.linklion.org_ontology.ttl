@@ -1,0 +1,155 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://www.linklion.org/ontology> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+doap:release a owl:InverseFunctionalProperty,
+        owl:ObjectProperty .
+
+doap:revision a owl:DatatypeProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "LinkLion - the Link Discovery Portal"@en ;
+    rdfs:isDefinedBy "http://www.linklion.org/ontology" ;
+    owl:versionInfo "0.1"@en .
+
+<http://www.linklion.org/ontology#LDFramework> a owl:Class ;
+    rdfs:label "Link Discovery Framework"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty foaf:name ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        doap:Project,
+        prov:Agent .
+
+<http://www.linklion.org/ontology#Link> a owl:Class ;
+    rdfs:label "Link"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass rdfs:Resource ;
+            owl:onProperty rdf:object ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass rdfs:Resource ;
+            owl:onProperty rdf:subject ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <http://www.linklion.org/ontology#Mapping> ;
+            owl:onProperty prov:wasDerivedFrom ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass rdfs:Resource ;
+            owl:onProperty rdf:predicate ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        prov:Entity .
+
+prov:wasGeneratedBy a owl:ObjectProperty .
+
+dcterms:license a owl:DatatypeProperty .
+
+doap:Project a owl:Class .
+
+doap:Version a owl:Class .
+
+<http://www.linklion.org/ontology#LDFrameworkVersion> a owl:Class ;
+    rdfs:label "Link Discovery Framework Version"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:anyURI ;
+            owl:onProperty dcterms:license ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty foaf:name ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        doap:Version,
+        prov:Agent .
+
+<http://www.linklion.org/ontology#hasSource> a owl:ObjectProperty ;
+    rdfs:domain <http://www.linklion.org/ontology#Mapping> ;
+    rdfs:range void:Dataset .
+
+<http://www.linklion.org/ontology#hasTarget> a owl:ObjectProperty ;
+    rdfs:domain <http://www.linklion.org/ontology#Mapping> ;
+    rdfs:range void:Dataset .
+
+<http://www.linklion.org/ontology#parameters> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.linklion.org/ontology#Algorithm> ;
+    rdfs:range xsd:string .
+
+<http://www.linklion.org/ontology#storedAt> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.linklion.org/ontology#Mapping> ;
+    rdfs:range xsd:anyURI .
+
+rdf:object a owl:ObjectProperty .
+
+rdf:predicate a owl:ObjectProperty .
+
+rdf:subject a owl:ObjectProperty .
+
+prov:Activity a owl:Class .
+
+prov:wasAssociatedWith a owl:ObjectProperty .
+
+prov:wasDerivedFrom a owl:ObjectProperty .
+
+<http://www.linklion.org/ontology#Algorithm> a owl:Class ;
+    rdfs:label "Algorithm"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty prov:generatedAtTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <http://www.linklion.org/ontology#parameters> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <http://www.linklion.org/ontology#LDFrameworkVersion> ;
+            owl:onProperty prov:wasAssociatedWith ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty foaf:name ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        prov:Activity .
+
+prov:Agent a owl:Class .
+
+prov:generatedAtTime a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.linklion.org/ontology#Algorithm> <http://www.linklion.org/ontology#Mapping> ) ] ;
+    rdfs:range xsd:dateTime .
+
+rdfs:Resource a owl:Class .
+
+prov:Entity a owl:Class .
+
+foaf:name a owl:DatatypeProperty .
+
+void:Dataset a owl:Class ;
+    rdfs:subClassOf prov:Entity .
+
+<http://www.linklion.org/ontology#Mapping> a owl:Class ;
+    rdfs:label "Mapping"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:anyURI ;
+            owl:onProperty <http://www.linklion.org/ontology#storedAt> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass void:Dataset ;
+            owl:onProperty <http://www.linklion.org/ontology#hasTarget> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass void:Dataset ;
+            owl:onProperty <http://www.linklion.org/ontology#hasSource> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty prov:generatedAtTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        prov:Entity .
+

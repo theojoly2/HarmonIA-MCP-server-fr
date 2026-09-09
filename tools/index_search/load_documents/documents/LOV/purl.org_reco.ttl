@@ -1,0 +1,127 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/reco#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:contributor "Carlos Ruiz (iSOCO S.A.)",
+        "Diego Berrueta (Fundación CTIC)",
+        "Emilio Rubiera (Fundación CTIC)" ;
+    dc:creator "Iván Mínguez (Fundación CTIC)",
+        "Luis Polo (Fundación CTIC)" ;
+    dc:date "August, 2011"@en ;
+    dc:description "The RECO ontology defines the vocabulary for representing prefereces-as-constraints and preferences-as-ratings as RDF graphs. This lightweight vocabulary provides domain-independent means to describe user profiles in a coherent and context-aware way. RECO has been designed as an extension of both Friend-Of-A-Friend (FOAF) and Who Am I! (WAI) ontologies."@en ;
+    dc:rights "Copyright by Fundación CTIC" ;
+    dc:title "RECommendations Ontology"@en ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
+    rdfs:isDefinedBy onto:reco.owl ;
+    owl:priorVersion <http://ontologies.ezweb.morfeo-project.org/reco/spec/> .
+
+onto:about a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "About"@en ;
+    rdfs:comment "A property that relates a preference with its main pattern."@en ;
+    rdfs:domain onto:Preference ;
+    rdfs:range onto:Pattern .
+
+onto:assignedBy a owl:ObjectProperty ;
+    rdfs:label "Assigned by"@en ;
+    rdfs:comment "This property relates a rating with the person having carried out it."@en ;
+    rdfs:domain onto:Rating ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/wai#Profile> <http://purl.org/wai#Role> foaf:Agent foaf:Group ) ] .
+
+onto:excludedPreference a owl:ObjectProperty ;
+    rdfs:label "Excluded Preference"@en ;
+    rdfs:comment "This property relates a demand with a particular preference P. The items that fulfill the constraints of P are excluded from the set of results calculated for this demand."@en ;
+    rdfs:domain onto:Demand ;
+    rdfs:range onto:Preference ;
+    rdfs:subPropertyOf onto:preference .
+
+onto:filter a owl:ObjectProperty ;
+    rdfs:label "Filter"@en ;
+    rdfs:comment "A property that relates a pattern with a constraint of the value of a datatype property. For instance, \"less than 180 cms height\" or \"released before 1980\"."@en ;
+    rdfs:domain onto:Pattern ;
+    rdfs:range onto:Filter .
+
+onto:holds a owl:ObjectProperty ;
+    rdfs:label "Holds"@en ;
+    rdfs:comment "This property relates a person with a preference."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/wai#Profile> <http://purl.org/wai#Role> foaf:Agent foaf:Group ) ] ;
+    rdfs:range onto:Preference .
+
+onto:operator a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Operator"@en ;
+    rdfs:comment "A property that relates a filter to the operator restraining the value of a datatype property."@en ;
+    rdfs:domain onto:Filter ;
+    rdfs:range onto:Operator .
+
+onto:optionalPreference a owl:ObjectProperty ;
+    rdfs:label "Optional Preference"@en ;
+    rdfs:comment "This property relates a demand to a preference P. The items that fulfill the constraints of P increase or decline their utility value according to the utility of P."@en ;
+    rdfs:domain onto:Demand ;
+    rdfs:range onto:Preference ;
+    rdfs:subPropertyOf onto:preference .
+
+onto:rates a owl:ObjectProperty ;
+    rdfs:label "Rates"@en ;
+    rdfs:comment "This property relates a rating with the resource assessed. Notice that this property has an open range (rdfs:Resource), therefore ratings can be applied to anything, including preferences themselves."@en ;
+    rdfs:domain onto:Rating .
+
+onto:requiredPreference a owl:ObjectProperty ;
+    rdfs:label "Required Preference"@en ;
+    rdfs:comment "This property relates a demand with a preference P. The items fulfilling the constraints of P must be included in the final set of results for this demand."@en ;
+    rdfs:domain onto:Demand ;
+    rdfs:range onto:Preference ;
+    rdfs:subPropertyOf onto:preference .
+
+onto:union a owl:ObjectProperty ;
+    rdfs:label "Union composition"@en ;
+    rdfs:comment "A property which reifies a disjunction of constraints."@en ;
+    rdfs:domain onto:Pattern ;
+    rdfs:range onto:Filter .
+
+onto:utility a owl:DatatypeProperty ;
+    rdfs:label "Utility"@en ;
+    rdfs:comment "This property captures the utility value of a rating. The utility in RECO is measured in the real interval [-1,1]. In practice, other discrete scales can be also used to measure users' opinions on resources, such as the Likert scale. "@en ;
+    rdfs:domain onto:Preference ;
+    rdfs:range xsd:float .
+
+onto:Operator a owl:Class ;
+    rdfs:label "Operator"@en ;
+    rdfs:comment "Boolean operations on data values: string comparisons, numerical intervales and (in)equality. Operators are reused from the X-path specification to ensure interoperability."@en .
+
+onto:Rating a owl:Class ;
+    rdfs:label "Rating"@en ;
+    rdfs:comment "A rating is a quantitative measurement of the \"appealingness\" of a particular item to a user."@en .
+
+onto:Filter a owl:Class ;
+    rdfs:label "Filter"@en ;
+    rdfs:comment "A datatype constraint based on boolean operators."@en .
+
+onto:Pattern a owl:Class ;
+    rdfs:label "Pattern"@en ;
+    rdfs:comment "Patterns are reifications of constraints, which are conditions about the desired or preferred attributes of the resources. A constraint ranges over a set of individuals. RECO considers several kind of constraint expressions: (1) conjunction of constraints: \"music from the sixties\"; (2) disjunction of constraints: \"music or films\"; (3) composition of constraints: \"cars with powerful engines\"; (4) datatype constraints based on boolean operators: \"released before 1980\"."@en .
+
+onto:preference a owl:ObjectProperty ;
+    rdfs:label "Preference"@en ;
+    rdfs:comment "This property relates a demand with the set of preferences that defines its matchmaking conditions. "@en ;
+    rdfs:domain onto:Demand ;
+    rdfs:range onto:Preference .
+
+onto:Demand a owl:Class ;
+    rdfs:label "Demand"@en ;
+    rdfs:comment "Groups of preferences representing users' requests at a given context or situation."@en ;
+    rdfs:subClassOf owl:Thing .
+
+onto:Preference a owl:Class ;
+    rdfs:label "Preference"@en ;
+    rdfs:comment "A preference is a qualitative description of the desired attributes that resources must ideally satisfy in order to be of interest for a user. A preference is described by a set of constraints."@en ;
+    rdfs:subClassOf owl:Thing .
+

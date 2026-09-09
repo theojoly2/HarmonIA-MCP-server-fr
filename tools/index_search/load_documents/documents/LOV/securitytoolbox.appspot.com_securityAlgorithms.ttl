@@ -1,0 +1,148 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix ns2: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://securitytoolbox.appspot.com/securityAlgorithms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dc:contributor <mailto:gyrard@eurecom.fr> ;
+    dc:description "An ontology to describe various cryptographic algorithms"@en ;
+    dc:title "Security Algorithms"@en ;
+    dcterms:creator <mailto:kim@itd.nrl.navy.mil>,
+        <mailto:luo@itd.nrl.navy.mil>,
+        <mailto:mkang@itd.nrl.navy.mil> ;
+    dcterms:issued "2005-08-31"^^xsd:date ;
+    dcterms:modified "2014-01-24"^^xsd:date ;
+    dcterms:source <http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA437938> ;
+    vann:preferredNamespacePrefix "algo" ;
+    vann:preferredNamespaceUri "http://securitytoolbox.appspot.com/securityAlgorithms#" ;
+    rdfs:comment " An ontology to describe various cryptographic algorithms" ;
+    owl:versionInfo 0.2 ;
+    ns2:term_status "Finished" ;
+    skos:historyNote "Ontology extracted from the paper Security Ontology for Annotating Resources. [Kim et al. 2005] (See APPENDIX D. OWL Representations of the NRL Security Ontology) Security ontology to faciliate web service description and discovery."@en .
+
+    onto:hasNSALevel <http://securitytoolbox.appspot.com/securityAssurance.owl#Type3> .
+
+onto:Blowfish a onto:SymmetricAlgorithm .
+
+onto:CAST a onto:SymmetricAlgorithm .
+
+onto:CBC-MAC a onto:MACAlgorithm .
+
+onto:CRAYON a onto:SymmetricAlgorithm ;
+    onto:hasNSALevel <http://securitytoolbox.appspot.com/securityAssurance.owl#Typel> .
+
+onto:CRC-16 a onto:ChecksumAlgorithm .
+
+onto:CRC-32 a onto:ChecksumAlgorithm .
+
+onto:CRC-8 a onto:ChecksumAlgorithm .
+
+    onto:hasNSALevel <http://securitytoolbox.appspot.com/securityAssurance.owl#Type3> ;
+    onto:keyLength "64"^^xsd:int ;
+    rdfs:comment "Refers only to single DES" .
+
+onto:DiffieHellman a onto:KeyExchangeAlgorithm .
+
+onto:ECC a onto:AsymmetricAlgorithm ;
+    rdfs:comment "Elliptic Curve Crypto" .
+
+onto:HMAC a onto:MACAlgorithm .
+
+onto:KEA a onto:KeyExchangeAlgorithm .
+
+onto:MD4 a onto:HashAlgorithm .
+
+onto:MD5 a onto:HashAlgorithm .
+
+onto:Oakley a onto:KeyExchangeAlgorithm .
+
+onto:RC4 a onto:SymmetricAlgorithm .
+
+onto:RIPE-MD a onto:HashAlgorithm .
+
+onto:RSA a onto:AsymmetricAlgorithm .
+
+onto:SHA-1 a onto:HashAlgorithm .
+
+onto:SHA-256 a onto:HashAlgorithm ;
+    rdfs:comment "usually used with AES" .
+
+onto:Skipjack a onto:SymmetricAlgorithm ;
+    onto:hasNSALevel <http://securitytoolbox.appspot.com/securityAssurance.owl#Type2> .
+
+
+onto:keyLength a owl:DatatypeProperty ;
+    rdfs:domain onto:SymmetricAlgorithm ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:modeOfOperation a owl:DatatypeProperty ;
+    rdfs:comment "Can be CBC, ECB, OFB, CFB, or Counter" ;
+    rdfs:domain onto:SymmetricAlgorithm ;
+    rdfs:range xsd:string .
+
+onto:hasNSALevel a owl:ObjectProperty ;
+    rdfs:comment "These can be Typel, Type 2, Type3, or Type4" ;
+    rdfs:domain onto:SynmmetricAlgorithm ;
+    rdfs:range <http://securitytoolbox.appspot.com/securityAssurance.owl#NSA> .
+
+onto:isNISTStandard a owl:DatatypeProperty ;
+    rdfs:comment "NIST FIPS Standard" ;
+    rdfs:domain onto:Algorithm ;
+    rdfs:range xsd:boolean .
+
+<mailto:gyrard@eurecom.fr> a foaf:Person ;
+    foaf:name "Amelie Gyrard" .
+
+<mailto:kim@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Anya Kim" .
+
+<mailto:luo@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Jim Luo" .
+
+<mailto:mkang@itd.nrl.navy.mil> a foaf:Person ;
+    foaf:name "Myong Kang" .
+
+onto:AsymmetricAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:EncryptionAlgorithm .
+
+onto:EncryptionAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:Algorithm .
+
+onto:MACAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:SignatureAlgorithm .
+
+onto:SignatureAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:Algorithm .
+
+<http://securitytoolbox.appspot.com/securityAssurance.owl#Type3> a onto:hasNSALevel .
+
+onto:ChecksumAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:Algorithm .
+
+onto:KeyExchangeAlgorithm a owl:Class ;
+    rdfs:subClassOf onto:Algorithm .
+
+onto:Algorithm a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:isNISTStandard ] .
+
+onto:HashAlgorithm a owl:Class ;
+    rdfs:comment "\\nKey dependent function; useful in providing user authentication without a\\nsecret key\\n" ;
+    rdfs:subClassOf onto:SignatureAlgorithm .
+
+onto:SymmetricAlgorithm a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://securitytoolbox.appspot.com/hasNSALevel> ],
+        onto:EncryptionAlgorithm .
+

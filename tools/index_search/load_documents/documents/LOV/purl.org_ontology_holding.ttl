@@ -1,0 +1,151 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://purl.org/ontology/holding> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.org/goodrelations/v1#Location> a owl:Class ;
+    rdfs:label "Location"@en ;
+    rdfs:isDefinedBy <http://purl.org/goodrelations/v1> ;
+    owl:equivalentClass <http://schema.org/Place> .
+
+<http://purl.org/ontology/dso#DocumentService> a owl:Class ;
+    rdfs:label "DocumentService" ;
+    rdfs:isDefinedBy <http://purl.org/ontology/dso> .
+
+<http://purl.org/ontology/ecpo#Chronology> a owl:Class ;
+    rdfs:label "Chronology"@en ;
+    rdfs:isDefinedBy <http://purl.org/ontology/ecpo> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "Holding Ontology"@en ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:creator "Carsten Klee",
+        "Jakob Voß" ;
+    dcterms:description "A vocabulary to express (library) holdings in RDF" ;
+    dcterms:modified "2014-06-30"^^xsd:date ;
+    dcterms:title "Holding Ontology"@en ;
+    vann:preferredNamespacePrefix "holding" ;
+    vann:preferredNamespaceUri "http://purl.org/ontology/holding#" ;
+    owl:versionInfo "0.1.3rev1" .
+
+<http://purl.org/ontology/holding#label> a owl:DatatypeProperty ;
+    rdfs:label "label"@en ;
+    rdfs:comment "A call number, shelf mark or similar label of an item"@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Item> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:seeAlso <http://bibframe.org/vocab/label>,
+        <http://bibframe.org/vocab/shelfMark>,
+        <http://purl.org/goodrelations/v1#hasStockKeepingUnit>,
+        <http://rdaregistry.info/Elements/i/identifierForTheItem>,
+        <http://schema.org/name>,
+        <http://schema.org/sku> ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+<http://purl.org/ontology/holding#broaderExemplar> a owl:ObjectProperty ;
+    rdfs:label "broader exemplar"@en ;
+    rdfs:comment "Relates a document to an item that contains an exemplar of the document as part."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Document> ;
+    rdfs:range <http://purl.org/ontology/holding#Item> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/i/containedInItem> ;
+    owl:inverseOf <http://purl.org/ontology/holding#broaderExemplarOf> .
+
+<http://purl.org/ontology/holding#broaderExemplarOf> a owl:ObjectProperty ;
+    rdfs:label "broader exemplar of"@en ;
+    rdfs:comment "Relates an item to a document which is partly exemplified by the item."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Item> ;
+    rdfs:range <http://purl.org/ontology/holding#Document> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/i/containsItem> ;
+    owl:inverseOf <http://purl.org/ontology/holding#broaderExemplar> .
+
+<http://purl.org/ontology/holding#exemplar> a owl:ObjectProperty ;
+    rdfs:label "has exemplar"@en ;
+    rdfs:comment "Relates a document to an item that is an exemplar of the document."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Document> ;
+    rdfs:range <http://purl.org/ontology/holding#Item> ;
+    rdfs:seeAlso <http://purl.org/vocab/frbr/core#exemplar>,
+        <http://rdaregistry.info/Elements/m/exemplarOfManifestation> ;
+    owl:inverseOf <http://purl.org/ontology/holding#exemplarOf> .
+
+<http://purl.org/ontology/holding#exemplarOf> a owl:ObjectProperty ;
+    rdfs:label "is examplar of"@en ;
+    rdfs:comment "Relates an item to the document that is exemplified by the item."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Item> ;
+    rdfs:range <http://purl.org/ontology/holding#Document> ;
+    rdfs:seeAlso <http://bibframe.org/vocab/holdingFor>,
+        <http://rdaregistry.info/Elements/i/manifestationExemplified> ;
+    owl:inverseOf <http://purl.org/ontology/holding#exemplar> .
+
+<http://purl.org/ontology/holding#heldBy> a owl:ObjectProperty ;
+    rdfs:label "held by"@en ;
+    rdfs:comment "Relates an item to an agent who holds the item."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Item> ;
+    rdfs:range <http://purl.org/ontology/holding#Agent> ;
+    rdfs:seeAlso <http://bibframe.org/vocab/heldBy>,
+        <http://rdaregistry.info/Elements/i/currentOwner>,
+        <http://rdaregistry.info/Elements/i/owner> ;
+    rdfs:subPropertyOf <http://purl.org/ontology/holding#collectedBy> ;
+    owl:inverseOf <http://purl.org/ontology/holding#holds> .
+
+<http://purl.org/ontology/holding#holds> a owl:ObjectProperty ;
+    rdfs:label "holds"@en ;
+    rdfs:comment "Relates an agent to an item which the agent holds."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Agent> ;
+    rdfs:range <http://purl.org/ontology/holding#Item> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/a/currentOwnerOf>,
+        <http://rdaregistry.info/Elements/a/ownerOf> ;
+    rdfs:subPropertyOf <http://purl.org/ontology/holding#collects> ;
+    owl:inverseOf <http://purl.org/ontology/holding#heldBy> .
+
+<http://purl.org/ontology/holding#narrowerExemplar> a owl:ObjectProperty ;
+    rdfs:label "narrower exemplar"@en ;
+    rdfs:comment "Relates a document to an item that is an exemplar of a part of the document."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Document> ;
+    rdfs:range <http://purl.org/ontology/holding#Item> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/i/containsItem> ;
+    owl:inverseOf <http://purl.org/ontology/holding#narrowerExemplarOf> .
+
+<http://purl.org/ontology/holding#narrowerExemplarOf> a owl:ObjectProperty ;
+    rdfs:label "narrower exemplar of"@en ;
+    rdfs:comment "Relates an item to a document which is partly exemplified by the item."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Item> ;
+    rdfs:range <http://purl.org/ontology/holding#Document> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/i/containedInItem> ;
+    owl:inverseOf <http://purl.org/ontology/holding#narrowerExemplar> .
+
+<http://purl.org/ontology/holding#collectedBy> a owl:ObjectProperty ;
+    rdfs:label "collected by"@en,
+        "collects"@en ;
+    rdfs:comment "Relates a document and/or item to an agent who collects it."@en,
+        "Relates an agent to a document and/or item that is collected by the agent."@en ;
+    rdfs:domain <http://purl.org/ontology/holding#Agent>,
+        <http://purl.org/ontology/holding#Document>,
+        <http://purl.org/ontology/holding#Item> ;
+    rdfs:range <http://purl.org/ontology/holding#Agent>,
+        <http://purl.org/ontology/holding#Document>,
+        <http://purl.org/ontology/holding#Item> ;
+    rdfs:seeAlso <http://rdaregistry.info/Elements/i/collector>,
+        <http://rdaregistry.info/Elements/i/collectorOf> ;
+    owl:inverseOf <http://purl.org/ontology/holding#collectedBy>,
+        <http://purl.org/ontology/holding#collects> .
+
+<http://purl.org/ontology/holding#Agent> a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "Use one of bf:Agent or foaf:Agent"@en ;
+    owl:unionOf ( <http://bibframe.org/vocab/Agent> foaf:Agent <http://schema.org/Organization> <http://schema.org/Person> <http://rdaregistry.info/Elements/c/Agent> ) .
+
+<http://purl.org/ontology/holding#Document> a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:comment "Use one of bibo:Document, foaf:Document, bf:Work or bf:Instance"@en ;
+    owl:unionOf ( <http://purl.org/ontology/bibo/Document> foaf:Document <http://bibframe.org/vocab/Work> <http://bibframe.org/vocab/Instance> <http://schema.org/CreativeWork> ) .
+
+<http://purl.org/ontology/holding#Item> a owl:Class ;
+    rdfs:label "Item"@en ;
+    rdfs:comment "Use one of bf:HeldItem frbr:Item rdac:Item"@en ;
+    owl:unionOf ( <http://bibframe.org/vocab/HeldItem> <http://purl.org/vocab/frbr/core#Item> <http://rdaregistry.info/Elements/c/Item> ) .
+

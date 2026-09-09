@@ -1,0 +1,445 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://privatealpha.com/ontology/content-inventory/> .
+@prefix ns2: <http://www.w3.org/1999/xhtml/vocab#> .
+@prefix ns3: <http://purl.org/ontology/bibo/> .
+@prefix onto: <https://privatealpha.com/ontology/content-inventory/1#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:1 ns1:external <http://en.wikipedia.org/wiki/Five-number_summary>,
+        <http://en.wikipedia.org/wiki/Mean>,
+        <http://en.wikipedia.org/wiki/Standard_deviation>,
+        <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html#ref_qb_DataStructureDefinition>,
+        <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html#ref_qb_DimensionProperty>,
+        <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html#ref_qb_MeasureProperty>,
+        <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html#ref_qb_Observation>,
+        <http://www.w3.org/TR/vocab-data-cube/>,
+        <http://www.w3.org/TR/vocab-data-cube/#ref_qb_DataSet> .
+
+onto:action a owl:ObjectProperty ;
+    rdfs:label "action" ;
+    rdfs:comment "use this to signal an action to take with the document in question."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Action ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#factor_of> ;
+    ns1:external <http://purl.org/NET/c4dm/event.owl#factor_of>,
+        foaf:Document .
+
+onto:alias a owl:ObjectProperty ;
+    rdfs:label "alias" ;
+    rdfs:comment "This is an alternate URI for the subject resource. It is simply meant to annotate a resource with another address. It differs from owl:sameAs in that it does not imply that <a> = <b> as well as <b> = <a>."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:assumes a owl:ObjectProperty ;
+    rdfs:label "assumes" ;
+    rdfs:comment "The document assumes the audience is familiar with this concept, and may not mention it explicitly."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:seeAlso dcterms:educationLevel ;
+    rdfs:subPropertyOf dcterms:references ;
+    ns1:external dcterms:educationLevel,
+        dcterms:references,
+        skos:Concept,
+        foaf:Document .
+
+onto:block a qb:MeasureProperty ;
+    rdfs:label "blocks" ;
+    rdfs:comment "A block count is conceptually similar to a word or section count, though it counts the total of elements in the document considered to be text blocks, such as paragraphs, tables, lists and figures. It is suited for document types that have no concept of (semantic) sections, such as HTML. The purpose of this measurement is to provide a sort of ratio to the word count, to glean how well-proportioned the document is."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns1:external qb:Observation,
+        xsd:nonNegativeInteger .
+
+onto:canonical a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "canonical" ;
+    rdfs:comment "This is the canonical URI of the subject resource, i.e., the one you always want to publish in content or redirect Web requests to."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf owl:sameAs ;
+    ns1:external owl:sameAs .
+
+onto:canonical-slug a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "canonical-slug" ;
+    rdfs:comment "This is the canonical slug associated with the resource, and should be populated with the slug which is actually in use."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:slug ;
+    ns1:external xsd:string .
+
+onto:desired-outcome a owl:ObjectProperty ;
+    rdfs:label "desired-outcome" ;
+    rdfs:comment "This property is intended to indicate what the document is supposed to do—what material effect it is supposed to produce. It is intentionally open-ended, and as such can point to something like a skos:Concept, another document, or a literal string of text describing the outcome."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf dcterms:type ;
+    ns1:external dcterms:type,
+        foaf:Document .
+
+onto:embed a owl:ObjectProperty ;
+    rdfs:label "embed" ;
+    rdfs:comment "This property specifies an embedded resource which is visible in the subject's user interface."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    ns1:external dcterms:hasPart,
+        foaf:Document .
+
+onto:empty a ns3:DocumentStatus ;
+    rdfs:label "empty" ;
+    rdfs:comment "The document contains no content."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:incomplete a ns3:DocumentStatus ;
+    rdfs:label "incomplete" ;
+    rdfs:comment "The document has been started, but is clearly not finished."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:incorrect a ns3:DocumentStatus ;
+    rdfs:label "incorrect" ;
+    rdfs:comment "The content of this document is factually wrong."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:indegree a qb:MeasureProperty ;
+    rdfs:label "indegree" ;
+    rdfs:comment "The number of links pointing at the specified resource."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Directed_graph#Indegree_and_outdegree> ;
+    ns1:external <http://en.wikipedia.org/wiki/Directed_graph#Indegree_and_outdegree>,
+        qb:Observation,
+        xsd:number .
+
+onto:introduces a owl:ObjectProperty ;
+    rdfs:label "introduces" ;
+    rdfs:comment "The document defines, describes, or otherwise introduces the audience to this concept."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf onto:mentions ;
+    ns1:external skos:Concept,
+        foaf:Document .
+
+onto:keep a onto:Action ;
+    rdfs:label "keep" ;
+    rdfs:comment "Keep this document to which this is associated; make no changes to it at this time."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:landing a ns3:DocumentStatus ;
+    rdfs:label "landing" ;
+    rdfs:comment "The resource is a landing page from some other medium (e.g. e-mail, television, billboard). This status is a hint to automated systems which would otherwise orphan or retire a landing page with no inbound links."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:link a owl:ObjectProperty ;
+    rdfs:label "link" ;
+    rdfs:comment "This property specifies a linked resource which is visible in the subject's user interface."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf dcterms:references ;
+    ns1:external dcterms:references,
+        foaf:Document .
+
+onto:non-audience a owl:ObjectProperty ;
+    rdfs:label "non-audience" ;
+    rdfs:comment "This property complements dct:audience insofar as enabling the author or editor to designate a set of entities who are explicitly not the intended audience of the document."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range dcterms:AgentClass ;
+    rdfs:seeAlso dcterms:audience ;
+    ns1:external dcterms:AgentClass,
+        dcterms:audience,
+        foaf:Document .
+
+onto:obsolete a ns3:DocumentStatus ;
+    rdfs:label "obsolete" ;
+    rdfs:comment "The content of this document was correct and relevant at one point, but external circumstances have caused it to lapse in relevance or factual accuracy."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:orphan a ns3:DocumentStatus ;
+    rdfs:label "orphan" ;
+    rdfs:comment "The resource is not explicitly pending or removed from publication, however it has managed to be disconnected from the rest of the site: There is no path to it from a landing page, and it is not a landing page on its own. That is to say that the resource either has no inbound links, or if it does, those links are from other resources that are in the same situation. Documents which are only linked from retired documents are also considered orphans."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:outdegree a qb:MeasureProperty ;
+    rdfs:label "outdegree" ;
+    rdfs:comment "The number of links emanating from the specified resource."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Directed_graph#Indegree_and_outdegree> ;
+    ns1:external <http://en.wikipedia.org/wiki/Directed_graph#Indegree_and_outdegree>,
+        qb:Observation,
+        xsd:number .
+
+onto:proofread a onto:Action ;
+    rdfs:label "proofread" ;
+    rdfs:comment "Proofread this document."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:retire a onto:Action ;
+    rdfs:label "retire" ;
+    rdfs:comment "Remove all references to this document and consign it to the archive."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:retired a ns3:DocumentStatus ;
+    rdfs:label "retired" ;
+    rdfs:comment "The document has been explicitly retired by an editor or curator, but still exists in the archive."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:revise a onto:Action ;
+    rdfs:label "revise" ;
+    rdfs:comment "Revise or restructure this document."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:rewrite a onto:Action ;
+    rdfs:label "rewrite" ;
+    rdfs:comment "Rewrite this document from scratch."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:split a onto:Action ;
+    rdfs:label "split" ;
+    rdfs:comment "Split this document into multiple pieces."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:target a owl:ObjectProperty ;
+    rdfs:label "target" ;
+    rdfs:comment "Specify the URI of the target resource into which this document should be merged."@en ;
+    rdfs:domain onto:Merge ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document ;
+    ns1:external foaf:Document .
+
+onto:tentative-merge a onto:Merge ;
+    rdfs:label "tentative-merge" ;
+    rdfs:comment "Merge this document into some other document, though unspecified at this time as to which."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:unavailable a ns3:DocumentStatus ;
+    rdfs:label "unavailable" ;
+    rdfs:comment "The resource at the subject address is unavailable for reasons other than explicit retirement, e.g. HTTP 404 or 403, or going out of print."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:update-metadata a onto:Action ;
+    rdfs:label "update-metadata" ;
+    rdfs:comment "Update the metadata of this document, such as keywords, audience, etc."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto:words-and-blocks a qb:DataStructureDefinition ;
+    rdfs:label "words-and-blocks" ;
+    qb:component [ a qb:ComponentSpecification ;
+            qb:measure onto:characters ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:sd ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:max ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:high-quartile ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:min ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:mean ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:median ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:low-quartile ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:words ],
+        [ a qb:ComponentSpecification ;
+            qb:dimension onto:document ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:blocks ],
+        [ a qb:ComponentSpecification ;
+            qb:measure onto:sections ] ;
+    rdfs:comment "A set of descriptive statistics pertaining to the number of words per block of text in a given document."@en .
+
+onto:characters a qb:MeasureProperty ;
+    rdfs:label "characters" ;
+    rdfs:comment "This indicates the number of characters in a document, with punctuation and the XPath normalize-space function applied. Note this is characters, not bytes."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:seeAlso <http://www.w3.org/TR/xpath/#function-normalize-space> ;
+    ns1:external qb:Observation,
+        xsd:nonNegativeInteger,
+        <http://www.w3.org/TR/xpath/#function-normalize-space> .
+
+onto:document a qb:DimensionProperty ;
+    rdfs:label "document" ;
+    rdfs:comment "Document Reference"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document ;
+    ns1:external qb:Observation,
+        foaf:Document .
+
+onto:high-quartile a qb:MeasureProperty ;
+    rdfs:label "high-quartile" ;
+    rdfs:comment "Third Quartile"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Quartile> ;
+    ns1:external <http://en.wikipedia.org/wiki/Quartile>,
+        qb:Observation,
+        xsd:number .
+
+onto:low-quartile a qb:MeasureProperty ;
+    rdfs:label "low-quartile" ;
+    rdfs:comment "Equivalent to the bottom quarter, or 25th percentile, of the observed data."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Quartile> ;
+    ns1:external <http://en.wikipedia.org/wiki/Quartile>,
+        qb:Observation,
+        xsd:number .
+
+onto:max a qb:MeasureProperty ;
+    rdfs:label "max" ;
+    rdfs:comment "Maximum"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Sample_maximum> ;
+    ns1:external <http://en.wikipedia.org/wiki/Sample_maximum>,
+        qb:Observation,
+        xsd:number .
+
+onto:mean a qb:MeasureProperty ;
+    rdfs:label "mean" ;
+    rdfs:comment "Mean"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Sample_minimum> ;
+    ns1:external <http://en.wikipedia.org/wiki/Sample_minimum>,
+        qb:Observation,
+        xsd:number .
+
+onto:median a qb:MeasureProperty ;
+    rdfs:label "median" ;
+    rdfs:comment "The median of a population "@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Median> ;
+    ns1:external <http://en.wikipedia.org/wiki/Median>,
+        qb:Observation,
+        xsd:number .
+
+onto:mentions a owl:ObjectProperty ;
+    rdfs:label "mentions" ;
+    rdfs:comment "The document explicitly mentions this concept."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:references ;
+    ns1:external dcterms:references,
+        skos:Concept,
+        foaf:Document .
+
+onto:min a qb:MeasureProperty ;
+    rdfs:label "min" ;
+    rdfs:comment "The smallest observation in the sample."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Sample_minimum> ;
+    ns1:external <http://en.wikipedia.org/wiki/Sample_minimum>,
+        qb:Observation,
+        xsd:number .
+
+onto:sd a qb:MeasureProperty ;
+    rdfs:label "sd" ;
+    rdfs:comment "Standard Deviation"@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:number ;
+    rdfs:seeAlso <http://en.wikipedia.org/wiki/Sample_minimum> ;
+    ns1:external <http://en.wikipedia.org/wiki/Sample_minimum>,
+        qb:Observation,
+        xsd:number .
+
+onto:sections a qb:MeasureProperty ;
+    rdfs:label "sections" ;
+    rdfs:comment "For document types that have a concrete representation of sections, this property may be used to capture their sum."@en ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns1:external xsd:nonNegativeInteger,
+        foaf:Document .
+
+onto:slug a owl:DatatypeProperty ;
+    rdfs:label "slug" ;
+    rdfs:comment "The slug is a text token which represents either the full path or terminal path segment of an HTTP(S) URL by which a resource can be located. This property is mainly for the purpose of archiving old or alternative URL paths in a content inventory, for such tasks as generating URL rewriting maps."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:external xsd:string .
+
+onto:words a qb:MeasureProperty ;
+    rdfs:label "words" ;
+    rdfs:comment "This indicates the number of words in a document, similar to the familiar function in a word processor. The exact method of counting words may vary by document type, language etc., and is thus out of scope from this document."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns1:external qb:Observation,
+        xsd:nonNegativeInteger .
+
+<https://doriantaylor.com/person/dorian-taylor#me> foaf:name "Dorian Taylor"@en .
+
+onto:Merge a owl:Class ;
+    rdfs:label "Merge" ;
+    rdfs:comment "In order to merge a document, we must define the target to which it ought to be merged. This class is identical to an Action, save for such a property."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Action .
+
+onto:Action a owl:Class ;
+    rdfs:label "Action" ;
+    rdfs:comment "An action, as its name implies, is meant to represent something a person or other agent ought to do to a document."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> ;
+    ns1:external <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto: a ns3:Webpage,
+        owl:Ontology ;
+    dcterms:created "2012-01-23T11:52:00-08:00"^^xsd:dateTime ;
+    dcterms:creator <http://doriantaylor.com/person/dorian-taylor#me>,
+        <https://doriantaylor.com/person/dorian-taylor#me> ;
+    dcterms:modified "2012-12-11T22:22:00-08:00"^^xsd:dateTime,
+        "2014-02-06T14:10:00-08:00"^^xsd:dateTime,
+        "2015-02-03T14:39:00-08:00"^^xsd:dateTime,
+        "2017-04-06T15:24:00-07:00"^^xsd:dateTime,
+        "2018-10-06T16:23:52+00:00"^^xsd:dateTime ;
+    dcterms:title "A Content Inventory Vocabulary"@en ;
+    ns3:uri onto: ;
+    vann:preferredNamespacePrefix "ci"^^xsd:string ;
+    ns2:license <http://creativecommons.org/licenses/by/2.5/ca/> ;
+    rdfs:comment "This vocabulary defines a number of concepts peculiar to content strategy which are not accounted for by other vocabularies."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:imports <http://purl.org/NET/c4dm/event.owl#>,
+        dcterms:,
+        qb:,
+        ns3:,
+        foaf: ;
+    owl:versionInfo "0.6" ;
+    ns1:external <http://creativecommons.org/licenses/by/2.5/ca/>,
+        <http://doriantaylor.com/person/dorian-taylor#me>,
+        <http://en.wikipedia.org/wiki/Content_strategy>,
+        <http://purl.org/NET/c4dm/event.owl#>,
+        dcterms:,
+        qb:,
+        ns3:,
+        <http://vocab.org/frbr/core>,
+        <http://vocab.org/frbr/extended>,
+        foaf:,
+        <https://doriantaylor.com/person/dorian-taylor#me> .
+

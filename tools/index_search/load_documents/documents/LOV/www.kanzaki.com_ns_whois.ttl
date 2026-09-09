@@ -1,0 +1,173 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/net/ns/ex#> .
+@prefix ns2: <http://purl.org/net/ns/ontology-annot#> .
+@prefix onto: <http://www.kanzaki.com/ns/whois> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://www.kanzaki.com/ns/whois#academicCareer> a owl:ObjectProperty ;
+    rdfs:label "Academic Career" ;
+    rdfs:comment "an educational career in one's personal history." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.kanzaki.com/ns/whois#Education> ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#career> .
+
+<http://www.kanzaki.com/ns/whois#achievement> a owl:ObjectProperty ;
+    rdfs:label "Achievement" ;
+    rdfs:comment "a one's achievement in general. Note you can use foaf:pastProject for a specific achievement." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#career> .
+
+<http://www.kanzaki.com/ns/whois#born> a owl:DatatypeProperty ;
+    rdfs:label "Born" ;
+    rdfs:comment "One's birthday. This can be used in place of 'whois:since' where the 'whois:Stage' is one's first stage." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#since> .
+
+<http://www.kanzaki.com/ns/whois#honor> a owl:ObjectProperty ;
+    rdfs:label "Honor" ;
+    rdfs:comment "an honor that one has been rewarded." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#career> .
+
+<http://www.kanzaki.com/ns/whois#place> a owl:DatatypeProperty ;
+    rdfs:label "Place" ;
+    rdfs:comment "Place which relates to a stage of life. Literal version of 'where'. \":x whois:place 'y'.\" implies \":x whois:where [rdfs:label 'y'].\"." ;
+    rdfs:domain <http://www.kanzaki.com/ns/whois#Stage> ;
+    rdfs:isDefinedBy onto: .
+
+<http://www.kanzaki.com/ns/whois#plan> a owl:ObjectProperty ;
+    rdfs:label "Plan" ;
+    rdfs:comment "General description of a person's future activities. Note past activity can be described with #career." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#description> .
+
+<http://www.kanzaki.com/ns/whois#professionalCareer> a owl:ObjectProperty ;
+    rdfs:label "Professional Career" ;
+    rdfs:comment "a professional or business career in one's personal history." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.kanzaki.com/ns/whois#Job> ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#career> .
+
+<http://www.kanzaki.com/ns/whois#publication> a owl:ObjectProperty ;
+    rdfs:label "Publication" ;
+    rdfs:comment "a one's publication in general. Note foaf:publications describes publication list page." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#description> .
+
+<http://www.kanzaki.com/ns/whois#stage> a owl:ObjectProperty ;
+    rdfs:label "Stage" ;
+    rdfs:comment "Describes an aspect of one's personal history. " ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.kanzaki.com/ns/whois#Stage> ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#description> .
+
+<http://www.kanzaki.com/ns/whois#until> a owl:DatatypeProperty ;
+    rdfs:label "Until" ;
+    rdfs:comment "date when a stage of life ended." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#when>,
+        <http://www.w3.org/2002/12/cal/icaltzd#dtend> .
+
+<http://www.kanzaki.com/ns/whois#what> a owl:ObjectProperty ;
+    rdfs:label "What" ;
+    rdfs:comment "Specifies a topic in a stage of life. The range is owl:Thing to have structured description. Use dc:description for literal description, or dc:subject for keywords." ;
+    rdfs:domain <http://www.kanzaki.com/ns/whois#Stage> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf foaf:topic .
+
+<http://www.kanzaki.com/ns/whois#where> a owl:ObjectProperty ;
+    rdfs:label "Where" ;
+    rdfs:comment "Place which relates to a stage of life. The range is whois:Place to have structured description. Use bio:place for literal value" ;
+    rdfs:domain <http://www.kanzaki.com/ns/whois#Stage> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.kanzaki.com/ns/whois#Place> .
+
+<http://www.kanzaki.com/ns/whois#Education> a owl:Class ;
+    rdfs:label "Educaton (stage)" ;
+    rdfs:comment "A period of education in one's academic career, as a stage of life. NOT an activity of learning." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.kanzaki.com/ns/whois#Stage> .
+
+<http://www.kanzaki.com/ns/whois#Job> a owl:Class ;
+    rdfs:label "Job (stage)" ;
+    rdfs:comment "A period of job in one's professional career, as a stage of life. NOT an activity of working." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.kanzaki.com/ns/whois#Stage> .
+
+<http://www.kanzaki.com/ns/whois#Place> a owl:Class ;
+    rdfs:label "Place" ;
+    rdfs:comment "A place -- this can be the domain of both contact: vocab and geo: vocab." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://www.kanzaki.com/ns/whois#since> a owl:DatatypeProperty ;
+    rdfs:label "Since" ;
+    rdfs:comment "date when a stage of life started. " ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#when>,
+        <http://www.w3.org/2002/12/cal/icaltzd#dtstart> .
+
+<http://www.w3.org/2002/12/cal/icaltzd#dtend> a owl:DatatypeProperty .
+
+<http://www.w3.org/2002/12/cal/icaltzd#dtstart> a owl:DatatypeProperty .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> a owl:Class .
+
+foaf:topic a owl:ObjectProperty .
+
+<urn:pin:MK705> a foaf:Person ;
+    rdfs:seeAlso <http://www.kanzaki.com/info/webwho.rdf> .
+
+<http://www.kanzaki.com/ns/whois#when> a owl:DatatypeProperty ;
+    rdfs:label "When" ;
+    rdfs:comment "date/time which is related to a stage of life. Super property of since and until. W3C-DTF format value is assumed (i.e. can be yyyy, yyyy-mm, yyyy-mm-dd etc)." ;
+    rdfs:domain <http://www.kanzaki.com/ns/whois#Stage> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+<http://www.kanzaki.com/ns/whois#career> a owl:ObjectProperty ;
+    rdfs:label "Career" ;
+    rdfs:comment "A job, education or any achievement in one's life, which can be specific to a stage of life (object = #Stage) or in general (object = any)." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.kanzaki.com/ns/whois#description> .
+
+<http://www.kanzaki.com/ns/whois#description> a owl:ObjectProperty ;
+    rdfs:label "Description" ;
+    rdfs:comment "General description of a person's activities. Use to describe something that does not fit into a Stage." ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range owl:Thing .
+
+<http://www.kanzaki.com/ns/whois#Stage> a owl:Class ;
+    rdfs:label "Stage" ;
+    rdfs:comment "A stage of life. A distinct time period in a sequence of one's life cycle." ;
+    rdfs:isDefinedBy onto: .
+
+onto: a owl:Ontology ;
+    rdfs:label "Who's who description vocabulary" ;
+    ns2:created "2003-07-08" ;
+    ns2:creator <urn:pin:MK705> ;
+    ns2:modified "2012-09-16" ;
+    rdfs:comment "An experimental vocabulary to describe a person's profile/history. Properties 'whois:stage' describe one's stage of life (whois:Stage). Similar to Ian Davis' BIO: vocab, however, while BIO: describes events on specific dates, this vocabulary uses whois:since/whois:until so that it can describe a period of time. This also includes such properties as career or honor to be used as a personal resume. Examples included in this document. " ;
+    owl:imports <http://www.kanzaki.com/ns/dliser.rdf> ;
+    owl:versionInfo "Version 0.5.4. added whois:publication." .
+
+[] a ns1:Example ;
+    ns1:code "\\n<foaf:Person>\\n <foaf:name>Masahide Kanzaki</foaf:name>\\n <whois:stage rdf:parseType='Resource'>\\n  <whois:place>Tokyo, Japan</whois:place>\\n  <whois:since>1982</whois:since>\\n </whois:stage>\\n <whois:stage rdf:parseType='Resource'>\\n  <whois:place>Suzuka, Mie, Japan</whois:place>\\n  <whois:born>1960</whois:born>\\n  <whois:until>1978</whois:until>\\n </whois:stage>\\n</foaf:Person>\\n " ;
+    ns1:exampleOf onto: ;
+    ns1:image <http://www.kanzaki.com/works/2007/misc/whois-vocab-sample1.png> ;
+    ns1:pfx "whois:" ;
+    rdfs:comment "Simple, unstructured description. Class tags 'whois:Stage' are omitted by using rdf:parseType='Resource', and 'whois:place' property is used instead of 'whois:where' to have literal values). Note the 'whois:born' (instead of 'whois:since') implies (the omitted 'whois:Stage' is) one's first stage of life, and the stage without 'whois:until' denotes the current phase." .
+
+[] a ns1:Example ;
+    ns1:code "\\n<whois:stage>\\n <whois:Stage>\\n  <whois:since>1987</whois:since>\\n  <whois:until>1989</whois:until>\\n  <whois:where>\\n   <whois:Place geo:lat=\"40.794\" geo:long=\"-73.972\">\\n    <contact:country>U.S.A.</contact:country>\\n    <contact:city>New York</contact:city>\\n   </whois:Place>\\n  </whois:where>\\n  <whois:what>\\n   <wn:School>\\n    <foaf:homepage rdf:resource=\"http://www.columbia.edu/cu/business/\"/>\\n   </wn:School>\\n  </whois:what>\\n </whois:Stage>\\n</whois:stage>\\n " ;
+    ns1:exampleOf onto: ;
+    rdfs:comment "A structured description of a stage of one's life. Note properties from contact: and geo: vocabulary can be used with whois:Place." .
+
+[] a ns1:Example ;
+    ns1:code "\\n<foaf:Person>\\n <foaf:name>Masahide Kanzaki</foaf:name>\\n <foaf:homepage rdf:resource=\"http://www.kanzaki.com/\"/>\\n <whois:stage whois:born=\"1960\" rdfs:label=\"Suzuka, Mie, Japan\"/>\\n <whois:career>\\n  <whois:Education>\\n   <rdfs:label>Columbia Business School</rdfs:label>\\n   <whois:since>1987</whois:since>\\n   <whois:until>1989</whois:until>\\n  </whois:Education>\\n </whois:career>\\n <whois:career>\\n  <whois:Job>\\n   <rdfs:label>A virtual corporation</rdfs:label>\\n   <whois:since>1989</whois:since>\\n   <whois:until>2002</whois:until>\\n  </whois:Job>\\n </whois:career>\\n <whois:professionalCareer rdf:parseType=\"Resource\">\\n  <rdfs:label>Keio University</rdfs:label>\\n  <whois:since>2003</whois:since>\\n </whois:professionalCareer>\\n</foaf:Person>\\n " ;
+    ns1:exampleOf onto: ;
+    rdfs:comment "Combined with other FOAF vocabularies, we can make a personal resume as a metadata. A career can be described with 'whois:career' property + 'whois:Education' or 'whois:Job' class, or sub properties 'whois:academicCareer' and 'whois:professionalCareer' that denote appropriate classes as range." .
+

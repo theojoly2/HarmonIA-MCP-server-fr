@@ -1,0 +1,1167 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://w3id.org/iddo#> .
+@prefix onto: <https://w3id.org/iddo> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:BoundaryValueItem a rdfs:Class ;
+    rdfs:label "Boundary value item" ;
+    rdfs:comment "Boundary value interval consisting of the lower(minValue) and the upper(maxValue) interval boundary" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty schema:minValue ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty schema:maxValue ],
+        owl:Thing,
+        schema:PropertyValue ;
+    skos:scopeNote "PA040" ;
+    ns1:code "PA040" .
+
+ns1:BoundaryValuesList a rdfs:Class ;
+    rdfs:label "Boundary values list" ;
+    rdfs:comment "Pair  (List of boundary intervals of possible values for the property, unit)" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onClass ns1:BoundaryValueItem ;
+            owl:onProperty ns1:BoundaryValue ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty ns1:Unit ],
+        owl:Thing ;
+    skos:scopeNote "PA040" ;
+    ns1:code "PA040" .
+
+ns1:DefiningValueItem a rdfs:Class ;
+    rdfs:label "Defining value item" ;
+    rdfs:comment "Contains a defining value of an array in the form of a literal" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty schema:value ],
+        owl:Thing,
+        schema:PropertyValue ;
+    skos:scopeNote "PA035" ;
+    ns1:code "PA035" .
+
+ns1:DefiningValuesList a rdfs:Class ;
+    rdfs:label "Defining values list" ;
+    rdfs:comment "In case of an array, this attribute provides the defining values when applicable, the datatype is given by the attribute PA030" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty ns1:DefiningValueItem ],
+        owl:Thing ;
+    skos:scopeNote "PA035" ;
+    ns1:code "PA035" .
+
+ns1:DigitalFormatItem a rdfs:Class ;
+    rdfs:label "Digital format item" ;
+    rdfs:comment "Pair for digital text type (precision, unit)\\nPrecision is the number of significant digits" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange <http://qudt.org/schema/qudt/Unit> ;
+            owl:onProperty ns1:Unit ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns1:Precision ;
+            owl:qualifiedCardinality 1 ],
+        owl:Thing ;
+    skos:scopeNote "PA037" ;
+    ns1:code "PA037" .
+
+ns1:PossibleValueInLanguageN a rdfs:Class ;
+    rdfs:label "Possible value in language N" ;
+    rdfs:comment "Possible value for the property and language\\nValues can be string or numbers" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty schema:value ],
+        owl:Thing,
+        schema:PropertyValue ;
+    skos:scopeNote "PA039" ;
+    ns1:code "PA039" .
+
+ns1:RelationOfPropertiyIdentifiersInTheInterconnectedDataDictionaries a rdfs:Class ;
+    rdfs:label "Relation of propertiy identifier in the interconnected data dictionaries" ;
+    rdfs:comment "Pair (property internal identifier, corresponding data dictionary identifier)\\nThis attribute should be used for compatibility between already existing properties" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:InterConDictID ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:GloballyUniqueIdentifier ;
+            owl:qualifiedCardinality 1 ],
+        owl:Thing ;
+    skos:scopeNote "PA014" ;
+    ns1:code "PA014" .
+
+ns1:RelationOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries a rdfs:Class ;
+    rdfs:label "Relation of the group of properties identifier in the interconnected data dictionaries" ;
+    rdfs:comment "Pair (group of properties internal identifier, corresponding data dictionary identifier)\\nThis attribute should be used for compatibility between already existing groups of properties" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:GloballyUniqueIdentifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:InterConDictID ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:GloballyUniqueIdentifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:InterConDictID ;
+            owl:qualifiedCardinality 1 ],
+        owl:Thing ;
+    skos:scopeNote "GA014" ;
+    ns1:code "GA014" .
+
+ns1:SymbolOfTheProperty a rdfs:Class ;
+    rdfs:label "Symbol of the property in a given property group" ;
+    rdfs:comment "Pair (symbol of the property, globally unique identifier of the group of properties (attribute GA001))" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Symbol ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:GivenGroupsOfProperties ;
+            owl:qualifiedCardinality 1 ],
+        owl:Thing ;
+    skos:scopeNote "PA022" ;
+    ns1:code "PA022" .
+
+ns1:TextFormatItem a rdfs:Class ;
+    rdfs:label "Text format item" ;
+    rdfs:comment "Pair for text type (encoding, number of characters)\\nThe encoding is set according to Name of encoding standard of IANA, RFC 2978" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:integer ;
+            owl:onProperty ns1:NumberOfCharacters ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Encoding ;
+            owl:qualifiedCardinality 1 ],
+        owl:Thing ;
+    skos:scopeNote "PA038" ;
+    ns1:code "PA038" .
+
+<http://www.example.com/property#Dictionary_1> a owl:NamedIndividual,
+        ns1:Dictionary ;
+    ns1:hasDictionarySubset <http://www.example.com/property#Dataset_1> .
+
+<http://www.example.com/property#Property_1> a owl:NamedIndividual,
+        ns1:Property ;
+    rdfs:label "Property example 1"@en ;
+    ns1:GroupsOfProperties <http://www.example.com/property#GroupOfProperties_1> .
+
+ns1:AssignedPropertyShape a owl:NamedIndividual,
+        sh:NodeShape ;
+    rdfs:label "Assigned property SHACL shape" ;
+    rdfs:comment "Represents the validation using SHACL of the assignment of a property and a property state to a feature of interest (FOI)." ;
+    sh:closed true ;
+    sh:property [ sh:description "Must be assigned to exacltyl one FOI" ;
+            sh:inversePath ns1:hasProperty ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "PropertyState" ],
+        [ sh:description "Needs at least one property state" ;
+            sh:minCount 1 ;
+            sh:name "PropertyState" ;
+            sh:path <http://www.w3id.org/opm#hasPropertyState> ],
+        [ sh:class ns1:Property ;
+            sh:description "Needs exactly one property reference" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "PropertyReference" ;
+            sh:path ns1:hasPropertyReference ] ;
+    sh:targetClass ns1:AssignedProperty .
+
+ns1:DefiningValue a owl:ObjectProperty ;
+    rdfs:label "Defining value" ;
+    rdfs:comment "Contains a defining value of an array" ;
+    rdfs:domain ns1:DefiningValuesList ;
+    rdfs:range ns1:DefiningValueItem ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA035" ;
+    ns1:code "PA035" .
+
+ns1:code a rdf:Property,
+        owl:AnnotationProperty ;
+    rdfs:label "Code" ;
+    rdfs:comment "Code that can be used to identify the attribute" ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy rdfs: ;
+    rdfs:range rdfs:Literal .
+
+<http://www.example.com/property#Dataset_1> a owl:NamedIndividual,
+        ns1:DictionarySubset ;
+    ns1:hasDictionaryReferenceDocument <http://www.example.com/property#ReferenceDocument_1> .
+
+<http://www.example.com/property#GroupOfProperties_1> a owl:NamedIndividual,
+        ns1:GroupOfProperties ;
+    rdfs:label "Group of properties example 1" ;
+    rdfs:comment "Collection enabling the properties to be prearranged or organized" ;
+    ns1:CategoryOfGroupOfProperties "Reference document" ;
+    ns1:CountryOfOrigin "DE" ;
+    ns1:CountryOfUse "DE" ;
+    ns1:CreatorsLanguage "de-DE" ;
+    ns1:DateOfActivation "2022-04-05T16:52:00"^^xsd:dateTime ;
+    ns1:DateOfCreation "2022-04-05T16:52:00"^^xsd:dateTime ;
+    ns1:DateOfLastChange "2022-04-05T16:52:00"^^xsd:dateTime ;
+    ns1:DateOfRevision "2022-04-05T16:52:30"^^xsd:dateTime ;
+    ns1:DateOfVersion "2022-04-05T16:52:33"^^xsd:dateTime ;
+    ns1:DefinitionInLanguage "Definition der Merkmalsgruppe" ;
+    ns1:GloballyUniqueIdentifier "9f225e73-c25a-4175-85c4-30de6becf5e0" ;
+    ns1:RevisionNumber 1 ;
+    ns1:Status "active" ;
+    ns1:VersionNumber 1 .
+
+<http://www.example.com/property#ReferenceDocument_1> a owl:NamedIndividual,
+        ns1:DictionaryReferenceDocument ;
+    dcat:accessURL <http://www.example.com/property#> ;
+    ns1:hasPropertyGroupReference ns1:GroupOfProperties_1 .
+
+dcat:accessURL a owl:AnnotationProperty .
+
+ns1:BoundaryValue a owl:ObjectProperty ;
+    rdfs:label "Boundary value" ;
+    rdfs:comment "Single Boundary value interval" ;
+    rdfs:domain ns1:BoundaryValuesList ;
+    rdfs:range ns1:BoundaryValueItem ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA040" ;
+    ns1:code "PA040" .
+
+ns1:BoundaryValues a owl:ObjectProperty ;
+    rdfs:label "Boundary values" ;
+    rdfs:comment "Pair (list of boundary intervals of possible values for the property, unit)" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:BoundaryValuesList ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA040" ;
+    ns1:code "PA040" .
+
+ns1:CategoryOfGroupOfProperties a owl:DatatypeProperty ;
+    rdfs:label "Category of group of properties" ;
+    rdfs:comment "Specifies the category of the created property group" ;
+    rdfs:domain ns1:GroupOfProperties ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf ( "Alternative use" "Class" "Composed property" "Domain" "Reference document" ) ] ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:example "Alternative use",
+        "Class",
+        "Composed property",
+        "Domain",
+        "Reference document" ;
+    skos:scopeNote "GA022" ;
+    ns1:code "GA022" .
+
+ns1:ConnectedProperties a owl:ObjectProperty ;
+    rdfs:label "Connected properties" ;
+    rdfs:comment "List of the globally unique identifier of the connected properties (attribute PA001); the value of one property is related to the values of the other ones. For example, a sound absorption coefficient is given for a specific frequency, in this case sound absorption and frequency are connected properties" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:Property ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA020" ;
+    ns1:code "PA020" .
+
+ns1:DataType a owl:DatatypeProperty ;
+    rdfs:label "Data type" ;
+    rdfs:comment "Format for expressing the value of the property\\nThis can be understood as the storage type from a software perspective\\nIn case of a dynamic property the value of this attribute is the datatype of the result of the calculation by the formula" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA030" ;
+    ns1:code "PA030" .
+
+ns1:DefiningValues a owl:ObjectProperty ;
+    rdfs:label "Defining values" ;
+    rdfs:comment "In case of an array, this attribute provides the defining values when applicable, the datatype is given by the attribute PA030" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:DefiningValuesList ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA035" ;
+    ns1:code "PA035" .
+
+ns1:DescriptionInLanguage a owl:DatatypeProperty ;
+    rdfs:label "Description in language N" ;
+    rdfs:comment "List of pairs (Description of the property, language)" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA019" ;
+    ns1:code "PA019" .
+
+ns1:DigitalFormat a owl:ObjectProperty ;
+    rdfs:label "Digital format" ;
+    rdfs:comment "Pair for digital text type (precision, unit)\\nPrecision is the number of significant digits" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:DigitalFormatItem ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA037" ;
+    ns1:code "PA037" .
+
+ns1:DynamicProperty a owl:DatatypeProperty ;
+    rdfs:label "Dynamic Property" ;
+    rdfs:comment "If this is a dynamic property, the value is dependent on the parameters provided in the attribute PA032" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf ( "yes" "no" ) ] ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:example "no",
+        "yes" ;
+    skos:scopeNote "PA031" ;
+    ns1:code "PA031" .
+
+ns1:Encoding a owl:DatatypeProperty ;
+    rdfs:label "Encoding" ;
+    rdfs:comment "The encoding is set according to Name of encoding standard of IANA, RFC 2978" ;
+    rdfs:domain ns1:TextFormatItem ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA038" ;
+    ns1:code "PA038" .
+
+ns1:ExampleInLanguage a owl:DatatypeProperty ;
+    rdfs:label "Example in language N" ;
+    rdfs:comment "List of pairs (example of the property, language)" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA019" ;
+    ns1:code "PA019" .
+
+ns1:GivenGroupsOfProperties a owl:ObjectProperty ;
+    rdfs:label "Given group of properties" ;
+    rdfs:comment "Globally unique identifier of a group of properties (attribute GA001) for the symbol assigned to the property." ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA022" ;
+    ns1:code "PA022" .
+
+ns1:GroupsOfProperties a owl:ObjectProperty ;
+    rdfs:label "Group(s) of properties" ;
+    rdfs:comment "List of globally unique identifiers of groups of properties (attribute GA001) to which the property is attached" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA021" ;
+    ns1:code "PA021" .
+
+ns1:ListOfReplacedGroupsOfProperties a owl:ObjectProperty ;
+    rdfs:label "List of replaced groups of properties" ;
+    rdfs:comment "List of globally unique identifiers of the replaced groups of properties" ;
+    rdfs:domain ns1:GroupOfProperties ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "GA011" ;
+    ns1:code "GA011" .
+
+ns1:ListOfReplacedProperties a owl:ObjectProperty ;
+    rdfs:label "List of replaced properties" ;
+    rdfs:comment "Globally unique identifier of the replaced property (or properties)" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:Property ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA011" ;
+    ns1:code "PA011" .
+
+ns1:ListOfReplacingGroupsOfProperties a owl:ObjectProperty ;
+    rdfs:label "List of replacing groups of properties" ;
+    rdfs:comment "List of globally unique identifiers of the replacing groups of properties" ;
+    rdfs:domain ns1:GroupOfProperties ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "GA012" ;
+    ns1:code "GA012" .
+
+ns1:ListOfReplacingProperties a owl:ObjectProperty ;
+    rdfs:label "List of replacing properties" ;
+    rdfs:comment "Globally unique identifier (attribute PA001) of the replacing property (or properties)" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:Property ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA012" ;
+    ns1:code "PA012" .
+
+ns1:MethodOfMeasurement a owl:DatatypeProperty ;
+    rdfs:label "Method of measurement" ;
+    rdfs:comment "Beurteilung von Bauprodukten, um ihre Tauglichkeit entsprechend den Anforderungen in harmonisierten technischen Spezifikationen sicherzustellen",
+        "Evaluation of construction products to ensure their fitness according to requirements in harmonised technical specifications" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA029" ;
+    ns1:code "PA029" .
+
+ns1:NameOfTheDefiningValues a owl:DatatypeProperty ;
+    rdfs:label "Names of the defining values" ;
+    rdfs:comment "In case of an array, this attribute provides the names of the column headers defined as a list of pairs (name, language)" ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA034" ;
+    ns1:code "PA034" .
+
+ns1:NumberOfCharacters a owl:DatatypeProperty ;
+    rdfs:label "Number of Characters" ;
+    rdfs:comment "The encoding is set according to Name of encoding standard of IANA, RFC 2978" ;
+    rdfs:domain ns1:TextFormatItem ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA038" ;
+    ns1:code "PA038" .
+
+ns1:ParametersOfTheDynamicProperty a owl:ObjectProperty ;
+    rdfs:label "Parameters of the dynamic property" ;
+    rdfs:comment "List of GUIDS of properties which are parameters of the function for a dynamic property" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:Property ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA032" ;
+    ns1:code "PA032" .
+
+ns1:PhysicalQuantity a owl:DatatypeProperty ;
+    rdfs:label "Physical quantity" ;
+    rdfs:comment "List of pairs (physical quantity | language)\\nPhysical quantities are expressed in International System (SI) units\\nNon-physical quantities such as text are expressed with the value \"without\"\\nThis is equivalent to a measure in ISO 16739-1 and ISO 10303\\nOnly one physical quantity can be attached to a property. This attribute is used to provide the quantity in plain text with all the needed translations" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA027" ;
+    ns1:code "PA027" .
+
+ns1:Precision a owl:DatatypeProperty ;
+    rdfs:label "Tolerance" ;
+    rdfs:comment "Precision is the number of significant digits" ;
+    rdfs:domain ns1:DigitalFormatItem ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA037" ;
+    ns1:code "PA037" .
+
+ns1:RelationsOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries a owl:ObjectProperty ;
+    rdfs:label "Relations of the group of properties identifiers in the interconnected data dictionaries" ;
+    rdfs:comment "List of pairs (group of properties internal identifier, corresponding data dictionary identifier)\\nThis attribute should be used for compatibility between already existing groups of properties" ;
+    rdfs:domain ns1:GroupOfProperties ;
+    rdfs:range ns1:RelationOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "GA014" ;
+    ns1:code "GA014" .
+
+ns1:RelationsOfThePropertyIdentifiersInTheInterconnectedDataDictionaries a owl:ObjectProperty ;
+    rdfs:label "Relations of the property identifiers in the interconnected data dictionaries" ;
+    rdfs:comment "List of pairs (property internal identifier, corresponding data dictionary identifier)\\nThis attribute should be used for compatibility between already existing properties" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:RelationOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA014" ;
+    ns1:code "PA014" .
+
+ns1:Symbol a owl:DatatypeProperty ;
+    rdfs:label "Symbol" ;
+    rdfs:domain ns1:SymbolOfTheProperty ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA022" ;
+    ns1:code "PA022" .
+
+ns1:SymbolsOfTheProperty a owl:ObjectProperty ;
+    rdfs:label "Symbols of the property in a given property group" ;
+    rdfs:comment "List of pairs (symbol of the property, globally unique identifier of the group of properties (attribute GA001))" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:SymbolOfTheProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA022" ;
+    ns1:code "PA022" .
+
+ns1:TextFormat a owl:ObjectProperty ;
+    rdfs:label "Text format" ;
+    rdfs:comment "Pair for text type (encoding, number of characters)\\nThe encoding is set according to Name of encoding standard of IANA, RFC 2978" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:TextFormatItem ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA038" ;
+    ns1:code "PA038" .
+
+ns1:Units a owl:ObjectProperty ;
+    rdfs:label "Units" ;
+    rdfs:comment "A unit to represent a scale that enables a value to be measured\\nIt is possible to use this attribute to explain there is no unit attached to the property by using unitless" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range <http://qudt.org/schema/qudt/Unit> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA033" ;
+    ns1:code "PA033" .
+
+ns1:hasDictionaryReferenceDocument a owl:ObjectProperty ;
+    rdfs:label "has relation to a reference document" ;
+    rdfs:domain ns1:DictionarySubset ;
+    rdfs:range ns1:DictionaryReferenceDocument ;
+    rdfs:subPropertyOf dcat:distribution .
+
+ns1:hasDictionarySubset a owl:ObjectProperty ;
+    rdfs:label "has dictionary subset" ;
+    rdfs:domain ns1:Dictionary ;
+    rdfs:range ns1:DictionarySubset ;
+    rdfs:subPropertyOf dcat:dataset .
+
+ns1:hasProperty a owl:ObjectProperty ;
+    rdfs:label "has property" ;
+    rdfs:comment "Attaches a property to a feature of interest (FOI)" ;
+    rdfs:range ns1:AssignedProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns1:hasPropertyGroupReference a owl:ObjectProperty ;
+    rdfs:label "has property group reference" ;
+    rdfs:comment "Attaches a property group reference to a iddo:ReferenceDocument" ;
+    rdfs:domain ns1:ReferenceDocument ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty,
+        dcat:distribution .
+
+onto: a owl:Ontology ;
+    rdfs:label "The Interconnected Data Dictionary Ontology (IDDO)" ;
+    dcterms:created "2019-01-01"^^xsd:date ;
+    dcterms:creator [ a schema:Person ;
+            schema:email <mailto:sven.zentgraf@rub.de> ;
+            schema:identifier <https://orcid.org/0000-0001-6058-7614> ;
+            schema:memberOf [ schema:identifier <https://www.inf.bi.ruhr-uni-bochum.de/iib/lehrstuhl/mitarbeiter/sven_zentgraf.html.en> ;
+                    schema:name "Ruhr University Bochum" ] ;
+            schema:name "Sven Zentgraf" ],
+        [ a schema:Person ;
+            schema:email <mailto:philipp.hagedorn-n6v@rub.de> ;
+            schema:identifier <https://orcid.org/0000-0002-6249-243X> ;
+            schema:memberOf [ schema:identifier <https://www.inf.bi.ruhr-uni-bochum.de/iib/lehrstuhl/mitarbeiter/philipp_hagedorn.html.en> ;
+                    schema:name "Ruhr University Bochum" ] ;
+            schema:name "Philipp Hagedorn" ] ;
+    dcterms:issued "2021-12-06"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2022-10-18"^^xsd:date ;
+    dcterms:publisher [ a schema:Organization ;
+            schema:identifier <https://www.inf.bi.rub.de> ;
+            schema:name "Chair of Computing in Engineering, Ruhr University Bochum" ;
+            schema:parentOrganization [ a schema:Organization ;
+                    schema:name "Ruhr University Bochum, Germany" ] ] ;
+    vann:preferredNamespacePrefix "iddo" ;
+    vann:preferredNamespaceUri onto: ;
+    rdfs:comment "The interconnected data dictionary ontology maps the data model of the ISO 23386 for the describing, creating, and maintenance of properties in interconnected data dictionaries.\\n\\nThe namespace for IDDO terms is [https://w3id.org/iddo](https://w3id.org/iddo)\\n\\nThe preferred prefix for the IDDO namespace is `iddo`.\\n\\n## Ontology Overview \\n![IDDO Ontology](Ontology_Overview.png \"Ontology\")\\n\\n## Assigning an IDDO Property to a Feature of Interest\\n![Property_Assignment](Property_Assignment.png \"Property_Assignment\")\\n\\n## Relation between DCAT vocabulary and the IDDO ontology\\n![DataCatalog_Overview](DataCatalog_Overview.png \"DataCatalog_Overview\")\\n" ;
+    rdfs:seeAlso <https://www.iso.org/standard/75401.html> ;
+    owl:versionIRI onto: ;
+    owl:versionInfo "v0.3" ;
+    skos:example <https://rub-informatik-im-bauwesen.github.io/iddo/Ontology_Overview.png> ;
+    skos:historyNote "v0.3: dcat usage update \\n  \\n  v0.2: ontology update \\n\\nv0.1: initial ontology for BIMSTRUCT project \\n  " ;
+    schema:codeRepository <https://github.com/RUB-Informatik-im-Bauwesen/iddo> .
+
+ns1:CountryOfUse a owl:DatatypeProperty ;
+    rdfs:label "Country of use" ;
+    rdfs:comment "Country (group of countries, continent) in which the property is relevant for the market the stakeholders operate in" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA024/GA019" ;
+    ns1:code "PA024/GA019" .
+
+ns1:CreatorsLanguage a owl:DatatypeProperty ;
+    rdfs:label "Creator's language" ;
+    rdfs:comment "Sentence explaining the reason of the deprecation, which can explain how to convert values to conform to the new property; this explanation has to be written in international English (EN)" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA015/GA015" ;
+    ns1:code "PA015/GA015" .
+
+ns1:DateOfActivation a owl:DatatypeProperty ;
+    rdfs:label "Date of activation" ;
+    rdfs:comment "Date after when the property can be used" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA04/GA04" ;
+    ns1:code "PA004/GA004" .
+
+ns1:DateOfCreation a owl:DatatypeProperty ;
+    rdfs:label "Date of creation" ;
+    rdfs:comment "Date of validation of the property creation request by experts" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA003/GA003" ;
+    ns1:code "PA003/GA003" .
+
+ns1:DateOfDeactivation a owl:DatatypeProperty ;
+    rdfs:label "Date of deactivation" ;
+    rdfs:comment "Date of deactivation" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA008/GA008" ;
+    ns1:code "PA008/GA008" .
+
+ns1:DateOfLastChange a owl:DatatypeProperty ;
+    rdfs:label "Date of last change" ;
+    rdfs:comment "Date of validation of the last change request by experts" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA005/GA005" ;
+    ns1:code "PA005/GA005" .
+
+ns1:DateOfRevision a owl:DatatypeProperty ;
+    rdfs:label "Date of revision" ;
+    rdfs:comment "Date of revision" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA006/GA006" ;
+    ns1:code "PA006/GA006" .
+
+ns1:DateOfVersion a owl:DatatypeProperty ;
+    rdfs:label "Date of version" ;
+    rdfs:comment "Date of version" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA007/GA007" ;
+    ns1:code "PA007/GA007" .
+
+ns1:DefinitionInLanguage a owl:DatatypeProperty ;
+    rdfs:label "Definition of in language N" ;
+    rdfs:comment "List of pairs (definition of the property/group of properties, language)" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA016/GA016" ;
+    ns1:code "PA016/GA016" .
+
+ns1:Dictionary a owl:Class ;
+    rdfs:label "Data dictionary" ;
+    rdfs:comment "Centralized repository of information about data such as meaning, relationships to other data, origin, usage and format" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:publisher ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:identifier ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty ns1:hasDictionarySubset ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:issued ],
+        dcat:Catalog .
+
+ns1:DictionaryReferenceDocument a owl:Class ;
+    rdfs:label "Reference document" ;
+    rdfs:comment "Publication that is consulted to find specific information, particularly in a technical or scientific domain" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty ns1:hasPropertyGroupReference ],
+        dcat:Distribution .
+
+ns1:ListOfPossibleValuesInLanguageN a owl:ObjectProperty ;
+    rdfs:label "List of possible values in language N" ;
+    rdfs:comment "List of pairs (possible value for the property and language)\\nValues can be string or numbers" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range ns1:PossibleValueInLanguageN ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA039" ;
+    ns1:code "PA039" .
+
+ns1:NameInLanguage a owl:DatatypeProperty ;
+    rdfs:label "Name in language N" ;
+    rdfs:comment "List of pairs (property name and language)\\nThis attribute can be used to add synonyms for different domains" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA016/GA016" ;
+    ns1:code "PA016/GA016" .
+
+ns1:ParentGroupOfProperties a owl:ObjectProperty ;
+    rdfs:label "Parent group of properties" ;
+    rdfs:comment "Enables a sub-group to be linked to a parent group via their globally unique identifiers (attribute GA001)\\nAny property attached to a group is inherited by the sub-group(s)" ;
+    rdfs:domain ns1:GroupOfProperties ;
+    rdfs:range ns1:GroupOfProperties ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "GA023" ;
+    ns1:code "GA023" .
+
+ns1:RevisionNumber a owl:DatatypeProperty ;
+    rdfs:label "Revision number" ;
+    rdfs:comment "This revision number allows tracking of minor changes e.g. new translation, changes of typos: if the version number changes, the revision number starts again at 1\\nExperts decide if a new revision number can be applied or if a new revision is needed" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA010/GA010" ;
+    ns1:code "PA010/GA010" .
+
+ns1:Status a owl:DatatypeProperty ;
+    rdfs:label "Status" ;
+    rdfs:comment "Status of the property during its life cycle" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf ( "active" "inactive" ) ] ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:example "active",
+        "inactive" ;
+    skos:scopeNote "PA002/GA002" ;
+    ns1:code "PA002/GA002" .
+
+ns1:SubdivisionOfUse a owl:DatatypeProperty ;
+    rdfs:label "Subdivision of use" ;
+    rdfs:comment "Documented geographical region of use of the group of properties" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA025/GA020" ;
+    ns1:code "PA025/GA020" .
+
+ns1:Tolerance a owl:DatatypeProperty ;
+    rdfs:label "Tolerance" ;
+    rdfs:comment "For numerical values; the total amount that a specific unit is permitted to vary; it is the difference between the maximum and the minimum limits for the unit" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA036" ;
+    ns1:code "PA036" .
+
+ns1:Unit a owl:ObjectProperty ;
+    rdfs:label "Unit" ;
+    rdfs:comment "Unit of measurement for the digital text type" ;
+    rdfs:domain ns1:DigitalFormatItem ;
+    rdfs:range <http://qudt.org/schema/qudt/Unit> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    skos:scopeNote "PA037" ;
+    ns1:code "PA037" .
+
+ns1:VersionNumber a owl:DatatypeProperty ;
+    rdfs:label "Version number" ;
+    rdfs:comment "This version number allows tracking of major changes. Experts decide if a new version number must be applied" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA009/GA009" ;
+    ns1:code "PA009/GA009" .
+
+ns1:VisualRepresentation a owl:DatatypeProperty ;
+    rdfs:label "Visual representation" ;
+    rdfs:comment "Visual representation of the group of properties through sketches, photos, videos or other multimedia objects" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA023/GA018" ;
+    ns1:code "PA023/GA018" .
+
+ns1:hasPropertyReference a owl:ObjectProperty ;
+    rdfs:label "has Property Reference" ;
+    rdfs:comment "Attaches a property reference to a property assignment" ;
+    rdfs:domain ns1:AssignedProperty ;
+    rdfs:range ns1:Property ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns1:AssignedProperty a owl:Class ;
+    rdfs:label "Assigned property" ;
+    rdfs:comment "Represents the assignment of a property and a property state to a feature of interest (FOI)." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty <http://www.w3id.org/opm#hasPropertyState> ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty ns1:hasPropertyReference ],
+        <http://www.w3id.org/opm#Property> .
+
+ns1:CountryOfOrigin a owl:DatatypeProperty ;
+    rdfs:label "Country of origin" ;
+    rdfs:comment "Country from where the requirement for this property/group of properties originated" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA026/GA021" ;
+    ns1:code "PA026/GA021" .
+
+ns1:DictionarySubset a owl:Class ;
+    rdfs:label "Dictionary subset" ;
+    rdfs:comment "Defines a subset or subgrouping of a data catalog" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty ns1:hasDictionaryReferenceDocument ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcat:accessURL ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty dcterms:title ],
+        dcat:Dataset .
+
+ns1:Dimension a owl:DatatypeProperty ;
+    rdfs:label "Dimension" ;
+    rdfs:comment "In case of a physical quantity, dimension according to ISO 80000 (all parts)\\nThis attribute allows the dimension to be machine readable; as all physical quantities are derived from 7 base quantities, it is provided with the power (as a rational number) attached to a basic dimension in the following order and with one space between each" ;
+    rdfs:domain ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA028" ;
+    ns1:code "PA028" .
+
+ns1:InterConDictID a owl:DatatypeProperty ;
+    rdfs:label "Interconnected Data Dictionary ID" ;
+    rdfs:comment "Corresponding data dictionary identifier" ;
+    rdfs:domain ns1:RelationOfPropertiyIdentifiersInTheInterconnectedDataDictionaries,
+        ns1:RelationOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA014" ;
+    ns1:code "PA014/GA014" .
+
+ns1:DeprecationExplanation a owl:DatatypeProperty ;
+    rdfs:label "Deprecation explanation" ;
+    rdfs:comment "Sentence explaining the reason of the deprecation, which can explain how to convert values to conform to the new property/group of properties; this explanation has to be written in international English (EN)" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA013/GA013" ;
+    ns1:code "PA013/GA013" .
+
+ns1:GloballyUniqueIdentifier a owl:DatatypeProperty ;
+    rdfs:label "Globally Unique Identifier (GUID)" ;
+    rdfs:comment "Unique identifier generated using the algorithm denoted in RFC 4122" ;
+    rdfs:domain ns1:GroupOfProperties,
+        ns1:Property ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    skos:scopeNote "PA001/GA001" ;
+    ns1:code "PA001/GA001" .
+
+ns1:GroupOfProperties a owl:Class ;
+    rdfs:label "Group of properties" ;
+    rdfs:comment "Collection enabling the properties to be prearranged or organized" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Dimension ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DeprecationExplanation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DeprecationExplanation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfLastChange ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfActivation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns1:Tolerance ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:GloballyUniqueIdentifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:integer ;
+            owl:onProperty ns1:RevisionNumber ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:RelationOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries ;
+            owl:onProperty ns1:RelationsOfTheGroupOfPropertiesIdentifiersInTheInterconnectedDataDictionaries ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:ParentGroupOfProperties ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:integer ;
+            owl:onProperty ns1:VersionNumber ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfVersion ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:NameInLanguage ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:oneOf ( "Alternative use" "Class" "Composed property" "Domain" "Reference document" ) ] ;
+            owl:onProperty ns1:CategoryOfGroupOfProperties ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:ListOfReplacedGroupsOfProperties ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:ListOfReplacingGroupsOfProperties ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfCreation ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CountryOfUse ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CreatorsLanguage ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfRevision ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:SubdivisionOfUse ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:ParentGroupOfProperties ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:VisualRepresentation ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:oneOf ( "active" "inactive" ) ],
+                xsd:string ;
+            owl:onProperty ns1:Status ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CountryOfOrigin ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DefinitionInLanguage ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfDeactivation ],
+        owl:Thing .
+
+ns1:Property a owl:Class ;
+    rdfs:label "Property" ;
+    rdfs:comment "Inherent or acquired feature of an item" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:SymbolOfTheProperty ;
+            owl:onProperty ns1:SymbolsOfTheProperty ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:integer ;
+            owl:onProperty ns1:RevisionNumber ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CountryOfOrigin ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:Property ;
+            owl:onProperty ns1:ConnectedProperties ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:ListOfPossibleValuesInLanguageN ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:DefiningValuesList ;
+            owl:onProperty ns1:DefiningValues ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:ExampleInLanguage ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:PossibleValueInLanguageN ;
+            owl:onProperty ns1:ListOfPossibleValuesInLanguageN ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:TextFormatItem ;
+            owl:onProperty ns1:TextFormat ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:SubdivisionOfUse ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfLastChange ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:oneOf ( "yes" "no" ) ] ;
+            owl:onProperty ns1:DynamicProperty ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:BoundaryValuesList ;
+            owl:onProperty ns1:BoundaryValues ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DefinitionInLanguage ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:Property ;
+            owl:onProperty ns1:ListOfReplacingProperties ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Dimension ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:NameOfTheDefiningValues ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CountryOfOrigin ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DeprecationExplanation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:CountryOfUse ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfActivation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:MethodOfMeasurement ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Dimension ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DescriptionInLanguage ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty ns1:CreatorsLanguage ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:GloballyUniqueIdentifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:PhysicalQuantity ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DeprecationExplanation ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:oneOf ( "active" "inactive" ) ] ;
+            owl:onProperty ns1:Status ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfVersion ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:DigitalFormatItem ;
+            owl:onProperty ns1:DigitalFormat ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:Property ;
+            owl:onProperty ns1:ParametersOfTheDynamicProperty ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns1:Tolerance ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:DataType ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfCreation ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:VisualRepresentation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:integer ;
+            owl:onProperty ns1:VersionNumber ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:RelationOfPropertiyIdentifiersInTheInterconnectedDataDictionaries ;
+            owl:onProperty ns1:RelationsOfThePropertyIdentifiersInTheInterconnectedDataDictionaries ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:NameInLanguage ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfRevision ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 1 ;
+            owl:onClass ns1:GroupOfProperties ;
+            owl:onProperty ns1:GroupsOfProperties ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:DateOfDeactivation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns1:Units ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality 0 ;
+            owl:onClass ns1:Property ;
+            owl:onProperty ns1:ListOfReplacedProperties ],
+        owl:Thing ;
+    owl:equivalentClass <https://w3id.org/opm#Property> .
+

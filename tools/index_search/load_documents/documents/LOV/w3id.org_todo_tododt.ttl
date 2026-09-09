@@ -1,0 +1,312 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/todo/tododt> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns2:license a owl:AnnotationProperty .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+xsd:time a rdfs:Datatype .
+
+owl:versionIRI a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    ns2:license "http://purl.org/NET/rdflicense/cc-by4.0" ;
+    dcterms:contributor "Izaskun Fernández (Tekniker) <mailto:izaskun.fernandez@tekniker.es>"^^xsd:string ;
+    dcterms:created "2020-04-21T00:00:00" ;
+    dcterms:creator "Cristina Aceta (Tekniker) <mailto:cristina.aceta@tekniker.es>"^^xsd:string ;
+    dcterms:description "Module for dialogue tracing."^^xsd:string ;
+    dcterms:issued "" ;
+    dcterms:modified "2021-09-23T10:00:00" ;
+    dcterms:title "TODODT: Dialogue Tracing Module for Task-Oriented Dialogue management Ontology (TODO)"^^xsd:string ;
+    vann:preferredNamespacePrefix "tododt"^^xsd:string ;
+    vann:preferredNamespaceUri "https://w3id.org/todo/tododt" ;
+    owl:priorVersion "" ;
+    owl:versionInfo 2.1 .
+
+<https://w3id.org/todo/tododt#ContentUserResponseTrace> a owl:Class ;
+    rdfs:label "ContentUserResponseTrace" ;
+    rdfs:comment "Element that leaves a record of the User Responses performed throughout the dialogue process. These responses provide specific information, as a response for a ContentRequest."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#UserResponseTrace> ;
+    owl:disjointWith <https://w3id.org/todo/tododt#YesNoUserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Content User Response: The error code is 412."@en .
+
+<https://w3id.org/todo/tododt#DialogueTrace> a owl:Class ;
+    rdfs:label "DialogueTrace" ;
+    rdfs:comment "Element that leaves a record of the dialogues performed." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <https://w3id.org/todo/tododt#dialogueStep> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododt#hasUserRequest> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#UserRequestTrace> ],
+        <https://w3id.org/todo/tododt#DialogueProcessTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#NoUserResponse> a owl:Class ;
+    rdfs:label "NoUserResponse" ;
+    rdfs:comment "Element that leaves a record of the User Responses performed throughout the dialogue process. These responses correspond to a negative polarity."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#YesNoUserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "No User Responses: No, Never, Not at all"@en .
+
+<https://w3id.org/todo/tododt#NullUserResponseTrace> a owl:Class ;
+    rdfs:label "NullUserResponseTrace" ;
+    rdfs:comment "Response that does not represent a value that can be classified as ContentResponse or YesNoResponse."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#UserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Null User Response: I don't know."@en .
+
+<https://w3id.org/todo/tododt#YesUserResponse> a owl:Class ;
+    rdfs:label "YesUserResponse" ;
+    rdfs:comment "Element that leaves a record of the User Responses performed throughout the dialogue process. These responses correspond to a positive polarity."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#YesNoUserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "Yes User Responses: Yes, OK"@en .
+
+<https://w3id.org/todo/tododt#currentValue> a owl:DatatypeProperty ;
+    rdfs:label "currentValue" ;
+    rdfs:comment "When asking the user for a specific information, the information currently asked to the user." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" ;
+    skos:example "UserReq: \"I want to go to the room\"\\n\\npossibleValue \"room1\"\\npossibleValue \"room2\"\\n\\nSystemReq: \"Do you want to go to {room1}?\" (currentValue: room1); \"Do you want to go to {room2}? (currentValue: room2)\""@en,
+        "UserReq: \"Quiero ir a la sala\"\\n\\npossibleValue \"sala1\"\\npossibleValue \"sala2\"\\n\\nSystem Req: \"¿Quieres ir a la {sala1}?\" (currentValue: sala1); \"¿Quieres ir a la {sala2}? (currentValue: sala2)\""@en .
+
+<https://w3id.org/todo/tododt#possibleValue> a owl:DatatypeProperty ;
+    rdfs:label "possibleValue" ;
+    rdfs:comment "When asking the user for a specific information, the possible values of that information to be asked to the user." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" ;
+    skos:example "UserReq: \"I want to go to the room\"\\n\\npossibleValue \"room1\"\\npossibleValue \"room2\"\\n\\nSystemReq: \"Do you want to go to {room1}?\"; \"Do you want to go to {room2}?\""@en .
+
+<https://w3id.org/todo/tododt#SecondaryDialogueTrace> a owl:Class ;
+    rdfs:label "SecondaryDialogueTrace" ;
+    rdfs:comment "Element that leaves a record of the secondary dialogues performed." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododt#hasUserResponse> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#UserResponseTrace> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododt#hasSystemResponse> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SystemResponseTrace> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <https://w3id.org/todo/tododt#text> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododt#hasSystemRequest> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SystemRequestTrace> ],
+        <https://w3id.org/todo/tododt#DialogueProcessTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#SystemRequestTrace> a owl:Class ;
+    rdfs:label "SystemRequestTrace" ;
+    rdfs:comment "Element that leaves a record of the SystemRequests performed throughout the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#SystemStepTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#SystemResponseTrace> a owl:Class ;
+    rdfs:label "SystemResponseTrace" ;
+    rdfs:comment "Element that leaves a record of the SystemResponses performed throughout the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#SystemStepTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#UserRequestTrace> a owl:Class ;
+    rdfs:label "UserRequestTrace" ;
+    rdfs:comment "Element that leaves a record of the User Requests performed throughout the dialogue process."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#UserStepTrace> ;
+    owl:disjointWith <https://w3id.org/todo/tododt#UserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#dialStatus> a owl:DatatypeProperty ;
+    rdfs:label "dialStatus" ;
+    rdfs:comment "Sets whether a Dialogue/SecondaryDialogue has finished (closed) or not (open)." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "closed" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "open" ;
+                            rdf:rest () ] ] ] ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#dialogueStep> a owl:DatatypeProperty ;
+    rdfs:label "dialogueStep" ;
+    rdfs:comment "Used to control which step is performing the current Dialogue." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#finishDateTime> a owl:DatatypeProperty ;
+    rdfs:label "finishDateTime" ;
+    rdfs:comment "Sets a finish timestamp to a DialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododt#dateTime> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#hasSecondaryDialogue> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "hasSecondaryDialogue" ;
+    rdfs:comment "Establishes the SecondaryDialogue corresponding to a DialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#hasSystemRequest> a owl:ObjectProperty ;
+    rdfs:label "hasSystemRequest" ;
+    rdfs:comment "Establishes the SystemRequest corresponding to a SecondaryDialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#hasSystemResponse> a owl:ObjectProperty ;
+    rdfs:label "hasSystemResponse" ;
+    rdfs:comment "Establishes the SystemResponse corresponding to a SecondaryDialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#hasUserRequest> a owl:ObjectProperty ;
+    rdfs:label "hasUserRequest" ;
+    rdfs:comment "Establishes the UserRequest corresponding to a DialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#hasUserResponse> a owl:ObjectProperty ;
+    rdfs:label "hasUserResponse" ;
+    rdfs:comment "Establishes the UserResponse corresponding to a SecondaryDialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#initDateTime> a owl:DatatypeProperty ;
+    rdfs:label "initDateTime" ;
+    rdfs:comment "Sets a start timestamp to a DialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subPropertyOf <https://w3id.org/todo/tododt#dateTime> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#DialogueProcessTrace> a owl:Class ;
+    rdfs:label "DialogueProcessTrace" ;
+    rdfs:comment "Element that leaves a record of the dialogues performed throughout the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododt#hasSecondaryDialogue> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SecondaryDialogueTrace> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty <https://w3id.org/todo/tododt#finishDateTime> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty <https://w3id.org/todo/tododt#initDateTime> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:oneOf [ a rdf:List ;
+                            rdf:first "close" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "open" ;
+                                    rdf:rest () ] ] ] ;
+            owl:onProperty <https://w3id.org/todo/tododt#dialStatus> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#SystemStepTrace> a owl:Class ;
+    rdfs:label "SystemStepTrace" ;
+    rdfs:comment "Element that leaves a record of the SystemSteps performed throughout the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#UserStepTrace> a owl:Class ;
+    rdfs:label "UserStepTrace" ;
+    rdfs:comment "Element that leaves a record of the user steps (requests and responses) performed throughout the dialogue process." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <https://w3id.org/todo/tododt#text> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#dateTime> a owl:DatatypeProperty ;
+    rdfs:label "dateTime" ;
+    rdfs:comment "Sets a timestamp to a DialogueTrace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#text> a owl:DatatypeProperty ;
+    rdfs:label "text" ;
+    rdfs:comment "String that corresponds to a transcribed command by an user or the fully constructed outputSentence directed to the user." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#YesNoUserResponseTrace> a owl:Class ;
+    rdfs:label "YesNoUserResponseTrace" ;
+    rdfs:comment "Element that leaves a record of the User Responses performed throughout the dialogue process. These responses correspond to a positive or negative polarity."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#UserResponseTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string ;
+    skos:example "YesNo User Responses:\\n\\n- Yes, OK\\n\\n- No, Not at all"@en .
+
+<https://w3id.org/todo/tododt#UserResponseTrace> a owl:Class ;
+    rdfs:label "UserResponseTrace" ;
+    rdfs:comment "Element that leaves a record of the User Responses performed throughout the dialogue process."@en ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododt#" ;
+    rdfs:subClassOf <https://w3id.org/todo/tododt#UserStepTrace> ;
+    owl:hasKey ( <https://w3id.org/todo/tododt#IDval> ) ;
+    ns1:term_status "stable"^^xsd:string .
+
+<https://w3id.org/todo/tododt#IDval> a owl:DatatypeProperty ;
+    rdfs:label "IDval" ;
+    rdfs:comment "Unique identification value for individuals." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/tododom#" ;
+    ns1:term_status "stable" .
+

@@ -1,0 +1,295 @@
+@prefix onto: <https://data.nasa.gov/ontologies/atmonto/equipment#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.nasa.gov/ontologies/atmonto/equipment> a owl:Ontology ;
+    owl:imports <https://data.nasa.gov/ontologies/atmonto/general> ;
+    owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
+
+onto:AircraftCommunicationSystem a owl:Class ;
+    rdfs:label "Aircraft communication system"^^xsd:string ;
+    rdfs:comment "An aircraft subsystem involving all voice and data communications functions."^^xsd:string ;
+    rdfs:subClassOf onto:AircraftSubsystem .
+
+onto:AircraftEngine a owl:Class ;
+    rdfs:label "Aircraft engine"^^xsd:string ;
+    rdfs:comment "An aircraft engine is the component of the propulsion system for an aircraft that generates mechanical power."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#AircraftEngineManufacturer> ;
+            owl:onProperty onto:manufacturedBy ],
+        onto:AircraftSubsystem .
+
+onto:AircraftNavigationSystem a owl:Class ;
+    rdfs:label "Aircraft navigation system"^^xsd:string ;
+    rdfs:comment "An aircraft subsystem responsible for navigation functions."^^xsd:string ;
+    rdfs:subClassOf onto:AircraftSubsystem .
+
+onto:BallBearing a owl:Class ;
+    rdfs:label "Ball bearing"^^xsd:string ;
+    rdfs:comment "A unit assembly in an aircraft mechanical subsystem, a ball bearing is positioned between a wheel and a fixed axle, in which the rotating part and the stationary part are separated by a ring of small solid metal balls that reduce friction."^^xsd:string ;
+    rdfs:subClassOf onto:UnitAssembly .
+
+onto:ElectricalPowerSystem a owl:Class ;
+    rdfs:label "Electrical power system"^^xsd:string ;
+    rdfs:comment "An aircraft subsystem responsible for generating and distributing electrical power."^^xsd:string ;
+    rdfs:subClassOf onto:AircraftSubsystem .
+
+onto:NavigationAid a owl:Class ;
+    rdfs:label "Navigation aid"^^xsd:string ;
+    rdfs:comment "A navaid (navigational aid) is an engineered system on the ground that airplanes can detect based on their emission of radio signals that enable the aircraft to navigate. Modern examples include NDBs and VORs, which both transmit radio signals that aircraft can follow and home in on."^^xsd:string ;
+    rdfs:subClassOf onto:DecomposableSystem .
+
+onto:aircraftModelCertainty a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aircraft model certainty"^^xsd:string ;
+    rdfs:comment "A numeric measure between 0 and 1 reflecting how certain the eqp:hasAircraftModel link is to be correct between the aircraft and the model. A value of one indicates 100% certainty. A lesser value is not to be taken as a percentage, but is a heuristic similarity value taken from the scoring of the TF/IDF similarity assessment performed between the FAA aircraft make/model in the FAA registration database and ICAO make/model names used in the ontology."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:float .
+
+onto:aircraftRegistrant a owl:DatatypeProperty ;
+    rdfs:label "aircraft registrant"^^xsd:string ;
+    rdfs:comment "The name of the entity that registered the aircraft with the FAA."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:string .
+
+onto:aircraftSerialNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "serial number"^^xsd:string ;
+    rdfs:comment "The manufacturer serial number of the aircraft."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:string .
+
+onto:aircraftTypeDesignator a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aircraft type designator"^^xsd:string ;
+    rdfs:comment "The type designator code for this type of aircraft (e.g., B777)."^^xsd:string ;
+    rdfs:domain onto:AircraftType ;
+    rdfs:range xsd:string .
+
+onto:aircraftWeightHighBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aircraft weight high bound"^^xsd:string ;
+    rdfs:comment "The upper bound of the aircraft weight category."^^xsd:string ;
+    rdfs:domain onto:AircraftWeightClass ;
+    rdfs:range xsd:integer .
+
+onto:aircraftWeightLowBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "aircraft weight low bound"^^xsd:string ;
+    rdfs:comment "The lower bound of the aircraft weight category."^^xsd:string ;
+    rdfs:domain onto:AircraftWeightClass ;
+    rdfs:range xsd:integer .
+
+onto:certificateIssueDate a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "certificate issue date"^^xsd:string ;
+    rdfs:comment "The date that an operating certificate was issued to the aircraft."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:date .
+
+onto:cicttNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "CICTT number"^^xsd:string ;
+    rdfs:comment "CAST/ICAO Common Taxonomy Team (CICTT) identifier for this model as specified by the International Aircraft Categorisation And Identification Standard (IACIS)."^^xsd:string ;
+    rdfs:domain onto:AircraftModel ;
+    rdfs:range xsd:integer .
+
+onto:designedBy a owl:ObjectProperty ;
+    rdfs:label "designed by"^^xsd:string ;
+    rdfs:comment "Links an aircraft model to the airframe manufacturer that designed the model."^^xsd:string ;
+    rdfs:domain onto:AircraftModel ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AirframeManufacturer> .
+
+onto:engineTypeDescription a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "engine type description"^^xsd:string ;
+    rdfs:comment "A text description of the engine type characteristics."^^xsd:string ;
+    rdfs:domain onto:EngineType ;
+    rdfs:range xsd:string .
+
+onto:hasAircraftEngineType a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has aircraft engine type"^^xsd:string ;
+    rdfs:comment "Links an aircraft type to the type of engine it uses."^^xsd:string ;
+    rdfs:domain onto:AircraftType ;
+    rdfs:range onto:EngineType .
+
+onto:hasAircraftModel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has aircraft model"^^xsd:string ;
+    rdfs:comment "Links a specific aircraft to its model."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range onto:AircraftModel .
+
+onto:hasAircraftWakeCategory a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has aircraft wake category"^^xsd:string ;
+    rdfs:comment "Links an aircraft model to its wake category."^^xsd:string ;
+    rdfs:domain onto:AircraftType ;
+    rdfs:range onto:AircraftWakeCategory .
+
+onto:hasAircraftWeightClass a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has aircraft weight class"^^xsd:string ;
+    rdfs:comment "Links an aircraft model to its weight class."^^xsd:string ;
+    rdfs:domain onto:AircraftType ;
+    rdfs:range onto:AircraftWeightClass .
+
+onto:hasComponent a owl:ObjectProperty ;
+    rdfs:label "has component"^^xsd:string ;
+    rdfs:comment "Connects an engineered system to its primitive components."^^xsd:string ;
+    rdfs:domain onto:DecomposableSystem ;
+    rdfs:range onto:UnitAssembly .
+
+onto:hasSubsystem a owl:ObjectProperty ;
+    rdfs:label "has subsystem"^^xsd:string ;
+    rdfs:comment "Connects an engineered system to its subsystems."^^xsd:string ;
+    rdfs:domain onto:DecomposableSystem ;
+    rdfs:range onto:DecomposableSystem .
+
+onto:isAircraftType a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is aircraft type"^^xsd:string ;
+    rdfs:comment "Links an aircraft model to its type, where the type represents a set of related models."^^xsd:string ;
+    rdfs:domain onto:AircraftModel ;
+    rdfs:range onto:AircraftType .
+
+onto:manufactureYear a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "manufacture year"^^xsd:string ;
+    rdfs:comment "The year the system was manufactured."^^xsd:string ;
+    rdfs:domain onto:EngineeredSystem ;
+    rdfs:range xsd:integer .
+
+onto:maxTakeoffWeightHighBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "max takeoff weight high bound"^^xsd:string ;
+    rdfs:comment "The upper bound of the maximum takeoff weight for this category."^^xsd:string ;
+    rdfs:domain onto:AircraftWakeCategory ;
+    rdfs:range xsd:integer .
+
+onto:maxTakeoffWeightLowBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "max takeoff weight low bound"^^xsd:string ;
+    rdfs:comment "The lower bound of the maximum takeoff weight for this category."^^xsd:string ;
+    rdfs:domain onto:AircraftWakeCategory ;
+    rdfs:range xsd:integer .
+
+onto:modeSCode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "mode SCode"^^xsd:string ;
+    rdfs:comment "The unique Mode S address of the transponder aboard the aircraft. Mode S equipment on aircraft are assigned a unique ICAO 24-bit address or (informally) Mode S hex code upon national registration and this address becomes a part of the aircraft's Certificate of Registration."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:string .
+
+onto:modelID a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "model ID"^^xsd:string ;
+    rdfs:comment "The string identifier of the model for this system/subsystem/assembly."^^xsd:string ;
+    rdfs:domain onto:EngineeredSystem ;
+    rdfs:range xsd:string .
+
+onto:numberOfEngines a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "number of engines"^^xsd:string ;
+    rdfs:comment "The number of engines specified for this aircraft model or found on this aircraft."^^xsd:string ;
+    rdfs:domain onto:Aircraft,
+        onto:AircraftModel ;
+    rdfs:range xsd:integer .
+
+onto:numberOfSeats a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "number of seats"^^xsd:string ;
+    rdfs:comment "The number of seats on this aircraft."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:integer .
+
+onto:registrationNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "registration number"^^xsd:string ;
+    rdfs:comment "The aircraft FAA registration number (the tail number, or the N-Number in the US)."^^xsd:string ;
+    rdfs:domain onto:Aircraft ;
+    rdfs:range xsd:string .
+
+onto:wakeCategoryID a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "wake category ID"^^xsd:string ;
+    rdfs:comment "The wake category identification character (A through F)."^^xsd:string ;
+    rdfs:domain onto:AircraftWakeCategory ;
+    rdfs:range xsd:string .
+
+onto:wingSpanHighBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "wing span high bound"^^xsd:string ;
+    rdfs:comment "The upper bound of the wingspan for this category."^^xsd:string ;
+    rdfs:domain onto:AircraftWakeCategory ;
+    rdfs:range xsd:integer .
+
+onto:wingSpanLowBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "wing span low bound"^^xsd:string ;
+    rdfs:comment "The lower bound of the wingspan for this category."^^xsd:string ;
+    rdfs:domain onto:AircraftWakeCategory ;
+    rdfs:range xsd:integer .
+
+onto:EngineType a owl:Class ;
+    rdfs:label "Engine Type"^^xsd:string ;
+    rdfs:comment "Represents different generic types of aircraft engines."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:UnitAssembly a owl:Class ;
+    rdfs:label "Unit assembly"^^xsd:string ;
+    rdfs:comment "A primitive, non-decomposible component in an engineered system."^^xsd:string ;
+    rdfs:subClassOf onto:EngineeredSystem .
+
+onto:manufacturedBy a owl:ObjectProperty ;
+    rdfs:label "manufactured by"^^xsd:string ;
+    rdfs:comment "A link to the entity that manufactured the system."^^xsd:string ;
+    rdfs:domain onto:EngineeredSystem ;
+    rdfs:range <https://data.nasa.gov/ontologies/atmonto/NAS#AviationIndustryManufacturer> .
+
+onto:AircraftWeightClass a owl:Class ;
+    rdfs:label "Aircraft Weight Class"^^xsd:string ;
+    rdfs:comment "Specifies a category of aircraft that can be used to partition aircraft according to their weight."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:AircraftSubsystem a owl:Class ;
+    rdfs:label "Aircraft subsystem"^^xsd:string ;
+    rdfs:comment "An engineering subsystem of an aircraft."^^xsd:string ;
+    rdfs:subClassOf onto:DecomposableSystem .
+
+onto:AircraftModel a owl:Class ;
+    rdfs:label "Aircraft model"^^xsd:string ;
+    rdfs:comment "An aircraft model represents a generic specification that describes the characteristics of a specific type of aircraft to be manufactured."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:AircraftType a owl:Class ;
+    rdfs:label "Aircraft Type"^^xsd:string ;
+    rdfs:comment "An aircraft type represents a set of related aircraft models. Each type corresponds to one of the FAA's aircraft type designators (e.g., B777 covers all Boeing 777 models)."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:EngineeredSystem a owl:Class ;
+    rdfs:label "Engineered system"^^xsd:string ;
+    rdfs:comment "Represents engineered systems as either decomposable or non-decomposible subsystems."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:AircraftWakeCategory a owl:Class ;
+    rdfs:label "Aircraft Wake Category"^^xsd:string ;
+    rdfs:comment "Specifies a category of aircraft according to their wake turbulance characteristics (including takeoff weight and wingspan). These categories are useful for the purpose of FAA separation assurance. See FAA Order JO 7110.659B, Wake Turbulence Recategorization, effective March 01, 2015."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:DecomposableSystem a owl:Class ;
+    rdfs:label "Decomposable system"^^xsd:string ;
+    rdfs:comment "A complex engineering system that can be further decomposed into a set of decomposable subsystems and primitive components."^^xsd:string ;
+    rdfs:subClassOf onto:EngineeredSystem .
+
+onto:Aircraft a owl:Class ;
+    rdfs:label "Aircraft"^^xsd:string ;
+    rdfs:comment "A physical realization of an aircraft, produced according to the specifications defined for a specific model type."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://data.nasa.gov/ontologies/atmonto/NAS#AirframeManufacturer> ;
+            owl:onProperty onto:manufacturedBy ],
+        onto:DecomposableSystem,
+        <https://data.nasa.gov/ontologies/atmonto/general#SequencedItem> .
+

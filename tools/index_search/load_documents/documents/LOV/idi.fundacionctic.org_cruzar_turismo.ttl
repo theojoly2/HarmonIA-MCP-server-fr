@@ -1,0 +1,1560 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://idi.fundacionctic.org/cruzar/turismo#> .
+@prefix ns2: <http://www.loa-cnr.it/ontologies/DOLCE-Lite#> .
+@prefix ns3: <http://www.loa-cnr.it/ontologies/TemporalRelations#> .
+@prefix ns4: <http://www.loa-cnr.it/ontologies/ExtendedDnS#> .
+@prefix ns5: <http://www.loa-cnr.it/ontologies/CommonSenseMapping#> .
+@prefix onto: <http://idi.fundacionctic.org/cruzar/turismo> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator "Departamento I+D+i (Fundación CTIC)"^^xsd:string .
+
+ns1:Alojamiento a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-hostelero .
+
+ns1:Caminar-velocidad-lenta a ns1:Preferencia-de-ruta ;
+    rdfs:label "Slow walking"@en,
+        "Vitesse lente de marche"@fr ;
+    ns1:necessity-relevance "1.75"^^xsd:float .
+
+ns1:Caminar-velocidad-rapida a ns1:Preferencia-de-ruta ;
+    rdfs:label "Fast walking"@en,
+        "Vitesse légère de marche"@fr ;
+    ns1:necessity-relevance "0.75"^^xsd:float .
+
+ns1:Edificio-historico a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Edificio-religioso a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Entorno-natural a owl:Class ;
+    rdfs:subClassOf ns1:Zona-verde .
+
+ns1:Escultura a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Estilo-neoclasico a ns1:Estilo-artistico ;
+    rdfs:label "Neoclassical style"@en,
+        "Style néoclassique"@fr .
+
+ns1:Fortaleza a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Horario-de-visita_8 a ns1:Horario-de-visita ;
+    ns1:closing-time "10:32:24"^^xsd:time ;
+    ns1:opening-time "15:32:32"^^xsd:time ;
+    ns2:r-location ns1:Temporada-de-invierno .
+
+ns1:Interes-en-edificio-historico a ns1:Interes-turistico ;
+    rdfs:label "Interest in historical buildings"@en,
+        "Intérêt pour les bâtiments historiques"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Interes-en-edificio-religioso a ns1:Interes-turistico ;
+    rdfs:label "Interest in religious buildings"@en,
+        "Intérêt pour les bâtiments religieux"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Interes-en-escultura a ns1:Interes-turistico ;
+    rdfs:label "Interest in sculpture"@en,
+        "Intérêt pour la sculpture"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Interes-en-fortalezas a ns1:Interes-turistico ;
+    rdfs:label "Interest in fortress"@en,
+        "Intérêt pour les forteresses"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Interes-en-museos a ns1:Interes-turistico ;
+    rdfs:label "Interest in museums"@en,
+        "Intérêt pour les musées"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Interes-en-palacios a ns1:Interes-turistico ;
+    rdfs:label "Interest in palaces"@en,
+        "Intérêt pour les palais"@fr ;
+    ns1:interest-relevance "0.5"^^xsd:float .
+
+ns1:Mercado a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-comercial .
+
+ns1:Museo a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Palacio a owl:Class ;
+    rdfs:subClassOf ns1:Monumento .
+
+ns1:Restaurante a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:has-quality ;
+            owl:someValuesFrom ns1:Calificacion ],
+        ns1:Recurso-hostelero .
+
+ns1:Sector-comercial a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-comercial .
+
+ns1:Ver-edificio-historico a ns1:Preferencia-de-usuario .
+
+ns1:Ver-edificio-religioso a ns1:Preferencia-de-usuario .
+
+ns1:Ver-escultura a ns1:Preferencia-de-usuario .
+
+ns1:Ver-fortaleza a ns1:Preferencia-de-usuario .
+
+ns1:Ver-museo a ns1:Preferencia-de-usuario .
+
+ns1:Ver-palacio a ns1:Preferencia-de-usuario .
+
+ns1:Ver-zona-verde a ns1:Preferencia-de-usuario .
+
+ns1:Viaje-de-descanso a ns1:Viaje .
+
+ns1:Visitar-tiempo-corto a ns1:Preferencia-de-ruta ;
+    rdfs:label "Short time of visit"@en,
+        "Durée breve de visite"@fr ;
+    ns1:necessity-relevance "0.5"^^xsd:float .
+
+ns1:Visitar-tiempo-largo a ns1:Preferencia-de-ruta ;
+    rdfs:label "Long time of visit"@en,
+        "Durée longue de visite"@fr ;
+    ns1:necessity-relevance "1.6"^^xsd:float .
+
+ns1:address a owl:AnnotationProperty ;
+    rdfs:label "Dirección Postal"^^xsd:string ;
+    rdfs:comment "Guarda la dirección postal del recurso"^^xsd:string .
+
+ns1:begining-date a owl:DatatypeProperty ;
+    rdfs:label "Fecha de inicio"^^xsd:string ;
+    rdfs:domain ns1:Temporada ;
+    rdfs:range xsd:date .
+
+ns1:closing-time a owl:DatatypeProperty ;
+    rdfs:domain ns1:Horario-de-visita ;
+    rdfs:range xsd:time .
+
+ns1:date a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Dia-Festivo ns1:Dia-de-visita-turistica ) ] ;
+    rdfs:range xsd:date .
+
+ns1:ending-date a owl:DatatypeProperty ;
+    rdfs:label "Fecha de finalización"^^xsd:string ;
+    rdfs:domain ns1:Temporada ;
+    rdfs:range xsd:date .
+
+ns1:final-date a owl:DatatypeProperty ;
+    rdfs:label "Día final"^^xsd:string ;
+    rdfs:domain ns1:Evento-de-zaragoza ;
+    rdfs:range xsd:date .
+
+ns1:has-interest a owl:ObjectProperty ;
+    rdfs:label "Tiene interés"@en ;
+    rdfs:range ns1:Interes-turistico ;
+    rdfs:subPropertyOf ns2:has-quality .
+
+ns1:has-no-interest a owl:ObjectProperty ;
+    rdfs:label "No tiene interés"@en ;
+    rdfs:domain _:B1e4bbdcb8fda8f102b0c7398cf3efbd7 ;
+    rdfs:range ns1:Interes-turistico .
+
+ns1:horario a owl:AnnotationProperty ;
+    rdfs:label "Horario"^^xsd:string ;
+    rdfs:comment "Guarda el texto con el horario de visita del recurso."^^xsd:string .
+
+ns1:id-idezar a owl:AnnotationProperty ;
+    rdfs:label "Identificador de IDEZar"^^xsd:string .
+
+ns1:initial-date a owl:DatatypeProperty ;
+    rdfs:label "Día inicial"^^xsd:string ;
+    rdfs:domain ns1:Evento-de-zaragoza ;
+    rdfs:range xsd:date .
+
+ns1:interest-relevance a owl:DatatypeProperty ;
+    rdfs:label "Relevancia de los intereses turísticos"^^xsd:string ;
+    rdfs:domain ns1:Interes-turistico ;
+    rdfs:range xsd:float .
+
+ns1:interest-towards a owl:ObjectProperty ;
+    rdfs:label "Tiene interés en determinados recursos"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Recurso-de-zaragoza .
+
+ns1:necessity-relevance a owl:DatatypeProperty ;
+    rdfs:label "Relevancia de las preferencias de ruta"^^xsd:string ;
+    rdfs:domain ns1:Preferencia-de-ruta ;
+    rdfs:range xsd:float .
+
+ns1:not-desire-towards a owl:ObjectProperty ;
+    rdfs:label "No tiene preferencia"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Preferencia-de-usuario .
+
+ns1:not-interest-towards a owl:ObjectProperty ;
+    rdfs:label "No tiene interés en determinados recursos"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Recurso-de-zaragoza .
+
+ns1:opening-time a owl:DatatypeProperty ;
+    rdfs:domain ns1:Horario-de-visita ;
+    rdfs:range xsd:time .
+
+ns1:poi-relevance a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain ns1:Recurso-turistico ;
+    rdfs:range [ a owl:DataRange ;
+            owl:oneOf ( "25"^^xsd:int "50"^^xsd:int "75"^^xsd:int ) ] .
+
+ns1:visit-duration a owl:DatatypeProperty ;
+    rdfs:domain ns1:Recurso-turistico ;
+    rdfs:range xsd:int .
+
+dc:coverage a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:identifier a owl:AnnotationProperty .
+
+dc:subject a owl:AnnotationProperty .
+
+ns4:refines a owl:ObjectProperty ;
+    rdfs:label "refines"@en ;
+    rdfs:domain _:Bdc01e747686b4bd8d24ed806ef30ed9b ;
+    rdfs:range _:Bdc01e747686b4bd8d24ed806ef30ed9b .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> a owl:DatatypeProperty ;
+    rdfs:domain ns1:Recurso-de-zaragoza ;
+    rdfs:range xsd:double .
+
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> a owl:DatatypeProperty ;
+    rdfs:domain ns1:Recurso-de-zaragoza ;
+    rdfs:range xsd:double .
+
+skos:definition a owl:AnnotationProperty .
+
+foaf:depiction a owl:AnnotationProperty .
+
+ns1:Perfil-de-prueba1 a ns1:Perfil-de-turista ;
+    ns4:covers ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-pareja ;
+    ns4:performs ns1:Viaje-de-turismo ;
+    ns3:e-temporal-location ns1:Dia-de-visita-turistica_6,
+        ns1:Dia-de-visita-turistica_7 .
+
+ns1:Perfil-de-prueba2 a ns1:Perfil-de-turista ;
+    ns4:covers ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-pareja ;
+    ns4:performs ns1:Viaje-de-turismo ;
+    ns3:e-temporal-location ns1:Dia-de-visita-turistica_6,
+        ns1:Dia-de-visita-turistica_7 .
+
+ns1:Temporada-de-verano a ns1:Temporada ;
+    ns1:begining-date "2007-05-01"^^xsd:date ;
+    ns1:ending-date "2007-10-08"^^xsd:date .
+
+ns1:Zona-verde a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-turistico .
+
+ns5:happens-at a owl:ObjectProperty ;
+    rdfs:label "happens at"@en ;
+    rdfs:domain ns1:Visita-turistica ;
+    rdfs:range ns1:Dia-de-visita-turistica .
+
+ns2:part a owl:ObjectProperty ;
+    rdfs:label "part"@en ;
+    rdfs:domain ns2:temporal-region ;
+    rdfs:range ns2:temporal-region ;
+    owl:inverseOf ns2:part-of .
+
+ns2:r-location a owl:ObjectProperty ;
+    rdfs:label "r-location"@en ;
+    rdfs:domain ns1:Horario-de-visita ;
+    rdfs:range ns1:Temporada .
+
+ns4:covers a owl:ObjectProperty ;
+    rdfs:label "covers"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Grupo-de-viaje .
+
+ns4:desire-towards a owl:ObjectProperty ;
+    rdfs:label "Tiene interés"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Preferencia-de-usuario .
+
+ns4:expected-setting-for a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "expected setting for"@en ;
+    rdfs:domain ns1:Ruta-turistica ;
+    rdfs:range ns1:Perfil-de-turista .
+
+ns4:performs a owl:ObjectProperty ;
+    rdfs:label "performs"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Viaje .
+
+<http://www.loa-cnr.it/ontologies/SpatialRelations#participant-place> a owl:ObjectProperty ;
+    rdfs:label "participant place"@en ;
+    rdfs:domain ns1:Evento-de-zaragoza ;
+    rdfs:range ns1:Recurso-de-zaragoza .
+
+ns3:e-temporal-location a owl:ObjectProperty ;
+    rdfs:label "e-temporal location"@en ;
+    rdfs:domain ns1:Perfil-de-turista ;
+    rdfs:range ns1:Dia-de-visita-turistica .
+
+ns3:present-at a owl:ObjectProperty ;
+    rdfs:label "present at"@en ;
+    rdfs:domain ns1:Recurso-de-zaragoza ;
+    rdfs:range ns1:Horario-de-visita .
+
+xsd:int a rdfs:Datatype .
+
+ns1:Recurso-comercial a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-de-zaragoza .
+
+ns1:Recurso-hostelero a owl:Class ;
+    rdfs:subClassOf ns1:Recurso-de-zaragoza .
+
+ns1:Ruta-turistica_propuesta1 a ns1:Ruta-turistica ;
+    ns4:expected-setting-for ns1:Perfil-de-prueba1 ;
+    ns4:setting-for ns1:Visita-planificada_01,
+        ns1:Visita-planificada_02,
+        ns1:Visita-planificada_03,
+        ns1:Visita-planificada_04,
+        ns1:Visita-planificada_05,
+        ns1:Visita-planificada_06,
+        ns1:Visita-planificada_07,
+        ns1:Visita-planificada_08,
+        ns1:Visita-planificada_09,
+        ns1:Visita-planificada_10 .
+
+ns1:Ruta-turistica_propuesta2 a ns1:Ruta-turistica ;
+    ns4:expected-setting-for ns1:Perfil-de-prueba2 ;
+    ns4:setting-for ns1:Visita-planificada_01,
+        ns1:Visita-planificada_02,
+        ns1:Visita-planificada_03,
+        ns1:Visita-planificada_04bis,
+        ns1:Visita-planificada_05bis,
+        ns1:Visita-planificada_06,
+        ns1:Visita-planificada_07,
+        ns1:Visita-planificada_08 .
+
+ns1:Temporada-de-invierno a ns1:Temporada ;
+    ns1:begining-date "2007-10-09"^^xsd:date ;
+    ns1:ending-date "2007-04-30"^^xsd:date .
+
+ns1:Visita-planificada_10 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_7 ;
+    ns3:follows ns1:Visita-planificada_09 .
+
+ns4:activity a owl:Class .
+
+ns4:setting a owl:ObjectProperty ;
+    rdfs:label "setting"@en ;
+    rdfs:domain ns1:Visita-turistica ;
+    rdfs:range ns1:Ruta-turistica ;
+    owl:inverseOf ns4:setting-for .
+
+ns4:setting-for a owl:ObjectProperty ;
+    rdfs:label "setting for"@en ;
+    rdfs:domain ns1:Ruta-turistica ;
+    rdfs:range ns1:Visita-turistica ;
+    owl:inverseOf ns4:setting .
+
+<http://www.loa-cnr.it/ontologies/FunctionalParticipation#target> a owl:ObjectProperty ;
+    rdfs:label "target"@en ;
+    rdfs:domain ns1:Visita-turistica ;
+    rdfs:range ns1:Recurso-de-zaragoza .
+
+ns3:temporally-coincides a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "temporally coincides"@en ;
+    rdfs:domain _:B3c7b0a34bc517af4add8aab781342ef4 ;
+    rdfs:range _:B3c7b0a34bc517af4add8aab781342ef4 ;
+    owl:inverseOf ns3:temporally-coincides .
+
+xsd:double a rdfs:Datatype .
+
+xsd:float a rdfs:Datatype .
+
+xsd:time a rdfs:Datatype .
+
+ns1:Accesibilidad-completa a ns1:Accesibilidad-de-movilidad-reducida ;
+    rdfs:label "Full accessibility"@en,
+        "Accessibilité complète"@fr ;
+    owl:differentFrom ns1:Accesibilidad-con-acompanyante,
+        ns1:Accesibilidad-con-muletas .
+
+ns1:Accesibilidad-con-acompanyante a ns1:Accesibilidad-de-movilidad-reducida ;
+    rdfs:label "Accessible with attendant"@en,
+        "Accessible avec accompagnateur"@fr ;
+    owl:differentFrom ns1:Accesibilidad-completa,
+        ns1:Accesibilidad-con-muletas .
+
+ns1:Accesibilidad-con-muletas a ns1:Accesibilidad-de-movilidad-reducida ;
+    rdfs:label "Accesible with crutches"@en,
+        "Accessible avec des béquilles"@fr ;
+    owl:differentFrom ns1:Accesibilidad-completa,
+        ns1:Accesibilidad-con-acompanyante .
+
+ns1:Viaje-de-congreso a ns1:Viaje ;
+    owl:differentFrom ns1:Viaje-de-negocios,
+        ns1:Viaje-de-turismo .
+
+ns1:Viaje-de-negocios a ns1:Viaje ;
+    owl:differentFrom ns1:Viaje-de-congreso,
+        ns1:Viaje-de-turismo .
+
+ns1:Visita-planificada_01 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns4:setting ns1:Ruta-turistica_propuesta1,
+        ns1:Ruta-turistica_propuesta2 ;
+    ns3:precedes ns1:Visita-planificada_02 .
+
+ns1:Visita-planificada_04 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns4:setting ns1:Ruta-turistica_propuesta1 ;
+    ns3:follows ns1:Visita-planificada_03 ;
+    ns3:precedes ns1:Visita-planificada_05 .
+
+ns1:Visita-planificada_04bis a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns4:setting ns1:Ruta-turistica_propuesta2 ;
+    ns3:follows ns1:Visita-planificada_03 ;
+    ns3:precedes ns1:Visita-planificada_05bis .
+
+ns1:Visita-planificada_05 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns3:follows ns1:Visita-planificada_04 ;
+    ns3:precedes ns1:Visita-planificada_06 .
+
+ns1:Visita-planificada_05bis a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns3:follows ns1:Visita-planificada_04bis ;
+    ns3:precedes ns1:Visita-planificada_06 .
+
+ns1:Visita-planificada_09 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_7 ;
+    ns3:follows ns1:Visita-planificada_08 ;
+    ns3:precedes ns1:Visita-planificada_10 .
+
+ns3:follows a owl:ObjectProperty ;
+    rdfs:label "follows"@en ;
+    rdfs:domain ns1:Visita-turistica ;
+    rdfs:range ns1:Visita-turistica ;
+    owl:inverseOf ns3:precedes .
+
+ns3:precedes a owl:ObjectProperty ;
+    rdfs:label "precedes"@en ;
+    rdfs:domain ns1:Visita-turistica ;
+    rdfs:range ns1:Visita-turistica ;
+    owl:inverseOf ns3:follows .
+
+ns1:Dos-tenedores a ns1:Calificacion ;
+    owl:differentFrom ns1:Sin-gluten,
+        ns1:Tres-tenedores,
+        ns1:Un-tenedor .
+
+ns1:Recurso-turistico a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns1:Accesibilidad-de-movilidad-reducida ns1:Estilo-artistico ) ] ;
+            owl:onProperty ns2:has-quality ],
+        ns1:Recurso-de-zaragoza .
+
+ns1:Sin-gluten a ns1:Calificacion ;
+    owl:differentFrom ns1:Dos-tenedores,
+        ns1:Tres-tenedores,
+        ns1:Un-tenedor .
+
+ns1:Tres-tenedores a ns1:Calificacion ;
+    owl:differentFrom ns1:Dos-tenedores,
+        ns1:Sin-gluten,
+        ns1:Un-tenedor .
+
+ns1:Un-tenedor a ns1:Calificacion ;
+    owl:differentFrom ns1:Dos-tenedores,
+        ns1:Sin-gluten,
+        ns1:Tres-tenedores .
+
+ns1:Visita-planificada_02 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns3:follows ns1:Visita-planificada_01 ;
+    ns3:precedes ns1:Visita-planificada_03 .
+
+ns1:Visita-planificada_07 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_7 ;
+    ns3:follows ns1:Visita-planificada_06 ;
+    ns3:precedes ns1:Visita-planificada_08 .
+
+ns1:Visita-planificada_08 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_7 ;
+    ns3:follows ns1:Visita-planificada_07 ;
+    ns3:precedes ns1:Visita-planificada_09 .
+
+ns2:has-quality a owl:ObjectProperty ;
+    rdfs:label "has quality"@en ;
+    rdfs:domain _:B1e4bbdcb8fda8f102b0c7398cf3efbd7 ;
+    rdfs:range ns2:quality .
+
+ns2:part-of a owl:ObjectProperty ;
+    rdfs:label "part of"@en ;
+    rdfs:domain ns2:temporal-region ;
+    rdfs:range ns2:temporal-region ;
+    owl:inverseOf ns2:part .
+
+ns1:Accesibilidad-de-movilidad-reducida a owl:Class ;
+    rdfs:subClassOf ns2:quality ;
+    owl:disjointWith ns1:Estilo-artistico .
+
+ns1:Calificacion a owl:Class ;
+    rdfs:subClassOf ns2:quality .
+
+ns1:Evento-de-zaragoza a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Recurso-de-zaragoza ;
+            owl:onProperty <http://www.loa-cnr.it/ontologies/SpatialRelations#participant-place> ],
+        ns2:event .
+
+ns1:Grupo-con-ninyos a ns1:Grupo-de-viaje ;
+    owl:differentFrom ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-pareja,
+        ns1:Grupo-de-varias-personas,
+        ns1:Grupo-individual .
+
+ns1:Grupo-de-varias-personas a ns1:Grupo-de-viaje ;
+    owl:differentFrom ns1:Grupo-con-ninyos,
+        ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-pareja,
+        ns1:Grupo-individual .
+
+ns1:Grupo-individual a ns1:Grupo-de-viaje ;
+    owl:differentFrom ns1:Grupo-con-ninyos,
+        ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-pareja,
+        ns1:Grupo-de-varias-personas .
+
+ns1:Horario-de-visita_7 a ns1:Horario-de-visita ;
+    ns1:closing-time "13:30:00"^^xsd:time ;
+    ns1:opening-time "09:30:00"^^xsd:time ;
+    ns2:part-of ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes ;
+    ns2:r-location ns1:Temporada-de-invierno ;
+    rdfs:comment ""^^xsd:string .
+
+ns1:Preferencia-de-ruta a owl:Class ;
+    rdfs:subClassOf ns1:Preferencia-de-usuario .
+
+ns1:Viaje-de-turismo a ns1:Viaje ;
+    owl:differentFrom ns1:Viaje-de-congreso,
+        ns1:Viaje-de-negocios .
+
+ns1:Visita-planificada_03 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_6 ;
+    ns3:follows ns1:Visita-planificada_02 ;
+    ns3:precedes ns1:Visita-planificada_04,
+        ns1:Visita-planificada_04bis .
+
+ns1:Visita-planificada_06 a ns1:Visita-turistica ;
+    ns5:happens-at ns1:Dia-de-visita-turistica_7 ;
+    ns3:follows ns1:Visita-planificada_05,
+        ns1:Visita-planificada_05bis ;
+    ns3:precedes ns1:Visita-planificada_07 .
+
+ns2:time-interval a owl:Class ;
+    rdfs:subClassOf ns2:temporal-region ;
+    owl:disjointWith ns1:Dia-Festivo,
+        ns1:Dia-de-la-semana,
+        ns1:Dia-de-visita-turistica,
+        ns1:Temporada .
+
+xsd:date a rdfs:Datatype .
+
+ns1:Dia-Festivo a owl:Class ;
+    rdfs:subClassOf ns2:temporal-region ;
+    owl:disjointWith ns1:Dia-de-la-semana,
+        ns1:Dia-de-visita-turistica,
+        ns1:Temporada,
+        ns2:time-interval .
+
+ns1:Monumento a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:has-quality ;
+            owl:someValuesFrom ns1:Estilo-artistico ],
+        ns1:Recurso-turistico .
+
+ns1:Viaje a owl:Class ;
+    rdfs:subClassOf ns4:activity .
+
+ns1:Dia-de-visita-turistica_7 a ns1:Dia-de-visita-turistica ;
+    ns1:date "2007-04-07"^^xsd:date .
+
+ns1:Estilo-barroco a ns1:Estilo-artistico ;
+    rdfs:label "Baroque style"@en,
+        "Style baroque"@fr ;
+    owl:differentFrom ns1:Estilo-contemporaneo,
+        ns1:Estilo-gotico,
+        ns1:Estilo-modernista,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-renacentista,
+        ns1:Estilo-romano .
+
+ns1:Estilo-contemporaneo a ns1:Estilo-artistico ;
+    rdfs:label "Contemporary style"@en,
+        "Style contemporain"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-gotico,
+        ns1:Estilo-modernista,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-renacentista,
+        ns1:Estilo-romano .
+
+ns1:Estilo-gotico a ns1:Estilo-artistico ;
+    rdfs:label "Gothic style"@en,
+        "Style gothique"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-contemporaneo,
+        ns1:Estilo-modernista,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-renacentista,
+        ns1:Estilo-romano .
+
+ns1:Estilo-modernista a ns1:Estilo-artistico ;
+    rdfs:label "Modernist style"@en,
+        "Style moderniste"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-contemporaneo,
+        ns1:Estilo-gotico,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-renacentista,
+        ns1:Estilo-romano .
+
+ns1:Estilo-mudejar a ns1:Estilo-artistico ;
+    rdfs:label "Mudéjar style"@en,
+        "Style mudéjar"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-contemporaneo,
+        ns1:Estilo-gotico,
+        ns1:Estilo-modernista,
+        ns1:Estilo-renacentista,
+        ns1:Estilo-romano .
+
+ns1:Estilo-renacentista a ns1:Estilo-artistico ;
+    rdfs:label "Renaissance style"@en,
+        "Style de la Renaissance"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-contemporaneo,
+        ns1:Estilo-gotico,
+        ns1:Estilo-modernista,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-romano .
+
+ns1:Estilo-romano a ns1:Estilo-artistico ;
+    rdfs:label "Roman style"@en,
+        "Style romain"@fr ;
+    owl:differentFrom ns1:Estilo-barroco,
+        ns1:Estilo-contemporaneo,
+        ns1:Estilo-gotico,
+        ns1:Estilo-modernista,
+        ns1:Estilo-mudejar,
+        ns1:Estilo-renacentista .
+
+ns1:Grupo-con-personas-con-discapacidad a ns1:Grupo-de-viaje ;
+    owl:differentFrom ns1:Grupo-con-ninyos,
+        ns1:Grupo-de-pareja,
+        ns1:Grupo-de-varias-personas,
+        ns1:Grupo-individual .
+
+ns1:Grupo-de-pareja a ns1:Grupo-de-viaje ;
+    owl:differentFrom ns1:Grupo-con-ninyos,
+        ns1:Grupo-con-personas-con-discapacidad,
+        ns1:Grupo-de-varias-personas,
+        ns1:Grupo-individual .
+
+ns1:Grupo-de-viaje a owl:Class ;
+    rdfs:subClassOf <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective> .
+
+ns1:Horario-de-visita_11 a ns1:Horario-de-visita ;
+    ns1:closing-time "15:38:42"^^xsd:time ;
+    ns1:opening-time "19:38:45"^^xsd:time ;
+    ns2:part-of ns1:Domingo,
+        ns1:Jueves,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes ;
+    ns2:r-location ns1:Temporada-de-verano .
+
+ns1:Ruta-turistica a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns4:expected-setting-for ;
+            owl:someValuesFrom ns1:Perfil-de-turista ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:setting-for ;
+            owl:someValuesFrom ns1:Visita-turistica ],
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns1:Domingo a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11 ;
+    owl:differentFrom ns1:Jueves,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes .
+
+ns1:Horario-de-visita a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns1:Dia-Festivo ns1:Dia-de-la-semana ) ] ;
+            owl:onProperty ns2:part-of ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Temporada ;
+            owl:onProperty ns2:r-location ],
+        ns2:time-interval .
+
+ns1:Jueves a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes .
+
+<http://www.loa-cnr.it/ontologies/Collectives#social-type-collective> a owl:Class ;
+    owl:disjointWith ns5:geographical-object,
+        ns2:event,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:course,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns5:geographical-object a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns2:event,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:course,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns4:course a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:event,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns4:social-role a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:event,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:course,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+<http://www.loa-cnr.it/ontologies/Plans#plan-execution> a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:event,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:course,
+        ns4:social-role .
+
+ns1:Dia-de-visita-turistica_6 a ns1:Dia-de-visita-turistica ;
+    ns1:date "2007-04-06"^^xsd:date .
+
+ns1:Lunes a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11,
+        ns1:Horario-de-visita_7 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Jueves,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes .
+
+ns1:Martes a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11,
+        ns1:Horario-de-visita_7 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Jueves,
+        ns1:Lunes,
+        ns1:Miercoles,
+        ns1:Sabado,
+        ns1:Viernes .
+
+ns1:Miercoles a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11,
+        ns1:Horario-de-visita_7 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Jueves,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Sabado,
+        ns1:Viernes .
+
+ns1:Sabado a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11,
+        ns1:Horario-de-visita_7 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Jueves,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Viernes .
+
+ns1:Viernes a ns1:Dia-de-la-semana ;
+    ns2:part ns1:Horario-de-visita_11,
+        ns1:Horario-de-visita_7 ;
+    owl:differentFrom ns1:Domingo,
+        ns1:Jueves,
+        ns1:Lunes,
+        ns1:Martes,
+        ns1:Miercoles,
+        ns1:Sabado .
+
+ns2:event a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:quality,
+        ns2:temporal-region,
+        ns4:course,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns1:Dia-de-visita-turistica a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:part-of ;
+            owl:someValuesFrom ns1:Temporada ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Temporada ;
+            owl:onProperty ns2:part-of ],
+        ns2:temporal-region ;
+    owl:disjointWith ns1:Dia-Festivo,
+        ns1:Dia-de-la-semana,
+        ns1:Temporada,
+        ns2:time-interval .
+
+ns1:Estilo-artistico a owl:Class ;
+    rdfs:subClassOf ns2:quality ;
+    owl:disjointWith ns1:Accesibilidad-de-movilidad-reducida .
+
+ns1:Dia-de-la-semana a owl:Class ;
+    rdfs:subClassOf ns2:temporal-region ;
+    owl:disjointWith ns1:Dia-Festivo,
+        ns1:Dia-de-visita-turistica,
+        ns1:Temporada,
+        ns2:time-interval .
+
+ns1:Temporada a owl:Class ;
+    rdfs:subClassOf ns2:temporal-region ;
+    owl:disjointWith ns1:Dia-Festivo,
+        ns1:Dia-de-la-semana,
+        ns1:Dia-de-visita-turistica,
+        ns2:time-interval .
+
+ns2:quality a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:event,
+        ns2:temporal-region,
+        ns4:course,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns1:Perfil-de-turista a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns4:performs ;
+            owl:someValuesFrom ns1:Viaje ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:desire-towards ;
+            owl:someValuesFrom ns1:Preferencia-de-usuario ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:covers ;
+            owl:someValuesFrom ns1:Grupo-de-viaje ],
+        [ a owl:Restriction ;
+            owl:onProperty ns3:e-temporal-location ;
+            owl:someValuesFrom ns1:Dia-de-visita-turistica ],
+        ns4:social-role .
+
+ns1:Recurso-de-zaragoza a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Horario-de-visita ;
+            owl:onProperty ns3:present-at ],
+        ns5:geographical-object .
+
+ns1:Interes-en-accesibilidad a ns1:Interes-turistico ;
+    rdfs:label "Interest in accessible monuments"@en,
+        "Intérêt pour les monuments accessibles"@fr ;
+    ns1:interest-relevance "1.0"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-arquitectura a ns1:Interes-turistico ;
+    rdfs:label "Interest in architecture"@en,
+        "Intérêt pour l'architecture"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-arte a ns1:Interes-turistico ;
+    rdfs:label "Interest in art"@en,
+        "Intérêt pour l'art"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-compras a ns1:Interes-turistico ;
+    rdfs:label "Interest in shopping"@en,
+        "Intérêt pour faire du shopping et faire du lèche-vitrines"@fr ;
+    ns1:interest-relevance "1.0"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-entorno-natural a ns1:Interes-turistico ;
+    rdfs:label "Interest in natural spaces and environment"@en,
+        "Intérêt pour les espaces et les environements naturaux"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    rdfs:comment ""^^xsd:string ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-barroco a ns1:Interes-turistico ;
+    rdfs:label "Interest in baroque style"@en,
+        "Intérêt pour le style baroque"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    rdfs:comment ""^^xsd:string ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-contemporaneo a ns1:Interes-turistico ;
+    rdfs:label "Interest in contemporary style"@en,
+        "Intérêt pour le style contemporain"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-gotico a ns1:Interes-turistico ;
+    rdfs:label "Interest in gothic style"@en,
+        "Intérêt pour le style gothique"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-modernista a ns1:Interes-turistico ;
+    rdfs:label "Interest in modernistic style"@en,
+        "Intérêt pour le style moderniste"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-mudejar a ns1:Interes-turistico ;
+    rdfs:label "Interest in mudéjar style"@en,
+        "Intérêt pour le style mudéjar"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-neoclasico a ns1:Interes-turistico ;
+    rdfs:label "Interest in neoclassical style"@en,
+        "Intérêt pour le style néoclassique"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-renacentista a ns1:Interes-turistico ;
+    rdfs:label "Interest in Renaissance style"@en,
+        "Intérêt pour le style de la Renaissance"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-estilo-romano a ns1:Interes-turistico ;
+    rdfs:label "Interest in roman style"@en,
+        "Intérêt pour le style romain"@fr ;
+    ns1:interest-relevance "0.8"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-expo,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-expo a ns1:Interes-turistico ;
+    rdfs:label "Interest in EXPO 2008"@en,
+        "Intérêt pour l'EXPO 2008"@fr ;
+    ns1:interest-relevance "1.0"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-zona-verde .
+
+ns1:Interes-en-zona-verde a ns1:Interes-turistico ;
+    rdfs:label "Interest in green spaces (parks, public gardens, etc)"@en,
+        "Intérêt pour les espaces verts (parcs, jardins, etc)"@fr ;
+    ns1:interest-relevance "0.6"^^xsd:float ;
+    owl:differentFrom ns1:Interes-en-accesibilidad,
+        ns1:Interes-en-arquitectura,
+        ns1:Interes-en-arte,
+        ns1:Interes-en-compras,
+        ns1:Interes-en-entorno-natural,
+        ns1:Interes-en-estilo-barroco,
+        ns1:Interes-en-estilo-contemporaneo,
+        ns1:Interes-en-estilo-gotico,
+        ns1:Interes-en-estilo-modernista,
+        ns1:Interes-en-estilo-mudejar,
+        ns1:Interes-en-estilo-neoclasico,
+        ns1:Interes-en-estilo-renacentista,
+        ns1:Interes-en-estilo-romano,
+        ns1:Interes-en-expo .
+
+ns1:Conocer-expo a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Conocer-zaragoza-verde a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Curiosear-por-calles a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ir-de-compras a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Pasear a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Salir-de-marcha a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-arquitectura a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-arte a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-barroco a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-contemporaneo a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-gotico a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-modernista a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-mudejar a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-neoclasico a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-renacentista,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-renacentista a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-romano .
+
+ns1:Ver-estilo-romano a ns1:Preferencia-de-usuario ;
+    owl:differentFrom ns1:Conocer-expo,
+        ns1:Conocer-zaragoza-verde,
+        ns1:Curiosear-por-calles,
+        ns1:Ir-de-compras,
+        ns1:Pasear,
+        ns1:Salir-de-marcha,
+        ns1:Ver-arquitectura,
+        ns1:Ver-arte,
+        ns1:Ver-estilo-barroco,
+        ns1:Ver-estilo-contemporaneo,
+        ns1:Ver-estilo-gotico,
+        ns1:Ver-estilo-modernista,
+        ns1:Ver-estilo-mudejar,
+        ns1:Ver-estilo-neoclasico,
+        ns1:Ver-estilo-renacentista .
+
+ns2:temporal-region a owl:Class ;
+    owl:disjointWith <http://www.loa-cnr.it/ontologies/Collectives#social-type-collective>,
+        ns5:geographical-object,
+        ns2:event,
+        ns2:quality,
+        ns4:course,
+        ns4:social-role,
+        <http://www.loa-cnr.it/ontologies/Plans#plan-execution> .
+
+ns1:Interes-turistico a owl:Class ;
+    rdfs:subClassOf ns2:quality .
+
+ns1:Visita-turistica a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns4:setting ;
+            owl:someValuesFrom ns1:Ruta-turistica ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Visita-turistica ;
+            owl:onProperty ns3:precedes ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Evento-de-zaragoza ;
+            owl:onProperty ns3:temporally-coincides ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://www.loa-cnr.it/ontologies/FunctionalParticipation#target> ;
+            owl:someValuesFrom ns1:Recurso-de-zaragoza ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.loa-cnr.it/ontologies/FunctionalParticipation#target> ],
+        [ a owl:Restriction ;
+            owl:onProperty ns5:happens-at ;
+            owl:someValuesFrom ns1:Dia-de-visita-turistica ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:onProperty ns3:follows ;
+                        owl:someValuesFrom ns1:Visita-turistica ] [ a owl:Restriction ;
+                        owl:onProperty ns3:precedes ;
+                        owl:someValuesFrom ns1:Visita-turistica ] ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Visita-turistica ;
+            owl:onProperty ns3:follows ],
+        ns4:activity .
+
+ns1:Preferencia-de-usuario a owl:Class ;
+    rdfs:subClassOf ns4:course .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Viaje-de-congreso ns1:Viaje-de-negocios ns1:Viaje-de-turismo ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Interes-en-accesibilidad ns1:Interes-en-arquitectura ns1:Interes-en-arte ns1:Interes-en-compras ns1:Interes-en-entorno-natural ns1:Interes-en-estilo-barroco ns1:Interes-en-estilo-contemporaneo ns1:Interes-en-estilo-gotico ns1:Interes-en-estilo-modernista ns1:Interes-en-estilo-mudejar ns1:Interes-en-estilo-neoclasico ns1:Interes-en-estilo-renacentista ns1:Interes-en-estilo-romano ns1:Interes-en-expo ns1:Interes-en-zona-verde ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Accesibilidad-completa ns1:Accesibilidad-con-acompanyante ns1:Accesibilidad-con-muletas ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Domingo ns1:Jueves ns1:Lunes ns1:Martes ns1:Miercoles ns1:Sabado ns1:Viernes ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Grupo-con-ninyos ns1:Grupo-con-personas-con-discapacidad ns1:Grupo-de-pareja ns1:Grupo-de-varias-personas ns1:Grupo-individual ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Estilo-barroco ns1:Estilo-contemporaneo ns1:Estilo-gotico ns1:Estilo-modernista ns1:Estilo-mudejar ns1:Estilo-renacentista ns1:Estilo-romano ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Dos-tenedores ns1:Sin-gluten ns1:Tres-tenedores ns1:Un-tenedor ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( ns1:Conocer-expo ns1:Conocer-zaragoza-verde ns1:Curiosear-por-calles ns1:Ir-de-compras ns1:Pasear ns1:Salir-de-marcha ns1:Ver-arquitectura ns1:Ver-arte ns1:Ver-estilo-barroco ns1:Ver-estilo-contemporaneo ns1:Ver-estilo-gotico ns1:Ver-estilo-modernista ns1:Ver-estilo-mudejar ns1:Ver-estilo-neoclasico ns1:Ver-estilo-renacentista ns1:Ver-estilo-romano ) .
+
+_:B2741e6aced3071c507b7ec32c2f81dc2 rdf:first ns1:Perfil-de-turista ;
+    rdf:rest ( ns1:Ruta-turistica ) .
+
+_:B406ae1d295fbb352912c4a273f1ad0fa rdf:first ns2:event ;
+    rdf:rest () .
+
+_:B4aee81190436b0c41b969bf0f0935186 rdf:first ns1:Evento-de-zaragoza ;
+    rdf:rest ( ns1:Perfil-de-turista ns1:Recurso-de-zaragoza ) .
+
+_:B8bc9a68cb4383343c3cda1a88ff2c8a7 rdf:first ns1:Visita-turistica ;
+    rdf:rest _:B406ae1d295fbb352912c4a273f1ad0fa .
+
+_:B1e4bbdcb8fda8f102b0c7398cf3efbd7 a owl:Class ;
+    owl:unionOf _:B4aee81190436b0c41b969bf0f0935186 .
+
+_:B3c7b0a34bc517af4add8aab781342ef4 a owl:Class ;
+    owl:unionOf _:B8bc9a68cb4383343c3cda1a88ff2c8a7 .
+
+_:Bdc01e747686b4bd8d24ed806ef30ed9b a owl:Class ;
+    owl:unionOf _:B2741e6aced3071c507b7ec32c2f81dc2 .
+

@@ -1,0 +1,2147 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://w3id.org/amv#> .
+@prefix ns2: <https://w3id.org/mod#> .
+@prefix onto: <https://w3id.org/amv> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:issued a owl:AnnotationProperty .
+
+dc:modified a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:accessRights a owl:ObjectProperty ;
+    rdfs:label "access rights"@en ;
+    rdfs:comment "Information about who access the resource or an indication of its security status. \\nAccess Rights may include information regarding access or restrictions based on privacy, security, or other policies. \\n\\nExamples of access rights are: Public, Internal, Department (source: https://www.dublincore.org/groups/government/accessRights/)"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range dcterms:RightsStatement ;
+    rdfs:subPropertyOf dcterms:rights ;
+    owl:inverseOf ns1:pub_accessRightsOf .
+
+dcterms:available a owl:DatatypeProperty ;
+    rdfs:label "available"@en ;
+    rdfs:comment "Date (often a range) that the resource became or will become available."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:date .
+
+dcterms:bibliographicCitation a owl:DatatypeProperty ;
+    rdfs:label "bibliographic citation"@en ;
+    rdfs:comment "A bibliographic reference for the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal .
+
+dcterms:contributor a owl:ObjectProperty ;
+    rdfs:label "contributor" ;
+    rdfs:comment "An agent who contributes towards the algorithm."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf ns1:pub_contributorOf .
+
+dcterms:created a owl:DatatypeProperty ;
+    rdfs:label "created" ;
+    rdfs:comment "The date of creation of the algorithm."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:date .
+
+dcterms:creator a owl:ObjectProperty ;
+    rdfs:label "creator" ;
+    rdfs:comment "The person who created the algorithm."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf ns1:pub_creatorOf ;
+    skos:AltLabel "author"@en .
+
+dcterms:dateSubmitted a owl:DatatypeProperty ;
+    rdfs:label "dateSubmitted" ;
+    rdfs:comment "Date of submission of the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:date .
+
+dcterms:hasVersion a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has Version" ;
+    rdfs:comment "A related resource (e.g., algorithm, program) that is a version, edition, or adaptation of the described resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation ;
+    owl:inverseOf dcterms:isVersionOf .
+
+dcterms:identifier a owl:DatatypeProperty ;
+    rdfs:label "identifier" ;
+    rdfs:comment "An unambiguous reference to the resource within a given context."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal .
+
+dcterms:license a owl:ObjectProperty ;
+    rdfs:label "license" ;
+    rdfs:comment "The licence under which the algorithm is published."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range dcterms:LicenseDocument ;
+    rdfs:subPropertyOf dcterms:rights ;
+    owl:inverseOf ns1:pub_licenseOf .
+
+dcterms:modified a owl:DatatypeProperty ;
+    rdfs:label "modified" ;
+    rdfs:comment "Date on which the resource was changed."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:date .
+
+dcterms:publisher a owl:ObjectProperty ;
+    rdfs:label "publisher"@en ;
+    rdfs:comment "An entity responsible for making the resource available."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ns1:pub_InformationResource ) ] ;
+    rdfs:range foaf:Agent ;
+    owl:inverseOf ns1:pub_publisherOf .
+
+dcterms:subject a owl:ObjectProperty ;
+    rdfs:label "subject" ;
+    rdfs:comment "A topic of the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ns1:pub_Discipline ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf ns1:pub_subjectOf .
+
+<http://purl.org/ontology/bibo/Chapter> a owl:Class ;
+    rdfs:label "Chapter"@en ;
+    rdfs:comment "A chapter of a book."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/BookSection> ;
+    skos:AltLabel "Book chapter"@en .
+
+<http://purl.org/ontology/bibo/EditedBook> a owl:Class ;
+    rdfs:label "Edited Book"@en ;
+    rdfs:comment "An edited book."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/CollectedDocument> .
+
+<http://purl.org/ontology/bibo/Excerpt> a owl:Class ;
+    rdfs:label "Excerpt"@en ;
+    rdfs:comment "A passage selected from a larger work."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/DocumentPart> .
+
+<http://purl.org/ontology/bibo/Issue> a owl:Class ;
+    rdfs:label "Issue"@en ;
+    rdfs:comment "something that is printed or published and distributed, esp. a given number of a periodical."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/CollectedDocument> .
+
+<http://purl.org/ontology/bibo/Manuscript> a owl:Class ;
+    rdfs:label "Manuscript"@en ;
+    rdfs:comment "An unpublished Document, which may also be submitted to a publisher for publication."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Patent> a owl:Class ;
+    rdfs:label "Patent"@en ;
+    rdfs:comment "A document describing the exclusive right granted by a government to an inventor to manufacture, use, or sell an invention for a certain number of years."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Proceedings> a owl:Class ;
+    rdfs:label "Proceedings"@en ;
+    rdfs:comment "A compilation of documents published from an event, such as a conference."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Book> .
+
+<http://purl.org/ontology/bibo/ReferenceSource> a owl:Class ;
+    rdfs:label "Reference Source"@en ;
+    rdfs:comment "A document that presents authoritative reference information, such as a dictionary or encylopedia."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Report> a owl:Class ;
+    rdfs:label "Report"@en ;
+    rdfs:comment "A document describing an account or statement describing in detail an event, situation, or the like, usually as the result of observation, inquiry, etc.."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Slide> a owl:Class ;
+    rdfs:label "Slide"@en ;
+    rdfs:comment "A slide in a slideshow."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/DocumentPart> .
+
+<http://purl.org/ontology/bibo/Thesis> a owl:Class ;
+    rdfs:label "Thesis"@en ;
+    rdfs:comment "A document created to summarize research findings associated with the completion of an academic degree."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Webpage> a owl:Class ;
+    rdfs:label "Webpage"@en ;
+    rdfs:comment "A web page is an online document available (at least initially) on the world wide web. A web page is written first and foremost to appear on the web, as distinct from other online resources such as books, manuscripts or audio documents which use the web primarily as a distribution mechanism alongside other more traditional methods such as print."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+<http://schema.org/comment> a owl:ObjectProperty ;
+    rdfs:label "comment"@en ;
+    rdfs:comment "Comments, typically from users."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ns1:pub_InformationResource ) ] ;
+    rdfs:range <http://schema.org/Comment> ;
+    owl:inverseOf ns1:commentOf .
+
+skos:AltLabel a owl:AnnotationProperty .
+
+dcat:byteSize a owl:DatatypeProperty ;
+    rdfs:label "byte size"@en ;
+    rdfs:comment "The size of a distribution in bytes."@en ;
+    rdfs:domain ns1:Implementation ;
+    rdfs:range xsd:decimal .
+
+dcat:landingPage a owl:DatatypeProperty ;
+    rdfs:label "landingPage" ;
+    rdfs:comment "A Web page that can be navigated to in a Web browser to gain access to the catalog, a dataset, its distributions and/or additional information."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf foaf:page .
+
+dcat:version a owl:DatatypeProperty ;
+    rdfs:label "version"@en ;
+    rdfs:comment "The version number of a resource."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ) ] ;
+    rdfs:range rdfs:Literal .
+
+prov:generalizationOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "generalization of"@en ;
+    rdfs:comment "An entity that is a generalization of another. E.g., Distribution sort algorithm is a generalization of Bucket sort."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation ;
+    owl:inverseOf prov:specializationOf .
+
+prov:hadPrimarySource a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "had primary source"@en ;
+    rdfs:comment "A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight. Because of the directness of primary sources, they 'speak for themselves' in ways that cannot be captured through the filter of secondary sources. As such, it is important for secondary sources to reference those primary sources from which they were derived, so that their reliability can be investigated. A primary source relation is a particular case of derivation of secondary materials from their primary sources. It is recognized that the determination of primary sources can be up to interpretation, and should be done according to conventions accepted within the application's domain."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf prov:wasDerivedFrom ;
+    owl:inverseOf prov:wasPrimarySourceOf .
+
+prov:hadRevision a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "had revision"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf prov:hadDerivation ;
+    owl:inverseOf prov:wasRevisionOf .
+
+<http://www.wikidata.org/entity/Q11862829> a owl:Class ;
+    rdfs:label "Academic discipline"@en ;
+    rdfs:comment "Academic field of study or profession."@en ;
+    owl:equivalentClass ns1:pub_Discipline .
+
+<http://www.wikidata.org/entity/Q9143> a owl:Class ;
+    rdfs:label "Programming language"@en ;
+    rdfs:comment "language designed to communicate instructions to a machine."@en ;
+    owl:equivalentClass ns1:ProgrammingLanguage ;
+    skos:AltLabel "Computer language"@en .
+
+foaf:firstName a owl:DatatypeProperty ;
+    rdfs:label "first name"@en ;
+    rdfs:comment "The first name of a person."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string .
+
+foaf:homepage a owl:DatatypeProperty ;
+    rdfs:label "homepage" ;
+    rdfs:comment "A homepage for some thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:anyURI .
+
+foaf:lastName a owl:DatatypeProperty ;
+    rdfs:label "last name"@en ;
+    rdfs:comment "The last name of a person."@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:range xsd:string .
+
+foaf:mbox a owl:DatatypeProperty ;
+    rdfs:label "personal mailbox"@en ;
+    rdfs:comment "A personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range xsd:string .
+
+foaf:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "The name for some thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+onto: a owl:Ontology ;
+    dc:creator "Biswanath Dutta (https://sites.google.com/view/bdutta)",
+        "Jyotima Patel (https://www.linkedin.com/in/jyotima-patel-61220411b)" ;
+    dc:description "AMV v1.0 was first published on June 16, 2021. This is the revised version dated on February 6, 2023."@en,
+        "Metadata vocabularies are used in various domains of study. It provides an in-depth description of the resources. In this work, we develop Algorithm Metadata Vocabulary (AMV), a vocabulary for capturing and storing the metadata about the algorithms (a procedure or a set of rules that is followed step-by-step to solve a problem, especially by a computer). The snag faced by the researchers in the current time is the failure of getting relevant results when searching for algorithms in any search engine. AMV is represented as a semantic model and produced OWL file, which can be directly used by anyone interested to create and publish algorithm metadata as a knowledge graph, or to provide metadata service through SPARQL endpoint. To design the vocabulary, we propose a well-defined methodology, which considers real issues faced by the algorithm users and the practitioners. The evaluation shows a promising result."@en ;
+    dc:issued "2021-06-16"@en ;
+    dc:modified "2023-02-06"@en ;
+    dc:publisher "Indian Statistical Institute (https://www.isibang.ac.in/)" ;
+    dc:rights "https://creativecommons.org/publicdomain/zero/1.0/"@en ;
+    dc:title "AMV:Algorithm Metadata Vocabulary"@en ;
+    vann:preferredNamespacePrefix "amv" ;
+    vann:preferredNamespaceUri "https://w3id.org/amv" ;
+    owl:versionIRI <https://w3id.org/amv/1.0> ;
+    owl:versionInfo "V1.0"@en ;
+    ns2:competencyQuestion "Example competency questions. \\nCQ1: What characteristics or properties are common across all algorithms?\\nCQ2: List all algorithms that compute the solution to problem X along with their types and input. \\nCQ3: Retrieve an algorithm that solves problem X with its details like best case space complexity, best case time complexity, and the problems related to it. \\nCQ4: Retrieve all the algorithms X which are expressed in the form of a flowchart.\\nCQ5: Which Sorting algorithms are derived from the already existing sorting algorithms?"@en ;
+    ns2:vocabularyUsed "http://purl.org/dc/terms/"^^xsd:anyURI,
+        "http://purl.org/ontology/bibo/"^^xsd:anyURI,
+        "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI,
+        "http://www.w3.org/ns/dcat#"^^xsd:anyURI,
+        "http://www.wikidata.org/entity/"^^xsd:anyURI,
+        "https://schema.org/"^^xsd:anyURI,
+        "http://xmlns.com/foaf/0.1/"@en .
+
+ns1:1.0.0 a owl:NamedIndividual .
+
+<https://w3id.org/amv#A*Algorithm> a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "A* Algorithm is a graph traversal and path search algorithm, which is often used in many fields of computer science due to its completeness, optimality, and optimal efficiency."^^xsd:string ;
+    dcterms:hasVersion ns1:DijkstrasAlgorithm ;
+    dcterms:relation ns1:BellmanFordAlgorithm ;
+    dcterms:title "A* Algorithm"^^xsd:string ;
+    ns1:computesSolutionTo ns1:ShortestPathProblem ;
+    ns1:dataStructureUsed ns1:GraphDataStructure ;
+    ns1:hasSpaceComplexity <https://w3id.org/amv#A*SpaceComplexity> ;
+    ns1:hasTimeComplexity <https://w3id.org/amv#A*TimeComplexity> ;
+    ns1:pub_appearedIn ns1:AFormalBasisForTheHeuristicDeterminationOfMinimumCostPaths .
+
+ns1:Ada a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:Apache a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:ApproximationAlgortihm a owl:NamedIndividual,
+        ns1:AlgorithmicType .
+
+ns1:AssignmentProblem a owl:NamedIndividual,
+        ns1:PolynomialTimeProblem .
+
+<https://w3id.org/amv#At&TBellLaboratories> a owl:NamedIndividual,
+        foaf:Organization .
+
+ns1:BacktrackingAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "Backtracking algorithms are based on a depth-first recursive search."@en .
+
+ns1:Basic a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:BeadSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "2002-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:CristianSCalude,
+        ns1:JoshuaJArulanandham,
+        ns1:MichaelDinneen ;
+    dcterms:description "A natural sorting algorithm."^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Bead_sort"^^rdfs:Literal ;
+    dcterms:title "Bead Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:hasImplementation ns1:BeadSortInPython ;
+    ns1:hasSpaceComplexity ns1:BeadSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:BeadSortTimeComplexity ;
+    ns1:input "A set of positive integers."^^xsd:string ;
+    ns1:inputImage ns1:BeadSort-R ;
+    ns1:outputImage ns1:BeadSort-L ;
+    ns1:pub_appearedIn <https://w3id.org/amv#BeadSort:ANaturalSortingAlgorithm> .
+
+ns1:BellmanFormPerformanceMetric a owl:NamedIndividual,
+        ns1:PerformanceMetric .
+
+ns1:BestBinFirst a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "Best bin first is a search algorithm that is designed to efficiently find an approximate solution to the nearest neighbor search problem in very-high-dimensional spaces."^^xsd:string ;
+    dcterms:title "Best bin first"^^xsd:string .
+
+ns1:BlockSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "2008-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:ArneKutzner,
+        ns1:PokSonKim ;
+    dcterms:description "Efficient sorting algorithm that combines insert and merge operations."^^xsd:string ;
+    dcterms:title "Block Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:hasSpaceComplexity ns1:BlockSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:BlockSortTimeComplexity ;
+    ns1:pub_appearedIn ns1:RatioBasedStableIn-placeMerging .
+
+ns1:BranchAndBoundAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "Branch and bound algorithms are generally used for optimization problems. \\nAs the algorithm progresses, a tree of subproblems is formed. \\nThe original problem is considered the “root problem”. A method is used to construct an upper and lower bound for a given problem. At each node, apply the bounding methods."@en .
+
+ns1:BruteForceAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "A brute force algorithm simply tries all possibilities until a satisfactory solution is found."@en .
+
+ns1:BubbleSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "Simple sorting algorithm that works by repeatedly swapping the adjacent elements."^^xsd:string ;
+    dcterms:title "Bubble sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasImplementation ns1:BubbleSortPseudocodeImplementation ;
+    ns1:hasSpaceComplexity ns1:BubbleSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:BubbleSortTimeComplexity .
+
+ns1:C a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+<https://w3id.org/amv#C++> a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:ChristofidesAlgorithm a owl:NamedIndividual,
+        ns1:Algorithm .
+
+ns1:CombinatorialOptimizationProblem a owl:Class ;
+    rdfs:label "Combinatorial optimization problem"@en ;
+    rdfs:subClassOf ns1:OptimizationProblem .
+
+ns1:ComputationalGeometryProblem a owl:Class ;
+    rdfs:label "Computational Geometry Problem"@en ;
+    rdfs:comment "Computational geometry is a branch of computer science devoted to the study of algorithms which can be stated in terms of geometry. Some purely geometrical problems arise out of the study of computational geometric algorithms, and such problems are also considered to be part of computational geometry." ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:ComputerProgram a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:ComputerScience a owl:NamedIndividual,
+        ns1:pub_Discipline .
+
+ns1:ConstantFunctions a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:ControlTable a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:Copyleft a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:CreativeCommonsAttribution3.0 a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:CreativeCommonsAttribution4.0 a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:CubicFunctionsAndPolynomials a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:DataExtractionFromSbr a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "2022-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:description "Extract the data of 75 algorithmic problems from Stony Brooks Algorithm Repository in tabular form."^^xsd:string ;
+    dcterms:identifier "https://github.com/jyotimapatel/Algorithmic_Knowledge_Graph/blob/main/scrape.py"^^rdfs:Literal ;
+    dcterms:title "Data Extraction From Sbr"^^xsd:string ;
+    ns1:dataStructureUsed ns1:Dictionary,
+        ns1:List ;
+    ns1:formOfExpression ns1:Pseudocode ;
+    ns1:hasImplementation ns1:DataExtractionImplementation ;
+    ns1:input "https://algorist.com/algorist.html"^^xsd:string ;
+    ns1:loopConstruct ns1:For ;
+    ns1:numberOfSteps "9"^^xsd:nonNegativeInteger ;
+    ns1:output "https://github.com/jyotimapatel/Algorithmic_Knowledge_Graph/blob/main/Problem(75).csv"^^xsd:string .
+
+ns1:DataStructuresProblem a owl:Class ;
+    rdfs:label "Data Structures Problem"@en ;
+    rdfs:comment "Solving problems related to data structure i.e  a particular way of organizing data in a computer so that it can be used effectively." ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:DelbertRayFulkerson a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:DerrickHenryLehmer a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:DifferentialCalculus a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+ns1:DoWhile a owl:NamedIndividual,
+        ns1:LoopConstruct .
+
+ns1:DonaldKnuth a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:Drakon-chart a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:EdouardLucas a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:EdwardWForgy a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:EncoderDecoder a owl:NamedIndividual,
+        ns1:Algorithm ;
+    ns1:computesSolutionTo ns1:NeuralMachineTranslation ;
+    ns1:hasSubalgorithm ns1:DecodingRecurrentNeuralNetwork,
+        ns1:EncodingRecurrentNeuralNetwork ;
+    ns1:hasTimeComplexity ns1:EncoderDecoderTimeComplexity .
+
+ns1:ExponentialFunctions a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:FastMultipoleMethod a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "The fast multipole method (FMM) is a numerical technique that was developed to speed up the calculation of long-ranged forces in the n-body problem."^^xsd:string ;
+    dcterms:title "Fast multipole method"^^xsd:string ;
+    ns1:computesSolutionTo ns1:n-bodyProblem .
+
+ns1:Flowchart a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:Fortran a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:GNU a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:GPL a dcterms:LicenseDocument,
+        owl:NamedIndividual .
+
+ns1:GaussianElimination a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+ns1:GeorgeDantzig a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:GraphTheory a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+ns1:HardProblem a owl:Class ;
+    rdfs:label "Hard Problem"@en ;
+    rdfs:comment "Any graph problem, which is NP-hard in general graphs, becomes polynomial-time solvable when restricted to graphs in special\\nclasses." ;
+    rdfs:subClassOf ns1:GraphProblem .
+
+ns1:HashTable a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:Hypergraph a owl:NamedIndividual,
+        ns1:DataStructure ;
+    rdfs:label "Hypergraph"@en ;
+    rdfs:isDefinedBy "https://xlinux.nist.gov/dads/HTML/hypergraph.html"@en ;
+    prov:specializationOf ns1:Graph ;
+    ns1:definition "A graph whose hyperedges connect two or more vertices."^^xsd:string ;
+    ns1:formalDefinition "A hypergraph G can be defined as a pair (V, E), where V is a set of vertices, and E is a set of hyperedges between the vertices. Each hyperedge is a set of vertices: E ⊆ {{u, v, …} ∈ 2V}. (Hyperedges are undirected.)"^^xsd:string .
+
+ns1:Internal a dcterms:RightsStatement,
+        owl:NamedIndividual .
+
+ns1:JHHalton a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:JamesHMorris a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:JaromirDolecek a owl:NamedIndividual .
+
+ns1:Java a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:JillianBeardwood a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:JohnHammersley a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:JohnMauchly a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:KenThompson a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:LinearFunctions a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:LinkedList a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:Lisp a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:LlewellynThomas a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:LogarithmicFunction a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:MS-DOS a owl:NamedIndividual,
+        schema:OperatingSystem .
+
+ns1:Mathematica a owl:NamedIndividual .
+
+ns1:Mathematics a owl:NamedIndividual,
+        ns1:pub_Discipline ;
+    ns1:pub_hasBranch ns1:Graph,
+        ns1:LinearAlgebra .
+
+ns1:Matlab a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:MicrosoftWindows a owl:NamedIndividual,
+        schema:OperatingSystem .
+
+ns1:NaturalLanguage a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:NumericalProblem a owl:Class ;
+    rdfs:label "Numerical Problem"@en ;
+    rdfs:comment "Numerical algorithms are behind designing shapes (e.g. shapes for cars, planes, fonts), computing intensities for displaying graphics, animating moving objects, studying the spread of diseases, modelling the orbit of planets and satellites, supporting search engines such as google, and many more practical problems." ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:PHP a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:Pascal a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:PerAustrin a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:PeterMcIlroy a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:PriorityQueue a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:Public a dcterms:RightsStatement,
+        owl:NamedIndividual .
+
+ns1:QuadriticFunction a owl:NamedIndividual,
+        ns1:AlgorithmAnalysisFunction .
+
+ns1:Queue a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:QuickSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "1961-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:CARHoare ;
+    dcterms:description "Average-case optimal divide and conquer comparison sorting algorithm."^^xsd:string,
+        "Quicksort is a type of divide and conquer algorithm for sorting an array, based on a partitioning routine."^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Quicksort"^^rdfs:Literal ;
+    dcterms:title "Quick Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:firstWrittenRecord "1959-01-01T00:00:00"^^xsd:dateTime ;
+    ns1:hasSpaceComplexity ns1:QuickSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:QuickSortTimeComplexity ;
+    ns1:isATypeOf ns1:DivideAndConquerAlgorithm ;
+    ns1:pub_appearedIn <https://w3id.org/amv#Algorithm64:Quicksort> .
+
+ns1:R a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:RandomizedAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "A randomized algorithm uses a random number at least once during the computation to make a decision."@en .
+
+ns1:RecursiveAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:label "Recursive algorithm"@en ;
+    rdfs:comment "A simple recursive algorithm: (i) Solves the base cases directly; (ii) Recurs with a simpler subproblem; (iii) Does some extra work to convert the solution to the simpler subproblem into a solution to the given problem. \\nIt is called “simple” because several of the other algorithm types are inherently recursive. (source: https://www.cis.upenn.edu/~matuszek/cit594-2003/Lectures/35-algorithm-types.ppt)"@en ;
+    skos:AltLabel "Simple recursive algorithm"@en .
+
+ns1:RedHatLinux a owl:NamedIndividual,
+        schema:OperatingSystem .
+
+ns1:SelectionSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "Sorting Algorithm"^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Selection_sort"^^rdfs:Literal ;
+    dcterms:title "Selection Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasImplementation ns1:SelectionSortImplementationInC ;
+    ns1:hasSpaceComplexity ns1:SelectionSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:SelectionSortTimeComplexity .
+
+ns1:SelmerMJohnson a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:SetProblem a owl:Class ;
+    rdfs:label "Set Problem"@en ;
+    rdfs:comment "Sets are collections of symbols whose order is assumed to carry no significance."@en ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:SmoothSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "1981-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:EdsgerWDijkstra ;
+    dcterms:description "A comparison-based sorting algorithm."^^xsd:string ;
+    dcterms:title "Smooth Sort"^^xsd:string ;
+    prov:wasDerivedFrom ns1:HeapSort ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasSpaceComplexity ns1:SmoothSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:SmoothSortTimeComplexity ;
+    ns1:pub_appearedIn ns1:SmoothSortAlternativeForSortingInSitu .
+
+ns1:Statistics a owl:NamedIndividual,
+        ns1:pub_Discipline .
+
+ns1:StringProblem a owl:Class ;
+    rdfs:label "String problem"@en ;
+    rdfs:comment "Strings are defined by the sequence or arrangement of symbols"@en ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:StuartLloyd a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:TheoryOfSets a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+ns1:TheoryOfStatisticsAndProbability a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+ns1:TimSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "2002-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:TimPeters ;
+    dcterms:description "Timsort is a hybrid stable sorting algorithm, derived from merge sort and insertion sort, designed to perform well on many kinds of real-world data."^^xsd:string ;
+    dcterms:title "Tim Sort"^^xsd:string ;
+    prov:wasDerivedFrom ns1:InsertionSort,
+        ns1:MergeSort ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasImplementation ns1:TimSortImplementedInPython ;
+    ns1:hasSpaceComplexity ns1:TimSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:TimSortTimeComplexity .
+
+ns1:TobiasDantzig a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:UndirectedGraph a owl:NamedIndividual,
+        ns1:DataStructure ;
+    prov:specializationOf ns1:Graph .
+
+ns1:Unix a owl:NamedIndividual,
+        schema:OperatingSystem .
+
+ns1:UserQueryProcessingAlgorithm a owl:NamedIndividual,
+        ns1:Algorithm ;
+    ns1:computesSolutionTo ns1:UserQueryProcessing ;
+    ns1:hasSubalgorithm ns1:QueryProcessingAlgorithm .
+
+ns1:VaughanPratt a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:While a owl:NamedIndividual,
+        ns1:LoopConstruct .
+
+ns1:WilliamWesleyPeterson a owl:NamedIndividual,
+        foaf:Person .
+
+ns1:accessibility a owl:DatatypeProperty ;
+    rdfs:label "accessibility"@en ;
+    rdfs:comment "The information on access (i.e modify, read, download) to the algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:string .
+
+ns1:accuracy a owl:DatatypeProperty ;
+    rdfs:label "accuracy" ;
+    rdfs:comment "How close the output will be to a set point."@en,
+        "It is the measure of the degree of closeness of a measured or calculated value to its actual value."@en ;
+    rdfs:domain ns1:PerformanceMetric ;
+    rdfs:range xsd:decimal .
+
+ns1:acronym a owl:DatatypeProperty ;
+    rdfs:label "acronym"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:affiliationOf a owl:ObjectProperty ;
+    rdfs:label "affiliation of"@en ;
+    rdfs:domain foaf:Organization ;
+    rdfs:range foaf:Person ;
+    owl:inverseOf ns1:affliation .
+
+ns1:algorithmTypeFor a owl:ObjectProperty ;
+    rdfs:label "algorithm type for"@en ;
+    rdfs:comment "Is an algorithm type for an algorithm."@en ;
+    rdfs:domain ns1:AlgorithmicType ;
+    rdfs:range ns1:Algorithm ;
+    owl:inverseOf ns1:isATypeOf .
+
+ns1:alternativeTitle a owl:DatatypeProperty ;
+    rdfs:label "alternative title"@en ;
+    rdfs:comment "An alternative title of a resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:analysisFunctionType a owl:ObjectProperty ;
+    rdfs:label "analysis function type"@en ;
+    rdfs:comment "The various function types for analysis of algorithms like logarithmic functions, exponential functions etc."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:AlgorithmAnalysisFunction ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf ns1:analysisFunctionTypeOf .
+
+ns1:availableAlgorithm a owl:ObjectProperty ;
+    rdfs:label "available algorithm"@en ;
+    rdfs:comment "An algorithm for a given problem."@en ;
+    rdfs:domain ns1:Problem ;
+    rdfs:range ns1:Algorithm ;
+    owl:inverseOf ns1:computesSolutionTo .
+
+ns1:averageMessageComplexity a owl:DatatypeProperty ;
+    rdfs:label "average message complexity"@en ;
+    rdfs:domain ns1:MessageComplexity ;
+    rdfs:range xsd:string .
+
+ns1:averageSpaceComplexity a owl:DatatypeProperty ;
+    rdfs:label "average space complexity"@en ;
+    rdfs:comment "Space complexity of an algorithm on average.(https://www.wikidata.org/wiki/Property:P3757)" ;
+    rdfs:domain ns1:SpaceComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3757"@en ;
+    rdfs:range xsd:string .
+
+ns1:averageTimeComplexity a owl:DatatypeProperty ;
+    rdfs:label "average time complexity"@en ;
+    rdfs:comment "Time complexity of an algorithm on average. (https://www.wikidata.org/wiki/Property:P3754)"@en ;
+    rdfs:domain ns1:TimeComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3754"@en ;
+    rdfs:range xsd:string .
+
+ns1:bestCaseMessageComplexity a owl:DatatypeProperty ;
+    rdfs:label "best case message complexity"@en ;
+    rdfs:domain ns1:MessageComplexity ;
+    rdfs:range xsd:string .
+
+ns1:bestCaseSpaceComplexity a owl:DatatypeProperty ;
+    rdfs:label "best case space complexity"@en ;
+    rdfs:comment "Space complexity of an algorithm at least.(https://www.wikidata.org/wiki/Property:P3756)" ;
+    rdfs:domain ns1:SpaceComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3756"@en ;
+    rdfs:range xsd:string .
+
+ns1:bestCaseTimeComplexity a owl:DatatypeProperty ;
+    rdfs:label "best case time complexity"@en ;
+    rdfs:comment "Time complexity of an algorithm at least. (https://www.wikidata.org/wiki/Property:P3753)"@en ;
+    rdfs:domain ns1:TimeComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3753"@en ;
+    rdfs:range xsd:string .
+
+ns1:constraint a owl:DatatypeProperty ;
+    rdfs:label "constraint"@en ;
+    rdfs:comment "Limitations that an algorithm posses."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:string .
+
+ns1:cpuTimeLimit a owl:DatatypeProperty ;
+    rdfs:label "cpu time limit"@en ;
+    rdfs:comment "Time taken by CPU while executing the program.(In seconds)"@en ;
+    rdfs:domain ns1:Implementation ;
+    rdfs:range xsd:integer .
+
+ns1:dataStructureUsed a owl:ObjectProperty ;
+    rdfs:label "data Structure Used" ;
+    rdfs:comment "The data structure used in an algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:DataStructure ;
+    owl:inverseOf ns1:dataStructureUsedIn .
+
+ns1:definingFormula a owl:DatatypeProperty ;
+    rdfs:label "defining formula"@en ;
+    rdfs:comment "The mathematical formula used for solving the problem.\\t\\nMathematical formula representing a theorem or law."@en ;
+    rdfs:domain ns1:MathematicalProperties ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/p2534"@en ;
+    rdfs:range xsd:string .
+
+ns1:definition a owl:DatatypeProperty ;
+    rdfs:label "definiton"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:edgeCase a owl:DatatypeProperty ;
+    rdfs:label "edge Case"@en ;
+    rdfs:comment "Input values that require special handling in an algorithm. When using the algorithm at an extreme(maximum or minimum) operating parameters."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:string .
+
+ns1:excerpt a owl:DatatypeProperty ;
+    rdfs:label "excerpt"@en ;
+    rdfs:comment "An excerpt is a contiguous or discontiguous portion, or a passage selected from a larger work or document."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:firstWrittenRecord a owl:DatatypeProperty ;
+    rdfs:label "time of earliest written record"@en ;
+    rdfs:comment "First time a subject was mentioned in writing.(https://www.wikidata.org/wiki/Property:P1249)" ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P1249"@en ;
+    rdfs:range xsd:dateTime .
+
+ns1:flexible a owl:DatatypeProperty ;
+    rdfs:label "flexible" ;
+    rdfs:comment "The algorithm written in such a way that it allows to add new features without changing the existing module."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:boolean .
+
+ns1:formOfExpression a owl:ObjectProperty ;
+    rdfs:label "form of expression"@en ;
+    rdfs:comment "The form of expression of an Algorithm." ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:FormOfExpression ;
+    owl:inverseOf ns1:formOfExpressionOf .
+
+ns1:formalDefinition a owl:DatatypeProperty ;
+    rdfs:label "formal definition"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:hasImplementation a owl:ObjectProperty ;
+    rdfs:label "has implementation"@en ;
+    rdfs:comment "The various applications of the algorithm."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ns1:Implementation ;
+    owl:inverseOf ns1:implementationOf .
+
+ns1:hasMessageComplexity a owl:ObjectProperty ;
+    rdfs:label "has message complexity"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:MessageComplexity ;
+    rdfs:subPropertyOf ns1:hasMetric ;
+    owl:inverseOf ns1:messageComplexityOf .
+
+ns1:hasPerformanceMetric a owl:ObjectProperty ;
+    rdfs:label "has performance metric"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:PerformanceMetric ;
+    rdfs:subPropertyOf ns1:hasMetric ;
+    owl:inverseOf ns1:performanceMetricOf .
+
+ns1:hasSpaceComplexity a owl:ObjectProperty ;
+    rdfs:label "has space complexity"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:SpaceComplexity ;
+    rdfs:subPropertyOf ns1:hasMetric ;
+    owl:inverseOf ns1:spaceComplexityOf .
+
+ns1:hasSubalgorithm a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has subalgorithm"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    owl:inverseOf ns1:subalgorithmOf .
+
+ns1:hasSubproblem a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has subproblem"@en ;
+    rdfs:comment "a problem that is contingent on or forms a part of another more inclusive problem."@en ;
+    rdfs:domain ns1:Problem ;
+    rdfs:range ns1:Problem ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    owl:inverseOf ns1:subproblemOf .
+
+ns1:hasTimeComplexity a owl:ObjectProperty ;
+    rdfs:label "has time complexity"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:TimeComplexity ;
+    rdfs:subPropertyOf ns1:hasMetric ;
+    owl:inverseOf ns1:timeComplexityOf .
+
+ns1:inputDescription a owl:DatatypeProperty ;
+    rdfs:label "input description"@en ;
+    rdfs:comment "Input description of an algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:description .
+
+ns1:inputImage a owl:ObjectProperty ;
+    rdfs:label "output image"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range foaf:Image ;
+    rdfs:subPropertyOf foaf:depiction ;
+    owl:inverseOf ns1:isOutputImageOf .
+
+ns1:isInputImageOf a owl:ObjectProperty ;
+    rdfs:label "is input image of"@en ;
+    rdfs:domain foaf:Image ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf ns1:outputImage .
+
+ns1:isSimilarTo a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "is similar to"@en ;
+    rdfs:comment "A pointer to another, functionally similar thing (or multiple things), for example, an algorithm is similar to another algorithm or algorithms, a problem is similar to another problem or problems, etc."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation .
+
+ns1:libraryURI a owl:DatatypeProperty ;
+    rdfs:label "library URI" ;
+    rdfs:comment "Unique identifier of the central place where the algorithm is stored."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Algorithm ns1:Implementation ) ] ;
+    rdfs:range xsd:anyURI .
+
+ns1:loopConstruct a owl:ObjectProperty ;
+    rdfs:label "loop construct"@en ;
+    rdfs:comment "The loop best suited for the algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:LoopConstruct ;
+    owl:inverseOf ns1:loopConstructOf .
+
+ns1:mathematicalProperty a owl:ObjectProperty ;
+    rdfs:label "mathematical property"@en ;
+    rdfs:comment "The mathematical concept used to solve the problem."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:MathematicalProperties ;
+    owl:inverseOf ns1:mathematicalPropertyUsed .
+
+ns1:numberOfNestedLoops a owl:DatatypeProperty ;
+    rdfs:label "number Of Nested Loops" ;
+    rdfs:comment "The number of nested loops in an algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:offlineAlgorithm a owl:DatatypeProperty ;
+    rdfs:label "offline algorithm"@en ;
+    rdfs:comment "The complete dataset is required to start processing."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:boolean .
+
+ns1:onlineAlgorithm a owl:DatatypeProperty ;
+    rdfs:label "online algorithm"@en ;
+    rdfs:comment "The data can be feed while processing."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:boolean .
+
+ns1:operatingSystemFor a owl:ObjectProperty ;
+    rdfs:label "operatingSystemFor" ;
+    rdfs:domain schema:OperatingSystem ;
+    rdfs:range ns1:Implementation ;
+    owl:inverseOf ns1:runsOnOperatingSystem .
+
+ns1:optimal a owl:DatatypeProperty ;
+    rdfs:label "optimal"@en ;
+    rdfs:comment "An algorithm is optimal means the time complexity in the worst case is a lower bound of the function that describes the time complexity in the worst case of a problem that the algorithm in question solves."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:boolean .
+
+ns1:precision a owl:DatatypeProperty ;
+    rdfs:label "precision"@en ;
+    rdfs:comment "It is a measure of quality, higher precision means algorithm returns more relevant results than irrelevant ones."@en ;
+    rdfs:domain ns1:PerformanceMetric ;
+    rdfs:range xsd:float .
+
+ns1:problemDescription a owl:DatatypeProperty ;
+    rdfs:label "problem description"@en ;
+    rdfs:comment "A description providing the problem statement."@en ;
+    rdfs:domain ns1:Problem ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:description .
+
+ns1:pub_Manual a owl:Class ;
+    rdfs:label "Manual"@en ;
+    rdfs:comment "A small reference book, especially one giving instructions."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+ns1:pub_branchOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "branch Of"@en ;
+    rdfs:domain ns1:pub_Discipline ;
+    rdfs:range ns1:pub_Discipline ;
+    owl:inverseOf ns1:pub_hasBranch .
+
+ns1:pub_downloadLink a owl:DatatypeProperty ;
+    rdfs:label "download link"@en ;
+    rdfs:comment "URL which can be used to download a work."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ) ] ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/p4945"@en ;
+    rdfs:range xsd:anyURI .
+
+ns1:pub_hasArticle a owl:ObjectProperty ;
+    rdfs:label "hasArticle" ;
+    rdfs:domain <http://purl.org/ontology/bibo/Periodical> ;
+    rdfs:range <http://purl.org/ontology/bibo/Article> ;
+    owl:inverseOf ns1:pub_publishedIn .
+
+ns1:pub_rating a owl:DatatypeProperty ;
+    rdfs:label "rating"@en ;
+    rdfs:comment "Rating given on the basis of usefulness of a thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:integer .
+
+ns1:pub_readme a owl:DatatypeProperty ;
+    rdfs:label "read me"@en ;
+    rdfs:comment "Provide a description or Link to algorithm, or similar resource \"Readme page\"."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+ns1:readable a owl:DatatypeProperty ;
+    rdfs:label "readable"@en ;
+    rdfs:comment "Is the algorithm readable/understandable to the user."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:boolean .
+
+ns1:recall a owl:DatatypeProperty ;
+    rdfs:label "recall"@en ;
+    rdfs:comment "percentage of total relevent result correctly classified by the algorithm."@en ;
+    rdfs:domain ns1:PerformanceMetric ;
+    rdfs:range xsd:float .
+
+ns1:tree a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:tuple a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:worstCaseMessageComplexity a owl:DatatypeProperty ;
+    rdfs:label "worst case message complexity"@en ;
+    rdfs:domain ns1:MessageComplexity ;
+    rdfs:range xsd:string .
+
+ns1:worstCaseSpaceComplexity a owl:DatatypeProperty ;
+    rdfs:label "worst case space complexity"@en ;
+    rdfs:comment "Space complexity of an algorithm at most.(https://www.wikidata.org/wiki/Property:P3755)" ;
+    rdfs:domain ns1:SpaceComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3755"@en ;
+    rdfs:range xsd:string .
+
+ns1:worstCaseTimeComplexity a owl:DatatypeProperty ;
+    rdfs:label "worst case time complexity"@en ;
+    rdfs:comment "Time complexity of an algorithm at most. (https://www.wikidata.org/wiki/Property:P3752)"@en ;
+    rdfs:domain ns1:TimeComplexity ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P3752"@en ;
+    rdfs:range xsd:string .
+
+ns2:competencyQuestion a owl:AnnotationProperty .
+
+ns2:vocabularyUsed a owl:AnnotationProperty .
+
+<https://www.isibang.ac.in/ns/GeneralAlgebra> a owl:NamedIndividual,
+        ns1:MathematicalProperties .
+
+dcterms:isVersionOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "is Version Of" ;
+    rdfs:comment "A related resource (e.g., algorithm, program) of which the described resource is a version, edition, or adaptation."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation .
+
+<http://purl.org/ontology/bibo/Book> a owl:Class ;
+    rdfs:label "Book"@en ;
+    rdfs:comment "A written or printed work of fiction or nonfiction, usually on sheets of paper fastened or bound together within covers."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/BookSection> a owl:Class ;
+    rdfs:label "Book Section"@en ;
+    rdfs:comment "A section of a book."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/DocumentPart> .
+
+<http://purl.org/ontology/bibo/Journal> a owl:Class ;
+    rdfs:label "Journal"@en ;
+    rdfs:comment "A periodical of scholarly journal Articles."@en,
+        "a periodical dedicated to a particular subject; \"he reads the medical journals.\""@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Periodical> ;
+    owl:disjointWith <http://purl.org/ontology/bibo/Magazine> .
+
+<http://purl.org/ontology/bibo/Magazine> a owl:Class ;
+    rdfs:label "Magazine"@en ;
+    rdfs:comment "A periodical of magazine Articles. A magazine is a publication that is issued periodically, usually bound in a paper cover, and typically contains essays, stories, poems, etc., by many writers, and often photographs and drawings, frequently specializing in a particular subject or area, as hobbies, news, or sports."@en,
+        "A periodical publication containing articles and illustrations, often on a particular subject or aimed at a particular readership."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Periodical> .
+
+<http://purl.org/ontology/bibo/Series> a owl:Class ;
+    rdfs:label "Series"@en ;
+    rdfs:comment "A loose, thematic, collection of Documents, often Books."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Collection> .
+
+<http://purl.org/ontology/bibo/Website> a owl:Class ;
+    rdfs:label "Website"@en ;
+    rdfs:comment "A group of Webpages accessible on the Web."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Collection> .
+
+prov:specializationOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "specialization of"@en ;
+    rdfs:comment "An entity that is specialization of (... is a kind of) another entity and shares all aspects of the later including its own specific aspects. E.g., Bucket sort algorithm is a specialization of (a kind of) Distribution sort."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation .
+
+prov:wasPrimarySourceOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "was primary source of"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf prov:hadDerivation .
+
+prov:wasRevisionOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "was revision of"@en ;
+    rdfs:comment "A revision is a derivation for which the resulting entity is a revised version of some original. The implication here is that the resulting entity contains substantial content from the original. Revision is a particular case of derivation."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf prov:wasDerivedFrom .
+
+foaf:depicts a owl:ObjectProperty ;
+    rdfs:label "depicts"@en ;
+    rdfs:comment "The depiction property is a relationship between a thing and an Image that depicts it. As such it is an inverse of the depicts relationship."@en ;
+    rdfs:domain foaf:Image ;
+    rdfs:range owl:Thing .
+
+foaf:page a owl:DatatypeProperty ;
+    rdfs:label "page" ;
+    rdfs:comment "A page or document about this thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/amv#A*SpaceComplexity> a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(|V|)"^^xsd:string .
+
+<https://w3id.org/amv#A*TimeComplexity> a owl:NamedIndividual ;
+    ns1:worstCaseTimeComplexity "O(|E|)"^^xsd:string .
+
+ns1:AFormalBasisForTheHeuristicDeterminationOfMinimumCostPaths a owl:NamedIndividual ;
+    dcterms:created "01-01-1968T00:00:00"^^xsd:string ;
+    dcterms:creator ns1:BertramRaphael,
+        ns1:NilsNilson,
+        ns1:PeterHart ;
+    dcterms:identifier "https://ieeexplore.ieee.org/document/4082128"^^rdfs:Literal ;
+    dcterms:title "A Formal Basis for the Heuristic Determination of Minimum Cost Paths"^^xsd:string .
+
+ns1:Algorithm232-HeapSort a owl:NamedIndividual ;
+    dcterms:creator ns1:JWJWilliams ;
+    dcterms:identifier "https://doi.org/10.1145/512274.512284"^^rdfs:Literal ;
+    dcterms:title "Algorithm 232 - HeapSort"^^xsd:string .
+
+<https://w3id.org/amv#Algorithm64:Quicksort> a owl:NamedIndividual ;
+    dcterms:created "1961-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:CARHoare ;
+    dcterms:identifier "https://doi.org/10.1145/366622.366644"^^rdfs:Literal ;
+    dcterms:title "Algorithm 64: Quicksort"^^xsd:string .
+
+ns1:BeadSort-L a owl:NamedIndividual ;
+    dcterms:identifier "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/BeadSort-Figure1.svg/220px-BeadSort-Figure1.svg.png"^^rdfs:Literal ;
+    dcterms:title "Bead Sort-L"^^xsd:string .
+
+ns1:BeadSort-R a owl:NamedIndividual ;
+    dcterms:identifier "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/BeadSort-Figure2.svg/220px-BeadSort-Figure2.svg.png"^^rdfs:Literal ;
+    dcterms:title "Bead Sort -R"^^xsd:string .
+
+<https://w3id.org/amv#BeadSort:ANaturalSortingAlgorithm> a owl:NamedIndividual ;
+    dcterms:created "2002-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:CristianSCalude,
+        ns1:JoshuaJArulanandham,
+        ns1:MichaelDinneen ;
+    dcterms:identifier "https://web.archive.org/web/20170809110409/https://www.cs.auckland.ac.nz/~jaru003/research/publications/journals/beadsort.pdf"^^rdfs:Literal ;
+    dcterms:title "Bead–Sort: A Natural Sorting Algorithm"^^xsd:string .
+
+ns1:BeadSortInPython a owl:NamedIndividual ;
+    dcterms:identifier "https://en.wikipedia.org/wiki/Bead_sort#Implementation"^^rdfs:Literal ;
+    dcterms:title "Bead Sort In Python"^^xsd:string ;
+    ns1:programmingLanguage ns1:Python .
+
+ns1:BeadSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseTimeComplexity "O(n^2)"^^xsd:string .
+
+ns1:BeadSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(S)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(S)"^^xsd:string .
+
+ns1:BellmanFordSpaceComplexity a owl:NamedIndividual,
+        ns1:SpaceComplexity ;
+    ns1:bestCaseSpaceComplexity "O(N)"^^xsd:string ;
+    ns1:worstCaseSpaceComplexity "θ(|V|)"^^xsd:string .
+
+ns1:BellmanFordTimeComplexity a owl:NamedIndividual,
+        ns1:TimeComplexity ;
+    ns1:bestCaseTimeComplexity "θ(|E|)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "θ(|V||E|)"^^xsd:string .
+
+ns1:BertramRaphael a owl:NamedIndividual ;
+    foaf:name "Bertram Raphael"^^xsd:string .
+
+ns1:BlockSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(1)"^^xsd:string .
+
+ns1:BlockSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(nlog n)"^^xsd:string .
+
+ns1:BubbleSortPseudocodeImplementation a owl:NamedIndividual ;
+    dcterms:identifier "https://en.wikipedia.org/wiki/Bubble_sort#Implementation"^^rdfs:Literal ;
+    dcterms:title "Bubble Sort Pseudocode Implementation"^^xsd:string .
+
+ns1:BubbleSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(1)"^^xsd:string .
+
+ns1:BubbleSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(n^2)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(n^2)"^^xsd:string .
+
+ns1:CodeForDijkstrasAlgorithm a owl:NamedIndividual ;
+    dcterms:identifier "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode"^^rdfs:Literal ;
+    dcterms:title "Code for Dijkstra's algorithm"^^xsd:string .
+
+ns1:CombinatorialProblem a owl:Class ;
+    rdfs:label "Combinatorial Problem" ;
+    rdfs:comment "Combinatorial algorithms are computational procedures which are designed to help solve combinatorial problems. Combinatorial problems are problems involving arrangements of elements from a finite set and selections from a finite set." ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:DataExtractionImplementation a owl:NamedIndividual ;
+    dcterms:identifier "https://github.com/jyotimapatel/Algorithmic_Knowledge_Graph/blob/main/Problem(75).csv"^^rdfs:Literal ;
+    dcterms:title "Data Extraction Implementation"^^xsd:string ;
+    ns1:programmingLanguage ns1:Python .
+
+ns1:DecodingRecurrentNeuralNetwork a owl:NamedIndividual ;
+    ns1:computesSolutionTo ns1:DecodingTargetLanguage ;
+    ns1:pub_appearedIn ns1:SequenceToSequenceLearningWithNeuralNetworks .
+
+ns1:Dictionary a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:DijkastrasAlgorithmTimeComplexity a owl:NamedIndividual ;
+    ns1:worstCaseTimeComplexity "O(|E|+|V| log |V|)"^^xsd:string .
+
+ns1:DynamicProgrammingAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "A dynamic programming algorithm remembers past results and uses them to find new results. \\nDynamic programming is generally used for optimization problems, where multiple solutions exist but need to find the “best” one."@en .
+
+ns1:EncoRNNTimeCom1 a owl:NamedIndividual,
+        ns1:TimeComplexity ;
+    ns1:bestCaseTimeComplexity "O(N)"^^xsd:string .
+
+ns1:EncoderDecoderTimeComplexity a owl:NamedIndividual ;
+    ns1:bestCaseTimeComplexity "O(N)"^^xsd:string .
+
+ns1:EncodingRecurrentNeuralNetwork a owl:NamedIndividual ;
+    dcterms:created "2014-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:IlyaSutskever,
+        ns1:OriolVinyals,
+        ns1:QuocVLe ;
+    dcterms:description "It uses deep neural network layers and converts the input words to corresponding hidden vectors. Each vector represents the current word and the context of the word."^^xsd:string ;
+    dcterms:title "Encoding Recurrent Neural Network"^^xsd:string ;
+    ns1:computesSolutionTo ns1:EncodingSourceLanguage ;
+    ns1:hasTimeComplexity ns1:EncoRNNTimeCom1 ;
+    ns1:inputDescription "Series of symbols in some language that need to be translated."^^xsd:string ;
+    ns1:pub_appearedIn ns1:SequenceToSequenceLearningWithNeuralNetworks .
+
+ns1:GreedyAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType .
+
+ns1:HeapSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:creator ns1:JWJWilliams ;
+    dcterms:description "Heapsort is a comparison-based sorting algorithm. Heapsort can be thought of as an improved selection sort: like selection sort, heapsort divides its input into a sorted and an unsorted region, and it iteratively shrinks the unsorted region by extracting the largest element from it and inserting it into the sorted region."^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Heapsort"^^rdfs:Literal ;
+    dcterms:title "Heap Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasSpaceComplexity ns1:HeapSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:HeapSortTimeComplexity ;
+    ns1:pub_appearedIn ns1:Algorithm232-HeapSort .
+
+ns1:HeapSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:bestCaseSpaceComplexity "O(n)"^^xsd:string .
+
+ns1:HeapSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(nlog n)"^^xsd:string .
+
+ns1:IlyaSutskever a owl:NamedIndividual ;
+    foaf:name "Ilya Sutskever"^^xsd:string .
+
+ns1:InsertionSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:description "Sorting algorithm that, at each iteration, inserts the current input element into the suitable position between the already sorted elements."^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Insertion_sort"^^rdfs:Literal ;
+    dcterms:title "Insertion Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasSpaceComplexity ns1:InsertionSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:InsertionSortTimeComplexity ;
+    ns1:onlineAlgorithm false .
+
+ns1:InsertionSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(1)"^^xsd:string .
+
+ns1:InsertionSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(n^2)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(n^2)"^^xsd:string .
+
+ns1:JohnVonNeumann a owl:NamedIndividual ;
+    foaf:name "John Von Neumann"^^xsd:string .
+
+ns1:LRFord a owl:NamedIndividual ;
+    foaf:name "L.R Ford"^^xsd:string .
+
+ns1:LinearAlgebra a owl:NamedIndividual,
+        ns1:MathematicalProperties,
+        ns1:pub_Discipline .
+
+ns1:List a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:MatchFindingAlgorithm a owl:NamedIndividual ;
+    ns1:computesSolutionTo ns1:FindingAMatch .
+
+ns1:MergeSort a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "1945-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:JohnVonNeumann ;
+    dcterms:description "Merge sort is an efficient, general-purpose, and comparison-based sorting algorithm."^^xsd:string ;
+    dcterms:identifier "https://rosettacode.org/wiki/Sorting_algorithms/Merge_sort"^^rdfs:Literal ;
+    dcterms:title "Merge Sort"^^xsd:string ;
+    ns1:computesSolutionTo ns1:Sorting ;
+    ns1:dataStructureUsed ns1:Array ;
+    ns1:hasSpaceComplexity ns1:MergeSortSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:MergeSortTimeComplexity ;
+    ns1:isATypeOf ns1:DivideAndConquerAlgorithm .
+
+ns1:MergeSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:bestCaseSpaceComplexity "O(1)"^^xsd:string ;
+    ns1:worstCaseSpaceComplexity "O(n)"^^xsd:string .
+
+ns1:MergeSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(nlog n)"^^xsd:string .
+
+ns1:NetworkFlowTheory a <http://purl.org/ontology/bibo/AcademicArticle>,
+        owl:NamedIndividual ;
+    dcterms:created "01-01-1956T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:LRFord ;
+    dcterms:identifier "https://www.rand.org/pubs/papers/P923.html"^^rdfs:Literal,
+        "https://doi.org/10.1090/qam/102435"^^xsd:string ;
+    dcterms:title "Network Flow Theory."^^xsd:string .
+
+ns1:NeuralMachineTranslation a owl:NamedIndividual,
+        ns1:Problem ;
+    ns1:hasSubproblem ns1:DecodingTargetLanguage,
+        ns1:EncodingSourceLanguage .
+
+ns1:NilsNilson a owl:NamedIndividual ;
+    foaf:name "NIls Nilson"^^xsd:string .
+
+ns1:OnARoutingProblem a <http://purl.org/ontology/bibo/AcademicArticle>,
+        owl:NamedIndividual ;
+    dcterms:created "01-01-1958T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:RichardEBellman ;
+    dcterms:identifier "https://doi.org/10.1090/qam/102435"^^rdfs:Literal ;
+    dcterms:title "On a Routing Problem"^^xsd:string ;
+    ns1:pub_publishedIn <https://w3id.org/amv#QuartApplMath.> .
+
+ns1:OptimizationProblem a owl:Class ;
+    rdfs:label "Optimization problem"@en ;
+    rdfs:comment "An optimization problem is the problem of finding the best solution from all feasible solutions."@en ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:OriolVinyals a owl:NamedIndividual ;
+    foaf:name "Oriol Vinyals"^^xsd:string .
+
+ns1:PeterHart a owl:NamedIndividual ;
+    foaf:name "Peter Hart"^^xsd:string .
+
+<https://w3id.org/amv#QuartApplMath.> a <http://purl.org/ontology/bibo/Journal>,
+        owl:NamedIndividual ;
+    dcterms:title "Quarterly Applied Mathematics"^^xsd:string .
+
+ns1:QueryProcessingAlgorithm a owl:NamedIndividual ;
+    ns1:computesSolutionTo ns1:QueryProcessing ;
+    ns1:hasSubalgorithm ns1:MatchFindingAlgorithm .
+
+ns1:QuickSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:averageSpaceComplexity "O(log n)"^^xsd:string ;
+    ns1:worstCaseSpaceComplexity "O(n)"^^xsd:string .
+
+ns1:QuickSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(n^^2)"^^xsd:string .
+
+ns1:QuocVLe a owl:NamedIndividual ;
+    foaf:name "Quoc V. Le"^^xsd:string .
+
+ns1:RatioBasedStableIn-placeMerging a owl:NamedIndividual ;
+    dcterms:created "2008-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:ArneKutzner,
+        ns1:PokSonKim ;
+    dcterms:identifier "http://itbe.hanyang.ac.kr/ak/papers/tamc2008.pdf"^^rdfs:Literal ;
+    dcterms:title "Ratio based stable in-place merging"^^xsd:string .
+
+ns1:RichardEBellman a owl:NamedIndividual ;
+    foaf:name "Richard E. Bellman"^^xsd:string .
+
+ns1:SelectionSortImplementationInC a owl:NamedIndividual ;
+    dcterms:identifier "https://en.wikipedia.org/wiki/Selection_sort#Implementations"^^rdfs:Literal ;
+    dcterms:title "Selection Sort Implementation In C"^^xsd:string .
+
+ns1:SelectionSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(1)"^^xsd:string .
+
+ns1:SelectionSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(n^^2)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n^^2)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(n^^2)"^^xsd:string .
+
+ns1:SmoothSortAlternativeForSortingInSitu a owl:NamedIndividual ;
+    dcterms:created "1981-01-01T00:00:00"^^rdfs:Literal ;
+    dcterms:creator ns1:EdsgerWDijkstra ;
+    dcterms:identifier "https://www.cs.utexas.edu/users/EWD/ewd07xx/EWD796a.PDF"^^rdfs:Literal ;
+    dcterms:title "Smooth Sort: An Alternative For Sorting In Situ"^^xsd:string .
+
+ns1:SmoothSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:bestCaseSpaceComplexity "O(1)"^^xsd:string ;
+    ns1:worstCaseSpaceComplexity "O(n)"^^xsd:string .
+
+ns1:SmoothSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(n)"^^xsd:string .
+
+ns1:TimPeters a owl:NamedIndividual ;
+    foaf:name "Tim Peters"^^xsd:string .
+
+ns1:TimSortImplementedInPython a owl:NamedIndividual ;
+    dcterms:identifier "https://gist.github.com/nandajavarma/a3a6b62f34e74ec4c31674934327bbd3"^^rdfs:Literal ;
+    dcterms:title "Tim Sort Implemented In Python"^^xsd:string ;
+    ns1:programmingLanguage ns1:Python .
+
+ns1:TimSortSpaceComplexity a owl:NamedIndividual ;
+    ns1:worstCaseSpaceComplexity "O(n)"^^xsd:string .
+
+ns1:TimSortTimeComplexity a owl:NamedIndividual ;
+    ns1:averageTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:bestCaseTimeComplexity "O(nlog n)"^^xsd:string ;
+    ns1:worstCaseTimeComplexity "O(n)"^^xsd:string .
+
+ns1:UserQueryProcessing a owl:NamedIndividual,
+        ns1:PolynomialTimeProblem ;
+    ns1:hasSubproblem ns1:QueryProcessing .
+
+ns1:affliation a owl:ObjectProperty ;
+    rdfs:label "affliation" ;
+    rdfs:comment "An organization that the person is affiliated with. For example, a school/university." ;
+    rdfs:domain foaf:Person ;
+    rdfs:range foaf:Organization .
+
+ns1:analysisFunctionTypeOf a owl:ObjectProperty ;
+    rdfs:label "analysis function type of"@en ;
+    rdfs:domain ns1:AlgorithmAnalysisFunction ;
+    rdfs:range ns1:Algorithm .
+
+ns1:commentOf a owl:ObjectProperty ;
+    rdfs:label "comment of"@en ;
+    rdfs:domain <http://schema.org/Comment> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ns1:pub_InformationResource ) ] .
+
+ns1:dataStructureUsedIn a owl:ObjectProperty ;
+    rdfs:label "data Structure Used In" ;
+    rdfs:domain ns1:DataStructure ;
+    rdfs:range ns1:Algorithm .
+
+ns1:formOfExpressionOf a owl:ObjectProperty ;
+    rdfs:label "form Of expression of"@en ;
+    rdfs:comment "The form of expression of an Algorithm." ;
+    rdfs:domain ns1:FormOfExpression ;
+    rdfs:range ns1:Algorithm .
+
+ns1:input a owl:DatatypeProperty ;
+    rdfs:label "input"@en ;
+    rdfs:comment "Something that is operated on by any process or system. An algorithm can have zero or more inputs."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Algorithm ns1:Implementation ) ] ;
+    rdfs:range xsd:string .
+
+ns1:isOutputImageOf a owl:ObjectProperty ;
+    rdfs:label "is output image of"@en ;
+    rdfs:domain foaf:Image ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns1:loopConstructOf a owl:ObjectProperty ;
+    rdfs:label "loop construct of"@en ;
+    rdfs:domain ns1:LoopConstruct ;
+    rdfs:range ns1:Algorithm .
+
+ns1:mathematicalPropertyUsed a owl:ObjectProperty ;
+    rdfs:label "mathematicalPropertyUsed" ;
+    rdfs:domain ns1:MathematicalProperties ;
+    rdfs:range ns1:Algorithm .
+
+ns1:messageComplexityOf a owl:ObjectProperty ;
+    rdfs:label "message complexity of"@en ;
+    rdfs:domain ns1:MessageComplexity ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf ns1:metricOf .
+
+ns1:n-bodyProblem a owl:NamedIndividual,
+        ns1:Problem ;
+    rdfs:label "n-body problem"@en ;
+    rdfs:comment "The n-body problem is the problem of predicting the individual motions of a group of celestial objects interacting with each other gravitationally."@en .
+
+ns1:numberOfSteps a owl:DatatypeProperty ;
+    rdfs:label "number Of Steps" ;
+    rdfs:comment "Total number of steps that the algorithm takes to solve a certain problem."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:output a owl:DatatypeProperty ;
+    rdfs:label "output"@en ;
+    rdfs:comment "Output after processing the input." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns1:Algorithm ns1:Implementation ) ] ;
+    rdfs:range xsd:string .
+
+ns1:outputImage a owl:ObjectProperty ;
+    rdfs:label "input image"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range foaf:Image ;
+    rdfs:subPropertyOf foaf:depiction .
+
+ns1:performanceMetricOf a owl:ObjectProperty ;
+    rdfs:label "performance metric of"@en ;
+    rdfs:domain ns1:PerformanceMetric ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf ns1:metricOf .
+
+ns1:programmingLanguage a owl:ObjectProperty ;
+    rdfs:label "programming language"@en ;
+    rdfs:comment "In which all language the implementation of the algorithm/ problem is available."@en ;
+    rdfs:domain ns1:Implementation ;
+    rdfs:range ns1:ProgrammingLanguage ;
+    owl:inverseOf ns1:usedInIm .
+
+ns1:pub_accessRightsOf a owl:ObjectProperty ;
+    rdfs:label "access rights of"@en ;
+    rdfs:domain dcterms:RightsStatement ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns1:pub_rightsOf .
+
+ns1:pub_appearedIn a owl:ObjectProperty ;
+    rdfs:label "appeared In" ;
+    rdfs:comment "An algorithm appeared in a publication."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:pub_InformationResource ;
+    owl:inverseOf ns1:pub_contains .
+
+ns1:pub_contains a owl:ObjectProperty ;
+    rdfs:label "contains" ;
+    rdfs:domain ns1:pub_InformationResource ;
+    rdfs:range ns1:Algorithm .
+
+ns1:pub_contributorOf a owl:ObjectProperty ;
+    rdfs:label "contributor of"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range owl:Thing .
+
+ns1:pub_creatorOf a owl:ObjectProperty ;
+    rdfs:label "creator of"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range owl:Thing ;
+    skos:AltLabel "author of"@en .
+
+ns1:pub_hasBranch a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has branch"@en ;
+    rdfs:comment "Branch of the academic discipline." ;
+    rdfs:domain ns1:pub_Discipline ;
+    rdfs:range ns1:pub_Discipline .
+
+ns1:pub_licenseOf a owl:ObjectProperty ;
+    rdfs:label "license of"@en ;
+    rdfs:domain dcterms:LicenseDocument ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf ns1:pub_rightsOf .
+
+ns1:pub_publishedIn a owl:ObjectProperty ;
+    rdfs:label "published in"@en ;
+    rdfs:domain <http://purl.org/ontology/bibo/Article> ;
+    rdfs:range <http://purl.org/ontology/bibo/Periodical> .
+
+ns1:pub_publisherOf a owl:ObjectProperty ;
+    rdfs:label "publisher of"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://www.wikidata.org/entity/Q8366> ns1:Implementation ns1:pub_InformationResource ) ] .
+
+ns1:pub_subjectOf a owl:ObjectProperty ;
+    rdfs:label "subject of"@en ;
+    rdfs:comment "A topic of the resource for."@en ;
+    rdfs:domain ns1:pub_Discipline ;
+    rdfs:range owl:Thing .
+
+ns1:spaceComplexityOf a owl:ObjectProperty ;
+    rdfs:label "space complexity of"@en ;
+    rdfs:domain ns1:SpaceComplexity ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf ns1:metricOf .
+
+ns1:subalgorithmOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "subalgorithm of"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf dcterms:isPartOf .
+
+ns1:subproblemOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "subproblem of"@en ;
+    rdfs:domain ns1:Problem ;
+    rdfs:range ns1:Problem ;
+    rdfs:subPropertyOf dcterms:isPartOf .
+
+ns1:timeComplexityOf a owl:ObjectProperty ;
+    rdfs:label "time complexity of"@en ;
+    rdfs:domain ns1:TimeComplexity ;
+    rdfs:range ns1:Algorithm ;
+    rdfs:subPropertyOf ns1:metricOf .
+
+ns1:usedInIm a owl:ObjectProperty ;
+    rdfs:label "programming language used in"@en ;
+    rdfs:domain ns1:ProgrammingLanguage ;
+    rdfs:range ns1:Implementation .
+
+dcterms:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:comment "A statement that represents something in words. It is the act of describing something. The description can include, for instance, the purpose of a thing, the scope, the area of applications of a thing, the history, etc."@en,
+        "An account of the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+dcterms:hasPart a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has Part" ;
+    rdfs:comment "A related resource that is included either physically or logically in the described resource.(https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/isPartOf)" ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation ;
+    owl:inverseOf dcterms:isPartOf .
+
+dcterms:rights a owl:ObjectProperty ;
+    rdfs:label "rights"@en ;
+    rdfs:comment "Information about rights held in and over the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range dcterms:RightsStatement ;
+    owl:inverseOf ns1:pub_rightsOf .
+
+dcterms:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "A name given to the resource (e.g., book, algorithm, research software)."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+<http://purl.org/ontology/bibo/AcademicArticle> a owl:Class ;
+    rdfs:label "Academic article"@en ;
+    rdfs:comment "A scholarly academic article, typically published in a journal."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Article> .
+
+<http://purl.org/ontology/bibo/CollectedDocument> a owl:Class ;
+    rdfs:label "Collected Document"@en ;
+    rdfs:comment "A document that simultaneously contains other documents."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://schema.org/Comment> a owl:Class ;
+    rdfs:label "Comment"@en ;
+    rdfs:comment "A comment on an item - for example, a comment on a blog post. The comment's content is expressed via the text property, and its topic via about, properties shared with all CreativeWorks."@en .
+
+prov:hadDerivation a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "had derivation"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf prov:wasDerivedFrom .
+
+foaf:Document a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:comment "The Document class represents those things which are, broadly conceived, 'documents'."@en ;
+    rdfs:subClassOf ns1:pub_InformationResource .
+
+foaf:depiction a owl:ObjectProperty ;
+    rdfs:label "depiction"@en ;
+    rdfs:comment "A depiction of some thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range foaf:Image ;
+    owl:inverseOf foaf:depicts .
+
+ns1:ArneKutzner a owl:NamedIndividual ;
+    foaf:name "Arne Kutzner"^^xsd:string .
+
+ns1:BellmanFordAlgorithm a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:created "1958"^^rdfs:Literal ;
+    dcterms:description "The Bellman-Ford algorithm was first proposed by Alfonso Shimbel (1955), but is instead named after Richard Bellman and Lester Ford Jr., who published it in 1958 and 1956, respectively."^^xsd:string,
+        "The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph. It is capable of handling graphs in which some of the edge weights are negative numbers."^^xsd:string ;
+    dcterms:relation ns1:DijkstrasAlgorithm ;
+    dcterms:title "Bellman-Ford Algorithm"^^xsd:string ;
+    ns1:computesSolutionTo ns1:ShortestPathProblem ;
+    ns1:dataStructureUsed ns1:GraphDataStructure ;
+    ns1:hasSpaceComplexity ns1:BellmanFordSpaceComplexity ;
+    ns1:hasTimeComplexity ns1:BellmanFordTimeComplexity ;
+    ns1:input "Graph and a source vertex src."^^xsd:string ;
+    ns1:inputDescription "Works on negative or positive vertex, in a directed weighted graph."^^xsd:string ;
+    ns1:isATypeOf ns1:DynamicProgrammingAlgorithm ;
+    ns1:loopConstruct ns1:For ;
+    ns1:output "Shortest distance to all vertices from src. If there is a negative weight cycle, then shortest distances are not calculated, negative weight cycle is reported."^^xsd:string ;
+    ns1:pub_appearedIn ns1:NetworkFlowTheory,
+        ns1:OnARoutingProblem .
+
+ns1:CARHoare a owl:NamedIndividual ;
+    foaf:name "C. A. R. Hoare"^^xsd:string .
+
+ns1:CristianSCalude a owl:NamedIndividual ;
+    foaf:name "Cristian S. Calude"^^xsd:string .
+
+ns1:DecodingTargetLanguage a owl:NamedIndividual .
+
+ns1:DijkstrasAlgorithm a owl:NamedIndividual,
+        ns1:Algorithm ;
+    dcterms:creator ns1:EdsgerWDijkstra ;
+    dcterms:description "An algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks."^^xsd:string,
+        "Dijkstra's algorithm is a graph search algorithm that solves the single-source shortest path problem for a graph with non-negative edge path costs, producing a shortest path tree."^^xsd:string ;
+    dcterms:relation ns1:BellmanFordAlgorithm ;
+    dcterms:title "Dijkstra's Algorithm"^^xsd:string ;
+    ns1:computesSolutionTo ns1:ShortestPathProblem ;
+    ns1:formOfExpression ns1:Pseudocode ;
+    ns1:hasImplementation ns1:CodeForDijkstrasAlgorithm ;
+    ns1:hasTimeComplexity ns1:DijkastrasAlgorithmTimeComplexity ;
+    ns1:input "a directed and weighted graph consisting of 2 or more nodes."^^xsd:string ;
+    ns1:inputDescription "Works on only positive- weight edges in a directed, acyclic graph. The input generally represented by an adjacency matrix or list, and a start node."^^xsd:string ;
+    ns1:isATypeOf ns1:GreedyAlgorithm ;
+    ns1:output "a set of edges depicting the shortest path to each destination node."^^xsd:string .
+
+ns1:DivideAndConquerAlgorithm a owl:NamedIndividual,
+        ns1:AlgorithmicType ;
+    rdfs:comment "A divide and conquer algorithm consists of two parts: (i) Divide the problem into smaller subproblems of the same type, and solve these subproblems recursively; (ii) Combine the solutions to the subproblems into a solution to the original proble."@en .
+
+ns1:EncodingSourceLanguage a owl:NamedIndividual .
+
+ns1:FindingAMatch a owl:NamedIndividual .
+
+ns1:For a owl:NamedIndividual,
+        ns1:LoopConstruct .
+
+ns1:GraphDataStructure a owl:NamedIndividual,
+        ns1:DataStructure .
+
+ns1:GraphProblem a owl:Class ;
+    rdfs:label "Graph Problem"@en ;
+    rdfs:comment "A Graph is a non-linear data structure consisting of nodes and edges. The nodes are sometimes also referred to as vertices and the edges are lines or arcs that connect any two nodes in the graph." ;
+    rdfs:subClassOf ns1:Problem .
+
+ns1:JWJWilliams a owl:NamedIndividual ;
+    foaf:name "J.W.J Williams"^^xsd:string .
+
+ns1:JoshuaJArulanandham a owl:NamedIndividual ;
+    foaf:name "Joshua J. Arulanandham"^^xsd:string .
+
+ns1:MichaelDinneen a owl:NamedIndividual ;
+    foaf:name "Michael Dinneen"^^xsd:string .
+
+ns1:PokSonKim a owl:NamedIndividual ;
+    foaf:name "Pok Son Kim"^^xsd:string .
+
+ns1:Pseudocode a owl:NamedIndividual,
+        ns1:FormOfExpression .
+
+ns1:QueryProcessing a owl:NamedIndividual ;
+    ns1:hasSubproblem ns1:FindingAMatch .
+
+ns1:SequenceToSequenceLearningWithNeuralNetworks a owl:NamedIndividual .
+
+ns1:computesSolutionTo a owl:ObjectProperty ;
+    rdfs:label "computes solution to"@en ;
+    rdfs:comment "Problem that this algorithm or method solves.(https://www.wikidata.org/wiki/Property:P2159)",
+        "The type of problem the algorithm solves."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:isDefinedBy "http://www.wikidata.org/prop/direct/P2159"@en ;
+    rdfs:range ns1:Problem .
+
+ns1:implementationOf a owl:ObjectProperty ;
+    rdfs:label "implementation of"@en ;
+    rdfs:comment "The various applications of the algorithm." ;
+    rdfs:domain ns1:Implementation ;
+    rdfs:range owl:Thing .
+
+ns1:isATypeOf a owl:ObjectProperty ;
+    rdfs:label "is a type of"@en ;
+    rdfs:comment "The different type of algorithmic techniques that are used to solve the various existing problems in the most optimized manner.This classification is neither exhaustive nor disjoint but highlights the various ways in which a problem can be addressed."@en,
+        "The nature or genre of an algorithm."@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:AlgorithmicType .
+
+ns1:runsOnOperatingSystem a owl:ObjectProperty ;
+    rdfs:label "runs on Operating System"@en ;
+    rdfs:domain ns1:Implementation ;
+    rdfs:range schema:OperatingSystem .
+
+dcterms:isPartOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "is Part Of" ;
+    rdfs:comment "A related resource in which the described resource is physically or logically included.(https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/isPartOf)" ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf dcterms:relation .
+
+<http://purl.org/ontology/bibo/Article> a owl:Class ;
+    rdfs:label "Article"@en ;
+    rdfs:comment "A written composition in prose, usually nonfiction, on a specific topic, forming an independent part of a book or other publication, as a newspaper or magazine."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+<http://purl.org/ontology/bibo/Collection> a owl:Class ;
+    rdfs:label "Collection"@en ;
+    rdfs:comment "A collection of Documents or Collections."@en ;
+    rdfs:subClassOf ns1:pub_InformationResource .
+
+<http://purl.org/ontology/bibo/DocumentPart> a owl:Class ;
+    rdfs:label "Document Part"@en ;
+    rdfs:comment "a distinct part of a larger document or collected document."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+prov:wasDerivedFrom a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "was Derived From" ;
+    rdfs:comment "A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing .
+
+foaf:Organization a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "An agent belonging to some social institutions such as companies, associations etc, that has a collective goal."@en ;
+    rdfs:subClassOf foaf:Agent ;
+    owl:disjointWith foaf:Person .
+
+ns1:EdsgerWDijkstra a owl:NamedIndividual ;
+    foaf:name "Edsger W. Dijkstra"^^xsd:string .
+
+ns1:Graph a owl:NamedIndividual ;
+    rdfs:label "Graph"@en ;
+    rdfs:isDefinedBy "https://xlinux.nist.gov/dads/HTML/graph.html"@en ;
+    ns1:definition "A set of items connected by edges. Each item is called a vertex or node. Formally, a graph is a set of vertices and a binary relation between vertices, adjacency."^^xsd:string .
+
+ns1:PolynomialTimeProblem a owl:Class ;
+    rdfs:label "Polynomial Time Problem"@en ;
+    rdfs:comment "Polynomial time problem means that an algorithm exists for its solution such that the number of steps in the algorithm is bounded by a polynomial function of n, where n corresponds to the length of the input for the problem."@en ;
+    rdfs:subClassOf ns1:GraphProblem .
+
+ns1:Python a owl:NamedIndividual,
+        ns1:ProgrammingLanguage .
+
+ns1:ShortestPathProblem a owl:NamedIndividual,
+        ns1:PolynomialTimeProblem ;
+    rdfs:label "Shortest path problem"@en ;
+    dcterms:title "Shortest path problem"^^xsd:string .
+
+ns1:pub_rightsOf a owl:ObjectProperty ;
+    rdfs:label "rights of"@en ;
+    rdfs:domain dcterms:RightsStatement ;
+    rdfs:range owl:Thing .
+
+dcterms:date a owl:DatatypeProperty ;
+    rdfs:label "date" ;
+    rdfs:comment "A point or period of time associated with an event in the lifecycle of the resource."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<http://purl.org/ontology/bibo/Periodical> a owl:Class ;
+    rdfs:label "Periodical"@en ;
+    rdfs:comment "A group of related documents issued at regular intervals."@en ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Collection> ;
+    owl:disjointWith <http://purl.org/ontology/bibo/Series>,
+        <http://purl.org/ontology/bibo/Website> .
+
+ns1:hasMetric a owl:ObjectProperty ;
+    rdfs:label "has metric"@en ;
+    rdfs:domain ns1:Algorithm ;
+    rdfs:range ns1:Metric ;
+    owl:inverseOf ns1:metricOf .
+
+ns1:LoopConstruct a owl:Class ;
+    rdfs:label "Loop construct"@en ;
+    rdfs:comment "The type of loop best suited when an algorithm is implemented in any desired programming language. The loop types are for loop, while loop, do-while loop."@en .
+
+ns1:MessageComplexity a owl:Class ;
+    rdfs:label "Message complexity"@en ;
+    rdfs:comment "The number of messages passed. This is an important measure, primarily applicable in case of distributed algorithms."@en ;
+    rdfs:subClassOf ns1:Metric .
+
+ns1:metricOf a owl:ObjectProperty ;
+    rdfs:label "metric of"@en ;
+    rdfs:domain ns1:Metric ;
+    rdfs:range ns1:Algorithm .
+
+<http://www.wikidata.org/entity/Q8366> a owl:Class ;
+    rdfs:label "Algorithm"@en ;
+    rdfs:comment "Unambiguous specification of how to solve a class of problems.(https://www.wikidata.org/wiki/Q8366)"@en ;
+    owl:equivalentClass ns1:Algorithm .
+
+foaf:Image a owl:Class ;
+    rdfs:label "Image"@en ;
+    rdfs:comment "The class Image is a sub-class of Document corresponding to those documents which are images."@en ;
+    rdfs:subClassOf foaf:Document .
+
+ns1:Metric a owl:Class ;
+    rdfs:label "Metric"@en .
+
+ns1:PerformanceMetric a owl:Class ;
+    rdfs:label "Performance metric"@en ;
+    rdfs:comment "Performance metrics (e.g., accuracy, precision, recall) are used to evaluate different algorithms."@en ;
+    rdfs:subClassOf ns1:Metric .
+
+ns1:SpaceComplexity a owl:Class ;
+    rdfs:label "Space complexity"@en ;
+    rdfs:comment "Space complexity of an algorithm quantifies the amount of space or memory taken by an algorithm to run as a function of the length of the input."@en ;
+    rdfs:subClassOf ns1:Metric .
+
+dcterms:RightsStatement a owl:Class ;
+    rdfs:label "Rights Statement" ;
+    rdfs:comment "A statement about the intellectual property rights (IPR) held in or over a Resource, a legal document giving official permission to do something with a resource, or a statement about access rights."@en .
+
+dcterms:relation a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "relation"@en ;
+    rdfs:comment "A related resource. \\nFor example, a Sorting problem is related to a problem Convex Hull."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing .
+
+schema:OperatingSystem a owl:Class ;
+    rdfs:label "Operating system"@en ;
+    rdfs:comment "An Operating System (OS) is an interface between a computer user and computer hardware. An operating system is a software which performs all the basic tasks like file management, memory management, process management, handling input and output, and controlling peripheral devices such as disk drives and printers." .
+
+ns1:Array a owl:NamedIndividual,
+        ns1:DataStructure ;
+    foaf:name "Array"^^xsd:string .
+
+ns1:TimeComplexity a owl:Class ;
+    rdfs:label "Time complexity"@en ;
+    rdfs:comment "It represents the number of times a statement is executed."@en,
+        "Time complexity of an algorithm quantifies the amount of time taken by an algorithm to run as a function of the length of the input. \\n\\nIt measures only the executing time of the algorithm in a way that depends only on the algorithm itself and its input."@en ;
+    rdfs:subClassOf ns1:Metric .
+
+dcterms:LicenseDocument a owl:Class ;
+    rdfs:label "LicenseDocument" ;
+    rdfs:comment "A legal document giving official permission to do something with a Resource."@en ;
+    rdfs:subClassOf dcterms:RightsStatement .
+
+ns1:AlgorithmAnalysisFunction a owl:Class ;
+    rdfs:label "AlgorithmAnalysisFunction"@en ;
+    rdfs:comment "Time complexity corresponds to the amount of time required for an algorithm to run over the provided input in order to generate the required output. Analysis of this helps to predict the resources that an algorithm will take to finish execution."@en .
+
+ns1:FormOfExpression a owl:Class ;
+    rdfs:label "Form of expression"@en ;
+    rdfs:comment "The available form of expression/ notation of an algorithm. For example, Flowcharts, pseudocode, control tables, etc. (source: https://en.wikipedia.org/wiki/Algorithm)"@en .
+
+foaf:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "A resource that acts or has the power to act. Example of Agents include person and organization."@en .
+
+ns1:MathematicalProperties a owl:Class ;
+    rdfs:label "Mathematical property"@en ;
+    rdfs:comment "The mathematical concept used in the algorithm to tackle the problem. This includes set theoty, linear algebra, graph theory etc."@en .
+
+ns1:Sorting a owl:NamedIndividual,
+        ns1:CombinatorialProblem ;
+    dcterms:title "Sorting"^^xsd:string .
+
+ns1:pub_InformationResource a owl:Class ;
+    rdfs:label "Information Resource"@en ;
+    rdfs:comment "An information resource."@en .
+
+<http://purl.org/ontology/bibo/Document> a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:comment "The algorithm was published in what kind of literature.",
+        "A document (noun) is a bounded physical representation of body of information designed with the capacity (and usually intent) to communicate. A document may manifest symbolic, diagrammatic or sensory-representational information."@en ;
+    rdfs:subClassOf ns1:pub_InformationResource ;
+    owl:equivalentClass foaf:Document .
+
+ns1:pub_Discipline a owl:Class ;
+    rdfs:label "Academic discipline"@en ;
+    rdfs:comment "A branch of knowledge."@en,
+        "Academic field of study or profession."@en ;
+    skos:AltLabel "Academic field"@en,
+        "Subject area"@en .
+
+ns1:AlgorithmicType a owl:Class ;
+    rdfs:label "Algorithmic Type"@en ;
+    rdfs:comment "The different type of algorithmic techniques that are used to solve the various existing problems in the most optimized manner.\\nThis classification is neither exhaustive nor disjoint."@en .
+
+ns1:DataStructure a owl:Class ;
+    rdfs:label "Data Structure" ;
+    rdfs:comment "A data structure is a named location that can be used to store and organize data."@en .
+
+ns1:ProgrammingLanguage a owl:Class ;
+    rdfs:label "Programming language"@en ;
+    rdfs:comment "Language designed to communicate instructions to a machine Programming languages are used in computer programming to implement algorithms." .
+
+ns1:Implementation a owl:Class ;
+    rdfs:label "Implementation"@en ;
+    rdfs:comment "A manifestation of a technical specification or algorithm as a program, software component, or other computer system through computer programming and deployment (source: https://en.wikipedia.org/wiki/Implementation)."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:runsOnOperatingSystem ;
+            owl:someValuesFrom schema:OperatingSystem ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:programmingLanguage ;
+            owl:someValuesFrom ns1:ProgrammingLanguage ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:implementationOf ;
+            owl:someValuesFrom ns1:Algorithm ] .
+
+ns1:Problem a owl:Class ;
+    rdfs:label "Problem"@en ;
+    rdfs:comment "The various problems for which an algorithm is written."@en .
+
+foaf:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A human."@en ;
+    rdfs:subClassOf foaf:Agent .
+
+ns1:Algorithm a owl:Class ;
+    rdfs:label "Algorithm" ;
+    rdfs:comment "It is a finite and unambiguous sequence of computer implementable instructions to perform a certain task. This can be a simple process, such as adding two numbers together, or a complex function, such as adding effects to an image. It can be expressed within a finite amount of space and time and in a well-defined formal language."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:numberOfSteps ;
+            owl:someValuesFrom xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:isATypeOf ;
+            owl:someValuesFrom ns1:AlgorithmicType ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:input ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:output ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:pub_appearedIn ;
+            owl:someValuesFrom ns1:pub_InformationResource ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:computesSolutionTo ;
+            owl:someValuesFrom ns1:Problem ] .
+

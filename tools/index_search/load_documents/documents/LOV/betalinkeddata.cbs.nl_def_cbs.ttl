@@ -1,0 +1,187 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix onto: <http://betalinkeddata.cbs.nl/def/cbs> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Buurt> a sh:NodeShape ;
+    sh:property <http://betalinkeddata.cbs.nl/def/cbs/Buurt_sfWithin>,
+        <http://betalinkeddata.cbs.nl/def/cbs/indelingswijziging> ;
+    sh:targetClass <http://betalinkeddata.cbs.nl/def/cbs#Buurt> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Gemeente> a sh:NodeShape ;
+    sh:property <http://betalinkeddata.cbs.nl/def/cbs/Gemeente_sfWithin> ;
+    sh:targetClass <http://betalinkeddata.cbs.nl/def/cbs#Gemeente_Geografisch> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Regio> a sh:NodeShape ;
+    sh:property <http://betalinkeddata.cbs.nl/def/cbs/Regio_hasGeometry>,
+        <http://betalinkeddata.cbs.nl/def/cbs/Regio_regiocode> ;
+    sh:targetClass <http://betalinkeddata.cbs.nl/def/cbs#Regio> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Regio_indelingswijziging> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "cbs:indelingswijziging" ;
+    sh:node <http://betalinkeddata.cbs.nl/def/cbs/Indelingswijzigingswaarde> ;
+    sh:path <http://betalinkeddata.cbs.nl/def/cbs#indelingswijziging> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Wijk> a sh:NodeShape ;
+    sh:property <http://betalinkeddata.cbs.nl/def/cbs/Wijk_sfWithin>,
+        <http://betalinkeddata.cbs.nl/def/cbs/indelingswijziging> ;
+    sh:targetClass <http://betalinkeddata.cbs.nl/def/cbs#Wijk> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#Buurt> a owl:Class ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Buurt> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://betalinkeddata.cbs.nl/def/cbs#Regio> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#Land_Geografisch> a owl:Class ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Land_Geografisch> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://betalinkeddata.cbs.nl/def/cbs#Regio> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#indelingswijziging> a rdf:Property,
+        owl:AnnotationProperty ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+<http://betalinkeddata.cbs.nl/def/cbs#regiocode> a owl:DatatypeProperty ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Regiocodering> ;
+    rdfs:domain <http://betalinkeddata.cbs.nl/def/cbs#Regio> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Buurt_sfWithin> a sh:PropertyShape ;
+    sh:class <http://betalinkeddata.cbs.nl/def/cbs#Wijk> ;
+    sh:minCount 1 ;
+    sh:name "geo:sfWithin" ;
+    sh:path geo:sfWithin .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Gemeente_sfWithin> a sh:PropertyShape ;
+    sh:class <http://betalinkeddata.cbs.nl/def/cbs#Land_Geografisch> ;
+    sh:minCount 1 ;
+    sh:name "geo:sfWithin" ;
+    sh:path geo:sfWithin .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Indelingswijzigingswaarde> a sh:NodeShape ;
+    sh:property [ sh:hasValue <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> ;
+            sh:path [ sh:inversePath skos:member ] ] .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Regio_hasGeometry> a sh:PropertyShape ;
+    sh:class geo:Geometry ;
+    sh:name "geo:hasGeometry" ;
+    sh:path geo:hasGeometry .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Regio_regiocode> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "cbs:regiocode" ;
+    sh:path <http://betalinkeddata.cbs.nl/def/cbs#regiocode> .
+
+<http://betalinkeddata.cbs.nl/def/cbs/Wijk_sfWithin> a sh:PropertyShape ;
+    sh:class <http://betalinkeddata.cbs.nl/def/cbs#Gemeente_Geografisch> ;
+    sh:minCount 1 ;
+    sh:name "geo:sfWithin" ;
+    sh:path geo:sfWithin .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Gemeente_Geografisch> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_AfbakeningGewijzigd> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:notation "3" .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingEnAfbakeningOngewijzigd> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:notation "1" .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingGewijzigd> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:notation "2" .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Land_Geografisch> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Regiocodering> a skos:Concept ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:related <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    skos:topConceptOf <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#Gemeente_Geografisch> a owl:Class ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Gemeente_Geografisch> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://betalinkeddata.cbs.nl/def/cbs#Regio> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#Wijk> a owl:Class ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Wijk> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://betalinkeddata.cbs.nl/def/cbs#Regio> .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Buurt> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Wijk> a skos:Concept ;
+    skos:broader <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten> a skos:Collection,
+        skos:Concept ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:member <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_AfbakeningGewijzigd>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingEnAfbakeningOngewijzigd>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingGewijzigd> ;
+    skos:narrower <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_AfbakeningGewijzigd>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingEnAfbakeningOngewijzigd>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten_CoderingGewijzigd> ;
+    skos:related <http://betalinkeddata.cbs.nl/cbs/id/concept/Buurt>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Wijk> ;
+    skos:topConceptOf <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+<http://betalinkeddata.cbs.nl/def/cbs#Regio> a owl:Class ;
+    dcterms:subject <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf geo:Feature .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept/Regio> a skos:Concept ;
+    skos:inScheme <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> ;
+    skos:narrower <http://betalinkeddata.cbs.nl/cbs/id/concept/Buurt>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Gemeente_Geografisch>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Land_Geografisch>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Wijk> ;
+    skos:topConceptOf <http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology,
+        <http://www.w3.org/ns/sparql-service-description#Graph> ;
+    dcterms:created "2018-05-02T01:00:00+01:00"^^xsd:dateTime ;
+    dcterms:language "nl" ;
+    dcterms:modified "2018-05-02T01:00:00+01:00"^^xsd:dateTime ;
+    dcterms:publisher <http://standaarden.overheid.nl/owms/terms/Centraal_Bureau_voor_de_Statistiek> ;
+    vann:preferredNamespacePrefix "cbs" ;
+    vann:preferredNamespaceUri "http://betalinkeddata.cbs.nl/def/cbs#" ;
+    void:triples 175 ;
+    owl:imports qb:,
+        geo: .
+
+<http://betalinkeddata.cbs.nl/cbs/id/concept-scheme/cbs> a skos:ConceptScheme ;
+    rdfs:label "CBS begrippenkader" ;
+    dcterms:title "CBS begrippenkader" ;
+    skos:hasTopConcept <http://betalinkeddata.cbs.nl/cbs/id/concept/IndelingswijzigingWijkenEnBuurten>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Regio>,
+        <http://betalinkeddata.cbs.nl/cbs/id/concept/Regiocodering> .
+

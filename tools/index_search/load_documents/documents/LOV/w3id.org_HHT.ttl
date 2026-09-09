@@ -1,0 +1,723 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/HHT> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+<http://www.cidoc-crm.org/cidoc-crm/> owl:versionInfo "RDFs Implementation (September 2022) of CIDOC-CRM 7.1.2"@en .
+
+<http://www.cidoc-crm.org/cidoc-crm/P144_joined_with> a owl:ObjectProperty ;
+    rdfs:label "joined with"@en ;
+    rdfs:comment "This property identifies the instance of E74 Group of which an instance of E39 Actor becomes a member through an instance of E85 Joining.\\nAlthough a joining activity normally concerns only one instance of E74 Group, it is possible to imagine circumstances under which becoming member of one Group implies becoming member of another Group as well.\\nJoining events allow for describing people becoming members of a group with a more detailed path from E74 Group through, P144i gained member by, E85 Joining, P143 joined, E39 Actor, compared to the shortcut offered by P107 has current or former member (is current or former member of).\\nThe property P144.1 kind of member can be used to specify the type of membership or the role the member has in the group."@en ;
+    rdfs:range <http://www.cidoc-crm.org/cidoc-crm/E74_Group> ;
+    rdfs:subPropertyOf org:originalOrganization,
+        org:resultingOrganization .
+
+<http://www.cidoc-crm.org/cidoc-crm/P146_separated_from> a owl:ObjectProperty ;
+    rdfs:label "separated from"@en ;
+    rdfs:comment "This property identifies the instance of E74 Group an instance of E39 Actor leaves through an instance of E86 Leaving.\\nAlthough a leaving activity normally concerns only one instance of E74 Group, it is possible to imagine circumstances under which leaving one E74 Group implies leaving another E74 Group as well."@en ;
+    rdfs:range <http://www.cidoc-crm.org/cidoc-crm/E74_Group> ;
+    rdfs:subPropertyOf org:originalOrganization,
+        org:resultingOrganization .
+
+<http://www.cidoc-crm.org/cidoc-crm/P151_was_formed_from> a owl:ObjectProperty ;
+    rdfs:label "was formed from"@en ;
+    rdfs:comment "This property associates an instance of E66 Formation with an instance of E74 Group from which the new group was formed preserving a sense of continuity such as in mission, membership or tradition."@en ;
+    rdfs:range <http://www.cidoc-crm.org/cidoc-crm/E74_Group> ;
+    rdfs:subPropertyOf org:originalOrganization,
+        org:resultingOrganization .
+
+<http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by> a owl:DatatypeProperty ;
+    rdfs:label "place is defined by"@en ;
+    rdfs:comment "This property associates an instance of E53 Place with an instance of E94 Space Primitive that defines it. Syntactic variants or use of different scripts may result in multiple instances of E94 Space Primitive defining exactly the same place. Transformations between different reference systems always result in new definitions of places approximating each other and not in alternative definitions."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P169i_spacetime_volume_is_defined_by> a owl:DatatypeProperty ;
+    rdfs:label "spacetime volume is defined by"@en ;
+    rdfs:comment "Scope note for 'P169': This property associates an instance of E95 Spacetime Primitive with the instance of E92 Spacetime Volume it defines."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P170i_time_is_defined_by> a owl:DatatypeProperty ;
+    rdfs:label "time is defined by"@en ;
+    rdfs:comment "Scope note for 'P170': This property associates an instance of E61 Time Primitive with the instance of E52 Time-Span that constitutes the interpretation of the terms of the time primitive as an extent in absolute, real time.\\nThe quantification allows several instances of E61 Time Primitive that are each expressed in different syntactic forms, to define the same instance of E52 Time-Span."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P171_at_some_place_within> a owl:DatatypeProperty ;
+    rdfs:label "at some place within"@en ;
+    rdfs:comment "This property describes the maximum spatial extent within which an instance of E53 Place falls. Since instances of E53 Places may not have precisely known spatial extents, the CIDOC CRM supports statements about maximum spatial extents of instances of E53 Place. This property allows an instance of E53 Placeâ€™s maximum spatial extent (i.e., its outer boundary) to be assigned an instance of E94 Space Primitive value.\\nThis property is a shortcut of the fully developed path from E53 Place, P89 falls within, E53 Place, P168 place is defined by to E94 Space Primitive through a declarative Place that is not explicitly documented, to a Space Primitive: declarative places are defined in CRMgeo (Doerr and Hiebel 2013)."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P172_contains> a owl:DatatypeProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:comment "This property describes a minimum spatial extent which is contained within an instance of E53 Place. Since instances of E53 Place may not have precisely known spatial extents, the CIDOC CRM supports statements about minimum spatial extents of instances of E53 Place. This property allows an instance of E53 Placesâ€™s minimum spatial extent (i.e., its inner boundary or a point being within a Place) to be assigned an instance of E94 Space Primitive value.\\nThis property is a shortcut of the fully developed path from E53 Place, P89i contains, E53 Place, P168 place is defined by to E94 Space Primitive"@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content> a owl:DatatypeProperty ;
+    rdfs:label "has symbolic content"@en ;
+    rdfs:comment "This property associates an instance of E90 Symbolic Object with a complete, identifying representation of its content in the form of an instance of E62 String.\\nThis property only applies to instances of E90 Symbolic Object that can be represented completely in this form. The representation may be more specific than the symbolic level defining the identity condition of the represented. This depends on the type of the symbolic object represented. For instance, if a name has type \"Modern Greek character sequence\", it may be represented in a loss-free Latin transcription, meaning however the sequence of Greek letters.\\nAs another example, if the represented object has type \"English words sequence\", American English or British English spelling variants may be chosen to represent the English word \"colour\" without defining a different symbolic object. If a name has type \"European traditional name\", no particular string may define its content."@en ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P3_has_note> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P57_has_number_of_parts> a owl:DatatypeProperty ;
+    rdfs:label "has number of parts"@en,
+        "a pour nombre de parties"@fr ;
+    rdfs:comment "This property documents the number of parts, an instance of E60 Number, of which an instance of E19 Physical Object is composed.\\nThis may be used as a method of checking inventory counts with regard to aggregate or collective objects. What constitutes a part or component depends on the context and requirements of the documentation. Normally, the parts documented in this way would not be considered as worthy of individual attention.\\nFor a more complete description, objects may be decomposed into their components and constituents using P46 is composed of (forms parts of) and P45 consists of (is incorporated in). This allows each element to be described individually."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by> a owl:DatatypeProperty ;
+    rdfs:label "beginning is qualified by"@en,
+        "dÃ©but est qualifiÃ© par"@fr ;
+    rdfs:comment "This property associates an instance of E52 Time-Span with a note detailing the scholarly or scientific opinions and justifications about the certainty, precision, sources etc. of its beginning. Such notes may also be used to elaborate arguments about constraints or to give explanations of alternatives."@en ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P3_has_note> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by> a owl:DatatypeProperty ;
+    rdfs:label "end is qualified by"@en,
+        "fin est qualifiÃ©e par"@fr ;
+    rdfs:comment "This property associates an instance of E52 Time-Span with a note detailing the scholarly or scientific opinions and justifications about the end of this time-span concerning certainty, precision, sources etc. This property may also be used to describe arguments constraining possible dates and to distinguish reasons for alternative dates."@en ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P3_has_note> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P81a_end_of_the_begin> a owl:DatatypeProperty ;
+    rdfs:label "end of the begin"@en,
+        "fin du dÃ©but"@fr ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P81_ongoing_throughout> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P81b_begin_of_the_end> a owl:DatatypeProperty ;
+    rdfs:label "begin of the end"@en,
+        "dÃ©but de la fin"@fr ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P81_ongoing_throughout> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin> a owl:DatatypeProperty ;
+    rdfs:label "begin of the begin"@en,
+        "dÃ©but du dÃ©but"@fr ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P82_at_some_time_within> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end> a owl:DatatypeProperty ;
+    rdfs:label "end of the end"@en,
+        "fin de la fin"@fr ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P82_at_some_time_within> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit> a owl:DatatypeProperty ;
+    rdfs:label "has lower value limit"@en ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit> a owl:DatatypeProperty ;
+    rdfs:label "has upper value limit"@en ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://www.cidoc-crm.org/cidoc-crm/P90_has_value> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P95_has_formed> a owl:ObjectProperty ;
+    rdfs:label "has formed"@en,
+        "a fondÃ©"@fr ;
+    rdfs:comment "This property associates the instance of E66 Formation with the instance of E74 Group that it founded."@en ;
+    rdfs:range <http://www.cidoc-crm.org/cidoc-crm/E74_Group> ;
+    rdfs:subPropertyOf org:resultingOrganization .
+
+<http://www.cidoc-crm.org/cidoc-crm/P99_dissolved> a owl:ObjectProperty ;
+    rdfs:label "dissolved"@en,
+        "a dissous"@fr ;
+    rdfs:comment "This property associates the instance of E68 Dissolution with the instance of E74 Group that it disbanded."@en ;
+    rdfs:range <http://www.cidoc-crm.org/cidoc-crm/E74_Group> ;
+    rdfs:subPropertyOf org:originalOrganization .
+
+time:Interval a owl:Class ;
+    rdfs:label "Interval" .
+
+time:TemporalPosition rdfs:subClassOf <https://w3id.org/HHT#TemporalPrimitive> .
+
+org:Organization rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E74_Group> .
+
+foaf:Person a owl:Class .
+
+foaf:name a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "Historical Hierarchical Territories"@en ;
+    ns1:license <http://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator "Nathalie Aussenac-Gilles",
+        "Nathalie Hernandez",
+        "William Charles" ;
+    dcterms:issued "2023-12-01"^^xsd:date ;
+    vann:preferredNamespacePrefix "hht" ;
+    vann:preferredNamespaceUri <https://w3id.org/HHT#> ;
+    rdfs:comment "The notion of territory plays a major role in human and social sciences. In an historical context, most approaches are irrelevant as they rely on geometric data, which is not available. In order to represent historical territories,we conceived the HHT ontology (Hierarchical Historical Territory) to represent hierarchical historical territorial divisions, without having to know their geometry. This approach relies on a notion of building blocks to replace polygonal geometry."@en ;
+    owl:imports <http://www.opengis.net/ont/geosparql>,
+        time:2016,
+        org: ;
+    owl:priorVersion <https://w3id.org/HHT/1.0> ;
+    owl:versionIRI <https://w3id.org/HHT/1.1> ;
+    owl:versionInfo "1.1"@en .
+
+<https://w3id.org/HHT#ElementaryLevel> a owl:Class ;
+    rdfs:label "ElementaryLevel" ;
+    rdfs:comment "This subclass of level allows to define which level(s) will be considered to determine the building blocks of the geometry."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#Level> ;
+    owl:disjointWith <https://w3id.org/HHT#SubElementaryLevel> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#Level> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#hasVersion> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#ElementaryLevelVersion> ] ) ] .
+
+<https://w3id.org/HHT#defines> a owl:ObjectProperty ;
+    rdfs:label "defines" ;
+    rdfs:comment "Denotes the units an actor has normalized."@en ;
+    rdfs:range <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#attachedTo> ;
+    owl:inverseOf <https://w3id.org/HHT#isDefinedBy> .
+
+<https://w3id.org/HHT#hasEquivalentLevel> a owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "hasEquivalentLevel" ;
+    rdfs:comment "Denotes the equivalence of levels regarding their rank in the hierarchy they take part in."@en ;
+    rdfs:domain <https://w3id.org/HHT#LevelVersion> ;
+    rdfs:range <https://w3id.org/HHT#LevelVersion> .
+
+<https://w3id.org/HHT#hasID> a owl:ObjectProperty ;
+    rdfs:label "hasID" ;
+    rdfs:comment "Links a Unit to the outerID object representing its ID in another database."@en ;
+    rdfs:domain <https://w3id.org/HHT#Unit> ;
+    rdfs:range <https://w3id.org/HHT#outerID> ;
+    owl:inverseOf <https://w3id.org/HHT#isIDOf> .
+
+<https://w3id.org/HHT#hasLevel> a owl:ObjectProperty ;
+    rdfs:label "hasLevel" ;
+    rdfs:comment "Denotes that a hierarchy based on Hierarchical Criterion uses a Level version."@en ;
+    rdfs:domain <https://w3id.org/HHT#HierarchicalCriterion> ;
+    rdfs:range <https://w3id.org/HHT#LevelVersion> ;
+    owl:inverseOf <https://w3id.org/HHT#isLevelOf> .
+
+<https://w3id.org/HHT#hasLevelVersion> a owl:ObjectProperty ;
+    rdfs:label "hasLevelVersion" ;
+    rdfs:domain <https://w3id.org/HHT#Level> ;
+    rdfs:range <https://w3id.org/HHT#ElementaryLevelVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasVersion> .
+
+<https://w3id.org/HHT#hasManagedUnitVersion> a owl:ObjectProperty ;
+    rdfs:label "hasManagedUnitVersion" ;
+    rdfs:domain <https://w3id.org/HHT#ManagedUnit> ;
+    rdfs:range <https://w3id.org/HHT#ManagedUnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasUnitVersion> .
+
+<https://w3id.org/HHT#hasResident> a owl:ObjectProperty ;
+    rdfs:label "hasResident" ;
+    rdfs:comment "Denotes a Person living in a territory."@en ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasActor> ;
+    owl:inverseOf <https://w3id.org/HHT#residesIn> .
+
+<https://w3id.org/HHT#hasSubLevel> a owl:ObjectProperty ;
+    rdfs:label "hasSubLevel" ;
+    rdfs:comment "Denotes hierarchical superiority of a level version to another."@en ;
+    rdfs:domain <https://w3id.org/HHT#LevelVersion> ;
+    rdfs:range <https://w3id.org/HHT#LevelVersion> ;
+    owl:inverseOf <https://w3id.org/HHT#hasUpperLevel> ;
+    owl:propertyChainAxiom ( <https://w3id.org/HHT#hasMember> <https://w3id.org/HHT#hasSubUnit> <https://w3id.org/HHT#isMemberOf> ) .
+
+<https://w3id.org/HHT#idObardi> a owl:DatatypeProperty ;
+    rdfs:label "idObardi" ;
+    rdfs:comment "An unique ID used inside the ObARDI project to identify objects."@en ;
+    rdfs:domain <https://w3id.org/HHT#Unit> ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/HHT#idValue> a owl:DatatypeProperty ;
+    rdfs:label "idValue" ;
+    rdfs:comment "The value of an ID."@en ;
+    rdfs:domain <https://w3id.org/HHT#outerID> ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/HHT#isDeprecated> a owl:DatatypeProperty ;
+    rdfs:label "is deprecated"@en ;
+    rdfs:comment "A boolean, indicating whether a version is deprecated or not. Without any property regarding deprecation, a version is considered as non-deprecated."@en ;
+    rdfs:domain <https://w3id.org/HHT#Version> ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/HHT#isFrom> a owl:ObjectProperty ;
+    rdfs:label "isFrom" ;
+    rdfs:comment "Denotes the source of an outer ID."@en ;
+    rdfs:domain <https://w3id.org/HHT#outerID> ;
+    rdfs:range <https://w3id.org/HHT#IDSource> .
+
+<https://w3id.org/HHT#properContains> a owl:ObjectProperty ;
+    rdfs:label "properContains"@en ;
+    rdfs:comment "Denotes a version geometrically strictly included inside another unit version. In most cases, it is equivalent to the contains property, except when a sub territory is coextensive to the subject territory of a triple involving this property, in which case properContains does not apply."@en ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#contains> .
+
+<http://purl.org/net/tsn#Level> a owl:NamedIndividual .
+
+<http://purl.org/net/tsn#LevelVersion> a owl:NamedIndividual .
+
+<http://purl.org/net/tsn#Unit> a owl:NamedIndividual .
+
+<http://purl.org/net/tsn#UnitVersion> a owl:NamedIndividual .
+
+geo:Feature a owl:Class .
+
+<https://w3id.org/HHT#IDSource> a owl:Class ;
+    rdfs:label "IDSource" ;
+    rdfs:comment "This class describes abstractly historical databases from which IDs can be collected, in order to improve reusability of data."@en .
+
+<https://w3id.org/HHT#ManagedUnit> a owl:Class ;
+    rdfs:label "ManagedUnit" ;
+    rdfs:comment "A subclass of Unit to describe Units directly managed by an actor, which often is an institution."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#Unit> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#Unit> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#hasVersion> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#ManagedUnitVersion> ] ) ] .
+
+<https://w3id.org/HHT#NonVoidArea> a owl:Class ;
+    rdfs:label "NonVoidArea"@en ;
+    rdfs:comment "Any Area with an actual extent."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#SetAreaConstruction> ;
+    owl:disjointWith <https://w3id.org/HHT#VoidArea> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#SetAreaConstruction> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onProperty <https://w3id.org/HHT#hasComponent> ] [ a owl:Restriction ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onProperty <https://w3id.org/HHT#hasGeometry> ] ) ] ) ] .
+
+<https://w3id.org/HHT#SubElementaryLevel> a owl:Class ;
+    rdfs:label "SubElementaryLevel"@en ;
+    rdfs:comment "A Level that is under an ElementaryLevel. Think typically of Buildings if a city is an ElementaryLevel."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#Level> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#Level> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#hasVersion> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#SubElementaryLevelVersion> ] ) ] .
+
+<https://w3id.org/HHT#complementaryTo> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "complementaryTo"@en ;
+    rdfs:comment "Denotes the area to which a AreaComplementary is the complementary."@en ;
+    rdfs:domain <https://w3id.org/HHT#AreaComplementary> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> .
+
+<https://w3id.org/HHT#complementaryWithRegardOf> a owl:ObjectProperty ;
+    rdfs:label "complementaryWithRegardOf"@en ;
+    rdfs:comment "Denotes the area regarding which the AreaComplementary is supposed to denote."@en ;
+    rdfs:domain <https://w3id.org/HHT#AreaComplementary> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> .
+
+<https://w3id.org/HHT#hasSetGeometry> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasSetGeometry"@en ;
+    rdfs:comment "Denotes the geometry as a set of stableBlockAreas with a declared cardinality."@en ;
+    rdfs:domain <https://w3id.org/HHT#TerritoryVersion> ;
+    rdfs:range <https://w3id.org/HHT#BlockGeometry> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/HHT#hasSubUnit> a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasSubUnit" ;
+    rdfs:comment "Denotes the hierarchical direct lower territory."@en ;
+    rdfs:domain <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:range <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#contains> ;
+    owl:inverseOf <https://w3id.org/HHT#hasUpperUnit> .
+
+<https://w3id.org/HHT#hasTerritoryVersion> a owl:ObjectProperty ;
+    rdfs:label "hasTerritoryVersion" ;
+    rdfs:domain <https://w3id.org/HHT#Territory> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasVersion> .
+
+<https://w3id.org/HHT#hasUnitVersion> a owl:ObjectProperty ;
+    rdfs:label "hasUnitVersion" ;
+    rdfs:domain <https://w3id.org/HHT#Unit> ;
+    rdfs:range <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasTerritoryVersion> .
+
+<https://w3id.org/HHT#intersectionOf> a owl:ObjectProperty ;
+    rdfs:label "intersectionOf"@en ;
+    rdfs:comment "Denotes the areas which are taking part into an AreaIntersection."@en ;
+    rdfs:domain <https://w3id.org/HHT#AreaIntersection> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> .
+
+<https://w3id.org/HHT#isIDOf> a owl:ObjectProperty ;
+    rdfs:label "isIDOf" ;
+    rdfs:comment "Denotes the Unit which is attributed an ID from another database."@en ;
+    rdfs:domain <https://w3id.org/HHT#outerID> ;
+    rdfs:range <https://w3id.org/HHT#Unit> .
+
+<https://w3id.org/HHT#isManagedBy> a owl:ObjectProperty ;
+    rdfs:label "isManagedBy" ;
+    rdfs:comment "Denotes the actor managing a ManagedUnit."@en ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasActor> ;
+    owl:inverseOf <https://w3id.org/HHT#manages> .
+
+<https://w3id.org/HHT#manages> a owl:ObjectProperty ;
+    rdfs:label "manages" ;
+    rdfs:comment "Denotes the ManagedUnits which an actor manages."@en ;
+    rdfs:range <https://w3id.org/HHT#ManagedUnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#attachedTo> .
+
+<https://w3id.org/HHT#operativeContent> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "operativeContent"@en ;
+    rdfs:comment "Denotes a contains property that points to an Area resulting from a set Operation."@en ;
+    rdfs:domain <https://w3id.org/HHT#TerritoryVersion> ;
+    rdfs:range <https://w3id.org/HHT#SetAreaConstruction> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/HHT#residesIn> a owl:ObjectProperty ;
+    rdfs:label "residesIn" ;
+    rdfs:comment "Denotes the residence of an actor. It may be its main or secundary residence."@en ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#attachedTo> .
+
+<https://w3id.org/HHT#setCardinality> a owl:DatatypeProperty ;
+    rdfs:label "setCardinality"@en ;
+    rdfs:comment "Denotes the number of elements of the geometry set described in a BlockGeometry."@en ;
+    rdfs:domain <https://w3id.org/HHT#BlockGeometry> ;
+    rdfs:range xsd:positiveInteger .
+
+<https://w3id.org/HHT#validityPeriod> a owl:ObjectProperty ;
+    rdfs:label "validityPeriod" ;
+    rdfs:comment "Denotes the time interval where the state described by a version is valid."@en ;
+    rdfs:domain <https://w3id.org/HHT#Version> ;
+    rdfs:range <https://w3id.org/HHT#TemporalPrimitive> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P81_ongoing_throughout> a owl:DatatypeProperty ;
+    rdfs:label "ongoing throughout"@en,
+        "couvre au moins"@fr ;
+    rdfs:comment "This property associates an instance of E52 Time-Span with an instance of E61 Time Primitive specifying a minimum period of time covered by it. Since Time-Spans may not have precisely known temporal extents, the CIDOC CRM supports statements about the minimum and maximum temporal extents of Time-Spans. This property allows a Time-Spanâ€™s minimum temporal extent (i.e., its inner boundary) to be assigned an E61 Time Primitive value. Time Primitives are treated by the CIDOC CRM as application or system specific date intervals, and are not further analysed. If different sources of evidence justify different minimum extents without contradicting each other, the smallest interval including all these extents will be the best estimate. This should be taken into account for information integration."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P82_at_some_time_within> a owl:DatatypeProperty ;
+    rdfs:label "at some time within"@en,
+        "couvre au plus"@fr ;
+    rdfs:comment "This property describes the maximum period of time within which an E52 Time-Span falls. Since Time-Spans may not have precisely known temporal extents, the CIDOC CRM supports statements about the minimum and maximum temporal extents of Time-Spans. This property allows a Time-Spanâ€™s maximum temporal extent (i.e., its outer boundary) to be assigned an E61 Time Primitive value. Time Primitives are treated by the CIDOC CRM as application or system specific date intervals, and are not further analysed. If different sources of evidence justify different maximum extents without contradicting each other, the resulting intersection of all these extents will be the best estimate. This should be taken into account for information integration."@en ;
+    rdfs:range rdfs:Literal .
+
+<http://www.cidoc-crm.org/cidoc-crm/P90_has_value> a owl:DatatypeProperty ;
+    rdfs:label "has value"@en,
+        "a la valeur"@fr ;
+    rdfs:comment "This property allows an instance of E54 Dimension to be approximated by an instance of E60 Number primitive."@en ;
+    rdfs:range rdfs:Literal .
+
+<https://w3id.org/HHT#Area> a owl:Class ;
+    rdfs:label "Area"@en ;
+    rdfs:comment "Any object characterised by a geospatial extent."@en .
+
+<https://w3id.org/HHT#AreaIntersection> a owl:Class ;
+    rdfs:label "AreaIntersection"@en ;
+    rdfs:comment "An area resulting from the geometrical intersection of two areas."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#intersectionOf> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#TerritoryVersion> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#operatorCardinality> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:positiveInteger ;
+                                owl:withRestrictions ( [ xsd:minInclusive "1"^^xsd:positiveInteger ] ) ] ] ) ],
+        <https://w3id.org/HHT#SetAreaConstruction> .
+
+<https://w3id.org/HHT#AreaUnion> a owl:Class ;
+    rdfs:label "AreaUnion"@en ;
+    rdfs:comment "Area resulting from the geometrical union of several areas."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#unionOf> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#TerritoryVersion> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#operatorCardinality> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:positiveInteger ;
+                                owl:withRestrictions ( [ xsd:minInclusive "1"^^xsd:positiveInteger ] ) ] ] ) ],
+        <https://w3id.org/HHT#SetAreaConstruction> .
+
+<https://w3id.org/HHT#HierarchicalCriterion> a owl:Class ;
+    rdfs:label "HierarchicalCriterion" ;
+    rdfs:comment "Concept, principle or nomenclature inducing a hierarchical division of territories."@en .
+
+<https://w3id.org/HHT#SubElementaryLevelVersion> a owl:Class ;
+    rdfs:label "SubElementaryLevelVersion"@en ;
+    rdfs:comment "A SubLevel subclass used for levels below the Elementary levels."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#LevelVersion> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#LevelVersion> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onProperty <https://w3id.org/HHT#hasUpperLevel> ;
+                                    owl:someValuesFrom <https://w3id.org/HHT#ElementaryLevelVersion> ] [ a owl:Restriction ;
+                                    owl:onProperty <https://w3id.org/HHT#hasUpperLevel> ;
+                                    owl:someValuesFrom <https://w3id.org/HHT#SubElementaryLevelVersion> ] ) ] ) ] .
+
+<https://w3id.org/HHT#VoidArea> a owl:Class ;
+    rdfs:label "VoidArea"@en ;
+    rdfs:comment "An area whose with no extent, meaning its geometrical extent is null."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#SetAreaConstruction> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#SetAreaConstruction> [ a owl:Restriction ;
+                        owl:maxCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onProperty <https://w3id.org/HHT#hasComponent> ] [ a owl:Restriction ;
+                        owl:maxCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onProperty <https://w3id.org/HHT#hasGeometry> ] ) ] .
+
+<https://w3id.org/HHT#contains> a owl:AsymmetricProperty,
+        owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "contains" ;
+    rdfs:comment "Denotes a version geometrically included inside another unit version."@en ;
+    rdfs:domain <https://w3id.org/HHT#TerritoryVersion> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> ;
+    owl:inverseOf <https://w3id.org/HHT#isLocatedIn> ;
+    owl:propertyChainAxiom ( <https://w3id.org/HHT#operativeContent> <https://w3id.org/HHT#unionOf> ) .
+
+<https://w3id.org/HHT#hasGeometry> a owl:AsymmetricProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasGeometry"@en ;
+    rdfs:comment "Denotes the StableBlockAreas used to describe the geometry."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <https://w3id.org/HHT#AreaComplementary> <https://w3id.org/HHT#TerritoryVersion> ) ] ;
+    rdfs:range <https://w3id.org/HHT#stableBlockArea> ;
+    owl:propertyChainAxiom ( <https://w3id.org/HHT#hasSetGeometry> <https://w3id.org/HHT#hasComponent> ) .
+
+<https://w3id.org/HHT#hasMember> a owl:ObjectProperty ;
+    rdfs:label "hasMember" ;
+    rdfs:comment "Denotes that a Level Version is the level of a Unit Version."@en ;
+    rdfs:domain <https://w3id.org/HHT#LevelVersion> ;
+    rdfs:range <https://w3id.org/HHT#UnitVersion> ;
+    owl:inverseOf <https://w3id.org/HHT#isMemberOf> .
+
+<https://w3id.org/HHT#hasUpperUnit> a owl:ObjectProperty ;
+    rdfs:label "hasUpperUnit" ;
+    rdfs:comment "Denotes the hierarchical direct upper territory."@en ;
+    rdfs:domain <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:range <https://w3id.org/HHT#UnitVersion> ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#isLocatedIn> .
+
+<https://w3id.org/HHT#isDefinedBy> a owl:ObjectProperty ;
+    rdfs:label "isDefinedBy" ;
+    rdfs:comment "Denotes the actor who normalizes the Unit and integrates it in a territorial division."@en ;
+    rdfs:subPropertyOf <https://w3id.org/HHT#hasActor> .
+
+<https://w3id.org/HHT#isLevelOf> a owl:ObjectProperty ;
+    rdfs:label "isLevelOf" ;
+    rdfs:comment "Denotes the hierarchical Criterion a level version is related to."@en .
+
+<https://w3id.org/HHT#isLocatedIn> a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "isLocatedIn" ;
+    rdfs:comment "Denotes the location of a unit version inside another one."@en .
+
+<https://w3id.org/HHT#operatorCardinality> a owl:DatatypeProperty ;
+    rdfs:label "operatorCardinality"@en ;
+    rdfs:comment "Denotes the expected number of areas taking part into the operatively created area."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <https://w3id.org/HHT#AreaIntersection> <https://w3id.org/HHT#AreaUnion> ) ] ;
+    rdfs:range xsd:positiveInteger .
+
+<https://w3id.org/HHT#unionOf> a owl:ObjectProperty ;
+    rdfs:label "unionOf"@en ;
+    rdfs:comment "Denotes the areas which are taking part into an AreaUnion."@en ;
+    rdfs:domain <https://w3id.org/HHT#AreaUnion> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> .
+
+<http://www.cidoc-crm.org/cidoc-crm/P3_has_note> a owl:DatatypeProperty ;
+    rdfs:label "has note"@en,
+        "a pour note"@fr ;
+    rdfs:comment "This property is a container for all informal descriptions about an object that have not been expressed in terms of CIDOC CRM constructs.\\nIn particular, it captures the characterisation of the item itself, its internal structures, appearance etc.\\nLike property P2 has type (is type of), this property is a consequence of the restricted focus of the CIDOC CRM. The aim is not to capture, in a structured form, everything that can be said about an item; indeed, the CIDOC CRM formalism is not regarded as sufficient to express everything that can be said. Good practice requires use of distinct note fields for different aspects of a characterisation. The P3.1 has type property of P3 has note allows differentiation of specific notes, e.g., â€œconstructionâ€, â€œdecorationâ€ etc.\\nAn item may have many notes, but a note is attached to a specific item."@en ;
+    rdfs:range rdfs:Literal .
+
+<https://w3id.org/HHT#AreaComplementary> a owl:Class ;
+    rdfs:label "AreaComplementary"@en ;
+    rdfs:comment "An area defined as the geometrical complementary of a defined area with regard to another area."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#SetAreaConstruction> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#complementaryTo> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#TerritoryVersion> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#complementaryWithRegardOf> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#TerritoryVersion> ] ) ],
+        <https://w3id.org/HHT#SetAreaConstruction> .
+
+<https://w3id.org/HHT#BlockGeometry> a owl:Class ;
+    rdfs:label "BlockGeometry"@en ;
+    rdfs:comment "A set of stableBlockArea that represents a geometry."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#hasComponent> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#stableBlockArea> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#setCardinality> ;
+                        owl:someValuesFrom [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:positiveInteger ;
+                                owl:withRestrictions ( [ xsd:minInclusive "1"^^xsd:positiveInteger ] ) ] ] ) ],
+        <https://w3id.org/HHT#TimeStableArea> .
+
+<https://w3id.org/HHT#ElementaryLevelVersion> a owl:Class ;
+    rdfs:label "ElementaryLevelVersion" ;
+    rdfs:comment "This subclass of level version allows to define which level(s) will be considered to determine the building blocks of the geometry."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#LevelVersion> .
+
+<https://w3id.org/HHT#ManagedUnitVersion> a owl:Class ;
+    rdfs:label "ManagedUnitVersion" ;
+    rdfs:comment "Subtype of UnitVersion that adds the notion of the influence of the actors over it."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#UnitVersion> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#UnitVersion> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#isManagedBy> ;
+                        owl:someValuesFrom <http://www.cidoc-crm.org/cidoc-crm/E39_Actor> ] ) ] .
+
+<https://w3id.org/HHT#TemporalPrimitive> a owl:Class ;
+    rdfs:label "Temporal Primitive"@en ;
+    rdfs:comment "Any marker that could be used as temporal primitive for HHT."@en .
+
+<https://w3id.org/HHT#Territory> a owl:Class ;
+    rdfs:label "Territory" ;
+    rdfs:comment "Qualifies geographical areas meaningful to a human population. Typically, an area is considered to be meaningful as soon as it has a designation that falls under one of the following characteristics:\\n- A proper name, such as Paris or the Everest Mountain.\\nâ€“ An address, such as 417 fifth avenue, New York.\\nâ€“ A defined indexing designation, such as Paris third district."@en ;
+    rdfs:subClassOf geo:Feature,
+        <https://w3id.org/HHT#Area> .
+
+<https://w3id.org/HHT#attachedTo> a owl:ObjectProperty ;
+    rdfs:label "attachedTo" ;
+    rdfs:comment "Denotes an interaction with a territory."@en ;
+    rdfs:domain <http://www.cidoc-crm.org/cidoc-crm/E39_Actor> ;
+    rdfs:range <https://w3id.org/HHT#TerritoryVersion> ;
+    owl:inverseOf <https://w3id.org/HHT#hasActor> .
+
+<https://w3id.org/HHT#hasUpperLevel> a owl:ObjectProperty ;
+    rdfs:label "hasUpperLevel" ;
+    rdfs:comment "Denotes hierarchical inferiority of a level version to another."@en ;
+    rdfs:domain <https://w3id.org/HHT#LevelVersion> ;
+    rdfs:range <https://w3id.org/HHT#LevelVersion> ;
+    owl:propertyChainAxiom ( <https://w3id.org/HHT#hasMember> <https://w3id.org/HHT#hasUpperUnit> <https://w3id.org/HHT#isMemberOf> ) .
+
+<https://w3id.org/HHT#stableBlockArea> a owl:Class ;
+    rdfs:label "stable block area"@en ;
+    rdfs:comment "A block supposed to exist at all times, that is characterized only by its geometrical extent and has not necessarily any particular meaning other than that."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#TimeStableArea> .
+
+<http://www.cidoc-crm.org/cidoc-crm/E39_Actor> a owl:Class ;
+    rdfs:label "Actor"@en,
+        "Agent"@fr ;
+    rdfs:comment "This class comprises people, either individually or in groups, who have the potential to perform intentional actions of kinds for which someone may be held responsible."@en .
+
+<https://w3id.org/HHT#TimeStableArea> a owl:Class ;
+    rdfs:label "TimeStableArea"@en ;
+    rdfs:comment "An area which is considered to be stable during its whole existence which can be bounded or not. Typically, as they remain stable, their geometry does not depend on time."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#Area> .
+
+<https://w3id.org/HHT#hasActor> a owl:ObjectProperty ;
+    rdfs:label "hasActor" ;
+    rdfs:comment "Denotes an Actor impacting a territory." .
+
+<https://w3id.org/HHT#hasComponent> a owl:ObjectProperty ;
+    rdfs:label "hasComponent"@en ;
+    rdfs:comment "Denotes the parts of a BlockGeometry."@en ;
+    rdfs:domain <https://w3id.org/HHT#BlockGeometry> ;
+    rdfs:range <https://w3id.org/HHT#stableBlockArea> .
+
+<https://w3id.org/HHT#isMemberOf> a owl:ObjectProperty ;
+    rdfs:label "isMemberOf" ;
+    rdfs:comment "Denotes the level of an UnitVersion."@en .
+
+<https://w3id.org/HHT#outerID> a owl:Class ;
+    rdfs:label "outerID" ;
+    rdfs:comment "This class is a reification of an ID data field that differs from intern indexation. It is attached to an IDSource which describes the origin of said ID, and an idValue which corresponds to the actual ID."@en .
+
+<https://w3id.org/HHT#Level> a owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Level" ;
+    rdfs:comment "Hierarchical level of a territory."@en ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/HHT#hasVersion> ;
+            owl:someValuesFrom <https://w3id.org/HHT#LevelVersion> ] ;
+    prov:wasDerivedFrom <http://purl.org/net/tsn#Level> .
+
+<https://w3id.org/HHT#Version> a owl:Class ;
+    rdfs:label "Version" ;
+    rdfs:comment "Time slice representing a temporary state of an object. It is attached to said object, which bears the identity."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/HHT#validityPeriod> ;
+            owl:someValuesFrom <https://w3id.org/HHT#TemporalPrimitive> ] .
+
+<http://www.cidoc-crm.org/cidoc-crm/E74_Group> a owl:Class ;
+    rdfs:label "Group"@en,
+        "Groupe"@fr ;
+    rdfs:comment "This class comprises any gatherings or organizations of human individuals or groups that act collectively or in a similar way due to any form of unifying relationship. In the wider sense this class also comprises official positions which used to be regarded in certain contexts as one actor, independent of the current holder of the office, such as the president of a country. In such cases, it may happen that the group never had more than one member. A joint pseudonym (i.e., a name that seems indicative of an individual but that is actually used as a persona by two or more people) is a particular case of E74 Group.\\nA gathering of people becomes an instance of E74 Group when it exhibits organizational characteristics usually typified by a set of ideas or beliefs held in common, or actions performed together. These might be communication, creating some common artifact, a common purpose such as study, worship, business, sports, etc. Nationality can be modelled as membership in an instance of E74 Group. Married couples and other concepts of family are regarded as particular examples of E74 Group."@en ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E39_Actor> .
+
+<https://w3id.org/HHT#Unit> a owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Unit" ;
+    rdfs:comment "A territory normalized by an Actor, often taking part into a territorial hierarchy. Its state is further described using UnitVersion."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#Territory> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#Territory> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#hasVersion> ;
+                        owl:someValuesFrom <https://w3id.org/HHT#UnitVersion> ] ) ] ;
+    prov:wasDerivedFrom <http://purl.org/net/tsn#Unit> .
+
+<https://w3id.org/HHT#hasVersion> a owl:ObjectProperty ;
+    rdfs:label "hasVersion" ;
+    rdfs:comment "Links any versionable object to its versions. Classes of the object and its version should be coherent (ex : Unit and UnitVersion)"@en ;
+    rdfs:range <https://w3id.org/HHT#Version> .
+
+<https://w3id.org/HHT#SetAreaConstruction> a owl:Class ;
+    rdfs:label "SetAreaConstruction"@en ;
+    rdfs:comment "A superclass for all areas that result from a classical set operation."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#TimeStableArea> ;
+    owl:disjointUnionOf ( <https://w3id.org/HHT#NonVoidArea> <https://w3id.org/HHT#VoidArea> ) .
+
+<https://w3id.org/HHT#UnitVersion> a owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "UnitVersion" ;
+    rdfs:comment "Time slice representing the state of a unit during a provided time interval.\\nIt is considered that the state of a unit is not affected by its upper and lower units, so long as it doesn't change its geometry."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/HHT#isMemberOf> ;
+            owl:someValuesFrom <https://w3id.org/HHT#LevelVersion> ],
+        <https://w3id.org/HHT#TerritoryVersion> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <https://w3id.org/HHT#TerritoryVersion> [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/HHT#isDefinedBy> ;
+                        owl:someValuesFrom <http://www.cidoc-crm.org/cidoc-crm/E39_Actor> ] ) ] ;
+    prov:wasDerivedFrom <http://purl.org/net/tsn#UnitVersion> .
+
+<https://w3id.org/HHT#LevelVersion> a owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "LevelVersion" ;
+    rdfs:comment "Version of a level."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/HHT#isLevelOf> ;
+            owl:someValuesFrom <https://w3id.org/HHT#HierarchicalCriterion> ],
+        <https://w3id.org/HHT#Version> ;
+    prov:wasDerivedFrom <http://purl.org/net/tsn#LevelVersion> .
+
+<https://w3id.org/HHT#TerritoryVersion> a owl:Class ;
+    rdfs:label "TerritoryVersion" ;
+    rdfs:comment "Geographical area, which is defined by any human division."@en ;
+    rdfs:subClassOf <https://w3id.org/HHT#TimeStableArea>,
+        <https://w3id.org/HHT#Version> .
+

@@ -1,0 +1,855 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://dati.camera.it/ocd/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a <http://labs.mondeca.com/vocab/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:licence <http://creativecommons.org/licenses/by-sa/3.0/> ;
+    dc:creator "Camera dei deputati" ;
+    dc:issued "2011-12-20" ;
+    dc:publisher "Camera dei deputati" ;
+    dc:rights "Camera dei deputati" ;
+    dcterms:modified "2012-04-26",
+        "2013-05-02" ;
+    vann:preferredNamespacePrefix "ocd" ;
+    owl:imports dc:,
+        dcterms:,
+        <http://www.w3.org/2004/02/skos/core> ;
+    owl:versionInfo 1.2 ;
+    skos:historyNote [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe luogo" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe membroGoverno" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la proprietà rif_membroGoverno" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta le proprietà startDate e endDate subPropertyOf dc:date" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe abbinamento" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Deprecata la classe incaricoGoverno" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Modificato il nome della proprietà ocd:rif_attocamera in ocd:rif_attoCamera" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe votazione" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe voto" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe natura" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe richiestaParere" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la proprietà rif_luogo" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe assegnazione" ],
+        [ dc:creator "Camera dei deputati" ;
+            dc:date "2 maggio 2013" ;
+            rdf:value "Aggiunta la classe stralcio" ] .
+
+onto:ac a owl:ObjectProperty ;
+    rdfs:label "URL dell'atto camera" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:DOC onto:documentazione onto:dossier onto:dottrina onto:giurisprudenza onto:governo onto:normativa onto:note onto:pubblicistica ) ] .
+
+onto:aderisce a owl:ObjectProperty ;
+    rdfs:label "aderisce" ;
+    rdfs:domain onto:deputato ;
+    rdfs:range onto:adesioneGruppo .
+
+onto:altro_firmatario a owl:ObjectProperty ;
+    rdfs:label "altro firmatario" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:aic ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:deputato onto:membroGoverno ) ] .
+
+onto:approvato a owl:DatatypeProperty ;
+    rdfs:label "approvato" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:boolean ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:astenuti a owl:DatatypeProperty ;
+    rdfs:label "numero astenuti" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:autore a owl:Class ;
+    rdfs:label "autore"^^xsd:string .
+
+onto:carica a owl:DatatypeProperty ;
+    rdfs:label "dicastero" ;
+    rdfs:domain onto:ufficioParlamentare ;
+    rdfs:range xsd:string .
+
+onto:componente a owl:ObjectProperty ;
+    rdfs:label "componente" ;
+    rdfs:domain onto:adesioneGruppo ;
+    rdfs:range onto:adesioneGruppoMisto .
+
+onto:concluso a owl:DatatypeProperty ;
+    rdfs:label "costituzionale" ;
+    rdfs:domain onto:aic ;
+    rdfs:range xsd:boolean .
+
+onto:contrari a owl:DatatypeProperty ;
+    rdfs:label "voti contrari" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:convalida a owl:DatatypeProperty ;
+    rdfs:label "data di convalida" ;
+    rdfs:domain onto:mandatoCamera ;
+    rdfs:range xsd:date .
+
+onto:costituzionale a owl:DatatypeProperty ;
+    rdfs:label "costituzionale" ;
+    rdfs:domain onto:atto ;
+    rdfs:range xsd:boolean .
+
+onto:denominazione a owl:ObjectProperty ;
+    rdfs:label "denominazione" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:gruppoParlamentare onto:componenteGruppoMisto ) ] ;
+    rdfs:range onto:cambioDenominazione .
+
+onto:destinatario a owl:ObjectProperty ;
+    rdfs:label "componente" ;
+    rdfs:domain onto:aic ;
+    rdfs:range onto:organoGoverno .
+
+onto:dicastero a owl:DatatypeProperty ;
+    rdfs:label "dicastero" ;
+    rdfs:domain onto:organoGoverno ;
+    rdfs:range xsd:boolean .
+
+onto:diventa a owl:ObjectProperty ;
+    rdfs:label "diventa" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:gruppoParlamentare onto:componenteGruppoMisto ) ] ;
+    rdfs:range onto:trasformazioneGruppo .
+
+onto:doc a owl:ObjectProperty ;
+    rdfs:label "URL del DOC" ;
+    rdfs:domain onto:DOC .
+
+onto:endDate a owl:DatatypeProperty ;
+    rdfs:label "data fine" ;
+    rdfs:subPropertyOf dc:date ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:fa_parte_della a owl:ObjectProperty ;
+    rdfs:label "appartiene alla legislatura" ;
+    rdfs:domain onto:deputato ;
+    rdfs:range onto:legislatura .
+
+onto:favorevoli a owl:DatatypeProperty ;
+    rdfs:label "voti favorevoli" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:griglia a owl:ObjectProperty ;
+    rdfs:label "griglia" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:aic onto:atto onto:DOC onto:documentazione onto:dottrina onto:giurisprudenza onto:risorsa_web onto:normativa onto:note onto:pubblicistica ) ] ;
+    rdfs:range skos:Concept .
+
+onto:haMembro a owl:ObjectProperty ;
+    rdfs:label "ha membro" ;
+    rdfs:domain onto:organo ;
+    rdfs:range onto:composizioneOrgano .
+
+onto:incaricoGovernativo a owl:DatatypeProperty ;
+    rdfs:label "incarico governativo" ;
+    rdfs:domain onto:membroGoverno ;
+    rdfs:range xsd:string .
+
+onto:iniziativa a owl:DatatypeProperty ;
+    rdfs:label "iniziativa" ;
+    rdfs:domain onto:atto ;
+    rdfs:range xsd:string .
+
+onto:interim a owl:DatatypeProperty ;
+    rdfs:label "interim" ;
+    rdfs:domain onto:membroGoverno ;
+    rdfs:range xsd:boolean .
+
+onto:lavoriPreparatori a owl:ObjectProperty ;
+    rdfs:label "lavori preparatori" ;
+    rdfs:domain onto:lavoriPreparatoriLegge ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:organoGoverno ) ] .
+
+onto:lex a owl:DatatypeProperty ;
+    rdfs:label "legge" ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:range xsd:anyURI .
+
+onto:lista a owl:DatatypeProperty ;
+    rdfs:label "lista" ;
+    rdfs:range xsd:string .
+
+onto:maggioranza a owl:DatatypeProperty ;
+    rdfs:label "numero maggioranza" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:membro a owl:ObjectProperty ;
+    rdfs:label "membro" ;
+    rdfs:domain onto:deputato ;
+    rdfs:range onto:appartenenzaOrgano .
+
+onto:membroConsulta a owl:DatatypeProperty ;
+    rdfs:label "membro" ;
+    rdfs:domain onto:persona ;
+    rdfs:range xsd:boolean .
+
+onto:motivoTermine a owl:DatatypeProperty ;
+    rdfs:label "motivo termine mandato" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:membroGoverno onto:mandatoCamera onto:mandatoSenato ) ] ;
+    rdfs:range xsd:string .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "nome del luogo" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://www.geonames.org/ontology#name> .
+
+onto:nomina a owl:ObjectProperty ;
+    rdfs:label "nomina" ;
+    rdfs:domain onto:legislatura ;
+    rdfs:range onto:assemblea .
+
+onto:opzione a owl:DatatypeProperty ;
+    rdfs:label "data di opzione" ;
+    rdfs:domain onto:elezione ;
+    rdfs:range xsd:date .
+
+onto:parentADM1 a owl:DatatypeProperty ;
+    rdfs:label "ADM1" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://www.geonames.org/ontology#parentADM1> .
+
+onto:parentADM2 a owl:DatatypeProperty ;
+    rdfs:label "ADM2" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://www.geonames.org/ontology#parentADM2> .
+
+onto:parentADM3 a owl:DatatypeProperty ;
+    rdfs:label "ADM3" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://www.geonames.org/ontology#parentADM3> .
+
+onto:parentCountry a owl:DatatypeProperty ;
+    rdfs:label "parentCountry" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://www.geonames.org/ontology#parentCountry> .
+
+onto:plurieletto a owl:ObjectProperty ;
+    rdfs:label "plurieletto" ;
+    rdfs:domain onto:elezione ;
+    rdfs:range onto:circoscrizionePlurieletto .
+
+onto:presenti a owl:DatatypeProperty ;
+    rdfs:label "numero presenti" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:presidenteRepubblica a owl:Class ;
+    rdfs:label "presidente della Repubblica"^^xsd:string .
+
+onto:primo_firmatario a owl:ObjectProperty ;
+    rdfs:label "primo firmatario" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:DOC onto:aic ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:deputato onto:membroGoverno ) ] .
+
+onto:richiestaFiducia a owl:DatatypeProperty ;
+    rdfs:label "richiesta della fiducia" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:boolean ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_abbinamento a owl:ObjectProperty ;
+    rdfs:label "riferimento all'abbinamento dell'atto camera con altri atti" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:abbinamento ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_allegatoDiscussione a owl:ObjectProperty ;
+    rdfs:label "riferimento all'allegato di una discussione" ;
+    rdfs:domain onto:discussione ;
+    rdfs:range onto:allegatoDiscussione ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_assegnazione a owl:ObjectProperty ;
+    rdfs:label "riferimento all'assegnazione dell'atto camera" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:assegnazione ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_attoCamera a owl:ObjectProperty ;
+    rdfs:label "riferimento all'atto camera" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:cronologia onto:dibattito onto:documentazione onto:lavoriPreparatoriLegge ) ] ;
+    rdfs:range onto:atto .
+
+onto:rif_bollettino a owl:ObjectProperty ;
+    rdfs:label "riferimento al bollettino" ;
+    rdfs:domain onto:seduta ;
+    rdfs:range onto:bollettino .
+
+onto:rif_dibattito a owl:ObjectProperty ;
+    rdfs:label "riferimento al dibattito" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:assegnazione onto:richiestaParere ) ] ;
+    rdfs:range onto:dibattito ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_discussione a owl:ObjectProperty ;
+    rdfs:label "riferimento alla discussione" ;
+    rdfs:domain onto:dibattito ;
+    rdfs:range onto:discussione .
+
+onto:rif_doc a owl:ObjectProperty ;
+    rdfs:label "riferimento al doc" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DOC onto:dibattito ) ] ;
+    rdfs:range onto:DOC .
+
+onto:rif_dossier a owl:ObjectProperty ;
+    rdfs:label "riferimento al dossier" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto ) ] ;
+    rdfs:range onto:dossier .
+
+onto:rif_elezione a owl:ObjectProperty ;
+    rdfs:label "riferimento all'elezione" ;
+    rdfs:domain onto:mandatoCamera ;
+    rdfs:range onto:elezione .
+
+onto:rif_governo a owl:ObjectProperty ;
+    rdfs:label "riferimento al governo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:organoGoverno onto:legislatura onto:atto onto:membroGoverno onto:DOC onto:presidenteConsiglioMinistri ) ] ;
+    rdfs:range onto:governo .
+
+onto:rif_incarico a owl:ObjectProperty ;
+    rdfs:label "riferimento all'incarico" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:gruppoParlamentare onto:deputato ) ] ;
+    rdfs:range onto:incarico .
+
+onto:rif_incaricoGoverno a owl:ObjectProperty ;
+    rdfs:label "riferimento all'incarico di Governo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:deputato onto:governo onto:organoGoverno onto:persona ) ] ;
+    rdfs:range onto:incaricoGoverno ;
+    owl:versionInfo "Questa proprietà è deprecata nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_intervento a owl:ObjectProperty ;
+    rdfs:label "riferimento all'intervento del deputato o del membro di governo in una discussione" ;
+    rdfs:domain onto:discussione ;
+    rdfs:range onto:intervento ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_leg a owl:ObjectProperty ;
+    rdfs:label "riferimento alla legislatura" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:mandatoCamera onto:organo onto:governo onto:assemblea onto:aic onto:atto onto:cronologia onto:dibattito onto:DOC onto:documentazione onto:dottrina onto:elezione onto:giurisprudenza onto:gruppoParlamentare onto:incarico onto:membroGoverno onto:legge onto:risorsa_web onto:normativa onto:note onto:presidenteCamera onto:pubblicistica onto:sistemaElettorale onto:seduta onto:ufficioParlamentare onto:componenteGruppoMisto ) ] ;
+    rdfs:range onto:legislatura .
+
+onto:rif_luogo a owl:ObjectProperty ;
+    rdfs:label "riferimento al luogo" ;
+    rdfs:domain onto:persona ;
+    rdfs:range onto:luogo ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_mandatoCamera a owl:ObjectProperty ;
+    rdfs:label "riferimento a mandato camera" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:deputato onto:persona ) ] ;
+    rdfs:range onto:mandatoCamera .
+
+onto:rif_mandatoSenato a owl:ObjectProperty ;
+    rdfs:label "riferimento a mandato senato" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:senatore onto:persona ) ] ;
+    rdfs:range onto:mandatoSenato .
+
+onto:rif_membroGoverno a owl:ObjectProperty ;
+    rdfs:label "riferimento al membro di Governo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:deputato onto:governo onto:organoGoverno onto:persona ) ] ;
+    rdfs:range onto:membroGoverno ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_natura a owl:ObjectProperty ;
+    rdfs:label "riferimento alla natura dell'atto camera" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:natura ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_organoGoverno a owl:ObjectProperty ;
+    rdfs:label "riferimento all'organo di governo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:membroGoverno onto:atto ) ] ;
+    rdfs:range onto:organoGoverno .
+
+onto:rif_persona a owl:ObjectProperty ;
+    rdfs:label "riferimento a persona" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:discussione onto:membroGoverno onto:presidenteCamera onto:presidenteConsiglioMinistri onto:cronologia ) ] ;
+    rdfs:range onto:persona .
+
+onto:rif_presidenteConsiglioMinistri a owl:ObjectProperty ;
+    rdfs:label "rierimento al Presidente del Consiglio dei ministri" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:governo onto:persona ) ] ;
+    rdfs:range onto:presidenteConsiglioMinistri .
+
+onto:rif_richiestaParere a owl:ObjectProperty ;
+    rdfs:label "riferimento alla richesta dei pareri su un atto camera" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:richiestaParere ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_seduta a owl:ObjectProperty ;
+    rdfs:label "riferimento alla seduta" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:discussione onto:aic onto:bollettino onto:votazione ) ] ;
+    rdfs:range onto:seduta .
+
+onto:rif_senatore a owl:ObjectProperty ;
+    rdfs:label "riferimento al senatore" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:mandatoSenato onto:ufficioParlamentare ) ] ;
+    rdfs:range onto:senatore .
+
+onto:rif_sistemaElettorale a owl:ObjectProperty ;
+    rdfs:label "riferimento al sistema elettorale" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:legislatura onto:elezione ) ] ;
+    rdfs:range onto:sistemaElettorale .
+
+onto:rif_statoIter a owl:ObjectProperty ;
+    rdfs:label "riferimento allo stato iter di un atto camera" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:statoIter ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_trasmissione a owl:ObjectProperty ;
+    rdfs:label "riferimento alla trasmissione di un atto camera all'altro ramo del parlamento" ;
+    rdfs:domain onto:atto ;
+    rdfs:range onto:trasmissione ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_ufficioParlamentare a owl:ObjectProperty ;
+    rdfs:label "riferimento ufficio parlamentare" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:organo onto:deputato ) ] ;
+    rdfs:range onto:ufficioParlamentare .
+
+onto:rif_unitaOrganizzativa a owl:ObjectProperty ;
+    rdfs:label "unità organizzativa" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:aic onto:atto onto:DOC onto:documentazione onto:dottrina onto:risorsa_web onto:note ) ] ;
+    rdfs:range onto:unitaOrganizzativa .
+
+onto:rif_versioneTestoAtto a owl:ObjectProperty ;
+    rdfs:label "riferimento alla versione del testo dell'atto camera" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:assegnazione onto:abbinamento onto:richiestaParere onto:atto onto:stralcio onto:statoIter ) ] ;
+    rdfs:range onto:versioneTestoAtto ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_votazione a owl:ObjectProperty ;
+    rdfs:label "riferimento alla votazione" ;
+    rdfs:domain onto:voto ;
+    rdfs:range onto:votazione ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:risposta a owl:ObjectProperty ;
+    rdfs:label "riferimento alla risposta scritta all'interrogazione" ;
+    rdfs:domain onto:aic ;
+    rdfs:range onto:rispostaAIC .
+
+onto:ruolo a owl:DatatypeProperty ;
+    rdfs:label "ruolo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:atto onto:deputato onto:incarico onto:persona ) ] ;
+    rdfs:range xsd:string .
+
+onto:siComponeDi a owl:ObjectProperty ;
+    rdfs:label "si compone di" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:assemblea onto:componenteGruppoMisto onto:legislatura onto:gruppoParlamentare ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:organo onto:deputato ) ] .
+
+onto:startDate a owl:DatatypeProperty ;
+    rdfs:label "data inizio" ;
+    rdfs:subPropertyOf dc:date ;
+    owl:versionInfo "proprietà aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:tipoElezione a owl:DatatypeProperty ;
+    rdfs:label "tipo di elezione" ;
+    rdfs:domain onto:elezione ;
+    rdfs:range xsd:string .
+
+onto:tipoProclamazione a owl:ObjectProperty ;
+    rdfs:label "tipologia proclamazione" ;
+    rdfs:domain onto:mandatoCamera ;
+    rdfs:range onto:proclamazione .
+
+onto:tipologia a owl:Class ;
+    rdfs:label "tipologia documentaria"^^xsd:string .
+
+onto:votanti a owl:DatatypeProperty ;
+    rdfs:label "numero votanti" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:nonNegativeInteger ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:votazioneFinale a owl:DatatypeProperty ;
+    rdfs:label "votazione finale" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:boolean ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:votazioneSegreta a owl:DatatypeProperty ;
+    rdfs:label "votazione segreta" ;
+    rdfs:domain onto:votazione ;
+    rdfs:range xsd:boolean ;
+    owl:versionInfo "Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:adesioneGruppoMisto a owl:Class ;
+    rdfs:label "adesione al Gruppo Misto"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:rif_componente ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ] .
+
+onto:allegatoDiscussione a owl:Class ;
+    rdfs:label "allegato ad una discussione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:appartenenzaOrgano a owl:Class ;
+    rdfs:label "appertenenza di un deputato ad un organo"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:rif_deputato ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:type ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:description ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:rif_organo ] .
+
+onto:cambioDenominazione a owl:Class ;
+    rdfs:label "cambio denominazione del Gruppo Parlamentare"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty dcterms:alternative ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:title ;
+            owl:someValuesFrom rdfs:Literal ] .
+
+onto:circoscrizionePlurieletto a owl:Class ;
+    rdfs:label "circoscrizioni per plurieletti"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty dc:coverage ;
+            owl:someValuesFrom rdfs:Literal ] .
+
+onto:composizioneOrgano a owl:Class ;
+    rdfs:label "composizione di un organo parlamentare"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:rif_deputato ] .
+
+onto:incaricoGoverno a owl:Class ;
+    rdfs:label "incarico di Governo"^^xsd:string ;
+    owl:versionInfo "Questa classe è deprecata nell'ultima versione del 2 maggio 2013. E' stata sostituita dalla classe membroGoverno"^^xsd:string .
+
+onto:legge a owl:Class ;
+    rdfs:label "legge"^^xsd:string .
+
+onto:proclamazione a owl:Class ;
+    rdfs:label "proclamazione"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty dc:type ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:rif_deputato ] .
+
+onto:relatore a owl:Class ;
+    rdfs:label "relatore di un atto camera"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_organo a owl:ObjectProperty ;
+    rdfs:label "riferimento all'organo" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:ufficioParlamentare onto:dibattito onto:DOC onto:seduta onto:assegnazione onto:richiestaParere ) ] ;
+    rdfs:range onto:organo .
+
+onto:rispostaAIC a owl:Class ;
+    rdfs:label "risposta scritta alle interrogazioni"^^xsd:string .
+
+onto:trasformazioneGruppo a owl:Class ;
+    rdfs:label "trasformazione del Gruppo Parlamentare"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:rif_gruppoParlamentare ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:type ;
+            owl:someValuesFrom rdfs:Literal ] .
+
+onto:trasmissione a owl:Class ;
+    rdfs:label "trasmissione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:unitaOrganizzativa a owl:Class ;
+    rdfs:label "unità organizzativa"^^xsd:string .
+
+onto:versioneTestoAtto a owl:Class ;
+    rdfs:label "versione testo atto camera"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:adesioneGruppo a owl:Class ;
+    rdfs:label "adesione del deputato al Gruppo Parlamentare"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:rif_gruppoParlamentare ],
+        [ a owl:Restriction ;
+            owl:onProperty dc:date ;
+            owl:someValuesFrom rdfs:Literal ] .
+
+onto:bollettino a owl:Class ;
+    rdfs:label "bollettino"^^xsd:string ;
+    rdfs:subClassOf onto:lavori .
+
+onto:dossier a owl:Class ;
+    rdfs:label "dossier"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:lavoriPreparatoriLegge a owl:Class ;
+    rdfs:label "lavori preparatori"^^xsd:string .
+
+onto:luogo a owl:Class ;
+    rdfs:label "luogo"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:natura a owl:Class ;
+    rdfs:label "natura"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:rif_gruppoParlamentare a owl:ObjectProperty ;
+    rdfs:label "riferimento al Gruppo parlamentare" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:componenteGruppoMisto onto:incarico onto:voto ) ] ;
+    rdfs:range onto:gruppoParlamentare .
+
+onto:stralcio a owl:Class ;
+    rdfs:label "stralcio"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:abbinamento a owl:Class ;
+    rdfs:label "abbinamento"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:assemblea a owl:Class ;
+    rdfs:label "assemblea"^^xsd:string ;
+    rdfs:isDefinedBy <http://www.camera.it/734> .
+
+onto:giurisprudenza a owl:Class ;
+    rdfs:label "giurisprudenza"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:intervento a owl:Class ;
+    rdfs:label "intervento in una discussione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:normativa a owl:Class ;
+    rdfs:label "normativa"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:pubblicistica a owl:Class ;
+    rdfs:label "pubblicistica"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:rif_deputato a owl:ObjectProperty ;
+    rdfs:label "rierimento a deputato" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:persona onto:incarico onto:presidenteCamera onto:ufficioParlamentare onto:mandatoCamera onto:cronologia onto:discussione onto:intervento onto:relatore onto:voto ) ] ;
+    rdfs:range onto:deputato .
+
+onto:risorsa_web a owl:Class ;
+    rdfs:label "risorsa_web"^^xsd:string .
+
+onto:senatore a owl:Class ;
+    rdfs:label "senatore"^^xsd:string ;
+    rdfs:subClassOf onto:persona .
+
+onto:sistemaElettorale a owl:Class ;
+    rdfs:label "sistema elettorale"^^xsd:string .
+
+onto:statoIter a owl:Class ;
+    rdfs:label "stato iter"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:cronologia a owl:Class ;
+    rdfs:label "cronologia"^^xsd:string .
+
+onto:dottrina a owl:Class ;
+    rdfs:label "dottrina"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:mandatoSenato a owl:Class ;
+    rdfs:label "mandato"^^xsd:string .
+
+onto:note a owl:Class ;
+    rdfs:label "note"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:presidenteCamera a owl:Class ;
+    rdfs:label "presidente della Camera dei deputati"^^xsd:string .
+
+onto:presidenteConsiglioMinistri a owl:Class ;
+    rdfs:label "presidente del Consiglio dei ministri"^^xsd:string .
+
+onto:voto a owl:Class ;
+    rdfs:label "voto del deputato in una votazione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:assegnazione a owl:Class ;
+    rdfs:label "assegnazione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:documentazione a owl:Class ;
+    rdfs:label "documentazione"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+onto:lavori a owl:Class ;
+    rdfs:label "lavori"^^xsd:string .
+
+onto:richiestaParere a owl:Class ;
+    rdfs:label "richiesta parere"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:seduta a owl:Class ;
+    rdfs:label "seduta"^^xsd:string ;
+    rdfs:subClassOf onto:lavori .
+
+onto:componenteGruppoMisto a owl:Class ;
+    rdfs:label "componente del Gruppo Misto"^^xsd:string .
+
+onto:incarico a owl:Class ;
+    rdfs:label "incarico"^^xsd:string .
+
+onto:organo a owl:Class ;
+    rdfs:label "organo"^^xsd:string .
+
+onto:dibattito a owl:Class ;
+    rdfs:label "dibattito"^^xsd:string ;
+    rdfs:subClassOf onto:lavori .
+
+onto:discussione a owl:Class ;
+    rdfs:label "discussione"^^xsd:string ;
+    rdfs:subClassOf onto:lavori .
+
+onto:elezione a owl:Class ;
+    rdfs:label "elezione"^^xsd:string .
+
+onto:governo a owl:Class ;
+    rdfs:label "governo"^^xsd:string .
+
+onto:gruppoParlamentare a owl:Class ;
+    rdfs:label "gruppo parlamentare"^^xsd:string .
+
+onto:legislatura a owl:Class ;
+    rdfs:label "legislatura"^^xsd:string .
+
+onto:ufficioParlamentare a owl:Class ;
+    rdfs:label "ufficio Parlamentare"^^xsd:string .
+
+onto:documenti a owl:Class ;
+    rdfs:label "documenti"^^xsd:string .
+
+onto:mandatoCamera a owl:Class ;
+    rdfs:label "mandato"^^xsd:string .
+
+onto:organoGoverno a owl:Class ;
+    rdfs:label "organo governativo"^^xsd:string .
+
+onto:DOC a owl:Class ;
+    rdfs:label "doc"^^xsd:string ;
+    rdfs:isDefinedBy <http://www.camera.it/168> .
+
+onto:aic a owl:Class ;
+    rdfs:label "atti di indirizzo e controllo"^^xsd:string ;
+    rdfs:isDefinedBy <http://www.camera.it/205> ;
+    rdfs:subClassOf onto:lavori .
+
+onto:membroGoverno a owl:Class ;
+    rdfs:label "membro di Governo"^^xsd:string ;
+    rdfs:subClassOf onto:persona ;
+    owl:versionInfo "Questa classe è stata aggiunta nell'ultima versione del 2 maggio 2013"^^xsd:string .
+
+onto:deputato a owl:Class ;
+    rdfs:label "deputato"^^xsd:string ;
+    rdfs:isDefinedBy <http://www.camera.it/423?conoscerelacamera=2> ;
+    rdfs:subClassOf onto:persona .
+
+onto:persona a owl:Class ;
+    rdfs:label "persona"^^xsd:string ;
+    owl:sameAs foaf:Person .
+
+onto:votazione a owl:Class ;
+    rdfs:label "votazione"^^xsd:string ;
+    owl:versionInfo "classe aggiunta nella versione del 2 maggio 2013"^^xsd:string .
+
+onto:atto a owl:Class ;
+    rdfs:label "atto camera"^^xsd:string ;
+    rdfs:subClassOf onto:documenti .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:organo onto:organoGoverno onto:dibattito onto:discussione onto:seduta onto:intervento onto:atto onto:richiestaParere onto:stralcio onto:statoIter onto:abbinamento onto:assegnazione onto:natura onto:votazione onto:voto onto:membroGoverno onto:governo onto:elezione onto:sistemaElettorale onto:legislatura onto:presidenteCamera onto:presidenteConsiglioMinistri onto:senatore onto:mandatoCamera onto:mandatoSenato onto:ufficioParlamentare onto:gruppoParlamentare onto:componenteGruppoMisto onto:incarico onto:aic onto:luogo ) .
+

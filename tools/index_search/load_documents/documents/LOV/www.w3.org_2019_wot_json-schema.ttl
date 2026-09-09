@@ -1,0 +1,156 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix onto: <https://www.w3.org/2019/wot/json-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:publisher <https://www.w3.org/WoT/WG/> ;
+    dc:title "JSON Schema in RDF"@en ;
+    dcterms:creator <https://vcharpenay.link/#me> ;
+    dcterms:license <http://purl.org/NET/rdflicense/cc-by4.0> ;
+    vann:preferredNamespacePrefix "jsonschema" ;
+    vann:preferredNamespaceUri "https://www.w3.org/2019/wot/json-schema#" ;
+    rdfs:comment "Module for data schema specifications, part of the W3C Web of Things (WoT) Thing Description model"@en ;
+    owl:versionInfo "0.6.0" .
+
+onto:BooleanSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>boolean</code>. This subclass is indicated by the value <code>boolean</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:NullSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>null</code>. This subclass is indicated by the value <code>null</code> assigned to <code>type</code> in <code>DataSchema</code> instances. This Subclass describes only one acceptable value, namely <code>null</code>. It can be used as part of a <code>oneOf</code> declaration, where it is used to indicate, that the data can also be <code>null</code>."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:allOf a owl:ObjectProperty ;
+    rdfs:label "allOf" ;
+    ns1:domainIncludes onto:DataSchema ;
+    ns1:rangeIncludes onto:DataSchema ;
+    rdfs:comment "Used to ensure that the data is valid against all of the specified schemas in the array."@en .
+
+onto:anyOf a owl:ObjectProperty ;
+    rdfs:label "anyOf" ;
+    ns1:domainIncludes onto:DataSchema ;
+    ns1:rangeIncludes onto:DataSchema ;
+    rdfs:comment "Used to ensure that the data is valid against any of the specified schemas in the array."@en .
+
+onto:const a owl:DatatypeProperty ;
+    rdfs:label "const" ;
+    ns1:domainIncludes onto:DataSchema ;
+    rdfs:comment "Provides a constant value."@en .
+
+onto:description a owl:AnnotationProperty ;
+    rdfs:label "description" ;
+    rdfs:comment "Can be used to decorate a user interface with information about the data produced by this user interface. a description will provide explanation about the purpose of the instance described by this schema."@en .
+
+onto:enum a owl:DatatypeProperty ;
+    rdfs:label "enum" ;
+    ns1:domainIncludes onto:DataSchema ;
+    rdfs:comment "Restricted set of values provided as an array."@en .
+
+onto:format a owl:DatatypeProperty ;
+    rdfs:label "format" ;
+    ns1:domainIncludes onto:StringSchema ;
+    rdfs:comment "Allows validation based on a format pattern such as \"date-time\", \"email\", \"uri\", etc."@en ;
+    rdfs:range xsd:string .
+
+onto:items a owl:ObjectProperty ;
+    rdfs:label "items" ;
+    ns1:domainIncludes onto:ArraySchema ;
+    ns1:rangeIncludes onto:DataSchema ;
+    rdfs:comment "Used to define the characteristics of an array."@en .
+
+onto:maxItems a owl:DatatypeProperty ;
+    rdfs:label "maxItems" ;
+    ns1:domainIncludes onto:ArraySchema ;
+    rdfs:comment "Defines the maximum number of items that have to be in the array."@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:maximum a owl:DatatypeProperty ;
+    rdfs:label "maximum" ;
+    ns1:domainIncludes onto:IntegerSchema,
+        onto:NumberSchema ;
+    rdfs:comment "Specifies a maximum numeric value. Only applicable for associated number or integer types."@en ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso ns1:maxValue .
+
+onto:minItems a owl:DatatypeProperty ;
+    rdfs:label "minItems" ;
+    ns1:domainIncludes onto:ArraySchema ;
+    rdfs:comment "Defines the minimum number of items that have to be in the array."@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:minimum a owl:DatatypeProperty ;
+    rdfs:label "minimum" ;
+    ns1:domainIncludes onto:IntegerSchema,
+        onto:NumberSchema ;
+    rdfs:comment "Specifies a minimum numeric value. Only applicable for associated number or integer types."@en ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso ns1:minValue .
+
+onto:oneOf a owl:ObjectProperty ;
+    rdfs:label "oneOf" ;
+    ns1:domainIncludes onto:DataSchema ;
+    ns1:rangeIncludes onto:DataSchema ;
+    rdfs:comment "Used to ensure that the data is valid against exactly one of the specified schemas in the array."@en .
+
+onto:properties a owl:ObjectProperty ;
+    rdfs:label "properties" ;
+    ns1:domainIncludes onto:ObjectSchema ;
+    ns1:rangeIncludes onto:DataSchema ;
+    rdfs:comment "Data schema nested definitions"@en .
+
+onto:propertyName a owl:DatatypeProperty ;
+    rdfs:label "propertyName" ;
+    ns1:domainIncludes onto:DataSchema ;
+    rdfs:comment "Used to store the indexing name in the parent object when this schema appears as a property of an object schema."@en ;
+    rdfs:range xsd:string .
+
+onto:readOnly a owl:DatatypeProperty ;
+    rdfs:label "readOnly" ;
+    ns1:domainIncludes onto:DataSchema ;
+    rdfs:comment "Boolean value that is a hint to indicate whether a property interaction / value is read only (=true) or not (=false)"@en ;
+    rdfs:range xsd:boolean .
+
+onto:required a owl:DatatypeProperty ;
+    rdfs:label "required" ;
+    ns1:domainIncludes onto:ObjectSchema ;
+    rdfs:comment "Defines which members of the object type are mandatory."@en ;
+    rdfs:range xsd:string .
+
+onto:title a owl:AnnotationProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "Can be used to decorate a user interface with information about the data produced by this user interface. A title will preferably be short."@en .
+
+onto:writeOnly a owl:DatatypeProperty ;
+    rdfs:label "writeOnly" ;
+    ns1:domainIncludes onto:DataSchema ;
+    rdfs:comment "Boolean value that is a hint to indicate whether a property interaction / value is write only (=true) or not (=false)"@en ;
+    rdfs:range xsd:boolean .
+
+onto:StringSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>string</code>. This subclass is indicated by the value <code>string</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:IntegerSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>integer</code>. This subclass is indicated by the value <code>integer</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:NumberSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>number</code>. This subclass is indicated by the value <code>number</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:ObjectSchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type <code>object</code>. This subclass is indicated by the value <code>object</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:ArraySchema a owl:Class ;
+    rdfs:comment "Metadata describing data of type array. This subclass is indicated by the value <code>array</code> assigned to <code>type</code> in <code>DataSchema</code> instances."@en ;
+    rdfs:subClassOf onto:DataSchema .
+
+onto:DataSchema a owl:Class ;
+    rdfs:comment "Metadata that describes the data format used. It can be used for validation." .
+

@@ -1,0 +1,140 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/ontology/pbo/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:FixedPlaylist a owl:Class ;
+    rdfs:label "Fixed Playlist"@en ;
+    rdfs:comment "A (sub) playlist of a fixed length and a fixed order. This concept should be used to express static relations, \\ne.g. \"those three music tracks must always be played in a row\"."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Playlist ;
+    ns1:term_status "testing"@en .
+
+onto:PlayBackCounter a owl:Class ;
+    rdfs:label "Play Back Counter"@en ;
+    rdfs:comment "A play back counter, e.g. to count the playback of a media object."^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:MediaActionCounter ;
+    ns1:term_status "unstable"@en .
+
+onto:SkipCounter a owl:Class ;
+    rdfs:label "Skip Counter"^^xsd:string ;
+    rdfs:comment "A skip counter, e.g. to count skip events of a media object."^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:MediaActionCounter ;
+    ns1:term_status "unstable"^^xsd:string .
+
+onto:media_object a owl:ObjectProperty ;
+    rdfs:label "has media object"@en ;
+    rdfs:comment "Associates a media object to its related counter."@en ;
+    rdfs:domain onto:MediaActionCounter ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/ontology/bibo/Document> <http://purl.org/vocab/frbr/core#Endeavour> ) ] ;
+    rdfs:subPropertyOf <http://purl.org/ontology/co/core#object> ;
+    ns1:term_status "unstable"@en .
+
+onto:media_scrobble_object a owl:ObjectProperty ;
+    rdfs:label "has media scrobble object"@en ;
+    rdfs:comment "A media specific scrobble object, e.g. a music track or a video."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/ontology/bibo/Document> <http://purl.org/vocab/frbr/core#Endeavour> ) ] ;
+    rdfs:subPropertyOf <http://purl.org/ontology/co/core#scrobble_object> ;
+    ns1:term_status "testing"@en .
+
+onto:playlist a owl:ObjectProperty ;
+    rdfs:label "has playlist"@en ;
+    rdfs:comment "Associates a playlist to something."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Playlist ;
+    ns1:term_status "testing"@en .
+
+onto:playlist_slot a owl:ObjectProperty ;
+    rdfs:label "has playlist slot"@en ;
+    rdfs:comment "A specific slot in a playlist."@en ;
+    rdfs:domain onto:Playlist ;
+    rdfs:range onto:PlaylistSlot ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#slot> ;
+    ns1:term_status "testing"@en .
+
+onto:skip_time a owl:ObjectProperty ;
+    rdfs:label "has skip time"^^xsd:string ;
+    rdfs:comment "The moment, when someone skipped the media object, e.g. an instant of a timeline of an audio signal."^^xsd:string ;
+    rdfs:domain onto:SkipEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#time> ;
+    ns1:term_status "testing"^^xsd:string .
+
+onto:transition a owl:ObjectProperty ;
+    rdfs:label "has transition"@en ;
+    rdfs:comment "This relation directs to a description of a transition between two neighbouring playlist slots, e.g. two successive music tracks in a dj mix."@en ;
+    rdfs:domain onto:PlaylistSlot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/ontology/similarity/association> ;
+    ns1:term_status "testing"@en .
+
+onto:SkipEvent a owl:Class ;
+    rdfs:label "Skip Event"^^xsd:string ;
+    rdfs:comment "A specific skip event of something."^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/co/core#ScrobbleEvent> ;
+    ns1:term_status "testing"^^xsd:string .
+
+onto:playlist_item a owl:ObjectProperty ;
+    rdfs:label "has playlist item"@en ;
+    rdfs:comment "A specific playlist item, e.g. a music track, video or slides. The range types of this property must be \\nbased on bibo:Document or frbr:Endeavour (to keep it somehow media based)."@en ;
+    rdfs:domain onto:PlaylistSlot ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://purl.org/ontology/bibo/Document> <http://purl.org/vocab/frbr/core#Endeavour> ) ] ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#item> ;
+    owl:inverseOf [ a owl:ObjectProperty ;
+            rdfs:label "is playlist item of"@en ] ;
+    ns1:term_status "unstable"@en .
+
+onto:MediaActionCounter a owl:Class ;
+    rdfs:label "Media Action Counter"@en ;
+    rdfs:comment "A media action counter. Media actions are for example play back or skip events."^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/co/core#Counter> ;
+    ns1:term_status "unstable"@en .
+
+onto:Playlist a owl:Class ;
+    rdfs:label "Playlist"@en ;
+    rdfs:comment "A playlist of specific media items, e.g. music tracks, videos or slides."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document>,
+        <http://purl.org/ontology/olo/core#OrderedList> ;
+    ns1:term_status "unstable"@en .
+
+onto:PlaylistSlot a owl:Class ;
+    rdfs:label "Playlist Slot"@en ;
+    rdfs:comment "A playlist slot. It could contain e.g. a music track, a video or a slide, and maybe related with some \\nadditional properties. However, it could maybe also included a \"sub\" playlist, e.g. to keep a fixed sequence of some tracks."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:playlist_item ],
+        <http://purl.org/ontology/olo/core#Slot> ;
+    ns1:term_status "testing"@en .
+
+onto: a owl:Ontology ;
+    dc:creator <http://foaf.me/zazi#me>,
+        <http://kurtisrandom.com/foaf.rdf#kurtjx> ;
+    dc:date "2010-09-13T18:31:52+01:00"^^xsd:dateTime ;
+    dc:description "The Play Back Ontology specification provides basic concepts and properties \\nfor describing concepts that are related to the play back domain, e.g. an playlist, play back count and skip counter \\non/ for the Semantic Web. This document contains a RDF description of the Play Back Ontology."@en ;
+    dc:title "The Play Back Ontology"@en ;
+    owl:imports <http://purl.org/NET/c4dm/event.owl>,
+        dc:,
+        <http://purl.org/ontology/bibo/>,
+        <http://purl.org/ontology/co/core>,
+        <http://purl.org/ontology/olo/core>,
+        <http://purl.org/ontology/similarity/>,
+        <http://purl.org/vocab/frbr/core>,
+        <http://www.w3.org/2003/06/sw-vocab-status/ns> ;
+    owl:versionInfo 0.6 .
+

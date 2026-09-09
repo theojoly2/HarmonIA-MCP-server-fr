@@ -1,0 +1,342 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.aktors.org/ontology/support#> .
+@prefix onto: <http://www.aktors.org/ontology/support> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:source a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+ns1:Calendar-Date a owl:Class ;
+    rdfs:label "Calendar Date" ;
+    rdfs:comment "A point in time" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:second-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hour-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:year-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:minute-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:month-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:day-of ],
+        ns1:Time-Point .
+
+ns1:Day a owl:Class ;
+    rdfs:label "Day" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:twentyfour-hour-duration ;
+            owl:onProperty ns1:has-duration ],
+        ns1:Time-Interval .
+
+ns1:Month a owl:Class ;
+    rdfs:label "Month" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Time-Interval .
+
+ns1:Tangible-Thing a owl:Class ;
+    rdfs:label "Tangible Thing" ;
+    rdfs:comment "Something which is not intangible, something which is physical, made of matter. It does not matter whether things are real of imaginary.  Therefore we consider Mickey Mouse's car and a hippogriff as  tangible things" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Temporal-Thing ;
+    owl:complementOf ns1:Intangible-Thing .
+
+ns1:Week a owl:Class ;
+    rdfs:label "Week" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:seven-day-duration ;
+            owl:onProperty ns1:has-duration ],
+        ns1:Time-Interval .
+
+ns1:Year a owl:Class ;
+    rdfs:label "Year" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue ns1:twelve-month-duration ;
+            owl:onProperty ns1:has-duration ],
+        ns1:Time-Interval .
+
+ns1:begins-at-time-point a owl:ObjectProperty ;
+    rdfs:label "begins at time point" ;
+    rdfs:domain ns1:Time-Interval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Time-Point .
+
+ns1:ends-at-time-point a owl:ObjectProperty ;
+    rdfs:label "ends at time point" ;
+    rdfs:domain ns1:Time-Interval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Time-Point .
+
+ns1:has-magnitude a owl:DatatypeProperty ;
+    rdfs:label "has magnitude" ;
+    rdfs:domain ns1:Physical-Quantity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal .
+
+ns1:has-pretty-name a owl:DatatypeProperty ;
+    rdfs:label "has pretty name" ;
+    rdfs:comment "A human readable name" ;
+    rdfs:domain ns1:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+ns1:has-time-interval a owl:ObjectProperty ;
+    rdfs:label "has time interval" ;
+    rdfs:domain ns1:Temporal-Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Time-Interval .
+
+ns1:has-variant-name a owl:DatatypeProperty ;
+    rdfs:label "has variant name" ;
+    rdfs:comment "Other variants of the human readable name" ;
+    rdfs:domain ns1:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+ns1:in-timezone a owl:DatatypeProperty ;
+    rdfs:label "in timezone" ;
+    rdfs:domain ns1:Time-Position ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer .
+
+ns1:thirty-day-duration a ns1:Duration ;
+    rdfs:label "30 day duration" ;
+    ns1:has-magnitude 30.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-day ;
+    rdfs:isDefinedBy onto: .
+
+ns1:thirtyone-day-duration a ns1:Duration ;
+    rdfs:label "31 day duration" ;
+    ns1:has-magnitude 31.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-day ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-minute a ns1:Time-Measure ;
+    rdfs:label "minute" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-second a ns1:Time-Measure ;
+    rdfs:label "second" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-year a ns1:Time-Measure ;
+    rdfs:label "year" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:twentyeight-day-duration a ns1:Duration ;
+    rdfs:label "28 day duration" ;
+    ns1:has-magnitude 28.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-day ;
+    rdfs:isDefinedBy onto: .
+
+ns1:twentynine-day-duration a ns1:Duration ;
+    rdfs:label "29 day duration" ;
+    ns1:has-magnitude 29.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-day ;
+    rdfs:isDefinedBy onto: .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+rdfs:seeAlso a owl:AnnotationProperty .
+
+ns1:Quantity a owl:Class ;
+    rdfs:label "Quantity" ;
+    rdfs:comment "From SUO: Any specification of how many or how much of something there is. Accordingly, there are two subclasses of Quantity: Number (how many) and Physical-Quantity (how much)." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Intangible-Thing .
+
+ns1:has-unit-of-measure a owl:ObjectProperty ;
+    rdfs:label "has unit of measure" ;
+    rdfs:domain ns1:Physical-Quantity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Unit-Of-Measure .
+
+ns1:seven-day-duration a ns1:Duration ;
+    rdfs:label "7 day duration" ;
+    ns1:has-magnitude 7.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-day ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-hour a ns1:Time-Measure ;
+    rdfs:label "hour" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-month a ns1:Time-Measure ;
+    rdfs:label "month" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:twelve-month-duration a ns1:Duration ;
+    rdfs:label "12 month duration" ;
+    ns1:has-magnitude 12.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-month ;
+    rdfs:isDefinedBy onto: .
+
+ns1:twentyfour-hour-duration a ns1:Duration ;
+    rdfs:label "24 hour duration" ;
+    ns1:has-magnitude 24.0 ;
+    ns1:has-unit-of-measure ns1:time-measure-hour ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Temporal-Thing a owl:Class ;
+    rdfs:label "Temporal Thing" ;
+    rdfs:comment "Like in Cyc, this is something which has a temporal extent." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Thing .
+
+ns1:Unit-Of-Measure a owl:Class ;
+    rdfs:label "Unit of Measure" ;
+    rdfs:comment "Any kind of unit of measure, metre, dollar, kilogram, etc." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Intangible-Thing .
+
+ns1:day-of a owl:DatatypeProperty ;
+    rdfs:label "day of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:hour-of a owl:DatatypeProperty ;
+    rdfs:label "hour of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:minute-of a owl:DatatypeProperty ;
+    rdfs:label "minute of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:month-of a owl:DatatypeProperty ;
+    rdfs:label "month of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:second-of a owl:DatatypeProperty ;
+    rdfs:label "second of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:year-of a owl:DatatypeProperty ;
+    rdfs:label "year of" ;
+    rdfs:domain ns1:Time-Point ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+ns1:Physical-Quantity a owl:Class ;
+    rdfs:label "Physical Quantity" ;
+    rdfs:comment "SUO: Physical Quantities are distinguished from Numbers by the fact that the former are associated with a dimension of measurement." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Quantity .
+
+ns1:Time-Position a owl:Class ;
+    rdfs:label "Time Position" ;
+    rdfs:comment "A time position is either a time interval or a time point. Any time position is relative to a time zone" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Intangible-Thing .
+
+ns1:has-duration a owl:ObjectProperty ;
+    rdfs:label "has duration" ;
+    rdfs:domain ns1:Time-Interval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Duration .
+
+ns1:Intangible-Thing a owl:Class ;
+    rdfs:label "Intangible Thing" ;
+    rdfs:comment "This comes from HPKB upper level. The collection of things that are not physical - are not made of, or encoded in, matter. Every Collection is an Intangible (even if its instances are tangible), and so are some Individuals. Caution: do not confuse `tangibility' with `perceivability' - humans can perceive light even though it's intangible - at least in a sense." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Thing .
+
+ns1:Thing a owl:Class ;
+    rdfs:label "Thing" ;
+    rdfs:comment "This is the top-level concept in the AKT reference ontology" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:time-measure-day a ns1:Time-Measure ;
+    rdfs:label "day" ;
+    rdfs:isDefinedBy onto: .
+
+ns1:Time-Measure a owl:Class ;
+    rdfs:label "Time Measure" ;
+    rdfs:comment "The class of all unit of measures used to measure time, e.g., minute, second, hour, etc." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Unit-Of-Measure .
+
+ns1:Duration a owl:Class ;
+    rdfs:label "Duration" ;
+    rdfs:comment "A measure of time, e.g., 5 hours" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns1:Time-Measure ;
+            owl:onProperty ns1:has-unit-of-measure ],
+        ns1:Physical-Quantity .
+
+ns1:Time-Interval a owl:Class ;
+    rdfs:label "Time Interval" ;
+    rdfs:comment "An interval is defined by two time points or a duration. Classes of intervals, e.g., a day, can be defined by specifying only a duration.  A time interval has no gaps" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:Time-Position .
+
+ns1:Time-Point a owl:Class ;
+    rdfs:label "Time Point" ;
+    rdfs:comment "A point in time" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:second-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:day-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:year-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:minute-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hour-of ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:month-of ],
+        ns1:Time-Position .
+
+onto: a owl:Ontology ;
+    rdfs:label "AKT Reference Ontology (Support Ontology)" ;
+    dc:creator "AKT Project",
+        "Enrico Motta (OCML version)",
+        "Nick Gibbins (OWL translation)" ;
+    dc:description "The AKT Reference Ontology has been designed to support the AKT-2 demonstrator (\"AKTive Portal\"), and subsequent activities. The ontology, designed by the AKT-2 group and codified by Enrico Motta, extends Version 1."@en ;
+    dc:source <http://d3e.open.ac.uk/akt/2002/ref-onto.html> ;
+    dc:title "AKT Reference Ontology (Support Ontology)"@en ;
+    dcterms:created "2003-02-10" ;
+    rdfs:seeAlso <http://d3e.open.ac.uk/akt/2002/ref-onto.html> ;
+    owl:versionInfo "2.0" .
+

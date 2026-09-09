@@ -1,0 +1,816 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://creativecommons.org/ns#license> a owl:AnnotationProperty .
+
+onto: a owl:NamedIndividual,
+        owl:Ontology,
+        owl:Thing ;
+    rdfs:label "The administrative geography and civil voting area ontology"@en ;
+    dc:creator "Ordnance Survey"@en ;
+    rdfs:comment "An ontology describing the administrative and voting area geography of Great Britain"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    owl:imports <http://data.ordnancesurvey.co.uk/ontology/geometry/>,
+        <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+
+onto:Borough a owl:Class ;
+    rdfs:comment "Borough"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> .
+
+onto:gssCode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "GSS"^^xsd:string ;
+    rdfs:comment "Office for National Statistics (ONS) have reconfigured their GSS coding structure \\n(providing a unique system of referencing for administrative units) to a new 9 character\\nalpha numeric format,replacing the current alpha numeric format (up to 6 characters).This\\nchange has now been implemented in this October 2010 release of Boundary-Line. \\n\\nHowever,the new GSS Coding and Naming policy for some statistical geographies will be implemented \\non 1 January 2011. From this date, where new codes have been allocated they should be used in all\\nexchanges of statistics and published outputs that normally include codes.\\n\\nThe following types of unit are coded where they have been made available by ONS: \\nCounties, Districts, Wards/Electoral Divisions, London Boroughs, Unitary Authorities, GLA's,\\nParish/Communities, Euro Regions, Welsh Assembly Const and Electoral Regions, \\nScottish Parliamentary Const and Electoral Regions, Westminster Const."^^xsd:string ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> .
+
+onto:hasOfficialName a owl:DatatypeProperty ;
+    rdfs:label "has official name" .
+
+onto:parish a owl:ObjectProperty ;
+    rdfs:label "parish" ;
+    rdfs:comment "this relates various administrative areas to the parishes they contain" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:CivilParish onto:Community ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+onto:scottishParliamentElectoralRegion a owl:ObjectProperty ;
+    rdfs:domain onto:EuropeanRegion ;
+    rdfs:range onto:ScottishParliamentElectoralRegion ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+onto:welshAssemblyElectoralRegion a owl:ObjectProperty ;
+    rdfs:domain onto:EuropeanRegion ;
+    rdfs:range onto:WelshAssemblyElectoralRegion ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+onto:CountyElectoralDivision a owl:Class ;
+    rdfs:label "County Electoral Division"@en ;
+    rdfs:comment "Apart from the special cases of the Isles of Scilly and the Greater London Authority (GLA), the English county councils are the only type of local authority in the UK which does not use standard electoral wards/divisions for electing councillors. Instead they use their own larger units, which are confusingly also termed electoral divisions. These county electoral divisions must be confined within district boundaries, but need not be based on whole electoral wards. Like electoral wards/divisions, county electoral divisions are defined by the Boundary Committee for England (BCFE)."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:County ;
+            owl:onProperty onto:inCounty ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilVotingArea .
+
+onto:county a owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:County onto:GreaterLondonAuthority ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+onto:westminsterConstituency a owl:ObjectProperty ;
+    rdfs:label "westminster constituency" ;
+    rdfs:comment "this relates European regions to the Westminster constituencies contains within those regions" ;
+    rdfs:domain onto:EuropeanRegion ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range onto:WestminsterConstituency ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+rdfs:label a owl:AnnotationProperty,
+        owl:DatatypeProperty .
+
+onto:DistrictWard a owl:Class ;
+    rdfs:label "District Ward"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:County ;
+            owl:onProperty onto:inCounty ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:District ;
+            owl:onProperty onto:inDistrict ],
+        onto:Ward .
+
+onto:LondonBoroughWard a owl:Class ;
+    rdfs:label "London Borough Ward"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:LondonBorough ;
+            owl:onProperty onto:inDistrict ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:GreaterLondonAuthority ;
+            owl:onProperty onto:inCounty ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:Ward .
+
+onto:MetropolitanDistrictWard a owl:Class ;
+    rdfs:label "Metropolitan District Ward"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:MetropolitanDistrict ;
+            owl:onProperty onto:inDistrict ],
+        onto:Ward .
+
+onto:UnitaryAuthorityWard a owl:Class ;
+    rdfs:label "Unitary Authority Ward"@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:UnitaryAuthority ;
+            owl:onProperty onto:inDistrict ],
+        onto:Ward .
+
+onto:inEuropeanRegion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "in European region" ;
+    rdfs:comment "this relates various administrative and civil voting areas to their containing European region" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range onto:EuropeanRegion ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> .
+
+onto:CivilParish a owl:Class ;
+    rdfs:label "Civil Parish"@en ;
+    rdfs:comment "Parishes are subdivisions of local authorities in many parts of England, and their councils are the most local level of government. Unlike electoral wards/divisions however, parishes are not found in all parts of England. The Welsh equivalents are communities. Note that the full term for administrative parishes is &apos;civil parishes&apos;, to distinguish them from the ecclesiastical parishes which are found in all parts of the UK."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass [ a owl:Class ;
+                    owl:unionOf ( onto:District onto:MetropolitanDistrict onto:UnitaryAuthority ) ] ;
+            owl:onProperty onto:inDistrict ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:County ;
+            owl:onProperty onto:inCounty ],
+        onto:CivilAdministrativeArea .
+
+onto:Community a owl:Class ;
+    rdfs:label "Community"@en ;
+    rdfs:comment "The Welsh equivalent of Civil Parish."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:UnitaryAuthority ;
+            owl:onProperty onto:inDistrict ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilAdministrativeArea .
+
+onto:WestminsterConstituency a owl:Class ;
+    rdfs:label "Westminster Constituency"@en ;
+    rdfs:comment "Westminster parliamentary constituencies are used to elect members to the UK Parliament in Westminster, London."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:Constituency .
+
+onto:inRegion a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "in region" ;
+    rdfs:comment "this relates Greater London Authority Assembly Constituencies, Scottish Parliament Constituenices and Welsh AssemblyConstituencies to their containing regions." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:GreaterLondonAuthorityAssemblyConstituency onto:ScottishParliamentConstituency onto:WelshAssemblyConstituency ) ] ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:GreaterLondonAuthority onto:ScottishParliamentElectoralRegion onto:WelshAssemblyElectoralRegion ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> ;
+    owl:inverseOf onto:constituency .
+
+<http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry> a owl:Class .
+
+<http://data.ordnancesurvey.co.uk/ontology/geometry/extent> a owl:ObjectProperty .
+
+owl:Thing a owl:Class .
+
+onto:GreaterLondonAuthorityAssemblyConstituency a owl:Class ;
+    rdfs:label "Greater London Authority Assembly Constituency"@en ;
+    rdfs:comment "Greater London Authority (GLA) Assembly constituencies are used to elect members to the London Assembly, which is part of the GLA."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:GreaterLondonAuthority ;
+            owl:onProperty onto:inRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:Constituency .
+
+onto:ScottishParliamentConstituency a owl:Class ;
+    rdfs:label "Scottish Parliament Constituency"@en ;
+    rdfs:comment "The Scottish parliamentary constituencies are used to elect members to the Scottish Parliament."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:ScottishParliamentElectoralRegion ;
+            owl:onProperty onto:inRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:Constituency .
+
+onto:UnitaryAuthorityElectoralDivision a owl:Class ;
+    rdfs:label "Unitary Authority Electoral Division" ;
+    rdfs:comment "Electoral wards/divisions are the base unit of UK administrative geography such that all higher units are built up from them. They are also used as a base unit for many other geographies such as parliamentary constituencies and Primary Care Trusts (PCTs). Electoral wards are found across Scotland, Northern Ireland and most of England, whereas the equivalents in Wales and the Isle of Wight are known as electoral divisions." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilVotingArea .
+
+onto:WelshAssemblyConstituency a owl:Class ;
+    rdfs:label "Welsh Assembly Constituency"@en ;
+    rdfs:comment "The  Welsh Assembly constituencies are used to elect members to the National Assembly for Wales (NAW)."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:WelshAssemblyElectoralRegion ;
+            owl:onProperty onto:inRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:Constituency .
+
+onto:constituency a owl:ObjectProperty ;
+    rdfs:label "constituency" ;
+    rdfs:comment "this relates European regions, Scottish Parliament Electoral Regions and Welsh Assembly Electoral Regions to their consistuencies." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:GreaterLondonAuthority onto:ScottishParliamentElectoralRegion onto:WelshAssemblyElectoralRegion ) ] ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:GreaterLondonAuthorityAssemblyConstituency onto:ScottishParliamentConstituency onto:WelshAssemblyConstituency ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> .
+
+onto:district a owl:ObjectProperty ;
+    rdfs:label "district" ;
+    rdfs:comment "this relates counties and european regions to the districts, unitary authorites, metropolitan districts and London boroughs they contain." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:District onto:LondonBorough onto:MetropolitanDistrict onto:UnitaryAuthority ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+    owl:propertyChainAxiom ( onto:county onto:district ) .
+
+<http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> a owl:ObjectProperty .
+
+onto:Constituency a owl:Class ;
+    rdfs:label "Constituency" ;
+    rdfs:comment "Constituencies are used to elect members to legislatures." ;
+    rdfs:subClassOf onto:CivilVotingArea .
+
+onto:ScottishParliamentElectoralRegion a owl:Class ;
+    rdfs:label "Scottish Parliament Electoral Region"@en ;
+    rdfs:comment "The Scottish parliamentary electoral regions are used for the proportional component of the elections to the Scottish Parliament. They are made up of groups of Scottish parliamentary constituencies."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:constituency ;
+            owl:someValuesFrom onto:ScottishParliamentConstituency ],
+        onto:CivilVotingArea .
+
+onto:WelshAssemblyElectoralRegion a owl:Class ;
+    rdfs:label "Welsh Assembly Electoral Region"@en ;
+    rdfs:comment "The Welsh Assembly electoral regions are used for the proportional component of the elections to the National Assembly for Wales (NAW). They are made up of groups of Welsh Assembly constituencies."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:constituency ;
+            owl:someValuesFrom onto:WelshAssemblyConstituency ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilVotingArea .
+
+onto:ward a owl:ObjectProperty ;
+    rdfs:label "ward" ;
+    rdfs:comment "this relates an administrative regions to the wards and unitary electoral divisions contained within that region" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:UnitaryAuthorityElectoralDivision onto:Ward ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+    owl:propertyChainAxiom ( onto:district onto:ward ) .
+
+onto:EuropeanRegion a owl:Class ;
+    rdfs:label "European Region" ;
+    rdfs:comment "European Regions correspond to Scotland, Wales and the nine Government Office Regions of England. The nine Government Office Regions (GORs) are the primary statistical subdivisions of England and also the areas in which the Government Offices for the Regions fulfil their role. Each GOR covers a number of local authorities." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://data.ordnancesurvey.co.uk/ontology/geometry/extent> ;
+            owl:someValuesFrom <http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:westminsterConstituency ;
+            owl:someValuesFrom onto:WestminsterConstituency ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        owl:Thing .
+
+onto:LondonBorough a owl:Class ;
+    rdfs:label "London Borough"@en ;
+    rdfs:comment "The London boroughs are the local government areas within Greater London. The borough councils are unitary administrations with a status similar to metropolitan districts, but will also be affected by any policies implemented by the Greater London Authority (GLA)." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:ward ;
+            owl:someValuesFrom onto:LondonBoroughWard ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass onto:GreaterLondonAuthority ;
+            owl:onProperty onto:inCounty ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilAdministrativeArea .
+
+onto:MetropolitanDistrict a owl:Class ;
+    rdfs:label "Metropolitan District"@en ;
+    rdfs:comment "Metropolitan districts are subdivisions of the 6 metropolitan county areas of England. Since the abolition of the metropolitan county councils in 1986 the metropolitan district councils have been unitary administrations."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:ward ;
+            owl:someValuesFrom onto:MetropolitanDistrictWard ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilAdministrativeArea .
+
+onto:inCounty a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "in county" ;
+    rdfs:comment "this relates districts, parish, county electoral divisions and wards to their containing counties" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:County onto:GreaterLondonAuthority ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> .
+
+skos:altLabel a owl:DatatypeProperty .
+
+onto:CivilVotingArea a owl:Class ;
+    rdfs:label "Civil Voting Area" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:EuropeanRegion ;
+            owl:onProperty onto:inEuropeanRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://data.ordnancesurvey.co.uk/ontology/geometry/extent> ;
+            owl:someValuesFrom <http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry> ] .
+
+onto:County a owl:Class ;
+    rdfs:label "County"@en ;
+    rdfs:comment "Counties were formerly administrative units across the whole UK. Due to various administrative restructurings however then the only administrative areas still referred to as counties are the non-metropolitan (shire) counties of England. The English metropolitan counties, although no longer administrative units, are also used for statistical purposes."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:district ;
+            owl:someValuesFrom onto:District ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        onto:CivilAdministrativeArea .
+
+onto:District a owl:Class ;
+    rdfs:label "District"@en ;
+    rdfs:comment "Districts are local administrative units and have at various times been used in all four countries of the UK. The only current references to districts however are found in metropolitan and non-metropolitan districts in England, and district council areas in Northern Ireland."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:ward ;
+            owl:someValuesFrom onto:DistrictWard ],
+        [ a owl:Restriction ;
+            owl:onClass onto:County ;
+            owl:onProperty onto:inCounty ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty rdfs:label ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        onto:CivilAdministrativeArea .
+
+onto:UnitaryAuthority a owl:Class ;
+    rdfs:label "Unitary Authority" ;
+    rdfs:comment "Unitary authorities (UAs) are areas with a single tier of local government (as opposed to the two-tier county:district structure)."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:ward ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:unionOf ( onto:UnitaryAuthorityElectoralDivision onto:UnitaryAuthorityWard ) ] ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilAdministrativeArea .
+
+onto:Ward a owl:Class ;
+    rdfs:label "Ward"@en ;
+    rdfs:comment "Electoral wards/divisions are the base unit of UK administrative geography such that all higher units are built up from them. They are also used as a base unit for many other geographies such as parliamentary constituencies and Primary Care Trusts (PCTs). Electoral wards are found across Scotland, Northern Ireland and most of England, whereas the equivalents in Wales and the Isle of Wight are known as electoral divisions."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass [ a owl:Class ;
+                    owl:unionOf ( onto:District onto:LondonBorough onto:MetropolitanDistrict onto:UnitaryAuthority ) ] ;
+            owl:onProperty onto:inDistrict ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilVotingArea .
+
+onto:inDistrict a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "in district" ;
+    rdfs:comment "this relates parishes, wards and unitary electoral divisions to their containing districts" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:CivilParish onto:Community onto:UnitaryAuthorityElectoralDivision onto:Ward ) ] ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:District onto:LondonBorough onto:MetropolitanDistrict onto:UnitaryAuthority ) ] ;
+    rdfs:subPropertyOf <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> .
+
+onto:CivilAdministrativeArea a owl:Class ;
+    rdfs:label "Civil Administrative Area"^^xsd:string ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:EuropeanRegion ;
+            owl:onProperty onto:inEuropeanRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://data.ordnancesurvey.co.uk/ontology/geometry/extent> ;
+            owl:someValuesFrom <http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry> ],
+        owl:Thing ;
+    owl:disjointWith onto:CivilVotingArea .
+
+onto:GreaterLondonAuthority a owl:Class ;
+    rdfs:label "Greater London Authority"@en ;
+    rdfs:comment "The area covered by the Greater London Authority (GLA). The GLA is the body responsible for strategic citywide government for London, and consists of the Mayor of London and the London Assembly. The remit of the GLA covers the Greater London area."@en ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:prefLabel ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty skos:notation ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty skos:altLabel ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:district ;
+            owl:someValuesFrom onto:LondonBorough ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:constituency ;
+            owl:someValuesFrom onto:GreaterLondonAuthorityAssemblyConstituency ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasAreaCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasUnitID ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:hasCensusCode ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:CivilAdministrativeArea .
+
+<http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> a owl:ObjectProperty .
+
+skos:notation a owl:DatatypeProperty .
+
+onto:hasCensusCode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has census code" ;
+    rdfs:comment "These code area unique system of referencing for administrative units. These codes are allocated by the Office of National Statistics (ONS) for England and Wales, and by the General Register Office for Scotland (GROS) for Scottish Areas." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> .
+
+onto:hasAreaCode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has area code" ;
+    rdfs:comment "This code describing the area type" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> .
+
+onto:hasUnitID a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has unit ID" ;
+    rdfs:comment "A unique ID for the region" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/admingeo.owl> .
+
+skos:prefLabel a owl:DatatypeProperty .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:GreaterLondonAuthorityAssemblyConstituency onto:ScottishParliamentConstituency onto:WelshAssemblyConstituency onto:WestminsterConstituency ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:CivilParish onto:Community onto:County onto:District onto:GreaterLondonAuthority onto:LondonBorough onto:MetropolitanDistrict onto:UnitaryAuthority ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Constituency onto:CountyElectoralDivision onto:ScottishParliamentElectoralRegion onto:UnitaryAuthorityElectoralDivision onto:Ward onto:WelshAssemblyElectoralRegion ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:DistrictWard onto:LondonBoroughWard onto:MetropolitanDistrictWard onto:UnitaryAuthorityWard ) .
+

@@ -1,0 +1,424 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix onto: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> a rdfs:Class ;
+    rdfs:label "Additional property" ;
+    rdfs:comment "Represents an additional property that may be added to instances as well as class and property definitions." .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> a rdfs:Class ;
+    rdfs:label "Class map" ;
+    rdfs:comment "Maps an RDFS or OWL class to its database representation." ;
+    rdfs:subClassOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Configuration> a rdfs:Class ;
+    rdfs:label "Configuration" ;
+    rdfs:comment "Represents general settings." .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#D2RQModel> a rdfs:Class ;
+    rdfs:label "D2RQ model" ;
+    ns1:assembler "de.fuberlin.wiwiss.d2rq.assembler.D2RQAssembler" ;
+    rdfs:comment "Jena Assemler specification for a relational database, mapped to RDF using the D2RQ tool." ;
+    rdfs:subClassOf ns1:Object .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> a rdfs:Class ;
+    rdfs:label "Database" ;
+    rdfs:comment "Represents a database." .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#DatatypePropertyBridge> a rdfs:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Datatype property bridge" ;
+    rdfs:comment "(Deprecated) Maps a datatype property to one or more database columns." ;
+    rdfs:subClassOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#DownloadMap> a rdfs:Class ;
+    rdfs:label "Download map" ;
+    rdfs:comment "Makes the contents of some database column downloadable." ;
+    rdfs:subClassOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ObjectPropertyBridge> a rdfs:Class,
+        owl:DeprecatedClass ;
+    rdfs:label "Object property bridge" ;
+    rdfs:comment "(Deprecated) Maps an object property to one or more database columns." ;
+    rdfs:subClassOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> a rdfs:Class ;
+    rdfs:label "Property bridge" ;
+    rdfs:comment "Maps an RDF property to one or more database columns." ;
+    rdfs:subClassOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> a rdfs:Class ;
+    rdfs:label "Resource map" ;
+    rdfs:comment "A database-to-RDF mapping from one or more database columns to a set of RDF resources. An abstract class, usually not used directly." .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Translation> a rdfs:Class ;
+    rdfs:label "Translation" ;
+    rdfs:comment "Translation Key/Value Pair." .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#TranslationTable> a rdfs:Class ;
+    rdfs:label "Translation table" ;
+    rdfs:comment "Lookup table for translations used in the mapping process." .
+
+onto: a owl:Ontology ;
+    dc:contributor "Chris Bizer",
+        "Richard Cyganiak" ;
+    dc:description "This document specifies the D2RQ mapping language. D2RQ is a declarative language to describe mappings between relational database schemata and OWL/RDFS ontologies. See D2RQ Users Manual for detailed explanations and examples (http://www.wiwiss.fu-berlin.de/suhl/bizer/d2rq/spec/)." ;
+    dc:format "Turtle" ;
+    dc:title "D2RQ - Language Specification v0.8" ;
+    rdfs:seeAlso <http://www.wiwiss.fu-berlin.de/suhl/bizer/d2rq/spec/> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#additionalClassDefinitionProperty> a rdf:Property ;
+    rdfs:label "Additional class definition property" ;
+    rdfs:comment "An additional property to be served for all associated class definitions" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#additionalProperty> a rdf:Property ;
+    rdfs:label "Additional property" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#additionalPropertyDefinitionProperty> a rdf:Property ;
+    rdfs:label "Additional property definition property" ;
+    rdfs:comment "An additional property to be served for all associated property definitions" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#alias> a rdf:Property ;
+    rdfs:label "Alias" ;
+    rdfs:comment "TABLE AS ALIAS declaration for establishing an alternate table name." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#allowDistinct> a rdf:Property,
+        owl:DeprecatedProperty ;
+    rdfs:label "Allow distinct" ;
+    rdfs:comment "Value: true/false that describe the databases ability to handle DISTINCT correctly. Deprecated, the engine now determines this automatically." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#bNodeIdColumns> a rdf:Property ;
+    rdfs:label "Blank node ID columns" ;
+    rdfs:comment "Comma-separated list of database columns used for construction of blank nodes." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#belongsToClassMap> a rdf:Property ;
+    rdfs:label "Belongs to class map" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#binaryColumn> a rdf:Property ;
+    rdfs:label "BINARY column" ;
+    rdfs:comment "Name of a column of a binary type, such as BINARY, VARBINARY or BLOB." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#bitColumn> a rdf:Property ;
+    rdfs:label "BIT column" ;
+    rdfs:comment "Name of a column of type BIT." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#booleanColumn> a rdf:Property ;
+    rdfs:label "BOOLEAN column" ;
+    rdfs:comment "Name of a column of type BOOLEAN." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#classDefinitionComment> a rdf:Property ;
+    rdfs:label "Class definition comment" ;
+    rdfs:comment "A comment to be served as rdfs:comment for all associated class definitions" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#classDefinitionLabel> a rdf:Property ;
+    rdfs:label "Class definition label" ;
+    rdfs:comment "A label to be served as rdfs:label for all associated class definitions" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#column> a rdf:Property ;
+    rdfs:label "Column" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#condition> a rdf:Property ;
+    rdfs:label "Condition" ;
+    rdfs:comment "SQL WHERE condition that must be satisfied for a database row to be mapped." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#constantValue> a rdf:Property ;
+    rdfs:label "Constant value" ;
+    rdfs:comment "A constant RDF node to be used as the value of this property bridge, or as the resource of a singleton class map." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#containsDuplicates> a rdf:Property ;
+    rdfs:label "Contains duplicates" ;
+    rdfs:comment "Set to true if the table, after applying d2rq:joins and d2rq:conditions, may contain duplicate records." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> ;
+    rdfs:range xsd:boolean .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#contentDownloadColumn> a rdf:Property ;
+    rdfs:label "Content download column" ;
+    rdfs:comment "A database column containing data to be made downloadable." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#DownloadMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#dataStorage> a rdf:Property ;
+    rdfs:label "Data storage" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#databaseValue> a rdf:Property ;
+    rdfs:label "Database value" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Translation> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#datatype> a rdf:Property ;
+    rdfs:label "Datatype" ;
+    rdfs:comment "The datatype of literals created by this bridge." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#dateColumn> a rdf:Property ;
+    rdfs:label "DATE column" ;
+    rdfs:comment "Name of a column of type DATE." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#dynamicProperty> a rdf:Property ;
+    rdfs:label "Property" ;
+    rdfs:comment "Links a d2rq:PropertyBridge to a dynamic property." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#fetchSize> a rdf:Property ;
+    rdfs:label "Fetch size" ;
+    rdfs:comment "The number of rows that should be fetched from the database at once" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#href> a rdf:Property ;
+    rdfs:label "Href" ;
+    rdfs:comment "Link to a translation table in an external CSV file." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#TranslationTable> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#intervalColumn> a rdf:Property ;
+    rdfs:label "INTERVAL column" ;
+    rdfs:comment "Name of a column of type INTERVAL." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#javaClass> a rdf:Property ;
+    rdfs:label "Java class" ;
+    rdfs:comment "Qualified name of a Java class that implements de.fuberlin.wiwiss.d2rq.Translator and translates between database and RDF." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#jdbcDSN> a rdf:Property ;
+    rdfs:label "JDBC DSN" ;
+    rdfs:comment "JDBC data source name." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#jdbcDriver> a rdf:Property ;
+    rdfs:label "JDBC driver" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#join> a rdf:Property ;
+    rdfs:label "Join" ;
+    rdfs:comment "SQL join condition over tables in the database." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#lang> a rdf:Property ;
+    rdfs:label "Language" ;
+    rdfs:comment "The language tag of literals created by this bridge." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#limit> a rdf:Property ;
+    rdfs:label "Limit" ;
+    rdfs:comment "The number of results to retrieve from the database for this PropertyBridge" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#limitInverse> a rdf:Property ;
+    rdfs:label "Limit inverse" ;
+    rdfs:comment "The number of results to retrieve from the database for the inverse statements for this PropertyBridge" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#mappingFile> a rdf:Property ;
+    rdfs:label "Mapping file" ;
+    rdfs:comment "URL of a D2RQ mapping file." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#D2RQModel> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#mediaType> a rdf:Property ;
+    rdfs:label "Media type" ;
+    rdfs:comment "The Internet media type, such as image/png, of the downloadable content, suitable for use in the HTTP Content-Type header." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#DownloadMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#numericColumn> a rdf:Property ;
+    rdfs:label "Numeric column" ;
+    rdfs:comment "Name of a column of a numeric type, such as INT or DOUBLE or DECIMAL." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#odbcDSN> a rdf:Property,
+        owl:DeprecatedProperty ;
+    rdfs:label "ODBC data source name. Deprecated, use JDBC instead (with ODBC-JDBC bridge if necessary)." ;
+    rdfs:comment "ODBC DSN" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#orderAsc> a rdf:Property ;
+    rdfs:label "Order ascending" ;
+    rdfs:comment "The column after which to sort results in ascending order for this PropertyBridge" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#orderDesc> a rdf:Property ;
+    rdfs:label "Order descending" ;
+    rdfs:comment "The column after which to sort results in descending order for this PropertyBridge" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#password> a rdf:Property ;
+    rdfs:label "Password" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#pattern> a rdf:Property ;
+    rdfs:label "Pattern" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyDefinitionComment> a rdf:Property ;
+    rdfs:label "Property definition comment" ;
+    rdfs:comment "A comment to be served as rdfs:comment for all associated properties" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyDefinitionLabel> a rdf:Property ;
+    rdfs:label "Property definition label" ;
+    rdfs:comment "A label to be served as rdfs:label for all associated properties" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyName> a rdf:Property ;
+    rdfs:label "Property name" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyValue> a rdf:Property ;
+    rdfs:label "Property value" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#AdditionalProperty> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#rdfValue> a rdf:Property ;
+    rdfs:label "RDF value" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Translation> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#refersToClassMap> a rdf:Property ;
+    rdfs:label "Refers to class map" ;
+    rdfs:comment "Has to be used if a join refers to a different classMap." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ObjectPropertyBridge> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#resourceBaseURI> a rdf:Property ;
+    rdfs:label "Resource base URI" ;
+    rdfs:comment "Base URI for resources generated by relative URI patterns." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#D2RQModel> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#resultSizeLimit> a rdf:Property ;
+    rdfs:label "Result size limit" ;
+    rdfs:comment "Enforced upper limit for the size of SQL result sets." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#serveVocabulary> a rdf:Property ;
+    rdfs:label "Serve vocabulary" ;
+    rdfs:comment "Whether to serve inferred and user-supplied vocabulary data" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Configuration> ;
+    rdfs:range xsd:boolean .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#sqlExpression> a rdf:Property ;
+    rdfs:label "SQL expression" ;
+    rdfs:comment "A SQL expression whose result will be the value of this property bridge." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#startupSQLScript> a rdf:Property ;
+    rdfs:label "Startup SQL script" ;
+    rdfs:comment "URL of a SQL script that will be run on startup." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> ;
+    rdfs:range foaf:Document .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#textColumn> a rdf:Property ;
+    rdfs:label "Text column" ;
+    rdfs:comment "Name of a column of a character type, such as CHAR, VARCHAR, NVARCHAR or CLOB." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#timeColumn> a rdf:Property ;
+    rdfs:label "TIME column" ;
+    rdfs:comment "Name of a column of type TIME." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#timestampColumn> a rdf:Property ;
+    rdfs:label "TIMESTAMP column" ;
+    rdfs:comment "Name of a column of type TIMESTAMP." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#translateWith> a rdf:Property ;
+    rdfs:label "Translate with" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#TranslationTable> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#translation> a rdf:Property ;
+    rdfs:label "Translation" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#TranslationTable> ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Translation> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#uriColumn> a rdf:Property ;
+    rdfs:label "URI column" ;
+    rdfs:comment "Database column which contains URIs." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#uriPattern> a rdf:Property ;
+    rdfs:label "URI pattern" ;
+    rdfs:comment "URI pattern with placeholders that will be filled with values from a database column." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#uriSqlExpression> a rdf:Property ;
+    rdfs:label "URI SQL expression" ;
+    rdfs:comment "An SQL expression whose result will be the URI value of this property bridge." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#useAllOptimizations> a rdf:Property ;
+    rdfs:label "Use all optimizations" ;
+    rdfs:comment "Whether to use bleeding edge optimizations" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Configuration> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#username> a rdf:Property ;
+    rdfs:label "User name" ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#valueContains> a rdf:Property ;
+    rdfs:label "Value contains" ;
+    rdfs:comment "Optimizing hint: a string contained in every value of this resource map." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#valueMaxLength> a rdf:Property ;
+    rdfs:label "Value max length" ;
+    rdfs:comment "Optimizing hint: the maximum length of values of this resource map." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> ;
+    rdfs:range xsd:decimal .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#valueRegex> a rdf:Property ;
+    rdfs:label "Value regex" ;
+    rdfs:comment "Optimizing hint: a regular expression matching every value of this resource map." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ResourceMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#class> a rdf:Property ;
+    rdfs:label "Class" ;
+    rdfs:comment "Links d2rq:classMaps to RDFS or OWL classes." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> ;
+    rdfs:range rdfs:Class ;
+    owl:inverseOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#classMap> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#classMap> a rdf:Property,
+        owl:DeprecatedProperty ;
+    rdfs:label "Class map" ;
+    rdfs:comment "Used to link RDFS or OWL classes to d2r:classMaps. Deprecated, use inverse d2rq:class instead." ;
+    rdfs:domain rdfs:Class ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#ClassMap> ;
+    owl:inverseOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#class> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#property> a rdf:Property ;
+    rdfs:label "Property" ;
+    rdfs:comment "Links a d2rq:PropertyBridge to an RDF property." ;
+    rdfs:domain <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> ;
+    rdfs:range rdf:Property ;
+    owl:inverseOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyBridge> .
+
+<http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#propertyBridge> a rdf:Property,
+        owl:DeprecatedProperty ;
+    rdfs:label "Property bridge" ;
+    rdfs:comment "Used for linking RDFS properties to D2R property bridges. Deprecated, use inverse d2rq:property instead." ;
+    rdfs:domain rdf:Property ;
+    rdfs:range <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#PropertyBridge> ;
+    owl:inverseOf <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#property> .
+

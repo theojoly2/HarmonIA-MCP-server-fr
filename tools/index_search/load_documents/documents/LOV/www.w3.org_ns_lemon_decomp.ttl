@@ -1,0 +1,80 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix ns2: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://www.w3.org/ns/lemon/decomp> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns2:term_status a owl:AnnotationProperty .
+
+<http://www.w3.org/ns/lemon/decomp#constituent> a owl:ObjectProperty ;
+    rdfs:label "constituent"@en,
+        "constituent"@fr ;
+    rdfs:comment "The property 'constituent' relates a lexical entry or component to a component that it is constituted by."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.w3.org/ns/lemon/decomp#Component> <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/decomp#Component> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns2:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/decomp#correspondsTo> a owl:ObjectProperty ;
+    rdfs:label "corresponds to"@en,
+        "correspond à"@fr ;
+    rdfs:comment "The property 'correspondsTo' links a component to a corresponding lexical entry or argument."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/decomp#Component> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> <http://www.w3.org/ns/lemon/synsem#SyntacticArgument> ) ] ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns2:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/decomp#subterm> a owl:ObjectProperty ;
+    rdfs:label "sous-terme"@fr ;
+    rdfs:comment "The property 'subterm' relates a compound lexical entry to one of the lexical entries it is composed of."@en,
+        "Свойство 'подчинение' связывает составную словарную единицу с одной из словарных единиц, из которых она состоит."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns2:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#SyntacticArgument> a owl:Class .
+
+<http://www.w3.org/ns/lemon/decomp#Component> a owl:Class ;
+    rdfs:label "component"@en,
+        "composant"@fr ;
+    rdfs:comment "A component is a particular realization of a lexical entry that forms part of a compound lexical entry."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns2:term_status "stable" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    dc:contributor <http://art.uniroma2.it/fiorelli/>,
+        <http://art.uniroma2.it/stellato/>,
+        <http://jogracia.url.ph/web/>,
+        <http://mayor2.dia.fi.upm.es/oeg-upm/index.php/en/teachers/52-emontiel>,
+        <http://www.dfki.de/~declerck/>,
+        <http://www.ilc.cnr.it/en/content/anas-fahad-khan>,
+        <http://www.istc.cnr.it/people/aldo-gangemi>,
+        <http://www.oeg-upm.net/index.php/teachers/53-lupe>,
+        <http://www.paulbuitelaar.net/>,
+        <https://sites.google.com/site/francescafrontini/> ;
+    dc:creator <http://john.mccr.ae/>,
+        <http://www.cimiano.de/> ;
+    dc:description "A model for the representation of lexical information relative to ontologies. Decomposition module."@en ;
+    dc:issued "2016-01-10"^^xsd:date ;
+    dc:modified "2016-01-10"^^xsd:date ;
+    dc:publisher <http://www.w3.org/community/ontolex> ;
+    dc:rights "CC-Zero" ;
+    dc:title "Lexicon Model for Ontologies - Decomp"@en ;
+    vann:preferredNamespacePrefix "decomp" ;
+    vann:preferredNamespaceUri "http://www.w3.org/ns/lemon/decomp#" ;
+    rdfs:comment "-Version 1.0: depreciation with minor change in metadata for LOV publication\\r\\n-Version 1.1: creation"@en ;
+    owl:imports <http://www.w3.org/ns/lemon/ontolex> ;
+    owl:versionInfo 1.1 .
+

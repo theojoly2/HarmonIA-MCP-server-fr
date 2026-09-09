@@ -1,0 +1,126 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <https://w3id.org/i40/sto#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:description "A vocabulary to describe the relation between standards in use on the Industry 4.0, and related concepts" ;
+    dc:title "i40 Standards Lanscape Vocabulary"@en ;
+    dcterms:created "2017-01-25"^^xsd:date ;
+    dcterms:creator "Irlan Grangel",
+        "Paul Baptista",
+        "Steffen Lohmann" ;
+    dcterms:publisher <http://de.dbpedia.org/resource/Fraunhofer-Gesellschaft> ;
+    vann:preferredNamespacePrefix "sto" ;
+    vann:preferredNamespaceUri "https://w3id.org/i40/sto#" ;
+    owl:versionInfo "0.2" .
+
+onto:abbreviation a owl:DatatypeProperty ;
+    rdfs:label "Abbreviated name" ;
+    dcterms:description "Abbreviated  name of the organization"@en ;
+    rdfs:domain onto:SDO .
+
+onto:formationDate a owl:DatatypeProperty ;
+    rdfs:label "Formation Date"@en ;
+    dcterms:description "Abbreviated  name of the organization"@en ;
+    rdfs:domain onto:SDO ;
+    rdfs:range xsd:date .
+
+onto:hasDBpediaResource a owl:ObjectProperty ;
+    rdfs:label "Has DBpedia resource" ;
+    dcterms:description "Instance's DBpedia Resource"@en .
+
+onto:hasOfficialWebsite a owl:ObjectProperty ;
+    rdfs:label "Has Official website" ;
+    dcterms:description "Instance's Official Website"@en .
+
+onto:hasTag a owl:ObjectProperty ;
+    rdfs:label "Has Tag" ;
+    dcterms:description "Tag commonly used to refer to the standard "@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range <http://purl.org/muto/core#Tag> .
+
+onto:hasWikidataEntity a owl:ObjectProperty ;
+    rdfs:label "Has Wikidata entity" ;
+    dcterms:description "Instance's Wikidata Entry"@en .
+
+onto:hasWikipediaArticle a owl:ObjectProperty ;
+    rdfs:label "Has Wikipedia article" ;
+    dcterms:description "Instance's Wikipedia article"@en .
+
+onto:license a owl:ObjectProperty ;
+    rdfs:label "License" ;
+    dcterms:description "License under which a standard is published"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:subPropertyOf dcterms:license .
+
+onto:motivation a owl:ObjectProperty ;
+    rdfs:label "motivation" ;
+    dcterms:description "A motivation for the creation of the standard"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range <http://purl.org/spar/deo/Motivation> .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "Name" ;
+    dcterms:description "Name of the Organization"@en ;
+    rdfs:domain onto:SDO .
+
+onto:norm a owl:DatatypeProperty ;
+    rdfs:label "Norm" ;
+    dcterms:description "Norm under which the standard is published"@en ;
+    rdfs:domain onto:Standard .
+
+onto:published a owl:ObjectProperty ;
+    rdfs:label "Published" ;
+    dcterms:description "A standard published by this organization"@en ;
+    rdfs:domain onto:SDO ;
+    rdfs:range onto:Standard ;
+    rdfs:subPropertyOf foaf:made ;
+    owl:inverseOf onto:publisher .
+
+onto:ramiHierarchyLevel a owl:ObjectProperty ;
+    rdfs:label "RAMI Hierarchy Level"@en ;
+    dcterms:description "Property through to associate the standards with the RAMI level in which they are applicable"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range <https://w3id.org/i40/rami/RAMIHierarchyLevel> .
+
+onto:relatedTo a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "Related to" ;
+    dcterms:description "Both Standards are related"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range onto:Standard .
+
+onto:scope a owl:ObjectProperty ;
+    rdfs:label "Scope"@en ;
+    dcterms:description "Property through which relate the standards with industry domains"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range onto:IndustryDomain .
+
+onto:IndustryDomain a owl:Class ;
+    rdfs:label "Industry Domain" ;
+    dcterms:description "Represents the possible industry domains"@en .
+
+onto:publisher a owl:ObjectProperty ;
+    rdfs:label "Publisher" ;
+    dcterms:description "The organization that published this Standard"@en ;
+    rdfs:domain onto:Standard ;
+    rdfs:range onto:SDO ;
+    rdfs:subPropertyOf foaf:maker .
+
+onto:SDO a owl:Class ;
+    rdfs:label "Standard Developing Organization" ;
+    dcterms:description "Define the standards organizations that develop and publish specific standards related to the industry 4.0"@en ;
+    rdfs:subClassOf foaf:Organization ;
+    owl:disjointWith onto:Standard .
+
+onto:Standard a owl:Class ;
+    rdfs:label "Standard" ;
+    dcterms:description "Defines the standards in use on the Industry 4.0"@en ;
+    rdfs:subClassOf foaf:Document .
+

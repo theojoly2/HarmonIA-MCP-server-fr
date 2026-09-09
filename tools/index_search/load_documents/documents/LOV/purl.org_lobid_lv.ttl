@@ -1,0 +1,193 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/openorg/> .
+@prefix onto: <http://purl.org/lobid/lv> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.org/lobid/lv#Bibliography> a owl:Class ;
+    rdfs:label "Bibliography"@en ;
+    rdfs:comment "A collection of documents relevant to a particular subject or author."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Collection> .
+
+<http://purl.org/lobid/lv#Biography> a owl:Class ;
+    rdfs:label "Biography"@en ;
+    rdfs:comment "A detailed description or account of a person's life"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcterms:BibliographicResource .
+
+<http://purl.org/lobid/lv#EditedVolume> a owl:Class ;
+    rdfs:label "Edited Volume"@en ;
+    rdfs:comment "a collection of scholarly or scientific articles written by different authors"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Collection> .
+
+<http://purl.org/lobid/lv#Festschrift> a owl:Class ;
+    rdfs:label "Festschrift"@en ;
+    rdfs:comment "A publication honoring a respected person, especially an academic."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcterms:BibliographicResource .
+
+<http://purl.org/lobid/lv#Miscellaneous> a owl:Class ;
+    rdfs:label "Miscellaneous"@en ;
+    rdfs:comment "This class covers all publication types that are not covered by existing class definitions. It is used to enable facets over seldomly found publication types in library catalogs."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://wiki1.hbz-nrw.de/x/E4AyAQ#Facettenueberhbz01-Daten-misc> ;
+    rdfs:subClassOf dcterms:BibliographicResource .
+
+<http://purl.org/lobid/lv#OfficialPublication> a owl:Class ;
+    rdfs:label "Official Publication"@en ;
+    rdfs:comment "A publication that records the business and proceedings of a government agency."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcterms:BibliographicResource .
+
+<http://purl.org/lobid/lv#Schoolbook> a owl:Class ;
+    rdfs:label "Schoolbook"@en ;
+    rdfs:comment "A textbook used by school teachers in their classes."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcterms:BibliographicResource .
+
+<http://purl.org/lobid/lv#ags> a owl:DatatypeProperty ;
+    rdfs:label "Community Identification Number"@en ;
+    rdfs:comment "Amtlicher Gemeindeschlüssel (AGS) of the region a spatial resource is located in."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:positiveInteger ;
+    rdfs:seeAlso <http://de.wikipedia.org/wiki/Amtlicher_Gemeindeschl%C3%BCssel>,
+        <http://en.wikipedia.org/wiki/Community_Identification_Number#Germany> .
+
+<http://purl.org/lobid/lv#contactqr> a owl:ObjectProperty ;
+    rdfs:label "Contact QR code"@en ;
+    rdfs:comment "Relates a person, organization or other agent to a QR code that encodes the agent's contact information."@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Image .
+
+<http://purl.org/lobid/lv#dbsID> a owl:DatatypeProperty ;
+    rdfs:label "DBS ID"@en ;
+    rdfs:comment "The identifier that was assigned to a library in the context of the German Library Statistics (DBS)."@en ;
+    rdfs:domain <http://schema.org/Library> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+<http://purl.org/lobid/lv#fulltextOnline> a owl:ObjectProperty ;
+    rdfs:label "Fulltext online"@en ;
+    rdfs:comment "Relates a bibliographic resource to an online resource (full text in HTML, PDFs or landing pages in OA repositories, on publishers' websites etc.) that represents the full text of the bibliographic resource or contains a link to a full text of the resource. "@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document .
+
+<http://purl.org/lobid/lv#fundertype> a owl:ObjectProperty ;
+    rdfs:label "Type of funding organization"@en ;
+    rdfs:comment "Indicates which type an institution's funder is of. It should be used with a controlled vocabulary like http://purl.org/lobid/fundertype."@en ;
+    rdfs:domain foaf:Organization ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+<http://purl.org/lobid/lv#hbzID> a owl:DatatypeProperty ;
+    rdfs:label "hbz ID"@en ;
+    rdfs:comment "The identifier that is assigned to a bibliographic resource in the hbz union catalogue."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+<http://purl.org/lobid/lv#isil> a owl:DatatypeProperty ;
+    rdfs:label "ISIL" ;
+    rdfs:comment "International Standard Identifier for Libraries and Related Organizations (ISIL). 'An ISIL identifies an organization, i.e., a library or a related organization, or one of its subordinate units, which is responsible for an action or service in a bibliographic environment (e.g. creation of machine-readable information). It can be used to identify the originator or holder of a resource (e.g. library material).' The literal should conform to this regular expression: [A-Z]{1,4}-[0-9a-zA-Z:-/]{1,11} ."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "[A-Z]{1,4}-[0-9a-zA-Z:-/]{1,11}" ] ) ] ;
+    rdfs:seeAlso <http://biblstandard.dk/isil/scope.htm> ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+<http://purl.org/lobid/lv#nwbibspatial> a owl:ObjectProperty ;
+    rdfs:label "NWBib spatial subject heading"@en ;
+    rdfs:comment "Links a resource in the Northrhine-Westphalian Bibliography (NWBib) to a concept in NWBib's spatial classification."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:subject .
+
+<http://purl.org/lobid/lv#nwbibsubject> a owl:ObjectProperty ;
+    rdfs:label "NWBib subject heading"@en ;
+    rdfs:comment "Links a resource in the Northrhine-Westphalian Bibliography (NWBib) to a concept in NWBib's subject classification."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf dcterms:subject .
+
+<http://purl.org/lobid/lv#rs> a owl:DatatypeProperty ;
+    rdfs:label "Region key"@en ;
+    rdfs:comment "Key of the region a spatial resource is located in."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:positiveInteger ;
+    rdfs:seeAlso <https://de.wikipedia.org/wiki/Amtlicher_Gemeindeschl%C3%BCssel#Regionalschl.C3.BCssel> .
+
+<http://purl.org/lobid/lv#stocksize> a rdf:Property ;
+    rdfs:label "Stock Size"@en ;
+    rdfs:comment "Indicates an institution's stock size. This property is especially used to indicate the size of a library's collection. It is recommended to be used with the controlled vocabulary at http://purl.org/lobid/stocksize."@en ;
+    rdfs:domain foaf:Organization ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/lobid/lv#subjectChain> a owl:DatatypeProperty ;
+    rdfs:label "Chain of subject terms"@en ;
+    rdfs:comment "A pipe-separated list of subject terms, optionally followed by a comma-seperated list of permutations (in parentheses)."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/lobid/lv#titleKeyword> a owl:DatatypeProperty ;
+    rdfs:label "Title keyword"@en ;
+    rdfs:comment "Indicates a title keyword, possibly in a different spelling than used in the original title."@en ;
+    rdfs:domain <http://schema.org/CreativeWork> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/lobid/lv#urn> a owl:DatatypeProperty ;
+    rdfs:label "URN"@en ;
+    rdfs:comment "This property is used to indicate the uniform resource name (URN) of a bibliographic resource. The URN must be stated as a string not as URI, thus identifying the identifier itself and not the resource that is identified by the URN."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/lobid/lv#webPageArchived> a owl:ObjectProperty ;
+    rdfs:label "Web page archived"@en ;
+    rdfs:comment "This property is used to link the product of archiving a web page to the web page being archived."@en ;
+    rdfs:domain <http://purl.org/lobid/lv#ArchivedWebPage> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://schema.org/WebPage> .
+
+<http://purl.org/lobid/lv#zdbID> a owl:DatatypeProperty ;
+    rdfs:label "ZDB ID"@en ;
+    rdfs:comment "The identifier that is assigned to a bibliographic resource in the German Journal Database (Zeitschriftendatenbank, ZDB)."@en ;
+    rdfs:domain dcterms:BibliographicResource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+<http://purl.org/lobid/lv#ArchivedWebPage> a owl:Class ;
+    rdfs:label "Archived Web Page"@en ;
+    rdfs:comment "An archival resource that is product of archiving a web page."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://data.archiveshub.ac.uk/def/ArchivalResource> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    dcterms:creator <http://lobid.org/team/ap> ;
+    dcterms:description "Under this name space new properties and classes needed for the service lobid ('linking open bibliographic data') are defined . Already existing properties and classes which are (re)used in lobid aren't documented here."@en ;
+    dcterms:issued "2012-01-17" ;
+    dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+    dcterms:modified "2015-02-09"^^xsd:date ;
+    dcterms:publisher <http://lobid.org/organisation/DE-605> ;
+    dcterms:title "lobid vocab" ;
+    ns1:contact <mailto:semweb@hbz-nrw.de> ;
+    vann:preferredNamespacePrefix "lv" ;
+    vann:preferredNamespaceUri "http://purl.org/lobid/lv#" ;
+    skos:historyNote "See the commit history for this vocabulary at https://github.com/lobid/vocabs/commits/master/lobid-vocab.ttl." .
+

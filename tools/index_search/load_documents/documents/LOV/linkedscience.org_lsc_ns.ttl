@@ -1,0 +1,202 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/net/provenance/ns#> .
+@prefix ns2: <http://www.w3.org/1999/xhtml/vocab#> .
+@prefix onto: <http://linkedscience.org/lsc/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:isSupprtedBy a owl:ObjectProperty ;
+    rdfs:label "isSupportedBy"@en ;
+    rdfs:comment "Abstract property to express the relation between the hypothesis and the evidence of a research."@en ;
+    rdfs:domain onto:Hypothesis ;
+    rdfs:isDefinedBy onto:isSupportedBy ;
+    rdfs:range onto:Research .
+
+<http://linkedscience.org/lsc/ns/> a foaf:Document ;
+    rdfs:label "Document that defines the Linked Science Core Vocabulary"@en ;
+    dcterms:conformsTo <http://www.w3.org/TR/rdfa-syntax> ;
+    dcterms:description "This documents specifies the classes and properties introduced by the Linked Science Core Vocabulary."@en ;
+    dcterms:title "Linked Science Core Vocabulary Specification"@en,
+        "Linked Science Vocabulary Specification"@en ;
+    ns2:license <http://creativecommons.org/licenses/by/1.0/> ;
+    ns2:stylesheet <http://linkedscience.org/teach/ns/main.css> ;
+    foaf:primaryTopic onto: .
+
+<http://linkedscience.org/teach/ns#Method> a owl:Class ;
+    rdfs:label "Method"@en ;
+    rdfs:comment "A method used in a scientific research."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/teach/ns> .
+
+<http://carsten.io/> a foaf:Person ;
+    foaf:homepage <http://carsten.io/> ;
+    foaf:name "Carsten Keßler"@en .
+
+onto: a ns1:DataItem,
+        owl:Ontology ;
+    dcterms:created "2011-11-29T11:30:00+00:00"^^xsd:dateTime ;
+    dcterms:creator <http://kauppinen.net/tomi#me> ;
+    dcterms:description "LSC, the Linked Science Core Vocabulary, is a lightweight vocabulary providing terms to enable publishers and researchers to relate things in science to time, space, and themes. More precisely, LSC is designed for describing scientific resources including elements of research, their context, and for interconnecting them. We introduce LSC as an example of building blocks for Linked Science to communicate the linkage between scientific resources in a machine-understandable way. The “core” in the name refers to the fact that LSC only defines the basic terms for science. We argue that the success of Linked Science—or Linked Data in general—lies in interconnected, yet distributed vocabularies that minimize ontological commitments. More specific terms needed by different scientific communities can therefore be introduced as extensions of LSC. LSC is hosted at LinkedScience.org; please check also other available vocabularies at LinkedScience.org/vocabularies."@en ;
+    dcterms:title "Linked Science Core Vocabulary namespace"@en ;
+    ns1:createdBy [ a ns1:DataCreation ;
+            ns1:performedAt "2011-11-29T11:30:00+00:00"^^xsd:dateTime ;
+            ns1:performedBy <http://kauppinen.net/tomi#me> ],
+        [ a ns1:DataCreation ;
+            ns1:performedAt "2011-11-29T11:30:00+00:00"^^xsd:dateTime ;
+            ns1:performedBy <http://kauppinen.net/tomi#me> ] .
+
+onto:Conclusion a owl:Class ;
+    rdfs:label "Conclusion"@en ;
+    rdfs:comment "Conclusion is made by research."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> .
+
+onto:Prediction a owl:Class ;
+    rdfs:label "Prediction"@en ;
+    rdfs:comment "Prediction made by a hypothesis."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> .
+
+onto:Researcher a owl:Class ;
+    rdfs:label "Researcher"@en ;
+    rdfs:comment "A researcher that conducts research."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> ;
+    rdfs:subClassOf foaf:Person .
+
+onto:confirms a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A research confirms a hypothesis."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:confirms ;
+    rdfs:range onto:Hypothesis .
+
+onto:dataProduced a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "Describes the relation between a research and the data produced in it."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:dataProduced ;
+    rdfs:range onto:Data .
+
+onto:dataUsed a owl:ObjectProperty ;
+    rdfs:label "reportTemplate"@en ;
+    rdfs:comment "Describes the relation between a research and the data used to conduct it."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:dataUsed ;
+    rdfs:range onto:Data .
+
+onto:falsifies a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A research falsifies a hypothesis."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:falsifies ;
+    rdfs:range onto:Hypothesis .
+
+onto:isAboutRegion a owl:ObjectProperty ;
+    rdfs:label "weeklyHours"@en ;
+    rdfs:comment "Abstract property to define the region a research refers to."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:isAboutRegion ;
+    rdfs:range <http://observedchange.com/tisc/ns#Region> ;
+    rdfs:subPropertyOf <dct:coverage> .
+
+onto:isAboutTime a owl:ObjectProperty ;
+    rdfs:label "isAboutTime"@en ;
+    rdfs:comment "Abstract property to relate a research to the time period it refers."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:isAboutTime ;
+    rdfs:range xsd:dateTime .
+
+onto:makes a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A hypothesis makes a prediction."@en ;
+    rdfs:domain onto:Hypothesis ;
+    rdfs:isDefinedBy onto:makes ;
+    rdfs:range onto:Prediction .
+
+onto:methodUsed a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A method used in a research."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:methodUsed ;
+    rdfs:range onto:Method .
+
+onto:participatesIn a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A researcher participates in some research."@en ;
+    rdfs:domain onto:Researcher ;
+    rdfs:isDefinedBy onto:participatesIn ;
+    rdfs:range onto:Research .
+
+onto:produces a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A research produces a conclusion."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:produces ;
+    rdfs:range onto:Conclusion .
+
+onto:reportedIn a owl:ObjectProperty ;
+    rdfs:label "reportedIn"@en ;
+    rdfs:comment "Abstract property to relate a research to the publications it is reported in."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:reportedIn ;
+    rdfs:range onto:Publication .
+
+onto:reports a owl:ObjectProperty ;
+    rdfs:label "grading"@en ;
+    rdfs:comment "Abstract property to report the research of a publication."@en ;
+    rdfs:domain onto:Publication ;
+    rdfs:isDefinedBy onto:reports ;
+    rdfs:range onto:Research .
+
+onto:tests a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "A research tests a hypothesis."@en ;
+    rdfs:domain onto:Research ;
+    rdfs:isDefinedBy onto:tests ;
+    rdfs:range onto:Hypothesis .
+
+onto:timeAccepted a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "Abstract property to relate a publication to the time it was accepted."@en ;
+    rdfs:domain onto:Publication ;
+    rdfs:isDefinedBy onto:timeAccepted ;
+    rdfs:range xsd:dateTime .
+
+onto:timeRevised a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "Abstract property to relate a publication to the time it was revised."@en ;
+    rdfs:domain onto:Publication ;
+    rdfs:isDefinedBy onto:timeRevised ;
+    rdfs:range xsd:dateTime .
+
+onto:timeSubmitted a owl:ObjectProperty ;
+    rdfs:label "room"@en ;
+    rdfs:comment "Abstract property to relate a publication to the time it was submitted."@en ;
+    rdfs:domain onto:Publication ;
+    rdfs:isDefinedBy onto:timeSubmitted ;
+    rdfs:range xsd:dateTime .
+
+onto:Data a owl:Class ;
+    rdfs:label "Data"@en ;
+    rdfs:comment "Any kind of data."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> .
+
+<http://kauppinen.net/tomi#me> a foaf:Person ;
+    foaf:homepage <http://kauppinen.net/tomi> ;
+    foaf:name "Tomi Kauppinen"@en .
+
+onto:Hypothesis a owl:Class ;
+    rdfs:label "Hypothesis"@en ;
+    rdfs:comment "Any kind of hypothesis."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> .
+
+onto:Publication a owl:Class ;
+    rdfs:label "Publication"@en ;
+    rdfs:comment "Any kind of publication eg. scientific paper, book, journal publication."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> ;
+    rdfs:subClassOf <http://purl.org/ontology/bibo/Document> .
+
+onto:Research a owl:Class ;
+    rdfs:label "Research"@en ;
+    rdfs:comment "Any kind of research."@en ;
+    rdfs:isDefinedBy <http://linkedscience.org/lsc/ns> .
+

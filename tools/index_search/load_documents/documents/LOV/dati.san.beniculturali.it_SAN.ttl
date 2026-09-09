@@ -1,0 +1,640 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://dati.san.beniculturali.it/SAN/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator "ICAR - Centro MAAS" ;
+    dc:date "2015-03-02" ;
+    dc:rights "Per l'ontologia ed il thesaurus SAN, si applica una licenza Creative Commons 2.5 BY di attribuzione. Per tipologie di uso e riutilizzo non consentite dalla licenza adottata, è necessario richiedere esplicita autorizzazione all'ICAR" ;
+    dc:title "SAN Ontologia" ;
+    owl:versionInfo "Version 1.1"^^xsd:string .
+
+onto:abstract a owl:DatatypeProperty ;
+    rdfs:label "abstract"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/description/biogHist/abstract",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/abstract[@langcode]" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] .
+
+onto:acronimo a owl:DatatypeProperty ;
+    rdfs:label "acronimo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/acronimo" ;
+    rdfs:domain onto:conservatore .
+
+onto:altraDenominazioneComplarc a owl:DatatypeProperty ;
+    rdfs:label "altra denominazione complesso archivistico"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unittitle" ;
+    rdfs:domain onto:complessoArchivistico .
+
+onto:altraDenominazioneProduttore a owl:DatatypeProperty ;
+    rdfs:label "altra denominazione produttore"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/identity/nameEntry[@localType='altradenominazione']/part" ;
+    rdfs:domain onto:produttore .
+
+onto:altraDenominazioneProfiloIstituzionale a owl:DatatypeProperty ;
+    rdfs:label "altra denominazione profilo istituzionale"^^xsd:string ;
+    rdfs:domain onto:profiloIstituzionale .
+
+onto:altroAccesso a owl:DatatypeProperty ;
+    rdfs:label "altro accesso"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/altroaccesso" ;
+    rdfs:domain onto:conservatore .
+
+onto:autore a owl:DatatypeProperty ;
+    rdfs:label "autore"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/titlestmt/author" ;
+    rdfs:domain onto:strumento .
+
+onto:casaEditrice a owl:DatatypeProperty ;
+    rdfs:label "casa editrice"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/publicationstm/publisher" ;
+    rdfs:domain onto:strumento .
+
+onto:codice_ISIL a owl:DatatypeProperty ;
+    rdfs:label "codice ISIL"^^xsd:string ;
+    rdfs:domain onto:conservatore .
+
+onto:consistenza a owl:DatatypeProperty ;
+    rdfs:label "consistenza"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/physdesc/extent" ;
+    rdfs:domain onto:complessoArchivistico ;
+    owl:equivalentProperty <http://lod.xdams.org/reload/oad/extentAndMedium> .
+
+onto:consultazione a owl:DatatypeProperty ;
+    rdfs:label "consultazione"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/consultazione" ;
+    rdfs:domain onto:conservatore ;
+    rdfs:range xsd:boolean .
+
+onto:dateCSITesto a owl:DatatypeProperty ;
+    rdfs:label "date contesto storico istituzionale testo" ;
+    dcterms:description "Date contesto storico istituzionale testuali" ;
+    rdfs:domain onto:dateCSI .
+
+onto:dateComplarcNormal a owl:DatatypeProperty ;
+    rdfs:label "date complesso archivistico normal"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitdate[@datechar='principale']/@normal" ;
+    rdfs:domain onto:dateComplarc ;
+    owl:equivalentProperty <http://lod.xdams.org/reload/oad/date> .
+
+onto:dateComplarcTesto a owl:DatatypeProperty ;
+    rdfs:label "date complesso archivistico testo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitdate[@datechar='principale']" ;
+    rdfs:domain onto:dateComplarc .
+
+onto:dateEsistenzaNormal a owl:DatatypeProperty ;
+    rdfs:label "date esistenza normal"^^xsd:string ;
+    rdfs:domain onto:dateEsistenza ;
+    owl:equivalentProperty <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#existDates> .
+
+onto:dateEsistenzaTesto a owl:DatatypeProperty ;
+    rdfs:label "date esistenza testo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/description/existDates/dateSet/date" ;
+    rdfs:domain onto:dateEsistenza .
+
+onto:dateQualificazioniRelCpf a owl:DatatypeProperty ;
+    rdfs:label "date qualificazioni relazioni Cpf"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/relations/cpfRelation/date" ;
+    rdfs:domain onto:qualificazioniRelazioniCpf .
+
+onto:dateStrumentoTesto a owl:DatatypeProperty ;
+    rdfs:label "date strumento testo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/publicationstm/date" ;
+    rdfs:domain onto:dateStrumento .
+
+onto:denominazioneCSI a owl:DatatypeProperty ;
+    rdfs:label "denominazione contesto storico istituzionale"^^xsd:string ;
+    rdfs:domain onto:contestoStoricoIstituzionale .
+
+onto:descrizione a owl:DatatypeProperty ;
+    rdfs:label "descrizione"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/descrizione",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/notestmt/note" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] .
+
+onto:descrizioneCSI a owl:DatatypeProperty ;
+    rdfs:label "descrizione contesto storico istituzionale"^^xsd:string ;
+    rdfs:domain onto:contestoStoricoIstituzionale .
+
+onto:edito a owl:DatatypeProperty ;
+    rdfs:label "edito"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/notestmt/note/@type" ;
+    rdfs:domain onto:strumento ;
+    rdfs:range xsd:boolean .
+
+onto:ente a owl:Class ;
+    rdfs:label "ente"^^xsd:string ;
+    rdfs:subClassOf onto:produttore ;
+    owl:disjointWith onto:famiglia,
+        onto:persona ;
+    owl:equivalentClass <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#corporateBoby> .
+
+onto:estensioneDateNormal a owl:DatatypeProperty ;
+    rdfs:label "estensione date normal"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitdate/@normal" ;
+    rdfs:domain onto:estensioneDateComplarc .
+
+onto:formaAutorizzataComplarc a owl:DatatypeProperty ;
+    rdfs:label "forma autorizzata complesso archivistico"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unittitle" ;
+    rdfs:domain onto:complessoArchivistico ;
+    owl:equivalentProperty <http://lod.xdams.org/reload/oad/title> .
+
+onto:formaAutorizzataConservatore a owl:DatatypeProperty ;
+    rdfs:label "forma autorizzata conservatore"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/formaautorizzata",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/formeparallele" ;
+    rdfs:domain onto:conservatore .
+
+onto:formaAutorizzataProduttore a owl:DatatypeProperty ;
+    rdfs:label "forma autorizzata produttore"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/identity/nameEntry/part",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/identity/nameEntryParallel/nameEntry/part[@langcode]" ;
+    rdfs:domain onto:produttore ;
+    owl:equivalentProperty <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#authorizedForm> .
+
+onto:formaAutorizzataProfiloIstituzionale a owl:DatatypeProperty ;
+    rdfs:label "forma autorizzata profilo istituzionale"^^xsd:string ;
+    rdfs:domain onto:profiloIstituzionale .
+
+onto:has_cpf a owl:ObjectProperty ;
+    rdfs:label "ha cpf"^^xsd:string ;
+    rdfs:domain onto:contestoStoricoIstituzionale ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    owl:inverseOf onto:has_CSI .
+
+onto:has_dateCSI a owl:ObjectProperty ;
+    rdfs:label "ha date contesto storico istituzionale"^^xsd:string ;
+    rdfs:domain onto:contestoStoricoIstituzionale ;
+    rdfs:range onto:dateCSI .
+
+onto:has_dateComplarc a owl:ObjectProperty ;
+    rdfs:label "ha date complesso archivistico"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:dateComplarc .
+
+onto:has_dateEsistenza a owl:ObjectProperty ;
+    rdfs:label "ha date esistenza"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range onto:dateEsistenza .
+
+onto:has_dateEsistenzaTipo a owl:ObjectProperty ;
+    rdfs:label "ha tipo date di esistenza"^^xsd:string ;
+    rdfs:domain onto:dateEsistenza ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/Tipo_data_esistenza_CPF> .
+
+onto:has_dateStrumento a owl:ObjectProperty ;
+    rdfs:label "ha date strumento"^^xsd:string ;
+    rdfs:domain onto:strumento ;
+    rdfs:range onto:dateStrumento .
+
+onto:has_estensioneDateComplarc a owl:ObjectProperty ;
+    rdfs:label "ha estensione date complesso archivistico"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:estensioneDateComplarc .
+
+onto:has_estensioneDateTipo a owl:ObjectProperty ;
+    rdfs:label "ha estensione date tipo"^^xsd:string ;
+    rdfs:domain onto:estensioneDateComplarc ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/Estensione_data_complesso> .
+
+onto:has_livelloSuperiore a owl:ObjectProperty ;
+    rdfs:label "ha livelloSuperiore"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:complessoArchivistico .
+
+onto:has_luogoAmbitoTerritoriale a owl:ObjectProperty ;
+    rdfs:label "ha luogo Ambito Territoriale"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_luogoConservatore a owl:ObjectProperty ;
+    rdfs:label "ha luogoConservatore"^^xsd:string ;
+    rdfs:domain onto:conservatore ;
+    rdfs:range onto:luogoConservatore .
+
+onto:has_luogoGiurisdizione a owl:ObjectProperty ;
+    rdfs:label "ha luogo Giurisdizione"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_luogoMorte a owl:ObjectProperty ;
+    rdfs:label "ha luogo morte"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_luogoNascita a owl:ObjectProperty ;
+    rdfs:label "ha luogo nascita"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_luogoResidenza a owl:ObjectProperty ;
+    rdfs:label "ha luogo Residenza"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_luogoSede a owl:ObjectProperty ;
+    rdfs:label "ha luogo Sede"^^xsd:string ;
+    rdfs:subPropertyOf onto:has_luogoProduttore .
+
+onto:has_natura_giuridica_ente a owl:ObjectProperty ;
+    rdfs:label "ha natura giuridica ente"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/natura_giuridica_ente> .
+
+onto:has_qualificazioniRelazioniCpf a owl:ObjectProperty ;
+    rdfs:label "ha qualificazioni relazioni Cpf"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range onto:qualificazioniRelazioniCpf .
+
+onto:has_relazionePI a owl:ObjectProperty ;
+    rdfs:label "ha relazione con Profilo Istituzionale"^^xsd:string ;
+    rdfs:domain onto:qualificazioniRelazioniCpf ;
+    rdfs:range onto:profiloIstituzionale .
+
+onto:has_relazioneProduttore a owl:ObjectProperty ;
+    rdfs:label "ha relazione con Soggetto Produttore"^^xsd:string ;
+    rdfs:domain onto:qualificazioniRelazioniCpf ;
+    rdfs:range onto:produttore .
+
+onto:has_sitoWeb a owl:ObjectProperty ;
+    rdfs:label "ha sito web"^^xsd:string ;
+    rdfs:domain onto:conservatore ;
+    rdfs:range onto:sitoWeb .
+
+onto:has_sottotipologia_ente a owl:ObjectProperty ;
+    rdfs:label "ha sottotipologia ente"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/sottotipologia_ente> .
+
+onto:has_statusProvenienza a owl:ObjectProperty ;
+    rdfs:label "ha statusProvenienza"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/Status_scheda_provenienza> .
+
+onto:has_strumentoDigitale a owl:ObjectProperty ;
+    rdfs:label "ha strumento digitale"^^xsd:string ;
+    rdfs:domain onto:strumento ;
+    rdfs:range onto:strumentoDigitale .
+
+onto:has_tematismo a owl:ObjectProperty ;
+    rdfs:label "ha tematismo"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/Tematismo> .
+
+onto:has_tipologia a owl:ObjectProperty ;
+    rdfs:label "ha tipologia"^^xsd:string ;
+    rdfs:domain onto:conservatore ;
+    rdfs:range <http://dati.san.beniculturali.it/SAN/TesauroSAN/tipologia_Conservatore> .
+
+onto:indirizzo a owl:DatatypeProperty ;
+    rdfs:label "indirizzo"^^xsd:string ;
+    rdfs:domain onto:conservatore .
+
+onto:isConservatoreOf a owl:ObjectProperty ;
+    rdfs:label "è conservatore di"^^xsd:string ;
+    rdfs:domain onto:conservatore ;
+    rdfs:range onto:complessoArchivistico ;
+    owl:inverseOf onto:has_conservatore .
+
+onto:isProduttoreOf a owl:ObjectProperty ;
+    rdfs:label "è produttore di"^^xsd:string ;
+    rdfs:domain onto:produttore ;
+    rdfs:range onto:complessoArchivistico ;
+    owl:inverseOf onto:has_produttore .
+
+onto:isStrumentoDiRicercaOf a owl:ObjectProperty ;
+    rdfs:label "è strumento di ricerca di"^^xsd:string ;
+    rdfs:domain onto:strumento ;
+    rdfs:range onto:complessoArchivistico ;
+    owl:inverseOf onto:has_strumentoDiRicerca .
+
+onto:luogoCAP a owl:DatatypeProperty ;
+    rdfs:label "luogo CAP"^^xsd:string ;
+    rdfs:domain onto:luogoConservatore .
+
+onto:luogoComune a owl:DatatypeProperty ;
+    rdfs:label "luogo comune"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/localizzazione/@comune" ;
+    rdfs:domain onto:luogoConservatore .
+
+onto:luogoPaese a owl:DatatypeProperty ;
+    rdfs:label "luogo paese"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/localizzazione/@paese" ;
+    rdfs:domain onto:luogoConservatore .
+
+onto:luogoProvincia a owl:DatatypeProperty ;
+    rdfs:label "luogo provincia"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/localizzazione/@provincia" ;
+    rdfs:domain onto:luogoConservatore .
+
+onto:luogoPubblicazione a owl:DatatypeProperty ;
+    rdfs:label "luogo pubblicazione"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/publicationstm/address" ;
+    rdfs:domain onto:strumento .
+
+onto:luogoTesto a owl:DatatypeProperty ;
+    rdfs:label "luogo testo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/placeDates/placeDate/place",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/localizzazione" ;
+    rdfs:domain onto:luogo .
+
+onto:orario a owl:DatatypeProperty ;
+    rdfs:label "orario"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/orario" ;
+    rdfs:domain onto:conservatore .
+
+onto:ordinamento a owl:DatatypeProperty ;
+    rdfs:label "ordinamento"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico .
+
+onto:professione a owl:DatatypeProperty ;
+    rdfs:label "professione"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/description/descriptiveEntries/descriptiveEntry/term" ;
+    rdfs:domain onto:persona .
+
+onto:recordProvenienzaId a owl:DatatypeProperty ;
+    rdfs:label "record provenienza id"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/control/otherRecordId",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitid",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/eadid" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] .
+
+onto:schedaProvenienzaHref a owl:DatatypeProperty ;
+    rdfs:label "scheda provenienza href"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/control/sources/source/@xlink:href",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitid/@identifier",
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range xsd:anyURI .
+
+onto:schedaSAN a owl:DatatypeProperty ;
+    rdfs:label "scheda SAN"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range xsd:anyURI .
+
+onto:servizi a owl:DatatypeProperty ;
+    rdfs:label "servizi"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/servizi" ;
+    rdfs:domain onto:conservatore .
+
+onto:sistemaProvenienza a owl:DatatypeProperty ;
+    rdfs:label "sistema provenienza"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/control/otherRecordId/@localtype",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc/did/unitid/@type",
+        "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/eadid/@identifier" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] .
+
+onto:sitoWebHref a owl:DatatypeProperty ;
+    rdfs:label "sito web href"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/sitoweb/@href" ;
+    rdfs:domain onto:sitoWeb ;
+    rdfs:range xsd:anyURI ;
+    owl:equivalentProperty foaf:homepage .
+
+onto:sitoWebTesto a owl:DatatypeProperty ;
+    rdfs:label "sito web testo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/scons.xsd//scons/sitoweb" ;
+    rdfs:domain onto:sitoWeb .
+
+onto:strumentoDigitaleLink a owl:DatatypeProperty ;
+    rdfs:label "strumento digitale link"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/editionstmt/edition/extptr/@href" ;
+    rdfs:domain onto:strumentoDigitale ;
+    rdfs:range xsd:anyURI .
+
+onto:strumentoDigitaleTitolo a owl:DatatypeProperty ;
+    rdfs:label "strumento digitale titolo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/editionstmt/edition/extptr/@title" ;
+    rdfs:domain onto:strumentoDigitale .
+
+onto:tipoQualificazioniRelCpf a owl:DatatypeProperty ;
+    rdfs:label "tipo qualificazioni relazioni Cpf"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/relations/cpfRelation/@localType" ;
+    rdfs:domain onto:qualificazioniRelazioniCpf ;
+    owl:equivalentProperty <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#cpfRelationType> .
+
+onto:tipologiaComplesso a owl:DatatypeProperty ;
+    rdfs:label "tipologia complesso"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaead.xsd//ead/archdesc[@level='otherlevel']/@otherlevel" ;
+    rdfs:domain onto:complessoArchivistico .
+
+onto:titolo a owl:DatatypeProperty ;
+    rdfs:label "titolo"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/strumenti.xsd//ead/eadheader/filedesc/titlestmt/titleproper" ;
+    rdfs:domain onto:strumento .
+
+onto:titolo_nobiliare a owl:DatatypeProperty ;
+    rdfs:label "titolo nobiliare"^^xsd:string ;
+    rdfs:comment "Tracciato schema SAN: http://www.san.beniculturali.it/tracciato/schemaeac.xsd//eac-cpf/cpfDescription/description/descriptiveEntries/descriptiveEntry/term" ;
+    rdfs:domain onto:persona .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/Estensione_data_complesso> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/Status_scheda_provenienza> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/Tematismo> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/Tipo_data_esistenza_CPF> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/natura_giuridica_ente> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/sottotipologia_ente> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+<http://dati.san.beniculturali.it/SAN/TesauroSAN/tipologia_Conservatore> a owl:Class ;
+    rdfs:subClassOf skos:Concept .
+
+onto:famiglia a owl:Class ;
+    rdfs:label "famiglia"^^xsd:string ;
+    rdfs:subClassOf onto:produttore ;
+    owl:disjointWith onto:persona ;
+    owl:equivalentClass <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#family> .
+
+onto:has_CSI a owl:ObjectProperty ;
+    rdfs:label "ha contesto storico istituzionale"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ ] ] ;
+    rdfs:range onto:contestoStoricoIstituzionale .
+
+onto:has_conservatore a owl:ObjectProperty ;
+    rdfs:label "ha conservatore"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:conservatore .
+
+onto:has_produttore a owl:ObjectProperty ;
+    rdfs:label "ha produttore"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:produttore .
+
+onto:has_strumentoDiRicerca a owl:ObjectProperty ;
+    rdfs:label "ha strumento di ricerca"^^xsd:string ;
+    rdfs:domain onto:complessoArchivistico ;
+    rdfs:range onto:strumento ;
+    owl:equivalentProperty <http://lod.xdams.org/reload/oad/has_findingAid> .
+
+onto:dateCSI a owl:Class ;
+    rdfs:label "date contesto storico istituzionale"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        onto:date .
+
+onto:dateStrumento a owl:Class ;
+    rdfs:label "date strumento"^^xsd:string ;
+    rdfs:subClassOf onto:date .
+
+onto:dateComplarc a owl:Class ;
+    rdfs:label "date complesso archivistico"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        [ ],
+        onto:date .
+
+onto:estensioneDateComplarc a owl:Class ;
+    rdfs:label "estensione date complesso archivistico"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        onto:date .
+
+onto:luogo a owl:Class ;
+    rdfs:label "luogo"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        owl:Thing ;
+    owl:equivalentClass <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#place>,
+        <http://www.geonames.org/ontology#Feature> .
+
+onto:profiloIstituzionale a owl:Class ;
+    rdfs:label "profilo istituzionale"^^xsd:string ;
+    rdfs:comment "Istituzioni, preunitarie o unitarie, descritte una volta per tutte, con riferimento al periodo in cui hanno operato e al contesto storico istituzionale o statuale di appartenenza.\\nDescrive una volta per tutte un particolare soggetto produttore, e costituisce una chiave di ricerca per tutti i soggetti produttori che appartengono al profilo descritto." ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        owl:Thing .
+
+onto:sitoWeb a owl:Class ;
+    rdfs:label "sito web"^^xsd:string ;
+    rdfs:subClassOf owl:Thing ;
+    owl:equivalentClass <http://lod.xdams.org/reload/ocsa/contactArea> .
+
+onto:strumentoDigitale a owl:Class ;
+    rdfs:label "strumento digitale"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        [ ],
+        owl:Thing .
+
+onto:dateEsistenza a owl:Class ;
+    rdfs:label "date esistenza"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        onto:date .
+
+onto:persona a owl:Class ;
+    rdfs:label "persona"^^xsd:string ;
+    rdfs:subClassOf onto:produttore ;
+    owl:equivalentClass <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#person>,
+        foaf:person .
+
+onto:contestoStoricoIstituzionale a owl:Class ;
+    rdfs:label "contesto storico istituzionale"^^xsd:string ;
+    rdfs:comment "Organizzazione istituzionale entro cui ha operato il soggetto produttore. Può trattarsi di uno Stato o di articolazioni territoriali o amministrative di esso. L'entità  statale può essere individuata con la denominazione propria di un determinato periodo storico (per es. “Repubblica di Siena”, “Granducato di Toscana””) o con le denominazioni assunte in un più lungo arco cronologico (es. \"Regno d'Italia poi Repubblica italiana\")." ;
+    rdfs:subClassOf owl:Thing .
+
+onto:date a owl:Class ;
+    rdfs:label "date"^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:luogoConservatore a owl:Class ;
+    rdfs:label "luogo conservatore"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        onto:luogo .
+
+onto:qualificazioniRelazioniCpf a owl:Class ;
+    rdfs:label "qualificazioni relazioni Cpf"^^xsd:string ;
+    rdfs:subClassOf [ ],
+        owl:Thing .
+
+onto:has_luogoProduttore a owl:ObjectProperty ;
+    rdfs:label "ha luogoProduttore"^^xsd:string ;
+    rdfs:domain onto:produttore ;
+    rdfs:range onto:luogo ;
+    owl:equivalentProperty <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#hasPlace> .
+
+onto:produttore a owl:Class ;
+    rdfs:label "soggetto produttore"^^xsd:string ;
+    rdfs:comment "Soggetto (ente, famiglia o persona) che ha prodotto o acquisito per finalità  amministrative, familiari o personali il complesso archivistico oggetto di descrizione. Può essere collegato ad altri soggetti produttori con relazioni gerarchiche o temporali." ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        owl:Thing ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf [ ] ],
+        <http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf#entity> .
+
+onto:strumento a owl:Class ;
+    rdfs:label "strumento di ricerca"^^xsd:string ;
+    rdfs:comment "Repertorio - in forma di inventario analitico o sommario, elenco, elenco di versamento, elenco di consistenza, elenco numerico o altro - che descrive in maniera più o meno dettagliata un fondo o parte di esso." ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        owl:Thing ;
+    owl:equivalentClass <http://lod.xdams.org/reload/oad/findingAid> .
+
+onto:conservatore a owl:Class ;
+    rdfs:label "soggetto conservatore"^^xsd:string ;
+    rdfs:comment "Il soggetto sul quale ricade la responsabilità  della conservazione e valorizzazione dell'archivio" ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        owl:Thing ;
+    owl:equivalentClass org:Organization .
+
+onto:complessoArchivistico a owl:Class ;
+    rdfs:label "complesso archivistico"^^xsd:string ;
+    rdfs:comment "Locuzione generica per indicare un corpus documentale oggetto di descrizione." ;
+    rdfs:subClassOf [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        [ ],
+        owl:Thing ;
+    owl:equivalentClass <http://lod.xdams.org/reload/oad/uod> .
+

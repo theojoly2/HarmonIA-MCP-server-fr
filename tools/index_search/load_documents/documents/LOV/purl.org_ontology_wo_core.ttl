@@ -1,0 +1,108 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/ontology/wo/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Scale a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Scale"@en ;
+    rdfs:comment "A concept for describing scales for weights."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/scovo#Dimension> ;
+    ns1:term_status "unstable"@en .
+
+onto:Weight a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Weight"@en ;
+    rdfs:comment "A weight class to enable timestamped (etc.) weights."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/scovo#Item> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:weight_value ] ;
+    ns1:term_status "testing"@en .
+
+onto:max_weight a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has max weight"@en ;
+    rdfs:comment "A maximum weight of a scale."@en ;
+    rdfs:domain onto:Scale ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf <http://purl.org/NET/scovo#max>,
+        <http://purl.org/stuff/rev#maxRating> ;
+    ns1:term_status "unstable"@en .
+
+onto:min_weight a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has min weight"@en ;
+    rdfs:comment "A minimum weight of a scale."@en ;
+    rdfs:domain onto:Scale ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf <http://purl.org/NET/scovo#min>,
+        <http://purl.org/stuff/rev#minRating> ;
+    ns1:term_status "unstable"@en .
+
+onto:scale a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has scale"@en ;
+    rdfs:comment "A scale for the weighting of some relation."@en ;
+    rdfs:domain onto:Weight ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Scale ;
+    rdfs:subPropertyOf <http://purl.org/NET/scovo#dimension> ;
+    ns1:term_status "unstable"@en .
+
+onto:step_size a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has step size"@en ;
+    rdfs:comment "A predefined step size for weight of a specific scale."@en ;
+    rdfs:domain onto:Scale ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "unstable"@en .
+
+onto:weight a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has weight"@en ;
+    rdfs:comment "The weight on some relation, e.g. a interest in a topic, or of an interest that is valid for a specific period of time or was raised up in a specific period of time."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Weight ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#factor> ;
+    ns1:term_status "unstable"@en .
+
+onto:weight_value a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has weight value"@en ;
+    rdfs:comment "The specific value of a weight."@en ;
+    rdfs:domain onto:Weight ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "testing"@en .
+
+onto: a owl:Ontology ;
+    dc:creator <http://foaf.me/zazi#me> ;
+    dc:date "2010-09-14T11:40:52+01:00"^^xsd:dateTime ;
+    dc:description "A vocabulary for describing weightings and their referenced scales."@en ;
+    dc:title "Weighting Ontology"@en ;
+    vann:preferredNamespacePrefix "wo" ;
+    vann:preferredNamespaceUri "http://purl.org/ontology/wo/core#" ;
+    owl:imports <http://purl.org/NET/c4dm/event.owl>,
+        <http://purl.org/NET/scovo>,
+        dc:,
+        <http://purl.org/stuff/rev>,
+        vann:,
+        <http://www.w3.org/2003/06/sw-vocab-status/ns> ;
+    owl:versionInfo 0.1 .
+

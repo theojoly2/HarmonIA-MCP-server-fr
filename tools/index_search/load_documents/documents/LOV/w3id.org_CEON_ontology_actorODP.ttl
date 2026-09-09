@@ -1,0 +1,194 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix ns1: <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#> .
+@prefix onto: <http://w3id.org/CEON/ontology/actorODP/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:publisher a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dcterms:contributor "Eva Blomqvist",
+        "Mikael Lindecrantz",
+        "Robin Keskisärkkä" ;
+    dcterms:created "2025-05-20"^^xsd:date ;
+    dcterms:creator "Huanyu Li" ;
+    dcterms:description "A core ODP of the CEON ontology network, defining aspects of the actor concept." ;
+    dcterms:issued "2025-06-30"^^xsd:date ;
+    dcterms:license "https://creativecommons.org/licenses/by/4.0/" ;
+    dcterms:publisher "Onto-DESIDE" ;
+    dcterms:title "Circular Economy Ontology Network (CEON) - Actor ODP" ;
+    vann:preferredNamespacePrefix "ceon-actorODP" ;
+    vann:preferredNamespaceUri "http://w3id.org/CEON/ontoloy/actorODP/" ;
+    ns1:coversRequirements "Covers the following requirements from Onto-DESIDE D3.1: CVN-Process-3, CVN-Actor-1,4,6,7, CVN-Competency-3, CVN-Information-4, C11-1, C11-3, E1-6,6,6,9, E4-10.",
+        "Covers the following requirements from Onto-DESIDE D3.2: CE1-1, CE2-1, CE2-2, CE4-2, CE6-3, CE12-1, CE10-1, CE10-3, CE10-4, CE10-9, C3-6, C3-9, C11-1, C11-3, C13-8, C13-10, E1-6, E1-9, E4-10." ;
+    rdfs:comment "A core ODP of the CEON ontology network, defining aspects of the actor concept." ;
+    rdfs:seeAlso <https://github.com/LiUSemWeb/CEON> ;
+    owl:priorVersion 0.3 ;
+    owl:versionIRI <http://w3id.org/CEON/ontology/actorODP/0.4/> ;
+    owl:versionInfo 0.4 .
+
+onto:basedOnCapability a owl:ObjectProperty ;
+    rdfs:label "based on capability" ;
+    rdfs:comment "An actor participates in a collaboration based on that it has some capability that is useful for the collaboration." ;
+    rdfs:domain onto:CollaborationParticipation ;
+    rdfs:range onto:Capability .
+
+onto:capabilityOf a owl:ObjectProperty ;
+    rdfs:label "capability of" ;
+    rdfs:comment "Relates to the actor holding the capability." ;
+    rdfs:domain onto:Capability ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Actor onto:Infrastructure ) ] .
+
+onto:capabilityProperty a owl:ObjectProperty ;
+    rdfs:label "capability property" ;
+    rdfs:comment "Relates some properties to the capability, such as the parameters of it, or the needed resources." ;
+    rdfs:domain onto:Capability .
+
+onto:participantRole a owl:ObjectProperty ;
+    rdfs:label "participant role" ;
+    rdfs:comment "Holds the value of the role of the participant in this participation relation." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range onto:Role .
+
+onto:participatingActor a owl:ObjectProperty ;
+    rdfs:label "participating actor" ;
+    rdfs:comment "Holds the value of the actor involved in this participation relation." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range onto:Actor .
+
+onto:participatingInfrastructure a owl:ObjectProperty ;
+    rdfs:label "participating infrastructure" ;
+    rdfs:comment "Holds the value of the infrastructure involved in this participation relation." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range onto:Infrastructure .
+
+onto:participatingObject a owl:ObjectProperty ;
+    rdfs:label "participating object" ;
+    rdfs:comment "Participating object in a resource participation. This is part of a resource participation that can be a directional relation, and the participating object is the end point of the relation." ;
+    rdfs:domain onto:ResourceParticipation ;
+    rdfs:range <http://w3id.org/CEON/ontology/resourceODP/Resource> .
+
+onto:participatingResource a owl:ObjectProperty ;
+    rdfs:label "participating resource" ;
+    rdfs:comment "The resource that this participation relation relates to, i.e. for which the actor holds the specified role." ;
+    rdfs:domain onto:ResourceRelation ;
+    rdfs:range <http://w3id.org/CEON/ontology/resourceODP/Resource> .
+
+onto:participatingSubject a owl:ObjectProperty ;
+    rdfs:label "participating subject" ;
+    rdfs:comment "Participating subject in a resource participation. This is part of a resource participation that can be a directional relation, and the participating subject is the starting point of the relation." ;
+    rdfs:domain onto:ResourceParticipation ;
+    rdfs:range <http://w3id.org/CEON/ontology/resourceODP/Resource> .
+
+onto:participationEndTime a owl:DatatypeProperty ;
+    rdfs:label "participation end time" ;
+    rdfs:comment "The end of a time interval." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:date xsd:dateTime xsd:gMonthYear xsd:gYear ) ] .
+
+onto:participationIn a owl:ObjectProperty ;
+    rdfs:label "participation in" ;
+    rdfs:comment "The collaboration or process that this participation relates to." ;
+    rdfs:domain onto:CollaborationParticipation ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://w3id.org/CEON/ontology/cvn/Collaboration> <http://w3id.org/CEON/ontology/processODP/Process> ) ] .
+
+ns1:coversRequirements a owl:AnnotationProperty .
+
+geo:geoJSONLiteral a rdfs:Datatype .
+
+geo:gmlLiteral a rdfs:Datatype .
+
+geo:wktLiteral a rdfs:Datatype .
+
+onto:ResourceRelation a owl:Class ;
+    rdfs:label "Resource Relation" ;
+    rdfs:comment "The relation involving the role of a certain actor with respect to a certain resource, e.g. an organisation or individual (actor) owning (role) a specific product (resource) at a specific point or period in time." ;
+    rdfs:subClassOf onto:Participation .
+
+onto:Role a owl:Class ;
+    rdfs:label "Role" ;
+    rdfs:comment "A role that an actor can take in a specific context. Applies both to roles in the context of resources, such as owner, manufacturer, reseller etc. of that resource, as well as roles in relation to a circular value network, such as recycler, dismantler, transporter etc., in relation to a material flow." .
+
+onto:participationStartTime a owl:DatatypeProperty ;
+    rdfs:label "participation start time" ;
+    rdfs:comment "The start of a time interval." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:date xsd:dateTime xsd:gMonthYear xsd:gYear ) ] .
+
+onto:participationTimePoint a owl:DatatypeProperty ;
+    rdfs:label "participation time point" ;
+    rdfs:comment "The point in time when something took place or was valid." ;
+    rdfs:domain onto:Participation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:date xsd:dateTime xsd:gMonthYear xsd:gYear ) ] .
+
+<http://w3id.org/CEON/ontology/cvn/Collaboration> a owl:Class .
+
+<http://w3id.org/CEON/ontology/processODP/Process> a owl:Class .
+
+onto:Actor a owl:Class ;
+    rdfs:label "Actor" ;
+    rdfs:comment "An agent able to act in the context of a circular value network, e.g. an organisation, person." .
+
+onto:CollaborationParticipation a owl:Class ;
+    rdfs:label "Collaboration Participation" ;
+    rdfs:comment "The relation involving the role of a certain actor with respect to a value network or a process in such a network, e.g. an organisation (actor) acting as the recycler (role) in a glass recycling value netowrk (network) at a specific point or period in time. Or an organisation (actor) acting as the dismantler (role) in a dismantling step of a building deconstruction process (process step) at a specific point or period in time." ;
+    rdfs:subClassOf onto:Participation .
+
+onto:Infrastructure a owl:Class ;
+    rdfs:label "Infrastructure" ;
+    rdfs:comment "An infrastructure refers to facilities, services, or systems for participations to function." .
+
+onto:ResourceParticipation a owl:Class ;
+    rdfs:label "Resource Participation" ;
+    rdfs:comment "The generic relation representing the particpation of a resource in some relation. For example, it can be specialized to represent a reified version of an object or data property." ;
+    rdfs:subClassOf onto:Participation .
+
+onto:Capability a owl:Class ;
+    rdfs:label "Capability" ;
+    rdfs:comment "Something that the actor is capable of doing, e.g. perfomring a certain role in a process, based on some properties, such as access to infrastructure, resources and know-how." .
+
+<http://w3id.org/CEON/ontology/resourceODP/Resource> a owl:Class .
+
+xsd:date a rdfs:Datatype .
+
+xsd:gMonthYear a rdfs:Datatype .
+
+xsd:gYear a rdfs:Datatype .
+
+onto:Participation a owl:Class ;
+    rdfs:label "Participation" ;
+    rdfs:comment "Represents the participation of objects in some situation." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:unionOf ( [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:participationStartTime ] [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty onto:participationTimePoint ] ) ] .
+

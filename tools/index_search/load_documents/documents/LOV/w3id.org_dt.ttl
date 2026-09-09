@@ -1,0 +1,251 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://w3id.org/dt> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/dt#ConstructionObject> a rdfs:Class ;
+    rdfs:label "Construction object"@en ;
+    rdfs:comment "object of interest in the context of a construction process"@en ;
+    rdfs:subClassOf <https://w3id.org/dt#LibraryComponent> .
+
+<https://w3id.org/dt#DataTemplate> a rdfs:Class ;
+    rdfs:label "Data template"@en ;
+    rdfs:comment "data structure used to describe the characteristics of construction objects"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasSetOfProperties> ;
+            owl:someValuesFrom <https://w3id.org/dt#SetOfProperties> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#isDataTemplateFor> ;
+            owl:someValuesFrom <https://w3id.org/loin#AlphanumericalInformation> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasProperty> ;
+            owl:someValuesFrom <https://w3id.org/isoprops#Property> ],
+        <https://w3id.org/dt#LibraryComponent> .
+
+<https://w3id.org/dt#ExternalDictionaryReference> a rdfs:Class ;
+    rdfs:label "External dictionary" ;
+    rdfs:comment "reference to an external dictionary, which is a centralized repository of information about data such as meaning, relationships to other data, origin, usage and format"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasExternalDictionaryProperty> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasExternalDictionary> ],
+        owl:Thing ;
+    owl:equivalentClass <https://w3id.org/isoprops#ExternalDictionaryReference> .
+
+<https://w3id.org/dt#LibraryComponent> a rdfs:Class ;
+    rdfs:label "Library component"@en ;
+    rdfs:comment "named and individually scheduled physical item and feature that might require management, such as inspection, maintenance, servicing or replacement, during the in-use phase"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasExternalDictionary> ;
+            owl:someValuesFrom <https://w3id.org/dt#ExternalDictionaryReference> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasReferenceDocument> ;
+            owl:someValuesFrom <https://w3id.org/dt#ReferenceDocument> ],
+        owl:Thing .
+
+<https://w3id.org/dt#PhysicalQuantity> a rdfs:Class ;
+    rdfs:label "Physical quantity" ;
+    rdfs:comment "the physical quantity of a library component"@en ;
+    rdfs:subClassOf <https://w3id.org/dt#LibraryComponent> ;
+    owl:equivalentClass <http://qudt.org/schema/qudt/QuantityKind> .
+
+<https://w3id.org/dt#Property> a rdfs:Class ;
+    rdfs:label "Property"@en-GB ;
+    rdfs:comment "inherent or acquired feature of an item"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasPredefinedValues> ],
+        <https://w3id.org/dt#LibraryComponent> ;
+    owl:equivalentClass <https://w3id.org/isoprops#Property> .
+
+<https://w3id.org/dt#ReferenceDocument> a rdfs:Class ;
+    rdfs:label "Reference document"@en ;
+    rdfs:comment "publication that is consulted to find specific information, particularly in a technical or scientific domain"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#publisher> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#ISBN> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#dateOfPublication> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#author> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#uri> ],
+        <https://w3id.org/dt#LibraryComponent> ;
+    owl:equivalentClass <https://w3id.org/isoprops#DictionaryReferenceDocument> .
+
+<https://w3id.org/dt#SetOfProperties> a rdfs:Class ;
+    rdfs:label "Set of properties" ;
+    rdfs:comment "a set of properties that can be applied to a data template" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasSetOfProperties> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasProperty> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasProperty> ;
+            owl:someValuesFrom <https://w3id.org/isoprops#Property> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/dt#hasSetOfProperties> ;
+            owl:someValuesFrom <https://w3id.org/dt#SetOfProperties> ],
+        <https://w3id.org/dt#LibraryComponent> .
+
+<https://w3id.org/dt#Unit> a rdfs:Class ;
+    rdfs:label "Unit"@en-GB ;
+    rdfs:comment "real scalar quantity, defined and adopted by convention, with which any other quantity of the same kind can be compared to express the ratio of the second quantity to the first one as a number" ;
+    rdfs:subClassOf <https://w3id.org/dt#LibraryComponent> ;
+    owl:equivalentClass <http://qudt.org/schema/qudt/Unit> .
+
+onto: a owl:Ontology ;
+    dcterms:created "2023-12-23"^^xsd:date ;
+    dcterms:creator [ a schema:Person ;
+            schema:email <mailto:liu.liu-m6r@rub.de> ;
+            schema:identifier <https://orcid.org/0000-0001-5907-7609> ;
+            schema:memberOf [ schema:identifier <https://www.inf.bi.ruhr-uni-bochum.de/iib/lehrstuhl/mitarbeiter/liu_liu.html.en> ;
+                    schema:name "Ruhr University Bochum" ] ;
+            schema:name "Liu Liu" ],
+        [ a schema:Person ;
+            schema:email <mailto:martina.mellenthin.filardo@uni-weimar.de> ;
+            schema:identifier <https://orcid.org/0000-0001-7759-7579> ;
+            schema:memberOf [ schema:identifier <https://www.uni-weimar.de/en/civil-engineering/chairs/construction-engineering-and-management/people/martina-mellenthin-filardo-msc/> ;
+                    schema:name "Bauhaus-Universitaet Weimar" ] ;
+            schema:name "Marthina Mellenthin-Filardo" ],
+        [ a schema:Person ;
+            schema:email <mailto:philipp.hagedorn-n6v@rub.de> ;
+            schema:identifier <https://orcid.org/0000-0002-6249-243X> ;
+            schema:memberOf [ schema:identifier <https://www.inf.bi.ruhr-uni-bochum.de/iib/lehrstuhl/mitarbeiter/philipp_hagedorn.html.en> ;
+                    schema:name "Ruhr University Bochum" ] ;
+            schema:name "Philipp Hagedorn" ],
+        [ a schema:Person ;
+            schema:email <mailto:sven.zentgraf@rub.de> ;
+            schema:identifier <https://orcid.org/0000-0001-6058-7614> ;
+            schema:memberOf [ schema:identifier <https://www.inf.bi.ruhr-uni-bochum.de/iib/lehrstuhl/mitarbeiter/sven_zentgraf.html.en> ;
+                    schema:name "Ruhr University Bochum" ] ;
+            schema:name "Sven Zentgraf" ] ;
+    dcterms:description "The Data Template (DT) Ontology is based on concepts and principles for creating templates from ISO 23387 and the associated XML data schema, which is currently under development. "@en ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:rights "Copyright 2024 by Chair of Computing in Engineering, Ruhr University Bochum and Chair of Construction Management, Bauhaus Universitaet Weimar" ;
+    dcterms:source <https://linkedbuildingdata.net/ldac2024/files/papers/LDAC2024_Camera_8.pdf> ;
+    dcterms:title "Data Template (DT) Ontology"@en ;
+    vann:preferredNamespacePrefix "dt" ;
+    vann:preferredNamespaceUri <http://w3id.org/dt#> ;
+    owl:imports <https://w3id.org/isoprops>,
+        <https://w3id.org/loin> ;
+    owl:versionInfo "1.0",
+        "Created with TopBraid Composer" .
+
+<https://w3id.org/dt#PredefinedValueItem> a owl:Class ;
+    rdfs:label "Predefined value item"@en-GB ;
+    rdfs:comment "the physical quantity of a library component"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty schema:value ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasIndex> ],
+        owl:Thing,
+        schema:PropertyValue .
+
+<https://w3id.org/dt#PredefinedValuesList> a owl:Class ;
+    rdfs:label "Predefined value list"@en-GB ;
+    rdfs:comment "list of predefined values"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/isoprops#hasUnit> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/dt#hasPredefinedValueItem> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <https://w3id.org/isoprops#hasUnit> ],
+        owl:Thing .
+
+<https://w3id.org/dt#hasExternalDictionaryReference> a owl:ObjectProperty ;
+    rdfs:label "referenced external dictionary"@en-GB ;
+    rdfs:domain <https://w3id.org/dt#LibraryComponent> ;
+    rdfs:range <https://w3id.org/dt#ExternalDictionaryReference> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#ISBN> a owl:DatatypeProperty ;
+    rdfs:label "ISBN" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#author> a owl:DatatypeProperty ;
+    rdfs:label "author"@en-GB ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#dateOfPublication> a owl:DatatypeProperty ;
+    rdfs:label "date of publication"@en-GB ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#hasExternalDictionaryProperty> a owl:ObjectProperty ;
+    rdfs:label "has external property reference"@en-GB ;
+    rdfs:domain <https://w3id.org/dt#ExternalDictionaryReference> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#hasIndex> a owl:DatatypeProperty ;
+    rdfs:label "Index of the element in the enumeration"@en-GB ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#hasPredefinedValueItem> a owl:ObjectProperty ;
+    rdfs:label "has predefinded value item"@en-GB ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#hasPredefinedValues> a owl:ObjectProperty ;
+    rdfs:label "has predefined values"@en-GB ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty <https://w3id.org/isoprops#hasPossibleValues> .
+
+<https://w3id.org/dt#hasReferenceDocument> a owl:ObjectProperty ;
+    rdfs:label "has reference document" ;
+    rdfs:domain <https://w3id.org/dt#LibraryComponent> ;
+    rdfs:range <https://w3id.org/dt#ReferenceDocument> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#isDataTemplateFor> a owl:ObjectProperty ;
+    rdfs:label "is data template for" ;
+    rdfs:domain <https://w3id.org/dt#DataTemplate> ;
+    rdfs:range <https://w3id.org/loin#SpecificationPerObjectType> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#publisher> a owl:DatatypeProperty ;
+    rdfs:label "publisher" ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#uri> a owl:DatatypeProperty ;
+    rdfs:label "uri" ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<https://w3id.org/dt#hasExternalDictionary> a owl:ObjectProperty ;
+    rdfs:label "has external dictionary"@en-GB ;
+    rdfs:domain <https://w3id.org/dt#LibraryComponent> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#hasProperty> a owl:ObjectProperty ;
+    rdfs:label "has property" ;
+    rdfs:domain <https://w3id.org/dt#DataTemplate> ;
+    rdfs:range <https://w3id.org/isoprops#Property> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<https://w3id.org/dt#hasSetOfProperties> a owl:ObjectProperty ;
+    rdfs:label "has set of properties" ;
+    rdfs:domain <https://w3id.org/dt#DataTemplate>,
+        <https://w3id.org/dt#SetOfProperties> ;
+    rdfs:range <https://w3id.org/dt#SetOfProperties> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+

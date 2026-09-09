@@ -1,0 +1,98 @@
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://purl.org/ontology/ssso> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.org/ontology/ssso#ServiceFulfillment> a owl:Class ;
+    rdfs:label "ServiceFulfillment"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/ssso#ServiceEvent> .
+
+<http://purl.org/ontology/ssso#TimeTravel> a owl:Class ;
+    rdfs:label "TimeTravel"@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/ssso#nextService> a owl:ObjectProperty ;
+    rdfs:label "nextService"@en ;
+    rdfs:domain <http://purl.org/ontology/ssso#ServiceEvent> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:inverseOf <http://purl.org/ontology/ssso#previousService> .
+
+<http://purl.org/ontology/ssso#previousService> a owl:ObjectProperty ;
+    rdfs:label "previousService"@en ;
+    rdfs:domain <http://purl.org/ontology/ssso#ServiceEvent> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:inverseOf <http://purl.org/ontology/ssso#nextService> .
+
+<http://purl.org/ontology/ssso#ExecutedService> a owl:Class ;
+    rdfs:label "ExecutedService"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:disjointWith <http://purl.org/ontology/ssso#PreparedService>,
+        <http://purl.org/ontology/ssso#ProvidedService>,
+        <http://purl.org/ontology/ssso#RejectedService>,
+        <http://purl.org/ontology/ssso#ReservedService> .
+
+<http://purl.org/ontology/ssso#PreparedService> a owl:Class ;
+    rdfs:label "ReservedService"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:disjointWith <http://purl.org/ontology/ssso#ExecutedService>,
+        <http://purl.org/ontology/ssso#ProvidedService>,
+        <http://purl.org/ontology/ssso#RejectedService>,
+        <http://purl.org/ontology/ssso#ReservedService> .
+
+<http://purl.org/ontology/ssso#RejectedService> a owl:Class ;
+    rdfs:label "RejectedService"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:disjointWith <http://purl.org/ontology/ssso#ExecutedService>,
+        <http://purl.org/ontology/ssso#PreparedService>,
+        <http://purl.org/ontology/ssso#ProvidedService>,
+        <http://purl.org/ontology/ssso#ReservedService> .
+
+<http://purl.org/ontology/ssso#ReservedService> a owl:Class ;
+    rdfs:label "ReservedService"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/ontology/ssso#ServiceEvent> ;
+    owl:disjointWith <http://purl.org/ontology/ssso#ExecutedService>,
+        <http://purl.org/ontology/ssso#PreparedService>,
+        <http://purl.org/ontology/ssso#ProvidedService>,
+        <http://purl.org/ontology/ssso#RejectedService>,
+        <http://purl.org/ontology/ssso#ReservedService> .
+
+onto: a owl:Ontology ;
+    rdfs:label "SSSO" ;
+    ns1:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:creator "Jakob Voß" ;
+    dcterms:description "An event-based RDF ontology for typical status in fulfillment of a service."@en ;
+    dcterms:modified "2013-11-19"^^xsd:date ;
+    dcterms:title "Simple Service Status Ontology"@en ;
+    vann:preferredNamespacePrefix "ssso" ;
+    vann:preferredNamespaceUri "http://purl.org/ontology/ssso#" ;
+    owl:versionInfo "0.3.0" .
+
+<http://purl.org/ontology/ssso#ServiceEvent> a owl:Class ;
+    rdfs:label "ServiceEvent"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://linkedevents.org/ontology/Event>,
+        <http://purl.org/NET/cidoc-crm/core#E7_Activity>,
+        dcmitype:Event,
+        <http://purl.org/goodrelations/v1#Individual>,
+        <http://purl.org/ontology/c4dm/event.owl#Event>,
+        <http://purl.org/ontology/service#Service>,
+        <http://purl.org/tio/ns#Event>,
+        <http://schema.org/Event>,
+        <http://schema.org/IndividualProduct>,
+        <http://www.europeana.eu/schemas/edm/Event>,
+        <http://www.loa-cnr.it/ontologies/DUL.owl#Event>,
+        <http://www.semanticdesktop.org/ontologies/2007/04/02/ncal#Event>,
+        prov:Activity .
+

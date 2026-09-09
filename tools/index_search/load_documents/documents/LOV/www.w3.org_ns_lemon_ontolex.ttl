@@ -1,0 +1,360 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://www.w3.org/ns/lemon/ontolex> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+owl:topDataProperty a owl:DatatypeProperty .
+
+owl:topObjectProperty a owl:ObjectProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+<http://www.w3.org/ns/lemon/ontolex#Affix> a owl:Class ;
+    rdfs:label "affix"@en,
+        "affixe"@fr ;
+    rdfs:comment "An affix is a lexical entry that represents a morpheme (suffix, prefix, infix, circumfix) that is attached to a word stem to form a new word."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#ConceptSet> a owl:Class ;
+    rdfs:label "concept set"@en,
+        "banque de conepts"@fr ;
+    rdfs:comment "A concept set represents a collection of lexical concepts."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:ConceptScheme ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+            owl:onProperty skos:inScheme ] ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#MultiWordExpression> a owl:Class ;
+    rdfs:label "multi-word expression"@en,
+        "expression à mots multiples"@fr ;
+    rdfs:comment "A multiword expression is a lexical entry that consists of two or more words."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#Word> a owl:Class ;
+    rdfs:label "word"@en,
+        "mot"@fr ;
+    rdfs:comment "A word is a lexical entry that consists of a single token."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#concept> a owl:ObjectProperty ;
+    rdfs:label "concept"@en,
+        "concept"@fr ;
+    rdfs:comment "The 'concept' property relates an ontological entity to a lexical concept that represents the corresponding meaning."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#isConceptOf> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#isDenotedBy> a owl:ObjectProperty ;
+    rdfs:label "is denoted by"@en,
+        "est dénoté par"@fr ;
+    rdfs:comment "The object property isDenotedBy is the inverse of the object property denotes."@en ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#denotes> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#isEvokedBy> a owl:ObjectProperty ;
+    rdfs:label "is evoked by"@en,
+        "est évoqué par"@fr ;
+    rdfs:comment "The inverse relation to evokes."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#evokes> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#isReferenceOf> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is reference of"@en,
+        "est référence de"@fr ;
+    rdfs:comment "The object property isReferenceOf is the inverse property of reference."@en ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://www.w3.org/ns/lemon/ontolex#LexicalSense> <http://www.w3.org/ns/lemon/synsem#OntoMap> ) ] ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#reference> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#morphologicalPattern> a owl:ObjectProperty ;
+    rdfs:label "morphological pattern"@en,
+        "patron morphologique"@fr ;
+    rdfs:comment "The 'morphological pattern' property indicates the morphological class of a word."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#otherForm> a owl:ObjectProperty ;
+    rdfs:label "other form"@en,
+        "autre forme"@fr ;
+    rdfs:comment "The  'other form' property relates a lexical entry to a non-preferred (\"non-lemma\") form that realizes the given lexical entry."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/ontolex#lexicalForm> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#phoneticRep> a owl:DatatypeProperty ;
+    rdfs:label "phonetic representation"@en,
+        "représentation phonétique"@fr ;
+    rdfs:comment "The 'phonetic representation' property indicates one phonetic representation of the pronunciation of the form using a scheme such as the International Phonetic Alphabet (IPA). "@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/ontolex#representation> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#usage> a owl:ObjectProperty ;
+    rdfs:label "usage"@en,
+        "usage"@fr ;
+    rdfs:comment "The 'usage' property indicates usage conditions or pragmatic implications when using the lexical entry to refer to the given ontological meaning."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource ;
+    ns1:term_status "stable" .
+
+foaf:Organization a owl:Class .
+
+foaf:Person a owl:Class .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+<http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#Expression> a owl:Class ;
+    rdfs:label "expression"@en .
+
+<http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes> a owl:ObjectProperty .
+
+skos:Concept a owl:Class ;
+    rdfs:label "concept"@en .
+
+skos:ConceptScheme a owl:Class ;
+    rdfs:label "concept scheme"@en .
+
+skos:inScheme a owl:ObjectProperty ;
+    rdfs:label "in scheme"@en .
+
+<http://www.w3.org/ns/lemon/ontolex#canonicalForm> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "canonical form"@en,
+        "forme canonique"@fr ;
+    rdfs:comment "The 'canonical form' property relates a lexical entry to its canoncical or dictionary form. This usually indicates the \"lemma\" form of a lexical entry. "@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/ontolex#lexicalForm> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#denotes> a owl:ObjectProperty ;
+    rdfs:label "denotes"@en,
+        "dénote"@fr ;
+    rdfs:comment "The 'denotes' property relates a lexical entry to a predicate in a given ontology that represents its meaning and has some denotational or model-theoretic semantics. "@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes> ;
+    owl:propertyChainAxiom ( <http://www.w3.org/ns/lemon/ontolex#sense> <http://www.w3.org/ns/lemon/ontolex#reference> ) ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#evokes> a owl:ObjectProperty ;
+    rdfs:label "evokes"@en,
+        "évoque"@fr ;
+    rdfs:comment "The 'evokes' property relates a lexical entry to one of the lexical concepts it evokes, i.e. the mental concept that speakers of a language might associate when hearing the lexical entry."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    owl:propertyChainAxiom ( <http://www.w3.org/ns/lemon/ontolex#sense> <http://www.w3.org/ns/lemon/ontolex#isLexicalizedSenseOf> ) ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#isConceptOf> a owl:ObjectProperty ;
+    rdfs:label "is concept of"@en,
+        "est un concept pour "@fr ;
+    rdfs:comment "This property formalizes the meaning of a Lexical Concept by linking it to a particular ontological meaning."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#isLexicalizedSenseOf> a owl:ObjectProperty ;
+    rdfs:label "is lexicalized sense of"@en,
+        "est le sens lexicalisé de"@fr ;
+    rdfs:comment "The object property isLexicalizedSenseOf is the inverse property of lexicalized sense."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#lexicalizedSense> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#lexicalizedSense> a owl:ObjectProperty ;
+    rdfs:label "lexicalized sense"@en,
+        "signification lexicalisé"@fr ;
+    rdfs:comment "The 'lexicalized sense' property relates a lexical concept to a corresponding lexical sense that lexicalizes the concept."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalConcept> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#writtenRep> a owl:DatatypeProperty ;
+    rdfs:label "written representation"@en,
+        "représentation écrite"@fr ;
+    rdfs:comment "The 'written representation' property indicates the written representation of a form."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:langString ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/ontolex#representation> ;
+    ns1:term_status "stable" .
+
+<http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#Meaning> a owl:Class ;
+    rdfs:label "meaning"@en .
+
+<http://www.w3.org/ns/lemon/ontolex#isSenseOf> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is sense of"@en,
+        "est signification de"@fr ;
+    rdfs:comment "The property isSenseOf is the inverse property of sense."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#representation> a owl:DatatypeProperty ;
+    rdfs:label "representation"@en,
+        "représentation"@fr ;
+    rdfs:comment "The 'representation' property indicates a string by which the form is represented according to some orthography. "@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:langString ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#sense> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "sense"@en,
+        "signification"@fr ;
+    rdfs:comment "The 'sense' property relates a lexical entry to one of its lexical senses. "@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    owl:inverseOf <http://www.w3.org/ns/lemon/ontolex#isSenseOf> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#OntoMap> a owl:Class .
+
+<http://www.w3.org/ns/lemon/ontolex#lexicalForm> a owl:ObjectProperty ;
+    rdfs:label "lexical form"@en,
+        "forme lexicale"@fr ;
+    rdfs:comment "The 'lexical form' property relates a lexical entry to one grammatical form variant of the lexical entry."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#Form> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#reference> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "reference"@en,
+        "référence"@fr ;
+    rdfs:comment "The 'reference' property relates a lexical sense to an ontological predicate that represents the denotation of the corresponding lexical entry. "@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.w3.org/ns/lemon/ontolex#LexicalSense> <http://www.w3.org/ns/lemon/synsem#OntoMap> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource ;
+    ns1:term_status "stable" .
+
+rdf:langString a rdfs:Datatype .
+
+<http://www.w3.org/ns/lemon/ontolex#LexicalConcept> a owl:Class ;
+    rdfs:label "lexical concept"@en,
+        "concept lexical"@fr ;
+    rdfs:comment "A lexical concept represents a mental abstraction, concept or unit of thought that embodies the meaning of one or more lexical entries."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#Meaning>,
+        skos:Concept ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#LexicalSense> a owl:Class ;
+    rdfs:label "lexical sense"@en,
+        "signification lexicale"@fr ;
+    rdfs:comment "A lexical sense represents the lexical meaning of a lexical entry when interpreted as referring to the corresponding ontology element. A lexical sense thus represents a reification of a pair of a uniquely determined lexical entry and a uniquely determined ontology entity it refers to. A link between a lexical entry and an ontology entity via a Lexical Sense object implies that the lexical entry can be used to refer to the ontology entity in question."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+            owl:onProperty <http://www.w3.org/ns/lemon/ontolex#isSenseOf> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/ns/lemon/ontolex#reference> ],
+        <http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#Meaning> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#Form> a owl:Class ;
+    rdfs:label "form"@en,
+        "forme"@fr ;
+    rdfs:comment "A form represents one grammatical realization of a lexical entry."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange rdf:langString ;
+            owl:onProperty <http://www.w3.org/ns/lemon/ontolex#writtenRep> ],
+        owl:Thing ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/ontolex#LexicalEntry> a owl:Class ;
+    rdfs:label "lexical entry"@en,
+        "entrée lexicale"@fr ;
+    rdfs:comment "A lexical entry represents a unit of analysis of the lexicon that consists of a set of forms that are grammatically related and a set of base meanings that are associated with all of these forms. Thus, a lexical entry is a word, multiword expression or affix with a single part-of-speech, morphological pattern, etymology and set of senses."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.w3.org/ns/lemon/ontolex#Form> ;
+            owl:onProperty <http://www.w3.org/ns/lemon/ontolex#lexicalForm> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.w3.org/ns/lemon/ontolex#Form> ;
+            owl:onProperty <http://www.w3.org/ns/lemon/ontolex#canonicalForm> ],
+        <http://www.ontologydesignpatterns.org/cp/owl/semiotics.owl#Expression>,
+        owl:Thing ;
+    ns1:term_status "stable" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns2:licence <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    ns2:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    dc:contributor <http://art.uniroma2.it/fiorelli/>,
+        <http://art.uniroma2.it/stellato/>,
+        <http://jogracia.url.ph/web/>,
+        <http://mayor2.dia.fi.upm.es/oeg-upm/index.php/en/teachers/52-emontiel>,
+        <http://www.dfki.de/~declerck/>,
+        <http://www.ilc.cnr.it/en/content/anas-fahad-khan>,
+        <http://www.istc.cnr.it/people/aldo-gangemi>,
+        <http://www.oeg-upm.net/index.php/teachers/53-lupe>,
+        <http://www.paulbuitelaar.net/>,
+        <https://sites.google.com/site/francescafrontini/> ;
+    dc:creator <http://john.mccr.ae/>,
+        <http://www.cimiano.de/> ;
+    dc:description "A model for the representation of lexical information relative to ontologies. Core module."@en ;
+    dc:issued "2016-01-10"^^xsd:date ;
+    dc:modified "2016-01-10"^^xsd:date ;
+    dc:publisher <http://www.w3.org/community/ontolex> ;
+    dc:rights "CC-Zero" ;
+    dc:title "Lexicon Model for Ontologies - Core"@en ;
+    vann:preferredNamespacePrefix "ontolex" ;
+    vann:preferredNamespaceUri "http://www.w3.org/ns/lemon/ontolex#" ;
+    rdfs:comment "-Version 1.0: depreciation with minor change in metadata for LOV publication\\n-Version 1.1: creation"@en ;
+    owl:versionInfo 1.1 .
+

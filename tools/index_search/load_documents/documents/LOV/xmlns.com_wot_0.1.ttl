@@ -1,0 +1,183 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://xmlns.com/wot/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:assurance a owl:ObjectProperty ;
+    rdfs:label "Assurance" ;
+    rdfs:comment "A property linking a document to an endorsement resource containing a detached ascii signature." ;
+    rdfs:domain foaf:Document ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Endorsement ;
+    ns1:term_status "stable" .
+
+onto:encryptedTo a owl:ObjectProperty ;
+    rdfs:label "Encrypted to" ;
+    rdfs:comment "A property linking an encrypted document to a recipient." ;
+    rdfs:domain onto:EncryptedDocument ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PubKey ;
+    ns1:term_status "unstable" .
+
+onto:encrypter a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Encrypted by" ;
+    rdfs:comment "A property linking an encrypted document to the public key that was used to encrypt it." ;
+    rdfs:domain onto:EncryptedDocument ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PubKey ;
+    ns1:term_status "unstable" .
+
+onto:fingerprint a owl:DatatypeProperty,
+        owl:InverseFunctionalProperty ;
+    rdfs:label "Fingerprint" ;
+    rdfs:comment "A public key hex fingerprint string (40 digits, white space insignificant)." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "testing" .
+
+onto:hasKey a owl:ObjectProperty ;
+    rdfs:label "has Key" ;
+    rdfs:comment "A property to link a PubKey from a User" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PubKey ;
+    owl:inverseOf onto:identity ;
+    ns1:term_status "testing" .
+
+onto:hex_id a owl:DatatypeProperty ;
+    rdfs:label "Hex identifier" ;
+    rdfs:comment "A public key hex identifier string (8 digits)." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:length a owl:DatatypeProperty ;
+    rdfs:label "Length" ;
+    rdfs:comment "A numeric string representing the length, in bytes, of a public key." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer ;
+    ns1:term_status "stable" .
+
+onto:pubkeyAddress a owl:ObjectProperty ;
+    rdfs:label "Address" ;
+    rdfs:comment "The location of an ascii version of a public key." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Document ;
+    ns1:term_status "testing" .
+
+onto:sigdate a owl:DatatypeProperty ;
+    rdfs:label "Signature date" ;
+    rdfs:comment "The date of a public key signature event." ;
+    rdfs:domain onto:SigEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "testing" .
+
+onto:signed a owl:ObjectProperty ;
+    rdfs:label "Signed" ;
+    rdfs:comment "A property linking a public key to a public key signature event." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:SigEvent ;
+    ns1:term_status "testing" .
+
+onto:signer a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Signer" ;
+    rdfs:comment "A property linking a public key signature event to the public key that was used to sign." ;
+    rdfs:domain onto:SigEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PubKey ;
+    ns1:term_status "unstable" .
+
+onto:sigtime a owl:DatatypeProperty ;
+    rdfs:label "Signature time" ;
+    rdfs:comment "The time (of day) of a public key signature event." ;
+    rdfs:domain onto:SigEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:time ;
+    ns1:term_status "unstable" .
+
+onto:identity a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Identity" ;
+    rdfs:comment "A property linking a public key to the user of the key." ;
+    rdfs:domain onto:PubKey ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User ;
+    ns1:term_status "testing" .
+
+onto:Endorsement a owl:Class ;
+    rdfs:label "Endorsement" ;
+    rdfs:comment "An endorsement resource containing a detached ascii signature." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf foaf:Document,
+        <http://xmlns.com/wordnet/1.6/Endorsement-4> ;
+    owl:disjointWith onto:EncryptedDocument,
+        onto:PubKey,
+        onto:SigEvent,
+        onto:User ;
+    ns1:term_status "unstable" .
+
+onto:EncryptedDocument a owl:Class ;
+    rdfs:label "Encrypted Document" ;
+    rdfs:comment "An encrypted document intended for a set of recipients." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf foaf:Document,
+        <http://xmlns.com/wordnet/1.6/Endorsement-4> ;
+    owl:disjointWith onto:Endorsement,
+        onto:PubKey,
+        onto:SigEvent,
+        onto:User ;
+    ns1:term_status "unstable" .
+
+onto:User a owl:Class ;
+    rdfs:label "Key User" ;
+    rdfs:comment "A user (agent, person, group or organization) of a PGP/GPG public key." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf foaf:Agent ;
+    owl:disjointWith onto:EncryptedDocument,
+        onto:Endorsement,
+        onto:PubKey,
+        onto:SigEvent ;
+    ns1:term_status "stable" .
+
+onto:SigEvent a owl:Class ;
+    rdfs:label "Key Signing Event" ;
+    rdfs:comment "An event describing the action of a public key being signed by some other public key." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/2002/12/cal/ical#Vevent>,
+        <http://xmlns.com/wordnet/1.6/Event> ;
+    owl:disjointWith onto:EncryptedDocument,
+        onto:Endorsement,
+        onto:PubKey,
+        onto:User ;
+    ns1:term_status "testing" .
+
+onto:PubKey a owl:Class ;
+    rdfs:label "Public Key" ;
+    rdfs:comment "A class used to represent a PGP/GPG public key for a user (an agent, person, group or organization)." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://xmlns.com/wordnet/1.6/Credential> ;
+    owl:disjointWith onto:EncryptedDocument,
+        onto:Endorsement,
+        onto:SigEvent,
+        onto:User ;
+    ns1:term_status "stable" .
+
+onto: a owl:Ontology ;
+    dc:date "2004-02-23" ;
+    dc:description "Web Of Trust (wot) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language." ;
+    dc:title "Web Of Trust vocabulary" ;
+    rdfs:seeAlso foaf: ;
+    owl:imports <http://www.w3.org/2000/01/rdf-schema>,
+        <http://www.w3.org/2002/07/owl> .
+

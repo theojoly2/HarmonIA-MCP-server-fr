@@ -1,0 +1,113 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/net/po#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:title a owl:DatatypeProperty ;
+    rdfs:domain onto:Song ;
+    rdfs:range rdfs:Literal .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    dcterms:description "An ontology for describing playlists, playlist entries and songs." ;
+    dcterms:title "Playlist Ontology" ;
+    vann:preferredNamespacePrefix "po" ;
+    vann:preferredNamespaceUri "http://purl.org/net/po#" .
+
+onto:artistInfo a owl:ObjectProperty ;
+    rdfs:domain onto:Song ;
+    rdfs:range <http://purl.org/ontology/mo/MusicArtist> .
+
+onto:featuredInPlaylistEntry a owl:ObjectProperty ;
+    rdfs:domain onto:Song ;
+    rdfs:range onto:PlaylistEntry ;
+    owl:inverseOf onto:playlistEntrySong .
+
+onto:hasPlaylistEntry a owl:ObjectProperty ;
+    rdfs:domain onto:Playlist ;
+    rdfs:range onto:PlaylistEntry ;
+    owl:inverseOf onto:partOfPlaylist .
+
+onto:photoURL a owl:DatatypeProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range rdfs:Literal .
+
+onto:playlistName a owl:DatatypeProperty ;
+    rdfs:domain onto:Playlist ;
+    rdfs:range rdfs:Literal .
+
+onto:position a owl:DatatypeProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:songInfo a owl:ObjectProperty ;
+    rdfs:domain onto:Song ;
+    rdfs:range <http://purl.org/ontology/mo/Track> .
+
+onto:stationName a owl:DatatypeProperty ;
+    rdfs:domain onto:Playlist ;
+    rdfs:range rdfs:Literal .
+
+onto:week a owl:DatatypeProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:year a owl:DatatypeProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range xsd:nonNegativeInteger .
+
+foaf:name a owl:DatatypeProperty ;
+    rdfs:domain onto:Song ;
+    rdfs:range rdfs:Literal .
+
+<http://purl.org/ontology/mo/MusicArtist> a owl:Class .
+
+<http://purl.org/ontology/mo/Track> a owl:Class .
+
+onto:partOfPlaylist a owl:ObjectProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range onto:Playlist .
+
+onto:playlistEntrySong a owl:ObjectProperty ;
+    rdfs:domain onto:PlaylistEntry ;
+    rdfs:range onto:Song .
+
+onto:Playlist a owl:Class ;
+    rdfs:label "Playlist"@en ;
+    rdfs:comment "A class for representing a playlist. One Playlist instance is connected to one or more PlaylistEntry instances. It contains the name of the playlist and the name of the radio station."@en .
+
+onto:PlaylistEntry a owl:Class ;
+    rdfs:label "Playlist Entry"@en ;
+    rdfs:comment "A class for representing an entry from a playlist. One PlaylistEntry instance is connected to one Song instance and one Playlist instance. It contains information about the 'position' of the Song in the Playlist, for the specific 'week' of the 'year'. It also contains an URL of a 'photo' for the playlist entry."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:Playlist ;
+            owl:onProperty onto:partOfPlaylist ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Song ;
+            owl:onProperty onto:playlistEntrySong ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Playlist ;
+            owl:onProperty onto:partOfPlaylist ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Song ;
+            owl:onProperty onto:playlistEntrySong ;
+            owl:qualifiedCardinality 1 ] .
+
+onto:Song a owl:Class ;
+    rdfs:label "Song"@en ;
+    rdfs:comment "A class for representing a song. One Song instance is connected to one or more PlaylistEntry instances. It contains the name of the song and the name of the artist. It can also contain external links to mo:Track and/or mo:MusicArtist instances, for creating Linked Data."@en .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Playlist onto:PlaylistEntry onto:Song ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Playlist onto:PlaylistEntry onto:Song ) .
+

@@ -1,0 +1,2885 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/11/swrl#> .
+@prefix ns2: <https://w3id.org/OntoGSN/ontology#> .
+@prefix ns3: <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#> .
+@prefix ns4: <http://schema.org/> .
+@prefix ns5: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/OntoGSN/ontology> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns5:license a owl:AnnotationProperty .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:created a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:identifier a owl:AnnotationProperty .
+
+dc:issued a owl:AnnotationProperty .
+
+dc:modified a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:source a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:abstract a owl:AnnotationProperty .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+ns4:citation a owl:AnnotationProperty .
+
+ns4:disclaimer a owl:AnnotationProperty .
+
+ns4:license a owl:AnnotationProperty .
+
+ns4:url a owl:AnnotationProperty .
+
+ns4:version a owl:AnnotationProperty .
+
+ns3:isRuleEnabled a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+skos:altLabel a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:note a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    ns5:license "https://creativecommons.org/licenses/by/4.0/" ;
+    dc:contributor "Barbara Gallina, Dian Balta, Ingmar Kessler"@en ;
+    dc:creator "Standard: The Assurance Case Working Group (ACWG)"@en,
+        "Tomas Bueno Momčilović"@en ;
+    dc:description "OntoGSN is an ontology for managing assurance cases in the Goal Structuring Notation (GSN). The goal of the ontology is to help users in linking the elements of their cases - claims and evidence - with the internationalized resource identifiers (IRIs) of represented concepts, events and data, and in evaluating the validity of their argument."@en ;
+    dc:identifier "SCSC-141C" ;
+    dc:issued "2025-02-24"^^xsd:date ;
+    dc:modified "2025-06-19T00:00:00Z" ;
+    dc:publisher "https://www.fortiss.org/"@en ;
+    dc:source "The Assurance Case Working Group (ACWG). (2021 May). Goal Structuring Notation Community Standard Version 3. URL: http://scsc.uk/SCSC-141C"@en ;
+    dc:title "OntoGSN"@en ;
+    dcterms:bibliographicCitation "Bueno Momcilovic, T., Kessler, I., Gallina, B., & Balta, D. (2025). OntoGSN: An Ontology for Dynamic Management of Assurance Cases." ;
+    dcterms:created "20th February 2025"@en ;
+    vann:preferredNamespacePrefix "gsn" ;
+    ns4:disclaimer "[Disclaimer from the GSN Community Standard v3.0]: While the authors and the publishers have used reasonable endeavours to ensure that the information and guidance given in this work is correct, all parties must rely on their own skill and judgement when making use of this work and obtain professional or specialist advice before taking, or refraining from, any action on the basis of the content of this work. Neither the authors nor the publishers make any representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to such information and guidance for any purpose, and they will not be liable for any loss or damage including without limitation, indirect or consequential loss or damage, or any loss or damage whatsoever (including as a result of negligence) arising out of, or in connection with, the use of this work. The views and opinions expressed in this publication are those of the authors and do not necessarily reflect those of their employers, the SCSC1 or other organisations."@en ;
+    ns4:url "https://w3id.org/OntoGSN/"^^xsd:anyURI ;
+    ns4:version 3.0 ;
+    owl:versionInfo 1.2 ;
+    skos:definition "GSN is a graphical argument notation which can be used to document explicitly the elements and structure of an argument and the argument’s relationship to evidence."@en .
+
+ns2:Catalogue a owl:Class ;
+    rdfs:label "Catalogue"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns2:Pattern ;
+            owl:onProperty ns2:contains ] ;
+    skos:definition "A pattern catalogue may be created to collate a series of patterns; where such a catalogue is created the structure and format of the definition should be consistent and each pattern’s definition should have a unique {pattern identifier}."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:applicability a owl:AnnotationProperty ;
+    rdfs:label "applicability"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The applicability section should state under what circumstances the pattern can be applied, making clear the assumptions and principles underlying the pattern to avoid inappropriate application in a mismatched context. This section should record what contextual information is required in order to apply the pattern."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:attachedTo a owl:ObjectProperty ;
+    rdfs:label "attached to"@en ;
+    rdfs:domain ns2:InstantiationDataReference ;
+    rdfs:range ns2:Template ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "dotted line" .
+
+ns2:choice a owl:DatatypeProperty ;
+    rdfs:label "choice"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range xsd:boolean ;
+    skos:definition "A GSN choice can be used to denote possible alternatives in satisfying a relationship."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "solid diamond" .
+
+ns2:collaboration a owl:AnnotationProperty ;
+    rdfs:label "collaboration"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The collaboration section should describe how elements of the pattern work together to achieve the desired effect, particularly where there are links that are not readily apparent from the argument structure."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:consequences a owl:AnnotationProperty ;
+    rdfs:label "consequences"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The consequences section should make clear what work remains after the pattern has been applied. This should highlight where further support to the argument is required, and assumptions that need to be discharged."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:coreOrExtension a owl:AnnotationProperty ;
+    rdfs:label "core or extension"@en ;
+    skos:definition "Indicator of the sourcing section in the GSN Community Standard v3."@en .
+
+ns2:examples a owl:AnnotationProperty ;
+    rdfs:label "examples"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "It may be useful to provide example illustrations of the application of the pattern, particularly for more abstract patterns. Illustrations should include a typical case and can be supplemented with atypical cases where more than one example is provided."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:implementation a owl:AnnotationProperty ;
+    rdfs:label "implementation"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The implementation section should communicate how the application of the pattern is carried out e.g. the order in which elements should be developed; communicate hints or techniques that may ease successful application; highlight common or recognised pitfalls with the application of the pattern; and record potential misinterpretation of the terms or concepts in the pattern."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:intent a owl:AnnotationProperty ;
+    rdfs:label "intent"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The intent statement should state clearly what the pattern aims to achieve."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:knownUses a owl:AnnotationProperty ;
+    rdfs:label "known uses"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "It may be useful to provide references to known applications of the pattern. These can serve as additional examples."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:maxCardinality a owl:DatatypeProperty ;
+    rdfs:label "maximum cardinality"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "text" .
+
+ns2:minCardinality a owl:DatatypeProperty ;
+    rdfs:label "minimum cardinality"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "text" .
+
+ns2:motivation a owl:AnnotationProperty ;
+    rdfs:label "motivation"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The motivation statement can be used to state why the pattern was created. It could be expressed in terms of previous experiences e.g. as the abstraction of a successfully presented argument, or challenges addressed e.g. argument topics that are often incompletely or poorly addressed."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:multiple a owl:DatatypeProperty ;
+    rdfs:label "multiple"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "solid ball" .
+
+ns2:offDiagram a owl:DatatypeProperty ;
+    rdfs:label "off-diagram"@en ;
+    rdfs:domain ns2:GSNElement ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:optional a owl:DatatypeProperty ;
+    rdfs:label "optional"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Optional instantiation means that the relationship and the argument below may or may not be instantiated."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "hollow ball"@en .
+
+ns2:participants a owl:AnnotationProperty ;
+    rdfs:label "participants"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The participants section augments the structure by providing a description of each element. This can provide more complete descriptions, clarify the role of the element in the overall argument and emphasise the aspects that require development or instantiation."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to"@en ;
+    rdfs:domain ns2:ArtefactReference ;
+    rdfs:range ns2:Artefact ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:relatedTo a owl:ObjectProperty ;
+    rdfs:label "related to"@en ;
+    rdfs:domain ns2:Pattern ;
+    rdfs:range ns2:Pattern ;
+    skos:definition "This section can be used to reference patterns that are related e.g. addressing the same intent in a different context."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:renderedAs a owl:AnnotationProperty ;
+    rdfs:label "rendered as"@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:structure a owl:AnnotationProperty ;
+    rdfs:label "structure"@en ;
+    rdfs:domain ns2:Pattern ;
+    skos:definition "The structure uses the structural and element abstraction notations to present the pattern, clearly indicating where the argument needs to be further developed or populated with details to instantiate the pattern for a specific case."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:structured a owl:DatatypeProperty ;
+    rdfs:label "structured"@en ;
+    rdfs:domain ns2:Argument ;
+    rdfs:range xsd:boolean ;
+    skos:definition "A particular kind of argument where the relationships between the asserted claims, and from the evidence to the claims, are explicitly represented."@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:uninstantiated a owl:DatatypeProperty ;
+    rdfs:label "uninstantiated"@en ;
+    rdfs:domain ns2:GSNElement ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "hollow triangle" .
+
+ns2:viewType a owl:DatatypeProperty ;
+    rdfs:label "view type"@en ;
+    rdfs:domain ns2:View ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "architecture" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "argument" ;
+                            rdf:rest () ] ] ] ;
+    ns2:coreOrExtension "Modular Extension"@en .
+
+ns4:description a owl:AnnotationProperty,
+        owl:DatatypeProperty .
+
+rdf:Statement a owl:Class .
+
+ns2:InstantiationDataReference a owl:Class ;
+    rdfs:label "Instantiation Data Reference"@en ;
+    skos:definition "This symbol indicates that the GSN argument below the attached element is to be instantiated as a template argument. It provides a reference to the information used to instantiate the template argument." ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "hollow triangle" .
+
+ns2:View a owl:Class ;
+    rdfs:label "View"@en ;
+    skos:definition "The argument view depicts the argument inside an individual module."@en ;
+    ns2:coreOrExtension "Modular Extension"@en .
+
+ns2:X a ns1:Variable .
+
+ns2:argumentType a owl:DatatypeProperty ;
+    rdfs:label "argument type"@en ;
+    rdfs:domain ns2:Argument ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "confidence" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "dialectic" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "risk" ;
+                                    rdf:rest () ] ] ] ] ;
+    ns2:coreOrExtension "Confidence Argument Extension"@en .
+
+ns2:consistentWith a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "consistent with"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Assumption ns2:Context ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Assumption ns2:Context ) ] ;
+    skos:definition "By making the relationship to the away goal the author is asserting not only the inference of support for the parent goal, but also that the context in which the away goal is declared is consistent with the context and assumptions in scope for the parent goal." ;
+    ns2:coreOrExtension "Modular Extension"@en .
+
+ns2:final a owl:DatatypeProperty ;
+    rdfs:label "final"@en ;
+    rdfs:domain ns2:Argument ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:instantiationOf a owl:ObjectProperty ;
+    rdfs:label "instantiation of"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Argument ns2:GSNElement ) ] ;
+    rdfs:range ns2:Pattern ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:substitutedBy a owl:ObjectProperty ;
+    rdfs:label "substituted by"@en ;
+    rdfs:domain ns2:Justification ;
+    rdfs:range [ a owl:Class ;
+            owl:intersectionOf ( ns2:Goal [ a owl:Restriction ;
+                        owl:hasValue true ;
+                        owl:onProperty ns2:away ] ) ] ;
+    skos:definition "There may be occasions when a goal or strategy requires fuller justification than can be provided within the confines of a GSN justification element. In such cases, an away goal can be substituted for the justification."@en ;
+    ns2:coreOrExtension "Modular Extension"@en .
+
+ns2:AssuranceCase a owl:Class ;
+    rdfs:label "Assurance Case"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:contains ;
+            owl:someValuesFrom ns2:Artefact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Argument ns2:Artefact ) ] ;
+            owl:onProperty ns2:contains ],
+        [ a owl:Restriction ;
+            owl:onProperty ns2:contains ;
+            owl:someValuesFrom ns2:Argument ] ;
+    skos:definition "A reasoned and compelling argument, supported by a body of evidence, that a system, service or organisation will operate as intended for a defined application in a defined environment."@en,
+        "Arguments and evidence intended to demonstrate that a system meets its assurance requirements."@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:C1 a ns1:Variable .
+
+ns2:Defeater a owl:Class ;
+    rdfs:label "Defeater"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Solution ) ] ;
+    skos:altLabel "Dialectic Element"@en ;
+    skos:definition "The source of challenge being applied; can be directed at any part of an argument. A defeater (goal or solution) can challenge any element in a goal structure, e.g. goal, solution, strategy, context, assumption, justification." ;
+    skos:note "Membership of this class is only meant to be inferred, not asserted! Please do not add individuals to this class manually (i.e., assertions)."@en,
+        "The goal and solution statements should be clearly expressed such that the crux of the challenge is unequivocally communicated. Thus, the link between the part of the argument that is being challenged (target) and the dialectic element (source) is self-evident."@en ;
+    ns2:coreOrExtension "Dialectic Extension"@en .
+
+ns2:ID a ns1:Variable .
+
+ns2:inDoubt a owl:DatatypeProperty ;
+    rdfs:label "in doubt"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:AssuranceCase ns2:GSNElement ns2:Relationship ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "The dialectic challenge within this structure asserts that if the claim presented in Goal CG1 is true then this is sufficient to establish that the claim in Goal G1 in the original structure is in doubt."@en ;
+    ns2:coreOrExtension "Dialectic Extension"@en .
+
+ns2:published a owl:DatatypeProperty ;
+    rdfs:label "published"@en ;
+    rdfs:domain ns2:Argument ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:top a owl:DatatypeProperty ;
+    rdfs:label "top (goal)"@en ;
+    rdfs:domain ns2:Goal ;
+    rdfs:range xsd:boolean ;
+    skos:definition "A GSN Goal that presents the pinnacle claim in an argument. It is ‘top’ in terms of the argument hierarchy, rather than necessarily its physical layout. There may be more than one top goal in a GSN structure."@en,
+        "The top goal presents the overall claim asserted by the author and it is up to the reader to determine their belief that it is adequately supported."@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+<urn:swrl:var#B> a ns1:Variable .
+
+rdf:predicate a owl:ObjectProperty .
+
+ns2:C2 a ns1:Variable .
+
+ns2:D a ns1:Variable .
+
+ns2:P a ns1:Variable .
+
+ns2:Template a owl:Class ;
+    rdfs:label "Template"@en ;
+    rdfs:subClassOf ns2:Pattern ;
+    skos:definition "A template argument is a special case of a pattern argument. It uses the core GSN and argument pattern extension to construct an argument structure which requires no further development."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:defeated a owl:DatatypeProperty ;
+    rdfs:label "defeated"@en ;
+    ns4:description "Defeated Relationship indicates that the relationship is defeated. The Defeated decorator can be applied to any of the GSN relationships."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:GSNElement ns2:Relationship ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "This decorator symbol indicates that the element is defeated. The Defeated decorator can be applied to any of the GSN elements."@en ;
+    ns2:coreOrExtension "Dialectic Extension"@en ;
+    ns2:renderedAs "cross (‘X’) superimposed on a GSN element or relationship" .
+
+ns2:public a owl:DatatypeProperty ;
+    rdfs:label "public"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Assumption ns2:Context ns2:Goal ns2:Justification ns2:Solution ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "This indicates that the element is publicly visible in one or more interfaces of the module and can be referenced as an away element."@en ;
+    ns2:coreOrExtension "Modular Extension"@en ;
+    ns2:renderedAs "miniature module symbol superimposed on an element at the top right" .
+
+ns2:toBeSupportedByContract a owl:DatatypeProperty ;
+    rdfs:label "to be supported by contract"@en ;
+    rdfs:domain ns2:Goal ;
+    rdfs:range xsd:boolean ;
+    owl:propertyDisjointWith ns2:undeveloped ;
+    ns2:coreOrExtension "Modular Extension"@en ;
+    ns2:renderedAs "attached centrally immediately below the goal to which it relates" .
+
+<urn:swrl:var#A> a ns1:Variable .
+
+<urn:swrl:var#C> a ns1:Variable .
+
+ns2:Artefact a owl:Class ;
+    rdfs:label "Artefact"@en ;
+    skos:altLabel "Evidence"@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:E2 a ns1:Variable .
+
+ns2:R3 a ns1:Variable .
+
+ns2:relationshipType a owl:DatatypeProperty ;
+    rdfs:label "relationship type"@en ;
+    rdfs:domain ns2:Relationship ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "contextual" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "evidential" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "inferential" ;
+                                    rdf:rest () ] ] ] ] ;
+    skos:definition "An evidential relationship is a declared relationship between a claim and an evidence item by which the claim is substantiated. An inferential relationship is a declared inference between claims in the argument. A contextual relationship draws attention to explanatory contextual information."@en,
+        "SupportedBy relationships – represented by lines with solid arrowheads – indicate inferential or evidential relationships between elements. InContextOf relationships – represented as lines with hollow arrowheads – declare contextual relationships."@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:G3 a ns1:Variable .
+
+ns2:J a ns1:Variable .
+
+ns2:contract a owl:DatatypeProperty ;
+    rdfs:label "contract"@en ;
+    rdfs:domain ns2:Module ;
+    rdfs:range xsd:boolean ;
+    owl:propertyDisjointWith ns2:undeveloped ;
+    skos:definition "A contract module is a special type of module that controls the relationship between argument module interfaces using arguments to define how a goal in one module is supported by one or more goals in one or more other modules."@en ;
+    skos:note "A contract may be described in textual form (e.g. as a table) or for more complex relationships may be described within a contract module using GSN."@en,
+        "Contract modules can be used in the support relationship between modules to aid decoupling. The de-coupling by use of a contract permits argument module construction in cases where the eventual source of support for an argument is unknown at the time of authoring or can be changed for example through re-use or planned product improvement or reconfiguration."@en ;
+    ns2:coreOrExtension "Modular Extension"@en ;
+    ns2:renderedAs "a rectangle with two smaller rectangles (of equal size to each other) adjoining at the top left and bottom right" .
+
+ns2:undeveloped a owl:DatatypeProperty ;
+    rdfs:label "undeveloped"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Strategy ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Undeveloped element decorator, rendered as a hollow diamond applied to the bottom centre of an element, indicates that a line of argument has not been developed."@en ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en ;
+    ns2:renderedAs "hollow diamond" .
+
+ns2:E1 a ns1:Variable .
+
+ns2:M3 a ns1:Variable .
+
+ns2:assuranceClaimPoint a owl:DatatypeProperty ;
+    rdfs:label "assurance claim point"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:ArtefactReference ns2:RelationshipWithConfidence ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An Assurance Claim Point (ACP) can be used in GSN to indicate that a confidence argument is associated with an assertion in a risk argument."@en ;
+    ns2:coreOrExtension "Confidence Argument Extension"@en ;
+    ns2:renderedAs "solid square" .
+
+ns2:away a owl:DatatypeProperty ;
+    rdfs:label "away"@en ;
+    ns4:description "An away assumption repeats an assumption presented in another argument module and is typically used only in Contract Modules. An away context repeats a reference to context presented in another argument module. An away goal reference repeats a claim presented in another argument module. An away justification repeats a justification presented in another argument module and is typically used only in Contract Modules. An away solution repeats a reference to evidence items presented in another argument module."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Assumption ns2:Context ns2:Goal ns2:Justification ns2:Solution ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An away element reference repeats a claim or evidence presented in another argument module."@en ;
+    ns2:coreOrExtension "Modular Extension"@en ;
+    ns2:renderedAs "bisecting line in the lower half" .
+
+ns2:ArtefactReference a owl:Class ;
+    rdfs:label "Artefact Reference"@en ;
+    rdfs:subClassOf ns2:GSNElement ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:statement a owl:DatatypeProperty ;
+    rdfs:label "statement"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Argument ns2:GSNElement ) ] ;
+    rdfs:range xsd:string ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:Justification a owl:Class ;
+    rdfs:label "Justification"@en ;
+    rdfs:subClassOf _:B15ca2af34f6dd63bea65c4a22886fbe1,
+        ns2:GSNElement ;
+    skos:definition "A justification, rendered as an oval with the letter 'J' at the top- or bottom-right, presents a statement of rationale."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "oval"@en .
+
+ns2:N a ns1:Variable .
+
+ns2:S1 a ns1:Variable .
+
+ns2:challenges a owl:ObjectProperty ;
+    rdfs:label "challenges"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Solution ) ] ;
+    rdfs:range ns2:GSNElement ;
+    skos:definition "Allows a Challenge to any GSN entity to be documented. A goal, (core element) can be used in a dialectic context to assert a challenge to part of the argument. A solution, (core element) can be used to present a reference to an evidence item that asserts a challenge to part of the argument."@en ;
+    skos:note "A challenge must be levied against the appropriate aspect of the goal structure."@en ;
+    ns2:coreOrExtension "Dialectic Extension"@en ;
+    ns2:renderedAs "dashed line with an open arrowhead" .
+
+ns4:identifier a owl:DatatypeProperty .
+
+ns2:S2 a ns1:Variable .
+
+ns2:associatedWith a owl:ObjectProperty ;
+    rdfs:label "associated with"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:ArtefactReference ns2:RelationshipWithConfidence ) ] ;
+    rdfs:range ns2:Argument ;
+    ns2:coreOrExtension "Confidence Argument Extension"@en .
+
+ns2:Assumption a owl:Class ;
+    rdfs:label "Assumption"@en ;
+    rdfs:subClassOf _:B905a508d61cf7e3aca71242bcc595d3e,
+        ns2:GSNElement ;
+    skos:definition "An assumption, rendered as an oval with the letter 'A' at the top- or bottom-right, presents an intentionally unsubstantiated statement."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "oval"@en .
+
+ns2:Context a owl:Class ;
+    rdfs:label "Context"@en ;
+    rdfs:subClassOf _:Be5e2841527e2997c0c8b480943b89f4d,
+        ns2:ArtefactReference ;
+    skos:definition "A context, rendered as shown left, presents a contextual artefact. This can be a reference to contextual information, or a statement."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "rounded rectangle"@en .
+
+ns2:RelationshipWithConfidence a owl:Class ;
+    rdfs:label "Relationship with Confidence"@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty ns2:associatedWith ;
+                        owl:someValuesFrom ns2:Argument ] [ a owl:Restriction ;
+                        owl:onProperty ns2:assuranceClaimPoint ;
+                        owl:someValuesFrom xsd:boolean ] ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Context ns2:Solution ns2:Strategy ) ] ;
+            owl:onProperty rdf:object ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:identifier ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( ns2:Argument [ a owl:Restriction ;
+                                owl:hasValue "confidence" ;
+                                owl:onProperty ns2:argumentType ] ) ] ;
+            owl:onProperty ns2:associatedWith ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns4:identifier ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns2:Relationship ;
+    skos:note "The corresponding argument could be located in a paragraph of accompanying text, a goal in the local argument, or a goal in a separate module."@en ;
+    ns2:coreOrExtension "Confidence Argument Extension"@en .
+
+ns2:Strategy a owl:Class ;
+    rdfs:label "Strategy"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Assumption ns2:Context ns2:Justification ns2:Module ) ] ;
+            owl:onProperty ns2:inContextOf ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:Goal ;
+            owl:onProperty ns2:supportedBy ],
+        _:Be0303b4403c8cf33a50c8e1d8a888805,
+        ns2:GSNElement ;
+    skos:definition "A strategy, rendered as a parallelogram, describes the inference that exists between a goal and its supporting goal(s)."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "parallelogram"@en .
+
+ns2:E a ns1:Variable .
+
+ns2:Relationship a owl:Class ;
+    rdfs:label "Relationship"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Defeater ns2:Goal ns2:Strategy ) ] ;
+            owl:onProperty rdf:subject ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:GSNElement ;
+            owl:onProperty rdf:object ],
+        rdf:Statement ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:Argument a owl:Class ;
+    rdfs:label "Argument"@en ;
+    rdfs:subClassOf _:B87ad031266c8e053d735ccd140035b27,
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:GSNElement ;
+            owl:onProperty ns2:contains ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns4:identifier ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:identifier ;
+            owl:someValuesFrom xsd:string ] ;
+    skos:definition "A body of information presented with the intention to establish one or more claims through the presentation of related supporting claims, evidence and contextual information."@en,
+        "A connected series of claims intended to establish an overall claim."@en ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:Pattern a owl:Class ;
+    rdfs:label "Pattern"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns4:description ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    ns2:coreOrExtension "Argument Pattern Extension"@en .
+
+ns2:Solution a owl:Class ;
+    rdfs:label "Solution"@en ;
+    rdfs:subClassOf _:B851115e685c89629d65bfe4fdd2da7a3,
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:GSNElement ns2:Relationship ) ] ;
+            owl:onProperty ns2:challenges ],
+        ns2:ArtefactReference ;
+    skos:definition "A solution, rendered as a circle, presents a reference to an evidence item."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "circle"@en .
+
+ns2:M a ns1:Variable .
+
+ns2:true a owl:DatatypeProperty ;
+    rdfs:label "true"@en ;
+    rdfs:domain ns2:GSNElement ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:G2 a ns1:Variable .
+
+ns2:C a ns1:Variable .
+
+ns2:G1 a ns1:Variable .
+
+ns2:GSNElement a owl:Class ;
+    rdfs:label "GSN Element"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns4:identifier ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns4:identifier ;
+            owl:someValuesFrom xsd:string ] ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:inContextOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "in context of"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Strategy ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Assumption ns2:Context ns2:Justification ns2:Module ) ] ;
+    skos:definition "InContextOf, rendered as a line with a hollow arrowhead, declares a contextual relationship."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "line with a hollow arrowhead" .
+
+ns2:R1 a ns1:Variable .
+
+ns2:S a ns1:Variable .
+
+ns2:G a ns1:Variable .
+
+rdf:object a owl:ObjectProperty .
+
+rdf:subject a owl:ObjectProperty .
+
+ns2:R2 a ns1:Variable .
+
+ns2:M1 a ns1:Variable .
+
+ns2:M2 a ns1:Variable .
+
+ns2:valid a owl:DatatypeProperty ;
+    rdfs:label "valid"@en ;
+    rdfs:domain ns2:GSNElement ;
+    rdfs:range xsd:boolean ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:contains a owl:ObjectProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Argument ns2:AssuranceCase ns2:Module ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Argument ns2:Artefact ns2:Module ) ] ;
+    ns2:coreOrExtension "Core GSN"@en .
+
+ns2:Module a owl:Class ;
+    rdfs:label "Module"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ns2:Module ;
+            owl:onProperty ns2:inContextOf ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ns2:Module ;
+            owl:onProperty ns2:supportedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Argument ns2:Module ) ] ;
+            owl:onProperty ns2:contains ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns2:Argument ;
+            owl:onProperty ns2:contains ],
+        ns2:GSNElement ;
+    skos:definition "Goal structures can be partitioned into separate, but interrelated, modules. This can allow the division of an overall goal structure into separate goal structures focusing on particular aspects of the overall argument. A module may contain one or more arguments and may contain other modules."@en ;
+    ns2:coreOrExtension "Modular Extension"@en ;
+    ns2:renderedAs "a rectangle with a second smaller rectangle adjoining at the top left" .
+
+ns2:Goal a owl:Class ;
+    rdfs:label "Goal"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns2:inContextOf ;
+            owl:someValuesFrom ns2:Context ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:GSNElement ns2:Relationship ) ] ;
+            owl:onProperty ns2:challenges ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Goal ns2:Module ns2:Solution ns2:Strategy ) ] ;
+            owl:onProperty ns2:supportedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( ns2:Assumption ns2:Context ns2:Justification ns2:Module ) ] ;
+            owl:onProperty ns2:inContextOf ],
+        _:Be37232b0c6d4f156bda5fcbddec12a5c,
+        ns2:GSNElement ;
+    skos:altLabel "Claim"@en ;
+    skos:definition "(Claim is) A proposition being asserted by the author that is a true or false statement."@en,
+        "A goal, rendered as a rectangle, presents a claim forming part of the argument."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "rectangle"@en .
+
+ns2:supportedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "supported by"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Strategy ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( ns2:Goal ns2:Module ns2:Solution ns2:Strategy ) ] ;
+    skos:definition "SupportedBy, rendered as a line with a solid arrowhead, allows support relationships between elements to be documented."@en ;
+    ns2:coreOrExtension "Core GSN"@en ;
+    ns2:renderedAs "line with a solid arrowhead" .
+
+ns2:R a ns1:Variable .
+
+ns2:B a ns1:Variable .
+
+ns2:A a ns1:Variable .
+
+[] a ns1:Imp ;
+    rdfs:label "S8" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:true ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:B ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:classPredicate ns2:Goal ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S23" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:N ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:contains ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:N ;
+                                            ns1:classPredicate ns2:Module ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:ClassAtom ;
+                                                    ns1:argument1 ns2:M ;
+                                                    ns1:classPredicate ns2:Module ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                            ns1:arguments ( ns2:M ns2:N ) ;
+                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:away ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S32" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G1 ;
+                    ns1:argument2 ns2:C1 ;
+                    ns1:propertyPredicate ns2:inContextOf ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:G2 ;
+                            ns1:argument2 ns2:C2 ;
+                            ns1:propertyPredicate ns2:inContextOf ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:G1 ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:G2 ;
+                                            ns1:classPredicate ns2:Goal ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 ns2:G2 ;
+                                                    ns1:argument2 true ;
+                                                    ns1:propertyPredicate ns2:away ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:G1 ;
+                                                            ns1:argument2 ns2:G2 ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:C2 ;
+                                                                    ns1:classPredicate ns2:Context ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:C1 ;
+                    ns1:argument2 ns2:C2 ;
+                    ns1:propertyPredicate ns2:consistentWith ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S1" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Assumption ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:B ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate ns2:inContextOf ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Solution ;
+    owl:annotatedTarget _:B851115e685c89629d65bfe4fdd2da7a3 ;
+    skos:definition "GSN solutions make no claim, but are simply references to evidence items that provide support for a particular claim. They shall therefore be stated as noun-phrases."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S35" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:classPredicate ns2:Module ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M2 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:M1 ;
+                                    ns1:argument2 ns2:E1 ;
+                                    ns1:propertyPredicate ns2:contains ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:M2 ;
+                                            ns1:argument2 ns2:E2 ;
+                                            ns1:propertyPredicate ns2:contains ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:E1 ;
+                                                    ns1:argument2 ns2:E2 ;
+                                                    ns1:propertyPredicate ns2:inContextOf ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                            ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:argument2 ns2:M2 ;
+                    ns1:propertyPredicate ns2:inContextOf ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S21" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Template ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:undeveloped ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 true ;
+                                            ns1:propertyPredicate ns2:published ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest () ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S36" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:E1 ;
+                    ns1:argument2 ns2:M2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M1 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M2 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:M1 ;
+                                            ns1:argument2 ns2:E1 ;
+                                            ns1:propertyPredicate ns2:contains ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                    ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                            rdf:rest () ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:argument2 ns2:M2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S14" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate rdf:subject ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate ns2:inContextOf ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:R ;
+                                            ns1:classPredicate ns2:Relationship ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:R ;
+                                                    ns1:argument2 ns2:B ;
+                                                    ns1:propertyPredicate rdf:object ] ;
+                                            rdf:rest () ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S31" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:M ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate ns2:contains ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:argument2 true ;
+                                    ns1:propertyPredicate ns2:toBeSupportedByContract ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:R ;
+                                                    ns1:argument2 ns2:A ;
+                                                    ns1:propertyPredicate rdf:subject ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:ClassAtom ;
+                                                            ns1:argument1 ns2:M ;
+                                                            ns1:classPredicate ns2:Module ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                    ns1:argument1 ns2:R ;
+                                                                    ns1:argument2 ns2:B ;
+                                                                    ns1:propertyPredicate rdf:object ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S11" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Solution ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:true ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:B ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S29" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:G1 ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M1 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:G1 ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R ;
+                                            ns1:argument2 ns2:G2 ;
+                                            ns1:propertyPredicate rdf:object ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:ClassAtom ;
+                                                    ns1:argument1 ns2:M2 ;
+                                                    ns1:classPredicate ns2:Module ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:G1 ;
+                                                            ns1:argument2 ns2:G2 ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 ns2:G1 ;
+                                                                    ns1:argument2 true ;
+                                                                    ns1:propertyPredicate ns2:away ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                            ns1:argument1 ns2:M1 ;
+                                                                            ns1:argument2 ns2:G1 ;
+                                                                            ns1:propertyPredicate ns2:contains ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                    ns1:argument1 ns2:M2 ;
+                                                                                    ns1:argument2 ns2:G2 ;
+                                                                                    ns1:propertyPredicate ns2:contains ] ;
+                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Argument ;
+    owl:annotatedTarget _:B87ad031266c8e053d735ccd140035b27 ;
+    skos:definition "The corresponding argument could be located in a paragraph of accompanying text, a goal in the local argument, or a goal in a separate module."@en ;
+    ns2:coreOrExtension "Confidence Argument Extension" .
+
+[] a ns1:Imp ;
+    rdfs:label "S52" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:challenges ] ;
+            rdf:rest () ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Defeater ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S10" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Solution ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:argument2 true ;
+                                    ns1:propertyPredicate ns2:true ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S45" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G ;
+                    ns1:argument2 ns2:S2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:S1 ;
+                            ns1:classPredicate ns2:Goal ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R1 ;
+                                    ns1:argument2 ns2:S1 ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:R1 ;
+                                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                    ns1:arguments ( ns2:S2 ns2:R2 ) ;
+                                                    ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:G ;
+                                                            ns1:argument2 ns2:S1 ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:S2 ;
+                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:ClassAtom ;
+                                                                            ns1:argument1 ns2:G ;
+                                                                            ns1:classPredicate ns2:Goal ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                                                    ns1:arguments ( ns2:S1 ns2:S2 ) ;
+                                                                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                            rdf:rest [ a ns1:AtomList ;
+                                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                            ns1:argument1 ns2:R1 ;
+                                                                                            ns1:argument2 ns2:A ;
+                                                                                            ns1:propertyPredicate ns2:associatedWith ] ;
+                                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                                    ns1:argument1 ns2:R1 ;
+                                                                                                    ns1:argument2 ns2:G ;
+                                                                                                    ns1:propertyPredicate rdf:subject ] ;
+                                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R2 ;
+                    ns1:argument2 ns2:S2 ;
+                    ns1:propertyPredicate rdf:object ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R2 ;
+                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R2 ;
+                                    ns1:argument2 ns2:G ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R2 ;
+                                            ns1:argument2 ns2:A ;
+                                            ns1:propertyPredicate ns2:associatedWith ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 ns2:R2 ;
+                                                    ns1:argument2 true ;
+                                                    ns1:propertyPredicate ns2:assuranceClaimPoint ] ;
+                                            rdf:rest () ] ] ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S34" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:classPredicate ns2:Module ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M2 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:E1 ;
+                                    ns1:argument2 ns2:E2 ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:M1 ;
+                                            ns1:argument2 ns2:E1 ;
+                                            ns1:propertyPredicate ns2:contains ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:M2 ;
+                                                    ns1:argument2 ns2:E2 ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                            ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:argument2 ns2:M2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Assumption ;
+    owl:annotatedTarget _:B905a508d61cf7e3aca71242bcc595d3e ;
+    skos:definition "GSN assumptions provide additional information necessary for the correct understanding of the argument. This information is stated as fully as necessary, using complete sentences in the form noun phrase + verb phrase."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S6" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:X ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:top ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S26" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:M1 ;
+                    ns1:propertyPredicate rdf:object ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M1 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M2 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:M2 ;
+                                            ns1:argument2 ns2:A ;
+                                            ns1:propertyPredicate ns2:contains ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:A ;
+                                                    ns1:argument2 ns2:M1 ;
+                                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:R ;
+                                                            ns1:argument2 ns2:A ;
+                                                            ns1:propertyPredicate rdf:subject ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 ns2:M2 ;
+                                                                    ns1:argument2 true ;
+                                                                    ns1:propertyPredicate ns2:contract ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S51" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:D ;
+                    ns1:argument2 ns2:R ;
+                    ns1:propertyPredicate ns2:challenges ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 ns2:G3 ;
+                            ns1:propertyPredicate rdf:subject ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:G1 ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:G1 ;
+                                            ns1:classPredicate ns2:Goal ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:ClassAtom ;
+                                                    ns1:argument1 ns2:G3 ;
+                                                    ns1:classPredicate ns2:Goal ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                            ns1:arguments ( ns2:G3 ns2:S ) ;
+                                                            ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:G2 ;
+                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                            ns1:argument1 ns2:G3 ;
+                                                                            ns1:argument2 ns2:G1 ;
+                                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                                                    ns1:arguments ( ns2:G1 ns2:G2 ) ;
+                                                                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:S ;
+                    ns1:argument2 ns2:G2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:G3 ;
+                            ns1:argument2 ns2:S ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:D ;
+                                    ns1:argument2 false ;
+                                    ns1:propertyPredicate ns2:valid ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:S ;
+                                            ns1:argument2 ns2:G1 ;
+                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:D ;
+                                                    ns1:argument2 ns2:S ;
+                                                    ns1:propertyPredicate ns2:challenges ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                            ns1:argument1 ns2:S ;
+                                                            ns1:argument2 false ;
+                                                            ns1:propertyPredicate ns2:valid ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 ns2:R ;
+                                                                    ns1:argument2 false ;
+                                                                    ns1:propertyPredicate ns2:valid ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:ClassAtom ;
+                                                                            ns1:argument1 ns2:S ;
+                                                                            ns1:classPredicate ns2:Strategy ] ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] .
+
+[] a owl:Class ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue true ;
+            owl:onProperty ns2:top ] ;
+    owl:intersectionOf ( ns2:Goal [ a owl:Class ;
+                owl:complementOf [ a owl:Restriction ;
+                        owl:onProperty [ owl:inverseOf ns2:supportedBy ] ;
+                        owl:someValuesFrom ns2:Goal ] ] ) .
+
+[] a ns1:Imp ;
+    rdfs:label "S49" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:G ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:undeveloped ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:G ;
+                            ns1:argument2 ns2:E ;
+                            ns1:propertyPredicate ns2:challenges ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:G ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 ns2:E ;
+                                            ns1:argument2 true ;
+                                            ns1:propertyPredicate ns2:inDoubt ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:defeated ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S16" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Assumption ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:true ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:B ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate ns2:inContextOf ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S28" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:toBeSupportedByContract ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:M ;
+                                    ns1:argument2 true ;
+                                    ns1:propertyPredicate ns2:contract ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:M ;
+                                            ns1:classPredicate ns2:Module ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S7" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R3 ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate rdf:object ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R1 ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate rdf:subject ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R2 ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R3 ;
+                                            ns1:argument2 ns2:C ;
+                                            ns1:propertyPredicate rdf:subject ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:R3 ;
+                                                    ns1:argument2 ns2:P ;
+                                                    ns1:propertyPredicate rdf:predicate ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:R2 ;
+                                                            ns1:argument2 ns2:P ;
+                                                            ns1:propertyPredicate rdf:predicate ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                    ns1:argument1 ns2:R1 ;
+                                                                    ns1:argument2 ns2:B ;
+                                                                    ns1:propertyPredicate rdf:object ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                            ns1:argument1 ns2:R2 ;
+                                                                            ns1:argument2 ns2:C ;
+                                                                            ns1:propertyPredicate rdf:object ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                    ns1:argument1 ns2:R1 ;
+                                                                                    ns1:argument2 ns2:P ;
+                                                                                    ns1:propertyPredicate rdf:predicate ] ;
+                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R1 ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:R2 ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:R3 ;
+                                    ns1:argument2 false ;
+                                    ns1:propertyPredicate ns2:valid ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S48" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G ;
+                    ns1:argument2 ns2:E ;
+                    ns1:propertyPredicate ns2:challenges ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:G ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:true ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:G ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:inDoubt ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S25" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:M ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate ns2:contains ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:A ;
+                                    ns1:argument2 ns2:ID ;
+                                    ns1:propertyPredicate ns4:identifier ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:M ;
+                                            ns1:classPredicate ns2:Module ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                    ns1:arguments ( ns2:A ns2:B ) ;
+                                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                            ns1:argument1 ns2:B ;
+                                                            ns1:argument2 ns2:ID ;
+                                                            ns1:propertyPredicate ns4:identifier ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest () ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S19" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:inContextOf ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:BuiltinAtom ;
+                            ns1:arguments ( ns2:B ns2:R ) ;
+                            ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                    rdf:rest () ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:classPredicate ns2:Relationship ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S47" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:defeated ] ;
+            rdf:rest () ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S40" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:assuranceClaimPoint ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:classPredicate ns2:ArtefactReference ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:BuiltinAtom ;
+                                    ns1:arguments ( ns2:A ns2:R ) ;
+                                    ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate rdf:subject ] ;
+                    rdf:rest () ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S42" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G1 ;
+                    ns1:argument2 ns2:S ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:S ;
+                            ns1:argument2 ns2:G2 ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:R1 ;
+                                    ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:BuiltinAtom ;
+                                            ns1:arguments ( ns2:G2 ns2:R2 ) ;
+                                            ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:ClassAtom ;
+                                                    ns1:argument1 ns2:S ;
+                                                    ns1:classPredicate ns2:Strategy ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:ClassAtom ;
+                                                            ns1:argument1 ns2:G1 ;
+                                                            ns1:classPredicate ns2:Goal ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:G2 ;
+                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                            ns1:argument1 ns2:R1 ;
+                                                                            ns1:argument2 ns2:S ;
+                                                                            ns1:propertyPredicate rdf:object ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                    ns1:argument1 ns2:R1 ;
+                                                                                    ns1:argument2 ns2:A ;
+                                                                                    ns1:propertyPredicate ns2:associatedWith ] ;
+                                                                            rdf:rest [ a ns1:AtomList ;
+                                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                            ns1:argument1 ns2:R1 ;
+                                                                                            ns1:argument2 ns2:G1 ;
+                                                                                            ns1:propertyPredicate rdf:subject ] ;
+                                                                                    rdf:rest () ] ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R2 ;
+                    ns1:argument2 ns2:S ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R2 ;
+                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R2 ;
+                                    ns1:argument2 ns2:G2 ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R2 ;
+                                            ns1:argument2 ns2:A ;
+                                            ns1:propertyPredicate ns2:associatedWith ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 ns2:R2 ;
+                                                    ns1:argument2 true ;
+                                                    ns1:propertyPredicate ns2:assuranceClaimPoint ] ;
+                                            rdf:rest () ] ] ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S5" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate rdf:subject ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:B ;
+                                            ns1:classPredicate ns2:Goal ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 "inferential" ;
+                    ns1:propertyPredicate ns2:relationshipType ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S9" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:true ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:C ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 true ;
+                                            ns1:propertyPredicate ns2:true ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:C ;
+                                                    ns1:argument2 ns2:A ;
+                                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:ClassAtom ;
+                                                            ns1:argument1 ns2:A ;
+                                                            ns1:classPredicate ns2:Goal ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:B ;
+                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S12" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:C ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:C ;
+                                            ns1:argument2 ns2:A ;
+                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S44" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G ;
+                    ns1:argument2 ns2:S2 ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:S1 ;
+                            ns1:classPredicate ns2:Solution ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R1 ;
+                                    ns1:argument2 ns2:S1 ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:R1 ;
+                                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                    ns1:arguments ( ns2:S2 ns2:R2 ) ;
+                                                    ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:G ;
+                                                            ns1:argument2 ns2:S1 ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:G ;
+                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                                            ns1:arguments ( ns2:S1 ns2:S2 ) ;
+                                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                    ns1:argument1 ns2:R1 ;
+                                                                                    ns1:argument2 ns2:A ;
+                                                                                    ns1:propertyPredicate ns2:associatedWith ] ;
+                                                                            rdf:rest [ a ns1:AtomList ;
+                                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                            ns1:argument1 ns2:R1 ;
+                                                                                            ns1:argument2 ns2:G ;
+                                                                                            ns1:propertyPredicate rdf:subject ] ;
+                                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                                                    ns1:argument1 ns2:S2 ;
+                                                                                                    ns1:classPredicate ns2:Solution ] ;
+                                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R2 ;
+                    ns1:argument2 ns2:S2 ;
+                    ns1:propertyPredicate rdf:object ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R2 ;
+                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R2 ;
+                                    ns1:argument2 ns2:G ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R2 ;
+                                            ns1:argument2 ns2:A ;
+                                            ns1:propertyPredicate ns2:associatedWith ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 ns2:R2 ;
+                                                    ns1:argument2 true ;
+                                                    ns1:propertyPredicate ns2:assuranceClaimPoint ] ;
+                                            rdf:rest () ] ] ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S2" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:inContextOf ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 "contextual" ;
+                    ns1:propertyPredicate ns2:relationshipType ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S17" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl:var#B> ;
+                    ns1:argument2 <urn:swrl:var#C> ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 <urn:swrl:var#B> ;
+                            ns1:argument2 <urn:swrl:var#A> ;
+                            ns1:propertyPredicate ns2:inContextOf ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 <urn:swrl:var#A> ;
+                                    ns1:classPredicate ns2:Assumption ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 <urn:swrl:var#C> ;
+                                            ns1:classPredicate ns2:Goal ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 <urn:swrl:var#C> ;
+                    ns1:argument2 <urn:swrl:var#A> ;
+                    ns1:propertyPredicate ns2:inContextOf ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S13" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Solution ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:classPredicate ns2:Solution ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:B ;
+                                    ns1:argument2 false ;
+                                    ns1:propertyPredicate ns2:true ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:C ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                    ns1:argument1 ns2:A ;
+                                                    ns1:argument2 true ;
+                                                    ns1:propertyPredicate ns2:true ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:C ;
+                                                            ns1:argument2 ns2:A ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:true ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S33" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M2 ;
+                    ns1:argument2 ns2:G ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M1 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M2 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:J ;
+                                            ns1:argument2 ns2:G ;
+                                            ns1:propertyPredicate ns2:substitutedBy ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:M1 ;
+                                                    ns1:argument2 ns2:J ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:ClassAtom ;
+                                                            ns1:argument1 ns2:J ;
+                                                            ns1:classPredicate ns2:Justification ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                    ns1:argument1 ns2:E ;
+                                                                    ns1:argument2 ns2:J ;
+                                                                    ns1:propertyPredicate ns2:inContextOf ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                                            ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:J ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Goal ;
+    owl:annotatedTarget _:Be37232b0c6d4f156bda5fcbddec12a5c ;
+    skos:definition "GSN goals document the claims made in the argument (i.e. premises and conclusions). Each goal shall contain a single goal statement, expressed as a proposition in the form of a noun phrase + verb-phrase sentence."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S37" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:M3 ;
+                    ns1:classPredicate ns2:Module ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:M1 ;
+                            ns1:classPredicate ns2:Module ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M2 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:BuiltinAtom ;
+                                            ns1:arguments ( ns2:M3 ns2:M1 ) ;
+                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:M1 ;
+                                                    ns1:argument2 ns2:M2 ;
+                                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:M2 ;
+                                                            ns1:argument2 ns2:M3 ;
+                                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                                    ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                                            ns1:arguments ( ns2:M2 ns2:M3 ) ;
+                                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                    ns1:argument1 ns2:M3 ;
+                                                                                    ns1:argument2 ns2:M1 ;
+                                                                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:M1 ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:M3 ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:M2 ;
+                                    ns1:argument2 false ;
+                                    ns1:propertyPredicate ns2:valid ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S30" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:away ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:toBeSupportedByContract ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M1 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:M2 ;
+                                            ns1:classPredicate ns2:Module ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:M1 ;
+                                                    ns1:argument2 ns2:A ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:M2 ;
+                                                            ns1:argument2 ns2:B ;
+                                                            ns1:propertyPredicate ns2:contains ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                    ns1:argument1 ns2:A ;
+                                                                    ns1:argument2 ns2:B ;
+                                                                    ns1:propertyPredicate ns2:supportedBy ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                                            ns1:arguments ( ns2:M1 ns2:M2 ) ;
+                                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                                    rdf:rest () ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:M2 ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:contract ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S39" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:contract ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:E ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:public ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:C ;
+                                    ns1:argument2 ns2:E ;
+                                    ns1:propertyPredicate ns2:contains ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S20" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 ns2:C ;
+                    ns1:propertyPredicate ns2:instantiationOf ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:final ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:C ;
+                                    ns1:classPredicate ns2:Pattern ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate ns2:contains ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:A ;
+                                                    ns1:argument2 ns2:C ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest () ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S27" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:M1 ;
+                    ns1:propertyPredicate ns2:inContextOf ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 ns2:M1 ;
+                            ns1:propertyPredicate rdf:object ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:M1 ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:ClassAtom ;
+                                            ns1:argument1 ns2:M2 ;
+                                            ns1:classPredicate ns2:Module ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:M2 ;
+                                                    ns1:argument2 ns2:A ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:R ;
+                                                            ns1:argument2 ns2:A ;
+                                                            ns1:propertyPredicate rdf:subject ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                                                    ns1:argument1 ns2:M2 ;
+                                                                    ns1:argument2 true ;
+                                                                    ns1:propertyPredicate ns2:contract ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S50" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:challenges ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:BuiltinAtom ;
+                            ns1:arguments ( ns2:B ns2:R ) ;
+                            ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                    rdf:rest () ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:classPredicate ns2:Relationship ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S24" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:M ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate ns2:contains ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:N ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:contains ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:N ;
+                                    ns1:classPredicate ns2:Module ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate ns2:inContextOf ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:ClassAtom ;
+                                                    ns1:argument1 ns2:M ;
+                                                    ns1:classPredicate ns2:Module ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:BuiltinAtom ;
+                                                            ns1:arguments ( ns2:M ns2:N ) ;
+                                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:away ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Context ;
+    owl:annotatedTarget _:Be5e2841527e2997c0c8b480943b89f4d ;
+    skos:definition "Two kinds of GSN context statement exist. Where a context statement draws attention to explanatory contextual information (such as the definition of some term), this information shall be stated briefly using complete sentences of a noun-phrase + verb-phrase structure. Where a context statement is a reference to an artefact of some kind, which informs the reasoning step, the context statement shall be expressed as a noun phrase."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S3" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:classPredicate ns2:Solution ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate rdf:object ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 "evidential" ;
+                    ns1:propertyPredicate ns2:relationshipType ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S4" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:B ;
+                    ns1:classPredicate ns2:Strategy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:A ;
+                            ns1:argument2 ns2:B ;
+                            ns1:propertyPredicate ns2:supportedBy ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:A ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R ;
+                                            ns1:argument2 ns2:B ;
+                                            ns1:propertyPredicate rdf:object ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 "inferential" ;
+                    ns1:propertyPredicate ns2:relationshipType ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S22" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:classPredicate ns2:Template ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 true ;
+                            ns1:propertyPredicate ns2:undeveloped ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                            ns1:argument1 ns2:A ;
+                                            ns1:argument2 true ;
+                                            ns1:propertyPredicate ns2:published ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:A ;
+                                                    ns1:argument2 ns2:B ;
+                                                    ns1:propertyPredicate ns2:contains ] ;
+                                            rdf:rest () ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest () ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S46" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:S ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:S ;
+                            ns1:argument2 ns2:E ;
+                            ns1:propertyPredicate ns2:challenges ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:S ;
+                                    ns1:classPredicate ns2:Solution ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:E ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:defeated ] ;
+            rdf:rest () ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S38" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:G ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:public ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:G ;
+                            ns1:argument2 ns2:C ;
+                            ns1:propertyPredicate ns2:inContextOf ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:ClassAtom ;
+                                    ns1:argument1 ns2:G ;
+                                    ns1:classPredicate ns2:Goal ] ;
+                            rdf:rest () ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:C ;
+                    ns1:argument2 true ;
+                    ns1:propertyPredicate ns2:public ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Strategy ;
+    owl:annotatedTarget _:Be0303b4403c8cf33a50c8e1d8a888805 ;
+    skos:definition "GSN strategy statements describe the reasoning that connects parent goals and their supporting goals, but the core claims and the structure connecting those claims remain unchanged. Strategy statements contain a brief description of the argument approach."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S18" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:B ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:BuiltinAtom ;
+                            ns1:arguments ( ns2:B ns2:R ) ;
+                            ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                    rdf:rest () ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:R ;
+                    ns1:argument2 ns2:A ;
+                    ns1:propertyPredicate rdf:subject ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R ;
+                            ns1:classPredicate ns2:Relationship ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R ;
+                                    ns1:argument2 ns2:B ;
+                                    ns1:propertyPredicate rdf:object ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "S43" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:IndividualPropertyAtom ;
+                    ns1:argument1 ns2:G2 ;
+                    ns1:argument2 ns2:S ;
+                    ns1:propertyPredicate ns2:supportedBy ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:ClassAtom ;
+                            ns1:argument1 ns2:R1 ;
+                            ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                    ns1:argument1 ns2:R1 ;
+                                    ns1:argument2 ns2:S ;
+                                    ns1:propertyPredicate rdf:subject ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:S ;
+                                            ns1:argument2 ns2:G1 ;
+                                            ns1:propertyPredicate ns2:supportedBy ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:BuiltinAtom ;
+                                                    ns1:arguments ( ns2:G2 ns2:R2 ) ;
+                                                    ns1:builtin <http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> ] ;
+                                            rdf:rest [ a ns1:AtomList ;
+                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                            ns1:argument1 ns2:R1 ;
+                                                            ns1:argument2 ns2:G1 ;
+                                                            ns1:propertyPredicate rdf:object ] ;
+                                                    rdf:rest [ a ns1:AtomList ;
+                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                    ns1:argument1 ns2:S ;
+                                                                    ns1:classPredicate ns2:Strategy ] ;
+                                                            rdf:rest [ a ns1:AtomList ;
+                                                                    rdf:first [ a ns1:ClassAtom ;
+                                                                            ns1:argument1 ns2:G1 ;
+                                                                            ns1:classPredicate ns2:Goal ] ;
+                                                                    rdf:rest [ a ns1:AtomList ;
+                                                                            rdf:first [ a ns1:ClassAtom ;
+                                                                                    ns1:argument1 ns2:G2 ;
+                                                                                    ns1:classPredicate ns2:Goal ] ;
+                                                                            rdf:rest [ a ns1:AtomList ;
+                                                                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                                                            ns1:argument1 ns2:R1 ;
+                                                                                            ns1:argument2 ns2:A ;
+                                                                                            ns1:propertyPredicate ns2:associatedWith ] ;
+                                                                                    rdf:rest () ] ] ] ] ] ] ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:ClassAtom ;
+                    ns1:argument1 ns2:R2 ;
+                    ns1:classPredicate ns2:RelationshipWithConfidence ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                            ns1:argument1 ns2:R2 ;
+                            ns1:argument2 ns2:A ;
+                            ns1:propertyPredicate ns2:associatedWith ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 ns2:R2 ;
+                                    ns1:argument2 true ;
+                                    ns1:propertyPredicate ns2:assuranceClaimPoint ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:IndividualPropertyAtom ;
+                                            ns1:argument1 ns2:R2 ;
+                                            ns1:argument2 ns2:G2 ;
+                                            ns1:propertyPredicate rdf:subject ] ;
+                                    rdf:rest [ a ns1:AtomList ;
+                                            rdf:first [ a ns1:IndividualPropertyAtom ;
+                                                    ns1:argument1 ns2:R2 ;
+                                                    ns1:argument2 ns2:S ;
+                                                    ns1:propertyPredicate rdf:object ] ;
+                                            rdf:rest () ] ] ] ] ] .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns2:Justification ;
+    owl:annotatedTarget _:B15ca2af34f6dd63bea65c4a22886fbe1 ;
+    skos:definition "GSN justifications provide additional information necessary for the correct understanding of the argument. This information is stated as fully as necessary, using complete sentences in the form noun phrase + verb phrase."@en .
+
+[] a ns1:Imp ;
+    rdfs:label "S41" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "" ;
+    ns1:body [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 ns2:N ;
+                    ns1:propertyPredicate ns4:identifier ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 ns2:M ;
+                            ns1:propertyPredicate ns4:identifier ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:BuiltinAtom ;
+                                    ns1:arguments ( ns2:A ns2:B ) ;
+                                    ns1:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ] ;
+                            rdf:rest [ a ns1:AtomList ;
+                                    rdf:first [ a ns1:BuiltinAtom ;
+                                            ns1:arguments ( ns2:N ns2:M ) ;
+                                            ns1:builtin <http://www.w3.org/2003/11/swrlb#equal> ] ;
+                                    rdf:rest () ] ] ] ] ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 ns2:A ;
+                    ns1:argument2 false ;
+                    ns1:propertyPredicate ns2:valid ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 ns2:B ;
+                            ns1:argument2 false ;
+                            ns1:propertyPredicate ns2:valid ] ;
+                    rdf:rest () ] ] .
+
+_:B43b89cecX3A19e72fdbb57X3A23f7 rdf:first [ a owl:Restriction ;
+            owl:onProperty ns2:contains ;
+            owl:someValuesFrom ns2:ArtefactReference ] ;
+    rdf:rest ( [ a owl:Restriction ;
+                owl:onProperty ns2:contains ;
+                owl:someValuesFrom ns2:Goal ] ) .
+
+_:B43b89cecX3A19e72fdbb57X3A23f9 rdf:first [ a owl:Class ;
+            owl:intersectionOf _:B43b89cecX3A19e72fdbb57X3A23f7 ] ;
+    rdf:rest ( [ a owl:Restriction ;
+                owl:onProperty ns2:statement ;
+                owl:someValuesFrom xsd:string ] ) .
+
+_:B15ca2af34f6dd63bea65c4a22886fbe1 a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+
+_:B851115e685c89629d65bfe4fdd2da7a3 a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+
+_:B87ad031266c8e053d735ccd140035b27 a owl:Class ;
+    owl:unionOf _:B43b89cecX3A19e72fdbb57X3A23f9 .
+
+_:B905a508d61cf7e3aca71242bcc595d3e a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+
+_:Be0303b4403c8cf33a50c8e1d8a888805 a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+
+_:Be37232b0c6d4f156bda5fcbddec12a5c a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+
+_:Be5e2841527e2997c0c8b480943b89f4d a owl:Restriction ;
+    owl:onProperty ns2:statement ;
+    owl:someValuesFrom xsd:string .
+

@@ -1,0 +1,181 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://reference.data.gov.uk/def/organogram> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a void:Dataset,
+        owl:Ontology ;
+    rdfs:label "Organogram Data Vocabulary"@en ;
+    dcterms:contributor [ foaf:mbox "jeni@jenitennison.com" ;
+            foaf:name "Jeni Tennison" ] ;
+    dcterms:created "2010-10-17"^^xsd:date ;
+    dcterms:license <http://www.opendatacommons.org/licenses/pddl/1.0/> ;
+    dcterms:modified "2011-06-11"^^xsd:date ;
+    dcterms:title "Organogram Data Vocabulary"@en ;
+    void:vocabulary qb:,
+        <http://purl.org/net/opmv/ns#>,
+        <http://reference.data.gov.uk/def/central-government/>,
+        <http://reference.data.gov.uk/def/organogram/>,
+        rdfs:,
+        owl:,
+        skos:,
+        time:,
+        org:,
+        foaf: .
+
+<http://reference.data.gov.uk/def/organogram/junior-posts> a qb:DataStructureDefinition,
+        rdfs:Resource ;
+    rdfs:label "Junior Posts Data Structure"@en ;
+    qb:component [ qb:dimension <http://reference.data.gov.uk/def/organogram/grade> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/unit> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/date> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/job> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/profession> ],
+        [ qb:measure <http://reference.data.gov.uk/def/organogram/fullTimeEquivalent> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/reportingTo> ] ;
+    rdfs:comment "The structure of a cube containing data about the number of junior staff of different grades that report to a particular post from within a particular unit, with a particular job and a particular profession, on a particular day." ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> .
+
+<http://reference.data.gov.uk/def/organogram/number-of-posts> a qb:DataStructureDefinition,
+        rdfs:Resource ;
+    rdfs:label "Number of Posts Data Structure"@en ;
+    qb:component [ qb:measure <http://reference.data.gov.uk/def/organogram/numberOfPosts> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/grade> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/post> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/date> ] ;
+    rdfs:comment "The structure of a cube containing data about the number of posts of different grades that report to a particular post on a particular day." ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> .
+
+<http://reference.data.gov.uk/def/organogram/salary-costs-of-reports> a qb:DataStructureDefinition,
+        rdfs:Resource ;
+    rdfs:label "Salary Costs Data Structure"@en ;
+    qb:component [ qb:measure <http://reference.data.gov.uk/def/organogram/salaryCostOfReports> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/date> ],
+        [ qb:attribute <http://reference.data.gov.uk/def/organogram/currency> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/post> ] ;
+    rdfs:comment "The structure of a cube containing data about the salary costs of the reports to a particular post on a particular day." ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> .
+
+<http://reference.data.gov.uk/def/organogram/total-pay> a qb:DataStructureDefinition,
+        rdfs:Resource ;
+    rdfs:label "Total Pay Data Structure"@en ;
+    qb:component [ qb:attribute <http://reference.data.gov.uk/def/organogram/currency> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/tenure> ],
+        [ qb:dimension <http://reference.data.gov.uk/def/organogram/date> ],
+        [ qb:measure <http://reference.data.gov.uk/def/organogram/totalPay> ] ;
+    rdfs:comment "The structure of a cube containing data about the total pay received for a particular tenure (a person in a post) on a particular day." ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> .
+
+<http://reference.data.gov.uk/def/organogram/job> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Job"@en ;
+    rdfs:comment "The job performed by the junior posts."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/civil-service-job/Job> .
+
+<http://reference.data.gov.uk/def/organogram/numberOfPosts> a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Number of Posts"@en ;
+    rdfs:comment "The number of posts with this grade that report to the given post, as a full-time equivalent."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range xsd:decimal .
+
+<http://reference.data.gov.uk/def/organogram/profession> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Profession"@en ;
+    rdfs:comment "The profession of the junior posts."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/civil-service-profession/Profession> .
+
+<http://reference.data.gov.uk/def/organogram/reportingTo> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Reporting To"@en ;
+    rdfs:comment "The post to which the junior posts report."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/central-government/Post> .
+
+<http://reference.data.gov.uk/def/organogram/salaryCostOfReports> a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Salary Cost of Reports"@en ;
+    rdfs:comment "The total salary cost of each Deputy Director/SCS Pay Band 1 and 1A member and the non-SCS staff that report to this post. Salary costs are base pay (excluding bonuses and allowances) as at the date of the observation. To ensure that individual salaries cannot be identified from this information (for Deputy Director/SCS Pay Band 1 and 1A level and non-SCS grades), where the team is less than five people, the cost is rounded to the nearest £100,000. Where the team is one person only, the salary cost may be rounded to the nearest £100,000 or merged with the costs of another team."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range xsd:integer .
+
+<http://reference.data.gov.uk/def/organogram/tenure> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Tenure"@en ;
+    rdfs:comment "The tenure through which pay was given."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/central-government/Tenure> .
+
+<http://reference.data.gov.uk/def/organogram/totalPay> a qb:MeasureProperty,
+        rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Total Pay"@en ;
+    rdfs:comment "The total pay received."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range xsd:decimal .
+
+<http://reference.data.gov.uk/def/organogram/unit> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "The unit to which the junior posts belong."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range org:OrganizationalUnit .
+
+<http://reference.data.gov.uk/def/organogram/currency> a qb:AttributeProperty ;
+    rdfs:label "currency"@en ;
+    qb:concept <http://purl.org/linked-data/sdmx/2009/concept#currency> ;
+    rdfs:comment "Currency in which the salary is paid, typically attached to the dataset for single currency datasets."@en ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> .
+
+<http://reference.data.gov.uk/def/organogram/grade> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Grade"@en ;
+    rdfs:comment "The grade of the junior posts."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/civil-service-grade/Grade> .
+
+<http://reference.data.gov.uk/def/organogram/post> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Post"@en ;
+    rdfs:comment "The post whose subordinates this statistic relates to."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/central-government/Post> .
+
+<http://reference.data.gov.uk/def/organogram/date> a qb:DimensionProperty,
+        rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The date that the observation relates to."@en ;
+    rdfs:domain qb:Observation ;
+    rdfs:isDefinedBy <http://reference.data.gov.uk/def/organogram/> ;
+    rdfs:range <http://reference.data.gov.uk/def/intervals/CalendarDay> .
+

@@ -1,0 +1,155 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/rdf-connect/ontology> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+dcterms:author a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+foaf:name a owl:AnnotationProperty .
+
+<https://w3id.org/rdf-connect#CommandRunner> a owl:Class ;
+    rdfs:label "Command Runner"@en ;
+    rdfs:comment "A runner that executes processors via shell commands."@en ;
+    rdfs:subClassOf <https://w3id.org/rdf-connect#Runner> .
+
+<https://w3id.org/rdf-connect#Reader> a owl:Class ;
+    rdfs:label "Reader"@en ;
+    rdfs:comment "A component that provides input data to a processor."@en .
+
+<https://w3id.org/rdf-connect#Writer> a owl:Class ;
+    rdfs:label "Writer"@en ;
+    rdfs:comment "A component that handles output data from a processor."@en .
+
+<https://w3id.org/rdf-connect#class> a owl:DatatypeProperty ;
+    rdfs:label "class"@en ;
+    rdfs:comment "The class name of a processor. Applicable for any object-oriented programming language."@en ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/rdf-connect#command> a owl:DatatypeProperty ;
+    rdfs:label "command"@en ;
+    rdfs:comment "Shell command used by an orchestrator to execute a runner instance."@en ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/rdf-connect#consistsOf> a owl:ObjectProperty ;
+    rdfs:label "consists of"@en ;
+    rdfs:comment "Relates a pipeline to an execution context (runner and processors) it uses."@en ;
+    rdfs:domain <https://w3id.org/rdf-connect#Pipeline> ;
+    rdfs:range <https://w3id.org/rdf-connect#ExecutionContext> .
+
+<https://w3id.org/rdf-connect#entrypoint> a owl:DatatypeProperty ;
+    rdfs:label "entrypoint"@en ;
+    rdfs:comment "The folder location of the main script or module entry point of a JavaScript processor."@en ;
+    rdfs:range xsd:anyURI .
+
+<https://w3id.org/rdf-connect#file> a owl:DatatypeProperty ;
+    rdfs:label "file"@en ;
+    rdfs:comment "The file name containing the processor logic of a JavaScript processor."@en ;
+    rdfs:range xsd:anyURI .
+
+<https://w3id.org/rdf-connect#handlesSubjectsOf> a owl:ObjectProperty ;
+    rdfs:label "handle subjects of"@en ;
+    rdfs:comment "The property that defines which type of processors a runner can handle, typically linked to a specific implementation property."@en ;
+    rdfs:domain <https://w3id.org/rdf-connect#Runner> .
+
+<https://w3id.org/rdf-connect#instantiates> a owl:ObjectProperty ;
+    rdfs:label "instantiates"@en ;
+    rdfs:comment "Declares the runner instance used in an execution context."@en ;
+    rdfs:domain <https://w3id.org/rdf-connect#ExecutionContext> ;
+    rdfs:range <https://w3id.org/rdf-connect#Runner> .
+
+<https://w3id.org/rdf-connect#jar> a owl:DatatypeProperty ;
+    rdfs:label "jar"@en ;
+    rdfs:comment "Path to the JAR file containing the processor logic of a Java processor."@en ;
+    rdfs:range xsd:anyURI .
+
+<https://w3id.org/rdf-connect#javaImplementationOf> a owl:ObjectProperty ;
+    rdfs:label "Java Implementation Of"@en ;
+    rdfs:comment "Indicates that a processor is implemented in Java and is a specialization of implementationOf."@en ;
+    rdfs:subPropertyOf <https://w3id.org/rdf-connect#implementationOf> .
+
+<https://w3id.org/rdf-connect#jsImplementationOf> a owl:ObjectProperty ;
+    rdfs:label "JavaScript Implementation Of"@en ;
+    rdfs:comment "Indicates that a processor is implemented in JavaScript and is a specialization of implementationOf."@en ;
+    rdfs:subPropertyOf <https://w3id.org/rdf-connect#implementationOf> .
+
+<https://w3id.org/rdf-connect#module_path> a owl:DatatypeProperty ;
+    rdfs:label "module path"@en ;
+    rdfs:comment "The module path of a processor implemented in Python."@en ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/rdf-connect#processor> a owl:ObjectProperty ;
+    rdfs:label "processor"@en ;
+    rdfs:comment "Declares a processor instance used in an execution context, part of a pipeline."@en ;
+    rdfs:domain <https://w3id.org/rdf-connect#ExecutionContext> ;
+    rdfs:range <https://w3id.org/rdf-connect#Processor> .
+
+<https://w3id.org/rdf-connect#pyImplementationOf> a owl:ObjectProperty ;
+    rdfs:label "Python Implementation Of"@en ;
+    rdfs:comment "Indicates that a processor is implemented in Python and is a specialization of implementationOf."@en ;
+    rdfs:subPropertyOf <https://w3id.org/rdf-connect#implementationOf> .
+
+onto: a owl:Ontology ;
+    rdfs:label "RDF Connect Ontology"@en ;
+    ns1:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:author [ a foaf:Person ;
+            foaf:name "Arthur Vercruysse" ] ;
+    dcterms:contributor [ a foaf:Person ;
+            foaf:name "Jens Pots" ],
+        <https://julianrojas.org/#me>,
+        <https://pietercolpaert.be/#me>,
+        <https://smessaert.be/#me> ;
+    dcterms:issued "2024-07-29"^^xsd:date ;
+    dcterms:modified "2025-09-02"^^xsd:date ;
+    rdfs:comment "An ontology for describing programming language-specific runners, processors and pipelines in RDF-based data processing frameworks."@en ;
+    owl:versionInfo "0.2.1" .
+
+rdfs:subClassOf a owl:ObjectProperty .
+
+prov:Activity a owl:Class .
+
+prov:Entity a owl:Class .
+
+prov:SoftwareAgent a owl:Class .
+
+<https://w3id.org/rdf-connect#Pipeline> a owl:Class ;
+    rdfs:label "Pipeline"@en ;
+    rdfs:comment "A sequence of processors and runners forming a data processing workflow."@en ;
+    rdfs:subClassOf prov:Entity .
+
+foaf:Person a owl:Class .
+
+<https://w3id.org/rdf-connect#ExecutionContext> a owl:Class ;
+    rdfs:label "Execution Context"@en ;
+    rdfs:comment "Entity that defines an execution context used by a pipeline, which is composed by a runner and a set of processor instances."@en .
+
+<https://w3id.org/rdf-connect#Processor> a owl:Class ;
+    rdfs:label "Processor"@en ;
+    rdfs:comment "A processing unit that performs an action within a pipeline."@en ;
+    rdfs:subClassOf prov:Activity .
+
+<https://w3id.org/rdf-connect#Runner> a owl:Class ;
+    rdfs:label "Runner"@en ;
+    rdfs:comment "An agent responsible for executing processors based on specific implementations."@en ;
+    rdfs:subClassOf prov:SoftwareAgent .
+
+<https://w3id.org/rdf-connect#implementationOf> a owl:ObjectProperty ;
+    rdfs:label "implementation of"@en ;
+    rdfs:comment "Abstract property that conveys the implementation language of a processor."@en ;
+    rdfs:domain <https://w3id.org/rdf-connect#Processor> ;
+    rdfs:range <https://w3id.org/rdf-connect#Processor> ;
+    rdfs:subPropertyOf rdfs:subClassOf .
+

@@ -1,0 +1,1295 @@
+@prefix onto: <http://purl.org/olia/ubyCat.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "ubyCat.owl" ;
+    rdfs:comment "OLiA Annotation Model for Uby Parts of Speech (Gurevych et al, 2012)\\nextracted from the Uby DTD (http://purl.org/olia/ubyCat.owl, version of Nov 21th, 2012).\\n\\nReferences\\nIryna Gurevych, Judith Eckle-Kohler, Silvana Hartmann, Michael Matuschek, Christian M. Meyer and Christian Wirth, 2012, Uby - A Large-Scale Unified Lexical-Semantic Resource, Proceedings of the 13th Conference of the European Chapter of the Association for Computational Linguistics (EACL 2012), Avignon, France.\\n\\nThe DTD is made available under a Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) license which is available at http://creativecommons.org/licenses/by-sa/3.0/\\nYou are free to share (copy, distribute and transmit) the work, to develop your own extensions (adapt, remix) of the work, and to make commercial use of the work."@en ;
+    owl:imports <http://purl.org/olia/system.owl>,
+        <http://www.monnet-project.eu/lemon> ;
+    owl:versionInfo "2012, Nov 14 created (CC)\\n2013, Mar 20 extended by Data Categories from UBY-LMF not related to Parts-of-Speech, reorganized (JEK)\\n2013, Jun 21 reorganized: converted terminal classes (encoding attribute values) to individuals, eliminated inferred Part-of-Speech hierarchy (JEK)\\n2013, Jun 24-25 Class MultiWordFeature to DatatypeProperty multiWordFeature;\\n\\t\\t\\t Class Index to DatatypeProperty hasIndex;\\n\\t\\t\\t Class IsIncorporated to DatatypeProperty isIncorporated; eliminate hasIsIncorporated, hasIsHead, hasIsBreakBefore;\\n\\t\\t\\t Class Lexicalized to DatatypeProperty lexicalized; eliminate hasLexicalized;\\n\\t\\t\\t Class OptionalArgument to DatatypeProperty optionalArgument;\\n\\t\\t\\t Class Perspectivalized to DatatypeProperty perspectivalized; eliminate hasPerspectivalized;\\n\\t\\t\\t Class TransparentMeaning to DatatypeProperty transparentMeaning; eliminate yes, no;\\n\\t\\t\\t (CC)\\n2013, Jun 25 hasIndex to index (JMC)\\n2013, Jun 26 IsHead to isHead, IsBreakBefore to isBreakBefore\\n\\tintroduced LexicalDataStructure, reintroduced sense, LexicalEntry, Lexicon, Sense, SemanticPredicate, Definition, Lemma, Context, SubcategorizationFrame, SyntacticArgument, senseRelation, SenseExample, SemanticArgument (these are not actually used in the RDF data, but in the original DTD, hence marked as deprecated here, however, having them in the ontology would allow Uby users to easily rediscover the equivalent lemon concepts)\\n\\thasSeparableParticle, SeparableParticle to separableParticle, (has)GeographicalVariant to Dataprop geographicalVariant, (has)Hyphenation to Datprop hyphenation, (has)PhoneticForm to Dp phoneticForm, (has)Transliteration to Dp transliteration, (has)Usage to Dp usage, writtenForm to Dp, (has)IncorporatedSemArg to Dp incorporatedSemArg, (has)SemanticRole to Dp semanticRole, (has)Lexeme to Dp lexeme, (has)Preposition to Dp preposition, (has)PrepositionType to Dp prepositionType\\n\\t(has)ExternalReference to externalReference, (has)ExternalSystem, (has)Generator, (has)Corpus, (has)Label, (has)OrthographyName, (has)Quantification, (has)Sound, (has)Type\\n\\t(has)LanguageIdentifier to dp languageIdentifier (deprecated)\\n\\tdp hasMonolingualExternalRef to OP monolingualExternalRef\\n\\tFrequency subClassOf LexicalFeatureStructure (deprecated)\\n\\t(has)DerivationType deprecated, JMC: relType ... decides the property to use in the mapping, hence deprecated.\\n\\tmerged ComplexLexicalFeature and LexicalDataStructure to LexicalFeatureStructure\\n\\t(CC)\\n\\nTODO: ObjectProperties and Classes for quantification, semanticRole, incorporatedSemArg, Type\\n\\t  consistent naming conventions for properties: hasXY for ObjectProperties, isXY for boolean DataProperties, xY for other DataProperties\\n\\t  domain and range restrictions on properties\\n\\t  check properties generated from DerivationType (relType)\\n\\nChristian Chiarcos, chiarcos@cs.uni-frankfurt.de\\nJudith Eckle-Kohler, eckle-kohler@ukp.informatik.tu-darmstadt.de\\nJohn McCrae, jmccrae@cit-ec.uni-bielefeld.de\\n"@en .
+
+<http://purl.org/olia/ubyCat.owl#Context> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#LexicalContext> ;
+    owl:versionInfo "superseded by lemon:LexicalContext" .
+
+<http://purl.org/olia/ubyCat.owl#Definition> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#SenseDefinition> ;
+    owl:versionInfo "superseded by lemon:SenseDefinition" .
+
+<http://purl.org/olia/ubyCat.owl#Frequency> a owl:Class ;
+    rdfs:comment "This owl:Class corresponds to the LMF-class Frequency which has been introduced in UBY-LMF as an extension of ISO-LMF." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> .
+
+<http://purl.org/olia/ubyCat.owl#Lemma> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation>,
+        <http://www.monnet-project.eu/lemon#Form> ;
+    owl:deprecated true ;
+    owl:versionInfo "superseded by lemon:canonicalForm" .
+
+<http://purl.org/olia/ubyCat.owl#LexicalEntry> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#LexicalEntry> ;
+    owl:versionInfo "superseded by lemon:LexicalEntry" .
+
+<http://purl.org/olia/ubyCat.owl#Lexicon> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#Lexicon> ;
+    owl:versionInfo "superseded by lemon:Lexicon" .
+
+<http://purl.org/olia/ubyCat.owl#Position> a owl:DatatypeProperty ;
+    rdfs:label "position" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2237" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#multiwordFeature> .
+
+<http://purl.org/olia/ubyCat.owl#Quantification> a owl:Class ;
+    rdfs:label "quantification" ;
+    rdfs:comment "In UBY-LMF, quantification is an attribute of the class SemanticLabel. It can be used, if the value of the semantic label is annotated with a score, e.g. type=sentiment, label=positive, quantification=strong.\\n" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2211" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#MetaFeature> ;
+    owl:versionInfo "should be used together with hasQuantification to replace the DatatypeProperty quantification" .
+
+<http://purl.org/olia/ubyCat.owl#SemanticArgument> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation>,
+        <http://www.monnet-project.eu/lemon#Argument> ;
+    owl:versionInfo "subclass of lemon:semArg" .
+
+<http://purl.org/olia/ubyCat.owl#SemanticLabel> a owl:Class ;
+    rdfs:comment "This owl:Class corresponds to the LMF-class SemanticLabel which has been introduced in UBY-LMF as an extension of ISO-LMF." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#SemanticLabel> ;
+    owl:versionInfo "superseded by lemon:SemanticLabel" .
+
+<http://purl.org/olia/ubyCat.owl#SemanticPredicate> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation>,
+        <http://www.monnet-project.eu/lemon#LexicalSense> ;
+    owl:versionInfo "subClass of lemon:LexicalSense" .
+
+<http://purl.org/olia/ubyCat.owl#SenseExample> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#UsageExample> ;
+    owl:versionInfo "superseded by lemon:UsageExample" .
+
+<http://purl.org/olia/ubyCat.owl#SubcategorizationFrame> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#Frame> ;
+    owl:versionInfo "superseded by lemon:Frame" .
+
+<http://purl.org/olia/ubyCat.owl#SyntacticArgument> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation>,
+        <http://www.monnet-project.eu/lemon#Argument> ;
+    owl:versionInfo "see lemon:synArg" .
+
+<http://purl.org/olia/ubyCat.owl#Type> a owl:Class ;
+    rdfs:label "type" ;
+    rdfs:comment "Type is an attribute of the UBY-LMF class SemanticLabel. It encodes the name of a SemanticLabel type, e.g.\\ntype=semanticField (from WordNet or GermaNet).\\nThe label attribute of SemanticLabel holds the corresponding value of the SemanticLabel, e.g. \\nlabel=animate (for type=semanticField)." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1971" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#MetaFeature> ;
+    owl:versionInfo "Should replace the DatatypeProperty type" .
+
+<http://purl.org/olia/ubyCat.owl#WordForm> a owl:Class ;
+    rdfs:label "WordForm" ;
+    rdfs:isDefinedBy "http://purl.org/olia/ubyCat.owl" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation> .
+
+<http://purl.org/olia/ubyCat.owl#abbreviation> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "abbreviation" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-329" .
+
+<http://purl.org/olia/ubyCat.owl#abbreviationAcronym> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "abbreviationAcronym" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-334" .
+
+<http://purl.org/olia/ubyCat.owl#abbreviationInitialism> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "abbreviationInitialism" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-333" .
+
+<http://purl.org/olia/ubyCat.owl#accusative> a <http://purl.org/olia/ubyCat.owl#Case>,
+        owl:NamedIndividual ;
+    rdfs:label "accusative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2724" .
+
+<http://purl.org/olia/ubyCat.owl#adjective> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adjective" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1230" .
+
+<http://purl.org/olia/ubyCat.owl#adjectivePhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "adjectivePhrase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2258" .
+
+<http://purl.org/olia/ubyCat.owl#adjectivePhrase_nounPhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "adjectivePhrase_nounPhrase" .
+
+<http://purl.org/olia/ubyCat.owl#adposition> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adposition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1231" .
+
+<http://purl.org/olia/ubyCat.owl#adpositionCircumposition> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adpositionCircumposition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1906" .
+
+<http://purl.org/olia/ubyCat.owl#adpositionPostposition> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adpositionPostposition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1360" .
+
+<http://purl.org/olia/ubyCat.owl#adpositionPreposition> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adpositionPreposition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1366" .
+
+<http://purl.org/olia/ubyCat.owl#adverb> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adverb" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1232" .
+
+<http://purl.org/olia/ubyCat.owl#adverbPhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "adverbPhrase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2259" .
+
+<http://purl.org/olia/ubyCat.owl#adverbPronominal> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "adverbPronominal" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2998" .
+
+<http://purl.org/olia/ubyCat.owl#adverbialComplement> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "adverbialComplement" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4639" .
+
+<http://purl.org/olia/ubyCat.owl#affix> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "affix" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1234" .
+
+<http://purl.org/olia/ubyCat.owl#affixPrefix> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "affixPrefix" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1365" .
+
+<http://purl.org/olia/ubyCat.owl#affixSuffix> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "affixSuffix" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1395" .
+
+<http://purl.org/olia/ubyCat.owl#association> a <http://purl.org/olia/ubyCat.owl#RelType>,
+        owl:NamedIndividual ;
+    rdfs:label "association" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-438" .
+
+<http://purl.org/olia/ubyCat.owl#bareInfinitive> a <http://purl.org/olia/ubyCat.owl#VerbForm>,
+        owl:NamedIndividual ;
+    rdfs:label "bareInfinitive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4163" .
+
+<http://purl.org/olia/ubyCat.owl#comparative> a <http://purl.org/olia/ubyCat.owl#Degree>,
+        owl:NamedIndividual ;
+    rdfs:label "comparative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2781" .
+
+<http://purl.org/olia/ubyCat.owl#complement> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "complement" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1257" .
+
+<http://purl.org/olia/ubyCat.owl#complementary> a <http://purl.org/olia/ubyCat.owl#RelType>,
+        owl:NamedIndividual ;
+    rdfs:label "complementary" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-83" .
+
+<http://purl.org/olia/ubyCat.owl#compound> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "compound" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3127" .
+
+<http://purl.org/olia/ubyCat.owl#compoundRoot> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "compoundRoot" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-357" .
+
+<http://purl.org/olia/ubyCat.owl#conjunction> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "conjunction" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3132" .
+
+<http://purl.org/olia/ubyCat.owl#conjunctionCoordinating> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "conjunctionCoordinating" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1262" .
+
+<http://purl.org/olia/ubyCat.owl#conjunctionSubordinating> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "conjunctionSubordinating" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1393" .
+
+<http://purl.org/olia/ubyCat.owl#contraction> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "contraction" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-354" .
+
+<http://purl.org/olia/ubyCat.owl#core> a <http://purl.org/olia/ubyCat.owl#CoreType>,
+        owl:NamedIndividual ;
+    rdfs:label "core" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4462" .
+
+<http://purl.org/olia/ubyCat.owl#coreUnexpressed> a <http://purl.org/olia/ubyCat.owl#CoreType>,
+        owl:NamedIndividual ;
+    rdfs:label "coreUnexpressed" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4464" .
+
+<http://purl.org/olia/ubyCat.owl#corpus> a owl:DatatypeProperty ;
+    rdfs:label "corpus" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4361" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#crosslingualSenseAlignment> a <http://purl.org/olia/ubyCat.owl#SenseAxisType>,
+        owl:NamedIndividual ;
+    rdfs:label "crosslingualSenseAlignment" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4628" .
+
+<http://purl.org/olia/ubyCat.owl#dative> a <http://purl.org/olia/ubyCat.owl#Case>,
+        owl:NamedIndividual ;
+    rdfs:label "dative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2723" .
+
+<http://purl.org/olia/ubyCat.owl#declarativeClause> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "declarativeClause" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2300" .
+
+<http://purl.org/olia/ubyCat.owl#derivationBase> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "derivationBase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4612" .
+
+<http://purl.org/olia/ubyCat.owl#derivationBaseAdj> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "derivationBaseAdj" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4616" .
+
+<http://purl.org/olia/ubyCat.owl#derivationBaseNoun> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "derivationBaseNoun" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4615" .
+
+<http://purl.org/olia/ubyCat.owl#derivationBaseVerb> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "derivationBaseVerb" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4614" .
+
+<http://purl.org/olia/ubyCat.owl#derivative> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "derivative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4611" .
+
+<http://purl.org/olia/ubyCat.owl#determiner> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determiner" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1272" .
+
+<http://purl.org/olia/ubyCat.owl#determinerDefinite> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determinerDefinite" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1430" .
+
+<http://purl.org/olia/ubyCat.owl#determinerDemonstrative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determinerDemonstrative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1269" .
+
+<http://purl.org/olia/ubyCat.owl#determinerIndefinite> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determinerIndefinite" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1307" .
+
+<http://purl.org/olia/ubyCat.owl#determinerInterrogative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determinerInterrogative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1320" .
+
+<http://purl.org/olia/ubyCat.owl#determinerPossessive> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "determinerPossessive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1357" .
+
+<http://purl.org/olia/ubyCat.owl#directObject> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "directObject" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1274" .
+
+<http://purl.org/olia/ubyCat.owl#etymology> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "etymology" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-221" .
+
+<http://purl.org/olia/ubyCat.owl#expletive> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "expletive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3187" .
+
+<http://purl.org/olia/ubyCat.owl#extensionalDefinition> a <http://purl.org/olia/ubyCat.owl#DefinitionType>,
+        owl:NamedIndividual ;
+    rdfs:label "extensionalDefinition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-171" .
+
+<http://purl.org/olia/ubyCat.owl#externalReference> a owl:DatatypeProperty ;
+    rdfs:label "externalReference" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1975" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#externalSystem> a owl:DatatypeProperty ;
+    rdfs:label "externalSystem" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1974" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#extraThematic> a <http://purl.org/olia/ubyCat.owl#CoreType>,
+        owl:NamedIndividual ;
+    rdfs:label "extraThematic" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4465" .
+
+<http://purl.org/olia/ubyCat.owl#feminine> a <http://purl.org/olia/ubyCat.owl#GrammaticalGender>,
+        owl:NamedIndividual ;
+    rdfs:label "feminine" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3197" .
+
+<http://purl.org/olia/ubyCat.owl#first> a <http://purl.org/olia/ubyCat.owl#Person>,
+        owl:NamedIndividual ;
+    rdfs:label "first" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3198" .
+
+<http://purl.org/olia/ubyCat.owl#generator> a owl:DatatypeProperty ;
+    rdfs:label "generator" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2511" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#genitive> a <http://purl.org/olia/ubyCat.owl#Case>,
+        owl:NamedIndividual ;
+    rdfs:label "genitive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2722" .
+
+<http://purl.org/olia/ubyCat.owl#geographicalVariant> a owl:DatatypeProperty ;
+    rdfs:label "geographicalVariant" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1851" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:deprecated true ;
+    owl:versionInfo "moved into language tags (JMC)" .
+
+<http://purl.org/olia/ubyCat.owl#hasComplementizer> a owl:ObjectProperty ;
+    rdfs:label "complementizer" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Complementizer> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasCoreType> a owl:ObjectProperty ;
+    rdfs:label "coreType" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#CoreType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasDefinitionType> a owl:ObjectProperty ;
+    rdfs:label "definitionType" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#DefinitionType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasDerivationType> a owl:ObjectProperty ;
+    rdfs:comment "In UBY-LMF, relType is an attribute of the RelatedForm class which encodes links to derivationally related lexical entries or senses." ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#DerivationType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> ;
+    owl:deprecated true ;
+    owl:versionInfo "It decides the property to use in the mapping, hence deprecated.\\nrelType=\"xxx\" is normally uby:xxx\\n(with some exceptions, .e.g, relType=\"seeAlso\" is rdfs:seeAlso)" .
+
+<http://purl.org/olia/ubyCat.owl#hasDeterminer> a owl:ObjectProperty ;
+    rdfs:label "determiner" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Determiner> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasExampleType> a owl:ObjectProperty ;
+    rdfs:label "exampleType" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#ExampleType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasGrammaticalFunction> a owl:ObjectProperty ;
+    rdfs:label "grammaticalFunction" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#GrammaticalFunction> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasPosition> a owl:DatatypeProperty ;
+    rdfs:label "position" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasQuantification> a owl:AnnotationProperty,
+        owl:ObjectProperty ;
+    rdfs:label "quantification" ;
+    rdfs:comment "In UBY-LMF, quantification is an attribute of the class SemanticLabel. It can be used, if the value of the semantic label is annotated with a score, e.g. type=sentiment, label=positive, quantification=strong.\\n" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2211" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:versionInfo "Should be used to replace the DatatypeProperty quantification" .
+
+<http://purl.org/olia/ubyCat.owl#hasRelType> a owl:ObjectProperty ;
+    rdfs:label "relType" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#RelType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasSenseAxisType> a owl:ObjectProperty ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#SenseAxisType> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasSyntacticCategory> a owl:ObjectProperty ;
+    rdfs:label "syntacticCategory" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#SyntacticCategory> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasSyntacticProperty> a owl:ObjectProperty ;
+    rdfs:label "syntacticProperty" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#SyntacticProperty> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#hasType> a owl:AnnotationProperty,
+        owl:ObjectProperty ;
+    rdfs:label "type" ;
+    rdfs:comment "Type is an attribute of the UBY-LMF class SemanticLabel. It encodes the name of a SemanticLabel type, e.g.\\ntype=semanticField (from WordNet or GermaNet).\\nThe label attribute of SemanticLabel holds the corresponding value of the SemanticLabel, e.g. \\nlabel=animate (for type=semanticField)." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1971" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:versionInfo "Should replace the DatatypeProperty type" .
+
+<http://purl.org/olia/ubyCat.owl#hasVerbForm> a owl:ObjectProperty ;
+    rdfs:label "verbForm" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#VerbForm> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#has_case> a owl:ObjectProperty ;
+    rdfs:label "case" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Case> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_degree> a owl:ObjectProperty ;
+    rdfs:label "degree" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Degree> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_grammaticalGender> a owl:ObjectProperty ;
+    rdfs:label "grammaticalGender" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#GrammaticalGender> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_grammaticalNumber> a owl:ObjectProperty ;
+    rdfs:label "grammaticalNumber" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#GrammaticalNumber> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_partOfSpeech> a owl:ObjectProperty ;
+    rdfs:label "partOfSpeech" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-396" ;
+    rdfs:subPropertyOf <http://purl.org/olia/system.owl#hasFeature> .
+
+<http://purl.org/olia/ubyCat.owl#has_person> a owl:ObjectProperty ;
+    rdfs:label "person" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Person> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_tense> a owl:ObjectProperty ;
+    rdfs:label "tense" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Tense> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#has_verbFormMood> a owl:ObjectProperty ;
+    rdfs:label "verbFormMood" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#VerbFormMood> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#hyphenation> a owl:DatatypeProperty ;
+    rdfs:label "hyphenation" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-264" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#idiomaticExpression> a <http://purl.org/olia/ubyCat.owl#ExampleType>,
+        owl:NamedIndividual ;
+    rdfs:label "idiomaticExpression" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-351" .
+
+<http://purl.org/olia/ubyCat.owl#imperative> a <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "imperative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1844" .
+
+<http://purl.org/olia/ubyCat.owl#incorporatedSemArg> a owl:DatatypeProperty,
+        owl:ObjectProperty ;
+    rdfs:label "incorporatedSemArg" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4151" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> .
+
+<http://purl.org/olia/ubyCat.owl#indefinite> a <http://purl.org/olia/ubyCat.owl#Determiner>,
+        owl:NamedIndividual ;
+    rdfs:label "indefinite" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1307" .
+
+<http://purl.org/olia/ubyCat.owl#index> a owl:DatatypeProperty ;
+    rdfs:label "index" ;
+    rdfs:comment "Index is an attribute of the UBY-LMF class Sense.\\nIt encodes a ranking of the senses according to their frequency which is provided, e.g., by WordNet." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-233" ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#indicative> a <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "indicative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1885" .
+
+<http://purl.org/olia/ubyCat.owl#infinitive> a <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "infinitive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1312" .
+
+<http://purl.org/olia/ubyCat.owl#infinitiveZu> a <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "infinitiveZu" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2897" .
+
+<http://purl.org/olia/ubyCat.owl#ingForm> a <http://purl.org/olia/ubyCat.owl#VerbForm>,
+        <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "ingForm" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4108" .
+
+<http://purl.org/olia/ubyCat.owl#intensionalDefinition> a <http://purl.org/olia/ubyCat.owl#DefinitionType>,
+        owl:NamedIndividual ;
+    rdfs:label "intensionalDefinition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-170" .
+
+<http://purl.org/olia/ubyCat.owl#interjection> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "interjection" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1318" .
+
+<http://purl.org/olia/ubyCat.owl#isBreakBefore> a owl:DatatypeProperty ;
+    rdfs:label "isBreakBefore" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4626" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#multiwordFeature> .
+
+<http://purl.org/olia/ubyCat.owl#isHead> a owl:DatatypeProperty ;
+    rdfs:label "isHead" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4617" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#multiwordFeature> .
+
+<http://purl.org/olia/ubyCat.owl#isIncorporated> a owl:DatatypeProperty ;
+    rdfs:label "isIncorporated" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4151" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#label> a owl:DatatypeProperty ;
+    rdfs:label "label" ;
+    rdfs:comment "Label encodes a name (short - like a tag) and is an attribute of the UBY-LMF class SemanticLabel, SemanticPredicate, " ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1857" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#languageIdentifier> a owl:DatatypeProperty ;
+    rdfs:label "languageIdentifier" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-279" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:deprecated true ;
+    owl:versionInfo "replaced by a lang-tag" .
+
+<http://purl.org/olia/ubyCat.owl#lexeme> a owl:DatatypeProperty ;
+    rdfs:label "lexeme" ;
+    rdfs:comment "Lexeme is an attribute of the UBY-LMF class SyntacticArgument and specifies a particular lexeme to be used in realizations of particular complements.\\nExample (lexeme = es, ObjectComplement realized as zu-infinitive): Er schafft es, den Termin einzuhalten.\\n* Er schafft, den Termin einzuhalten." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1325" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#lexicalized> a owl:DatatypeProperty ;
+    rdfs:label "lexicalized" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3295" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#loanWord> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "loanWord" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-511" .
+
+<http://purl.org/olia/ubyCat.owl#masculine> a <http://purl.org/olia/ubyCat.owl#GrammaticalGender>,
+        owl:NamedIndividual ;
+    rdfs:label "masculine" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3312" .
+
+<http://purl.org/olia/ubyCat.owl#monolingualExternalRef> a owl:AnnotationProperty,
+        owl:ObjectProperty ;
+    rdfs:label "monolingualExternalRef" ;
+    rdfs:domain <http://purl.org/olia/ubyCat.owl#Synset> ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#MonolingualExternalRef> ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#monolingualSenseAlignment> a <http://purl.org/olia/ubyCat.owl#SenseAxisType>,
+        owl:NamedIndividual ;
+    rdfs:label "monolingualSenseAlignment" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4627" .
+
+<http://purl.org/olia/ubyCat.owl#neuter> a <http://purl.org/olia/ubyCat.owl#GrammaticalGender>,
+        owl:NamedIndividual ;
+    rdfs:label "neuter" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3336" .
+
+<http://purl.org/olia/ubyCat.owl#nominative> a <http://purl.org/olia/ubyCat.owl#Case>,
+        owl:NamedIndividual ;
+    rdfs:label "nominative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2721" .
+
+<http://purl.org/olia/ubyCat.owl#nonPredicativeAdjective> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "nonPredicativeAdjective" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4618" .
+
+<http://purl.org/olia/ubyCat.owl#noun> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "noun" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3347" .
+
+<http://purl.org/olia/ubyCat.owl#nounCommon> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "nounCommon" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-385" .
+
+<http://purl.org/olia/ubyCat.owl#nounPhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "nounPhrase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2256" .
+
+<http://purl.org/olia/ubyCat.owl#nounProper> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "nounProper" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1371" .
+
+<http://purl.org/olia/ubyCat.owl#nounProperFamilyName> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "nounProperLastName" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4195" .
+
+<http://purl.org/olia/ubyCat.owl#nounProperGivenName> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "nounProperFirstName" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4194" .
+
+<http://purl.org/olia/ubyCat.owl#numeral> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "numeral" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1334" .
+
+<http://purl.org/olia/ubyCat.owl#objectComplement> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "objectComplement" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4625" .
+
+<http://purl.org/olia/ubyCat.owl#objectControl> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "objectControl" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4189" .
+
+<http://purl.org/olia/ubyCat.owl#objectRaising> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "objectRaising" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4190" .
+
+<http://purl.org/olia/ubyCat.owl#optionalArgument> a owl:DatatypeProperty ;
+    rdfs:label "optional" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4622" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#orthographyName> a owl:DatatypeProperty ;
+    rdfs:label "orthographyName" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2176" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#other> a <http://purl.org/olia/ubyCat.owl#ExampleType>,
+        owl:NamedIndividual ;
+    rdfs:label "other" .
+
+<http://purl.org/olia/ubyCat.owl#partWhole> a <http://purl.org/olia/ubyCat.owl#RelType>,
+        owl:NamedIndividual ;
+    rdfs:label "partWhole" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-397" .
+
+<http://purl.org/olia/ubyCat.owl#participle> a <http://purl.org/olia/ubyCat.owl#VerbForm>,
+        <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "participle" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3371" .
+
+<http://purl.org/olia/ubyCat.owl#particle> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "particle" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3372" .
+
+<http://purl.org/olia/ubyCat.owl#particleAnswer> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "particleAnswer" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2891" .
+
+<http://purl.org/olia/ubyCat.owl#particleComparative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "particleComparative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1922" .
+
+<http://purl.org/olia/ubyCat.owl#particleInfinitive> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "particleInfinitive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1896" .
+
+<http://purl.org/olia/ubyCat.owl#particleNegative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "particleNegative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1894" .
+
+<http://purl.org/olia/ubyCat.owl#partitiveDefinition> a <http://purl.org/olia/ubyCat.owl#DefinitionType>,
+        owl:NamedIndividual ;
+    rdfs:label "partitiveDefinition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-172" .
+
+<http://purl.org/olia/ubyCat.owl#past> a <http://purl.org/olia/ubyCat.owl#Tense>,
+        owl:NamedIndividual ;
+    rdfs:label "past" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3378" .
+
+<http://purl.org/olia/ubyCat.owl#peripheral> a <http://purl.org/olia/ubyCat.owl#CoreType>,
+        owl:NamedIndividual ;
+    rdfs:label "peripheral" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4463" .
+
+<http://purl.org/olia/ubyCat.owl#perspectivalized> a owl:DatatypeProperty ;
+    rdfs:label "perspectivalized" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4391" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#phoneticForm> a owl:DatatypeProperty ;
+    rdfs:label "phoneticForm" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1837" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#phraseme> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "phraseme" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-339" .
+
+<http://purl.org/olia/ubyCat.owl#plural> a <http://purl.org/olia/ubyCat.owl#GrammaticalNumber>,
+        owl:NamedIndividual ;
+    rdfs:label "plural" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-253" .
+
+<http://purl.org/olia/ubyCat.owl#positive> a <http://purl.org/olia/ubyCat.owl#Degree>,
+        owl:NamedIndividual ;
+    rdfs:label "positive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2780" .
+
+<http://purl.org/olia/ubyCat.owl#possessive> a <http://purl.org/olia/ubyCat.owl#Determiner>,
+        owl:NamedIndividual ;
+    rdfs:label "possessive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1357" .
+
+<http://purl.org/olia/ubyCat.owl#postpositiveAdjective> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "postpositiveAdjective" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4619" .
+
+<http://purl.org/olia/ubyCat.owl#predicativeAdjective> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "predicativeAdjective" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2710" .
+
+<http://purl.org/olia/ubyCat.owl#preposition> a owl:DatatypeProperty ;
+    rdfs:label "preposition" ;
+    rdfs:comment "Preposition is an attribute of the UBY-LMF class SyntacticArgument and specifies the particular preposition to be used in prepositional complements that can either be realized as PP or as preposition and subordinate clause.\\nExample: That depends on who did it." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1366" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#prepositionType> a owl:DatatypeProperty ;
+    rdfs:label "prepositionType" ;
+    rdfs:comment "PrepositionType is an attribute of the UBY-LMF class SyntacticArgument and specifies the particular preposition type (e.g. locative, directional) to be used in prepositional complements.\\nThe preposition type is specified in VerbNet." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4621" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#prepositionalComplement> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "prepositionalComplement" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4638" .
+
+<http://purl.org/olia/ubyCat.owl#prepositionalPhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "prepositionalPhrase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2257" .
+
+<http://purl.org/olia/ubyCat.owl#present> a <http://purl.org/olia/ubyCat.owl#Tense>,
+        owl:NamedIndividual ;
+    rdfs:label "present" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3421" .
+
+<http://purl.org/olia/ubyCat.owl#pronoun> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronoun" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1370" .
+
+<http://purl.org/olia/ubyCat.owl#pronounDemonstrative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounDemonstrative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1270" .
+
+<http://purl.org/olia/ubyCat.owl#pronounIndefinite> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounIndefinite" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1309" .
+
+<http://purl.org/olia/ubyCat.owl#pronounInterrogative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounInterrogative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1321" .
+
+<http://purl.org/olia/ubyCat.owl#pronounPersonal> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounPersonal" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3013" .
+
+<http://purl.org/olia/ubyCat.owl#pronounPersonalIrreflexive> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounPersonalIrreflexive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3013" .
+
+<http://purl.org/olia/ubyCat.owl#pronounPersonalReflexive> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounPersonalReflexive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3014" .
+
+<http://purl.org/olia/ubyCat.owl#pronounPossessive> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounPossessive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1359" .
+
+<http://purl.org/olia/ubyCat.owl#pronounRelative> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "pronounRelative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1380" .
+
+<http://purl.org/olia/ubyCat.owl#quantification> a owl:DatatypeProperty ;
+    rdfs:label "quantification" ;
+    rdfs:comment "In UBY-LMF, quantification is an attribute of the class SemanticLabel. It can be used, if the value of the semantic label is annotated with a score, e.g. type=sentiment, label=positive, quantification=strong.\\n" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2211" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:versionInfo "Should be remodelled as an ObjectProperty in future versions" .
+
+<http://purl.org/olia/ubyCat.owl#reflexive> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "reflexive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3014" .
+
+<http://purl.org/olia/ubyCat.owl#second> a <http://purl.org/olia/ubyCat.owl#Person>,
+        owl:NamedIndividual ;
+    rdfs:label "second" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3464" .
+
+<http://purl.org/olia/ubyCat.owl#semanticRole> a owl:DatatypeProperty ;
+    rdfs:label "semanticRole" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3466" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#sense> a owl:ObjectProperty ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd",
+        "http://www.monnet-project.eu/lemon#sense" ;
+    rdfs:range <http://purl.org/olia/ubyCat.owl#Sense> ;
+    owl:equivalentProperty <http://www.monnet-project.eu/lemon#sense> .
+
+<http://purl.org/olia/ubyCat.owl#senseInstance> a <http://purl.org/olia/ubyCat.owl#ExampleType>,
+        owl:NamedIndividual ;
+    rdfs:label "senseInstance" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3778" .
+
+<http://purl.org/olia/ubyCat.owl#senseRelation> a owl:ObjectProperty ;
+    rdfs:label "SenseRelation" ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd" ;
+    owl:deprecated true ;
+    owl:equivalentProperty <http://www.monnet-project.eu/lemon#senseRelation> ;
+    owl:versionInfo "superseded by lemon:senseRelation" .
+
+<http://purl.org/olia/ubyCat.owl#separableParticle> a owl:DatatypeProperty ;
+    rdfs:label "separableParticle" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3546" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#singular> a <http://purl.org/olia/ubyCat.owl#GrammaticalNumber>,
+        owl:NamedIndividual ;
+    rdfs:label "singular" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-252" .
+
+<http://purl.org/olia/ubyCat.owl#sound> a owl:DatatypeProperty ;
+    rdfs:label "sound" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2250" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#subcatFrame> a <http://purl.org/olia/ubyCat.owl#ExampleType>,
+        owl:NamedIndividual ;
+    rdfs:label "subcatFrame" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4630" .
+
+<http://purl.org/olia/ubyCat.owl#subject> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "subject" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1391" .
+
+<http://purl.org/olia/ubyCat.owl#subjectComplement> a <http://purl.org/olia/ubyCat.owl#GrammaticalFunction>,
+        owl:NamedIndividual ;
+    rdfs:label "subjectComplement" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4624" .
+
+<http://purl.org/olia/ubyCat.owl#subjectControl> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "subjectControl" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4187" .
+
+<http://purl.org/olia/ubyCat.owl#subjectRaising> a <http://purl.org/olia/ubyCat.owl#SyntacticProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "subjectRaising" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4188" .
+
+<http://purl.org/olia/ubyCat.owl#subjunctive> a <http://purl.org/olia/ubyCat.owl#VerbFormMood>,
+        owl:NamedIndividual ;
+    rdfs:label "subjunctive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1843" .
+
+<http://purl.org/olia/ubyCat.owl#subordinateClause> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "subordinateClause" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3496" .
+
+<http://purl.org/olia/ubyCat.owl#superlative> a <http://purl.org/olia/ubyCat.owl#Degree>,
+        owl:NamedIndividual ;
+    rdfs:label "superlative" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2782" .
+
+<http://purl.org/olia/ubyCat.owl#supports> a <http://purl.org/olia/ubyCat.owl#DerivationType>,
+        owl:NamedIndividual ;
+    rdfs:label "supports" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3003" .
+
+<http://purl.org/olia/ubyCat.owl#symbol> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "symbol" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1398" .
+
+<http://purl.org/olia/ubyCat.owl#syntacticUsage> a <http://purl.org/olia/ubyCat.owl#ExampleType>,
+        owl:NamedIndividual ;
+    rdfs:label "syntacticUsage" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-455" .
+
+<http://purl.org/olia/ubyCat.owl#taxonomic> a <http://purl.org/olia/ubyCat.owl#RelType>,
+        owl:NamedIndividual ;
+    rdfs:label "taxonomic" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4039" .
+
+<http://purl.org/olia/ubyCat.owl#thatType> a <http://purl.org/olia/ubyCat.owl#Complementizer>,
+        owl:NamedIndividual ;
+    rdfs:label "thatType" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4623" .
+
+<http://purl.org/olia/ubyCat.owl#third> a <http://purl.org/olia/ubyCat.owl#Person>,
+        owl:NamedIndividual ;
+    rdfs:label "third" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3526" .
+
+<http://purl.org/olia/ubyCat.owl#toInfinitive> a <http://purl.org/olia/ubyCat.owl#VerbForm>,
+        owl:NamedIndividual ;
+    rdfs:label "toInfinitive" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4162" .
+
+<http://purl.org/olia/ubyCat.owl#translatedDefinition> a <http://purl.org/olia/ubyCat.owl#DefinitionType>,
+        owl:NamedIndividual ;
+    rdfs:label "translatedDefinition" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-173" .
+
+<http://purl.org/olia/ubyCat.owl#transliteration> a owl:DatatypeProperty ;
+    rdfs:label "transliteration" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1848" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#transparentMeaning> a owl:DatatypeProperty ;
+    rdfs:label "transparentMeaning" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4390" ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#type> a owl:DatatypeProperty ;
+    rdfs:label "type" ;
+    rdfs:comment "Type is an attribute of the UBY-LMF class SemanticLabel. It encodes the name of a SemanticLabel type, e.g.\\ntype=semanticField (from WordNet or GermaNet).\\nThe label attribute of SemanticLabel holds the corresponding value of the SemanticLabel, e.g. \\nlabel=animate (for type=semanticField)." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1971" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:versionInfo "Should be replaced by the ObjectProperty hasType and the Class Type" .
+
+<http://purl.org/olia/ubyCat.owl#usage> a owl:DatatypeProperty ;
+    rdfs:label "usage" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3764" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> ;
+    owl:versionInfo "Never used" .
+
+<http://purl.org/olia/ubyCat.owl#verb> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "verb" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1424" .
+
+<http://purl.org/olia/ubyCat.owl#verbAuxiliary> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "verbAuxiliary" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1244" .
+
+<http://purl.org/olia/ubyCat.owl#verbMain> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "verbMain" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1400" .
+
+<http://purl.org/olia/ubyCat.owl#verbModal> a <http://purl.org/olia/ubyCat.owl#PartOfSpeech>,
+        owl:NamedIndividual ;
+    rdfs:label "verbModal" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1329" .
+
+<http://purl.org/olia/ubyCat.owl#verbPhrase> a <http://purl.org/olia/ubyCat.owl#SyntacticCategory>,
+        owl:NamedIndividual ;
+    rdfs:label "verbPhrase" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2255" .
+
+<http://purl.org/olia/ubyCat.owl#whType> a <http://purl.org/olia/ubyCat.owl#Complementizer>,
+        owl:NamedIndividual ;
+    rdfs:label "whType" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2296" .
+
+<http://purl.org/olia/ubyCat.owl#writtenForm> a owl:DatatypeProperty ;
+    rdfs:label "writtenForm" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1836" ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#yesNoType> a <http://purl.org/olia/ubyCat.owl#Complementizer>,
+        owl:NamedIndividual ;
+    rdfs:label "yesNoType" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2297" .
+
+<http://purl.org/olia/ubyCat.owl#DerivationalMorphology> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#LinkingFeature> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#MonolingualExternalRef> a owl:Class ;
+    rdfs:label "monolingualExternalRef" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1975" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> .
+
+<http://purl.org/olia/ubyCat.owl#Sense> a owl:Class ;
+    rdfs:isDefinedBy "http://uby.googlecode.com/files/UBY_LMF_0_2_0.dtd",
+        "http://www.monnet-project.eu/lemon#LexicalSense" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#UnitOfAnnotation>,
+        <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> ;
+    owl:deprecated true ;
+    owl:equivalentClass <http://www.monnet-project.eu/lemon#LexicalSense> ;
+    owl:versionInfo "superseded by lemon:LexicalSense" .
+
+<http://purl.org/olia/ubyCat.owl#Synset> a owl:Class ;
+    rdfs:comment "This owl:Class corresponds to the ISO LMF-class Synset." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure>,
+        skos:Concept ;
+    owl:versionInfo "mapped onto skos:Concept" .
+
+<http://www.monnet-project.eu/lemon#LexicalContext> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> .
+
+<http://www.monnet-project.eu/lemon#SemanticLabel> a owl:Class .
+
+skos:Concept a owl:Class .
+
+<http://purl.org/olia/system.owl#Feature> a owl:Class .
+
+<http://purl.org/olia/system.owl#hasFeature> a owl:ObjectProperty .
+
+<http://purl.org/olia/ubyCat.owl#DictionaryFeature> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#LexicalAnnotation> a owl:Class .
+
+<http://purl.org/olia/ubyCat.owl#MetaFeature> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#SemanticFeature> a owl:Class ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#Determiner> a owl:Class ;
+    rdfs:label "determiner" ;
+    rdfs:comment "In UBY-LMF, determiner is an attribute of the LMF class SyntacticArgument. For noun phrase arguments, this attribute encodes specific constraints on the determiner to be used (possessive or indefinite).\\n\\nExample given in VerbNet (possessive): They allow our smoking.\\nExample from VerbNet (indefinite): an indefinite determiner is required for the noun phrase complement of \"echo\" as in \\nThere echoed voices through the hall. (verb class sound_existence-47.4)" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1272",
+        "http://www.isocat.org/datcat/DC-3159" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#GrammaticalNumber> a owl:Class ;
+    rdfs:label "grammaticalNumber" ;
+    rdfs:comment "In UBY-LMF, number is also an attribute of the UBY-LMF class SyntacticArgument and specifies the grammatical number of an argument.\\nExample: These types of fish mix well together." ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-251" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature>,
+        <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#SenseAxisType> a owl:Class ;
+    rdfs:label "senseAxisType" ;
+    rdfs:comment "In Uby-LMF, the attribute senseAxisType of the SenseAxis class indicates, whether the type of linking between to senses or between two synsets. Example values are monolingualSenseAlignment and crosslingualSenseAlignment" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LinkingFeature> .
+
+<http://purl.org/olia/ubyCat.owl#Tense> a owl:Class ;
+    rdfs:label "tense" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3519" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#multiwordFeature> a owl:DatatypeProperty ;
+    rdfs:subPropertyOf <http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> .
+
+<http://purl.org/olia/ubyCat.owl#Complementizer> a owl:Class ;
+    rdfs:label "complementizer" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3124" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#Degree> a owl:Class ;
+    rdfs:label "degree" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2779" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#GrammaticalGender> a owl:Class ;
+    rdfs:label "grammaticalGender" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3217" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#Person> a owl:Class ;
+    rdfs:label "person" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-3385" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#Case> a owl:Class ;
+    rdfs:label "case" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-2720" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#CoreType> a owl:Class ;
+    rdfs:label "coreType" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-4461" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SemanticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#DefinitionType> a owl:Class ;
+    rdfs:label "definitionType" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#DictionaryFeature> .
+
+<http://purl.org/olia/ubyCat.owl#RelType> a owl:Class ;
+    rdfs:label "relType" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1971" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SemanticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#VerbForm> a owl:Class ;
+    rdfs:label "verbForm" ;
+    rdfs:comment "Specifies the verb form to be used in a verb phrase complement." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#ExampleType> a owl:Class ;
+    rdfs:label "exampleType" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#DictionaryFeature> .
+
+<http://purl.org/olia/ubyCat.owl#SyntacticFeature> a owl:Class ;
+    rdfs:comment "SyntacticFeature groups attributes of UBY-LMF classes from the ISO LMF Syntax extension package." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#WordFormAttribute> a owl:Class ;
+    rdfs:label "WordFormAttribute" ;
+    rdfs:isDefinedBy "http://purl.org/olia/ubyCat.owl" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#Feature>,
+        <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+
+<http://purl.org/olia/ubyCat.owl#has_WordFormAttribute> a owl:ObjectProperty ;
+    rdfs:label "WordFormAttribute" ;
+    rdfs:isDefinedBy "http://purl.org/olia/ubyCat.owl" ;
+    rdfs:subPropertyOf <http://purl.org/olia/system.owl#hasFeature> .
+
+<http://purl.org/olia/system.owl#UnitOfAnnotation> a owl:Class .
+
+<http://purl.org/olia/ubyCat.owl#GrammaticalFunction> a owl:Class ;
+    rdfs:label "grammaticalFunction" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1296" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#LexicalFeature> a owl:Class ;
+    rdfs:comment "LexicalFeature groups different kinds of lexical feaures, which correspond to attributes of UBY-LMF classes." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalAnnotation> .
+
+<http://purl.org/olia/ubyCat.owl#SyntacticProperty> a owl:Class ;
+    rdfs:label "syntacticProperty" ;
+    rdfs:comment "Attribute of the UBY-LMF class SubcategorizationFrame." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#VerbFormMood> a owl:Class ;
+    rdfs:label "verbFormMood" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1427" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#WordFormAttribute> .
+
+<http://purl.org/olia/ubyCat.owl#LexicalFeatureStructure> a owl:Class ;
+    rdfs:label "complex lexical feature",
+        "lexical data structure",
+        "lexical feature structure" ;
+    rdfs:comment "LexicalFeatureStructure is a complex lexical Feature Structure (with features and feature values) and corresponds to a class in LMF."@en ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#LexicalAnnotation> ;
+    owl:deprecated true ;
+    owl:versionInfo "TODO: check whether these may be LexicalFeatureStructures",
+        "superseded by lemon data structures, left here only as a reference"@en .
+
+<http://purl.org/olia/ubyCat.owl#DerivationType> a owl:Class ;
+    rdfs:label "relType" ;
+    rdfs:comment "In UBY-LMF, relType is an attribute of the RelatedForm class which encodes links to derivationally related lexical entries or senses." ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#DerivationalMorphology> ;
+    owl:deprecated true ;
+    owl:versionInfo "It decides the property to use in the mapping, hence deprecated.\\nrelType=\"xxx\" is normally uby:xxx\\n(with some exceptions, .e.g, relType=\"seeAlso\" is rdfs:seeAlso)" .
+
+<http://purl.org/olia/ubyCat.owl#SyntacticCategory> a owl:Class ;
+    rdfs:label "syntacticCategory" ;
+    rdfs:isDefinedBy "http://www.isocat.org/datcat/DC-1506" ;
+    rdfs:subClassOf <http://purl.org/olia/ubyCat.owl#SyntacticFeature> .
+
+<http://purl.org/olia/ubyCat.owl#hasUbyObjectProperty> a owl:ObjectProperty ;
+    rdfs:comment "This ObjectProperty could also be named \"hasTypedLexicalFeature\".\\nThe current name \"hasUbyObjectProperty\" indicates that it groups Object Properties used in UBY-LMF." ;
+    rdfs:subPropertyOf <http://www.monnet-project.eu/lemon#property> .
+
+<http://purl.org/olia/ubyCat.owl#hasUbyDatatypeProperty> a owl:DatatypeProperty ;
+    rdfs:comment "This DatatypeProperty could also be named \"hasSimpleLexicalFeature\".\\nThe current name \"hasUbyDatatypeProperty\" indicates that it groups Data Properties used in UBY-LMF." .
+
+<http://purl.org/olia/ubyCat.owl#PartOfSpeech> a owl:Class ;
+    rdfs:label "partOfSpeech" ;
+    rdfs:comment "As a convention, the relation is called has_partOfSpeech, partOfSpeech is the top-level *class* of parts of speech" ;
+    rdfs:isDefinedBy "http://purl.org/olia/ubyCat.owl" ;
+    rdfs:subClassOf <http://purl.org/olia/system.owl#Feature>,
+        <http://purl.org/olia/ubyCat.owl#LexicalFeature> .
+

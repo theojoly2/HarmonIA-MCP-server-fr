@@ -1,0 +1,1030 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://premon.fbk.eu/ontology/vn> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dcterms:creator "Francesco Corcoglioniti",
+        "Marco Rospocher <https://dkm.fbk.eu/rospocher>" ;
+    dcterms:description <http://premon.fbk.eu/images/vn.svg>,
+        "The VerbNet module of the PreMOn ontology defines classes [pmovn:VerbClass](http://premon.fbk.eu/ontology/vn#VerbClass) and [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole) as subclasses of [pmo:SemanticClass](http://premon.fbk.eu/ontology/core#SemanticClass) and [pmo:SemanticRole](http://premon.fbk.eu/ontology/core#SemanticRole), respectively. \\n\\n*Class members* are modeled as instances of [ontolex:LexicalEntry](https://www.w3.org/community/ontolex/wiki/Final_Model_Specification#Lexical_Entry), connected to their class via property [ontolex:evokes](https://www.w3.org/community/ontolex/wiki/Final_Model_Specification#Evokes). \\n\\nThe VN class hierarchy is modeled via the [pmovn:subclassOf](http://premon.fbk.eu/ontology/vn#subclassOf) property (subproperty of [skos:broader](http://www.w3.org/2004/02/skos/core#broader)), that relates a verb class (e.g., *13.1-1*) with its parent class (e.g., *13.1*). \\n\\nGiven the propagation of semantic roles along the class hierarchy, we introduce property [pmovn:definesSemRole](http://premon.fbk.eu/ontology/vn#definesSemRole) to differentiate the [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole) instances defined on a class from the ones inherited from its ancestor classes. \\n\\nEach [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole) instance is related (via property [pmovn:thematicRole](http://premon.fbk.eu/ontology/vn#thematicRole)) to exactly one pmovn:ThematicRole, which contains all the thematic roles defined in VB. These thematic roles are organized in a hierarchy, which is formalized via the skos:broader property. \\n\\nVN selectional restrictions on [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole)s (e.g., restricting *theme* to something not animate) are formalized using property [pmovn:restriction](http://premon.fbk.eu/ontology/vn#restriction) and class [pmovn:Restriction](http://premon.fbk.eu/ontology/vn#Restriction) (see later).\\n\\nA verb class may have one or more [pmovn:VerbNetFrame](http://premon.fbk.eu/ontology/vn#VerbNetFrame)s (via property [pmovn:frame](http://premon.fbk.eu/ontology/vn#frame), or its subproperty [pmovn:definesFrame](http://premon.fbk.eu/ontology/vn#definesFrame), to distinguish frames defined on the class or inherited from ancestors), which have:\\n\\n* one or more ordered [pmo:SynItem](http://premon.fbk.eu/ontology/core#SynItem)s, modeling a syntactic construction (e.g., *Agent V Theme [-sentential]*) shared by all members of the class. [pmo:SynItem](http://premon.fbk.eu/ontology/core#SynItem)s are specialized according to their syntactical function (e.g., [pmovn:NpSynItem](http://premon.fbk.eu/ontology/vn#NpSynItem) for noun phrases). A [pmovn:NpSynItem](http://premon.fbk.eu/ontology/vn#NpSynItem) can point (via [pmo:valueObj](http://premon.fbk.eu/ontology/core#valueObj)) to a [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole), and define, via [pmovn:restriction](http://premon.fbk.eu/ontology/vn#restriction), (i) a selectional restriction holding for the [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole) in that frame (e.g., *animate*), or (ii) some other syntactic restriction (e.g., *np to inf*). Similarly, selectional restrictions can be modelled on [pmovn:PrepSynItem](http://premon.fbk.eu/ontology/vn#PrepSynItem) (e.g., *spatial*);\\n\\n\\n\\n* one or more ordered semantic [pmo:Pred](http://premon.fbk.eu/ontology/core#Pred)s, modeling the meaning of the event, and its participants, expressed by the verb class for that syntactic construction (e.g.,\\n*approve(during(E), Agent, Theme)*). Predicates in [pmovn:Pred](http://premon.fbk.eu/ontology/vn#Pred) have a type ([pmovn:PredType](http://premon.fbk.eu/ontology/vn#PredType), e.g., *approve*) and can be further decomposed in [pmovn:PredArg](http://premon.fbk.eu/ontology/vn#PredArg) (e.g., *during(E)*) of various types (e.g., [pmovn:EventPredArg](http://premon.fbk.eu/ontology/vn#EventPredArg)). Negation of a predicate is expressed by typing the corresponding instance as [pmovn:NegPred](http://premon.fbk.eu/ontology/vn#NegPred), while implicit [pmovn:PredArg](http://premon.fbk.eu/ontology/vn#PredArg)s are typed as [pmovn:ImplicitPredArg](http://premon.fbk.eu/ontology/vn#ImplicitPredArg).\\n\\nA [pmovn:VerbNetFrame](http://premon.fbk.eu/ontology/vn#VerbNetFrame) is directly associated to its corresponding [pmo:Example](http://premon.fbk.eu/ontology/core#Example) via the pmovn:frameExample property.\\n\\n### Restrictions\\n\\n[pmovn:Restriction](http://premon.fbk.eu/ontology/vn#Restriction)s are modeled structurally as AND / OR compositions ([pmovn:CompoundRestriction](http://premon.fbk.eu/ontology/vn#CompoundRestriction) and subclasses) of atomic restrictions ([pmovn:AtomicRestriction](http://premon.fbk.eu/ontology/vn#AtomicRestriction) and subclasses) that require the presence or absence of a certain [pmovn:RestrictionProperty](http://premon.fbk.eu/ontology/vn#RestrictionProperty). Semantically, restrictions are divided in [pmovn:SyntacticRestriction](http://premon.fbk.eu/ontology/vn#SyntacticRestriction)s, which refer to a [pmovn:SyntacticRestrictionProperty](http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty) and are attached to [pmovn:NpSynItem](http://premon.fbk.eu/ontology/vn#NpSynItem)s, and [pmovn:SelectionalRestriction](http://premon.fbk.eu/ontology/vn#SelectionalRestriction)s. The latter are divided in [pmovn:PrepositionalSelectionalRestriction](http://premon.fbk.eu/ontology/vn#PrepositionalSelectionalRestriction)s, which refer to a [pmovn:PrepositionalRestrictionProperty](http://premon.fbk.eu/ontology/vn#PrepositionalRestrictionProperty) and are attached to [pmovn:PrepSynItem](http://premon.fbk.eu/ontology/vn#PrepSynItem)s, and [pmovn:RoleSelectionalRestriction](http://premon.fbk.eu/ontology/vn#RoleSelectionalRestriction)s, which refer to a [pmovn:RoleRestrictionProperty](http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty) and are attached both to [pmovn:SemanticRole](http://premon.fbk.eu/ontology/vn#SemanticRole)s and [pmovn:NpSynItem](http://premon.fbk.eu/ontology/vn#NpSynItem)s. Every restriction instance instantiates both a structural and a semantic subclass of [pmovn:Restriction](http://premon.fbk.eu/ontology/vn#Restriction)."@en ;
+    dcterms:issued "2015-10-28"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:modified "2017-05-01"^^xsd:date ;
+    dcterms:publisher "DKM, Fondazione Bruno Kessler <http://dkm.fbk.eu/>" ;
+    dcterms:rights "This ontology is licensed under CC-BY-SA <http://creativecommons.org/licenses/by-sa/4.0/>"@en ;
+    dcterms:title "Predicate Model for Ontologies (PreMOn) - VerbNet ontology module"@en ;
+    vann:preferredNamespacePrefix "pmovn" ;
+    vann:preferredNamespaceUri "http://premon.fbk.eu/ontology/vn#" ;
+    rdfs:comment "The VerbNet module of the PreMOn ontology extends the core module with classes and properties specific to the VerbNet predicate model. The modelling is based on the [VerbNet Annotation Guidelines](http://nlp.cs.nyu.edu/meyers/nombank/nombank-specs-2007.pdf)."@en ;
+    rdfs:isDefinedBy onto:.ttl ;
+    owl:imports <http://premon.fbk.eu/ontology/core>,
+        <http://www.w3.org/ns/lemon/ontolex> ;
+    owl:versionInfo "2017a" .
+
+<http://premon.fbk.eu/ontology/vn#ImplicitPredArg> a owl:Class ;
+    rdfs:label "Implicit Predicate Argument"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#PredArg> .
+
+<http://premon.fbk.eu/ontology/vn#NegPred> a owl:Class ;
+    rdfs:label "Negated Predicate"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#Pred> .
+
+<http://premon.fbk.eu/ontology/vn#agent> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "agent"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#actor> .
+
+<http://premon.fbk.eu/ontology/vn#asset> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "asset"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#value> .
+
+<http://premon.fbk.eu/ontology/vn#attribute> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "attribute"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#beneficiary> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "beneficiary"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#coAgent> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "co-agent"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#actor> .
+
+<http://premon.fbk.eu/ontology/vn#coPatient> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "co-patient"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#coTheme> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "co-theme"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#definesFrame> a owl:ObjectProperty ;
+    rdfs:label "defines frame"@en ;
+    rdfs:subPropertyOf <http://premon.fbk.eu/ontology/vn#frame> .
+
+<http://premon.fbk.eu/ontology/vn#definesSemRole> a owl:ObjectProperty ;
+    rdfs:label "defines semantic role"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbClass> ;
+    rdfs:range <http://premon.fbk.eu/ontology/vn#SemanticRole> ;
+    rdfs:subPropertyOf <http://premon.fbk.eu/ontology/core#semRole> .
+
+<http://premon.fbk.eu/ontology/vn#duration> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "duration"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#time> .
+
+<http://premon.fbk.eu/ontology/vn#experiencer> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "experiencer"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#patient> .
+
+<http://premon.fbk.eu/ontology/vn#extent> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "extent"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#value> .
+
+<http://premon.fbk.eu/ontology/vn#finalTime> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "final time"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#time> .
+
+<http://premon.fbk.eu/ontology/vn#frameDescNumber> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "frame description number"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frameExample> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "frame example"@en ;
+    rdfs:comment "directly associates a VerbNet frame to its corresponding example"@en .
+
+<http://premon.fbk.eu/ontology/vn#framePrimary> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "frame primary"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frameSecondary> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "frame secondary"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frameSemanticsDescription> a owl:DatatypeProperty ;
+    rdfs:label "frame semantics description"@en ;
+    rdfs:comment "String representing the semantics of the Frame"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frameSyntaxDescription> a owl:DatatypeProperty ;
+    rdfs:label "frame syntax description"@en ;
+    rdfs:comment "String representing the syntax of the Frame"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frameXtag> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "frame xtag"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbNetFrame> ;
+    rdfs:range xsd:string .
+
+<http://premon.fbk.eu/ontology/vn#frequency> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "frequency"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#time> .
+
+<http://premon.fbk.eu/ontology/vn#idea_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "idea" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#abstract_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#initialLocation> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "initial location"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#location>,
+        <http://premon.fbk.eu/ontology/vn#source> .
+
+<http://premon.fbk.eu/ontology/vn#initialTime> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "initial time"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#time> .
+
+<http://premon.fbk.eu/ontology/vn#instrument> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "instrument"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#material> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "material"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#patient>,
+        <http://premon.fbk.eu/ontology/vn#source> .
+
+<http://premon.fbk.eu/ontology/vn#pivot> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "pivot"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#plural_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "plural" .
+
+<http://premon.fbk.eu/ontology/vn#pos_ing> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "pos_ing" .
+
+<http://premon.fbk.eu/ontology/vn#predicate> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "predicate"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#product> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "product"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#result> .
+
+<http://premon.fbk.eu/ontology/vn#recipient> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "recipient"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#destination> .
+
+<http://premon.fbk.eu/ontology/vn#reflexive> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "reflexive"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#stimulus> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "stimulus"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#cause> .
+
+<http://premon.fbk.eu/ontology/vn#subclassOf> a owl:ObjectProperty ;
+    rdfs:label "subclass of"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbClass> ;
+    rdfs:range <http://premon.fbk.eu/ontology/vn#VerbClass> ;
+    rdfs:subPropertyOf <http://premon.fbk.eu/ontology/core#classRel>,
+        skos:broader .
+
+<http://premon.fbk.eu/ontology/vn#to_inf_rs_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "to_inf_rs" .
+
+<http://premon.fbk.eu/ontology/vn#topic> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "topic"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#theme> .
+
+<http://premon.fbk.eu/ontology/vn#trajectory> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "trajectory"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+skos:closeMatch a owl:AnnotationProperty .
+
+skos:related a owl:AnnotationProperty .
+
+<http://premon.fbk.eu/ontology/vn#AbsentAtomicRestriction> a owl:Class ;
+    rdfs:label "Absent Atomic Restriction"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#AtomicRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#AdjSynItem> a owl:Class ;
+    rdfs:label "Adjective Syntactic Item"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#SynItem> ;
+    skos:closeMatch <http://www.lexinfo.net/lexinfo#Adjective> .
+
+<http://premon.fbk.eu/ontology/vn#AdvSynItem> a owl:Class ;
+    rdfs:label "Adverb Syntactic Item"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#SynItem> ;
+    skos:closeMatch <http://www.lexinfo.net/lexinfo#Adverb> .
+
+<http://premon.fbk.eu/ontology/vn#AndCompoundRestriction> a owl:Class ;
+    rdfs:label "And Compound Restriction"@en ;
+    rdfs:comment "default" ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#CompoundRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#ConstantPredArg> a owl:Class ;
+    rdfs:label "Constant Predicate Argument"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#PredArg> .
+
+<http://premon.fbk.eu/ontology/vn#EventPredArg> a owl:Class ;
+    rdfs:label "Event Predicate Argument"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#EventPredArgType> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#PredArg> .
+
+<http://premon.fbk.eu/ontology/vn#ExistAtomicRestriction> a owl:Class ;
+    rdfs:label "Exist Atomic Restriction"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#AtomicRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#LexSynItem> a owl:Class ;
+    rdfs:label "Lexical Syntactic Item"@en ;
+    rdfs:comment "Not clear if there is an equivalent in lexInfo" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueDt> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueDt> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <http://premon.fbk.eu/ontology/vn#SynItem> .
+
+<http://premon.fbk.eu/ontology/vn#OrCompoundRestriction> a owl:Class ;
+    rdfs:label "Or Compound Restriction"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#CompoundRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#PredType> a owl:Class ;
+    rdfs:label "Predicate Type"@en .
+
+<http://premon.fbk.eu/ontology/vn#ThemRolePredArg> a owl:Class ;
+    rdfs:label "Thematic Role Predicate Argument"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SemanticRole> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#PredArg> .
+
+<http://premon.fbk.eu/ontology/vn#VerbSpecificPredArg> a owl:Class ;
+    rdfs:label "Verb Specific Predicate Argument"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#PredArg> .
+
+<http://premon.fbk.eu/ontology/vn#ac_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "ac_ing" .
+
+<http://premon.fbk.eu/ontology/vn#ac_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "ac_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#acc_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "acc_ing" .
+
+<http://premon.fbk.eu/ontology/vn#adv_loc_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "adv_loc" .
+
+<http://premon.fbk.eu/ontology/vn#animal_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "animal" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#animate_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#be_sc_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "be_sc_ing" .
+
+<http://premon.fbk.eu/ontology/vn#biotic_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "biotic" .
+
+<http://premon.fbk.eu/ontology/vn#body_part_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "body_part" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#animate_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#body_part_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "body_part" .
+
+<http://premon.fbk.eu/ontology/vn#cause> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "cause"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#actor> .
+
+<http://premon.fbk.eu/ontology/vn#comestible_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "comestible" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#phys_obj_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#communication_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "communication" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#abstract_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#currency_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "currency" .
+
+<http://premon.fbk.eu/ontology/vn#definite_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "definite" .
+
+<http://premon.fbk.eu/ontology/vn#dest_conf_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "dest_conf" .
+
+<http://premon.fbk.eu/ontology/vn#dest_dir_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "dest_dir" .
+
+<http://premon.fbk.eu/ontology/vn#dest_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "dest" .
+
+<http://premon.fbk.eu/ontology/vn#destination> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "destination"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#goal>,
+        <http://premon.fbk.eu/ontology/vn#location> .
+
+<http://premon.fbk.eu/ontology/vn#dir_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "dir" .
+
+<http://premon.fbk.eu/ontology/vn#duringEventArg> a <http://premon.fbk.eu/ontology/vn#EventPredArgType>,
+        owl:NamedIndividual ;
+    rdfs:label "during event"@en .
+
+<http://premon.fbk.eu/ontology/vn#elongated_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "elongated" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#shape_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#endEventArg> a <http://premon.fbk.eu/ontology/vn#EventPredArgType>,
+        owl:NamedIndividual ;
+    rdfs:label "end of event"@en .
+
+<http://premon.fbk.eu/ontology/vn#for_comp_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "for_comp" .
+
+<http://premon.fbk.eu/ontology/vn#force_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "force" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#int_control_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#frame> a owl:ObjectProperty ;
+    rdfs:label "frame"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#VerbClass> ;
+    rdfs:range <http://premon.fbk.eu/ontology/vn#VerbNetFrame> .
+
+<http://premon.fbk.eu/ontology/vn#garment_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "garment" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#artifact_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#genitive_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "genitive" .
+
+<http://premon.fbk.eu/ontology/vn#how_extract_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "how_extract" .
+
+<http://premon.fbk.eu/ontology/vn#human_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "human" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#animate_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#loc_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "loc" .
+
+<http://premon.fbk.eu/ontology/vn#nonrigid_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "nonrigid" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#solid_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#np_auxnpType> a <http://premon.fbk.eu/ontology/vn#AuxnpType>,
+        owl:NamedIndividual ;
+    rdfs:label "NP" .
+
+<http://premon.fbk.eu/ontology/vn#np_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_ing" .
+
+<http://premon.fbk.eu/ontology/vn#np_omit_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_omit_ing" .
+
+<http://premon.fbk.eu/ontology/vn#np_p_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_p_ing" .
+
+<http://premon.fbk.eu/ontology/vn#np_ppart_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_ppart" .
+
+<http://premon.fbk.eu/ontology/vn#np_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#np_tobe_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "np_tobe" .
+
+<http://premon.fbk.eu/ontology/vn#oblique1_auxnpType> a <http://premon.fbk.eu/ontology/vn#AuxnpType>,
+        owl:NamedIndividual ;
+    rdfs:label "Oblique1" .
+
+<http://premon.fbk.eu/ontology/vn#oblique2_auxnpType> a <http://premon.fbk.eu/ontology/vn#AuxnpType>,
+        owl:NamedIndividual ;
+    rdfs:label "Oblique2" .
+
+<http://premon.fbk.eu/ontology/vn#oblique_auxnpType> a <http://premon.fbk.eu/ontology/vn#AuxnpType>,
+        owl:NamedIndividual ;
+    rdfs:label "Oblique" .
+
+<http://premon.fbk.eu/ontology/vn#oc_bare_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "oc_bare_inf" .
+
+<http://premon.fbk.eu/ontology/vn#oc_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "oc_ing" .
+
+<http://premon.fbk.eu/ontology/vn#oc_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "oc_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#organization_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "organization" .
+
+<http://premon.fbk.eu/ontology/vn#path_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "path" .
+
+<http://premon.fbk.eu/ontology/vn#plant_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "plant" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#natural_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#plural_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "plural" .
+
+<http://premon.fbk.eu/ontology/vn#plural_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "plural" .
+
+<http://premon.fbk.eu/ontology/vn#pointy_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "pointy" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#shape_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#poss_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "poss_ing" .
+
+<http://premon.fbk.eu/ontology/vn#quotation_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "quotation" .
+
+<http://premon.fbk.eu/ontology/vn#refl_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "refl" .
+
+<http://premon.fbk.eu/ontology/vn#refl_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "refl" .
+
+<http://premon.fbk.eu/ontology/vn#region_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "region" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#location_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#result> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "result"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#goal>,
+        <http://premon.fbk.eu/ontology/vn#patient> .
+
+<http://premon.fbk.eu/ontology/vn#resultEventArg> a <http://premon.fbk.eu/ontology/vn#EventPredArgType>,
+        owl:NamedIndividual ;
+    rdfs:label "result of event"@en .
+
+<http://premon.fbk.eu/ontology/vn#rigid_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "rigid" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#solid_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#rs_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "rs_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#sc_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "sc_ing" .
+
+<http://premon.fbk.eu/ontology/vn#sc_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "sc_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#scalar_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "scalar" .
+
+<http://premon.fbk.eu/ontology/vn#sentential_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "sentential" .
+
+<http://premon.fbk.eu/ontology/vn#small_clause_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "small_clause" .
+
+<http://premon.fbk.eu/ontology/vn#sound_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "sound" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#abstract_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#spatial_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "spatial" .
+
+<http://premon.fbk.eu/ontology/vn#src_prp> a <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "src" .
+
+<http://premon.fbk.eu/ontology/vn#startEventArg> a <http://premon.fbk.eu/ontology/vn#EventPredArgType>,
+        owl:NamedIndividual ;
+    rdfs:label "start of event"@en .
+
+<http://premon.fbk.eu/ontology/vn#state_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "state" .
+
+<http://premon.fbk.eu/ontology/vn#substance_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "substance" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#tensed_that_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "tensed_that" .
+
+<http://premon.fbk.eu/ontology/vn#that_comp_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "that_comp" .
+
+<http://premon.fbk.eu/ontology/vn#thematicRole> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "thematic role"@en ;
+    rdfs:domain <http://premon.fbk.eu/ontology/vn#SemanticRole> ;
+    rdfs:range <http://premon.fbk.eu/ontology/vn#ThematicRole> .
+
+<http://premon.fbk.eu/ontology/vn#theme> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "theme"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#time_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "time" .
+
+<http://premon.fbk.eu/ontology/vn#to_be_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "to_be" .
+
+<http://premon.fbk.eu/ontology/vn#tool_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "tool" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#artifact_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#vc_to_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "vc_to_inf" .
+
+<http://premon.fbk.eu/ontology/vn#vehicle_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "vehicle" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#machine_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#wh_comp_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "wh_comp" .
+
+<http://premon.fbk.eu/ontology/vn#wh_extract_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "wh_extract" .
+
+<http://premon.fbk.eu/ontology/vn#wh_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "wh_inf" .
+
+<http://premon.fbk.eu/ontology/vn#wh_ing_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "wh_ing" .
+
+<http://premon.fbk.eu/ontology/vn#what_extract_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "what_extract" .
+
+<http://premon.fbk.eu/ontology/vn#what_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "what_inf" .
+
+<http://premon.fbk.eu/ontology/vn#wheth_inf_syrp> a <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "wheth_inf" .
+
+<http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech> a owl:ObjectProperty .
+
+<http://www.lexinfo.net/ontology/2.0/lexinfo#preposition> a owl:NamedIndividual .
+
+skos:broader a owl:AnnotationProperty .
+
+<http://premon.fbk.eu/ontology/vn#NpSynItem> a owl:Class ;
+    rdfs:label "NP Syntactic Item"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://premon.fbk.eu/ontology/vn#AuxnpType> <http://premon.fbk.eu/ontology/vn#SemanticRole> ) ] ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://premon.fbk.eu/ontology/vn#RoleSelectionalRestriction> <http://premon.fbk.eu/ontology/vn#SyntacticRestriction> ) ] ;
+            owl:onProperty <http://premon.fbk.eu/ontology/vn#restriction> ],
+        <http://premon.fbk.eu/ontology/vn#SynItem> ;
+    skos:closeMatch <http://www.lexinfo.net/lexinfo#NounPhrase> .
+
+<http://premon.fbk.eu/ontology/vn#Pred> a owl:Class ;
+    rdfs:label "Predicate"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ;
+            owl:someValuesFrom <http://premon.fbk.eu/ontology/vn#PredArg> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#PredType> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:onClass <http://premon.fbk.eu/ontology/vn#PredArg> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#first> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ;
+            owl:someValuesFrom owl:Thing ] .
+
+<http://premon.fbk.eu/ontology/vn#PrepSynItem> a owl:Class ;
+    rdfs:label "Preposition Syntactic Item"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:intersectionOf ( <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> [ a owl:Restriction ;
+                                owl:hasValue <http://www.lexinfo.net/ontology/2.0/lexinfo#preposition> ;
+                                owl:onProperty <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech> ] ) ] ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#PrepositionSelectionalRestriction> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/vn#restriction> ],
+        [ a owl:Class ;
+            owl:unionOf ( [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Class ;
+                                    owl:complementOf [ a owl:Restriction ;
+                                            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ;
+                                            owl:someValuesFrom owl:Thing ] ] [ a owl:Restriction ;
+                                    owl:onProperty <http://premon.fbk.eu/ontology/vn#restriction> ;
+                                    owl:someValuesFrom owl:Thing ] ) ] [ a owl:Class ;
+                        owl:intersectionOf ( [ a owl:Class ;
+                                    owl:complementOf [ a owl:Restriction ;
+                                            owl:onProperty <http://premon.fbk.eu/ontology/vn#restriction> ;
+                                            owl:someValuesFrom owl:Thing ] ] [ a owl:Restriction ;
+                                    owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ;
+                                    owl:someValuesFrom owl:Thing ] ) ] ) ],
+        <http://premon.fbk.eu/ontology/vn#SynItem> ;
+    skos:closeMatch <http://www.lexinfo.net/lexinfo#Preposition> .
+
+<http://premon.fbk.eu/ontology/vn#RestrictionProperty> a owl:Class ;
+    rdfs:label "Restriction Property"@en .
+
+<http://premon.fbk.eu/ontology/vn#VerbSynItem> a owl:Class ;
+    rdfs:label "Verb Syntactic Item"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#SynItem> ;
+    skos:closeMatch <http://www.lexinfo.net/lexinfo#Verb> .
+
+<http://premon.fbk.eu/ontology/vn#goal> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "goal"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#place> .
+
+<http://premon.fbk.eu/ontology/vn#location> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "location"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#place> .
+
+<http://premon.fbk.eu/ontology/vn#location_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "location" .
+
+<http://premon.fbk.eu/ontology/vn#natural_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "natural" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#source> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "source"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#place> .
+
+<http://premon.fbk.eu/ontology/vn#value> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "value"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#place> .
+
+<http://premon.fbk.eu/ontology/vn#AtomicRestriction> a owl:Class ;
+    rdfs:label "Atomic Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#Restriction> ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#AbsentAtomicRestriction> <http://premon.fbk.eu/ontology/vn#ExistAtomicRestriction> ) .
+
+<http://premon.fbk.eu/ontology/vn#CompoundRestriction> a owl:Class ;
+    rdfs:label "Compound Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ;
+            owl:someValuesFrom owl:Thing ],
+        <http://premon.fbk.eu/ontology/vn#Restriction> ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#AndCompoundRestriction> <http://premon.fbk.eu/ontology/vn#OrCompoundRestriction> ) .
+
+<http://premon.fbk.eu/ontology/vn#PrepositionSelectionalRestriction> a owl:Class ;
+    rdfs:label "Preposition Selectional Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#PrepositionSelectionalRestriction> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ],
+        <http://premon.fbk.eu/ontology/vn#SelectionalRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#RoleSelectionalRestriction> a owl:Class ;
+    rdfs:label "Role Selectional Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#RoleSelectionalRestriction> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#SelectionalRestriction> .
+
+<http://premon.fbk.eu/ontology/vn#SelectionalRestrictionProperty> a owl:Class ;
+    rdfs:label "Selectional Restriction Property"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#RestrictionProperty> ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty> <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty> ) .
+
+<http://premon.fbk.eu/ontology/vn#SyntacticRestriction> a owl:Class ;
+    rdfs:label "Syntactic Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SyntacticRestriction> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#Restriction> .
+
+<http://premon.fbk.eu/ontology/vn#actor> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "actor"@en ;
+    rdfs:comment "abstract, non instantiated in the dataset"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#machine_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "machine" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#artifact_rrp>,
+        <http://premon.fbk.eu/ontology/vn#int_control_rrp> ;
+    skos:related <http://premon.fbk.eu/ontology/vn#int_control_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#patient> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "patient"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#undergoer> .
+
+<http://premon.fbk.eu/ontology/vn#phys_obj_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "physical object" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#shape_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "shape" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#solid_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "solid" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#SelectionalRestriction> a owl:Class ;
+    rdfs:label "Selectional Restriction"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SelectionalRestriction> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SelectionalRestrictionProperty> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueObj> ],
+        <http://premon.fbk.eu/ontology/vn#Restriction> ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#PrepositionSelectionalRestriction> <http://premon.fbk.eu/ontology/vn#RoleSelectionalRestriction> ) .
+
+<http://premon.fbk.eu/ontology/vn#abstract_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "abstract" .
+
+<http://premon.fbk.eu/ontology/vn#artifact_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "artifact" ;
+    rdfs:comment "Non in the data" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#phys_obj_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#place> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "place"@en ;
+    rdfs:comment "abstract, non instantiated in the dataset"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#time> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "time"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#AuxnpType> a owl:Class ;
+    rdfs:label "Auxiliary NP Type"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/vn#oblique_auxnpType> <http://premon.fbk.eu/ontology/vn#oblique2_auxnpType> <http://premon.fbk.eu/ontology/vn#oblique1_auxnpType> <http://premon.fbk.eu/ontology/vn#np_auxnpType> ) ] .
+
+<http://premon.fbk.eu/ontology/vn#EventPredArgType> a owl:Class ;
+    rdfs:label "Event Predicate Argument Type"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/vn#startEventArg> <http://premon.fbk.eu/ontology/vn#resultEventArg> <http://premon.fbk.eu/ontology/vn#endEventArg> <http://premon.fbk.eu/ontology/vn#duringEventArg> ) ] .
+
+<http://premon.fbk.eu/ontology/vn#Restriction> a owl:Class ;
+    rdfs:label "Restriction"@en ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#AtomicRestriction> <http://premon.fbk.eu/ontology/vn#CompoundRestriction> ),
+        ( <http://premon.fbk.eu/ontology/vn#SelectionalRestriction> <http://premon.fbk.eu/ontology/vn#SyntacticRestriction> ) .
+
+<http://premon.fbk.eu/ontology/vn#VerbClass> a owl:Class ;
+    rdfs:label "Verb Class (VN)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SemanticRole> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#semRole> ],
+        <http://premon.fbk.eu/ontology/core#SemanticClass> .
+
+<http://premon.fbk.eu/ontology/vn#animate_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "animate" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#natural_rrp> ;
+    skos:related <http://premon.fbk.eu/ontology/vn#int_control_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#int_control_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "int_control" ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#concrete_rrp> ;
+    skos:related <http://premon.fbk.eu/ontology/vn#animate_rrp>,
+        <http://premon.fbk.eu/ontology/vn#machine_rrp> .
+
+<http://premon.fbk.eu/ontology/vn#restriction> a owl:ObjectProperty ;
+    rdfs:label "restriction"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://premon.fbk.eu/ontology/vn#NpSynItem> <http://premon.fbk.eu/ontology/vn#PrepSynItem> <http://premon.fbk.eu/ontology/vn#SemanticRole> ) ] ;
+    rdfs:range <http://premon.fbk.eu/ontology/vn#Restriction> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://premon.fbk.eu/ontology/vn#SemanticRole> a owl:Class ;
+    rdfs:label "Semantic Role (VN)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://premon.fbk.eu/ontology/vn#thematicRole> ;
+            owl:someValuesFrom <http://premon.fbk.eu/ontology/vn#ThematicRole> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/vn#restriction> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#VerbClass> ;
+            owl:onProperty [ owl:inverseOf <http://premon.fbk.eu/ontology/core#semRole> ] ],
+        <http://premon.fbk.eu/ontology/core#SemanticRole> .
+
+<http://premon.fbk.eu/ontology/vn#VerbNetFrame> a owl:Class ;
+    rdfs:label "Syntactic Frame (VN)"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <http://premon.fbk.eu/ontology/vn#SynItem> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#first> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <http://premon.fbk.eu/ontology/vn#VerbSynItem> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://premon.fbk.eu/ontology/vn#Pred> <http://premon.fbk.eu/ontology/vn#SynItem> ) ] ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#item> ] .
+
+<http://premon.fbk.eu/ontology/vn#concrete_rrp> a <http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty>,
+        owl:NamedIndividual ;
+    rdfs:label "concrete" .
+
+<http://premon.fbk.eu/ontology/vn#participant> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "participant"@en ;
+    rdfs:comment "abstract, non instantiated in the dataset."@en .
+
+<http://premon.fbk.eu/ontology/vn#PredArg> a owl:Class ;
+    rdfs:label "Predicate Argument"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueDt> ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#valueDt> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#PredArg> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#next> ] ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#ConstantPredArg> <http://premon.fbk.eu/ontology/vn#EventPredArg> <http://premon.fbk.eu/ontology/vn#ThemRolePredArg> <http://premon.fbk.eu/ontology/vn#VerbSpecificPredArg> ) .
+
+<http://premon.fbk.eu/ontology/vn#undergoer> a <http://premon.fbk.eu/ontology/vn#ThematicRole>,
+        owl:NamedIndividual ;
+    rdfs:label "undergoer"@en ;
+    rdfs:comment "abstract, non instantiated in the dataset"@en ;
+    skos:broader <http://premon.fbk.eu/ontology/vn#participant> .
+
+<http://premon.fbk.eu/ontology/vn#SynItem> a owl:Class ;
+    rdfs:label "Syntactic Item"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://premon.fbk.eu/ontology/vn#SynItem> ;
+            owl:onProperty <http://premon.fbk.eu/ontology/core#next> ] ;
+    owl:disjointUnionOf ( <http://premon.fbk.eu/ontology/vn#AdjSynItem> <http://premon.fbk.eu/ontology/vn#AdvSynItem> <http://premon.fbk.eu/ontology/vn#LexSynItem> <http://premon.fbk.eu/ontology/vn#NpSynItem> <http://premon.fbk.eu/ontology/vn#PrepSynItem> <http://premon.fbk.eu/ontology/vn#VerbSynItem> ) .
+
+<http://premon.fbk.eu/ontology/vn#PrepositionRestrictionProperty> a owl:Class ;
+    rdfs:label "Preposition Selectional Restriction Property"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#SelectionalRestrictionProperty> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/vn#dest_prp> <http://premon.fbk.eu/ontology/vn#path_prp> <http://premon.fbk.eu/ontology/vn#dir_prp> <http://premon.fbk.eu/ontology/vn#loc_prp> <http://premon.fbk.eu/ontology/vn#spatial_prp> <http://premon.fbk.eu/ontology/vn#plural_prp> <http://premon.fbk.eu/ontology/vn#src_prp> <http://premon.fbk.eu/ontology/vn#dest_dir_prp> <http://premon.fbk.eu/ontology/vn#dest_conf_prp> ) ] .
+
+<http://premon.fbk.eu/ontology/vn#RoleRestrictionProperty> a owl:Class ;
+    rdfs:label "Role Selectional Restriction Property"@en ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#SelectionalRestrictionProperty> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/vn#machine_rrp> <http://premon.fbk.eu/ontology/vn#pointy_rrp> <http://premon.fbk.eu/ontology/vn#animate_rrp> <http://premon.fbk.eu/ontology/vn#comestible_rrp> <http://premon.fbk.eu/ontology/vn#scalar_rrp> <http://premon.fbk.eu/ontology/vn#shape_rrp> <http://premon.fbk.eu/ontology/vn#region_rrp> <http://premon.fbk.eu/ontology/vn#communication_rrp> <http://premon.fbk.eu/ontology/vn#plant_rrp> <http://premon.fbk.eu/ontology/vn#body_part_rrp> <http://premon.fbk.eu/ontology/vn#nonrigid_rrp> <http://premon.fbk.eu/ontology/vn#human_rrp> <http://premon.fbk.eu/ontology/vn#int_control_rrp> <http://premon.fbk.eu/ontology/vn#substance_rrp> <http://premon.fbk.eu/ontology/vn#organization_rrp> <http://premon.fbk.eu/ontology/vn#concrete_rrp> <http://premon.fbk.eu/ontology/vn#biotic_rrp> <http://premon.fbk.eu/ontology/vn#tool_rrp> <http://premon.fbk.eu/ontology/vn#rigid_rrp> <http://premon.fbk.eu/ontology/vn#sound_rrp> <http://premon.fbk.eu/ontology/vn#vehicle_rrp> <http://premon.fbk.eu/ontology/vn#solid_rrp> <http://premon.fbk.eu/ontology/vn#artifact_rrp> <http://premon.fbk.eu/ontology/vn#force_rrp> <http://premon.fbk.eu/ontology/vn#location_rrp> <http://premon.fbk.eu/ontology/vn#time_rrp> <http://premon.fbk.eu/ontology/vn#animal_rrp> <http://premon.fbk.eu/ontology/vn#elongated_rrp> <http://premon.fbk.eu/ontology/vn#phys_obj_rrp> <http://premon.fbk.eu/ontology/vn#abstract_rrp> <http://premon.fbk.eu/ontology/vn#state_rrp> <http://premon.fbk.eu/ontology/vn#currency_rrp> <http://premon.fbk.eu/ontology/vn#garment_rrp> <http://premon.fbk.eu/ontology/vn#refl_rrp> ) ] .
+
+<http://premon.fbk.eu/ontology/vn#ThematicRole> a owl:Class ;
+    rdfs:label "Thematic Role (VN)"@en ;
+    rdfs:subClassOf skos:Concept .
+
+<http://premon.fbk.eu/ontology/vn#SyntacticRestrictionProperty> a owl:Class ;
+    rdfs:label "Syntactic Restriction Property" ;
+    rdfs:subClassOf <http://premon.fbk.eu/ontology/vn#RestrictionProperty> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://premon.fbk.eu/ontology/vn#adv_loc_syrp> <http://premon.fbk.eu/ontology/vn#np_omit_ing_syrp> <http://premon.fbk.eu/ontology/vn#tensed_that_syrp> <http://premon.fbk.eu/ontology/vn#np_ing_syrp> <http://premon.fbk.eu/ontology/vn#oc_ing_syrp> <http://premon.fbk.eu/ontology/vn#sc_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#vc_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#small_clause_syrp> <http://premon.fbk.eu/ontology/vn#genitive_syrp> <http://premon.fbk.eu/ontology/vn#wheth_inf_syrp> <http://premon.fbk.eu/ontology/vn#oc_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#what_extract_syrp> <http://premon.fbk.eu/ontology/vn#oc_bare_inf_syrp> <http://premon.fbk.eu/ontology/vn#np_p_ing_syrp> <http://premon.fbk.eu/ontology/vn#wh_ing_syrp> <http://premon.fbk.eu/ontology/vn#how_extract_syrp> <http://premon.fbk.eu/ontology/vn#to_be_syrp> <http://premon.fbk.eu/ontology/vn#wh_extract_syrp> <http://premon.fbk.eu/ontology/vn#what_inf_syrp> <http://premon.fbk.eu/ontology/vn#np_ppart_syrp> <http://premon.fbk.eu/ontology/vn#that_comp_syrp> <http://premon.fbk.eu/ontology/vn#ac_ing_syrp> <http://premon.fbk.eu/ontology/vn#plural_syrp> <http://premon.fbk.eu/ontology/vn#quotation_syrp> <http://premon.fbk.eu/ontology/vn#wh_comp_syrp> <http://premon.fbk.eu/ontology/vn#np_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#acc_ing_syrp> <http://premon.fbk.eu/ontology/vn#rs_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#np_tobe_syrp> <http://premon.fbk.eu/ontology/vn#for_comp_syrp> <http://premon.fbk.eu/ontology/vn#wh_inf_syrp> <http://premon.fbk.eu/ontology/vn#be_sc_ing_syrp> <http://premon.fbk.eu/ontology/vn#sentential_syrp> <http://premon.fbk.eu/ontology/vn#definite_syrp> <http://premon.fbk.eu/ontology/vn#poss_ing_syrp> <http://premon.fbk.eu/ontology/vn#sc_ing_syrp> <http://premon.fbk.eu/ontology/vn#ac_to_inf_syrp> <http://premon.fbk.eu/ontology/vn#body_part_syrp> <http://premon.fbk.eu/ontology/vn#refl_syrp> ) ] .
+

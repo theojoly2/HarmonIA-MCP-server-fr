@@ -1,0 +1,228 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://resource.geosciml.org/ontology/timescale/gts> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEraRank> a rdfs:Class ;
+    rdfs:label "Geochronologic Era Rank"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf skos:Concept .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/metadata#Medium.name> rdfs:label "Medium.name" .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Age> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Eon> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Epoch> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Era> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#GeologicTimescale> a owl:Class ;
+    rdfs:label "Geologic Timescale"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#NumericEraBoundary> ) ] ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/thors#referencePoint> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/thors#component> ],
+        <http://resource.geosciml.org/ontology/timescale/thors#ReferenceSystem> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Period> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Sub-Period> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#Super-Eon> a owl:Class ;
+    rdfs:subClassOf <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#boundary> a owl:ObjectProperty ;
+    rdfs:label "geochronologic boundary" ;
+    rdfs:comment "geochronologic boundary corresponding with this point" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#boundaryLevel> a owl:DatatypeProperty ;
+    rdfs:label "boundary level" ;
+    rdfs:comment "the level within the section of the point characterizing the boundary" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#era> a owl:ObjectProperty ;
+    rdfs:label "geochronologic era" ;
+    rdfs:comment "geochronologic era corresponding with this section" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#event> a owl:ObjectProperty ;
+    rdfs:label "stratigraphic event" ;
+    rdfs:comment "stratigraphic event corresponding with this boundary or point" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicEvent> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#manifestedBy> a owl:ObjectProperty ;
+    rdfs:label "geologic manifestation" ;
+    rdfs:comment "This property points from a geochronologic element to a geologic feature" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf <http://resource.geosciml.org/ontology/timescale/gts#correlatesWith> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#positionalUncertainty> a owl:ObjectProperty ;
+    rdfs:label "Uncertainty in time position" .
+
+<http://resource.geosciml.org/ontology/timescale/gts#rank> a owl:ObjectProperty ;
+    rdfs:label "Geochronologic era rank" ;
+    rdfs:comment "Elements of all ranks are included in the class 'gts:GeochronologicEra'. \\nThe rank may be indicated by membership of a sub-class, or is indicated using the 'gts:rank' property." ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEraRank> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#EraCode> a rdfs:Datatype ;
+    rdfs:label "Era code" ;
+    rdfs:isDefinedBy onto: ;
+    owl:equivalentClass [ a rdfs:Datatype ;
+            owl:onDataType xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "a[12](.[1-9])*" ] ) ] .
+
+<http://resource.geosciml.org/ontology/timescale/gts#StratigraphicEvent> a owl:Class ;
+    rdfs:label "Stratigraphic Event"@en ;
+    rdfs:comment "A subclass of Geologic Event (placeholder) " ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#correlatesWith> a owl:ObjectProperty ;
+    rdfs:label "correlating boundary or era" ;
+    rdfs:comment "This property points from a geologic feature or event to a geochronologic element" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> ) ] .
+
+<http://resource.geosciml.org/ontology/timescale/gts#correlationEvent> a owl:DatatypeProperty ;
+    rdfs:label "correlation event" ;
+    rdfs:comment "the stratigraphic event that is intended to be represented by this stratigraphic point" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#geologicDescription> a owl:DatatypeProperty ;
+    rdfs:label "geologic description" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#geologicSetting> a owl:DatatypeProperty ;
+    rdfs:label "geologic setting" ;
+    rdfs:domain <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#ratifiedGSSP> a owl:DatatypeProperty ;
+    rdfs:label "ratified" ;
+    rdfs:comment "'true' if ratified by ICS" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#NumericEraBoundary> ) ] ;
+    rdfs:range xsd:boolean .
+
+<http://resource.geosciml.org/ontology/timescale/gts#status> a owl:DatatypeProperty ;
+    rdfs:label "status" ;
+    rdfs:comment "formal ICS status of this boundary and point" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#NumericEraBoundary> <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ) ] ;
+    rdfs:isDefinedBy onto: .
+
+<http://resource.geosciml.org/ontology/timescale/gts#stratotype> a owl:ObjectProperty ;
+    rdfs:label "stratotype" ;
+    rdfs:comment "the characteristic point or section corresponding with a geochronologic concept" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> ) ] .
+
+<http://resource.geosciml.org/ontology/timescale/gts#NumericEraBoundary> a owl:Class ;
+    rdfs:label "Numeric Era Boundary"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#status> ],
+        <http://resource.geosciml.org/ontology/timescale/thors#EraBoundary> ;
+    owl:disjointWith <http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> a owl:Class ;
+    rdfs:label "Stratigraphic Section"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#geologicSetting> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#geologicDescription> ] .
+
+<http://resource.geosciml.org/ontology/timescale/gts#GeochronologicBoundary> a owl:Class ;
+    rdfs:label "Geochronologic Boundary"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#stratotype> ],
+        <http://resource.geosciml.org/ontology/timescale/thors#EraBoundary> ;
+    owl:disjointWith <http://resource.geosciml.org/ontology/timescale/gts#NumericEraBoundary> .
+
+<http://resource.geosciml.org/ontology/timescale/gts#StratigraphicPoint> a owl:Class ;
+    rdfs:label "Stratigraphic Point"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#ratifiedGSSP> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#status> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#correlationEvent> ] .
+
+<http://resource.geosciml.org/ontology/timescale/gts#GeochronologicEra> a owl:Class ;
+    rdfs:label "Geochronologic Era"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://resource.geosciml.org/ontology/timescale/gts#StratigraphicSection> ;
+            owl:onProperty <http://resource.geosciml.org/ontology/timescale/gts#stratotype> ],
+        [ a owl:Restriction ;
+            owl:onProperty skos:notation ;
+            owl:someValuesFrom <http://resource.geosciml.org/ontology/timescale/gts#EraCode> ],
+        <http://resource.geosciml.org/ontology/timescale/thors#Era> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    dc:contributor "Stephen M RICHARD" ;
+    dc:creator "Simon J D COX" ;
+    dc:description "This is an RDF/OWL representation of the GeoSciML Geologic Timescale model, which has been adapted from the model described in Cox, S.J.D, & Richard, S.M. (2005) A formal model for the geologic timescale and GSSP, compatible with geospatial information transfer standards, Geosphere, Geological Society of America 1/3, 119–137." ;
+    dc:rights "Copyright © 2012-2017 CSIRO" ;
+    dc:source "Cox, S.J.D, & Richard, S.M. (2005) A formal model for the geologic timescale and GSSP, compatible with geospatial information transfer standards, Geosphere, Geological Society of America 1/3, 119–137." ;
+    dc:title "Geologic Timescale model" ;
+    dcterms:created "2011-01-01"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:modified "2017-04-28"^^xsd:date ;
+    vann:preferredNamespacePrefix "gts" ;
+    vann:preferredNamespaceUri <http://resource.geosciml.org/ontology/timescale/gts#> ;
+    rdfs:seeAlso <doi:10.1130/GES00022.1>,
+        <http://dx.doi.org/10.1130/GES00022.1>,
+        <http://geosphere.gsapubs.org/cgi/doi/10.1130/GES00022.1>,
+        <http://www.geosciml.org> ;
+    owl:imports <http://resource.geosciml.org/ontology/timescale/thors> ;
+    owl:priorVersion <https://www.seegrid.csiro.au/subversion/xmml/ontologies/tags/201402/Geoscience/GeologicTimeScale/gts.rdf> ;
+    owl:versionIRI <https://github.com/GeoscienceAustralia/geosciml.org/commit/24d302bf3f0fa315c1dddc2c734b84f52299cd02#diff-73b17e22072459ab7e06e9ab664a9d48> ;
+    skos:changeNote "2017-04-28 - removed imports ISO ontologies" .
+

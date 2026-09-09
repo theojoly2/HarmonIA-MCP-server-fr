@@ -1,0 +1,621 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <https://w3id.org/usability#> .
+@prefix onto: <https://w3id.org/usability> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    dc:creator "Danilov Nikita" ;
+    dc:description "Ontology 'Usability' created to describe and store information about interactions of user with a software user interface"@en ;
+    dc:publisher "Denis Palashevskiy" ;
+    dc:title "Usability"@en .
+
+ns1:Device1 a owl:NamedIndividual,
+        ns1:Device ;
+    ns1:wasUsedIn ns1:Session1,
+        ns1:Session2 .
+
+ns1:DoubleClickMouseEvent a owl:Class ;
+    rdfs:label "DoubleClickMouseEvent"@en ;
+    rdfs:comment "The class that represents a double mouse click"@en ;
+    rdfs:subClassOf ns1:ClickMouseActionEvent .
+
+ns1:DoubleTapTouchActionEvent a owl:Class ;
+    rdfs:label "DoubleTapTouchActionEvent"@en ;
+    rdfs:comment "The class that represents double tap - two short taps on the screen"@en ;
+    rdfs:subClassOf ns1:TapTouchActionEvent .
+
+ns1:Event1121 a owl:NamedIndividual,
+        ns1:Event .
+
+ns1:Event1122 a owl:NamedIndividual,
+        ns1:Event .
+
+ns1:Event2111 a owl:NamedIndividual,
+        ns1:Event .
+
+ns1:HoldTapTouchActionEvent a owl:Class ;
+    rdfs:label "HoldTapTouchActionEvent"@en ;
+    rdfs:comment "The class that represents touch-and-hold action - continuous touch with a single finger"@en ;
+    rdfs:subClassOf ns1:TapTouchActionEvent .
+
+ns1:LongTapTouchActionEvent a owl:Class ;
+    rdfs:label "LongTapTouchActionEvent"@en ;
+    rdfs:comment "The class that represents touch - a touch that is slightly longer then tap"@en ;
+    rdfs:subClassOf ns1:TapTouchActionEvent .
+
+ns1:MoveMouseActionEvent a owl:Class ;
+    rdfs:label "MoveMouseAcitonEvent"@en ;
+    rdfs:comment "The class that represents movements of cursor. hasInRegionX and hasInRegionY properties store information about the new cursor coordinates after the movement"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionY ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionX ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:MouseActionEvent .
+
+ns1:PinchTouchActionEvent a owl:Class ;
+    rdfs:label "PinchTouchActionEvent"@en ;
+    rdfs:comment "The class that represents pinch - a contractive movement with two fingers on the screen to scale down the image."@en ;
+    rdfs:subClassOf ns1:TouchActionEvent .
+
+ns1:ScrollMouseActionEvent a owl:Class ;
+    rdfs:label "ScrollMouseActionEvent"@en ;
+    rdfs:comment "The class that represents a mouse wheel scroll"@en ;
+    rdfs:subClassOf ns1:MouseActionEvent .
+
+ns1:SingleClickMouseEvent a owl:Class ;
+    rdfs:label "SingleClickMouseEvent"@en ;
+    rdfs:comment "The class that represents a single mouse click"@en ;
+    rdfs:subClassOf ns1:ClickMouseActionEvent .
+
+ns1:SingleTapTouchActionEvent a owl:Class ;
+    rdfs:label "SingleTapTouchActionEvent"@en ;
+    rdfs:comment "The class that represents tap action - single short touch with one finger"@en ;
+    rdfs:subClassOf ns1:TapTouchActionEvent .
+
+ns1:StretchTouchActionEvent a owl:Class ;
+    rdfs:label "StretchTouchActionEvent"@en ;
+    rdfs:comment "The class that represents stretch (pinch it open) - tensile movement with two fingers on the screen to enlarge the image."@en ;
+    rdfs:subClassOf ns1:TouchActionEvent .
+
+ns1:SwipeTouchActionEvent a owl:Class ;
+    rdfs:label "SwipeTouchActionEvent"@en ;
+    rdfs:comment "The class the represents swipe (slide) - a continuous movement of the finger across the screen"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionY ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionX ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:TouchActionEvent .
+
+ns1:TypeKeyboardActionEvent a owl:Class ;
+    rdfs:label "TypeKeyboardActionEvent"@en ;
+    rdfs:comment "The class that represents clicks on a keyboard"@en ;
+    rdfs:subClassOf ns1:KeyboardActionEvent .
+
+ns1:User1 a owl:NamedIndividual,
+        ns1:User ;
+    ns1:hasName "Ivan Ivanov"^^xsd:string ;
+    ns1:performed ns1:Session1 .
+
+ns1:User2 a owl:NamedIndividual,
+        ns1:User ;
+    ns1:hasName "Petr Petrov"^^xsd:string ;
+    ns1:performed ns1:Session2 .
+
+ns1:hasCommandName a owl:DatatypeProperty ;
+    rdfs:domain ns1:CommandEvent ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] .
+
+ns1:CommandEvent1113 a owl:NamedIndividual,
+        ns1:CommandEvent ;
+    ns1:contains ns1:CommandA ;
+    ns1:isContainedIn ns1:RegionVariation111 ;
+    ns1:wasAssociatedWith ns1:CommandA .
+
+ns1:CommandEvent1114 a owl:NamedIndividual,
+        ns1:CommandEvent ;
+    ns1:contains ns1:CommandA ;
+    ns1:isContainedIn ns1:RegionVariation111 ;
+    ns1:wasAssociatedWith ns1:CommandA .
+
+ns1:CommandEvent2112 a owl:NamedIndividual,
+        ns1:CommandEvent ;
+    ns1:contains ns1:CommandB ;
+    ns1:wasAssociatedWith ns1:CommandB .
+
+ns1:Event1111 a owl:NamedIndividual,
+        ns1:Event ;
+    ns1:hasInRegionX 2.7e+01 ;
+    ns1:hasInRegionY 6.25e+02 .
+
+ns1:Event1112 a owl:NamedIndividual,
+        ns1:Event .
+
+ns1:Image111 a owl:NamedIndividual,
+        ns1:Image .
+
+ns1:Image112 a owl:NamedIndividual,
+        ns1:Image .
+
+ns1:Image211 a owl:NamedIndividual,
+        ns1:Image .
+
+ns1:KeyboardActionEvent a owl:Class ;
+    rdfs:label "KeyboardActionEvent"@en ;
+    rdfs:comment "The class that represents actions related to user's manipulations with a keyboard"@en ;
+    rdfs:subClassOf ns1:ActionEvent .
+
+ns1:Region11 a owl:NamedIndividual,
+        ns1:Region ;
+    ns1:contains ns1:RegionVariation111,
+        ns1:RegionVariation112 ;
+    ns1:hasName "Region11"^^xsd:string .
+
+ns1:Region21 a owl:NamedIndividual,
+        ns1:Region ;
+    ns1:contains ns1:RegionVariation211 ;
+    ns1:hasName "Region21"^^xsd:string .
+
+ns1:RegionVariation112 a owl:NamedIndividual,
+        ns1:Variation ;
+    ns1:hasImage ns1:Image112 .
+
+ns1:hasBinaryData a owl:DatatypeProperty ;
+    rdfs:range xsd:base64Binary .
+
+ns1:hasDateTime a owl:DatatypeProperty ;
+    rdfs:domain ns1:Event ;
+    rdfs:range xsd:dateTimeStamp .
+
+ns1:hasDpiX a owl:DatatypeProperty ;
+    rdfs:domain ns1:Image ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:int ;
+            owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int ] ) ] .
+
+ns1:hasDpiY a owl:DatatypeProperty ;
+    rdfs:domain ns1:Image ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:int ;
+            owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int ] ) ] .
+
+ns1:hasEndDateTime a owl:DatatypeProperty ;
+    rdfs:domain ns1:Session ;
+    rdfs:range xsd:dateTimeStamp .
+
+ns1:hasHeight a owl:DatatypeProperty ;
+    rdfs:domain ns1:Image ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:hasImage a owl:ObjectProperty ;
+    rdfs:label "hasImage"@en ;
+    rdfs:comment "The property which associate some region variation with its image"@en ;
+    rdfs:domain ns1:Variation ;
+    rdfs:range ns1:Image ;
+    owl:inverseOf ns1:wasImaged .
+
+ns1:hasStartDateTime a owl:DatatypeProperty ;
+    rdfs:domain ns1:Session ;
+    rdfs:range xsd:dateTimeStamp .
+
+ns1:hasWidth a owl:DatatypeProperty ;
+    rdfs:domain ns1:Image ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:performed a owl:ObjectProperty ;
+    rdfs:label "performed"@en ;
+    rdfs:domain ns1:User ;
+    rdfs:range ns1:Session ;
+    owl:inverseOf ns1:wasPerformedBy .
+
+ns1:wasAssociatedWith a owl:ObjectProperty ;
+    rdfs:label "wasAssociatedWith"@en ;
+    rdfs:comment "The property that associates command event with the specific command instance"@en ;
+    owl:inverseOf ns1:wasInvokedIn .
+
+ns1:wasImaged a owl:ObjectProperty ;
+    rdfs:label "wasImaged"@en ;
+    rdfs:comment "The property that associates an image with the corresponding region variation"@en ;
+    rdfs:domain ns1:Image ;
+    rdfs:range ns1:Variation .
+
+ns1:wasPerformedOn a owl:ObjectProperty ;
+    rdfs:label "wasPerformedOn"@en ;
+    rdfs:comment "The property that associates a session with the device on which the session was run"@en ;
+    rdfs:domain ns1:Session ;
+    rdfs:range ns1:Device ;
+    owl:inverseOf ns1:wasUsedIn .
+
+ns1:ClickMouseActionEvent a owl:Class ;
+    rdfs:label "ClickMouseActionEvent"@en ;
+    rdfs:comment "The class that represents any mouse click"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionX ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionY ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:MouseActionEvent .
+
+ns1:CommandB a owl:NamedIndividual,
+        ns1:Command ;
+    ns1:hasName "CommandB"^^xsd:string ;
+    ns1:isContainedIn ns1:RegionVariation211 ;
+    ns1:wasInvokedIn ns1:RegionVariation211 .
+
+ns1:Session1 a owl:NamedIndividual,
+        ns1:Session ;
+    ns1:contains ns1:Region11 .
+
+ns1:Session2 a owl:NamedIndividual,
+        ns1:Session ;
+    ns1:contains ns1:Region21 .
+
+ns1:hasMaxHeight a owl:DatatypeProperty ;
+    rdfs:domain ns1:Variation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:hasMaxWidth a owl:DatatypeProperty ;
+    rdfs:domain ns1:Variation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:hasMinHeight a owl:DatatypeProperty ;
+    rdfs:domain ns1:Variation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:hasMinWidth a owl:DatatypeProperty ;
+    rdfs:domain ns1:Variation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:wasInvokedIn a owl:ObjectProperty ;
+    rdfs:label "wasInvokedIn"@en,
+        "былоВызваноВ"@en ;
+    rdfs:comment "The property that associates specific command with the event in which the command was called"@en .
+
+ns1:wasPerformedBy a owl:ObjectProperty ;
+    rdfs:label "wasPerformedBy"@en ;
+    rdfs:comment "The property that associates a session with the user who performed it"@en ;
+    rdfs:domain ns1:Session ;
+    rdfs:range ns1:User .
+
+ns1:wasUsedIn a owl:ObjectProperty ;
+    rdfs:label "wasUsedIn"@en ;
+    rdfs:comment "The property that associates a device with the sessions which were run on that device"@en ;
+    rdfs:domain ns1:Device ;
+    rdfs:range ns1:Session .
+
+ns1:ActionEvent a owl:Class ;
+    rdfs:label "ActionEvent"@en ;
+    rdfs:comment "The base class for events which are user actions related to user interation with the interface (clicks, mouse movements, etc.)"@en ;
+    rdfs:subClassOf ns1:Event .
+
+ns1:MouseActionEvent a owl:Class ;
+    rdfs:label "MouseActionEvent"@en ;
+    rdfs:comment "The class that represents actions related to user's manipulations with a mouse"@en ;
+    rdfs:subClassOf ns1:ActionEvent .
+
+ns1:RegionVariation111 a owl:NamedIndividual,
+        ns1:Variation ;
+    ns1:contains ns1:CommandEvent1113,
+        ns1:CommandEvent1114,
+        ns1:Event1111,
+        ns1:Event1112 ;
+    ns1:hasImage ns1:Image111 ;
+    ns1:hasName "RegionVariation111"^^xsd:string .
+
+ns1:RegionVariation211 a owl:NamedIndividual,
+        ns1:Variation ;
+    ns1:contains ns1:CommandEvent2112 ;
+    ns1:hasImage ns1:Image211 .
+
+ns1:hasUid a owl:DatatypeProperty ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] .
+
+ns1:Command a owl:Class ;
+    rdfs:label "Command"@en,
+        "The base class for the command called by user"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:wasInvokedIn ;
+            owl:someValuesFrom ns1:CommandEvent ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:isContainedIn ;
+            owl:someValuesFrom ns1:CommandEvent ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasName ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+ns1:CommandA a owl:NamedIndividual,
+        ns1:Command ;
+    ns1:hasName "CommandA"^^xsd:string .
+
+ns1:Device a owl:Class ;
+    rdfs:label "Device"@en,
+        "The device on which the sessions were performed."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasUid ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:wasUsedIn ;
+            owl:someValuesFrom ns1:Session ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasName ] .
+
+ns1:Region a owl:Class ;
+    rdfs:label "Region"@en ;
+    rdfs:comment "A fragment of GUI, for example, the whole window, or a part of it"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:hasMinWidth ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasMaxWidth ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:isContainedIn ;
+            owl:someValuesFrom ns1:Session ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasMaxHeight ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasName ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:contains ;
+            owl:someValuesFrom ns1:Variation ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasMinHeight ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ] .
+
+ns1:TapTouchActionEvent a owl:Class ;
+    rdfs:label "TapTouchActionEvent"@en ;
+    rdfs:comment "The class that represents differend kinds events related to user's tap on the touch screen"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionX ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasInRegionY ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:TouchActionEvent .
+
+ns1:TouchActionEvent a owl:Class ;
+    rdfs:label "TouchActionEvent"@en ;
+    rdfs:comment "The class that represents events related to user interations with touchscreen, like smartphone or tablet PC"@en ;
+    rdfs:subClassOf ns1:ActionEvent .
+
+ns1:contains a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:comment "A transitive property which determines that some subject contains/stores some object inside of it. Inverse of isContainedIn"@en ;
+    owl:inverseOf ns1:isContainedIn .
+
+ns1:hasInRegionX a owl:DatatypeProperty ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:hasInRegionY a owl:DatatypeProperty ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] .
+
+ns1:User a owl:Class ;
+    rdfs:label "User"@en ;
+    rdfs:comment "The user who runs sessions"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:performed ;
+            owl:someValuesFrom ns1:Session ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasName ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasUid ] .
+
+ns1:hasName a owl:DatatypeProperty ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] .
+
+ns1:isContainedIn a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "isContainedIn"@en ;
+    rdfs:comment "A transitive property which determines that some object is contained/stored/located inside of some subject. Inverse of contains"@en .
+
+ns1:CommandEvent a owl:Class ;
+    rdfs:label "CommandEvent"@en ;
+    rdfs:comment "The class that represents events, related with the fact of calling a certain command (function) by the user"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:contains ;
+            owl:someValuesFrom ns1:Command ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:Command ;
+            owl:onProperty ns1:wasAssociatedWith ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:Event .
+
+ns1:Event a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:comment "The base class for all different kinds of event that may be occured while the user is interacting with the software"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:isContainedIn ;
+            owl:someValuesFrom ns1:Variation ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTimeStamp ;
+            owl:onProperty ns1:hasDateTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+ns1:Image a owl:Class ;
+    rdfs:label "Image"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasHeight ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:int ;
+                    owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasDpiY ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasWidth ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasBinaryData ;
+            owl:someValuesFrom xsd:base64Binary ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:int ;
+                    owl:withRestrictions ( [ xsd:minExclusive "0"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasDpiX ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+ns1:Session a owl:Class ;
+    rdfs:label "Session"@en ;
+    rdfs:comment "A period of time when a user interacts with the software"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:contains ;
+            owl:someValuesFrom ns1:Region ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:Device ;
+            owl:onProperty ns1:wasPerformedOn ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:User ;
+            owl:onProperty ns1:wasPerformedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTimeStamp ;
+            owl:onProperty ns1:hasStartDateTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTimeStamp ;
+            owl:onProperty ns1:hasEndDateTime ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasUid ] .
+
+ns1:Variation a owl:Class ;
+    rdfs:label "Variation"@en ;
+    rdfs:comment "Class that describes a region variation, since a region may have one or more variations. Variation is a unique combination of region image's height and width, or their range"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:minLength "1"^^xsd:int ] ) ] ;
+            owl:onProperty ns1:hasName ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:Image ;
+            owl:onProperty ns1:hasImage ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:contains ;
+            owl:someValuesFrom ns1:Event ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasMaxHeight ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasMinWidth ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasMaxWidth ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:double ;
+                    owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] ;
+            owl:onProperty ns1:hasMinHeight ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:isContainedIn ;
+            owl:someValuesFrom ns1:Region ] .
+

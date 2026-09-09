@@ -1,0 +1,40 @@
+@prefix onto: <http://inference-web.org/2.0/ds.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Data Structure Ontology (v 0.1.1)"@en ;
+    rdfs:comment "This ontology offers OWL-Lite definition for object list. It is a restricted version of OWL-S ObjectList (http://www.daml.org/services/owl-s/1.1/generic/ObjectList.owl). \\n  It is compatible to rdf:List with the following differences: (i) OWL individuals as list members and (ii) appropriate property cardinality restriction. The range of first will specified by the subclasses."@en .
+
+<http://inference-web.org/2.0/ds.owl#nil> a <http://inference-web.org/2.0/ds.owl#List> ;
+    rdfs:label "nil"@en ;
+    rdfs:comment "The empty list, with no items in it. If the rest of a list is nil then the list has no more items in it."@en .
+
+<http://inference-web.org/2.0/ds.owl#first> a owl:ObjectProperty ;
+    rdfs:label "first"@en ;
+    rdfs:comment "The first item in the subject RDF list."@en ;
+    rdfs:domain <http://inference-web.org/2.0/ds.owl#List> .
+
+<http://inference-web.org/2.0/ds.owl#rest> a owl:ObjectProperty ;
+    rdfs:label "rest"@en ;
+    rdfs:comment "The rest of the subject RDF list after the first item."@en ;
+    rdfs:domain <http://inference-web.org/2.0/ds.owl#List> ;
+    rdfs:range <http://inference-web.org/2.0/ds.owl#List> .
+
+<http://inference-web.org/2.0/ds.owl#List> a owl:Class ;
+    rdfs:label "List"@en ;
+    rdfs:comment "A template for defining typed-list. It functions like rdf:List with object members."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#first> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:int ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#rest> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:int ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#first> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:int ;
+            owl:onProperty <http://inference-web.org/2.0/ds.owl#rest> ] .
+

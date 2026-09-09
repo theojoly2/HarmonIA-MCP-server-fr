@@ -1,0 +1,148 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/1999/02/22-rdf-syntax-ns> rdfs:seeAlso <http://www.w3.org/TR/2005/NOTE-test-metadata-20050914/> .
+
+<http://www.w3.org/2006/03/test-description#SimpleReviewStatus> a owl:Class ;
+    rdfs:label "A status for a simple review process containing 6 possible stages"@en ;
+    rdfs:subClassOf <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    owl:oneOf ( <http://www.w3.org/2006/03/test-description#unreviewed> <http://www.w3.org/2006/03/test-description#accepted> <http://www.w3.org/2006/03/test-description#assigned> <http://www.w3.org/2006/03/test-description#approved> <http://www.w3.org/2006/03/test-description#rejected> <http://www.w3.org/2006/03/test-description#onhold> ),
+        ( <http://www.w3.org/2006/03/test-description#unreviewed> <http://www.w3.org/2006/03/test-description#accepted> <http://www.w3.org/2006/03/test-description#assigned> <http://www.w3.org/2006/03/test-description#approved> <http://www.w3.org/2006/03/test-description#rejected> <http://www.w3.org/2006/03/test-description#onhold> ) .
+
+<http://www.w3.org/2006/03/test-description#SpecificationTestCase> a owl:Class ;
+    rdfs:label "A Test Case based on a specification"@en ;
+    rdfs:comment "A test case which relates to a requirement set in a specification" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#specificationReference> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#specificationReference> ],
+        <http://www.w3.org/2006/03/test-description#TestCase> .
+
+<http://www.w3.org/2006/03/test-description#informationResourceInput> a owl:ObjectProperty ;
+    rdfs:label "information resource as input"@en ;
+    rdfs:comment "Information Resource (e.g. a file) used as input for the test case"@en ;
+    rdfs:range <http://www.w3.org/2006/gen/ont#InformationResource> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/03/test-description#input> .
+
+<http://www.w3.org/2006/03/test-description#informationResourceResults> a owl:ObjectProperty ;
+    rdfs:label "information resource as expected results"@en ;
+    rdfs:comment "Information Resource (e.g. a file) that contains the expected results for the test case" ;
+    rdfs:range <http://www.w3.org/2006/gen/ont#InformationResource> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/03/test-description#expectedResults> .
+
+<http://www.w3.org/2006/03/test-description#preCondition> a owl:DatatypeProperty ;
+    rdfs:label "precondition"@en ;
+    rdfs:comment "a condition that must be met before the test is executed"@en ;
+    rdfs:domain <http://www.w3.org/2006/03/test-description#TestCase> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.w3.org/2006/03/test-description#expectedResults> a rdf:Property ;
+    rdfs:label "expected results"@en ;
+    rdfs:comment "The results that a conformant implementation is expected to produce when this test is executed" ;
+    rdfs:domain <http://www.w3.org/2006/03/test-description#TestCase> .
+
+<http://www.w3.org/2006/03/test-description#input> a rdf:Property ;
+    rdfs:label "input"@en ;
+    rdfs:comment "Parameters or data that are needed for the test execution."@en ;
+    rdfs:domain <http://www.w3.org/2006/03/test-description#TestCase> .
+
+<http://www.w3.org/2006/03/test-description#accepted> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "accepted"@en ;
+    rdfs:comment "the item has gone through a first review, which shows it as valid for further processing" .
+
+<http://www.w3.org/2006/03/test-description#approved> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "approved"@en ;
+    rdfs:comment "the item has gone through the review process and was approved" .
+
+<http://www.w3.org/2006/03/test-description#assigned> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "assigned"@en ;
+    rdfs:comment "a more specific review of the item has been assigned to someone" .
+
+<http://www.w3.org/2006/03/test-description#onhold> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "on hold" ;
+    rdfs:comment "the item had already gone through the review process, but the results of the review need to be re-assessed due to new input" .
+
+<http://www.w3.org/2006/03/test-description#rejected> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "rejected"@en ;
+    rdfs:comment "the item has gone through the review process and was rejected" .
+
+<http://www.w3.org/2006/03/test-description#reviewStatus> a owl:ObjectProperty ;
+    rdfs:label "status of review"@en ;
+    rdfs:range <http://www.w3.org/2006/03/test-description#ReviewStatus> .
+
+<http://www.w3.org/2006/03/test-description#specificationReference> a owl:DatatypeProperty ;
+    rdfs:label "reference in specification"@en ;
+    rdfs:comment "a description or a link of what part of which specification lead to the creation of this test case"@en ;
+    rdfs:domain <http://www.w3.org/2006/03/test-description#TestCase> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.w3.org/2006/03/test-description#unreviewed> a <http://www.w3.org/2006/03/test-description#ReviewStatus> ;
+    rdfs:label "unreviewed"@en ;
+    rdfs:comment "the item has been proposed, but hasn't been reviewed (e.g. for completeness) yet" .
+
+<http://www.w3.org/2006/03/test-description#purpose> a owl:DatatypeProperty ;
+    rdfs:label "purpose"@en ;
+    rdfs:domain <http://www.w3.org/2006/03/test-description#TestCase> ;
+    rdfs:range rdfs:Literal .
+
+<http://www.w3.org/2006/03/test-description#TestCase> a owl:Class ;
+    rdfs:label "A Test Case"@en ;
+    rdfs:comment "A set of test inputs, execution conditions, and expected results developed for a particular objective, such as to exercise a particular program path or to verify compliance with a specific requirement" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:rights ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#reviewStatus> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#reviewStatus> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:contributor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:title ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#purpose> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:contributor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#purpose> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:rights ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:title ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:title ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#purpose> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/03/test-description#purpose> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:title ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dc:description ] .
+
+<http://www.w3.org/2006/03/test-description#ReviewStatus> a owl:Class ;
+    rdfs:label "Status in a review process"@en ;
+    rdfs:comment "A particular stage in a review process" .
+

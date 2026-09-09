@@ -1,0 +1,1034 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://ns.inria.fr/ludo/v1/gamemodel#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ns.inria.fr/ludo/v1/gamemodel> a owl:Ontology .
+
+onto:Button a owl:Class ;
+    rdfs:label "Button"@en ;
+    rdfs:comment "Button"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GUIComponent,
+        owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Checkbox a owl:Class ;
+    rdfs:label "Checkbox"@en ;
+    rdfs:comment "Checkbox"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GUIComponent,
+        owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:ComputedResult a owl:Class ;
+    rdfs:label "Computed result"@en ;
+    rdfs:comment "Computed result"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameResult ;
+    owl:disjointWith onto:RawResult ;
+    ns1:term_status "stable" .
+
+onto:ObjectImage a owl:Class ;
+    rdfs:label "Object Image"@en ;
+    rdfs:comment "The object image is represented using one or more image components"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Appearance ;
+    ns1:term_status "stable" .
+
+onto:Score a owl:Class ;
+    rdfs:label "Score"@en ;
+    rdfs:comment "Score"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameAttribute ;
+    owl:disjointWith onto:Vital ;
+    ns1:term_status "stable" .
+
+onto:hasActingCoordination a owl:DatatypeProperty ;
+    rdfs:label "Has Game Acting Coordination"@en ;
+    rdfs:comment "The coordination of a game object can involve appear (for generation and re- spawning of game object), animating an action, playing a sound, moving towards a checkpoint, interacting with another game object or a composition of these."@en ;
+    rdfs:domain onto:GameActingScript ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasAction a owl:ObjectProperty ;
+    rdfs:label "Has action"@en ;
+    rdfs:comment "Has action"@en ;
+    rdfs:domain onto:GameObject ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Action ;
+    ns1:term_status "stable" .
+
+onto:hasAnimation a owl:ObjectProperty ;
+    rdfs:label "Has animation"@en ;
+    rdfs:comment "Has animation"@en ;
+    rdfs:domain onto:Action ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Animation ;
+    ns1:term_status "stable" .
+
+onto:hasAnimationType a owl:DatatypeProperty ;
+    rdfs:label "Has Animation Type"@en ;
+    rdfs:comment "Defines the animation type, either 2D or 3D"@en ;
+    rdfs:domain onto:Animation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasAppearance a owl:ObjectProperty ;
+    rdfs:label "Has appearance"@en ;
+    rdfs:comment "Has appearance"@en ;
+    rdfs:domain onto:GameObject ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Appearance ;
+    ns1:term_status "stable" .
+
+onto:hasArea a owl:ObjectProperty ;
+    rdfs:label "Has area"@en ;
+    rdfs:comment "Relates an Area with any component to be represented graphically on the game screen, sucha as GUI components and Media components"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Area ;
+    ns1:term_status "stable" .
+
+onto:hasArtRequirement a owl:ObjectProperty ;
+    rdfs:label "Has art requirement"@en ;
+    rdfs:comment "Has art requirement"@en ;
+    rdfs:domain onto:GameTheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ArtRequirement ;
+    ns1:term_status "stable" .
+
+onto:hasConstraint a owl:ObjectProperty ;
+    rdfs:label "Has constraint"@en ;
+    rdfs:comment "Has constraint"@en ;
+    rdfs:domain onto:Motion ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Constraint ;
+    ns1:term_status "stable" .
+
+onto:hasDifficultyIndicator a owl:ObjectProperty ;
+    rdfs:label "Has difficulty indicator"@en ;
+    rdfs:comment "Has difficulty indicator"@en ;
+    rdfs:domain onto:GameScenario ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:DifficultyIndicator ;
+    ns1:term_status "stable" .
+
+onto:hasDifficultyIndicatorValue a owl:DatatypeProperty ;
+    rdfs:label "Difficulty"@en ;
+    rdfs:comment "Has difficulty indicator value"@en ;
+    rdfs:domain onto:DifficultyIndicator ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer ;
+    ns1:term_status "stable" .
+
+onto:hasEventTrigger a owl:ObjectProperty ;
+    rdfs:label "Has event trigger"@en ;
+    rdfs:comment "The property to relate a Game Structure or a Game Event with an Event Trigger"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:EventTrigger ;
+    ns1:term_status "stable" .
+
+onto:hasEventTriggerClass a owl:DatatypeProperty ;
+    rdfs:label "Has Event Trigger Class"@en ;
+    rdfs:comment "Event triggers are used to invoke the transition between game sections and activate the game events within a game scenario. They can be classified into four distinct classes, namely: Input trigger detects user input via hardware interface or graphical user interface (GUI); Time trigger is essentially a countdown timer with an interval value with frequency of once, to repeat infinitely or to repeat finitely; Proximity trigger like input trigger has a hotspot that detects the collision of a specified game object, a class of game object or a group of game objects from different classes; Game mechanics trigger is associated to a range of game application related of events such media event, game event and simulation event. Each event trigger is associated with a command that specify the transition between game sections or activation of a game event."@en ;
+    rdfs:domain onto:EventTrigger ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    owl:propertyDisjointWith onto:hasEventTriggerCommand ;
+    ns1:term_status "stable" .
+
+onto:hasForce a owl:ObjectProperty ;
+    rdfs:label "Has force"@en ;
+    rdfs:comment "Has force"@en ;
+    rdfs:domain onto:Motion ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Force ;
+    ns1:term_status "stable" .
+
+onto:hasFrontEndDisplay a owl:ObjectProperty ;
+    rdfs:label "Has front end display"@en ;
+    rdfs:comment "Has front end display"@en ;
+    rdfs:domain onto:GameSimulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://ns.inria.fr/ludo/v1/gamepresentation#FrontEndDisplay> ;
+    ns1:term_status "stable" .
+
+onto:hasGameAct a owl:ObjectProperty ;
+    rdfs:label "Has Game Act"@en ;
+    rdfs:comment "Has Game Act"@en ;
+    rdfs:domain onto:GameEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameAct ;
+    ns1:term_status "stable" .
+
+onto:hasGameActObject a owl:ObjectProperty ;
+    rdfs:label "Has Game Act Object"@en ;
+    rdfs:comment "Has Game Act Object"@en ;
+    rdfs:domain onto:GameAct ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameObject ;
+    ns1:term_status "stable" .
+
+onto:hasGameActingScript a owl:ObjectProperty ;
+    rdfs:label "Game Acting Script"@en ;
+    rdfs:comment "Game Acting Script"@en ;
+    rdfs:domain onto:GameAct ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameActingScript ;
+    ns1:term_status "stable" .
+
+onto:hasGameAttribute a owl:ObjectProperty ;
+    rdfs:label "Has Game Attribute"@en ;
+    rdfs:comment "Has Game Attribute"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:hasGameContext a owl:ObjectProperty ;
+    rdfs:label "Has Game Context"@en ;
+    rdfs:comment "Has Game Context"@en ;
+    rdfs:domain onto:GameStructure ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameContext ;
+    ns1:term_status "stable" .
+
+onto:hasGameControl a owl:ObjectProperty ;
+    rdfs:label "Has Game Control"@en ;
+    rdfs:comment "Has Game Control"@en ;
+    rdfs:domain onto:GamePlayer ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameControl ;
+    ns1:term_status "stable" .
+
+onto:hasGameControlInterface a owl:ObjectProperty ;
+    rdfs:label "Has Game Control Interface"@en ;
+    rdfs:comment "Has Game Control Interface"@en ;
+    rdfs:domain onto:GameControl ;
+    rdfs:range onto:GameControlInterface .
+
+onto:hasGameDimension a owl:DatatypeProperty ;
+    rdfs:label "Has Game Dimension"@en ;
+    rdfs:comment "The game dimension refers to the virtual space of which the game simulation takes place. It can either be 2D or 3D."@en ;
+    rdfs:domain onto:GameDimension ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasGameDimention a owl:ObjectProperty ;
+    rdfs:label "Has Game Dimention"@en ;
+    rdfs:comment "Has Game Dimention"@en ;
+    rdfs:domain onto:GameSimulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameDimension ;
+    ns1:term_status "stable" .
+
+onto:hasGameEnvironment a owl:ObjectProperty ;
+    rdfs:label "Has Game Environment"@en ;
+    rdfs:comment "Has Game Environment"@en ;
+    rdfs:domain onto:GameScenario ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameEnvironment ;
+    ns1:term_status "stable" .
+
+onto:hasGameEvent a owl:ObjectProperty ;
+    rdfs:label "Has Game Event"@en ;
+    rdfs:comment "Has Game Event"@en ;
+    rdfs:domain onto:GameScenario ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameEvent ;
+    ns1:term_status "stable" .
+
+onto:hasGameKnowledgeBase a owl:ObjectProperty ;
+    rdfs:label "Has Game Knowledge-Base"@en ;
+    rdfs:comment "Has Game Knowledge-Base"@en ;
+    rdfs:domain onto:SeriousGame ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameKnowledgeBase ;
+    ns1:term_status "stable" .
+
+onto:hasGameObject a owl:ObjectProperty ;
+    rdfs:label "Has Game Object"@en ;
+    rdfs:comment "This property applies for a Game Environment, a Serious Game and an Inventory"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameObject ;
+    ns1:term_status "stable" .
+
+onto:hasGameObjective a owl:ObjectProperty ;
+    rdfs:label "Has Game Objective"@en ;
+    rdfs:comment "This property relates with a Game Objective. Can be used for Game Scenario and Inventory objects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameObjective ;
+    ns1:term_status "stable" .
+
+onto:hasGamePhysics a owl:DatatypeProperty ;
+    rdfs:label "Has Game Physics"@en ;
+    rdfs:comment "Has Game Physics"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasGamePlayer a owl:ObjectProperty ;
+    rdfs:label "Has Game Player"@en ;
+    rdfs:comment "Has Game Player"@en ;
+    rdfs:domain onto:SeriousGame ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GamePlayer ;
+    ns1:term_status "stable" .
+
+onto:hasGameRecord a owl:ObjectProperty ;
+    rdfs:label "Has Game Record"@en ;
+    rdfs:comment "Has Game Record"@en ;
+    rdfs:domain onto:GamePlayer ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameRecord ;
+    ns1:term_status "stable" .
+
+onto:hasGameResult a owl:ObjectProperty ;
+    rdfs:label "Has Game Result"@en ;
+    rdfs:comment "Has Game Result"@en ;
+    rdfs:domain onto:GameRecord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameResult ;
+    ns1:term_status "stable" .
+
+onto:hasGameRule a owl:ObjectProperty ;
+    rdfs:label "Has Game Rule"@en ;
+    rdfs:comment "This property relates a Game Simulation with a Game Rule"@en ;
+    rdfs:domain onto:GameSimulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameRule ;
+    ns1:term_status "stable" .
+
+onto:hasGameScenario a owl:ObjectProperty ;
+    rdfs:label "Has Game Scenario"@en ;
+    rdfs:comment "Has Game Scenario"@en ;
+    rdfs:domain onto:GameSimulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameScenario ;
+    ns1:term_status "stable" .
+
+onto:hasGameStructure a owl:ObjectProperty ;
+    rdfs:label "Has Game Structure"@en ;
+    rdfs:comment "Has Game Structure"@en ;
+    rdfs:domain onto:SeriousGame ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameStructure ;
+    ns1:term_status "stable" .
+
+onto:hasGameTempo a owl:ObjectProperty ;
+    rdfs:label "Has Game Tempo"@en ;
+    rdfs:comment "Has Game Tempo"@en ;
+    rdfs:domain onto:GameSimulation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameTempo ;
+    ns1:term_status "stable" .
+
+onto:hasGameTheme a owl:ObjectProperty ;
+    rdfs:label "Has Game Theme"@en ;
+    rdfs:comment "Has Game Theme"@en ;
+    rdfs:domain onto:SeriousGame ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameTheme ;
+    ns1:term_status "stable" .
+
+onto:hasGoalCondition a owl:ObjectProperty ;
+    rdfs:label "Has Goal Condition"@en ;
+    rdfs:comment "Has Goal Condition"@en ;
+    rdfs:domain onto:GameObjective ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GoalCondition ;
+    ns1:term_status "stable" .
+
+onto:hasGoalConditionDescription a owl:DatatypeProperty ;
+    rdfs:label "Goal Condition description"@en ;
+    rdfs:comment "The description of the goal condition"@en ;
+    rdfs:domain onto:GoalCondition ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    ns1:term_status "stable" .
+
+onto:hasHardwareInterface a owl:DatatypeProperty ;
+    rdfs:label "Has hardware Interface"@en ;
+    rdfs:comment "Examples of hardware interface include keyboard, mouse, gamepad, joystick, motionsensor, camera and microphone."@en ;
+    rdfs:domain onto:GameControlInterface ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasInputEvent a owl:ObjectProperty ;
+    rdfs:label "Has Input Event"@en ;
+    rdfs:comment "Has Input Event"@en ;
+    rdfs:domain onto:GameControl ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:InputEvent ;
+    ns1:term_status "stable" .
+
+onto:hasIntelligences a owl:ObjectProperty ;
+    rdfs:label "Has Intelligences"@en ;
+    rdfs:comment "Has Intelligences"@en ;
+    rdfs:domain onto:GameObject ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Intelligence ;
+    ns1:term_status "stable" .
+
+onto:hasInteractionCondition a owl:DatatypeProperty ;
+    rdfs:label "Interaction Condition"@en ;
+    rdfs:comment "It refers to the state of actor or the state of the game world"@en ;
+    rdfs:domain onto:GameInteractionRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasInteractionRuleActor a owl:ObjectProperty ;
+    rdfs:label "Interaction Rule Actor"@en ;
+    rdfs:comment "Interaction Rule Actor"@en ;
+    rdfs:domain onto:GameInteractionRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameObject ;
+    ns1:term_status "stable" .
+
+onto:hasInteractionRuleOutcome a owl:ObjectProperty ;
+    rdfs:label "Interaction Rule Outcome"@en ;
+    rdfs:comment "Interaction Rule Outcome"@en ;
+    rdfs:domain onto:GameInteractionRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameInteractionRuleOutcome ;
+    ns1:term_status "stable" .
+
+onto:hasInteractionRuleOutcomeOperation a owl:DatatypeProperty ;
+    rdfs:label "Interaction Rule Outcome Operation"@en ;
+    rdfs:comment "Rewarding the player with any game object can mean give (add) or take away (subtract) an item or increase (add) or decrease (subtract) in the value of an attribute to provide the game player the advantage to succeed in the game."@en ;
+    rdfs:domain onto:GameInteractionRuleOutcome ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasInteractionRuleSubject a owl:ObjectProperty ;
+    rdfs:label "Interaction Rule Subject"@en ;
+    rdfs:comment "Interaction Rule Subject"@en ;
+    rdfs:domain onto:GameInteractionRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameObject ;
+    ns1:term_status "stable" .
+
+onto:hasInventory a owl:ObjectProperty ;
+    rdfs:label "Has Inventory"@en ;
+    rdfs:comment "Has Inventory"@en ;
+    rdfs:domain onto:GamePlayer ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Inventory ;
+    ns1:term_status "stable" .
+
+onto:hasInventoryQuantity a owl:DatatypeProperty ;
+    rdfs:label "Has inventory quantity"@en ;
+    rdfs:comment "Has inventory quantity"@en ;
+    rdfs:domain onto:InventoryState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer ;
+    ns1:term_status "stable" .
+
+onto:hasMass a owl:DatatypeProperty ;
+    rdfs:label "Mass"@en ;
+    rdfs:comment "The amount of matter of an object in Kilograms."@en ;
+    rdfs:domain onto:Mass ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "stable" .
+
+onto:hasMatter a owl:DatatypeProperty ;
+    rdfs:label "Interaction Rule Outcome Matter"@en ;
+    rdfs:comment "Each game rule is paired with an outcome which has a matter and an operation to add or subtract a value from the matter. Matter in the context of game refers to an item, an attribute or permission."@en ;
+    rdfs:domain onto:GameInteractionRuleOutcome ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasMotion a owl:ObjectProperty ;
+    rdfs:label "Has Motion"@en ;
+    rdfs:comment "Has Motion"@en ;
+    rdfs:domain onto:Action ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Motion ;
+    ns1:term_status "stable" .
+
+onto:hasNormalForce a owl:DatatypeProperty ;
+    rdfs:label "Normal force"@en ;
+    rdfs:comment "The normal force"@en ;
+    rdfs:domain onto:Force ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "stable" .
+
+onto:hasObjectVitality a owl:DatatypeProperty ;
+    rdfs:label "Has Object Vitality"@en ;
+    rdfs:comment "Vitality of an object such as life or interrelated attributes such as health, energy, strength, social and etc."@en ;
+    rdfs:domain onto:ObjectVitality ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasObjectVitalityValue a owl:DatatypeProperty ;
+    rdfs:label "Object Vitality Value"@en ;
+    rdfs:comment "Object Vitality Value"@en ;
+    rdfs:domain onto:ObjectVitality ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer ;
+    ns1:term_status "stable" .
+
+onto:hasPedagogicEvent a owl:DatatypeProperty ;
+    rdfs:label "Pedagogic Event"@en ;
+    rdfs:comment "Associates each game section with one or more pedagogic events from the Gagne's nine events of instructions. These events ordered in sequence are (1) gaining attention, (2) informing learning objectives, (3) recalling prior learning, (4) presenting learning content, (5) providing learning guidance, (6) eliciting performance, (7) provide feedback, (8) assess performance and, (9) enhance retention and transfer."@en ;
+    rdfs:domain onto:PedagogicEventIndicator ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasPedagogicEventIndicator a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Has Pedagogic Event Indicator"@en ;
+    rdfs:comment "Has Pedagogic Event Indicator"@en ;
+    rdfs:domain onto:GameStructure ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PedagogicEventIndicator ;
+    ns1:term_status "stable" .
+
+onto:hasScoringCondition a owl:DatatypeProperty ;
+    rdfs:label "Scoring Condition"@en ;
+    rdfs:comment "Every game scoring rule has a scoring condition which has no direct relation with interaction. It can be derived from the state of a game object (e.g. enemy is dead or fire is extinguished), the input statistics (e.g. accuracy is above 80%), the time (e.g. respond is less than 5 seconds or level completed in less than 5 minutes), or the game objective (e.g. objective 1, 2 and 5 are met)."@en ;
+    rdfs:domain onto:GameScoringRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasSoringRuleOutcome a owl:DatatypeProperty ;
+    rdfs:label "Scoring Rule Outcome"@en ;
+    rdfs:comment "The outcome of an Scoring Rule"@en ;
+    rdfs:domain onto:GameScoringRule ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasSound a owl:ObjectProperty ;
+    rdfs:label "Has Sound"@en ;
+    rdfs:comment "Has Sound"@en ;
+    rdfs:domain onto:Action ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Sound ;
+    ns1:term_status "stable" .
+
+onto:hasTempoScale a owl:DatatypeProperty ;
+    rdfs:label "Game tempo scale"@en ;
+    rdfs:comment "The tempo scale at which the time is passing. This can be used for slow motion effects. When timeScale is 1.0 the time is passing as fast as realtime. When timeScale is 0.5 the time is passing 2x slower than realtime. When timeScale is set to zero the game is basically paused if all your functions are frame rate independent.y. Based on: http://docs.unity3d.com/ScriptReference/Time-timeScale.html"@en ;
+    rdfs:domain onto:GameTempo ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:double ;
+    ns1:term_status "stable" .
+
+onto:hasURI a owl:ObjectProperty ;
+    rdfs:label "URI"@en ;
+    rdfs:comment "Uniform Resource Identifier"@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+onto:hasVirtualCamera a owl:ObjectProperty ;
+    rdfs:label "Has Virtual Camera"@en ;
+    rdfs:comment "Has Virtual Camera"@en ;
+    rdfs:domain onto:GameScenario ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:VirtualCamera ;
+    ns1:term_status "stable" .
+
+onto:hasVirtualCameraPosition a owl:DatatypeProperty ;
+    rdfs:label "Has Virtual Camera Position"@en ;
+    rdfs:comment "Position of the virtual camera in the game world"@en ;
+    rdfs:domain onto:VirtualCamera ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasVitalUpdate a owl:DatatypeProperty ;
+    rdfs:label "Has Vital Update"@en ;
+    rdfs:comment "Has Vital Update"@en ;
+    rdfs:domain onto:Action ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:double ;
+    ns1:term_status "stable" .
+
+onto:isSolid a owl:DatatypeProperty ;
+    rdfs:label "Solidity"@en ;
+    rdfs:comment "Solidity"@en ;
+    rdfs:domain onto:SoidityState ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    ns1:term_status "stable" .
+
+<http://dbpedia.org/resource/National_Institute_for_Research_in_Computer_Science_and_Control> a foaf:Organization .
+
+onto:ArtRequirement a owl:Class ;
+    rdfs:label "Art Requirement"@en ;
+    rdfs:comment "Art requirements related the game through expressive written text"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:CompleteGameStructure a owl:Class ;
+    rdfs:label "Complete Game Structure"@en ;
+    rdfs:comment "Complete Game Structure"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameStructure ;
+    ns1:term_status "stable" .
+
+onto:Constraint a owl:Class ;
+    rdfs:label "Constraint"@en ;
+    rdfs:comment "External forces"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:DecidingCondition a owl:Class ;
+    rdfs:label "Deciding Condition"@en ;
+    rdfs:comment "Deciding Condition"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Intelligence ;
+    ns1:term_status "stable" .
+
+onto:GameEnvironment a owl:Class ;
+    rdfs:label "Game Environment"@en ;
+    rdfs:comment "Represents the composition of the virtual world by populating the virtual space with game objects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameKnowledgeBase a owl:Class ;
+    rdfs:label "Game Knowledge Base"@en ;
+    rdfs:comment "A Knowledge Base to be used by the game."@en ;
+    rdfs:subClassOf void:Dataset .
+
+onto:GamePhysics a owl:Class ;
+    rdfs:label "Game Physics"@en ;
+    rdfs:comment "Defines the physicality of the game world. It encompasses the collision world and environment forces."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GamePresentation a owl:Class ;
+    rdfs:label "Game Presentation"@en ;
+    rdfs:comment "A virtual canvas that holds media components and GUI components to form a game menu, a game notification or a cut-scene to present information about the game and allow them to navigate through the game structure"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameContext ;
+    ns1:term_status "stable" .
+
+onto:Inventory a owl:Class ;
+    rdfs:label "Inventory"@en ;
+    rdfs:comment "Inventory presents the idea where player can own a number of game objects in the game as part of the game play. An inventory can be a collection of weapons in a shooter game or a collection of magic spell and potions in a role-playing game. In games such as Resident Evil 5 (www.residentevil.com), a game player can hold 9 items in the inventory at any one time."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Learn a owl:Class ;
+    rdfs:label "Learn"@en ;
+    rdfs:comment "Learn"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Navigate a owl:Class ;
+    rdfs:label "Navigate"@en ;
+    rdfs:comment "Navigate"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:ObjectsAttribute a owl:Class ;
+    rdfs:label "Objects attribute"@en ;
+    rdfs:comment "Objects attribute"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Presentation-basedStructure a owl:Class ;
+    rdfs:label "Presentation-based Structure"@en ;
+    rdfs:comment "Presentation-based Structure"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameStructure ;
+    ns1:term_status "stable" .
+
+onto:RawResult a owl:Class ;
+    rdfs:label "Raw result"@en ;
+    rdfs:comment "Raw result"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameResult ;
+    ns1:term_status "stable" .
+
+onto:Scenario-basedStructure a owl:Class ;
+    rdfs:label "Scenario-based Structure"@en ;
+    rdfs:comment "Scenario-based Structure"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameStructure ;
+    ns1:term_status "stable" .
+
+onto:Training-basedStructure a owl:Class ;
+    rdfs:label "Training-based Structure"@en ;
+    rdfs:comment "Training-based Structure"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameStructure ;
+    ns1:term_status "stable" .
+
+onto:Vital a owl:Class ;
+    rdfs:label "Vital"@en ;
+    rdfs:comment "Game designers can choose to represent the game object using a single vital definition such as life or further elaborate the vitality of a game object into interrelated attributes such as health, energy, strength, social and etc. "@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameAttribute ;
+    ns1:term_status "stable" .
+
+onto:VitalUpdate a owl:Class ;
+    rdfs:label "Vital Update"@en ;
+    rdfs:comment "Revises the value of vitals for a game object as a measure that takes into account the cost of an action inflicted to the object or the cost of performing an action."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:hasEventTriggerCommand a owl:DatatypeProperty ;
+    rdfs:label "Has Event trigger command"@en ;
+    rdfs:comment "Has Event trigger command"@en ;
+    rdfs:domain onto:EventTrigger ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasText a owl:DatatypeProperty ;
+    rdfs:label "Has text"@en ;
+    rdfs:comment "Has text"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+void:Dataset a owl:Class .
+
+<http://www.oscarrodriguez.me> a foaf:Person .
+
+<https://plus.google.com/106595696646939943813> a foaf:Person .
+
+onto:DifficultyIndicator a owl:Class ;
+    rdfs:label "Difficulty Indicator"@en ;
+    rdfs:comment "A value associated to the difficulty of the game scenario"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Force a owl:Class ;
+    rdfs:label "Force"@en ;
+    rdfs:comment "A motion is subject to a force"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameActingScript a owl:Class ;
+    rdfs:label "Game Acting Script"@en ;
+    rdfs:comment "Is composed by one or more acting coordination that instruct how a specific game object act in a defined sequence."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameControlInterface a owl:Class ;
+    rdfs:label "Game Control Interface"@en ;
+    rdfs:comment "Game Control Interface"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    owl:disjointWith onto:InputEvent ;
+    ns1:term_status "stable" .
+
+onto:GoalCondition a owl:Class ;
+    rdfs:label "Goal Condition"@en ;
+    rdfs:comment "The goal condition checks a track-able value against a constant value defined by the game designer to determine if the game objective has been met or not. The game objective is marked as achieve once the goal condition has been satisfied."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:InventoryState a owl:Class ;
+    rdfs:label "Inventory State"@en ;
+    rdfs:comment "The inventory is defined to hold a limited supply of consumable for a game object."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ObjectAttribute ;
+    ns1:term_status "stable" .
+
+onto:Mass a owl:Class ;
+    rdfs:label "Mass"@en ;
+    rdfs:comment "The mass that affects the motion of the game object"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ObjectAttribute ;
+    ns1:term_status "stable" .
+
+onto:ObjectVitality a owl:Class ;
+    rdfs:label "Object Vitality"@en ;
+    rdfs:comment "Vitality of an object such as life or interrelated attributes such as health, energy, strength, social and etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ObjectAttribute ;
+    ns1:term_status "stable" .
+
+onto:PedagogicEventIndicator a owl:Class ;
+    rdfs:label "Pedagogic Event Indicator"@en ;
+    rdfs:comment "Each game section is associated with one or more pedagogic events from the Gagnes nine events of instructions"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:SoidityState a owl:Class ;
+    rdfs:label "Solidity State"@en ;
+    rdfs:comment "The solidity state defines if a game object is solid, whereas the mass affects the motion of the game object."@en ;
+    rdfs:subClassOf onto:ObjectsAttribute ;
+    ns1:term_status "stable" .
+
+onto:VirtualCamera a owl:Class ;
+    rdfs:label "Virtual Camera"@en ;
+    rdfs:comment "Viewport to the game world"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Animation a owl:Class ;
+    rdfs:label "Animation"@en ;
+    rdfs:comment "An animation defines the virtual performance of a game object without reference of the position of the game object as a whole."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Appearance a owl:Class ;
+    rdfs:label "Appearance"@en ;
+    rdfs:comment "The visual appearance of a game object"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:EventTrigger a owl:Class ;
+    rdfs:label "Event Trigger"@en ;
+    rdfs:comment "Event triggers are used to invoke the transition between game sections and activate the game events within a game scenario"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameAct a owl:Class ;
+    rdfs:label "Game Act"@en ;
+    rdfs:comment "The performance of a game object in a game event. It consists of a game object and a game acting script that describe how the game object should move, animate, sound and interact with other game object in a game scenario."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameAttribute a owl:Class ;
+    rdfs:label "Game Attribute"@en ;
+    rdfs:comment "Data properties that represent a game objects vitality, physical being, cognitive state and ownership."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameContext a owl:Class ;
+    rdfs:label "Game Context"@en ;
+    rdfs:comment "Describes the type of game content presented to game players in a game presentation or game simulation."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameDimension a owl:Class ;
+    rdfs:label "Game Dimension"@en ;
+    rdfs:comment "Represents the virtual space in which the game simulation takes place in 2D or 3D."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameEvent a owl:Class ;
+    rdfs:label "Game Event"@en ;
+    rdfs:comment "Is the happening associated to a game scenario. A game event is composed of a set of game act and an event trigger which initiate the game event."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameInteractionRuleOutcome a owl:Class ;
+    rdfs:label "Interaction Rule Outcome"@en ;
+    rdfs:comment "Outcome of an Interaction Rule"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameObjective a owl:Class ;
+    rdfs:label "Game Objective"@en ;
+    rdfs:comment "Represents the goal associated to a game scenario"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameRecord a owl:Class ;
+    rdfs:label "Game Record"@en ;
+    rdfs:comment "A game record is a log of game players achievements in the game"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameResult a owl:Class ;
+    rdfs:label "Game Result"@en ;
+    rdfs:comment "Game Result"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameScoringRule a owl:Class ;
+    rdfs:label "Game Scoring Rule"@en ;
+    rdfs:comment "Only applies to game player and it defines what to be awarded to the game player when a scoring condition is met."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameRule ;
+    ns1:term_status "stable" .
+
+onto:GameTempo a owl:Class ;
+    rdfs:label "Game Tempo"@en ;
+    rdfs:comment "Represents the realtion between the pace of the time in a game and the time in the real world."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameTheme a owl:Class ;
+    rdfs:label "Game Theme"@en ;
+    rdfs:comment "Describes most of the art requirements related the game through expressive written text."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Intelligence a owl:Class ;
+    rdfs:label "Intelligence"@en ;
+    rdfs:comment "Provides game object the ability to decide, navigate and even learn."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:ObjectAttribute a owl:Class ;
+    rdfs:label "Object Atrribute"@en ;
+    rdfs:comment "Data properties that represent a game objects vitality, physical being, cognitive state and ownership"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+foaf:Person a owl:Class .
+
+onto:GameControl a owl:Class ;
+    rdfs:label "Game Control"@en ;
+    rdfs:comment "Provides game player the channel to control game objects"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameInteractionRule a owl:Class ;
+    rdfs:label "Game Interaction Rule"@en ;
+    rdfs:comment "It dictates the outcome of the interaction from two game objects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameRule ;
+    owl:disjointWith onto:GameScoringRule ;
+    ns1:term_status "stable" .
+
+onto:GameRule a owl:Class ;
+    rdfs:label "Game Rule"@en ;
+    rdfs:comment "States the relationship between game objects and game world, and the effect of an interaction. It can either be a Game Scoring Rule or Game Interaction Rule."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:Motion a owl:Class ;
+    rdfs:label "Motion"@en ;
+    rdfs:comment "Motion refers to the actual translation of game object position in the game world. A motion is subject to a force and also constraints (external force)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:SeriousGame a owl:Class ;
+    rdfs:label "Serious Game"@en ;
+    rdfs:comment "Serious Game"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GamePlayer a owl:Class ;
+    rdfs:label "Game Player"@en ;
+    rdfs:comment "The user of the game application who provides inputs to the game system as part of the gaming activity."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf foaf:Person ;
+    ns1:term_status "stable" .
+
+onto:Action a owl:Class ;
+    rdfs:label "Action"@en ;
+    rdfs:comment "The action of a game object, it consists of motion, animation, sound and vital updates."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameScenario a owl:Class ;
+    rdfs:label "Game Scenario"@en ;
+    rdfs:comment "A description of a situation which require game player to overcome a number of challenges in order to achieve the defined objectives. It is also commonly termed as game level in gaming jargon."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameSimulation a owl:Class ;
+    rdfs:label "Game Simulation"@en ;
+    rdfs:comment "Represents the simulation of a game scenario and is governed by a set of rules that define the interactivity, physical and temporal properties of the virtual world. It has game rules, game dimension, game tempo and game physics."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:GameContext ;
+    ns1:term_status "stable" .
+
+onto:GameObject a owl:Class ;
+    rdfs:label "Game Object"@en ;
+    rdfs:comment "Represents virtual things that populate the game world and can be designed to have a combination of abilities such as decision making, moving, acting and responding to surroundings and game players input simulating their existence in the game world."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameStructure a owl:Class ;
+    rdfs:label "Game Structure"@en ;
+    rdfs:comment "Describes the architecture and flow of the game. It segments game into game sections. A game section is composed of a game context, pedagogic event indicator and event trigger."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto: a owl:Ontology ;
+    ns2:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dc:creator <http://www.oscarrodriguez.me>,
+        <https://plus.google.com/106595696646939943813> ;
+    dc:issued "2016-02-01"^^xsd:date ;
+    dc:modified "2016-08-09"^^xsd:date ;
+    dc:publisher <http://dbpedia.org/resource/National_Institute_for_Research_in_Computer_Science_and_Control> ;
+    vann:preferredNamespacePrefix "gamemodel" ;
+    vann:preferredNamespaceUri "http://ns.inria.fr/ludo/v1/gamemodel#"^^xsd:string ;
+    rdfs:comment "Given the increasing amount of structured data published on the Web, many possibilities are open for creating new types of games that use resources from the Web of Data. In particular, if we consider the subcategory of Serious Games in which the object of the game is to educate the user through the interactive discovery of real-life concepts (associated to Semantic Web resources), the inclusion of a semantic representation of the user profile and his contextual information becomes an important element to recommend the user more accurate concepts. Ludo is an ontology that allows the creation of Serious Games with those characteristics."@en ;
+    owl:versionInfo 0.1 .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:GameAttribute onto:GameControl onto:GameRecord ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:CompleteGameStructure onto:Presentation-basedStructure onto:Scenario-basedStructure onto:Training-basedStructure ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:DecidingCondition onto:Learn onto:Navigate ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:GameDimension onto:GamePhysics onto:GameTempo ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Graphic onto:Sound onto:Video onto:hasText ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Action onto:Appearance onto:Intelligence ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:GameEvent onto:GameObject onto:GameObjective onto:GamePlayer onto:GamePresentation onto:GameRule onto:GameScenario onto:GameSimulation onto:GameStructure onto:GameTheme ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:InventoryState onto:Mass onto:SoidityState ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:Animation onto:Motion onto:Sound onto:VitalUpdate ) .
+

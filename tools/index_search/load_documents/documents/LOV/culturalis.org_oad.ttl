@@ -1,0 +1,467 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://culturalis.org/oad#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "Ontology for archival description" ;
+    ns1:license <http://creativecommons.org/licenses/by/4.0/> ;
+    dc:creator "Istituto per i beni artistici culturali e naturali della Regione Emilia-Romagna",
+        "Regesta.exe" ;
+    dc:date "20180802" ;
+    dc:description "An ontology for the description of archival data (OAD, “Ontology of Archival Description”) using the Web Ontology Language (OWL). This ontology represents the classes and properties needed to expose the archival resources as linked data." ;
+    dc:title "Ontology for archival description" ;
+    vann:preferredNamespacePrefix "oad" ;
+    vann:preferredNamespaceUri "http://culturalis.org/oad/" ;
+    owl:priorVersion <http://lod.xdams.org/reload/oad1.2> ;
+    owl:versionInfo 1.3 .
+
+onto:UoD a owl:Class ;
+    rdfs:label "Unit of description"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/uod> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:accruals a owl:DatatypeProperty ;
+    rdfs:label "Accruals"@en ;
+    rdfs:comment "The property represents expected increase."@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.3.3_accruals> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/accruals> .
+
+onto:appraisalDestructionAndSchedulingInformation a owl:DatatypeProperty ;
+    rdfs:label "Appraisal, destruction and scheduling information"@en ;
+    rdfs:comment "The property represents appraisal, destruction and scheduling information"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.3.2_appraisal_destruction_and_scheduling_information> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/appraisalDestructionAndSchedulingInformation> .
+
+onto:archivalHistory a owl:DatatypeProperty ;
+    rdfs:label "Archival history"@en ;
+    rdfs:comment "The property represents information about the history of the instance"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.2.3_archival_history> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/archivalHistory> .
+
+onto:archivistsNote a owl:DatatypeProperty ;
+    rdfs:label "Archivist's Note"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.7.1_archivist_s_note> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/archivistsNote> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:conditionsGoverningAccess a owl:DatatypeProperty ;
+    rdfs:label "Conditions governing access"@en ;
+    rdfs:comment "The property represents condition governing access of the instance"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.4.1_conditions_governing_access> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/conditionsGoverningAccess> .
+
+onto:conditionsGoverningReproduction a owl:DatatypeProperty ;
+    rdfs:label "Conditions governing reproduction"@en ;
+    rdfs:comment "The property represents condition governing reproduction of the instance"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.4.2_conditions_governing_reproduction> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/conditionsGoverningReproduction> .
+
+onto:custody a owl:Class ;
+    rdfs:label "Custody"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/custody> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:date a owl:DatatypeProperty ;
+    rdfs:label "Date(s)"@en ;
+    rdfs:comment "The property represents a date"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.1.3_dates> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/date> .
+
+onto:describes a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Describes"@en ;
+    rdfs:comment "This functional property links a finding aid to the archival resource described"@en ;
+    rdfs:domain onto:FindingAid ;
+    rdfs:range onto:ArchivalResource ;
+    owl:inverseOf onto:isDescribedBy ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:existenceAndLocationOfCopies a owl:DatatypeProperty ;
+    rdfs:label "Existence and location of copies"@en ;
+    rdfs:comment "The property represents the existence and location of copies"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.5.2_existence_and_location_of_copies> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/existenceAndLocationOfCopies> .
+
+onto:existenceAndLocationOfOriginals a owl:DatatypeProperty ;
+    rdfs:label "Existence and location of originals"@en ;
+    rdfs:comment "The property represents the existence and location of originals"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.5.1_existence_and_location_of_originals> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/existenceAndLocationOfOriginals> .
+
+onto:extentAndMedium a owl:DatatypeProperty ;
+    rdfs:label "Extent and medium of the unit of description (quantity, bulk, or size)"@en ;
+    dc:description "Le informazioni sottoforma di stringa di testo sulla consistenza vengono descritte attraverso la proprietà dc:format" ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.1.5_extent_and_medium_of_the_unit_of_description> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/extentAndMedium> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasAccessPointCorporateBody a owl:ObjectProperty ;
+    rdfs:subPropertyOf onto:hasAccessPoint ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_accessPointCorporateBody> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasAccessPointFamily a owl:ObjectProperty ;
+    rdfs:subPropertyOf onto:hasAccessPoint ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_accessPointFamily> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasAccessPointPerson a owl:ObjectProperty ;
+    rdfs:subPropertyOf onto:hasAccessPoint ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_accessPointPerson> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasAccessPointPlace a owl:ObjectProperty ;
+    rdfs:subPropertyOf onto:hasAccessPoint ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_accessPointPlace> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasAdministrativeBiographicalHistory a owl:ObjectProperty ;
+    rdfs:label "Has administrative / biographical history"@en ;
+    rdfs:comment "The property links and instace to information about administrative and biographica history."@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.2.2_administrative_biographical_history> ;
+    rdfs:range onto:AdministrativeBiographicalHistory ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_administrativeBiographicalHistory> .
+
+onto:hasCustody a owl:ObjectProperty ;
+    rdfs:label "Has Custody"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range onto:Custody ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_custody> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasEntity a owl:ObjectProperty ;
+    rdfs:label "Has Entity"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Custody onto:Production ) ] ;
+    rdfs:range <http://culturalis.org/eac-cpf#Entity> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_entity> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasExtentAndMedium a owl:ObjectProperty ;
+    rdfs:label "Has extent and medium"@en ;
+    rdfs:comment "The property links an instance to information about extent and medium"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range onto:ExtentAndMedium ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:hasExtentType a owl:ObjectProperty ;
+    rdfs:label "Has extent type"@en ;
+    rdfs:comment "The property represents an extent type and it is related to a skos vocabulary"@en ;
+    rdfs:domain onto:ExtentAndMedium ;
+    rdfs:range skos:Concept ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:hasFilePlan a owl:ObjectProperty ;
+    rdfs:label "File Plan"@en ;
+    rdfs:comment "The property links an instance to a classification system"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range skos:Concept ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_filePlan> .
+
+onto:hasFindingAid a owl:ObjectProperty ;
+    rdfs:label "Has finding aid"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.4.5_finding_aids> ;
+    rdfs:range onto:FindingAid ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_findingAid> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasLanguageScriptsOfMaterial a owl:ObjectProperty ;
+    rdfs:label "Has language/scripts of material"@en ;
+    rdfs:comment "The property links an instance to its language information"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.4.3_language_scripts_of_material> ;
+    rdfs:range <http://id.loc.gov/vocabulary/iso639-1/iso639-1_Language> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_languageScriptsOfMaterial> .
+
+onto:hasLevel a owl:ObjectProperty ;
+    rdfs:label "Has level of description"@en ;
+    rdfs:comment "The property links an archival resource to its level of description"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.1.4_level_of_description> ;
+    rdfs:range onto:LevelOfDescription ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_level> .
+
+onto:hasNameOfCreator a owl:ObjectProperty ;
+    rdfs:label "Name of creator(s)"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.2.1_name_of_creators> ;
+    rdfs:range <http://culturalis.org/eac-cpf#Entity> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_nameOfCreator> ;
+    owl:deprecated true .
+
+onto:hasNextInSequence a owl:ObjectProperty ;
+    rdfs:label "Has next in sequence"@en ;
+    rdfs:comment "The property links an instance to the following sibling"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range onto:Instance ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:hasProduction a owl:ObjectProperty ;
+    rdfs:label "Has Production"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range onto:Production ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_production> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:hasPublicationNote a owl:ObjectProperty ;
+    rdfs:label "Has publication note"@en ;
+    rdfs:comment "The property links an instance to its bibliography information"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.5.4_publication_note> ;
+    rdfs:range onto:PublicationNote ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_publicationNote> .
+
+onto:hasRelatedInstance a owl:ObjectProperty ;
+    rdfs:label "Has related instance"@en ;
+    rdfs:comment "The property links two or more instances related"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.5.3_related_units_of_description> ;
+    rdfs:range onto:Instance ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_relatedUnitsOfDescription> .
+
+onto:hasRepository a owl:ObjectProperty ;
+    rdfs:label "Has repository"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range <http://culturalis.org/eac-cpf#Entity> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_repository> ;
+    owl:deprecated true .
+
+onto:immediateSourceOfAcquisitionOrTransfer a owl:DatatypeProperty ;
+    rdfs:label "Immediate source of acquisition or transfer"@en ;
+    rdfs:comment "The property represents an immediate source of acquisition or transfer"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.2.4_immediate_source_of_acquisition_or_transfer> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/immediateSourceOfAcquisitionOrTransfer> .
+
+onto:isContainedIn a owl:ObjectProperty ;
+    rdfs:label "Is contained in"@en ;
+    rdfs:comment "The property represents the relationship between an instance and the finding aid in which it is contained"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://culturalis.org/eac-cpf#Instance> onto:Instance ) ] ;
+    rdfs:range onto:FindingAid ;
+    owl:inverseOf onto:contains ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:isEntryOf a owl:ObjectProperty ;
+    rdfs:label "Is entry of"@en ;
+    rdfs:comment "The property links an instance to an archival resource"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range onto:ArchivalResource ;
+    owl:inverseOf onto:hasEntry ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:isProducedBy a owl:ObjectProperty ;
+    rdfs:label "Is produced by"@en ;
+    rdfs:comment "The property links the archival resource described to the entity responsible for the production of the resource"@en ;
+    rdfs:domain onto:ArchivalResource ;
+    rdfs:range <http://culturalis.org/eac-cpf#Entity> ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:note a owl:DatatypeProperty ;
+    rdfs:label "Note"@en ;
+    rdfs:comment "The property represents information that cannot be accommodated in any of the other properties."@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.6.1_note> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/note> .
+
+onto:otherlevel a owl:DatatypeProperty ;
+    rdfs:label "Other Level of description"@en ;
+    rdfs:comment "The property represents an otherlevel of description"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/otherlevel> .
+
+onto:physicalCharacteristicsAndTechnicalRequirements a owl:DatatypeProperty ;
+    rdfs:label "Physical characteristics and technical requirements"@en ;
+    rdfs:comment "The property represents physical characteristics and technical requirements"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.4.4_physical_characteristics_and_technical_requirements> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/physicalCharacteristicsAndTechnicalRequirements> .
+
+onto:production a owl:Class ;
+    rdfs:label "Production"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/production> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:referenceCode a owl:DatatypeProperty ;
+    rdfs:label "Reference code"@en ;
+    rdfs:comment "The property represents an identification code of the described resource"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.1.1_reference_codes> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/referenceCode> .
+
+onto:scopeAndContent a owl:DatatypeProperty ;
+    rdfs:label "Scope and content"@en ;
+    rdfs:comment "The property represents the scope and the content of the described resource"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.3.1_scope_and_content> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/scopeAndContent> .
+
+onto:systemOfArrangement a owl:DatatypeProperty ;
+    rdfs:label "System of arrangement"@en ;
+    rdfs:comment "The property represents the internal structure, the order and/or the system of classification of the described resource"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.3.4_system_of_arrangement> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/systemOfArrangement> .
+
+onto:title a owl:DatatypeProperty ;
+    rdfs:label "Title"@en ;
+    rdfs:comment "The property represents the name shown in a description"@en ;
+    rdfs:domain onto:Instance ;
+    rdfs:isDefinedBy <http://lod.xdams.org/reload/oad/isadOntology/isad_3.1.2_title> ;
+    rdfs:range xsd:string ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/title> .
+
+onto:useEadElement a owl:ObjectProperty ;
+    rdfs:label "Use EAD element or attribute"@en ;
+    rdfs:domain foaf:Organization ;
+    rdfs:range onto:EadElement ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/use_eadElement> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+dc:description a owl:AnnotationProperty .
+
+xsd:booelan a rdfs:Datatype .
+
+<http://culturalis.org/cult/0.1/#Catalogue> a owl:Class .
+
+onto:AdministrativeBiographicalHistory a owl:Class ;
+    rdfs:label "Administrative / Biographical history"@en ;
+    rdfs:comment "The class represents the administrative and biographical history."@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/administrativeBiographicalHistory> .
+
+onto:EadElement a owl:Class ;
+    rdfs:label "EAD Schema's element or attribute"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/eadElement> ;
+    owl:deprecated "true"^^xsd:booelan .
+
+onto:LevelOfDescription a owl:Class ;
+    rdfs:label "Level of description"@en ;
+    rdfs:comment "The class represents the archival description level"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/levelOfDescription> .
+
+onto:Place a owl:Class ;
+    rdfs:label "Place"@en ;
+    rdfs:comment "The class represents a physical place"@en ;
+    rdfs:subClassOf <http://www.geonames.org/ontology#Feature> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/place> .
+
+onto:PublicationNote a owl:Class ;
+    rdfs:label "Publication note"@en ;
+    rdfs:comment "The class represents a bibliography"@en ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/publicationNote> .
+
+onto:contains a owl:ObjectProperty ;
+    rdfs:label "Contains"@en ;
+    rdfs:comment "Inverse property of oad:isContainedIn"@en ;
+    rdfs:domain onto:FindingAid ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://culturalis.org/eac-cpf#Instance> onto:Instance ) ] ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:hasEntry a owl:ObjectProperty ;
+    rdfs:label "Has entry"@en ;
+    rdfs:domain onto:ArchivalResource ;
+    rdfs:range onto:Instance ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:isDescribedBy a owl:ObjectProperty ;
+    rdfs:label "Is described by"@en ;
+    rdfs:comment "Inverse property of oad:describes"@en ;
+    rdfs:domain onto:ArchivalResource ;
+    rdfs:range onto:FindingAid ;
+    owl:versionInfo "Questa proprietà è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+<http://dati.san.beniculturali.it/SAN/complessoArchivistico> a owl:Class .
+
+<http://dati.san.beniculturali.it/SAN/strumento> a owl:Class .
+
+<http://id.loc.gov/vocabulary/iso639-1/iso639-1_Language> a owl:Class .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+<http://www.geonames.org/ontology#Feature> a owl:Class .
+
+foaf:Person a owl:Class .
+
+<http://culturalis.org/eac-cpf#Instance> a owl:Class .
+
+onto:Custody a owl:Class .
+
+onto:ExtentAndMedium a owl:Class ;
+    rdfs:label "Extent and medium"@en ;
+    rdfs:comment "The class represents the description about extent and medium."@en ;
+    owl:versionInfo "Questa classe è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:Production a owl:Class .
+
+foaf:Organization a owl:Class .
+
+skos:Concept a owl:Class .
+
+onto:hasAccessPoint a owl:ObjectProperty ;
+    rdfs:label "Has key access point"@en ;
+    rdfs:comment "The property represents an access point"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://culturalis.org/eac-cpf#Entity> onto:Instance ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://culturalis.org/eac-cpf#Entity> onto:Place skos:Concept foaf:Organization foaf:Person ) ] ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/has_accessPoint> .
+
+onto:ArchivalResource a owl:Class ;
+    rdfs:label "Archival resource"@en ;
+    rdfs:comment "oad:ArchivalResource is the class that represents the object of the description (i.e., a single document or a set of document)."@en ;
+    owl:equivalentClass <http://dati.san.beniculturali.it/SAN/complessoArchivistico> ;
+    owl:versionInfo "Questa classe è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+
+onto:FindingAid a owl:Class ;
+    rdfs:label "Finding aid"@en ;
+    rdfs:comment "The class represents a finding aid."@en ;
+    rdfs:subClassOf <http://culturalis.org/cult/0.1/#Catalogue> ;
+    owl:backwardCompatibleWith <http://lod.xdams.org/reload/oad/findingAid> ;
+    owl:equivalentClass <http://dati.san.beniculturali.it/SAN/strumento> .
+
+<http://culturalis.org/eac-cpf#Entity> a owl:Class .
+
+onto:Instance a owl:Class ;
+    rdfs:label "Archival instance"@en ;
+    rdfs:comment "The class represents the descriptive entry of an archival resource"@en ;
+    owl:versionInfo "Questa classe è stata aggiunta nella versione del 2 agosto 2018"^^xsd:string .
+

@@ -1,0 +1,73 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://data.press.net/ontology/event/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:subEventOf a owl:TransitiveProperty ;
+    rdfs:label "Transitive Property defining a parent-child relationship between events"@en ;
+    rdfs:comment "Transitive Property defining a parent-child relationship between events. Event Y is a sub event of Event X"@en ;
+    rdfs:domain onto:Event ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Event ;
+    ns1:term_status "testing" .
+
+onto:summary a owl:DatatypeProperty ;
+    rdfs:label "An Event summary"@en ;
+    rdfs:comment "Property for expressing an event summary. Datatype is String"@en ;
+    rdfs:domain onto:Event ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://data.press.net/ontology/stuff/comment>,
+        dcterms:abstract ;
+    ns1:term_status "testing" .
+
+onto:theme a owl:ObjectProperty ;
+    rdfs:label "Associates an Event with an intangible theme"@en ;
+    rdfs:comment "Property for expressing the theme of an event, its range is pns:Intangible"@en ;
+    rdfs:domain onto:Event ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://data.press.net/ontology/stuff/Intangible> ;
+    rdfs:subPropertyOf <http://data.press.net/ontology/stuff/notablyAssociatedWith> ;
+    ns1:term_status "testing" .
+
+onto:title a owl:DatatypeProperty ;
+    rdfs:label "An Event title"@en ;
+    rdfs:comment "Property for expressing an event title. Datatype is String"@en ;
+    rdfs:domain onto:Event ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf <http://data.press.net/ontology/stuff/label>,
+        dcterms:title ;
+    ns1:term_status "testing" .
+
+<http://uk.linkedin.com/in/jarredmcginnis> a foaf:Person ;
+    foaf:name "Jarred McGinnis" .
+
+<http://uk.linkedin.com/in/pauliharman> a foaf:Person ;
+    foaf:name "Paul Harman" .
+
+<http://uk.linkedin.com/in/paulwilton> a foaf:Person ;
+    foaf:name "Paul Wilton" .
+
+onto: a owl:Ontology ;
+    dcterms:created "2011-07-28"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-nd/3.0/> ;
+    dcterms:modified "2012-04-20"^^xsd:date ;
+    dcterms:title "SNaP Event Ontology"@en ;
+    rdfs:comment "The Event Ontology models news-worthy events and their relationship to news assets and stuff (simple entities) in the world."@en ;
+    owl:versionInfo "0.5.0"^^xsd:string ;
+    foaf:maker <http://uk.linkedin.com/in/jarredmcginnis>,
+        <http://uk.linkedin.com/in/pauliharman>,
+        <http://uk.linkedin.com/in/paulwilton> .
+
+onto:Event a owl:Class ;
+    rdfs:label "Generic Event Class"@en ;
+    rdfs:comment "Generic Event Class, a subclass of event:Event. The Event class also subclasses pnt:Stuff as it is a Compound domain entity, this inheritance means news assets can be tagged with Events"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://data.press.net/ontology/stuff/Stuff>,
+        <http://purl.org/NET/c4dm/event.owl#Event> ;
+    ns1:term_status "testing" .
+

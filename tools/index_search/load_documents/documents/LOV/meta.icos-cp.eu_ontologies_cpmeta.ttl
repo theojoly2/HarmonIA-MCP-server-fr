@@ -1,0 +1,1727 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://meta.icos-cp.eu/ontologies/cpmeta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns1:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    dc:creator <http://meta.icos-cp.eu/resources/people/Oleg%20Mirzov> ;
+    dc:description "OWL vocabulary describing metadata of two environmental research infrastructures: ICOS and SITES"@en ;
+    dc:issued "2015-05-18"^^xsd:date ;
+    dc:modified "2023-01-24"^^xsd:date ;
+    dc:publisher <http://meta.icos-cp.eu/resources/organizations/CP> ;
+    dc:rights "Copyright © 2023 ICOS ERIC" ;
+    dc:title "Ontology of Integrated Carbon Observation System (ICOS)"@en ;
+    vann:preferredNamespacePrefix "cpmeta" ;
+    vann:preferredNamespaceUri "http://meta.icos-cp.eu/ontologies/cpmeta/" ;
+    owl:versionInfo 1.0 .
+
+onto:AtmoStation a owl:Class ;
+    rdfs:label "ATMO station" ;
+    rdfs:subClassOf onto:Station .
+
+onto:FluxnetStation a owl:Class ;
+    rdfs:label "FLUXNET station" ;
+    rdfs:subClassOf onto:Station .
+
+onto:IngosStation a owl:Class ;
+    rdfs:label "InGOS station" ;
+    rdfs:subClassOf onto:Station .
+
+onto:NeonStation a owl:Class ;
+    rdfs:label "NEON station" ;
+    rdfs:subClassOf onto:Station .
+
+onto:OS a owl:Class ;
+    rdfs:label "Oceanic station" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://meta.icos-cp.eu/resources/organizations/OTC> ;
+            owl:onProperty onto:belongsToTheNetworkOf ],
+        onto:IcosStation .
+
+onto:SailDrone a owl:Class ;
+    rdfs:label "Sail Drone" ;
+    rdfs:subClassOf onto:Station .
+
+onto:WdcggStation a owl:Class ;
+    rdfs:label "WDCGG station" ;
+    rdfs:subClassOf onto:Station .
+
+onto:asGeoJSON a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "GeoJSON representation" ;
+    rdfs:domain onto:SpatialCoverage ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf geo:hasSerialization .
+
+onto:asciiAtcProductTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS ATC time series" ;
+    onto:hasGoodFlagValue "O",
+        "R",
+        "U" ;
+    rdfs:comment "Semicolon-separated ASCII, with #-prefixed multi-line header" .
+
+onto:asciiAtcTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS ATC Raw time series" .
+
+onto:asciiEtcHalfHourlyProductTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS ETC half-hourly product CSV" ;
+    onto:hasGoodFlagValue "0",
+        "1" ;
+    rdfs:comment "The first two columns are expected to be the beginning and the end of the averaging period in yyyyMMddHHmm format (no DST)" ;
+    rdfs:seeAlso onto:etcLocalDateTime .
+
+onto:asciiEtcRawTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Raw ASCII ETC station data" .
+
+onto:asciiEtcTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Time series in ICOS Sweden format" .
+
+onto:asciiOtcProductCsv a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS OTC time series" ;
+    onto:hasGoodFlagValue "2",
+        "9" ;
+    rdfs:comment "Single-line comment, first column is UTC ISO-8601 timestamp, NaN for missing values, comma-separated." .
+
+onto:asciiOtcSocatTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Data in OTC/SOCAT TSV format" .
+
+onto:asciiWdcggTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "WDCGG gas mole fraction time series" .
+
+onto:awardNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "award number" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:fundingInfoProp .
+
+onto:awardTitle a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "award title" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:fundingInfoProp .
+
+onto:awardURI a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "award URI" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf onto:fundingInfoProp .
+
+onto:binEtcRawTimeSer a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Raw binary ETC station data" .
+
+onto:bmpChar a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "UTF-16 character" ;
+    rdfs:comment "a character from the basic multilingual plane" .
+
+onto:broaderEcosystem a owl:ObjectProperty ;
+    rdfs:label "more general ecosystem" ;
+    rdfs:domain onto:EcosystemType ;
+    rdfs:range onto:EcosystemType ;
+    rdfs:subPropertyOf skos:broader .
+
+onto:country a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Country" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:csvWithIso8601tsFirstCol a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "CSV with ISO8601 timestamp as first column" .
+
+onto:etcDate a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "d/m/yyyy" .
+
+onto:etcRawTimeSerMultiZip a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Multi-file zip archive with ETC raw time series" .
+
+onto:excel a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Microsoft Excel (of unspecified structure)" .
+
+onto:float32 a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "32-bit floating point value" .
+
+onto:float64 a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "64-bit floating point value" .
+
+onto:funderIdentifier a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "funder identifier" ;
+    rdfs:domain onto:Funder ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:fundingInfoProp .
+
+onto:funderIdentifierType a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "funder identifier type" ;
+    rdfs:domain onto:Funder ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "Crossref Funder ID" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "GRID" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "ISNI" ;
+                                    rdf:rest [ a rdf:List ;
+                                            rdf:first "Other" ;
+                                            rdf:rest [ a rdf:List ;
+                                                    rdf:first "ROR" ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    rdfs:subPropertyOf onto:fundingInfoProp .
+
+onto:gzipEncoding a onto:ObjectEncoding,
+        owl:NamedIndividual ;
+    rdfs:label "gzip" .
+
+onto:hasActualColumnNames a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Contains a JSON array with actual column names" ;
+    rdfs:domain onto:SimpleDataObject ;
+    rdfs:range xsd:string .
+
+onto:hasActualVariable a owl:ObjectProperty ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range onto:VariableInfo .
+
+onto:hasAncillaryDataValue a owl:DatatypeProperty ;
+    rdfs:label "ancillary data value" ;
+    rdfs:comment "parent property for ancillary value properties whose values are plain literals (not from vocabularies)" ;
+    rdfs:domain onto:AncillaryEntry ;
+    rdfs:range rdfs:Literal .
+
+onto:hasAncillaryEntry a owl:ObjectProperty ;
+    rdfs:label "ancillary entry" ;
+    rdfs:comment "ancillary entry associated with a station" ;
+    rdfs:domain onto:Station ;
+    rdfs:range onto:AncillaryEntry .
+
+onto:hasAncillaryObjectValue a owl:ObjectProperty ;
+    rdfs:label "ancillary object value" ;
+    rdfs:comment "parent property for ancillary value properties whose values come from controlled vocabularies" ;
+    rdfs:domain onto:AncillaryEntry ;
+    rdfs:range onto:AncillaryValue .
+
+onto:hasAssociatedPublication a owl:DatatypeProperty ;
+    rdfs:label "associated publication" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf dcterms:bibliographicCitation .
+
+onto:hasAtcId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasTcId .
+
+onto:hasAttributionWeight a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "attribution weight" ;
+    rdfs:comment "to be used for determining the order of names in citation strings" ;
+    rdfs:domain onto:Membership ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf onto:hasExtraRoleInfo .
+
+onto:hasCitationString a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "a synthetic property; the RDF triples with it as a predicate are to be created by business-logic-based inference, not inserted into the triple store explicitly" ;
+    rdfs:domain onto:StaticObject ;
+    rdfs:range xsd:string .
+
+onto:hasClimateZone a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "climate zone" ;
+    rdfs:domain onto:Station ;
+    rdfs:range onto:ClimateZone .
+
+onto:hasDepiction a owl:DatatypeProperty ;
+    rdfs:label "has depiction" ;
+    rdfs:domain prov:Agent ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf <http://schema.org/image> .
+
+onto:hasDocumentationObject a owl:ObjectProperty ;
+    rdfs:label "has documentation" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObjectSpec onto:Station ) ] ;
+    rdfs:range onto:DocumentObject .
+
+onto:hasDocumentationUri a owl:DatatypeProperty ;
+    rdfs:label "documentation link" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf dcterms:bibliographicCitation .
+
+onto:hasDoi a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Collection onto:StaticObject ) ] ;
+    rdfs:range xsd:string .
+
+onto:hasElevation a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Elevation" ;
+    rdfs:comment "Elevation above sea level in meters" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Station geo:Geometry ) ] ;
+    rdfs:range xsd:float .
+
+onto:hasEndDate a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "end date" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range xsd:date .
+
+onto:hasEtcId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasTcId .
+
+onto:hasFormatSpecificMetadata a owl:DatatypeProperty ;
+    rdfs:label "format-specific metadata" ;
+    rdfs:comment "parent property for concrete format-specific metadata properties",
+        "used for WDCGG data, may be retired in the future" ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range rdfs:Literal .
+
+onto:hasFunding a owl:ObjectProperty ;
+    rdfs:label "has funding" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:CentralFacility onto:Station ) ] ;
+    rdfs:range onto:Funding .
+
+onto:hasGoodFlagValue a owl:DatatypeProperty ;
+    rdfs:domain onto:ObjectFormat ;
+    rdfs:range xsd:string .
+
+onto:hasHideFromSearchPolicy a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:hasPolicy .
+
+onto:hasInstrumentComponent a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:domain onto:Instrument ;
+    rdfs:range onto:Instrument ;
+    rdfs:subPropertyOf ssn:hasSubSystem .
+
+onto:hasKeyword a owl:DatatypeProperty ;
+    rdfs:comment "A \"virtual\" property, created for keyword search in SPARQL. A multi-value counterpart of cpmeta:hasKeywords, which contains a string with comma-separated list of keywords." ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range xsd:string .
+
+onto:hasKeywords a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "String representing a comma-separated list of keywords" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObject onto:DataObjectSpec onto:Project ) ] ;
+    rdfs:range xsd:string .
+
+onto:hasLabelingDate a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "labelling date" ;
+    rdfs:comment "the date when the station was approved by ICOS and got labelled as an ICOS station" ;
+    rdfs:domain onto:IcosStation ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasMarkerIcon a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has marker icon" ;
+    rdfs:comment "URL link to an icon that can be used by web apps to show e.g. locations of stations" ;
+    rdfs:domain onto:DataTheme ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf <http://schema.org/image> .
+
+onto:hasMaxValue a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:VariableInfo ;
+    rdfs:range xsd:double .
+
+onto:hasMeanAnnualPrecip a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "mean annual precipitation" ;
+    rdfs:comment "measured in mm" ;
+    rdfs:domain onto:ES ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasMeanAnnualRadiation a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "mean annual radiation" ;
+    rdfs:comment "measured in W m-2" ;
+    rdfs:domain onto:ES ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasMeanAnnualTemp a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "mean annual temperature" ;
+    rdfs:comment "measured in °C" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:float ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasMembership a owl:ObjectProperty ;
+    rdfs:label "has membership" ;
+    rdfs:domain onto:Person ;
+    rdfs:range onto:Membership .
+
+onto:hasMinValue a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:VariableInfo ;
+    rdfs:range xsd:double .
+
+onto:hasNumberOfRows a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "number of rows" ;
+    rdfs:domain onto:SimpleDataObject ;
+    rdfs:range xsd:long .
+
+onto:hasOperationalPeriod a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "operational period" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasOrcidId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Orcid ID" ;
+    rdfs:domain onto:Person ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStringId .
+
+onto:hasOtcId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasTcId .
+
+onto:hasQuantityKind a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "quantity kind" ;
+    rdfs:domain onto:ValueType ;
+    rdfs:range onto:QuantityKind .
+
+onto:hasResponsibleOrganization a owl:ObjectProperty ;
+    rdfs:label "responsible organization" ;
+    rdfs:domain onto:Station ;
+    rdfs:range onto:Organization .
+
+onto:hasSamplingHeight a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataAcquisition ssn:Deployment ) ] ;
+    rdfs:range xsd:float .
+
+onto:hasSamplingPoint a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataAcquisition onto:Site ) ] ;
+    rdfs:range onto:Position ;
+    rdfs:subPropertyOf prov:atLocation .
+
+onto:hasSha256sum a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "SHA-256 hashsum" ;
+    rdfs:domain onto:StaticObject ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:hexBinary ;
+            owl:withRestrictions ( [ xsd:length "64"^^xsd:nonNegativeInteger ] ) ] .
+
+onto:hasSizeInBytes a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:StaticObject ;
+    rdfs:range xsd:long .
+
+onto:hasSkipPidMintingPolicy a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:hasPolicy .
+
+onto:hasSkipStoragePolicy a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:hasPolicy .
+
+onto:hasStartDate a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "start date" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range xsd:date .
+
+onto:hasStationClass a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Station Class" ;
+    rdfs:domain onto:IcosStation ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "1" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "2" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "Associated" ;
+                                    rdf:rest () ] ] ] ] ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasTemporalResolution a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObject onto:DatasetSpec ) ] ;
+    rdfs:range xsd:string .
+
+onto:hasTimeZoneOffset a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "time zone offset" ;
+    rdfs:comment "offset of local timezone from UTC" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:hasUnit a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "unit" ;
+    rdfs:comment "unit of measurement" ;
+    rdfs:domain onto:ValueType ;
+    rdfs:range xsd:string .
+
+onto:hasVariableName a owl:DatatypeProperty ;
+    rdfs:comment "A \"virtual\" property only used to define a variable in SPARQL, to support variable-name search. Is a multi-valued counterpart of cpmeta:hasActualColumnNames (for SimpleDataObjects), which contains a JSON array. Also, used to indicate variable name that a sensor is measuring (via Deployment)." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObject ssn:Deployment ) ] ;
+    rdfs:range xsd:string .
+
+onto:hasWigosId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "WIGOS ID" ;
+    rdfs:domain onto:AS ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStringId .
+
+onto:icosLicence a dcterms:LicenseDocument,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS CCBY4 Data Licence" ;
+    rdfs:seeAlso <https://data.icos-cp.eu/licence> ;
+    skos:exactMatch <https://creativecommons.org/licenses/by/4.0> .
+
+onto:igbp_BSV a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_CRO a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_CSH a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_CVM a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_DBF a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_DNF a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_EBF a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_ENF a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_GRA a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_MF a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_OSH a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_SAV a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_SNO a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_URB a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_WAT a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_WET a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:igbp_WSA a onto:EcosystemType,
+        owl:NamedIndividual .
+
+onto:image a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Image of an unspecified format" .
+
+onto:impliesDefaultLicence a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "implies default licence" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObjectSpec onto:Project ) ] ;
+    rdfs:range dcterms:LicenseDocument .
+
+onto:ingosRar a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "RAR archive with InGoS time series results" .
+
+onto:int32 a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "32-bit integer value" .
+
+onto:isOptionalColumn a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:DatasetColumn ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:isOptionalVariable .
+
+onto:isQualityFlagFor a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a quality flag for" ;
+    rdfs:domain onto:DatasetColumn ;
+    rdfs:range onto:DatasetColumn .
+
+onto:isRegexColumn a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:DatasetColumn ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:isRegexVariable .
+
+onto:iso8601date a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Date in ISO-8601 format" .
+
+onto:iso8601dateTime a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Date-and-time stamp in ISO-8601 format" ;
+    rdfs:comment "Internally represented as int64 milliseconds since Unix epoch." .
+
+onto:iso8601timeOfDay a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "[h]h:mm[:ss]" .
+
+onto:isoLikeLocalDateTime a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ISO-like local dateTime" ;
+    rdfs:comment "May use space instead of 'T' for separator" .
+
+onto:koppen_Af a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Am a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Aw_As a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_BSh a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_BSk a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_BWh a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_BWk a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cfa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cfb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cfc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Csa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Csb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Csc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cwa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cwb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Cwc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dfa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dfb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dfc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dfd a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dsa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dsb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dsc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dsd a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dwa a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dwb a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dwc a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_Dwd a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_EF a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:koppen_ET a onto:ClimateZone,
+        owl:NamedIndividual .
+
+onto:locatedAt a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "located at" ;
+    rdfs:domain onto:Organization ;
+    rdfs:range geo:Feature ;
+    rdfs:subPropertyOf prov:atLocation .
+
+onto:multiImageZip a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Uncompressed zip archive with images" .
+
+onto:netcdf a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "NetCDF (spatial)" .
+
+onto:netcdfTimeSeries a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "NetCDF (time series)" ;
+    onto:hasGoodFlagValue "O",
+        "R",
+        "U" .
+
+onto:operatesOn a owl:ObjectProperty ;
+    rdfs:label "operates on" ;
+    rdfs:domain onto:Station ;
+    rdfs:range onto:Site ;
+    rdfs:subPropertyOf prov:atLocation .
+
+onto:otcRawData a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS OTC Raw Data" .
+
+onto:plainFileEncoding a onto:ObjectEncoding,
+        owl:NamedIndividual ;
+    rdfs:label "plain file" .
+
+onto:string a onto:ValueFormat,
+        owl:NamedIndividual .
+
+onto:wasHostedBy a owl:ObjectProperty ;
+    rdfs:range onto:Organization ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:wasParticipatedInBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:wasPerformedAt a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "was performed at" ;
+    rdfs:domain prov:Activity ;
+    rdfs:range geo:Feature ;
+    rdfs:subPropertyOf prov:atLocation .
+
+onto:wasPerformedWith a owl:ObjectProperty ;
+    rdfs:comment "instrument used to perform data acquisition" ;
+    rdfs:domain onto:DataAcquisition .
+
+onto:zipArchive a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Arbitrary ZIP archive" .
+
+onto:zipEncoding a onto:ObjectEncoding,
+        owl:NamedIndividual ;
+    rdfs:label "zip" .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:issued a owl:AnnotationProperty .
+
+dc:modified a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:date a owl:DatatypeProperty ;
+    rdfs:label "Date" ;
+    rdfs:range rdfs:Literal .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+rdf:PlainLiteral a rdfs:Datatype .
+
+rdf:type a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+rdfs:seeAlso a owl:AnnotationProperty .
+
+xsd:nonNegativeInteger a rdfs:Datatype .
+
+skos:exactMatch a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "exact match (SKOS)" ;
+    rdfs:domain skos:Concept ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf skos:closeMatch .
+
+prov:hadPrimarySource a owl:ObjectProperty ;
+    rdfs:domain prov:Entity ;
+    rdfs:range prov:Entity .
+
+prov:startedAtTime a owl:DatatypeProperty ;
+    rdfs:label "startedAtTime" ;
+    rdfs:domain prov:Activity ;
+    rdfs:range xsd:dateTime .
+
+ssn:forProperty a owl:ObjectProperty ;
+    rdfs:label "for property" .
+
+<https://meta.fieldsites.se/ontologies/sites/aquanetPointMeasurementsCsv> a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "AquaNet point measurements csv" .
+
+<https://meta.fieldsites.se/ontologies/sites/delimitedHeaderCsv> a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Character delimited header csv" .
+
+<https://meta.fieldsites.se/ontologies/sites/image> a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Image" .
+
+<https://meta.fieldsites.se/ontologies/sites/sitesLicence> a dcterms:LicenseDocument,
+        owl:NamedIndividual ;
+    rdfs:label "SITES CCBY4 Data Licence" ;
+    rdfs:seeAlso <https://data.fieldsites.se/licence> ;
+    skos:exactMatch <https://creativecommons.org/licenses/by/4.0> .
+
+<https://meta.fieldsites.se/ontologies/sites/spectralPointCloud> a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "SITES Spectral point cloud" .
+
+<https://meta.fieldsites.se/ontologies/sites/zipLidar> a onto:ObjectFormat,
+        owl:NamedIndividual ;
+    rdfs:label "Zipped LiDAR data" .
+
+onto:AS a owl:Class ;
+    rdfs:label "Atmospheric station" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://meta.icos-cp.eu/resources/organizations/ATC> ;
+            owl:onProperty onto:belongsToTheNetworkOf ],
+        onto:IcosStation .
+
+onto:DataProduction a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty prov:endedAtTime ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:wasPerformedBy ;
+            owl:someValuesFrom owl:Thing ],
+        prov:Activity .
+
+onto:DataSubmission a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty prov:wasAssociatedWith ;
+            owl:someValuesFrom owl:Thing ],
+        prov:Activity .
+
+onto:QuantityKind a owl:Class ;
+    rdfs:label "Quantity Kind" ;
+    rdfs:comment "The kind of physical quantity, for example volume, length, concentration. Can be basic or derived, standard or non-standard. Implies an associated physical quantity dimension but does not have a fixed unit of measurement." ;
+    rdfs:seeAlso <http://purl.oclc.org/NET/ssnx/qu/qu#QuantityKind>,
+        <http://qudt.org/schema/qudt#QuantityKind> ;
+    rdfs:subClassOf onto:DataObjectSpecifyingThing .
+
+onto:Role a owl:Class .
+
+onto:SimpleObjectSpec a owl:Class ;
+    rdfs:label "Simple Object specification" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:containsDataset ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:TabularDatasetSpec ;
+            owl:onProperty onto:containsDataset ],
+        onto:DataObjectSpec .
+
+onto:StringVocabulary a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:containsString ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:ValueFormat .
+
+onto:atOrganization a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "at organization" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Membership ssn:Deployment ) ] ;
+    rdfs:range onto:Organization .
+
+onto:containsString a owl:DatatypeProperty ;
+    rdfs:domain onto:StringVocabulary ;
+    rdfs:range xsd:string .
+
+onto:countryCode a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "country code" ;
+    rdfs:comment "ISO 3166-1 alpha-2 country code" ;
+    rdfs:domain onto:Station ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "^[A-Z]{2}$" ] ) ] ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/ISO_3166-1> ;
+    rdfs:subPropertyOf onto:hasStationSpecificParam .
+
+onto:etcLocalDateTime a onto:ValueFormat,
+        owl:NamedIndividual ;
+    rdfs:label "yyyyMMddHHmm (no DST) (ICOS ETC)" ;
+    rdfs:comment "Local dateTime timestamp without any daylight savings time adjustments, that is, local winter time." .
+
+onto:hasAssociatedProject a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "associated with project" ;
+    rdfs:domain onto:DataObjectSpec ;
+    rdfs:range onto:Project .
+
+onto:hasColumn a owl:ObjectProperty ;
+    rdfs:label "has column" ;
+    rdfs:domain onto:TabularDatasetSpec ;
+    rdfs:range onto:DatasetColumn ;
+    rdfs:subPropertyOf onto:hasVariable .
+
+onto:hasColumnTitle a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "column title" ;
+    rdfs:domain onto:DatasetColumn ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasVariableTitle .
+
+onto:hasDataLevel a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "data level" ;
+    rdfs:comment "Data level according to ICOS classification. Does not imply the data are official ICOS data." ;
+    rdfs:domain onto:DataObjectSpec ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first 0 ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first 1 ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first 2 ;
+                                    rdf:rest [ a rdf:List ;
+                                            rdf:first 3 ;
+                                            rdf:rest () ] ] ] ] ] .
+
+onto:hasDataTheme a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has data theme" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObjectSpec onto:ThematicCenter ) ] ;
+    rdfs:range onto:DataTheme .
+
+onto:hasEasternBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "eastern bound" ;
+    rdfs:domain onto:LatLonBox ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -1.8e+02 ] [ xsd:maxInclusive 1.8e+02 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:hasEcosystemType a owl:ObjectProperty ;
+    rdfs:label "ecosystem type" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:ES onto:Site <https://meta.fieldsites.se/ontologies/sites/Station> ) ] ;
+    rdfs:range onto:EcosystemType .
+
+onto:hasEmail a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "E-mail" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Organization onto:Person ) ] ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:string ;
+            owl:withRestrictions ( [ xsd:pattern "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,6}$" ] ) ] .
+
+onto:hasEncoding a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "encoding" ;
+    rdfs:comment "data stream encoding, e.g. zip, gzip, plain file" ;
+    rdfs:domain onto:DataObjectSpec ;
+    rdfs:range onto:ObjectEncoding ;
+    rdfs:subPropertyOf dcterms:format .
+
+onto:hasEndTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "end time" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Membership onto:SpatialDataObject ssn:Deployment ) ] ;
+    rdfs:range xsd:dateTime .
+
+onto:hasExtraRoleInfo a owl:DatatypeProperty ;
+    rdfs:label "extra role info" ;
+    rdfs:domain onto:Membership ;
+    rdfs:range rdfs:Literal .
+
+onto:hasFirstName a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "first name" ;
+    rdfs:domain onto:Person ;
+    rdfs:range xsd:string .
+
+onto:hasFormat a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "format" ;
+    rdfs:comment "format of the Data Object; will be used to determine the machinery for processing it" ;
+    rdfs:domain onto:DataObjectSpec ;
+    rdfs:range onto:ObjectFormat ;
+    rdfs:subPropertyOf dcterms:format .
+
+onto:hasFunder a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "funder" ;
+    rdfs:domain onto:Funding ;
+    rdfs:range onto:Funder .
+
+onto:hasIcon a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has icon" ;
+    rdfs:comment "URL link to SVG icon to be used in user interfaces" ;
+    rdfs:domain onto:DataTheme ;
+    rdfs:range xsd:anyURI ;
+    rdfs:subPropertyOf <http://schema.org/image> .
+
+onto:hasInstrumentOwner a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:Instrument ;
+    rdfs:range onto:Organization .
+
+onto:hasLastName a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "last name" ;
+    rdfs:domain onto:Person ;
+    rdfs:range xsd:string .
+
+onto:hasLatitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Latitude" ;
+    rdfs:comment "Decimal degrees in WGS84/GRS80" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Position onto:Station ssn:Deployment ) ] ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -9e+01 ] [ xsd:maxInclusive 9e+01 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:hasLongitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Longitude" ;
+    rdfs:comment "Decimal degrees in WGS84/GRS80" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Position onto:Station ssn:Deployment ) ] ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -1.8e+02 ] [ xsd:maxInclusive 1.8e+02 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:hasModel a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "instrument model" ;
+    rdfs:domain onto:Instrument ;
+    rdfs:range xsd:string .
+
+onto:hasName a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Name" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Instrument onto:Organization onto:StaticObject ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:title .
+
+onto:hasNorthernBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "northern bound" ;
+    rdfs:domain onto:LatLonBox ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -9e+01 ] [ xsd:maxInclusive 9e+01 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:hasRole a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:domain onto:Membership ;
+    rdfs:range onto:Role .
+
+onto:hasSerialNumber a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "serial number" ;
+    rdfs:domain onto:Instrument ;
+    rdfs:range xsd:string .
+
+onto:hasSouthernBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "southern bound" ;
+    rdfs:domain onto:LatLonBox ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -9e+01 ] [ xsd:maxInclusive 9e+01 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:hasSpatialCoverage a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "spatial coverage" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:DataObject onto:Station geo:Feature ) ] ;
+    rdfs:range onto:SpatialCoverage ;
+    rdfs:subPropertyOf geo:hasGeometry .
+
+onto:hasStartTime a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "start time" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Membership onto:SpatialDataObject ssn:Deployment ) ] ;
+    rdfs:range xsd:dateTime .
+
+onto:hasStationId a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Station ID" ;
+    rdfs:domain onto:Station ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStringId .
+
+onto:hasValueFormat a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "value format" ;
+    rdfs:domain onto:DatasetColumn ;
+    rdfs:range onto:ValueFormat .
+
+onto:hasVariable a owl:ObjectProperty ;
+    rdfs:label "has variable" ;
+    rdfs:domain onto:DatasetSpec ;
+    rdfs:range onto:DatasetVariable .
+
+onto:hasVendor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain onto:Instrument ;
+    rdfs:range onto:Organization .
+
+onto:hasWesternBound a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "western bound" ;
+    rdfs:domain onto:LatLonBox ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:onDatatype xsd:double ;
+            owl:withRestrictions ( [ xsd:minInclusive -1.8e+02 ] [ xsd:maxInclusive 1.8e+02 ] ) ] ;
+    rdfs:subPropertyOf onto:latlongs .
+
+onto:isOptionalVariable a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:DatasetVariable ;
+    rdfs:range xsd:boolean .
+
+onto:isRegexVariable a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain onto:DatasetVariable ;
+    rdfs:range xsd:boolean .
+
+onto:wasAcquiredBy a owl:ObjectProperty ;
+    rdfs:label "was acquired by" ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range onto:DataAcquisition ;
+    rdfs:subPropertyOf prov:wasGeneratedBy .
+
+onto:wasPerformedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasAssociatedWith .
+
+onto:wasProducedBy a owl:ObjectProperty ;
+    rdfs:label "was produced by" ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range onto:DataProduction ;
+    rdfs:subPropertyOf prov:wasGeneratedBy .
+
+onto:wasSubmittedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "was submitted by" ;
+    rdfs:domain onto:StaticObject ;
+    rdfs:range onto:DataSubmission ;
+    rdfs:subPropertyOf prov:wasGeneratedBy .
+
+dcterms:creator a owl:ObjectProperty .
+
+dcterms:dateSubmitted a owl:DatatypeProperty ;
+    rdfs:label "Date Submitted" ;
+    rdfs:range rdfs:Literal .
+
+dcterms:description a owl:DatatypeProperty ;
+    rdfs:label "Description" ;
+    rdfs:range rdfs:Literal .
+
+dcterms:hasPart a owl:ObjectProperty .
+
+geo:hasSerialization a owl:DatatypeProperty ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range rdfs:Literal .
+
+xsd:hexBinary a rdfs:Datatype .
+
+skos:broader a owl:ObjectProperty ;
+    rdfs:label "has broader" .
+
+skos:closeMatch a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "close match (SKOS)" ;
+    rdfs:domain skos:Concept ;
+    rdfs:range skos:Concept .
+
+prov:endedAtTime a owl:DatatypeProperty ;
+    rdfs:label "endedAtTime" ;
+    rdfs:domain prov:Activity ;
+    rdfs:range xsd:dateTime .
+
+prov:wasRevisionOf a owl:ObjectProperty ;
+    rdfs:domain prov:Entity ;
+    rdfs:range prov:Entity .
+
+sosa:ObservableProperty a owl:Class .
+
+sosa:Sensor a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom ssn:Deployment ;
+            owl:onProperty ssn:hasDeployment ] .
+
+ssn:hasDeployment a owl:ObjectProperty ;
+    rdfs:label "has deployment" .
+
+ssn:hasSubSystem a owl:ObjectProperty ;
+    rdfs:label "has subsystem" .
+
+<https://creativecommons.org/publicdomain/zero/1.0/> a dcterms:LicenseDocument,
+        owl:NamedIndividual ;
+    rdfs:label "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
+
+<https://meta.fieldsites.se/ontologies/sites/Station> a owl:Class ;
+    rdfs:label "SITES station" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <https://meta.fieldsites.se/resources/organizations/SITES_SLU> ;
+            owl:onProperty onto:belongsToTheNetworkOf ],
+        onto:Station .
+
+onto:AncillaryDatum a owl:Class ;
+    owl:disjointUnionOf ( onto:AncillaryEntry onto:AncillaryValue ) .
+
+onto:AncillaryValue a owl:Class ;
+    rdfs:label "Ancillary Value" ;
+    rdfs:comment "the class of ancillary values coming from controlled vocabularies" ;
+    rdfs:subClassOf onto:AncillaryDatum .
+
+onto:CentralFacility a owl:Class ;
+    rdfs:label "Central Facility" ;
+    rdfs:subClassOf onto:Organization .
+
+onto:DocumentObject a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:DocumentObject ;
+            owl:onProperty onto:isNextVersionOf ],
+        onto:StaticObject .
+
+onto:SimpleDataObject a owl:Class ;
+    owl:disjointWith onto:SpatialDataObject ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:DataObject [ a owl:Restriction ;
+                        owl:onProperty onto:wasAcquiredBy ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:allValuesFrom onto:SimpleObjectSpec ;
+                        owl:onProperty onto:hasObjectSpec ] ) ] .
+
+onto:TabularDatasetSpec a owl:Class ;
+    rdfs:label "Tabular Dataset Specification" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasColumn ;
+            owl:someValuesFrom owl:Thing ],
+        onto:DatasetSpec .
+
+onto:containsDataset a owl:ObjectProperty ;
+    rdfs:label "contains dataset" ;
+    rdfs:domain onto:DataObjectSpec ;
+    rdfs:range onto:DatasetSpec .
+
+onto:hasObjectSpec a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has specification" ;
+    rdfs:domain onto:DataObject ;
+    rdfs:range onto:DataObjectSpec .
+
+onto:hasValueType a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "value type" ;
+    rdfs:domain onto:DatasetVariable ;
+    rdfs:range onto:ValueType .
+
+onto:hasVariableTitle a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "variable title" ;
+    rdfs:domain onto:DatasetVariable ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:title .
+
+<http://meta.icos-cp.eu/resources/organizations/ATC> a onto:ThematicCenter,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS ATC" ;
+    onto:hasName "Atmosphere Thematic Centre" .
+
+<http://meta.icos-cp.eu/resources/organizations/ETC> a onto:ThematicCenter,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS ETC" ;
+    onto:hasName "Ecosystem Thematic Centre" .
+
+<http://meta.icos-cp.eu/resources/organizations/OTC> a onto:ThematicCenter,
+        owl:NamedIndividual ;
+    rdfs:label "ICOS OTC" ;
+    onto:hasName "Ocean Thematic Centre" .
+
+dcterms:FileFormat a owl:Class .
+
+dcterms:bibliographicCitation a owl:DatatypeProperty ;
+    rdfs:range rdfs:Literal .
+
+dcterms:format a owl:ObjectProperty ;
+    rdfs:label "Format" .
+
+geo:SpatialObject a owl:Class .
+
+geo:hasGeometry a owl:ObjectProperty ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:Geometry .
+
+xsd:integer a rdfs:Datatype .
+
+<https://creativecommons.org/licenses/by/4.0> a owl:NamedIndividual ;
+    rdfs:label "vanilla CC BY 4" .
+
+<https://meta.fieldsites.se/resources/organizations/SITES_SLU> a onto:ThematicCenter,
+        owl:NamedIndividual ;
+    rdfs:label "SITES at SLU" ;
+    onto:hasName "SITES coordination center at SLU" .
+
+onto:DataTheme a owl:Class ;
+    rdfs:label "Data Theme" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasIcon ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:DataObjectSpecifyingThing .
+
+onto:ES a owl:Class ;
+    rdfs:label "Ecosystem station" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue <http://meta.icos-cp.eu/resources/organizations/ETC> ;
+            owl:onProperty onto:belongsToTheNetworkOf ],
+        onto:IcosStation .
+
+onto:Position a owl:Class ;
+    rdfs:label "Position" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasLongitude ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasLatitude ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:SpatialCoverage .
+
+onto:Site a owl:Class ;
+    rdfs:comment "Physical research site" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:EcosystemType ;
+            owl:onProperty onto:hasEcosystemType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:SpatialCoverage ;
+            owl:onProperty geo:hasGeometry ],
+        geo:Feature .
+
+onto:SpatialDataObject a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:DataObject [ a owl:Restriction ;
+                        owl:onProperty onto:hasSpatialCoverage ;
+                        owl:someValuesFrom onto:LatLonBox ] [ a owl:Restriction ;
+                        owl:onProperty onto:wasProducedBy ;
+                        owl:someValuesFrom owl:Thing ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasEndTime ;
+                        owl:someValuesFrom rdfs:Literal ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasStartTime ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+onto:ValueType a owl:Class ;
+    rdfs:label "Value Type" ;
+    rdfs:comment "Domain-specific meaning of the values" ;
+    rdfs:subClassOf skos:Concept .
+
+onto:VariableInfo a owl:Class ;
+    rdfs:subClassOf onto:DataObjectSpecifyingThing .
+
+onto:hasPolicy a owl:DatatypeProperty ;
+    rdfs:domain onto:Project ;
+    rdfs:range rdfs:Literal .
+
+onto:hasTcId a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Instrument onto:Organization onto:Person ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:hasStringId .
+
+onto:isNextVersionOf a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Collection onto:StaticObject ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Collection onto:StaticObject ) ] ;
+    rdfs:subPropertyOf prov:wasRevisionOf .
+
+dcterms:title a owl:DatatypeProperty ;
+    rdfs:range rdfs:Literal .
+
+<http://schema.org/image> a owl:DatatypeProperty .
+
+xsd:date a rdfs:Datatype .
+
+prov:wasGeneratedBy a owl:ObjectProperty ;
+    rdfs:domain prov:Entity ;
+    rdfs:range prov:Activity .
+
+onto:AncillaryEntry a owl:Class ;
+    rdfs:label "Ancillary Entry" ;
+    rdfs:comment "contains the ancillary value(s), submission date, and optional information date" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty dcterms:dateSubmitted ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        onto:AncillaryDatum .
+
+onto:DataAcquisition a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty prov:wasAssociatedWith ;
+            owl:someValuesFrom owl:Thing ],
+        prov:Activity .
+
+onto:DatasetSpec a owl:Class ;
+    rdfs:label "Dataset Specification" ;
+    rdfs:subClassOf onto:DataObjectSpecifyingThing .
+
+onto:Funder a owl:Class ;
+    rdfs:subClassOf onto:Organization .
+
+onto:ObjectEncoding a owl:Class ;
+    rdfs:subClassOf dcterms:FileFormat .
+
+onto:Project a owl:Class ;
+    rdfs:subClassOf onto:DataObjectSpecifyingThing .
+
+onto:belongsToTheNetworkOf a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "belongs to thematic center" ;
+    rdfs:domain onto:Station ;
+    rdfs:range onto:ThematicCenter .
+
+onto:hasStringId a owl:DatatypeProperty ;
+    rdfs:comment "umbrella property for organizing id-related properties" ;
+    rdfs:range xsd:string .
+
+dcterms:LicenseDocument a owl:Class .
+
+prov:Agent a owl:Class .
+
+prov:atLocation a owl:ObjectProperty .
+
+onto:Collection a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty dcterms:title ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Collection ;
+            owl:onProperty onto:isNextVersionOf ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( onto:Collection onto:DataObject ) ] ;
+            owl:onProperty dcterms:hasPart ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:onClass onto:Organization ;
+            owl:onProperty dcterms:creator ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        prov:Entity .
+
+onto:DatasetVariable a owl:Class ;
+    rdfs:label "Dataset variable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasVariableTitle ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasValueType ;
+            owl:someValuesFrom owl:Thing ],
+        sosa:ObservableProperty .
+
+onto:IcosStation a owl:Class ;
+    rdfs:label "ICOS station" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:countryCode ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:Station .
+
+onto:LatLonBox a owl:Class ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( onto:SpatialCoverage [ a owl:Restriction ;
+                        owl:onProperty onto:hasEasternBound ;
+                        owl:someValuesFrom rdfs:Literal ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasNorthernBound ;
+                        owl:someValuesFrom rdfs:Literal ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasSouthernBound ;
+                        owl:someValuesFrom rdfs:Literal ] [ a owl:Restriction ;
+                        owl:onProperty onto:hasWesternBound ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+onto:SpatialCoverage a owl:Class ;
+    rdfs:label "Spatial Coverage" ;
+    rdfs:subClassOf geo:Geometry .
+
+onto:fundingInfoProp a owl:DatatypeProperty .
+
+geo:Feature a owl:Class ;
+    rdfs:subClassOf geo:SpatialObject ;
+    owl:disjointWith geo:Geometry .
+
+geo:Geometry a owl:Class ;
+    rdfs:subClassOf geo:SpatialObject .
+
+xsd:dateTime a rdfs:Datatype .
+
+xsd:float a rdfs:Datatype .
+
+skos:Concept a owl:Class .
+
+prov:wasAssociatedWith a owl:ObjectProperty ;
+    rdfs:label "was associated with" ;
+    rdfs:comment "A prov:Agent that had some (unspecified) responsibility for an occurrence of a prov:Activity" ;
+    rdfs:domain prov:Activity ;
+    rdfs:range prov:Agent .
+
+onto:Person a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasEmail ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasLastName ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasFirstName ;
+            owl:someValuesFrom rdfs:Literal ],
+        prov:Agent .
+
+onto:ThematicCenter a owl:Class ;
+    rdfs:label "Thematic Center" ;
+    rdfs:subClassOf onto:CentralFacility ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://meta.icos-cp.eu/resources/organizations/ATC> <http://meta.icos-cp.eu/resources/organizations/ETC> <http://meta.icos-cp.eu/resources/organizations/OTC> <https://meta.fieldsites.se/resources/organizations/SITES_SLU> ) ] .
+
+onto:latlongs a owl:DatatypeProperty ;
+    rdfs:range xsd:double .
+
+onto:DatasetColumn a owl:Class ;
+    rdfs:label "Dataset column" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasValueType ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasValueFormat ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasColumnTitle ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:DataObjectSpecifyingThing .
+
+onto:Funding a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasFunder ;
+            owl:someValuesFrom onto:Funder ] .
+
+onto:Membership a owl:Class ;
+    rdfs:label "Membership" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:atOrganization ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasRole ;
+            owl:someValuesFrom owl:Thing ] .
+
+xsd:boolean a rdfs:Datatype .
+
+prov:Entity a owl:Class .
+
+onto:DataObjectSpecifyingThing a owl:Class .
+
+onto:Instrument a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Organization ;
+            owl:onProperty onto:hasInstrumentOwner ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasSerialNumber ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:Organization ;
+            owl:onProperty onto:hasVendor ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasModel ;
+            owl:someValuesFrom rdfs:Literal ],
+        sosa:Sensor .
+
+prov:Activity a owl:Class .
+
+ssn:Deployment a owl:Class .
+
+onto:hasStationSpecificParam a owl:DatatypeProperty ;
+    rdfs:domain onto:Station ;
+    rdfs:range rdfs:Literal .
+
+xsd:double a rdfs:Datatype .
+
+onto:StaticObject a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:wasSubmittedBy ;
+            owl:someValuesFrom owl:Thing ],
+        prov:Entity .
+
+onto:DataObjectSpec a owl:Class ;
+    rdfs:label "Data Object specification" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasFormat ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasAssociatedProject ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasDataLevel ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasEncoding ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:hasDataTheme ;
+            owl:someValuesFrom owl:Thing ],
+        onto:DataObjectSpecifyingThing .
+
+onto:ValueFormat a owl:Class ;
+    rdfs:subClassOf onto:DataObjectSpecifyingThing .
+
+onto:DataObject a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasObjectSpec ;
+            owl:someValuesFrom owl:Thing ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:DataObject ;
+            owl:onProperty onto:isNextVersionOf ],
+        onto:StaticObject .
+
+onto:Organization a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasName ;
+            owl:someValuesFrom rdfs:Literal ],
+        prov:Agent .
+
+owl:Thing a owl:Class .
+
+onto:EcosystemType a owl:Class ;
+    rdfs:label "Ecosystem Type" .
+
+onto:ObjectFormat a owl:Class ;
+    rdfs:subClassOf dcterms:FileFormat .
+
+onto:Station a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty onto:hasStationId ;
+            owl:someValuesFrom rdfs:Literal ],
+        onto:Organization .
+
+onto:ClimateZone a owl:Class ;
+    rdfs:label "Climate Zone" .
+
+rdfs:Literal a rdfs:Datatype .
+
+xsd:string a rdfs:Datatype .
+

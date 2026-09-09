@@ -1,0 +1,155 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://datos.gob.es/def/sector-publico/organizacion#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:EntidadDerechoPublico a owl:Class ;
+    dcterms:issued "2015-19-02" ;
+    rdfs:subClassOf onto:UnidadOrganicaNoRaiz,
+        org:FormalOrganization .
+
+onto:UGEP a owl:Class ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+onto:ambitoCompetencias a owl:ObjectProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#Autonomia> <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#EntidadSingular> <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#Municipio> <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#Pais> <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#Provincia> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:hasValue <http://datos.gob.es/kos/sector-publico/AmbitoTerritorialCompetencias> ;
+                                    owl:onProperty skos:inScheme ] [ a owl:Restriction ;
+                                    owl:hasValue <http://datos.gob.es/kos/sector-publico/EntidadGeografica> ;
+                                    owl:onProperty skos:inScheme ] ) ] ) ] .
+
+onto:diasInhabiles a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain onto:Oficina ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+onto:disposicionLegal a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+onto:estado a owl:ObjectProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain org:Organization ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://datos.gob.es/kos/sector-publico/Estado> ;
+            owl:onProperty skos:inScheme ] .
+
+onto:horarioAtencion a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain onto:Oficina ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+onto:identificadorExterno a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+onto:nivelAdministracion a owl:ObjectProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain org:Organization ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://datos.gob.es/kos/sector-publico/NivelAdministracion> ;
+            owl:onProperty skos:inScheme ] .
+
+onto:nivelJerarquico a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer .
+
+onto:observacionBaja a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Literal .
+
+onto:otroContacto a owl:DatatypeProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:isDefinedBy onto: .
+
+onto:servicio a owl:ObjectProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain onto:Oficina ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <http://datos.gob.es/kos/sector-publico/ServicioOficina> ;
+            owl:onProperty skos:inScheme ] .
+
+onto:tieneUORaiz a owl:ObjectProperty ;
+    dcterms:issued "2015-02-19" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:UnidadOrganicaNoRaiz org:FormalOrganization ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range org:FormalOrganization .
+
+onto:Oficina a owl:Class ;
+    dcterms:issued "2015-19-02" ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+onto:UnidadOrganicaNoRaiz a owl:Class ;
+    dcterms:issued "2015-19-02" ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+onto: a owl:Ontology ;
+    dc:contributor [ foaf:mbox "c.jimenez@estratic.com" ;
+            foaf:name "Carlos Jimenez" ],
+        [ foaf:mbox "mjferuiz@zaragoza.es" ;
+            foaf:name "María Jesús Fernández" ],
+        [ foaf:mbox "martin@w3.org" ;
+            foaf:name "Martín Álvarez" ],
+        [ foaf:name "Toño Velasco" ],
+        [ foaf:mbox "mdolores.hernandez@seap.minhap.es" ;
+            foaf:name "Mª Dolores Hernández" ],
+        [ foaf:mbox "soyjosem@hotmail.com" ;
+            foaf:name "José M. Subero" ],
+            foaf:name "Asuncion Gomez-Perez" ],
+            foaf:name "Óscar Corcho" ],
+        [ foaf:mbox "IbaPasAn@jcyl.es" ;
+            foaf:name "Antonio Ibáñez" ],
+            foaf:name "Imanol Argüeso" ],
+        [ foaf:mbox "josemanuel.crespo@fundacionctic.org" ;
+            foaf:name "José Manuel Crespo" ],
+        [ foaf:mbox "dreyjor@admon.upo.es" ;
+            foaf:name "David Rey Jordán" ] ;
+    dc:creator "Ministerio de Hacienda y Administraciones Públicas",
+        "Ministerio de Industria, Energía y Turismo",
+        "Red.es" ;
+    dc:rights "Creative Commons 3.0 (BY-NC-SA)" ;
+    dcterms:date "2015-02-19" ;
+    dcterms:hasFormat <http://datos.gob.es/def/sector-publico/organizacion.html>,
+        <http://datos.gob.es/def/sector-publico/organizacion.rdf> ;
+    dcterms:issued "2015-02-19" ;
+    vann:preferredNamespacePrefix "orges" ;
+    vann:preferredNamespaceUri "http://datos.gob.es/def/sector-publico/organizacion#" ;
+    owl:imports vann:,
+        <http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio>,
+        <http://www.w3.org/2004/02/skos/core>,
+        org: ;
+    owl:versionIRI onto:1.0.0 .
+

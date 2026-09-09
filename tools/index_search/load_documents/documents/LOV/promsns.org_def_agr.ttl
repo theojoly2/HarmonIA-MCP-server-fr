@@ -1,0 +1,157 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://promsns.org/def/agr> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Agreements ontology"@en ;
+    dcterms:created "2016-09-12"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0002-8742-7730> ;
+    dcterms:modified "2016-10-12"^^xsd:date ;
+    rdfs:comment "This Agreements Ontology is designed to model 'agreements' which are social contracts that include licenses, laws, contracts, Memoranda of Understanding, standards and definitional metadata. Its purpose is to support data sharing by making explicit the relationships between agreements and data and agreements and Agents (people and organisations). Eventually it will also help with the interplay between different classes of agreements."@en ;
+    owl:imports <http://creativecommons.org/schema.rdf>,
+        <http://dublincore.org/2012/06/14/dcterms.rdf>,
+        <http://www.w3.org/2004/02/skos/core>,
+        <http://www.w3.org/ns/org.ttl>,
+        <http://www.w3.org/ns/prov-o#> ;
+    owl:versionInfo "v1.1" .
+
+<http://promsns.org/def/agr#MAY> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "MAY" .
+
+<http://promsns.org/def/agr#MUST> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "MUST" .
+
+<http://promsns.org/def/agr#MUST_NOT> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "MUST NOT" .
+
+<http://promsns.org/def/agr#OPTIONAL> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "OPTIONAL" .
+
+<http://promsns.org/def/agr#RECOMMENDED> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "RECOMMENDED" .
+
+<http://promsns.org/def/agr#REQUIRED> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "REQUIRED" .
+
+<http://promsns.org/def/agr#SHALL> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "SHALL" .
+
+<http://promsns.org/def/agr#SHALL_NOT> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "SHALL NOT" .
+
+<http://promsns.org/def/agr#SHOULD> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "SHOULD" .
+
+<http://promsns.org/def/agr#SHOULD_NOT> a <http://promsns.org/def/agr#RequirementLevel> ;
+    rdfs:label "SHOULD NOT" .
+
+<http://promsns.org/def/agr#hasScope> a owl:ObjectProperty ;
+    rdfs:label "has scope"@en ;
+    rdfs:comment "This property is the union (group) of all Agents indicated as being within the scope of an Agreement by the hasWithinScope property."@en ;
+    rdfs:domain <http://promsns.org/def/agr#Agreement> ;
+    rdfs:range prov:Agent ;
+    rdfs:subPropertyOf prov:influenced ;
+    owl:inverseOf <http://promsns.org/def/agr#scopeOf> .
+
+<http://promsns.org/def/agr#hasWithinScope> a owl:ObjectProperty ;
+    rdfs:label "has within scope"@en ;
+    rdfs:comment "This property indicates an Agent affected by an Agreement. It is likely that the Agent will be a group (foaf:Group) or an Organization (org:Organisation) rather than an individual person and certainly not a machine Agent. Individual Agents indicated as being affected by an Agreement via this property collectively make a group, formal or informal, that can be indicated as being the entire scope group of an Agreement via hasScopeOf property of it."@en ;
+    rdfs:domain <http://promsns.org/def/agr#Agreement> ;
+    rdfs:range prov:Agent ;
+    rdfs:subPropertyOf prov:influenced ;
+    owl:inverseOf <http://promsns.org/def/agr#withinScopeOf> .
+
+<http://promsns.org/def/agr#requirementLevel> a owl:ObjectProperty ;
+    rdfs:label "requirement level"@en ;
+    rdfs:comment "a Requirement has a requirementLevel of a RequirementLevel"@en ;
+    rdfs:domain <http://promsns.org/def/agr#Requirement> ;
+    rdfs:range <http://promsns.org/def/agr#RequirementLevel> .
+
+<http://promsns.org/def/agr#requirementOf> a owl:InverseFunctionalProperty ;
+    rdfs:label "requirement of"@en ;
+    rdfs:comment "A Requirement is a requirementOf an Agreement"@en ;
+    rdfs:domain <http://promsns.org/def/agr#Requirement> ;
+    rdfs:range <http://promsns.org/def/agr#Agreement> ;
+    rdfs:subPropertyOf dcterms:isPartOf ;
+    owl:inverseOf <http://promsns.org/def/agr#requires> .
+
+<http://promsns.org/def/agr#satisfiedBy> a owl:InverseFunctionalProperty ;
+    rdfs:label "satisfied by"@en ;
+    rdfs:comment "inverse of satisfies"@en ;
+    rdfs:domain <http://promsns.org/def/agr#Requirement> ;
+    rdfs:range <http://promsns.org/def/agr#RequirementResolution> ;
+    rdfs:subPropertyOf prov:influenced ;
+    owl:inverseOf <http://promsns.org/def/agr#satisfies> .
+
+<http://promsns.org/def/agr#scopeOf> a owl:ObjectProperty ;
+    rdfs:label "scope of"@en ;
+    rdfs:comment "inverse of hasScopeOf"@en ;
+    rdfs:domain prov:Agent ;
+    rdfs:range <http://promsns.org/def/agr#Agreement> ;
+    rdfs:subPropertyOf prov:wasInfluencedBy ;
+    owl:inverseOf <http://promsns.org/def/agr#hasScope> .
+
+<http://promsns.org/def/agr#withinScopeOf> a owl:ObjectProperty ;
+    rdfs:label "within scope"@en ;
+    rdfs:comment "inverse of hasWithinScope"@en ;
+    rdfs:domain prov:Agent ;
+    rdfs:range <http://promsns.org/def/agr#Agreement> ;
+    rdfs:subPropertyOf prov:wasInfluencedBy ;
+    owl:inverseOf <http://promsns.org/def/agr#hasWithinScope> .
+
+<https://orcid.org/0000-0002-8742-7730> a dcterms:Agent ;
+    rdfs:label "Nicholas Car"@en ;
+    rdfs:comment "Contact Nicholas on nicholas.car@ga.gov.au."@en .
+
+<http://promsns.org/def/agr#RequirementResolution> a owl:Class ;
+    rdfs:label "Requirement Resolution"@en ;
+    rdfs:comment "An action that resolves requirements"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://promsns.org/def/agr#satisfies> ],
+        skos:Concept,
+        prov:Activity .
+
+<http://promsns.org/def/agr#requires> a owl:ObjectProperty ;
+    rdfs:label "requires"@en ;
+    rdfs:comment "An Agreement requires a Requirement"@en ;
+    rdfs:domain <http://promsns.org/def/agr#Agreement> ;
+    rdfs:range <http://promsns.org/def/agr#Requirement> ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    owl:inverseOf <http://promsns.org/def/agr#requirementOf> .
+
+<http://promsns.org/def/agr#satisfies> a owl:ObjectProperty ;
+    rdfs:label "satisfies"@en ;
+    rdfs:comment "a Requirement Resolution satisfies a Requirement"@en ;
+    rdfs:domain <http://promsns.org/def/agr#RequirementResolution> ;
+    rdfs:range <http://promsns.org/def/agr#Requirement> ;
+    rdfs:subPropertyOf prov:wasInfluencedBy ;
+    owl:inverseOf <http://promsns.org/def/agr#satisfiedBy> .
+
+<http://promsns.org/def/agr#Requirement> a owl:Class ;
+    rdfs:label "Requirement"@en ;
+    rdfs:comment "This class is analagous to the Creative Commons ontology formerly available. According to CC, a Requirement is \"an action that may or may not be requested of you\". In this ontology, it is only \"an action that may be requested of you\""@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://promsns.org/def/agr#requirementLevel> ],
+        skos:Concept,
+        prov:Plan .
+
+<http://promsns.org/def/agr#Agreement> a owl:Class ;
+    rdfs:label "Agreement"@en ;
+    rdfs:comment "A description of a set of required actions by particular agents. All the required actions are detailed in Requirements class objects that this is a Collection of so the Agreement is just a container"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://promsns.org/def/agr#requires> ],
+        skos:Collection,
+        prov:Plan .
+
+<http://promsns.org/def/agr#RequirementLevel> a owl:Class ;
+    rdfs:label "Requirement Level"@en ;
+    rdfs:comment "An RequirementLevel is the level at which an Agreement complels the Agents it affects to action. The initial instances of Imperative are taken from RFC2119."@en ;
+    rdfs:subClassOf skos:Concept .
+

@@ -1,0 +1,52 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2004/03/trix/swp-1/Authority> a rdfs:Class ;
+    rdfs:label "Authority" ;
+    rdfs:comment "\\nAn authority, or origin, of a graph; such as a person or company.\\n      " .
+
+<http://www.w3.org/2004/03/trix/swp-1/SignatureMethod> a rdfs:Class ;
+    rdfs:label "Signature Method" ;
+    rdfs:comment "\\nA method used to construct a signature used to authenticate a graph.\\n      " .
+
+<http://www.w3.org/2004/03/trix/swp-1/Warrant> a rdfs:Class ;
+    rdfs:label "Warrant" ;
+    rdfs:comment "\\nA relationship between an authority and a graph, in which the authority is in\\nsome way an origin of that graph. Warrants may include a digital signature of\\nthe graph by the authority.\\n      " .
+
+<http://www.w3.org/2004/03/trix/swp-1/assertedBy> a rdf:Property ;
+    rdfs:label "asserted by" ;
+    rdfs:comment "\\nThe subject graph originates from and is asserted by the authority specified\\nfor the object warrant. The statements expressed in the graph are taken to be\\nclaims made by that authority. This property has performative semantics.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/rdfg-1/Graph> ;
+    rdfs:range <http://www.w3.org/2004/03/trix/swp-1/Warrant> .
+
+<http://www.w3.org/2004/03/trix/swp-1/authority> a rdf:Property ;
+    rdfs:label "authority" ;
+    rdfs:comment "\\nThe object authority is the origin of the graph with which the subject warrant\\nis associated.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/swp-1/Warrant> ;
+    rdfs:range <http://www.w3.org/2004/03/trix/swp-1/Authority> .
+
+<http://www.w3.org/2004/03/trix/swp-1/certificate> a rdf:Property ;
+    rdfs:label "certificate" ;
+    rdfs:comment "\\nThe object is a certificate by which the authority specified for the warrant\\ncan be authenticated.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/swp-1/Warrant> ;
+    rdfs:range xsd:base64Binary .
+
+<http://www.w3.org/2004/03/trix/swp-1/quotedBy> a rdf:Property ;
+    rdfs:label "quoted by" ;
+    rdfs:comment "\\nThe subject graph originates from the authority specified for the object warrant.\\nThe statements expressed in the graph are not taken to be claims made by that\\nauthority, insofar as any statement using this property is concerned.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/rdfg-1/Graph> ;
+    rdfs:range <http://www.w3.org/2004/03/trix/swp-1/Warrant> .
+
+<http://www.w3.org/2004/03/trix/swp-1/signature> a rdf:Property ;
+    rdfs:label "signature" ;
+    rdfs:comment "\\nThe object is the signature to be used to authenticate the graph with which the\\nsubject warrant is associated.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/swp-1/Warrant> ;
+    rdfs:range xsd:base64Binary .
+
+<http://www.w3.org/2004/03/trix/swp-1/signatureMethod> a rdf:Property ;
+    rdfs:label "signature method" ;
+    rdfs:comment "\\nThe object is the signature method by which  the signature specified for the\\nwarrant subject was constructed.\\n      " ;
+    rdfs:domain <http://www.w3.org/2004/03/trix/swp-1/Warrant> ;
+    rdfs:range <http://www.w3.org/2004/03/trix/swp-1/SignatureMethod> .
+

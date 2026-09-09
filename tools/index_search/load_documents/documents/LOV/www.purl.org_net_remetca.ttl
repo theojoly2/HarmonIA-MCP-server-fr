@@ -1,0 +1,189 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.purl.org/dc/> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://www.purl.org/net/remetca#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:bibliographicCitation a owl:Class ;
+    rdfs:comment "Equivalent to TEI <listBibl>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-listBibl.html" .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E63> a owl:Class ;
+    rdfs:comment "Data_post_quem: beginning of existence. TEI <origDate\\r\\n            notBefore=\"1425\">\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-origDate.html" ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E50> .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E64> a owl:Class ;
+    rdfs:comment "Data_ante_quem: end of existence. Equivalent to TEI <origDate\\r\\n            notAfter=\"1450\">\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-origDate.html" ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E50> .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#P92> a owl:DatatypeProperty ;
+    rdfs:comment "has_date: was brought into existence" ;
+    rdfs:domain <http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E21>,
+        onto:Complete_work,
+        onto:Poem ;
+    rdfs:range xsd:integer .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#P94> a owl:ObjectProperty ;
+    rdfs:comment "Composed by" ;
+    rdfs:domain onto:Complete_work ;
+    rdfs:range <http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E21> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#has_name_of_poem> a owl:DatatypeProperty ;
+    rdfs:comment "Equivalent to TEI attribute <lg subtype=\"\"> of lg type\\r\\n            “poema”. Names of the possible values of the vocabulary gathered at the controlled\\r\\n            vocabulary of http://vocabularios.caicyt.gov.ar/pmc/" ;
+    rdfs:domain onto:Poem ;
+    rdfs:range xsd:string .
+
+onto:Accentual_versification a owl:Class ;
+    rdfs:subClassOf onto:versification_System .
+
+onto:Edition a owl:Class ;
+    rdfs:comment "Equivalent to TEI <edition>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-edition.html" .
+
+onto:Manuscript a owl:Class ;
+    rdfs:comment "Equivalent to TEI <idno>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-idno.html inside\\r\\n            <msIdentifier>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-msIdentifier.html and inside\\r\\n            <msDesc>" .
+
+onto:Syllabic_versification a owl:Class ;
+    rdfs:subClassOf onto:versification_System .
+
+onto:asonant a owl:DatatypeProperty ;
+    rdfs:domain onto:Poem,
+        onto:Stanza ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:has_rhyme .
+
+onto:consonant a owl:DatatypeProperty ;
+    rdfs:domain onto:Poem,
+        onto:Stanza ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf onto:has_rhyme .
+
+onto:hasLines a owl:ObjectProperty ;
+    rdfs:comment "Related to TEI Attribute: "@en ;
+    rdfs:domain onto:Poem,
+        onto:Stanza ;
+    rdfs:range onto:Line .
+
+onto:hasPoems a owl:ObjectProperty ;
+    rdfs:domain onto:Complete_work ;
+    rdfs:range onto:Poem .
+
+onto:hasStanzas a owl:ObjectProperty ;
+    rdfs:domain onto:Poem,
+        onto:Stanza .
+
+onto:hasSyllables a owl:ObjectProperty ;
+    rdfs:domain onto:Line ;
+    rdfs:range onto:Syllable .
+
+onto:has_caesura a owl:DatatypeProperty ;
+    rdfs:domain onto:Line ;
+    rdfs:range xsd:boolean .
+
+onto:has_incipit a owl:DatatypeProperty ;
+    rdfs:domain onto:Complete_work ;
+    rdfs:range rdfs:Literal .
+
+onto:has_metrical_scheme a owl:DatatypeProperty ;
+    rdfs:comment "TEI attribute met <lg met=””>" ;
+    rdfs:domain onto:Line,
+        onto:Poem,
+        onto:Stanza ;
+    rdfs:range rdfs:Literal .
+
+onto:has_musical_notation a owl:DatatypeProperty ;
+    rdfs:domain onto:Poem ;
+    rdfs:range xsd:boolean .
+
+onto:has_name_of_stanza a owl:DatatypeProperty ;
+    rdfs:comment "Equivalent to TEI attribute <lg subtype=\"\"> de lg type\\r\\n            “estrofa”/cabeza/estribillo\" and populated with the controlled vocabulary of\\r\\n            http://vocabularios.caicyt.gov.ar/pmc/" ;
+    rdfs:domain onto:Stanza ;
+    rdfs:range xsd:string .
+
+onto:has_number_of_lines a owl:DatatypeProperty ;
+    rdfs:domain onto:Complete_work,
+        onto:Poem,
+        onto:Stanza ;
+    rdfs:range xsd:int .
+
+onto:has_number_of_stanzas a owl:DatatypeProperty ;
+    rdfs:domain onto:Complete_work,
+        onto:Poem,
+        onto:Stanza ;
+    rdfs:range xsd:int .
+
+onto:has_number_of_syllables a owl:DatatypeProperty ;
+    rdfs:domain onto:Line ;
+    rdfs:range xsd:int .
+
+onto:has_rhymeScheme a owl:DatatypeProperty ;
+    rdfs:comment "Equivalent to TEI attribute <lg rhyme=””>" ;
+    rdfs:domain onto:Poem ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+onto:has_text a owl:DatatypeProperty ;
+    rdfs:domain onto:Line ;
+    rdfs:range rdfs:Literal .
+
+onto:has_title a owl:DatatypeProperty ;
+    rdfs:domain onto:Complete_work,
+        onto:Poem ;
+    rdfs:range rdfs:Literal .
+
+onto:isAuthorof a owl:ObjectProperty ;
+    rdfs:domain <http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E21> ;
+    rdfs:range onto:Complete_work .
+
+<http://dbpedia.org/page/National_University_of_Distance_Education> a foaf:Organization .
+
+<http://labs.mondeca.com/foaf/mondeca.rdf#elenagbg> a foaf:Person .
+
+<http://www.purl.org/net/remetca> a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns2:license <http://creativecommons.org/licenses/by/3.0/> ;
+    vann:preferredNamespacePrefix "remetca" ;
+    vann:preferredNamespaceUri "http://www.purl.org/net/remetca#" ;
+    ns1:termscreator <http://labs.mondeca.com/foaf/mondeca.rdf#elenagbg> ;
+    ns1:termsdescription "Ontology for Poetry description"@en ;
+    ns1:termsissued "2014-10-12"^^xsd:date ;
+    ns1:termsmodified "2014-10-14"^^xsd:date ;
+    ns1:termspublisher <http://dbpedia.org/page/National_University_of_Distance_Education> ;
+    ns1:termsrights "Copyright © 2014 REMETCA" ;
+    ns1:termstitle "ReMetCa Ontology"@en ;
+    rdfs:comment "Version 1.1"@en ;
+    owl:versionIRI <http://www.purl.org/net/remetca> ;
+    owl:versionInfo 1.1 .
+
+onto:Syllable a owl:Class ;
+    rdfs:comment "Equals to TEI <syll>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-syll.html or <MetSym>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-metSym.html but no exact\\r\\n            correspondence" .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E50> a owl:Class ;
+    rdfs:comment "Date. Equivalent to TEI <creation>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-creation.html" .
+
+onto:has_rhyme a owl:DatatypeProperty ;
+    rdfs:comment "asonancia=\"asonante/consonante\" (not TEI, added by\\r\\n            ReMetCa)" ;
+    rdfs:domain onto:Poem,
+        onto:Stanza ;
+    rdfs:range xsd:boolean .
+
+onto:versification_System a owl:Class .
+
+<http://www.cidoc-crm.org/html/5.0.4/cidoc-crm.html#E21> a owl:Class ;
+    rdfs:comment "Author. Equivalent to TEI <author>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-author.html. Content of the VIAF\\r\\n            authority file of Spanish National Library:\\r\\n            http://catalogo.bne.es/uhtbin/authoritybrowse.cgi" .
+
+onto:Line a owl:Class ;
+    rdfs:comment "Equivalent to TEI <l>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-l.html" .
+
+onto:Complete_work a owl:Class ;
+    rdfs:comment "Complete literary work in which one or more poems are inserted" .
+
+onto:Stanza a owl:Class ;
+    rdfs:comment "Equals to TEI <lg>\\r\\n            http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-lg.html" .
+
+onto:Poem a owl:Class ;
+    rdfs:comment "Equivalent to TEI "@en .
+

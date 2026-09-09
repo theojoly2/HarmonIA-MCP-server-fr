@@ -1,0 +1,588 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <https://ns.verisav.fr/rma#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:approvalComment a owl:DatatypeProperty ;
+    rdfs:label "approval comment"@en,
+        "commentaire d'approbation"@fr ;
+    rdfs:comment "Comment associated with the approval or rejection."@en ;
+    rdfs:domain onto:Approval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:approvalDate a owl:DatatypeProperty ;
+    rdfs:label "approval date"@en,
+        "date d'approbation"@fr ;
+    rdfs:comment "Date when the approval was given."@en ;
+    rdfs:domain onto:Approval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:approvalStatus a owl:DatatypeProperty ;
+    rdfs:label "approval status"@en,
+        "statut d'approbation"@fr ;
+    rdfs:comment "Status of the approval (pending, approved, rejected)."@en ;
+    rdfs:domain onto:Approval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:approvedBy a owl:ObjectProperty ;
+    rdfs:label "approved by"@en,
+        "approuvé par"@fr ;
+    rdfs:comment "The person or organization who approved the return request or resolution."@en ;
+    rdfs:domain onto:Approval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:Organization,
+        schema:Person ;
+    ns1:term_status "stable" .
+
+onto:authoredBy a owl:ObjectProperty ;
+    rdfs:label "authored by"@en,
+        "rédigé par"@fr ;
+    rdfs:comment "The person or organization who authored a message."@en ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:Organization,
+        schema:Person ;
+    ns1:term_status "stable" .
+
+onto:carrierName a owl:DatatypeProperty ;
+    rdfs:label "carrier name"@en,
+        "nom du transporteur"@fr ;
+    rdfs:comment "Name of the shipping carrier (e.g., DHL, FedEx, UPS, Colissimo)."@en ;
+    rdfs:domain onto:ShippingLabel,
+        onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:carrierService a owl:DatatypeProperty ;
+    rdfs:label "carrier service"@en,
+        "service transporteur"@fr ;
+    rdfs:comment "Type of carrier service (standard, express, overnight, etc.)."@en ;
+    rdfs:domain onto:ShippingLabel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:concernsProduct a owl:ObjectProperty ;
+    rdfs:label "concerns product"@en,
+        "concerne le produit"@fr ;
+    rdfs:comment "Links a return request, ticket, or dispute to the product it concerns."@en ;
+    rdfs:domain onto:Dispute,
+        onto:ReturnRequest,
+        onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://ns.verisav.fr/dpp#ProductPassport>,
+        schema:Product ;
+    ns1:term_status "stable" .
+
+onto:disputeDate a owl:DatatypeProperty ;
+    rdfs:label "dispute date"@en,
+        "date du litige"@fr ;
+    rdfs:comment "Date when the dispute was raised."@en ;
+    rdfs:domain onto:Dispute ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:disputeDescription a owl:DatatypeProperty ;
+    rdfs:label "dispute description"@en,
+        "description du litige"@fr ;
+    rdfs:comment "Detailed description of the dispute or complaint."@en ;
+    rdfs:domain onto:Dispute ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:disputeType a owl:DatatypeProperty ;
+    rdfs:label "dispute type"@en,
+        "type de litige"@fr ;
+    rdfs:comment "Type of dispute (defective, damaged_shipping, wrong_item, not_as_described, missing_parts, etc.)."@en ;
+    rdfs:domain onto:Dispute ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:estimatedDeliveryDate a owl:DatatypeProperty ;
+    rdfs:label "estimated delivery date"@en,
+        "date de livraison estimée"@fr ;
+    rdfs:comment "Estimated delivery date for the package."@en ;
+    rdfs:domain onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "stable" .
+
+onto:expectedReturnDate a owl:DatatypeProperty ;
+    rdfs:label "expected return date"@en,
+        "date de retour attendue"@fr ;
+    rdfs:comment "Expected date for receiving the returned product."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "stable" .
+
+onto:handledBy a owl:ObjectProperty ;
+    rdfs:label "handled by"@en,
+        "traité par"@fr ;
+    rdfs:comment "The retailer, repairer, or organization handling the return request or ticket."@en ;
+    rdfs:domain onto:ReturnRequest,
+        onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:Organization ;
+    ns1:term_status "stable" .
+
+onto:hasApproval a owl:ObjectProperty ;
+    rdfs:label "has approval"@en,
+        "a pour approbation"@fr ;
+    rdfs:comment "Links a return request or resolution to an approval."@en ;
+    rdfs:domain onto:Resolution,
+        onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Approval ;
+    ns1:term_status "stable" .
+
+onto:hasDispute a owl:ObjectProperty ;
+    rdfs:label "has dispute"@en,
+        "a pour litige"@fr ;
+    rdfs:comment "Links a return request or ticket to a dispute."@en ;
+    rdfs:domain onto:ReturnRequest,
+        onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Dispute ;
+    ns1:term_status "stable" .
+
+onto:hasMessage a owl:ObjectProperty ;
+    rdfs:label "has message"@en,
+        "a pour message"@fr ;
+    rdfs:comment "Links a ticket to messages in the conversation thread."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Message ;
+    ns1:term_status "stable" .
+
+onto:hasResolution a owl:ObjectProperty ;
+    rdfs:label "has resolution"@en,
+        "a pour résolution"@fr ;
+    rdfs:comment "Links a return request, ticket, or dispute to a resolution."@en ;
+    rdfs:domain onto:Dispute,
+        onto:ReturnRequest,
+        onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Resolution ;
+    ns1:term_status "stable" .
+
+onto:hasReturnRequest a owl:ObjectProperty ;
+    rdfs:label "has return request"@en,
+        "a pour demande de retour"@fr ;
+    rdfs:comment "Links a product or ticket to a return request."@en ;
+    rdfs:domain onto:Ticket,
+        schema:Product ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ReturnRequest ;
+    ns1:term_status "stable" .
+
+onto:hasShippingLabel a owl:ObjectProperty ;
+    rdfs:label "has shipping label"@en,
+        "a pour étiquette d'expédition"@fr ;
+    rdfs:comment "Links a return request to a shipping label."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ShippingLabel ;
+    ns1:term_status "stable" .
+
+onto:hasTicket a owl:ObjectProperty ;
+    rdfs:label "has ticket"@en,
+        "a pour ticket"@fr ;
+    rdfs:comment "Links a product or return request to a service ticket."@en ;
+    rdfs:domain onto:ReturnRequest,
+        schema:Product ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Ticket ;
+    ns1:term_status "stable" .
+
+onto:hasTracking a owl:ObjectProperty ;
+    rdfs:label "has tracking"@en,
+        "a pour suivi"@fr ;
+    rdfs:comment "Links a return request or shipping label to tracking information."@en ;
+    rdfs:domain onto:ReturnRequest,
+        onto:ShippingLabel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tracking ;
+    ns1:term_status "stable" .
+
+onto:isInternal a owl:DatatypeProperty ;
+    rdfs:label "is internal"@en,
+        "est interne"@fr ;
+    rdfs:comment "Whether the message is internal (not visible to customer)."@en ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    ns1:term_status "stable" .
+
+onto:labelCreatedDate a owl:DatatypeProperty ;
+    rdfs:label "label created date"@en,
+        "date de création de l'étiquette"@fr ;
+    rdfs:comment "Date when the shipping label was created."@en ;
+    rdfs:domain onto:ShippingLabel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:labelExpiryDate a owl:DatatypeProperty ;
+    rdfs:label "label expiry date"@en,
+        "date d'expiration de l'étiquette"@fr ;
+    rdfs:comment "Expiry date of the shipping label."@en ;
+    rdfs:domain onto:ShippingLabel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    ns1:term_status "stable" .
+
+onto:labelUrl a owl:DatatypeProperty ;
+    rdfs:label "label URL"@en,
+        "URL de l'étiquette"@fr ;
+    rdfs:comment "URL or link to download the shipping label."@en ;
+    rdfs:domain onto:ShippingLabel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable" .
+
+onto:lastTrackingUpdate a owl:DatatypeProperty ;
+    rdfs:label "last tracking update"@en,
+        "dernière mise à jour de suivi"@fr ;
+    rdfs:comment "Date and time of the last tracking update."@en ;
+    rdfs:domain onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:messageDate a owl:DatatypeProperty ;
+    rdfs:label "message date"@en,
+        "date du message"@fr ;
+    rdfs:comment "Date and time when the message was sent."@en ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:messageText a owl:DatatypeProperty ;
+    rdfs:label "message text"@en,
+        "texte du message"@fr ;
+    rdfs:comment "Text content of the message."@en ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:messageType a owl:DatatypeProperty ;
+    rdfs:label "message type"@en,
+        "type de message"@fr ;
+    rdfs:comment "Type of message (customer_message, support_response, internal_note, system_notification)."@en ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:requestedBy a owl:ObjectProperty ;
+    rdfs:label "requested by"@en,
+        "demandé par"@fr ;
+    rdfs:comment "The person or organization who requested the return or created the ticket."@en ;
+    rdfs:domain onto:ReturnRequest,
+        onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range schema:Organization,
+        schema:Person ;
+    ns1:term_status "stable" .
+
+onto:resolutionAmount a owl:DatatypeProperty ;
+    rdfs:label "resolution amount"@en,
+        "montant de résolution"@fr ;
+    rdfs:comment "Amount for refund or store credit resolution."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+onto:resolutionCurrency a owl:DatatypeProperty ;
+    rdfs:label "resolution currency"@en,
+        "devise de résolution"@fr ;
+    rdfs:comment "Currency code for the resolution amount (ISO 4217)."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:resolutionDate a owl:DatatypeProperty ;
+    rdfs:label "resolution date"@en,
+        "date de résolution"@fr ;
+    rdfs:comment "Date when the resolution was proposed or applied."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:resolutionDescription a owl:DatatypeProperty ;
+    rdfs:label "resolution description"@en,
+        "description de résolution"@fr ;
+    rdfs:comment "Description of the proposed or applied resolution."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:resolutionStatus a owl:DatatypeProperty ;
+    rdfs:label "resolution status"@en,
+        "statut de résolution"@fr ;
+    rdfs:comment "Status of the resolution (proposed, approved, rejected, applied, cancelled)."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:resolutionType a owl:DatatypeProperty ;
+    rdfs:label "resolution type"@en,
+        "type de résolution"@fr ;
+    rdfs:comment "Type of resolution (refund, exchange, store_credit, repair, replacement, rejection)."@en ;
+    rdfs:domain onto:Resolution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:resultsInWorkOrder a owl:ObjectProperty ;
+    rdfs:label "results in work order"@en,
+        "résulte en ordre de travail"@fr ;
+    rdfs:comment "Links a return request or resolution to a work order if repair is needed."@en ;
+    rdfs:domain onto:Resolution,
+        onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://ns.verisav.fr/dpp#WorkOrder> ;
+    ns1:term_status "stable" .
+
+onto:returnReason a owl:DatatypeProperty ;
+    rdfs:label "return reason"@en,
+        "raison du retour"@fr ;
+    rdfs:comment "Reason for the return (defective, wrong_item, not_as_described, changed_mind, etc.)."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:returnRequestDate a owl:DatatypeProperty ;
+    rdfs:label "return request date"@en,
+        "date de demande de retour"@fr ;
+    rdfs:comment "Date when the return request was created."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:returnRequestNumber a owl:DatatypeProperty ;
+    rdfs:label "return request number"@en,
+        "numéro de demande de retour"@fr ;
+    rdfs:comment "Unique identifier for the return request (RMA number)."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:returnRequestStatus a owl:DatatypeProperty ;
+    rdfs:label "return request status"@en,
+        "statut de demande de retour"@fr ;
+    rdfs:comment "Status of the return request (pending, approved, rejected, in_transit, received, processed, completed)."@en ;
+    rdfs:domain onto:ReturnRequest ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:ticketClosedDate a owl:DatatypeProperty ;
+    rdfs:label "ticket closed date"@en,
+        "date de fermeture du ticket"@fr ;
+    rdfs:comment "Date when the ticket was closed."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:ticketCreatedDate a owl:DatatypeProperty ;
+    rdfs:label "ticket created date"@en,
+        "date de création du ticket"@fr ;
+    rdfs:comment "Date when the ticket was created."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "stable" .
+
+onto:ticketNumber a owl:DatatypeProperty ;
+    rdfs:label "ticket number"@en,
+        "numéro de ticket"@fr ;
+    rdfs:comment "Unique identifier for the service ticket."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:ticketPriority a owl:DatatypeProperty ;
+    rdfs:label "ticket priority"@en,
+        "priorité du ticket"@fr ;
+    rdfs:comment "Priority level of the ticket (low, normal, high, urgent)."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:ticketStatus a owl:DatatypeProperty ;
+    rdfs:label "ticket status"@en,
+        "statut du ticket"@fr ;
+    rdfs:comment "Status of the ticket (open, in_progress, waiting_customer, waiting_vendor, resolved, closed)."@en ;
+    rdfs:domain onto:Ticket ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:trackingNumber a owl:DatatypeProperty ;
+    rdfs:label "tracking number"@en,
+        "numéro de suivi"@fr ;
+    rdfs:comment "Carrier tracking number for the package."@en ;
+    rdfs:domain onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:trackingStatus a owl:DatatypeProperty ;
+    rdfs:label "tracking status"@en,
+        "statut de suivi"@fr ;
+    rdfs:comment "Current tracking status (label_created, in_transit, out_for_delivery, delivered, exception)."@en ;
+    rdfs:domain onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:trackingUrl a owl:DatatypeProperty ;
+    rdfs:label "tracking URL"@en,
+        "URL de suivi"@fr ;
+    rdfs:comment "URL to track the package on carrier's website."@en ;
+    rdfs:domain onto:Tracking ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI ;
+    ns1:term_status "stable" .
+
+onto:Approval a owl:Class ;
+    rdfs:label "Approval"@en,
+        "Approbation"@fr ;
+    rdfs:comment "An approval or authorization for a return request or resolution."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Action ;
+    ns1:term_status "stable" .
+
+onto:Dispute a owl:Class ;
+    rdfs:label "Dispute"@en,
+        "Litige"@fr ;
+    rdfs:comment "A dispute or complaint about a product (e.g., arrived broken, not as described, defective)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Complaint ;
+    ns1:term_status "stable" .
+
+onto:Message a owl:Class ;
+    rdfs:label "Message"@en,
+        "Message"@fr ;
+    rdfs:comment "A message in a ticket conversation thread between customer, retailer, or repairer."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Message ;
+    ns1:term_status "stable" .
+
+onto:ShippingLabel a owl:Class ;
+    rdfs:label "Shipping Label"@en,
+        "Étiquette d'Expédition"@fr ;
+    rdfs:comment "A shipping label for returning a product, containing carrier and tracking information."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:DigitalDocument ;
+    ns1:term_status "stable" .
+
+onto:Tracking a owl:Class ;
+    rdfs:label "Package Tracking"@en,
+        "Suivi Colis"@fr ;
+    rdfs:comment "Tracking information for a returned package, including carrier events and status."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:Resolution a owl:Class ;
+    rdfs:label "Resolution"@en,
+        "Résolution"@fr ;
+    rdfs:comment "A resolution proposed or applied to a return request or dispute (refund, exchange, store credit, repair)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:Ticket a owl:Class ;
+    rdfs:label "Service Ticket"@en,
+        "Ticket SAV"@fr ;
+    rdfs:comment "A service ticket that tracks customer service interactions and issue resolution."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Thing ;
+    ns1:term_status "stable" .
+
+onto:ReturnRequest a owl:Class ;
+    rdfs:label "Return Request"@en,
+        "Demande de Retour"@fr ;
+    rdfs:comment "A request for returning a product to a retailer or manufacturer."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf schema:Action ;
+    ns1:term_status "stable" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "Verisav RMA Vocabulary"@en,
+        "Vocabulaire RMA Verisav"@fr ;
+    ns2:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:created "2025-12-16"^^xsd:date ;
+    dcterms:creator [ a foaf:Person ;
+            rdfs:seeAlso <https://orcid.org/0009-0001-0356-4421>,
+                <https://www.linkedin.com/in/kévinboutillier>,
+                <https://www.verisav.fr/en/founders/kevin-boutillier> ;
+            foaf:name "Kévin Boutillier" ] ;
+    dcterms:description "Vocabulary for Return Merchandise Authorization (RMA) and service ticket management, standardizing communication between consumers, retailers, and repairers."@en,
+        "Vocabulaire pour les Autorisations de Retour de Marchandise (RMA) et la gestion de tickets SAV, standardisant la communication entre consommateurs, distributeurs et réparateurs."@fr ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2025-12-28"^^xsd:date ;
+    dcterms:publisher <https://www.verisav.fr> ;
+    dcterms:rights "Copyright © 2025 Verisav SAS. All rights reserved."@en,
+        "Copyright © 2025 Verisav SAS. Tous droits réservés."@fr ;
+    dcterms:title "Verisav RMA / Ticketing Vocabulary"@en ;
+    vann:preferredNamespacePrefix "rma" ;
+    vann:preferredNamespaceUri "https://ns.verisav.fr/rma#" ;
+    rdfs:comment "Version 1.0.0 (2025-12-28): Initial release. Vocabulary for managing return requests, service tickets, disputes, and resolutions in after-sales service workflows."@en,
+        "Version 1.0.0 (2025-12-28): Version initiale. Vocabulaire pour gérer les demandes de retour, tickets SAV, litiges et résolutions dans les workflows de service après-vente."@fr ;
+    owl:imports <https://ns.verisav.fr/dpp#>,
+        schema: ;
+    owl:versionInfo "1.0.0" ;
+    dcat:distribution [ a dcat:Distribution ;
+            dcterms:format "application/ld+json" ;
+            dcterms:title "RMA Vocabulary (JSON-LD via API)"@en ;
+            dcat:accessURL <https://www.verisav.fr/api/rma/rma.jsonld> ],
+        [ a dcat:Distribution ;
+            dcterms:format "text/turtle" ;
+            dcat:downloadURL <https://ns.verisav.fr/rma/rma.ttl> ],
+        [ a dcat:Distribution ;
+            dcterms:description "GraphQL API for querying all Verisav vocabularies (DPP, RMA, WTY)"@en ;
+            dcterms:format "application/graphql" ;
+            dcterms:title "Verisav Vocabularies GraphQL API"@en ;
+            dcat:accessURL <https://www.verisav.fr/api/graphql> ],
+        [ a dcat:Distribution ;
+            dcterms:format "application/ld+json" ;
+            dcat:downloadURL <https://ns.verisav.fr/rma/rma.jsonld> ] ;
+    schema:potentialAction [ a schema:SearchAction ;
+            schema:query-input "required name=query" ;
+            schema:target <https://www.verisav.fr/api/v1/vocabulary/rma/search?q=%7Bquery%7D> ] .
+

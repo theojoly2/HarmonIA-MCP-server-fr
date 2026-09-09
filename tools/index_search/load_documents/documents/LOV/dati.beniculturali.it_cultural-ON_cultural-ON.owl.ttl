@@ -1,0 +1,1735 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://dati.beniculturali.it/cis/Booking> a owl:Class ;
+    rdfs:label "Type of Booking"@en ;
+    dc:description "An example of usage of the class cis:Booking is the following:\\n\\n<pre>\\n\\nbooking:Mandatory\\n    a cis:Booking , cis:AccessCondition ;\\n    rdfs:label \"Mandatory Booking\"@en ;\\n    rdfs:label \"Prenotazione obbligatoria\"@it ;\\n    cis:name \"Mandatory Booking\"@en ;\\n    cis:name \"Prenotazione obbligatoria\"@it ;\\n    cis:description \"Per accedere al luogo della cultura o evento è necessaria la prenotazione\"@it ;\\n    cis:description \"Booking is mandatory in order to access to the CIS or the event\"@en ;\\n    cis:accessConditionFor event:Vincenzo_Gemito_al_Museo_di_Capodimonte .\\n\\nevent:Vincenzo_Gemito_al_Museo_di_Capodimonte\\n    a cis:Event ;\\n    cis:isHostedBy site:Museo_di_Capodimonte ;\\n    rdfs:label \"Vincenzo Gemito, dal salotto Minozzi al Museo di Capodimonte\" ;\\n    cis:name \"Vincenzo Gemito, dal salotto Minozzi al Museo di Capodimonte\" ;\\n    rdfs:comment \"Apre al pubblico al Museo di Capodimonte la mostra ‘Vincenzo Gemito, dal salotto Minozzi \\n    al Museo di Capodimonte’,\\n    organizzata dalla Soprintendenza speciale per il patrimonio storico\" ;\\n    cis:involves culturalheritageobject:Il_giocatore_di_carte ;\\n    cis:hasSubEvent event:VincenzoGemitoIlPescatorello ;\\n    cis:hasAccessCondition booking:Mandatory ;\\n    cis:takesPlaceDuring ti:Durata_di_Vincenzo_Gemito_dal_salotto_Minozzi_al_Museo_di_Capodimonte .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the  type of booking for the cultural institute or site or for the event. Examples can be: Mandatory, Optional, None (free access)."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        <http://dati.beniculturali.it/cis/AccessCondition> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Card> a owl:Class ;
+    rdfs:label "Card"@en ;
+    dc:description "An example of usage of the class cis:Card is the following:\\n\\n<pre>\\n\\ncard:Parco_archeologico_di_Liternum_Card\\n    a cis:Card ;\\n    rdfs:label \"Ingresso per due giorni al Parco archeologico di Liternum\"@it ; \\n    rdfs:label \"Two-day access to Parco archeologico di Liternum\"@en ;\\n    cis:name \"Ingresso per due giorni al Parco archeologico di Liternum\"@it ; \\n    cis:name \"Two-day access to the Parco archeologico di Liternum\"@en ;\\n    cis:hasValidity Parco_archeologico_di_Liternum_Card_Validity ;\\n    cis:forAccessTo cissite:Parco_archeologico_di_Liternum ;\\n    cis:description \"With this card a tourist can visit Parco archeologico di Liternum for 2 consecutive days\"@en ; \\n    cis:description \"La card permette l'accesso al Parco archeologico di Liternum per 2 giorni consecutivi\"@it .\\n\\nvalidity:Parco_archeologico_di_Liternum_Card_Validity\\n    a cis:Validity ;\\n    rdfs:label \"Two-day validity\"@en ;\\n    rdfs:label \"Validità per due giorni\"@it ;\\n    cis:hasDuration Parco_archeologico_di_Liternum_Card_Validity_Duration .\\n \\nquantitativevalue:Parco_archeologico_di_Liternum_Card_Validity_Duration\\n    a cis:QuantitativeValue ;\\n    rdfs:label \"2\" ;\\n    cis:hasMeasurementUnit cis:Day ;\\n    cis:hasValue \"2\"^^xsd:positiveInteger .\\n\\ncis:Day a cis:MeasurementUnit .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a card valid for the entrance to more than one Cultural Institute or Site. It is a subclass of Ticket."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/Ticket> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/ClericalAdministrativeArea> a owl:Class ;
+    rdfs:label "Clerical Administrative Area"@en ;
+    dc:description "An example of usage of the class cis:ClericalAdministrativeArea èil the following:\\n\\n<pre>\\n\\ncaa:Diocesi_di_San_Marco_Argentano-Scalea\\n    a cis:ClericalAdministrativeArea ;\\n    rdfs:label \"Diocese of San Marco Argentano-Scalea\"@en ;\\n    rdfs:label \"Diocesi di San Marco Argentano-Scalea\"@it ;\\n    cis:toponym \"Diocesi di San Marco Argentano-Scalea\"@it ;\\n    cis:toponym \"Diocese of San Marco Argentano-Scalea\"@en ;\\n    cis:identifier \"SMA-CS\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents the clerical administrative area. It can be used to represents Diocese, Parish, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://dati.beniculturali.it/cis/identifier> ],
+        <http://dati.beniculturali.it/cis/GeographicalFeature> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Day> a <http://dati.beniculturali.it/cis/MeasurementUnit>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/Euro> a <http://dati.beniculturali.it/cis/Currency>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/Friday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Friday"@en .
+
+<http://dati.beniculturali.it/cis/Hour> a <http://dati.beniculturali.it/cis/MeasurementUnit>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/Monday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Monday "@en .
+
+<http://dati.beniculturali.it/cis/OneDay> a owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/OneWeek> a owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/QuantityOfAdmissions> a <http://dati.beniculturali.it/cis/MeasurementUnit>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/Saturday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Saturday"@en .
+
+<http://dati.beniculturali.it/cis/Sunday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Sunday"@en .
+
+<http://dati.beniculturali.it/cis/Thursday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Thursday "@en .
+
+<http://dati.beniculturali.it/cis/Tuesday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Tuesday"@en .
+
+<http://dati.beniculturali.it/cis/Wednesday> a <http://dati.beniculturali.it/cis/DayOfWeek>,
+        owl:NamedIndividual ;
+    rdfs:label "Wednesday"@en .
+
+<http://dati.beniculturali.it/cis/Week> a <http://dati.beniculturali.it/cis/MeasurementUnit>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/Year> a <http://dati.beniculturali.it/cis/MeasurementUnit>,
+        owl:NamedIndividual .
+
+<http://dati.beniculturali.it/cis/hasEligibleUser> a owl:ObjectProperty ;
+    rdfs:label "has eligible User"@en ;
+    rdfs:comment "Property used to associate the an offert for the access to an event or a cultural institute or site with the type of user"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Offer> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/UserType> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasPriceSpecification> a owl:ObjectProperty ;
+    rdfs:label "has price specification "@en ;
+    rdfs:comment "This property is used to link the offer for a ticket to its price specification."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Offer> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/PriceSpecification> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/involves> a owl:ObjectProperty ;
+    rdfs:label "involves"@en ;
+    rdfs:comment "Involvment property that associates an event with a general cultural entity"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Event> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/offers> a owl:ObjectProperty ;
+    rdfs:label "offers"@en ;
+    rdfs:comment "Property used to associate an agent with an offer for accessing an event or a cultural institute or site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Agent> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Offer> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/takesPlaceDuring> a owl:ObjectProperty ;
+    rdfs:label "takes place during"@en ;
+    rdfs:comment "Property used to associate an event with a temporal interval within which the event takes place"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Event> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/TimeInterval> ;
+    owl:versionInfo "stable" .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:modified a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+rdf:PlainLiteral a rdfs:Datatype .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+<http://dati.beniculturali.it/cis/ArchaeologicalArea> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Archaeological Area"@en ;
+    dc:description "An example of usage of the class cis:ArchaeologicalArea is the following:\\n\\n<pre>\\n\\ncissite:Museo_delle_navi_romane_di_Nemi\\n    a cis:CulturalInstituteOrSite, cis:ArchaeologicalArea ;\\n    rdfs:label \"Museo delle navi romane di Nemi\" ;\\n    cis:institutionalName \"Museo delle navi romane di Nemi\" ;\\n    cis:ISILIdentifier \"IT-EX0001\" .\\n \\n</pre>"@en ;
+    rdfs:comment "It represents a specific type of Cultural Institute or SIte; that is, ArchaeologicalArea"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/ArchaeologicalArea> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/ArchaeologicalPark> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Archaeological Park"@en ;
+    dc:description "An example of usage of the class cis:ArchaeologicalPark is the following:\\n\\n<pre>\\n\\ncissite:Parco_archeologico_di_Liternum\\n    a cis:CulturalInstituteOrSite, cis:ArchaeologicalPark ;\\n    rdfs:label \"Parco archeologico di Liternum\" ;\\n    cis:institutionalName \"Parco archeologico di Liternum\" ;\\n    cis:ISILIdentifier \"IT-EX0002\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a specific type of Cultural Institute or SIte; that is, Archaeological Park"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/ArchaeologicalPark> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/AudioObject> a owl:Class ;
+    rdfs:label "Audio Object"@en ;
+    dc:description "An example of usage of the class cis:AudioObject is the following:\\n\\n<pre>\\n\\naudio:Audio_Tour_Parco_archeologico_di_Liternum\\n    a cis:AudioObject , cis:CreativeWork ;\\n    rdfs:label \"Audio Tour of the Parco archeologico di Liternum\"@en ;\\n    rdfs:label \"Audio guida del Parco archeologico di Liternum\"@it ;     \\n    cis:url http://www.example.com/Audio/Audio_Tour_Parco_archeologico_di_Liternum.mp3 ;     \\n    cis:isAbout cissite:Parco_archeologico_di_Liternum .  \\n\\n</pre>"@en ;
+    rdfs:comment "Concept used to represent multimedia objects of type audio."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/url> ],
+        <http://dati.beniculturali.it/cis/CreativeWork> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Cinema> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Cinema"@en ;
+    dc:description "An example of usage of the class cis:Cinema is the following:\\n\\n<pre>\\n\\ncissite:Cinema_Storico_Alberto_Sordi\\n    a cis:CulturalInstituteOrSite, cis:Cinema ;\\n    rdfs:label \"Cinema storico Alberto Sordi\" ;\\n    cis:institutionalName \"Cinema storico Alberto Sordi\" ;\\n    cis:ISILIdentifier \"IT-EX0003\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a cultural institute or site of type Cinema"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/Cinema> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/CultReseachCenter> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Cultural Reseach and Promotion Center"@en ;
+    dc:description "An example of usage of the class cis:CultReseachCenter is the following:\\n\\n<pre>\\n\\ncrc:Fondazione_Arnaldo_Pomodoro\\n    a cis:CultReseachCenter ;\\n    rdfs:label \"Fondazione Arnaldo Pomodoro\"@it ;\\n    rdfs:label \"Arnaldo Pomodoro Foundation\"@en ;\\n    cis:institutionalName \"Fondazione Arnaldo Pomodoro\"@it ;\\n    cis:institutionalName \"Arnaldo Pomodoro Foundation\"@en ;\\n    cis:ISILIdentifier \"IT-EX0005\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents cultural institutions that form so-called cultural research and promotion centers."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/CultReseachCenter> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/CulturalLandscapeAsset> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Cultural Landscape Asset"@en ;
+    dc:description "An example of usage of the class cis:CulturalLandscapeAsset is the following:\\n\\n<pre>\\n\\ncissite:Costiera_Amalfitana\\n a cis:CulturalInstituteOrSite, cis:CulturalLandscapeAsset ; \\n    rdfs:label \"Costiera Amalfitana\"@it ;\\n    cis:institutionalName \"Costiera Amalfitana\"@en ;\\n    cis:ISILIdentifier \"IT-EX0004\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a specific types of cultural institute or site, i.e., the cultural landscape asset."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/CulturalLandscapeAsset> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/GovernamentalAdministrativeArea> a owl:Class ;
+    rdfs:label "Governamental Administrative Area"@en ;
+    dc:description "An example of usage of the class cis:GovernamentalAdministrativeArea is the following:\\n\\n<pre>\\n\\ngaa:Lazio\\n    a cis:GovernamentalAdministrativeArea ;\\n    rdfs:label \"Lazio\" ;\\n    cis:toponym \"Lazio\" ;\\n    cis:hasISTATCode \"12\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents an administrative geographical area that is typically managed by a public body. It can be a Region, a Municipality, a Province, a sub-municipality area, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasISTATCode> ],
+        <http://dati.beniculturali.it/cis/GeographicalFeature> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/HolderOfArchive> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Holder of Archives"@en ;
+    dc:description "An example of usage of the class cis:HolderOfArchive is the following:\\n\\n<pre>\\n\\ncissite:Archivio_di_Stato_di_Oristano\\n    a cis:CulturalInstituteOrSite, cis:HolderOfArchive ;\\n    rdfs:label \"Archivio di Stato di Oristano\" ;\\n    cis:institutionalName \"Archivio di Stato di Oristano\" ;\\n    cis:ISILIdentifier \"IT-EX0006\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a specific tyep of cultural institute or site, i.e.,  Holder of Archive"@en ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/HolderOfArchive> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/ISILIdentifier> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "ISIL identifier"@en ;
+    rdfs:comment "This property is used to define the unique identifier of the cultural institute or site (i.e., the ISIL - International Standard Identifier for Libriaries and Related Organization - code). Subproperty of identifier."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://dati.beniculturali.it/cis/identifier> ;
+    owl:versionInfo "Stable"@en .
+
+<http://dati.beniculturali.it/cis/ImageObject> a owl:Class ;
+    rdfs:label "Image Object"@en ;
+    dc:description "An example of the usage of the class cis:ImageObject is the following:\\n\\n<pre>\\n\\nimage:Poster_Evento_Vincenzo_Gemito_al_Museo_di_Capodimonte\\n    a cis:ImageObject , cis:CreativeWork ;\\n    rdfs:label \"Poster of the event 'Vincenzo Gemito al Museo di Capodimonte'\"@en;\\n    rdfs:label \"Poster dell'evento 'Vincenzo Gemito al Museo di Capodimonte'\"@it;     \\n    cis:url http://www.example.com/Image/Poster_Evento_Vincenzo_Gemito_al_Museo_di_Capodimonte.png ;     \\n    cis:isAbout event:Vincenzo_Gemito_al_Museo_di_Capodimonte .  \\n\\n</pre>"@en ;
+    rdfs:comment "Concept used to represent an image file."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/url> ],
+        <http://dati.beniculturali.it/cis/CreativeWork> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Library> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Library"@en ;
+    rdfs:comment "It represents a specific type of Cultural Institute or Site; that is, Library"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/Library> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/MonumentalArea> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Monumental Area or Complex"@en ;
+    dc:description "An example of usage of the class cis:MonumentalArea is the following:\\n\\n<pre>\\n\\ncissite:COMPLESSO_MONUMENTALE_DI_VICOPISANO_ROCCA_DEL_BRUNELLESCHI_E_PALAZZO_PRETORIO\\n    a cis:CulturalInstituteOrSite, cis:MonumentalArea ;\\n    rdfs:label \"COMPLESSO MONUMENTALE DI VICOPISANO: ROCCA DEL BRUNELLESCHI E PALAZZO PRETORIO\" ;\\n    cis:institutionalName \"COMPLESSO MONUMENTALE DI VICOPISANO: ROCCA DEL BRUNELLESCHI E PALAZZO PRETORIOi\" ;\\n    cis:ISILIdentifier \"IT-EX0007\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a specific type of Cultural Institute or Site; that is, Monumental Area"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/MonumentalArea> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Museum> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Museum"@en ;
+    dc:description "An example of usage of the class cis:Museum is the following:\\n\\n<pre>\\n\\ncissite:Museo_di_Capodimonte\\n    a cis:CulturalInstituteOrSite, cis:Museum ;\\n    rdfs:label \"Museo di Capodimonte\"; ;\\n    cis:institutionalName \"Museo di Capodimonte\" ;\\n    cis:ISILIdentifier \"IT-EX0008\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a specific type of Cultural Institute or Site; that is, Museum"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/Museum> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/NewsArticle> a owl:Class ;
+    rdfs:label "News Article"@en ;
+    rdfs:comment "Concept used to represent a news article."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/url> ],
+        <http://dati.beniculturali.it/cis/CreativeWork> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Theatre> a <http://dati.beniculturali.it/cis/CISType>,
+        owl:Class,
+        owl:NamedIndividual ;
+    rdfs:label "Theatre"@en ;
+    dc:description "An example of usage of the class cis:Theatre is the following:\\n\\n<pre>\\n\\ncissite:Teatro_Olimpico\\n    a cis:CulturalInstituteOrSite, cis:Theatre ;\\n    rdfs:label \"Teatro Olimpico\" ;\\n    cis:name \"Teatro Olimpico\" ;\\n    cis:ISILIdentifier \"IT-EX0011\" .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a cultural institute or site of type Theatre"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:hasValue <http://dati.beniculturali.it/cis/Theatre> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/UserType> a owl:Class ;
+    rdfs:label "User Type"@en ;
+    dc:description "An example of usage of the class cis:UserType is the following:\\n\\n<pre>\\nuserType:Under18 \\n   a cis:UserType ; \\n   rdfs:label \"Under 18\" ; \\n   cis:name \"Under 18\"; ;\\n   cis:description \"People under 18 years old\";@en;\\n   cis:description \"Persone con età inferiore ai 18 anni\"@it  .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the identified type of users related to the tickets used to access an event or a Cultural Institute or Site. Examples include: people over 25 years old, people over 65 years old,  children, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/VideoObject> a owl:Class ;
+    rdfs:label "Video Object"@en ;
+    rdfs:comment "Concept used to represent multimedia objects of type video."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/url> ],
+        <http://dati.beniculturali.it/cis/CreativeWork> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/accessConditionFor> a owl:ObjectProperty ;
+    rdfs:label "access condition for"@en ;
+    rdfs:comment "Inverse property of \"has access condition\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/AccessCondition> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/hasAccessCondition> .
+
+<http://dati.beniculturali.it/cis/addressID> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "address identifier"@en ;
+    rdfs:comment "Property used to represent the globally unique identifier for each instance of an address. A crucial part of the INSPIRE data specifications. Subproperty of identifier."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://dati.beniculturali.it/cis/identifier> ;
+    owl:versionInfo "unstable" .
+
+<http://dati.beniculturali.it/cis/adminUnitL1> a owl:DatatypeProperty ;
+    rdfs:label "administrative unit level 1"@en ;
+    rdfs:comment "Property used to represent the uppermost administrative unit for the address of the site of the cultural institute or site, almost always a country."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/adminUnitL2> a owl:DatatypeProperty ;
+    rdfs:label "administrative unit level 2"@en ;
+    rdfs:comment "Property used to represent the region of the address of the site of a cultural institute or site, usually a county, state or other such area that typically encompasses several localities."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/altLabel> a owl:DatatypeProperty ;
+    rdfs:label "alternative label"@en ;
+    rdfs:comment "Property used to associate the situation name in time with the alternative name of the cultural institute or site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/NameInTime> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://dati.beniculturali.it/cis/name> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/available> a owl:ObjectProperty ;
+    rdfs:label "available"@en ;
+    rdfs:comment "Property used to associate a contact point with hours specification in which the contact point is available."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/ContactPoint> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/closes> a owl:DatatypeProperty ;
+    rdfs:label "closes "@en ;
+    rdfs:comment "This property is used to represent the closing time"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:time ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/endDate> a owl:DatatypeProperty ;
+    rdfs:label "end Date"@en ;
+    rdfs:comment "end Date of a Time Interval"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/TimeInterval> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:dateTime ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/fullAddress> a owl:DatatypeProperty ;
+    rdfs:label "full address"@en ;
+    rdfs:comment "Property used to represent the full address of the site of a cultural institute or site."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/geoMethodology> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "georeferentiation methodology"@en ;
+    rdfs:comment "This property is used to represent the methodology used for the georeferentiation."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Geometry> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/geometryType> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "geometry type"@en ;
+    rdfs:comment "This property is used to represent the geometry type (point, line, or polygon) in the geospatial representation."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Geometry> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasAddress> a owl:ObjectProperty ;
+    rdfs:label "has address"@en ;
+    rdfs:comment "Property that permits to associate a site with an address"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Site> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Address> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasAdmissionType> a owl:ObjectProperty ;
+    rdfs:label "has admission type"@en ;
+    rdfs:comment "Property used to associate the opening hours specification to the admission type"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/AdmissionType> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasAttribute> a owl:ObjectProperty ;
+    rdfs:label "has attribute"@en ;
+    rdfs:comment "Property used to associate the description of the site of the cultural institute or site an attribute (e.g., total space, shelving, etc.)"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/SiteDescription> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Attribute> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasCertifiedEmail> a owl:DatatypeProperty ;
+    rdfs:label "has certified email"@en ;
+    rdfs:comment "Property used to associate a certified email address to a contact point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/ContactPoint> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasCollection> a owl:ObjectProperty ;
+    rdfs:label "has collection"@en ;
+    rdfs:comment "Property used to associate the Cultural Institute or Site with the set of cultural objects it contains."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Collection> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasCurrency> a owl:ObjectProperty ;
+    rdfs:label "has currency"@en ;
+    rdfs:comment "This property is used to connected the Price specification to Currency"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/PriceSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Currency> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/hasCurrencyValue> a owl:DatatypeProperty ;
+    rdfs:label "has currency value"@en ;
+    rdfs:comment "Property used to represent the price of the ticket."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/PriceSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:float ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasDate> a owl:DatatypeProperty ;
+    rdfs:label "has date"@en ;
+    rdfs:comment "Property used to represent the date of the temporary closure."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/TemporaryClosure> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:date xsd:dateTime ) ] ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasDayOfWeek> a owl:ObjectProperty ;
+    rdfs:label "has day of week "@en ;
+    rdfs:comment "This property is used to specify the opening hours and in particular the days of the week."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/DayOfWeek> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/isDayOfWeekOf> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/hasDiscipline> a owl:ObjectProperty ;
+    rdfs:label "has discipline"@en ;
+    rdfs:comment "Property used to associate the Cultural Institute or Site with its own field of knowledge"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/SubjectDiscipline> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasDuration> a owl:ObjectProperty ;
+    rdfs:label "has duration"@en ;
+    rdfs:comment "This property is used to specify the temporal duration of the validity."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Validity> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/QuantitativeValue> <http://dati.beniculturali.it/cis/TimeInterval> ) ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/hasEmail> a owl:DatatypeProperty ;
+    rdfs:label "has email"@en ;
+    rdfs:comment "Property used to specify email address for a contact point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/ContactPoint> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasFax> a owl:DatatypeProperty ;
+    rdfs:label "has fax"@en ;
+    rdfs:comment "Property used to represent one or more fax numbers for the contact point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/ContactPoint> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasGeographicalLocation> a owl:ObjectProperty ;
+    rdfs:label "has geographical location"@en ;
+    rdfs:comment "Property used to associate a site with a geographical area where the site is located."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Site> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/GeographicalFeature> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasISTATCode> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has ISTAT code"@en ;
+    rdfs:comment "This property is used to represent a specific code used in the Italian context for the governamental administrative areas."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/GovernamentalAdministrativeArea> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasLat> a owl:DatatypeProperty ;
+    rdfs:label "has latitude"@en ;
+    rdfs:comment "Property used to associate a latitude with a Point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Geometry> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:decimal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasLong> a owl:DatatypeProperty ;
+    rdfs:label "has longitude"@en ;
+    rdfs:comment "Property used to associate the longitude with a Point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Geometry> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:decimal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasMeasurementUnit> a owl:ObjectProperty ;
+    rdfs:label "has measurement unit"@en ;
+    rdfs:comment "This property is used to represent a measurement unit."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/QuantitativeValue> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/MeasurementUnit> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/hasNameInTime> a owl:ObjectProperty ;
+    rdfs:label "has name in time"@en ;
+    rdfs:comment "Property which associate a cultural institute or site or a site with the situation name in time"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Site> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/NameInTime> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasReason> a owl:DatatypeProperty ;
+    rdfs:label "has reason"@en ;
+    rdfs:comment "Property used to describe a reason for the temporary closure."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/TemporaryClosure> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasSiteDescription> a owl:ObjectProperty ;
+    rdfs:label "has site description"@en ;
+    rdfs:comment "Propery that permits to associate a site of a cultural institute or site with its description."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Site> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/SiteDescription> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasTelephone> a owl:DatatypeProperty ;
+    rdfs:label "has telephone"@en ;
+    rdfs:comment "Property used to represent one or more telephone numbers for the contact point"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/ContactPoint> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasTemporaryClosureType> a owl:ObjectProperty ;
+    rdfs:label "has temporary closure type"@en ;
+    rdfs:comment "Property used to associate the temporary closure with its type"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/TemporaryClosure> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/TemporaryClosureType> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasValue> a owl:DatatypeProperty ;
+    rdfs:label "has value"@en ;
+    rdfs:comment "Property used to represent a value"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/QuantitativeValue> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:positiveInteger ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/includes> a owl:ObjectProperty ;
+    rdfs:label "includes"@en ;
+    rdfs:comment "Property used to associate an offer with the relative ticket"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Offer> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Ticket> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/isCatalogueOf> a owl:ObjectProperty ;
+    rdfs:label "is catalogue of"@en ;
+    rdfs:comment "Inverse property of \"has catalogue\"."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Catalogue> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/catalogue> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/isDayOfWeekOf> a owl:ObjectProperty ;
+    rdfs:label "is day of week of "@en ;
+    rdfs:comment "Inverse property of has day of week."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/DayOfWeek> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/isDescribedBy> a owl:ObjectProperty ;
+    rdfs:label "is described by"@en ;
+    rdfs:comment "Inverse property of \"describes\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Collection> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Catalogue> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/describes> .
+
+<http://dati.beniculturali.it/cis/isHeldBy> a owl:ObjectProperty ;
+    rdfs:label "is held by"@en ;
+    rdfs:comment "Inverse property of \"holds a role in time\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/RoleInTime> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Agent> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/holdsRoleInTime> .
+
+<http://dati.beniculturali.it/cis/isHostedBy> a owl:ObjectProperty ;
+    rdfs:label "is hosted by"@en ;
+    rdfs:comment "This property is the inverse of \"hosts\" and links the Event to the Site of the Cultural Institute or Site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Event> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Site> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/hosts> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/isInvolvedInProject> a owl:ObjectProperty ;
+    rdfs:label "is involved in a project"@en ;
+    rdfs:comment "Property used to represent an involvement relationship between a cultural institute or site and a project"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Project> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/isMemberOf> a owl:ObjectProperty ;
+    rdfs:label "is member of "@en ;
+    rdfs:comment "Inverse property of hasMember."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/Collection> <http://dati.beniculturali.it/cis/CulturalHeritageObject> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Collection> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/isPartOf> a owl:ObjectProperty ;
+    rdfs:label "is part of"@en ;
+    rdfs:comment "This object property is meant to link a cultural institute or site with itself. This can be used to represent all those cases in which a institute or site can be part of another general institute or site. This property can be effectively used in the cases of Sections of the Central Archive."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/isProvidedBy> a owl:ObjectProperty ;
+    rdfs:label "is provided by"@en ;
+    rdfs:comment "Inverse property of \"provides service\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Service> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/providesService> .
+
+<http://dati.beniculturali.it/cis/isRoleIn> a owl:ObjectProperty ;
+    rdfs:label "is role in"@en ;
+    rdfs:comment "Inverse property of \"with role\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Role> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/RoleInTime> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/withRole> .
+
+<http://dati.beniculturali.it/cis/isSiteOf> a owl:ObjectProperty ;
+    rdfs:label "is site of"@en ;
+    rdfs:comment "Inverse property of \"has Site\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Site> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/hasSite> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/isSubEventOf> a owl:ObjectProperty ;
+    rdfs:label "is sub-event of"@en ;
+    rdfs:comment "Inverse Property of \"has sub event\""@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Event> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Event> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/hasSubEvent> .
+
+<http://dati.beniculturali.it/cis/isSubjectOf> a owl:ObjectProperty ;
+    rdfs:label "is subject of"@en ;
+    rdfs:comment "Inverse propery of \"is about\"."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalEntity> <http://dati.beniculturali.it/cis/Event> <http://dati.beniculturali.it/cis/Site> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CreativeWork> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/isAbout> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/isValidDuring> a owl:ObjectProperty ;
+    rdfs:label "is valid during"@en ;
+    rdfs:comment "Property used to associate the situation name in time with a temporal validity interval"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/NameInTime> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/TimeInterval> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/makesAvailableEquipment> a owl:ObjectProperty ;
+    rdfs:label "makes available equipment"@en ;
+    rdfs:comment "Property that permits to associate the Cultural Institute or Site with its own equipment"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Equipment> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/opens> a owl:DatatypeProperty ;
+    rdfs:label "opens "@en ;
+    rdfs:comment "This property is used to represent the opening time"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:time ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/postCode> a owl:DatatypeProperty ;
+    rdfs:label "post code"@en ;
+    rdfs:comment "Property used to represent the post code of the address of the site of a cultural institute or site."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/postName> a owl:DatatypeProperty ;
+    rdfs:label "post name"@en ;
+    rdfs:comment "Property used to represent the key postal division of the address of the site of the cultural institute or site, usually the city. (INSPIRE's definition is 'One or more names created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points.'). "@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Address> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/reportsTo> a owl:ObjectProperty ;
+    rdfs:label "reports to"@en ;
+    rdfs:comment "This property permits to represent a general belonging relationship of an agent. For instance, the property can be used to represent the case in which an agent with Role responsible acts on the cultural Istitute or site on behalf of an Organization to which (s)he belongs."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Agent> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Agent> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/startDate> a owl:DatatypeProperty ;
+    rdfs:label "start Date"@en ;
+    rdfs:comment "Srart date of a Time Interval"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/TimeInterval> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:dateTime ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/toponym> a owl:DatatypeProperty ;
+    rdfs:label "toponym"@en ;
+    rdfs:comment "This property represents the toponym of a geographical area."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/GeographicalFeature> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://dati.beniculturali.it/cis/name> ;
+    owl:versionInfo "stable"@en .
+
+<http://www.w3.org/ns/adms#SemanticAsset> a owl:Class .
+
+<http://dati.beniculturali.it/cis/AdmissionType> a owl:Class ;
+    rdfs:label "Admission Type"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/admissionType.png>,
+        "Individuals of this class identify the possible admission types (in terms of access policies) that can be applied to the opening hours specifications of a Cultural Institute or Site (CIS).\\n\\nFor example. it can be used to indicate that the a CIS opens at 9:00 and closes at 17:00 <b>daily</b>.\\n\\nAn example in turtle is the following.\\n\\n<pre>\\n\\n\\nopeningHoursSpecification:Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi\\n      a       cis:OpeningHoursSpecification ;\\n      rdfs:label \"Opening Hours of Biblioteca nazionale centrale di Roma - thursday\"@en ;\\n      cis:closes \"19:00:00\"^^xsd:time ;\\n      cis:hasAdmissionType\\n              admissionType:Tipo_di_apertura_al_pubblico ;\\n      cis:hasDayOfWeek cis:Thursday ;\\n      cis:opens \"08:30:00\"^^xsd:time .\\n\\n\\nadmissionType:Tipo_di_apertura_al_pubblico\\n      a       cis:AdmissionType ;\\n      rdfs:label \"Tipo di apertura al pubblico\" ;\\n      cis:name \"giornaliera\" ;\\n      cis:description \"Apertura al pubblico giornaliera\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the type of admission. Examples are: weekly, monthly, daily, etc. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Attribute> a owl:Class ;
+    rdfs:label "Attribute"@en ;
+    dc:description "An example of usage of the class cis:Attribute is the following:\\n\\n<pre>\\n\\nattribute:Shelving\\n    a cis:Attribute ;\\n    rdfs:label \"Shelving\"@en ;\\n    rdfs:label \"Scaffalature\"@it ;\\n    cis:name \"Shelving\"@en ;\\n    cis:name \"Scaffalature\"@it ;\\n    cis:description \"The linear dimension of a shelf unit (e.g. 3 meters)\"@en ;\\n    cis:description \"La dimensione di uno scaffale in metri lineari (es. 3 metri)\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the attribute that a site description of a site of a cultural institute or site may have. For instance, length, the shelving in a library, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Equipment> a owl:Class ;
+    rdfs:label "Equipment"@en ;
+    dc:description "An example of usage of the class cis:Equipment is the following:\\n\\n<pre>\\n\\nequ:Photocopier \\n    a cis:Equipment ;\\n    rdfs:label \"Photocopier\"@en ;\\n    rdfs:label \"Fotocopiatrice\"@it ;\\n    cis:name \"Photocopier\"@en ;\\n    cis:name \"Fotocopiatrice\"@it .\\n\\ncissite:Biblioteca_nazionale_centrale cis:makesAvailableEquipment equ:Photocopier .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the equipment made available by the Cultural Institute or Site. For instance, the equipment can be a totem, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/SubjectDiscipline> a owl:Class ;
+    rdfs:label "Subject Discipline"@en ;
+    dc:description "An example of usage of the class cis:SubjectDiscipline is the following:\\n\\n<pre>\\n\\ncissite:Museo_archeologico_statale\\n    a cis:CulturalInstituteOrSite, cis:Museum ;\\n    rdfs:label \"Museo archeologico statale\" ;\\n    cis:institutionalName\"Museo archeologico statale\" ;\\n    cis:ISILIdentifier \"T-EX0010\" ;\\n    cis:hasDiscipline sd:Archeologia ;\\n    cis:hasSite site:Museo_archeologico_statale .\\n\\nsd:Archeologia\\n    a cis:SubjectDiscipline ;\\n    rdfs:label \"Archeologia\"@it ;\\n    rdfs:label \"Archaeology\"@en ;\\n    cis:name \"Archeologia\"@it ;\\n    cis:name \"Archaeology\"@en ;\\n    cis:description \"Archaeology, or archeology, is the study of human activity through the recovery and analysis \\nof material culture\"@en ;\\n    cis:description \"L'archeologia è la scienza che studia le civiltà e le culture umane del passato e le loro relazioni \\ncon l'ambiente circostante, mediante la raccolta, la documentazione e l'analisi delle tracce materiali che hanno\\nlasciato architetture, manufatti, resti biologici e umani\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a a field of knowledge or human activity. This can be defined in a controlled vocabulary. Examples can be: Modern Art, Ancient History, Ethnografy, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/TemporaryClosureType> a owl:Class ;
+    rdfs:label "Type of Temporary Closure"@en ;
+    dc:description "An example of usage of the class cis:TemporaryClosureType is the following:\\n\\n<pre>\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      rdfs:label \"Biblioteca nazionale centrale\"@it ;\\n      cis:ISILIdentifier \"IT-RM0267\" ;\\n      cis:hasAccessCondition tc:Biblioteca_nazionale_centrale_temporary_closure .\\n\\ntc:Biblioteca_nazionale_centrale_temporary_closure \\n    a cis:TemporaryClosure ;\\n    rdfs:label \"Chiusura temporanea della Biblioteca Nazionale Centrale di Roma per restauro\"@it ;\\n    rdfs:label \"Temporary closure of Biblioteca Nazionale Centrale di Roma for renovation\"@en ;\\n    cis:description \"Dal 19-01-2015 al 21-01-2015 la Biblioteca Nazionale centrale chiude per restauro\"@it ;\\n    cis:description \"From 2015-01-19 al 2015-01-21 Biblioteca Nazionale centrale is closed for renovation\"@en ;\\n    cis:hasReason \"Renovation\"@en;\\n    cis:hasReason \"Restauro\"@it ;\\n    cis:hasTemporaryClosureType tct:Renovation ;\\n    cis:hasDate \"2015-01-19\"^^xsd:date ;\\n    cis:hasDate \"2015-01-20\"^^xsd:date ;\\n    cis:hasDate \"2015-01-21\"^^xsd:date .\\n\\ntct:Renovation\\n    a cis:TemporaryClosureType;\\n    rdfs:label \"Renovation\"@en;\\n    rdfs:label \"Restauro\"@it ;\\n    cis:name \"Renovation\"@en;\\n    cis:name \"Restauro\";@it ;\\n    cis:description\"Temporary Closure for Renovation\";@en ;\\n    cis:description \"Chiusura per Restauro\";@it .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the type of temporary. Examples can be: closed for renovation, unfit for use, etc. "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/atTime> a owl:ObjectProperty ;
+    rdfs:label "at time"@en ;
+    rdfs:comment "Property used to associate the situation role in time with a temporal interval. The same property is used in a similar way to link a site or a collection to a temporal interval"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/Collection> <http://dati.beniculturali.it/cis/RoleInTime> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/TimeInterval> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/catalogue> a owl:ObjectProperty ;
+    rdfs:label "catalogue"@en ;
+    rdfs:comment "Property used to associate the Cultural Institute or SIte with a catalogue of cultural collections included in the institute or site. The relatioships can be used to indicate that a Cultural Institute or Site has an its own catalogue or situations where a Cultural Institute or Site contributes to a union catalogue (this latter case is represented by libraries that can contribute to or participate in a union catalogue)."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Catalogue> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/describes> a owl:ObjectProperty ;
+    rdfs:label "describes"@en ;
+    rdfs:comment "Property used to associate the catalogue with the cultural heritage objects of a cultural institute or site that the catalogue describes."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Catalogue> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Collection> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/forAccessTo> a owl:ObjectProperty ;
+    rdfs:label "for access to"@en ;
+    rdfs:comment "Property used to associate a ticket with an event or a cultural institute or site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Ticket> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasAccessCondition> a owl:ObjectProperty ;
+    rdfs:label "has access condition"@en ;
+    rdfs:comment "Property used to associate the Cultural Institute or Site or the Event with its access condition information"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/AccessCondition> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasGeometry> a owl:ObjectProperty ;
+    rdfs:label "has geometry"@en ;
+    rdfs:comment "Property used to associate a site with its own geographical coordinates"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/GeographicalFeature> <http://dati.beniculturali.it/cis/Site> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Geometry> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasMember> a owl:ObjectProperty ;
+    rdfs:label "has member"@en ;
+    rdfs:comment "Property that permits to specify the cultural heritage objects that form a specific collection or the entire cultural heritage included in a cultural institute or site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Collection> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/Collection> <http://dati.beniculturali.it/cis/CulturalHeritageObject> ) ] ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/isMemberOf> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasSite> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has site"@en ;
+    rdfs:comment "Property which links a cultural institute or site to its own physical site(s)."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Site> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasSubEvent> a owl:ObjectProperty ;
+    rdfs:label "has sub event"@en ;
+    rdfs:comment "Property used to describe large events to which single sub events refer. For instance, a large event can be the first world war centenary to which single events celebrating the 100th anniversary refer"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Event> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Event> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasTicket> a owl:ObjectProperty ;
+    rdfs:label "has ticket"@en ;
+    rdfs:comment "Inverse property of \"for access to\""@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Ticket> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/forAccessTo> .
+
+<http://dati.beniculturali.it/cis/hasValidity> a owl:ObjectProperty ;
+    rdfs:label "has validity"@en ;
+    rdfs:comment "Property used to specify the validity of an offer or ticket."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/Offer> <http://dati.beniculturali.it/cis/Ticket> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Validity> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/holdsRoleInTime> a owl:ObjectProperty ;
+    rdfs:label "holds role in time"@en ;
+    rdfs:comment "Property used to associate an agent with the situation role in time the agent can play"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Agent> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/RoleInTime> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hosts> a owl:ObjectProperty ;
+    rdfs:label "hosts"@en ;
+    rdfs:comment "Property used to associate a cultural institute or site to an event"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/Site> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Event> ;
+    owl:versionInfo "unstable" .
+
+<http://dati.beniculturali.it/cis/institutionalName> a owl:DatatypeProperty ;
+    rdfs:label "Institutional Name" ;
+    rdfs:comment "This data property identifies  the institutional name of the Cultural Institute or Site."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/NameInTime> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:subPropertyOf <http://dati.beniculturali.it/cis/name> ;
+    owl:versionInfo "Stable"@en .
+
+<http://dati.beniculturali.it/cis/isAbout> a owl:ObjectProperty ;
+    rdfs:label "is about"@en ;
+    rdfs:comment "Property used to associate a creative work with a cultural entity. The same property is used in a similar way to associate the creative work with an event or site"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CreativeWork> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalEntity> <http://dati.beniculturali.it/cis/Event> <http://dati.beniculturali.it/cis/Site> ) ] ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/isInSite> a owl:ObjectProperty ;
+    rdfs:label "is in site"@en ;
+    rdfs:comment "Property that permits to associate cultural heritage objects with the site(s) which conserve(s) them"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalHeritageObject> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Site> ;
+    owl:propertyChainAxiom ( <http://dati.beniculturali.it/cis/hasMember> <http://dati.beniculturali.it/cis/isInSite> ) ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/isRelatedToRiT> a owl:ObjectProperty ;
+    rdfs:label "is related to role in time"@en ;
+    rdfs:comment "inverse property for \"roleFor\""@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalEntity> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/RoleInTime> ;
+    owl:inverseOf <http://dati.beniculturali.it/cis/roleFor> .
+
+<http://dati.beniculturali.it/cis/providesService> a owl:ObjectProperty ;
+    rdfs:label "provides Service"@en ;
+    rdfs:comment "Property used to represent a supply service relationship between a cultural institute or site and a service."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Service> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/roleFor> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "role for"@en ;
+    rdfs:comment "Property used to associate the situation role in time played by an agent with the relative cultural institute or site. The same property is used in a similar way to associate role in time with an event"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/RoleInTime> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalEntity> <http://dati.beniculturali.it/cis/Event> ) ] ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/withRole> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "with Role"@en ;
+    rdfs:comment "Property used to associate the situation role in time with the role itself"@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/RoleInTime> ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/Role> ;
+    owl:versionInfo "stable" .
+
+xsd:date a rdfs:Datatype .
+
+xsd:float a rdfs:Datatype .
+
+<http://dati.beniculturali.it/cis/Currency> a owl:Class ;
+    rdfs:label "Currency"@en ;
+    dc:description "Individuals of the this class represent currency instances (e.g., Euro, US Dollar, Pound, Australian Dollar, etc.); they are always associated with individuals of the class 'Price Specification'.\\n\\nThis allows modelling Price Specification as a a quantified value, where the value is expressed as an integer and it is quantified in terms of a currency\\n\\nAn example is the following:\\n\\n<pre>\\n\\npriceSpecification:Under18>\\n      a       cis:PriceSpecification ;\\n      rdfs:label \"price specification under 18 \"@en , \"costo under 18 \"@it ;\\n      cis:hasCurrency cis:Euro ;\\n      cis:hasCurrencyValue\\n              \"5\"^^xsd:float .\\n\\ncis:Euro a cis:Currency ;\\n      rdfs:label \"Euro\"@en, \"Euro\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents a currency. In our domain currency is typically associated with Price Specification for tickets, and assumes specific values (e.g., Euro)."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/PriceSpecification> a owl:Class ;
+    rdfs:label "Price Specification"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/priceSpecification.png>,
+        "A price specification provides the information about the cost of an offer for entering a Cultural Institute or Site.\\n\\nIt is associated to a currency (e.g., Euro) and a currency value (i.e., a quantity, e.g., 5).\\n\\nThe following turtle provides an example about the price specification of the base offer for entering the Biblioteca Nazionale Centrale di Roma.\\n\\n<pre>\\n\\npriceSpecification:Under18\\n      a       cis:PriceSpecification ;\\n      rdfs:label \"price specification under 18 \"@en , \"costo under 18 \"@it ;\\n      cis:hasCurrency cis:Euro ;\\n      cis:hasCurrencyValue\\n              \"5\"^^xsd:float .\\n\\n\\noffer:Biblioteca_Nazionale_Centrale_base_offer\\n      a       cis:Offer ;\\n      rdfs:label \"offerta base \"@it , \"base offer \"@en ;\\n      cis:hasEligibleUser userType:Under18 ;\\n      cis:hasPriceSpecification\\n              priceSpecification:Under18 ;\\n      cis:hasValidity validity:Biblioteca_nazionale_centrale_validity ;\\n      cis:includes ticket:Biblioteca_nazionale_centrale_ticket_1 .\\n\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the price specification of the ticket"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCurrencyValue> ;
+            owl:someValuesFrom xsd:float ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCurrency> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Currency> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Project> a owl:Class ;
+    rdfs:label "Project"@en ;
+    dc:description "An example of usage of the class cis:Project is the following:\\n\\n<pre>\\n\\ncissite:Museo_di_Capodimonte\\n    a cis:CulturalInstituteOrSite, cis:Museum ;\\n    rdfs:label \"Museo di Capodimonte\" ;\\n    cis:InstitutionalName \"Museo di Capodimonte\" ;\\n    cis:ISILIdentifier \"IT-EX0008\" ;\\n    cis:isInvolvedInProject project:ProgettoEsempio ;\\n    cis:hasSite site:Museo_di_Capodimonte .\\n\\nproject:ProgettoEsempio \\n    a cis:Project;\\n    rdfs:label \"Example Project\"@en ;\\n    rdfs:label \"Progetto di Esempio\";@it;\\n    cis:name \"Example Project\";@en ;\\n    cis:name \"Progetto di Esempio\"@it;\\n    cis:hasWebSite http://www.example-project.com/ .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a Project the Cultural Institute and Site can be involved in."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasWebSite> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Role> a owl:Class ;
+    rdfs:label "Role"@en ;
+    dc:description "An example of usage of the class cis:Role is the following:\\n\\n<pre>\\n\\nrole:Director\\n    a cis:Role ;\\n    rdfs:label \"Director\"@en ;\\n    rdfs:label \"Direttore\"@it ;\\n    cis:name \"Direttore\"@it ;\\n    cis:name \";Director\"@en .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a role. It can be modelled using a controlled vocabulary. Examples of roles include: ManagingAuthority, AccountableAuthority, Owner, Director, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/RoleInTime> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isRoleIn> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/SiteDescription> a owl:Class ;
+    rdfs:label "Site Description"@en ;
+    dc:description "An example of usage of the class cis:SiteDescription is the following:\\n<pre>\\n\\nsite:Sede_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Site ;\\n      rdfs:label \"Sede Biblioteca nazionale centrale di Roma\"@it ;\\n      cis:hasAddress address:Indirizzo_della_sede_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasContactPoint contactPoint:Contatti_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasGeographicalLocation geographicalFeature:Comune_di_Roma ;\\n      cis:isSiteOf cissite:Biblioteca_nazionale_centrale ;\\n      cis:hasSiteDescription sd:Sede_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:name \"Sede di: Biblioteca nazionale centrale di Roma\"@it .\\n\\nsd:Sede_di_Biblioteca_nazionale_centrale_di_Roma\\n    a cis:SiteDescription ;\\n    rdfs:label\"Description of the 'Sede di Biblioteca Nazionale Centrale di Roma'\"@en ;\\n    rdfs:label \"Descrizione della 'Sede di Biblioteca Nazionale Centrale di Roma'\"@it ;\\n    cis:description \"La libreria 1000 metri di scaffalature\"@it ; \\n    cis:description \"The Library has 1000 meters of shelves\"@en ;\\n    cis:hasAttribute attribute:Shelving .\\n\\nattribute:Shelving\\n    a cis:Attribute ;\\n    rdfs:label \"Shelving\"@en ;\\n    rdfs:label \"Scaffalature\";@it ;\\n    cis:name \"Shelving\"@en ;\\n    cis:name \"Scaffalature\"@it ;\\n    cis:description \"The linear dimension of a shelf unit (e.g. 3 meters)\"@en ;\\n    cis:description \";La dimensione di uno scaffale in metri lineari (es. 3 metri)\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "Permits to represents a description of a site of the cultural institute or site (for instance, the site has a total space available XXX, and a shelving that consists of a set of XX X shelves, etc.)"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Attribute> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasAttribute> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/TemporaryClosure> a owl:Class ;
+    rdfs:label "Temporary Closure"@en ;
+    dc:description "A temporary closure is a subclass of 'AccessCondition' whose individuals provide information about a temporary closure.\\nThese individuals are described in terms of:\\n * the closure date (cf. property hasDate);\\n * the reason about the temporary closure (cf. property hasReason);\\n * the type associated with the temporary closure (cf. property hasTemporaryClosureType).\\n\\nAn example in turtle is the following:\\n\\n<pre>\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasAccessCondition            orari:Chiusura_estiva_di_Biblioteca_nazionale_centrale_di_Roma\\n\\norari:Chiusura_estiva_di_Biblioteca_nazionale_centrale_di_Roma\\n      cis:hasDate \"2015-08-15\"^^xsd:dateTime ;\\n      cis:hasReason \"Chiusura estiva\" ;\\n</pre>"@en ;
+    rdfs:comment "It represents the information on the temporary closure "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:unionOf ( xsd:date xsd:dateTime ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasDate> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/TemporaryClosureType> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasTemporaryClosureType> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasReason> ],
+        <http://dati.beniculturali.it/cis/AccessCondition> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasContactPoint> a owl:ObjectProperty ;
+    rdfs:label "has contact point"@en ;
+    rdfs:comment "Property which links a cultural insttiute or site to its contact points. The same property is used to link in a similar way the event to its contact points and to link the site of the cultural institute or site with its contact points"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> <http://dati.beniculturali.it/cis/Service> <http://dati.beniculturali.it/cis/Site> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range <http://dati.beniculturali.it/cis/ContactPoint> ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/hasWebSite> a owl:DatatypeProperty ;
+    rdfs:label "has web site"@en ;
+    rdfs:comment "Property used to represent a web site"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/Catalogue> <http://dati.beniculturali.it/cis/ContactPoint> <http://dati.beniculturali.it/cis/Project> ) ] ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/identifier> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "identifier"@en ;
+    rdfs:comment "This property represents an identifier for a Thing."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+owl:Thing a owl:Class .
+
+<http://dati.beniculturali.it/cis/CulturalHeritageObject> a owl:Class ;
+    rdfs:label "Cultural Heritage Object"@en ;
+    dc:description "An example of usage of the class cis:CulturalHeritageObject is the following:\\n\\n<pre>\\n\\nculturalheritageobject:Nascita_di_Venere\\n    a cis:CulturalHeritageObject ;\\n    rdfs:label \"Nascita di Venere\"@it ;;\\n    cis:name \"Nascita di Venere\"@it ;\\n    cis:isInSite site:Palazzo_degli_uffizi .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a cultural asset (even intagible) of the cultural heritage."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Site> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isInSite> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/QuantitativeValue> a owl:Class ;
+    rdfs:label "Quantitative Value"@en ;
+    dc:description "An example of usage of the class cis:QuantitativeValue is the following:\\n\\n<pre>\\n\\nqv:Parco_archeologico_di_Liternum_Card_Validity_Duration\\n    a cis:QuantitativeValue ;\\n    rdfs:label \"2\";\\n    cis:hasMeasurementUnit cis:Day ;\\n    cis:hasValue \"2\"^^xsd:positiveInteger .\\n\\ncis:Day a cis:MeasurementUnit .\\n\\n</pre>"@en ;
+    rdfs:comment "Class that represents a quantitative value."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasValue> ;
+            owl:someValuesFrom xsd:positiveInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasMeasurementUnit> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/MeasurementUnit> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/Service> a owl:Class ;
+    rdfs:label "Service"@en ;
+    dc:description "A Cultural Institute or Site (CIS) might offer a variety of services (e.g., Wi-Fi Handicapped access, cafeteria, etc.).\\n\\nThese services are represented as individuals of the class 'Service' and they are in relationship with a CIS by means of the object property providesService.\\n\\nThe following is an example expressed by using the turtle syntax:\\n\\n<pre>\\n\\nservice:Caffetteria\\n      a       cis:Service ;\\n      cis:name \"Caffetteria\" .\\n\\n\\nservice:Connessione_WI-FI\\n      a       cis:Service ;\\n      cis:name \"Connessione WI-FI\" .\\n\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:providesService service:Caffetteria, service:Connessione_WI-FI.\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a service that is provided by the Cultural Institute or Site. For instance, a service can be: the presence of a restaurant internal to the Cultural Institute or Site, the uso of an educational room, the use of a free wifi connection"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isProvidedBy> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/ContactPoint> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasContactPoint> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Validity> a owl:Class ;
+    rdfs:label "Validity"@en ;
+    dc:description "An example of usage of the class cis:Validity is the following:\\n\\n<pre>\\n\\nvalidity:Parco_archeologico_di_Liternum_Card_Validity\\n    a cis:Validity ;\\n    rdfs:label \"Two-day validity\"@en ;\\n    rdfs:label \"Validità per due giorni\"@it ;\\n    cis:hasDuration Parco_archeologico_di_Liternum_Card_Validity_Duration .\\n\\nqv:Parco_archeologico_di_Liternum_Card_Validity_Duration\\n    a cis:QuantitativeValue ;\\n    rdfs:label \"2\";;\\n    cis:hasMeasurementUnit cis:Day ;\\n    cis:hasValue \"2\"^^xsd:positiveInteger .\\n\\n</pre>"@en ;
+    rdfs:comment "This class represents the validity for the ticket and offering."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/QuantitativeValue> <http://dati.beniculturali.it/cis/TimeInterval> ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasDuration> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/url> a owl:DatatypeProperty ;
+    rdfs:label <http://dati.beniculturali.it/cis/>,
+        "url"@en ;
+    rdfs:comment "Thi property represents an URL."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://dati.beniculturali.it/cis/AudioObject> <http://dati.beniculturali.it/cis/ImageObject> <http://dati.beniculturali.it/cis/NewsArticle> <http://dati.beniculturali.it/cis/VideoObject> ) ] ;
+    rdfs:range xsd:anyURI ;
+    owl:versionInfo "unstable"@en .
+
+xsd:decimal a rdfs:Datatype .
+
+xsd:time a rdfs:Datatype .
+
+<http://dati.beniculturali.it/cis/NameInTime> a owl:Class ;
+    rdfs:label "Name in Time"@en ;
+    dc:description "An example of usage of the class cis:NameInTime is the following:\\n\\n<pre>\\n\\ncissite:Museo_di_Capodimonte\\n    a cis:CulturalInstituteOrSite, cis:Museum ;\\n    rdfs:label \"Museo di Capodimonte\" ;\\n    cis:institutionalName \"Museo di Capodimonte\" ;\\n    cis:ISILIdentifier \"IT-EX0008\" ;\\n    cis:hasNameInTime nit:Museo_di_Capodimonte ;\\n    cis:hasSite site:Museo_di_Capodimonte .\\n\\nnit:Museo_di_Capodimonte\\n    a cis:NameInTime ;\\n    rdfs:label \"Denominazione nel tempo 'Museo di Capodimonte'\"@it ;\\n    cis:institutionalName \"Museo di Capodimonte\"@it ;\\n    cis:altLabel \"Museo Nazionale di Capodimonte\"@it ;\\n    cis:isValidDuring ti:Intervallo_di_tempo_per_denominazione_nel_tempo_Museo_di_Capodimonte  .\\n\\t\\nti:Intervallo_di_tempo_per_denominazione_nel_tempo_Museo_di_Capodimonte\\n    a cis:TimeInterval ;\\n    cis:startDate \"1957\" .\\n\\n</pre>"@en ;
+    rdfs:comment "Permits to represent a situation in which a name of the Cultural Institute or Site change in time."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/altLabel> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isValidDuring> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/TimeInterval> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/institutionalName> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Offer> a owl:Class ;
+    rdfs:label "Offer"@en ;
+    dc:description "Any fare is expressed within the ontology by using instances of the class Offer.\\n\\nIt is possible to specify: \\n * the type of user to whom the offer is applicable  (cf. object property cis:hasEligibleUser);\\n * the information about the price (cf. object property hasPriceSpecification);\\n * the information about the temporal validity of the offer (cf. object property hasValidity);\\n * the association with a ticket (cf. object property includes).\\n\\nThe following turtle example exemplifies the base offer of the Biblioteca Nazionale Centrale di Roma.\\n\\n<pre>\\n\\noffer:Biblioteca_Nazionale_Centrale_base_offer\\n      a       cis:Offer ;\\n      rdfs:label \"offerta base \"@it , \"base offer \"@en ;\\n      cis:hasEligibleUser userType:Under18 ;\\n      cis:hasPriceSpecification\\n              priceSpecification:Under18 ;\\n      cis:hasValidity validity:Biblioteca_nazionale_centrale_validity ;\\n      cis:includes ticket:Biblioteca_nazionale_centrale_ticket_1 .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents an offer (reduction  for specific types of users or base price) related to the entrance ticket for the Cultural Institute or Site or for the Event."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/includes> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Ticket> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Validity> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasValidity> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/AccessCondition> a owl:Class ;
+    rdfs:label "Access condition"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/access.png>,
+        "This class is used for representing the access conditions associated with a 'Cultural Institute or Site' or an 'Event'.\\nAccess conditions are meant to be indivuduals of the following classes:\\n  * Opening Hours Specification\\n  * Temporary Closure\\n  * Type of Booking\\n\\nAn example in turtle is the following:\\n\\n<pre>\\ncis a CulturalInstituteOrSite ;\\n  description \"An entity representing an individual of the class 'Institute or Site.'\" ;\\n  hasAccessCondition cis_access_condition . \\n\\ncis_access_condition a Access ;\\n  description \"The individual of the class 'Access' that specifies the access\\n  condition associated with the CulturalInstituteOrSite called cis\" .\\n</pre>"@en ;
+    rdfs:comment "Concept used to represent general information for the public access to the Cultural Institute or Site or to the Event. For instance, examples of information include: opening hours, type of admission, temporary closing, etc."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/accessConditionFor> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/GeographicalFeature> a owl:Class ;
+    rdfs:label "Geographical Area"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/geographicalArea.png>,
+        "This class allows describing a geographical area.\\nGeographical areas are always associated with individuals of the class 'Site' by means of the object property hasGeographicalLocation (domain Site and range 'Geographical Area').\\n\\nA geographical area is described by a set of individuals of the class Geometry. A individual of the class Geometry is described by using a coordinate system related to Earth such as WGS84. It is univocally identified by lat/long. This means that a geographical area can be a point, a line or a polygon.\\n\\nFor example, the following snippet provides a turtle model that represents a Geographical Area corresponding to the Site of the Biblioteca Centrale di Roma.\\n\\n<pre>\\n\\n\\nsite:Sede_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Site ;\\n      cis:hasGeographicalLocation\\n              geographicalArea:Comune_di_Roma ;\\n      cis:isSiteOf cissite:Biblioteca_nazionale_centrale ;\\n      cis:name \"Biblioteca nazionale centrale di Roma\"@it .\\n\\ngeographicalArea:Comune_di_Roma\\n      a       cis:GeographicalArea ;\\n      rdfs:label \"Comune di Roma\"@it ;\\n      cis:toponym \"Roma\" ;\\n      owl:sameAs      <http://spcdata.digitpa.gov.it/Comune/H501> , <http://datiopen.istat.it/odi/risorsa/territorio/comuni/Roma_58091> ;\\n      hasGeometry geometry:Comune_di_Roma .\\n\\ngeometry:Comune_di_Roma\\n      a       cis:Geometry ;\\n      geo:lat \"41.906784\" ;\\n      geo:long \"12.504962\" .\\n\\t\\n</pre>"@en ;
+    rdfs:comment "It represents a geographical feature. It can be used to model a municipality or an area across different administrative areas."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Geometry> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasGeometry> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/toponym> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Agent> a owl:Class ;
+    rdfs:label "Agent"@en ;
+    dc:description "An Agent is described by means of its name and a set of properties that allows modeling its role in time and, in case of physical persons, his/her belonging relationship to the public or private organization.\\n\\nAn example of the use of the Agent class only is provided below in turtle (for an example of the role modeling, interested readers can refer to the examples provided with the  Role and RoleInTime classes):\\n\\n<pre>\\n\\nagent:Andrea_De_Pasquale\\n    a cis:Agent ;\\n    rdfs:label \"Andrea De Pasquale\" ;\\n    cis:name \"Andrea De Pasquale\" ;\\n    cis:reportsTo agent:Soprintendenza_Roma ;\\n    cis:holdsRoleInTime roleInTime:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale .\\n\\nagent:Soprintendenza_Roma\\n    a cis:Agent ;\\n    rdfs:label \"Superintendence Rome\"@en ;\\n    rdfs:label \"Soprintendenza Roma\"@it ;\\n    cis:name \"Superintendence Rome\"@en ;\\n    cis:name \"Soprintendenza Roma esempio\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents an agent. It can be an organization (public and/or private), an association/foundation or a single person. In the context of this ontology it can be a municipality, a supervision authority, a single private citizen"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Agent> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/reportsTo> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/RoleInTime> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/holdsRoleInTime> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Catalogue> a owl:Class ;
+    rdfs:label "Catalogue"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/catalogue.png>,
+        "A catalogue is always associated with an individual of the class 'CulturalInstituteOrSite' (CIS) by means of the object property hasCatalogue (with domain CulturalInstituteOrSite and range Catalogue).\\n\\nThe inverse property of hasCatalogue is isCatalogueOf and relates a catalogue to a CIS.\\n\\nAn example in turtle is the following:\\n\\n<pre>\\ncatalogue:Catalogo_Generale_(autore)\\n      a       cis:Catalogue ;\\n      rdfs:label \"Catalogo Generale (autore)\" ;\\n      cis:name \"Catalogo Generale (autore)\" ;\\n      cis:isCatalogueOf cissite:Biblioteca_nazionale_centrale ;\\n      cis:description \"Catalogo Generale per autore - online\"@it .\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasCatalogue catalogue:Catalogo_Generale_(autore) .\\n</pre>"@en ;
+    rdfs:comment "Concept used to represent the catalogue which describes the set of cultural heritage objects included in a Cultural Institute or Site"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isCatalogueOf> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Collection> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/describes> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasWebSite> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/CreativeWork> a owl:Class ;
+    rdfs:label "Creative Work"@en ;
+    rdfs:comment "Concept used to represent all types of creative works such multimedia objects (audio, video, image files), bibliographic references, and different types of articles, that refer to and cite the Cultural Institute or Site"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalEntity> <http://dati.beniculturali.it/cis/Event> <http://dati.beniculturali.it/cis/Site> ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isAbout> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Geometry> a owl:Class ;
+    rdfs:label "Geometry"@en ;
+    dc:description "An example of usage of the class cis:Geometry is the following:\\n<pre>\\n\\ngeometry:Museo_di_Capodimonte_Geometry\\n      a       cis:Geometry ;\\n      rdfs:label \"Coordinate geografiche della sede di Museo di Capodimonte\"@it;\\n      cis:hasLat \"40.867424\" ;\\n      cis:geometryType \"Point\";\\n      cis:geoMethodology \"Satellite data georeferentiation\" ;\\n      cis:hasLong \"14.249192\".\\n\\n</pre>\\n\\nFor a complete example refer to the class cis:GeographicalFeature"@en ;
+    rdfs:comment "It represents a geometry which is typically described by using a coordinate system related to Earth such as WGS84. It is univocally identified by lat/long"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/geometryType> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasLong> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/geoMethodology> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasLat> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/MeasurementUnit> a owl:Class ;
+    rdfs:label "Measurement Unit"@en ;
+    dc:description "Individuals of this class expresses a definite magnitude of physical quantities. \\n\\nFor example it is possible to define a quantity for time (e.g., the second), space (e.g., the metre), or temperature (the celcius degree).\\n\\nA measurement unit is always related to individuals of the class 'Quantitative Value' by means of the object property hasMeasurementUnit.\\n\\nThis allows representing as RDF assertions like 'the validity of the offer is of 7 days', e.g.,\\n\\n<pre>\\n\\nquantitativeValue:BaseOfferDuration\\n      a       cis:QuantitativeValue ;\\n      rdfs:label \"Durata di validità dell'offerta base della biblioteca nazionale centrale di Roma\"@it ;\\n      cis:hasMeasurementUnit\\n              cis:Day ;\\n      cis:hasValue \"7\"^^xsd:positiveInteger .\\n\\ncis:Day a cis:MeasurementUnit\\n\\n</pre>"@en ;
+    rdfs:comment "Class that represents a measurement unit"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/OpeningHoursSpecification> a owl:Class ;
+    rdfs:label "Opening Hours Specification"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/openingHoursSpecification.png>,
+        "Individuals of this class specify a particula access conditions, i.e., the opening hours of a 'Cultural Institute or Site' or an 'Event'.\\n\\nOpening hours are represented in terms of:\\n   * opening time (cf. property opens);\\n   * closing time (cf. property closes);\\n   * the day of the week that the opening specification refers to (cf. property hasDayOfWeek);\\n   * the admission type, e.g. weekly, monthly, daily, etc (cf. property hasAdmmissionType).\\n\\nAn example in turtle is the following:\\n\\n<pre>\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasAccessCondition            orari:Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi\\n\\norari:Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi\\n      a       cis:OpeningHoursSpecification ;\\n      rdfs:label \"Opening Hours of Biblioteca nazionale centrale di Roma - thursday\"@en , \\n      \"Orari di apertura di Biblioteca nazionale centrale di Roma - giovedì\"@it ;\\n      cis:closes \"19:00:00\"^^xsd:time ;\\n      cis:hasAdmissionType          addmissionType:Tipo_di_apertura_al_pubblico ;\\n      cis:hasDayOfWeek cis:Thursday ;\\n      cis:opens \"08:30:00\"^^xsd:time .\\n\\nadmissionType:Tipo_di_apertura_al_pubblico\\n      a       cis:AdmissionType ;\\n      cis:description \"daily\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the opening hours specification "@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/AdmissionType> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasAdmissionType> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/DayOfWeek> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasDayOfWeek> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:time ;
+            owl:onProperty <http://dati.beniculturali.it/cis/opens> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:time ;
+            owl:onProperty <http://dati.beniculturali.it/cis/closes> ],
+        <http://dati.beniculturali.it/cis/AccessCondition> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Address> a owl:Class ;
+    rdfs:label "Address"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/address.png>,
+        "Individuals of the class Site are associated with individual of the class Address by means of the object property hasAddress.\\nAn address is characterised by the following properties:\\n\\n * addressIdentifier: a unique ID of the address;\\n * administrativeUnitLevel1: e.g., Rome;\\n * administrativeUnitLevel2: e.g., Lazio;\\n * fullAddress: the literal that records the full address as a string;\\n * postCode: the postal code corresponding to the address;\\n * postName: the key postal name, usually the city ;\\n\\n\\nAn example in turtle is the following:\\n\\n<pre>\\n\\nsite:Sede_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Site ;\\n      rdfs:label \"Sede di: Biblioteca nazionale centrale di Roma\"@it ;\\n      cis:hasAddress address:Indirizzo_della_sede_di_Biblioteca_nazionale_centrale_di_Roma ;\\n\\n\\naddress:Indirizzo_della_sede_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Address ;\\n      rdfs:label \"Indirizzo della sede di: Biblioteca nazionale centrale di Roma\"@it ;\\n      cis:addressID \"IT-RM0267_IT_1\" ;\\n      cis:adminUnitL1 \"Roma\"@it ;\\n      cis:adminUnitL2 \"Lazio\"@it ;\\n      cis:fullAddress \"Viale Castro Pretorio 105 - 00185 - Roma (RM\" ;\\n      cis:postName \"Rome\" ;\\n      cis:postCode \"00185\" .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents an address as defined by the specifications of the EU INSPIRE directive https://inspire-twg.jrc.ec.europa.eu/inspire-fc.html#_C2538"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/adminUnitL2> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/postCode> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://dati.beniculturali.it/cis/addressID> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/postName> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/fullAddress> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/adminUnitL1> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Ticket> a owl:Class ;
+    rdfs:label "Ticket"@en ;
+    dc:description "An example of usage of the class cis:Ticket is the following:\\n\\n<pre>\\n\\noffer:Biblioteca_Nazionale_Centrale_base_offer\\n      a       cis:Offer ;\\n      rdfs:label \"offerta base \"@it , \"base offer\"@en ;\\n      cis:hasEligibleUser userType:Under18 ;\\n      cis:hasPriceSpecification priceSpecification:Under18 ;\\n      cis:hasValidity validity:Biblioteca_nazionale_centrale_validity ;\\n      cis:includes ticket:Biblioteca_nazionale_centrale_ticket_1 .\\n\\nticket:Biblioteca_nazionale_centrale_ticket_1 \\n     a cis:Ticket ;\\n     rdfs:label \"Biglietto per accedere a 'Biblioteca Nazionale Centrale di Roma'\"@it ;\\n     rdfs:label \"Ticket for access to 'Biblioteca Nazionale Centrale di Roma'\"@en ;\\n     cis:name \"Biglietto base per accedere 'Biblioteca Nazionale Centrale di Roma'\"@it ;\\n     cis:name\"Basic ticket for access to 'Biblioteca Nazionale Centrale di Roma'\"@en ;\\n     cis:description \"Biglietto che permette l'accesso per un giorno alla 'Biblioteca Nazionale Centrale di Roma'\"@it ;\\n     cis:description \"One-day ticket for 'Biblioteca Nazionale Centrale di Roma'\"@en ;\\n     cis:hasValidity validity:Biblioteca_nazionale_centrale_ticket_1;\\n     cis:forAccessTo cissite:Biblioteca_nazionale_centrale .\\n\\nvalidity:Biblioteca_nazionale_centrale_ticket_1\\n    a cis:Validity ;\\n    rdfs:label \"One day validity\"@en ;\\n    rdfs:label \"Validità per 1 giorno\"@it ;\\n    cis:hasDuration qv:Biblioteca_nazionale_centrale_ticket_1 .\\n\\nqv:Biblioteca_nazionale_centrale_ticket_1\\n    a cis:QuantitativeValue ;\\n    rdfs:label \"1\";\\n    cis:hasMeasurementUnit cis:Day ;\\n    cis:hasValue \"1\"^^xsd:positiveInteger .\\n\\npriceSpecification:Under18\\n      a       cis:PriceSpecification ;\\n      rdfs:label \"price specification under 18 \"@en , \"costo per ragazzi sotto i 18 anni \"@it ;\\n      cis:hasCurrency cis:Euro ;\\n      cis:hasCurrencyValue \"5\"^^xsd:float .\\n\\nuserType:Under18 \\n   a cis:UserType ; \\n   rdfs:label \"Under 18\" ; \\n   cis:name \"Under 18\"; ;\\n   cis:description \"People under 18 years old\";@en;\\n   cis:description \"Persone con età inferiore ai 18 anni\"@it  .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents an entrance ticket for a Cultural Institute or Site, if required, and for an event"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Validity> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasValidity> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/forAccessTo> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/CulturalEntity> a owl:Class ;
+    rdfs:label "Cultural Entity"@en ;
+    rdfs:comment "Class that provides a generalization of three classes; that is , cultural institute or site, collection and cultural heritage object. It does not correspond to a concept used typically in the cultural domain but it is used in order to model properties and property restrictions that are common to all the these three classes. The class will never be directly instanziated."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/ContactPoint> a owl:Class ;
+    rdfs:label "Contact Point"@en ;
+    dc:description "Individuals of the classes CulturalInstituteOrSite, Event and Site may have a \"contact point\", i.e., a phone number, email address, fax, etc. that is used a reference contact.\\n\\nAdditionally, a cantact point might be also declared to be operative with respect to specific hopening hours.\\n\\nThis information is modelled into a knowledge base by using the object property hasContactPoint whose domain can be a CulturalInstituteOrSite, an Event or a Site, and its range is any indifvidual of the class ContactPoint.\\n\\nFor example, the fact that the Biblioteca Nazionale Centrale of Rome has  reference phone and fax number and a email as well as certified email contacts can be described in the following way by using turtle:\\n\\n<pre>\\n\\ncontactPoint:Contatti_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:ContactPoint ;\\n      rdfs:label \"Contatti di: Biblioteca nazionale centrale di Roma\"@it ;\\n      cis:available   openingHoursSpecification:Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi ;\\n      cis:hasCertifiedEmail\\n              mailto:mbac-bnc-rm@mailcert.beniculturali.it ;\\n      cis:hasEmail mailto:bnc-rm@beniculturali.it ;\\n      cis:hasFax \"+39064457635  \" ;\\n      cis:hasTelephone \"+390649891\" .\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasContactPoint contactPoint:Contatti_di_Biblioteca_nazionale_centrale_di_Roma .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a contact point which consists of phone numbers, e-mail addresses, web sites and their availability where applicable. We recommend the domain experts to specify better during the data production phase which type of contact point is in use (administrative contact point, tourist contact point, etc,)."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasWebSite> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasTelephone> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasFax> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCertifiedEmail> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/OpeningHoursSpecification> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/available> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasEmail> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/DayOfWeek> a owl:Class ;
+    rdfs:label "Day of the Week"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/openingHoursSpecification.png>,
+        "An example of usage of the class cis:DayOfTheWeek is the following:\\n\\n<pre>\\n\\norari:Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi\\n      a       cis:OpeningHoursSpecification ;\\n      rdfs:label \"Opening Hours of Biblioteca nazionale centrale di Roma - thursday\"@en , \\n      \"Orari di apertura di Biblioteca nazionale centrale di Roma - giovedì\"@it ;\\n      cis:closes \"19:00:00\"^^xsd:time ;\\n      cis:hasAdmissionType addmissionType:Tipo_di_apertura_al_pubblico ;\\n      cis:hasDayOfWeek cis:Thursday ;\\n      cis:opens \"08:30:00\"^^xsd:time .\\n\\n</pre>\\n\\nFor the complete example see the class cis:OpeningHoursSpecification"@en ;
+    rdfs:comment "This class represents the set of all the days of the week."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/TimeInterval> a owl:Class ;
+    rdfs:label "Time Interval"@en ;
+    dc:description "An example of usage of the class cis:TimeInterval is the following:\\n\\n<pre>\\n\\ntimeInteval:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale_20130101_20161231\\n    a cis:TimeInterval ;\\n    rdfs:label \"Andrea De Pasquale director of Biblioteca Nazionale from 2013-01-01 to 2016-12-31\"@en ;\\n    cis:startDate \"2013-01-01\"^^xsd:dateTime ;\\n    cis:endDate \"2016-12-31\"^^xsd:dateTime .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a temporal interval"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty <http://dati.beniculturali.it/cis/startDate> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/endDate> ;
+            owl:someValuesFrom xsd:dateTime ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/Collection> a owl:Class ;
+    rdfs:label "Collection"@en ;
+    dc:description "Individuals of this class represent cultural heritage included in a Cultural Institute or Site.\\n\\nA Cultural Institute or Site can be related to a collection by means of the object property hasCollection.\\n\\nAdditionally, a collection can be composed of items that, in turn, can be individuals of the class 'Collection' or the class 'Cultural Heritage Object'.\\n\\nFor example, this allows to assert that the Biblioteca Centrale di Roma has its own cultural heritage (e.g,, Patrimonio di Biblioteca Centrale di Roma). This cultural heritage is composed of different items, e.g., Archivio Capizucchi, Fondo Ceccarius, etc.\\n\\nThis can be modelled by using turtle in the following way:\\n\\n<pre>\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasCollection collezioni:Patrimonio_di_Biblioteca_nazionale_centrale_di_Roma .\\n\\ncollezioni:Patrimonio_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Collection ;\\n      rdfs:label \"Patrimonio di: Biblioteca nazionale centrale di Roma\" ;\\n      cis:hasMember collezioni:Archivio_Capizucchi, collezioni:Fondo_Ceccarius .\\n\\n\\ncollezioni:Archivio_Capizucchi\\n      a       cis:Collection ;\\n      rdfs:label \"Archivio Capizucchi\" ;\\n      cis:isMemberOf collezioni:Patrimonio_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:description \"materiale documentario relativo alla famiglia Capizucchi\"@it .\\n\\n\\ncollezioni:Fondo_Ceccarius\\n      a       cis:Collection ;\\n      rdfs:label \"Fondo Ceccarius\" ;\\n      cis:isMemberOf collezioni:Patrimonio_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:description \"volumi, opuscoli, articoli e fotografie della biblioteca di G. Ceccarelli\"@it .\\n\\n\\n</pre>"@en ;
+    rdfs:comment "It represents the cultural heritage included in a Cultural Institute or Site or single collections that compone the cultural heritage"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/TimeInterval> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/atTime> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Catalogue> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isDescribedBy> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/Collection> <http://dati.beniculturali.it/cis/CulturalHeritageObject> ) ] ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasMember> ],
+        <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/RoleInTime> a owl:Class ;
+    rdfs:label "Role in Time"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/roleInTime.png>,
+        "An example of usage of the class cis:RoleInTime is the following:\\n\\n<pre>\\n\\nagent:Andrea_De_Pasquale\\n    a cis:Agent ;\\n    rdfs:label \"Andrea De Pasquale\"; ;\\n    cis:name \"Andrea De Pasquale\" ;\\n    cis:reportsTo agent:Soprintendenza ;\\n    cis:holdsRoleInTime roleInTime:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale .\\n\\nroleInTime:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale\\n    a cis:RoleInTime ;\\n    rdfs:label \"Andrea De Pasquale director of Biblioteca Nazionale Centrale\"@en ;\\n    cis:atTime timeInteval:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale_20130101_20161231 ;\\n    cis:roleFor cissite:Biblioteca_nazionale_centrale ;\\n    cis:withRole role:Director .\\n\\ntimeInteval:Andrea_De_Pasquale_DirectorOfBibliotecaNazionaleCentrale_20130101_20161231\\n    a cis:TimeInterval ;\\n    rdfs:label \"Andrea De Pasquale director of Biblioteca Nazionale from 1-1-2013 through 31-12-2016\"@en ;\\n    cis:startDate  \"2013-01-01\"^^xsd:dateTime ;\\n    cis:endDate \"2016-12-31\"^^xsd:dateTime .\\n\\nrole:Director\\n    a cis:Role ;\\n    rdfs:label \"Director\"@en ;\\n    rdfs:label \"Direttore\"@it ;\\n    cis:name \"Direttore\"@it ;\\n    cis:name \";Director\"@en .\\n\\n</pre>"@en ;
+    rdfs:comment "Concept used to represent a situation in which a role can vary in time. In this specific domain, it is the role of an agent played on a Cultural Institute or Site."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/roleFor> ;
+            owl:someValuesFrom [ a owl:Class ;
+                    owl:unionOf ( <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> <http://dati.beniculturali.it/cis/Event> ) ] ],
+        [ a owl:Restriction ;
+            owl:onClass <http://dati.beniculturali.it/cis/Agent> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isHeldBy> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/withRole> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Role> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/atTime> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/TimeInterval> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/hasCISType> a owl:ObjectProperty ;
+    rdfs:label <http://dati.beniculturali.it/cis/>,
+        "has type"@en ;
+    rdfs:comment "The property is used to link a cultural institure or site to its type."@en ;
+    rdfs:domain <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+    rdfs:range <http://dati.beniculturali.it/cis/CISType> ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/CISType> a owl:Class ;
+    rdfs:label "Cultural Institute or Site Type"@en ;
+    rdfs:comment "This class represents the type of cultural institute or site."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ] ;
+    owl:versionInfo "unstable"@en .
+
+<http://dati.beniculturali.it/cis/Site> a owl:Class ;
+    rdfs:label "Site"@en ;
+    dc:description "A site is always associated with an individual of the class 'Cultural Institute or Site' (CIS) by means of the object property hasSite.\\n\\nA site is characterised by the following properties:\\n\\n * hasAddress that allows associating the site with an indidivdual of the class Address, this latter providing the description of the address;\\n * hasContactPoint that associates the site with an individual identifying a contact point;\\n * hasGeographicalLocation for relating the site to the description of its geographical features, that, in turn, is represented by means of an individual of the class 'Geographical Area';\\n * name that is the datatype property for associating the site with a literal expressing a name;\\n * isSiteOf that is the inverse property of hasSite.\\n\\nThe following is an example of a Site and its association with a CIS\\n\\n<pre>\\n\\n\\nsite:Sede_di_Biblioteca_nazionale_centrale_di_Roma\\n      a       cis:Site ;\\n      rdfs:label \"Sede Biblioteca nazionale centrale di Roma\"@it ;\\n      cis:hasAddress address:Indirizzo_della_sede_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasContactPoint contactPoint:Contatti_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasGeographicalLocation\\n              geographicalFeature:Comune_di_Roma ;\\n      cis:isSiteOf cissite:Biblioteca_nazionale_centrale ;\\n      cis:name \"Sede di: Biblioteca nazionale centrale di Roma\"@it .\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      cis:hasSite site:Sede_di_Biblioteca_nazionale_centrale_di_Roma .\\n\\n</pre>"@en ;
+    rdfs:comment "It represents a georeferenced physical site related to the Cultural Institute or Site. A Cultural Institute or Site can be located in more than one physical site. For instance, a Site can be \"Palazzo Venezia\" which is the site of the \"Museum of Palazzo Venezia\" and of \"Library of Archaelogy and Art History\"."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasAddress> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Address> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasGeographicalLocation> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/GeographicalFeature> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isSiteOf> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/ContactPoint> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasContactPoint> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasSiteDescription> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/SiteDescription> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Event> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hosts> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Geometry> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasGeometry> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/description> a owl:DatatypeProperty ;
+    rdfs:label "description"@en ;
+    rdfs:comment "This property is used to indicate a description of the cultural institute or site"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/name> a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    rdfs:comment "Property used to associate a name with an event and a project"@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:range rdfs:Literal ;
+    owl:versionInfo "stable" .
+
+<http://dati.beniculturali.it/cis/Event> a owl:Class ;
+    rdfs:label "Event"@en ;
+    dc:description "An example of usage of the class cis:Event is the following:\\n\\n<pre>\\n\\nevent:Vincenzo_Gemito_al_Museo_di_Capodimonte\\n    a cis:Event;\\n    cis:isHostedBy site:Museo_di_Capodimonte;\\n    cis:name \"Vincenzo Gemito, dal salotto Minozzi al Museo di Capodimonte\" ;\\n    rdfs:comment \"Apre al pubblico al Museo di Capodimonte la mostra ‘Vincenzo Gemito, dal salotto Minozzi \\n    al Museo di Capodimonte’,\\n    organizzata dalla Soprintendenza speciale per il patrimonio storico\" ;\\n    cis:involves culturalheritageobject:Il_giocatore_di_carte ;\\n    cis:hasSubEvent event:Vincenzo_Gemito_Il_Pescatorello ;\\n    rdfs:label \"Vincenzo Gemito, dal salotto Minozzi al Museo di Capodimonte\" ;\\n    cis:takesPlaceDuring ti:Durata_di_Vincenzo_Gemito_dal_salotto_Minozzi_al_Museo_di_Capodimonte .\\n\\nevent:Vincenzo_Gemito_Il_Pescatorello \\n    a cis:Event ;\\n    cis:isHostedBy site:Museo_di_Capodimonte;\\n    rdfs:label \"Vincenzo Gemito, esposizione de Il Pescatorello\" ;\\n    cis:name \"Vincenzo Gemito, esposizione de Il Pescatorello&apos\" ;\\n    cis:involves culturalheritageobject:Il_Pescatorello ;\\n    cis:takesPlaceDuring ti:Durata_di_Vincenzo_Gemito_dal_salotto_Minozzi_al_Museo_di_Capodimonte .\\n\\nti:Durata_di_Vincenzo_Gemito_dal_salotto_Minozzi_al_Museo_di_Capodimonte\\n    a cis:TimeInterval ;\\n    rdfs:label \"Intervallo di durata dell'evento 'Vincenzo Gemito, dal salotto Minozzi al Museo di Capodimonte'\" ;\\n    cis:startDate \"2014-11-28T00:00:00\"^^xsd:dateTime;\\n    cis:endDate \"2015-07-16T00:00:00\"^^xsd:dateTime .\\n\\nculturalheritageobject:Il_giocatore_di_carte\\n    a cis:CulturalHeritageObject ;\\n    rdfs:label \"Il giocatore di carte\" ;;\\n    cis:name \"l giocatore di carte\" ;\\n    cis:isInSite site:Museo_di_Capodimonte .\\n\\ncultualheritageobject:Il_Pescatorello\\n    a cis:CulturalHeritageObject ;\\n    rdfs:label \"Il Pescatorello\" ;\\n    cis:name \"Il Pescatorello&quot\" ;\\n    cis:isInSite site:Museo_di_Capodimonte .\\n\\n</pre>"@en ;
+    rdfs:comment "it represents an event that typically is related to the cultural domain"@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Event> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isSubEventOf> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isHostedBy> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Site> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isRelatedToRiT> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/RoleInTime> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Event> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasSubEvent> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/name> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Ticket> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasTicket> ] ;
+    owl:versionInfo "stable"@en .
+
+<http://dati.beniculturali.it/cis/CulturalInstituteOrSite> a owl:Class ;
+    rdfs:label "Cultural Institute or Site"@en ;
+    dc:description <http://dati.beniculturali.it/cis/img/cis.png>,
+        "An example of usage of the class 'Cultural Institute or Site' is the following:\\n\\n<pre>\\n\\ncissite:Biblioteca_nazionale_centrale\\n      a       cis:Library , cis:CulturalInstituteOrSite ;\\n      rdfs:comment \"\"\"La Biblioteca Nazionale Centrale di Roma fu inaugurata il 14 marzo 1876 in un'ala del \\n      monumentale Palazzo cinquecentesco del Collegio Romano, sede dell'antica Bibliotheca Secreta o Major dei Gesuiti, \\n      che costituì il nucleo originario della nuova istituzione, cui si aggiunsero i fondi manoscritti e a stampa di 69 \\n      biblioteche conventuali devolute al Regno d'Italia dopo la soppressione delle corporazioni religiose di Roma \\n      nel 1873. \\n\\t  Cento anni dopo la Biblioteca venne trasferita nella nuova sede, all'interno della zona archeologica del \\n\\t  Castro Pretorio, fra la Città universitaria e la Stazione Termini, realizzata su progetto degli architetti Massimo\\n      Castellazzi, Tullio Dell'Anese e Annibale Vitellozzi.\"\"\"@it ;\\n      rdfs:label \"Biblioteca nazionale centrale\"@it ;\\n      cis:ISILIdentifier \"IT-RM0267\"^^xsd:string ;\\n      cis:description \"\"\"La Biblioteca Nazionale Centrale di Roma fu inaugurata il 14 marzo 1876 in un'ala del \\n      monumentale Palazzo cinquecentesco del Collegio Romano, sede dell'antica Bibliotheca Secreta o Major dei Gesuiti, \\n      che costituì il nucleo originario della nuova istituzione, cui si aggiunsero i fondi manoscritti e a stampa di 69 \\n      biblioteche conventuali devolute al Regno d'Italia dopo la soppressione delle corporazioni religiose di Roma \\n      nel 1873. Cento anni dopo la Biblioteca venne trasferita nella nuova sede, all'interno della zona archeologica \\n      del Castro Pretorio, fra la Città universitaria e la Stazione Termini, realizzata su progetto degli architetti \\n      Massimo Castellazzi, Tullio Dell'Anese e Annibale Vitellozzi.\"\"\"@it ;\\n      cis:hasAccessCondition\\n              <http://dati.beniculturali.it/cis/resource/OpeningHoursSpecification/Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_giovedi> , \\n              <http://dati.beniculturali.it/cis/resource/OpeningHoursSpecification/Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_mercoledi> , \\n              <http://dati.beniculturali.it/cis/resource/OpeningHoursSpecification/Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_lunedi> , \\n              <http://dati.beniculturali.it/cis/resource/OpeningHoursSpecification/Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_martedi> , <http://dati.beniculturali.it/cis/resource/OpeningHoursSpecification/Orari_di_apertura_di_Biblioteca_nazionale_centrale_di_Roma_venerdi> ;\\n      cis:hasCatalogue <http://dati.beniculturali.it/cis/resource/Catalogue/Catalogo_Generale_%28topografico%29> , <http://dati.beniculturali.it/cis/resource/Catalogue/Catalogo_Generale_%28titoli%29> , <http://dati.beniculturali.it/cis/resource/Catalogue/Catalogo_Generale_%28autore%29> , <http://dati.beniculturali.it/cis/resource/Catalogue/Catalogo_Generale_%28sistematico%29> , <http://dati.beniculturali.it/cis/resource/Catalogue/Catalogo_Generale_%28soggetto%29> ;\\n      cis:hasCollection collezioni:Patrimonio_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasContactPoint contactPoint:Contatti_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:hasNameInTime nameInTime:Biblioteca_Nazionale_Centrale ;\\n      cis:hasSite site:Sede_di_Biblioteca_nazionale_centrale_di_Roma ;\\n      cis:institutionalName\\n              \"Biblioteca Nazionale Centrale\"@it ;\\n      cis:providesService service:Connessione_WI-FI , service:Visite_guidate , service:ala_per_la_didattica ;\\n      owl:sameAs   <http://it.dbpedia.org/resource/Biblioteca_Nazionale_Centrale_di_Roma> ;\\n      cis:institutionalName \"\"Biblioteca nazionale centrale\"@it .\\n\\n</pre>"@en ;
+    rdfs:comment "The class Cultural Institute or Site represents museums, libraries, archive holders, archaeologic areas and parks, monumental areas. The cultural institutes of sites that are owned by public bodies are meant to offer public services. The cultural institutes or sites that are owned by private subjects, and are open to the public, offer a public and societal service."@en ;
+    rdfs:isDefinedBy <http://dati.beniculturali.it/cis/> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Ticket> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasTicket> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasSite> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/Site> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Catalogue> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/catalogue> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Service> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/providesService> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/AccessCondition> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasAccessCondition> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/NameInTime> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasNameInTime> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://dati.beniculturali.it/cis/ISILIdentifier> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/institutionalName> ;
+            owl:someValuesFrom rdfs:Literal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Project> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isInvolvedInProject> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Equipment> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/makesAvailableEquipment> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/Collection> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCollection> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isRelatedToRiT> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/RoleInTime> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/CreativeWork> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isSubjectOf> ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasCISType> ;
+            owl:someValuesFrom <http://dati.beniculturali.it/cis/CISType> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/CulturalInstituteOrSite> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/isPartOf> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom rdfs:Literal ;
+            owl:onProperty <http://dati.beniculturali.it/cis/description> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/ContactPoint> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasContactPoint> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://dati.beniculturali.it/cis/SubjectDiscipline> ;
+            owl:onProperty <http://dati.beniculturali.it/cis/hasDiscipline> ],
+        <http://dati.beniculturali.it/cis/CulturalEntity> ;
+    owl:versionInfo "stable"@en .
+
+rdfs:Literal a rdfs:Datatype .
+
+<http://dati.beniculturali.it/cis/> a owl:NamedIndividual,
+        owl:Ontology,
+        <http://www.w3.org/ns/adms#SemanticAsset> ;
+    dc:creator "Aldo Gangemi (ISTC-CNR, ST-Lab)",
+        "Andrea Nuzzolese (ISTC-CNR, ST-Lab)",
+        "Annarita Orsini (MIBACT)",
+        "Chiara Veninata (MIBACT)",
+        "Giorgia Lodi (ISTC-CNR, ST-Lab)",
+        "Istituto di Scienze e Tecnologie della Cognizione, Consiglio Nazionale delle Ricerche (ISTC-CNR, ST-Lab)",
+        "Luigi Asprino (ISTC-CNR, ST-Lab)",
+        "Ministero dei Beni e delle Attività Culturali e il Turismo (MIBACT)",
+        "Silvio Peroni (ISTC-CNR, ST-Lab)",
+        "Valentina Presutti (ISTC-CNR, ST-Lab)" ;
+    dc:date "2015-01-12" ;
+    dc:description <http://dati.beniculturali.it/cis/img/cultural-ON.png>,
+        "The ontology aims at modelling the data on cultural institutes or sites such as data regarding the agents that play a specific role on cultural institutes or sites, the sites themselves, the contact points, all multimedia files which describe the cultural institute or site and any other information useful to the public in order to access the institute or site. Moreover, the ontology represents events that can take place in specific cultural institutes or sites.\\nThe following figure illustrates some of the core elements of the ontology. The figure is not exaustive; however, it is included in order to help readers to understand some relationships among important concepts represented in the ontology.\\nFor each class, examples of their usage in turtle are provided; moreover, for only some of the classes, specific figures are reported that show the relationships and  concepts connected to them.\\nThe alignment_xml.owl complements the ontology with the alignments with external ontologies such as FOAF, PRO, schma.org, dublin core, etc."@en ;
+    dc:license <http://creativecommons.org/licenses/by/3.0/it/> ;
+    dc:modified "2016-03-30" ;
+    dc:rights <http://creativecommons.org/licenses/by/3.0/it/legalcode> ;
+    dc:title "Cultural-ON (Cultural ONtology): Cultural Institute/Site and Cultural Event Ontology"@en ;
+    rdfs:comment "During the definition of Cultural-ON, an in depth discussion between the working group responsible for cultural linked open data, formed by the Ministry of Cultural Heritage and Activities and Tourism (Service I) and the Institute of Cognitive Sciences and Technologies of the Council of Research (CNR) and the working group of the \"Istituto beni artistici culturali e naturali\" of Emilia Romagna Region, in order to contribute to the integration of the two ontologies, thus guaranteeing semantic interoperability."@en ;
+    owl:versionIRI <http://dati.beniculturali.it/cis/2.0> ;
+    owl:versionInfo "2.0 - March 30 2016"@en .
+

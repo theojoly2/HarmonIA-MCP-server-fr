@@ -1,0 +1,1405 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:title a owl:AnnotationProperty .
+
+<http://purl.org/onto-ocds/ocds#> a owl:Ontology ;
+    dcterms:author <https://twitter.com/CMaudry> ;
+    dcterms:license <https://creativecommons.org/licenses/by/2.0/> ;
+    dcterms:title "Schema for an Open Contracting Release"@en ;
+    owl:imports <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl> ;
+    foaf:homepage <https://github.com/ColinMaudry/open-contracting-ld> .
+
+<http://purl.org/onto-ocds/ocds#additionalClassifications> a owl:ObjectProperty ;
+    rdfs:label "Additional classifications"@en ;
+    rdfs:comment "An array of additional classifications for the item. See the [itemClassificationScheme](http://standard.open-contracting.org/latest/en/schema/codelists/#item-classification-scheme) codelist for common options to use in OCDS. This may also be used to present codes from an internal classification scheme."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Classification> .
+
+<http://purl.org/onto-ocds/ocds#additionalIdentifiers> a owl:ObjectProperty ;
+    rdfs:label "Additional identifiers"@en ;
+    rdfs:comment "A list of additional / supplemental identifiers for the organization, using the [organization identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/). This could be used to provide an internally used identifier for this organization in addition to the primary legal entity identifier."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Organization> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Identifier> .
+
+<http://purl.org/onto-ocds/ocds#address> a owl:ObjectProperty ;
+    rdfs:label "Address"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Organization> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Address> .
+
+<http://purl.org/onto-ocds/ocds#amendmentDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Amendment Date"@en ;
+    rdfs:comment "The data of this amendment."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Amendment> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#amendmentRationale> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Amendment rationale"@en ;
+    rdfs:comment "An explanation for the amendment."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Amendment> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#award> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Awards"@en ;
+    rdfs:comment "Information from the award phase of the contracting process. There may be more than one award per contracting process e.g. because the contract is split amongst different providers, or because it is a standing offer."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Award> .
+
+<http://purl.org/onto-ocds/ocds#awardAmendment> a owl:ObjectProperty ;
+    rdfs:label "Award amendment"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Amendment> .
+
+<http://purl.org/onto-ocds/ocds#awardCriteria> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award criteria"@en ;
+    rdfs:comment "Specify the award criteria for the procurement, using the [award criteria codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#award-criteria)"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#awardCriteriaBestProposal> a <http://purl.org/onto-ocds/ocds#AwardCriteria>,
+        owl:NamedIndividual ;
+    rdfs:label "bestProposal"@en ;
+    dcterms:title "Best Proposal Cost"@en .
+
+<http://purl.org/onto-ocds/ocds#awardCriteriaBestValueToGovernment> a <http://purl.org/onto-ocds/ocds#AwardCriteria>,
+        owl:NamedIndividual ;
+    rdfs:label "bestValueToGovernment"@en ;
+    dcterms:title "Best Value to Government"@en .
+
+<http://purl.org/onto-ocds/ocds#awardCriteriaDetails> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award criteria details"@en ;
+    rdfs:comment "Any detailed or further information on the award or selection criteria."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#awardCriteriaLowestCost> a <http://purl.org/onto-ocds/ocds#AwardCriteria>,
+        owl:NamedIndividual ;
+    rdfs:label "lowestCost"@en ;
+    dcterms:title "Lowest Cost"@en .
+
+<http://purl.org/onto-ocds/ocds#awardCriteriaSingleBidOnly> a <http://purl.org/onto-ocds/ocds#AwardCriteria>,
+        owl:NamedIndividual ;
+    rdfs:label "singleBidOnly"@en ;
+    dcterms:title "Single Bid Only"@en .
+
+<http://purl.org/onto-ocds/ocds#awardDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award date"@en ;
+    rdfs:comment "The date of the contract award. This is usually the date on which a decision to award was made." ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#awardDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award description" ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#awardDocuments> a owl:ObjectProperty ;
+    rdfs:label "Award documents"@en ;
+    rdfs:comment "All documents and attachments related to the award, including any notices."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#awardFollows> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> .
+
+<http://purl.org/onto-ocds/ocds#awardID> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Award ID"@en ;
+    rdfs:comment "The award against which this contract is being issued."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Award> .
+
+<http://purl.org/onto-ocds/ocds#awardId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award ID"@en ;
+    rdfs:comment "The identifier for this award. It must be unique and cannot change within the Open Contracting Process it is part of (defined by a single ocid). See the [identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/) for further details."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#awardPeriod> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Award period"@en ;
+    rdfs:comment "The date or period on which an award is anticipated to be made."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Period> .
+
+<http://purl.org/onto-ocds/ocds#awardPrecedes> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> .
+
+<http://purl.org/onto-ocds/ocds#awardStatus> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Award status" ;
+    rdfs:comment "The current status of the award drawn from the [awardStatus codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#award-status)" ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#AwardStatus> .
+
+<http://purl.org/onto-ocds/ocds#awardTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Award title"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#awardURL> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range xsd:anyURI .
+
+<http://purl.org/onto-ocds/ocds#awardValue> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Award value"@en ;
+    rdfs:comment "The total value of this award. In the case of a framework contract this may be the total estimated lifetime value, or maximum value, of the agreement. There may be more than one award per procurement."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#budget> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Budget"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Budget> .
+
+<http://purl.org/onto-ocds/ocds#budgetAmount> a owl:ObjectProperty ;
+    rdfs:label "Budget amount"@en ;
+    rdfs:comment "The value of the budget line item."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#budgetDescription> a owl:DatatypeProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#budgetId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Budget ID"@en ;
+    rdfs:comment "An identifier for the budget line item which provides funds for this contracting process. This identifier should be possible to cross-reference against the provided data source."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#budgetSource> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Budget Data Source"@en ;
+    rdfs:comment "Used to point either to a corresponding Budget Data Package, or to a machine or human-readable source where users can find further information on the budget line item identifiers, or project identifiers, provided here." ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range rdfs:Resource .
+
+<http://purl.org/onto-ocds/ocds#budgetUri> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Linked budget information"@en ;
+    rdfs:comment "A URI pointing directly to a machine-readable record about the related budget or projects for this contracting process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#buyer> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Buyer"@en ;
+    rdfs:comment "The buyer is the entity whose budget will be used to purchase the goods. This may be different from the procuring agency who may be specified in the tender data."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Organization> .
+
+<http://purl.org/onto-ocds/ocds#changes> a owl:ObjectProperty ;
+    rdfs:label "Amended fields"@en ;
+    rdfs:comment "Comma-separated list of affected fields."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Amendment> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Change> .
+
+<http://purl.org/onto-ocds/ocds#classification> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Classification"@en ;
+    rdfs:comment "The primary classification for the item. See the [itemClassificationScheme](http://standard.open-contracting.org/latest/en/schema/codelists/#item-classification-scheme) to identify preferred classification lists, including CPV and GSIN."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Classification> .
+
+<http://purl.org/onto-ocds/ocds#classificationDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Classification description"@en ;
+    rdfs:comment "A textual description or title for the code."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Classification> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#classificationId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Classification ID"@en ;
+    rdfs:comment "The classification code drawn from the selected scheme."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Classification> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#classificationScheme> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Classification scheme"@en ;
+    rdfs:comment "An classification should be drawn from an existing scheme or list of codes. This field is used to indicate the scheme/codelist from which the classification is drawn. For line item classifications, this value should represent an known [Item Classification Scheme](http://standard.open-contracting.org/latest/en/schema/codelists/#item-classification-scheme) wherever possible."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Classification> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#ItemClassificationScheme> .
+
+<http://purl.org/onto-ocds/ocds#classificationUri> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Classification URI"@en ;
+    rdfs:comment "A URI to identify the code. In the event individual URIs are not available for items in the identifier scheme this value should be left blank."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Classification> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#contactPoint> a owl:ObjectProperty ;
+    rdfs:label "Contact point"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Organization> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#ContactPoint> .
+
+<http://purl.org/onto-ocds/ocds#contactPointName> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Contact point name"@en ;
+    rdfs:comment "The name of the contact person, department, or contact point, for correspondence relating to this contracting process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#ContactPoint> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#contactPointUrl> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Contact point URL"@en ;
+    rdfs:comment "A web address for the contact point/person."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#ContactPoint> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#contractAmendment> a owl:ObjectProperty ;
+    rdfs:label "Contract amendment"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Amendment> .
+
+<http://purl.org/onto-ocds/ocds#contractDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Contract description"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#contractDocuments> a owl:ObjectProperty ;
+    rdfs:label "Contract documents"@en ;
+    rdfs:comment "All documents and attachments related to the contract, including any notices."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#contractFollows> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> .
+
+<http://purl.org/onto-ocds/ocds#contractId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Contract ID"@en ;
+    rdfs:comment "The identifier for this contract. It must be unique and cannot change within its Open Contracting Process (defined by a single ocid). See the [identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/) for further details."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#contractItems> a owl:ObjectProperty ;
+    rdfs:label "Items Contracted"@en ;
+    rdfs:comment "The goods, services, and any intangible outcomes in this contract. Note: If the items are the same as the award do not repeat."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Item> .
+
+<http://purl.org/onto-ocds/ocds#contractLots> a owl:ObjectProperty ;
+    rdfs:label "Contract lots"@en ;
+    rdfs:comment "List of lots associated with the contract"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Lot> .
+
+<http://purl.org/onto-ocds/ocds#contractPeriod> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Contract period"@en ;
+    rdfs:comment "The period for which the contract has been awarded."@en,
+        "The start and end date for the contract."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award>,
+        <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Period> .
+
+<http://purl.org/onto-ocds/ocds#contractStatus> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Contract status"@en ;
+    rdfs:comment "The current status of the contract. Drawn from the [contractStatus codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#contract-status)"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#ContractStatus> .
+
+<http://purl.org/onto-ocds/ocds#contractSuppliers> a owl:ObjectProperty ;
+    rdfs:label "Contract Suppliers"@en ;
+    rdfs:comment "The suppliers awarded this contract. Is an implementacion of DNCP"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Organization> .
+
+<http://purl.org/onto-ocds/ocds#contractTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Contract title" ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#contractValue> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Contract value"@en ;
+    rdfs:comment "The total value of this contract."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#contracts> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Contracts"@en ;
+    rdfs:comment "Information from the contract creation phase of the procurement process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Contract> .
+
+<http://purl.org/onto-ocds/ocds#countryName> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Country name"@en ;
+    rdfs:comment "The country name. For example, United States."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Address> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#currency> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Currency"@en ;
+    rdfs:comment "The currency in 3-letter ISO 4217 format."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Value> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#datePublished> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Publication date"@en ;
+    rdfs:comment "The date on which the document was first published. This is particularly important for legally important documents such as notices of a tender."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#dateSigned> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Date of signature"@en ;
+    rdfs:comment "The date the contract was signed. In the case of multiple signatures, the date of the last signature."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#dncpContractCode> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#documentDateModified> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Document modification date"@en ;
+    rdfs:comment "Date that the document was last modified"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#documentDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Document description"@en ;
+    rdfs:comment "A short description of the document. We recommend descriptions do not exceed 250 words. In the event the document is not accessible online, the description field can be used to describe arrangements for obtaining a copy of the document."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#documentId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Document ID"@en ;
+    rdfs:comment "A local, unique identifier for this document. This field is used to keep track of multiple revisions of a document through the compilation from release to record mechanism."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#documentLanguage> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Document language"@en ;
+    rdfs:comment "Specifies the language of the linked document using either two-digit [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes), or extended [BCP47 language tags](http://www.w3.org/International/articles/language-tags/). The use of two-letter codes from [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) is strongly recommended unless there is a clear user need for distinguishing the language subtype."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#documentTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Document title"@en ;
+    rdfs:comment "The document title."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#documentType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Document type"@en ;
+    rdfs:comment "A classification of the document described taken from the [documentType codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#document-type). Values from the provided codelist should be used wherever possible, though extended values can be provided if the codelist does not have a relevant code."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#DocumentType> .
+
+<http://purl.org/onto-ocds/ocds#documentTypeAwardNotice> a <http://purl.org/onto-ocds/ocds#DocumentType>,
+        owl:NamedIndividual ;
+    rdfs:label "awardNotice"@en ;
+    dcterms:title "Award Notice"@en ;
+    rdfs:comment "The formal notice that gives details of the contract award. This may be a link to a downloadable document, to a web page, or to an official gazette in which the notice is contained."@en .
+
+<http://purl.org/onto-ocds/ocds#documentTypeTenderNotice> a <http://purl.org/onto-ocds/ocds#DocumentType>,
+        owl:NamedIndividual ;
+    rdfs:label "tenderNotice"@en ;
+    dcterms:title "Tender Notice"@en ;
+    rdfs:comment "The formal notice that gives details of a tender. This may be a link to a downloadable document, to a web page, or to an official gazette in which the notice is contained."@en .
+
+<http://purl.org/onto-ocds/ocds#documentUrl> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Document URL"@en ;
+    rdfs:comment "Direct link to the document or attachment. The server providing access to this document should be configured to correctly report the document mime type."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#documents> a owl:ObjectProperty ;
+    rdfs:label "Documents"@en ;
+    rdfs:comment "A list of documents related to the planning process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#dueDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Due date"@en ;
+    rdfs:comment "The date the milestone is due."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#eligibilityCriteria> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Eligibility criteria"@en ;
+    rdfs:comment "A description of any eligibility criteria for potential suppliers."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#email> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Email"@en ;
+    rdfs:comment "The e-mail address of the contact point/person."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#ContactPoint> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#endDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "End date"@en ;
+    rdfs:comment "The end date for the period."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Period> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#enquiryPeriod> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Enquiry period"@en ;
+    rdfs:comment "The period during which enquiries may be made and answered."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Period> .
+
+<http://purl.org/onto-ocds/ocds#faxNumber> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Fax number"@en ;
+    rdfs:comment "The fax number of the contact point/person. This should include the international dialling code."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#ContactPoint> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#format> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Format"@en ;
+    rdfs:comment "The format of the document taken from the [IANA Media Types code list](http://www.iana.org/assignments/media-types/), with the addition of one extra value for 'offline/print', used when this document entry is being used to describe the offline publication of a document. Use values from the template column. Links to web pages should be tagged 'text/html'."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Document> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#former_value> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Former value"@en ;
+    rdfs:comment "The previous value of the changed property, in whatever type the property is."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Change> ;
+    rdfs:range rdfs:Resource .
+
+<http://purl.org/onto-ocds/ocds#hasEnquiries> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Has enquiries"@en ;
+    rdfs:comment " Yes/No field to indicate whether enquiries were part of tender process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:boolean .
+
+<http://purl.org/onto-ocds/ocds#ics_CDNCP> a <http://purl.org/onto-ocds/ocds#ItemClassificationScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "CDNCP"@en .
+
+<http://purl.org/onto-ocds/ocds#ics_CPV> a <http://purl.org/onto-ocds/ocds#ItemClassificationScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "CPV"@en ;
+    dcterms:title "EC Common Procurement Vocabulary"@en ;
+    rdfs:comment "The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The main vocabulary, identified in OCDS by the code CPV, is based on a tree structure comprising codes of up to 9 digits (an 8 digit code plus a check digit) associated with a wording that describes the type of supplies, works or services forming the subject of the contract."@en .
+
+<http://purl.org/onto-ocds/ocds#ics_CPVS> a <http://purl.org/onto-ocds/ocds#ItemClassificationScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "CPVS"@en ;
+    dcterms:title "EC Common Procurement Vocabulary - Supplementary Codelists"@en ;
+    rdfs:comment "The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The supplementary vocabulary, identified in OCDS by the code CPVS, is made up of an alphanumeric code with a corresponding wording allowing further details to be added regarding the specific nature or destination of the goods to be purchased."@en .
+
+<http://purl.org/onto-ocds/ocds#ics_GSIN> a <http://purl.org/onto-ocds/ocds#ItemClassificationScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "GSIN"@en ;
+    dcterms:title "Goods and Services Identification Number"@en ;
+    rdfs:comment "The Canadia federal government uses Goods and Services Identification Number (GSIN) codes to identify generic product descriptions for its procurement activities. The full list is published and maintained at buyandsell.gc.ca"@en .
+
+<http://purl.org/onto-ocds/ocds#ics_UNSPSC> a <http://purl.org/onto-ocds/ocds#ItemClassificationScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "UNSPSC"@en ;
+    dcterms:title "United Nations Standard Products and Services Code®"@en ;
+    rdfs:comment "The United Nations Standard Products and Services Code (UNSPSC) is a hierarchical convention that is used to classify all products and services. Machine readable meta-data for UNSPSC is not provided as open data: and so publishers should consider alternative classification shemes that do provide open data lookup tables wherever possible."@en .
+
+<http://purl.org/onto-ocds/ocds#id> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Release ID" ;
+    rdfs:comment "A unique identifier that identifies this release. A release ID must be unique within a release-package and must not contain the # character."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#identifier> a owl:ObjectProperty ;
+    rdfs:label "Organization identifier"@en ;
+    rdfs:comment "The primary identifier for this organization. Identifiers that uniquely pick out a legal entity should be preferred. Consult the [organization identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/) for the preferred scheme and identifier to use."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Organization> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Identifier> .
+
+<http://purl.org/onto-ocds/ocds#identifierId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Identifier ID"@en ;
+    rdfs:comment "The identifier of the organization in the selected scheme."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Identifier> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#identifierScheme> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Identifier scheme"@en ;
+    rdfs:comment "Organization identifiers be drawn from an existing identification scheme. This field is used to indicate the scheme or codelist in which the identifier will be found. This value should be drawn from the [Organization Identifier Scheme](http://standard.open-contracting.org/latest/en/schema/codelists/#organization-identifier-scheme)."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Identifier> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#OrganizationIdentifierScheme> .
+
+<http://purl.org/onto-ocds/ocds#identifierUri> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Identifier URI"@en ;
+    rdfs:comment "A URI to identify the organization, such as those provided by [Open Corporates](http://www.opencorporates.com) or some other relevant URI provider. This is not for listing the website of the organization: that can be done through the url field of the Organization contact point."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Identifier> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#implementation> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Implementation"@en ;
+    rdfs:comment "Information related to the implementation of the contract in accordance with the obligations laid out therein."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Contract> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Implementation> .
+
+<http://purl.org/onto-ocds/ocds#implementationDocuments> a owl:ObjectProperty ;
+    rdfs:label "Implementation documents"@en ;
+    rdfs:comment "Documents and reports that are part of the implementation phase e.g. audit and evaluation reports."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Implementation> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#implementationMilestones> a owl:ObjectProperty ;
+    rdfs:label "Implementation milestones"@en ;
+    rdfs:comment "As milestones are completed, milestone completions should be documented."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Implementation> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Milestone> .
+
+<http://purl.org/onto-ocds/ocds#initiationType> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Initiation Type"@en ;
+    rdfs:comment "String specifying the type of initiation process used for this contract, taken from the [initiationType](http://standard.open-contracting.org/latest/en/schema/codelists/#initiation-type) codelist. Currently only tender is supported."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#InitiationType> .
+
+<http://purl.org/onto-ocds/ocds#itemDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Item description"@en ;
+    rdfs:comment "A description of the goods, services to be provided."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#itemId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Item ID"@en ;
+    rdfs:comment "A local identifier to reference and merge the items by. Must be unique within a given array of items."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#legalName> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Legal name"@en ;
+    rdfs:comment "The legally registered name of the organization."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Identifier> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#locality> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Locality"@en ;
+    rdfs:comment "The locality. For example, Mountain View."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Address> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#lotId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Lot> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#lotItems> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Lot> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Item> .
+
+<http://purl.org/onto-ocds/ocds#lotTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Lot> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#milestoneDateModified> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Milestone modification date"@en ;
+    rdfs:comment "The date the milestone was last reviewed or modified and the status was altered or confirmed to still be correct."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#milestoneDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Milestone description"@en ;
+    rdfs:comment "A description of the milestone."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#milestoneDocuments> a owl:ObjectProperty ;
+    rdfs:label "Milestone documents"@en ;
+    rdfs:comment "List of documents associated with this milestone."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#milestoneId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Milestone ID"@en ;
+    rdfs:comment "A local identifier for this milestone, unique within this block. This field is used to keep track of multiple revisions of a milestone through the compilation from release to record mechanism."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#milestoneStatus> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Milestone status"@en ;
+    rdfs:comment "The status that was realized on the date provided in dateModified, drawn from the [milestoneStatus codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#milestone-status)."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#milestoneTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Milestone title"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Milestone> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#milestones> a owl:ObjectProperty ;
+    rdfs:label "Milestones"@en ;
+    rdfs:comment "A list of milestones associated with the tender."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Milestone> .
+
+<http://purl.org/onto-ocds/ocds#minValue> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Minimum value"@en ;
+    rdfs:comment "The minimum estimated value of the procurement."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#numberOfTenderers> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Number of tenders"@en ;
+    rdfs:comment "The number of entities who submit a tender."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:integer .
+
+<http://purl.org/onto-ocds/ocds#ocid> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Open Contracting ID"@en ;
+    rdfs:comment "A globally unique identifier for this Open Contracting Process. Composed of a publisher prefix and an identifier for the contracting process. For more information see the [Open Contracting Identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/)"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#ois_AF-CBR> a <http://purl.org/onto-ocds/ocds#OrganizationIdentifierScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "AF-CBR"@en ;
+    dcterms:title "Afghanistan Central Business Registry"@en ;
+    rdfs:comment "Website not yet searchable."@en .
+
+<http://purl.org/onto-ocds/ocds#ois_AF-MOE> a <http://purl.org/onto-ocds/ocds#OrganizationIdentifierScheme>,
+        owl:NamedIndividual ;
+    rdfs:label "AF-MOE"@en ;
+    dcterms:title "Ministry of Economy"@en ;
+    rdfs:comment ""@en .
+
+<http://purl.org/onto-ocds/ocds#organizationName> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Organization name"@en ;
+    rdfs:comment "The common name of the organization. The ID property provides an space for the formal legal name, and so this may either repeat that value, or could provide the common name by which this organization is known. This field could also include details of the department or sub-unit involved in this contracting process."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Organization> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#planning> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Planning"@en ;
+    rdfs:comment "Information from the planning phase of the contracting process. This includes information related to the process of deciding what to contract for, when and how."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Planning> .
+
+<http://purl.org/onto-ocds/ocds#planningPrecedes> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> .
+
+<http://purl.org/onto-ocds/ocds#planningRationale> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Planning rationale"@en ;
+    rdfs:comment "The rationale for the procurement provided in free text. More detail can be provided in an attached document."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#planningUrl> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:range xsd:anyURI .
+
+<http://purl.org/onto-ocds/ocds#postalCode> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Postal code"@en ;
+    rdfs:comment "The postal code. For example, 94043."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Address> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#procurementMethod> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Procurement method"@en ;
+    rdfs:comment "Specify tendering method against the [method codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#method) as per [GPA definitions](http://www.wto.org/english/docs_e/legal_e/rev-gpr-94_01_e.htm) of Open, Selective, Limited"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Method> .
+
+<http://purl.org/onto-ocds/ocds#procurementMethodRationale> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Procurement method rationale"@en ;
+    rdfs:comment "Rationale of procurement method, especially in the case of Limited tendering."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#procuringEntity> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Procuring entity"@en ;
+    rdfs:comment "The entity managing the procurement, which may be different from the buyer who is paying / using the items being procured."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Organization> .
+
+<http://purl.org/onto-ocds/ocds#project> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Project Title"@en ;
+    rdfs:comment "The name of the project that through which this contracting process is funded (if applicable). Some organizations maintain a registry of projects, and the data should use the name by which the project is known in that registry. No translation option is offered for this string, as translated values can be provided in third-party data, linked from the data source above."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#projectID> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Project Identifier"@en ;
+    rdfs:comment "An external identifier for the project that this contracting process forms part of, or is funded via (if applicable). Some organizations maintain a registry of projects, and the data should use the identifier from the relevant registry of projects."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Budget> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#property> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Property"@en ;
+    rdfs:comment "The property name that has been changed relative to the place the amendment is. For example if the contract value has changed, then the property under changes within the contract.amendment would be value.amount."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Change> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#providerOrganization> a owl:ObjectProperty ;
+    rdfs:label "Provider organization"@en ;
+    rdfs:comment "The Organization Identifier for the organization from which the funds in this transaction originate. Expressed following the Organizational Identifier standard - consult the documentation and the codelist."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Identifier> .
+
+<http://purl.org/onto-ocds/ocds#quantity> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "quantity"@en ;
+    rdfs:comment "The number of units required"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range xsd:integer .
+
+<http://purl.org/onto-ocds/ocds#receiverOrganization> a owl:ObjectProperty ;
+    rdfs:label "Receiver organization"@en ;
+    rdfs:comment "The Organization Identifier for the organization which receives the funds in this transaction. Expressed following the Organizational Identifier standard - consult the documentation and the codelist."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Identifier> .
+
+<http://purl.org/onto-ocds/ocds#region> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Region"@en ;
+    rdfs:comment "The region. For example, CA."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Address> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#releaseDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Release Date" ;
+    rdfs:comment "The date this information is released, it may well be the same as the parent publishedDate, it must not be later than the publishedDate from the parent package. It is used to determine merge order."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#releaseLanguage> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Release language"@en ;
+    rdfs:comment "pecifies the default language of the data using either two-digit ISO 639-1, or extended BCP47 language tags. The use of two-letter codes from ISO 639-1 is strongly recommended."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#startDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Start date"@en ;
+    rdfs:comment "The start date for the period."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Period> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#streetAddress> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Street address"@en ;
+    rdfs:comment "The street address. For example, 1600 Amphitheatre Pkwy"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Address> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#submissionMethod> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Submission method"@en ;
+    rdfs:comment "pecify the method by which bids must be submitted, in person, written, or electronic auction. Using the [submission method codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#submission-method)"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#submissionMethodDetails> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Submission method details"@en ;
+    rdfs:comment "Any detailed or further information on the submission method. This may include the address, e-mail address or online service to which bids should be submitted, and any special requirements to be followed for submissions."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#submissionMethodElectronicAuction> a <http://purl.org/onto-ocds/ocds#SubmissionMethod>,
+        owl:NamedIndividual ;
+    rdfs:label "electronicAuction"@en ;
+    dcterms:title "Electronic Auction"@en .
+
+<http://purl.org/onto-ocds/ocds#submissionMethodElectronicSubmission> a <http://purl.org/onto-ocds/ocds#SubmissionMethod>,
+        owl:NamedIndividual ;
+    rdfs:label "electronicSubmission"@en ;
+    dcterms:title "Electronic Submission"@en .
+
+<http://purl.org/onto-ocds/ocds#submissionMethodInPerson> a <http://purl.org/onto-ocds/ocds#SubmissionMethod>,
+        owl:NamedIndividual ;
+    rdfs:label "inPerson"@en ;
+    dcterms:title "In Person"@en .
+
+<http://purl.org/onto-ocds/ocds#submissionMethodWritten> a <http://purl.org/onto-ocds/ocds#SubmissionMethod>,
+        owl:NamedIndividual ;
+    rdfs:label "written"@en ;
+    dcterms:title "Written"@en .
+
+<http://purl.org/onto-ocds/ocds#suppliers> a owl:ObjectProperty ;
+    rdfs:label "Suppliers"@en ;
+    rdfs:comment "The suppliers awarded this award. If different suppliers have been awarded different items of values, these should be split into separate award blocks."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Organization> .
+
+<http://purl.org/onto-ocds/ocds#tag> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Release Tag"@en ;
+    rdfs:comment "A value from the [releaseTag codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#release-tag) that identifies the nature of the release being made. Tags may be used to filter release, or, in future, for for advanced validation when certain kinds of releases should contain certain fields."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#ReleaseTag> .
+
+<http://purl.org/onto-ocds/ocds#telephone> a owl:DatatypeProperty ;
+    rdfs:label "Telephone"@en ;
+    rdfs:comment "The telephone number of the contact point/person. This should include the international dialling code."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#ContactPoint> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#tender> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Tender"@en ;
+    rdfs:comment "The activities undertaken in order to enter into a contract."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Release> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Tender> .
+
+<http://purl.org/onto-ocds/ocds#tenderAmendment> a owl:ObjectProperty ;
+    rdfs:label "Tender amendment"@en ;
+    rdfs:comment ""@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Amendment> .
+
+<http://purl.org/onto-ocds/ocds#tenderDescription> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Tender description" ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#tenderDocuments> a owl:ObjectProperty ;
+    rdfs:label "Tender documents"@en ;
+    rdfs:comment "All documents and attachments related to the tender, including any notices. See the [documentType codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#document-type) for details of potential documents to include."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Document> .
+
+<http://purl.org/onto-ocds/ocds#tenderFollows> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Planning> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> .
+
+<http://purl.org/onto-ocds/ocds#tenderId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Tender ID"@en ;
+    rdfs:comment "An identifier for this tender process. This may be the same as the ocid, or may be drawn from an internally held identifier for this tender."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#tenderItems> a owl:ObjectProperty ;
+    rdfs:label "Items to be procured"@en ;
+    rdfs:comment "The goods and services to be purchased, broken into line items wherever possible. Items should not be duplicated, but a quantity of 2 specified instead."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Item> .
+
+<http://purl.org/onto-ocds/ocds#tenderLots> a owl:ObjectProperty ;
+    rdfs:label "Tender lots"@en ;
+    rdfs:comment "List of lots associated with the tender"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Lot> .
+
+<http://purl.org/onto-ocds/ocds#tenderPeriod> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Tender period"@en ;
+    rdfs:comment "The period when the tender is open for submissions. The end date is the closing date for tender submissions."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Period> .
+
+<http://purl.org/onto-ocds/ocds#tenderPrecedes> a owl:ObjectProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Award> ;
+    rdfs:subPropertyOf <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> .
+
+<http://purl.org/onto-ocds/ocds#tenderStatus> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Tender Status"@en ;
+    rdfs:comment "The current status of the tender based on the [tenderStatus codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#tender-status)"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#TenderStatus> .
+
+<http://purl.org/onto-ocds/ocds#tenderTitle> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Tender title"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#tenderUrl> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range xsd:anyURI .
+
+<http://purl.org/onto-ocds/ocds#tenderValue> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Tender value"@en ;
+    rdfs:comment "The total upper estimated value of the procurement."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#tenderers> a owl:ObjectProperty ;
+    rdfs:label "Tenderers"@en ;
+    rdfs:comment "All entities who submit a tender."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Tender> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Organization> .
+
+<http://purl.org/onto-ocds/ocds#transactionAmount> a owl:ObjectProperty ;
+    rdfs:label "Transaction amount"@en ;
+    rdfs:comment "The value of the transaction."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#transactionDate> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Transaction date"@en ;
+    rdfs:comment "The date of the transaction"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range xsd:dateTime .
+
+<http://purl.org/onto-ocds/ocds#transactionId> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Transaction ID"@en ;
+    rdfs:comment "A unique identifier for this transaction. This identifier should be possible to cross-reference against the provided data source. For the budget data package this is the id, for IATI, the transaction reference."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range xsd:integer,
+        xsd:string .
+
+<http://purl.org/onto-ocds/ocds#transactionSource> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Transaction Data Source"@en ;
+    rdfs:comment "Used to point either to a corresponding Budget Data Package, IATI file, or machine or human-readable source where users can find further information on the budget line item identifiers, or project identifiers, provided here."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range rdfs:Resource .
+
+<http://purl.org/onto-ocds/ocds#transactionUri> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Linked spending information"@en ;
+    rdfs:comment "A URI pointing directly to a machine-readable record about this spending transaction."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Transaction> ;
+    rdfs:range dcterms:URI .
+
+<http://purl.org/onto-ocds/ocds#transactions> a owl:ObjectProperty ;
+    rdfs:label "Transactions"@en ;
+    rdfs:comment "A list of the spending transactions made against this contract"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Implementation> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Transaction> .
+
+<http://purl.org/onto-ocds/ocds#unit> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Unit"@en ;
+    rdfs:comment "Description of the unit which the good comes in e.g. hours, kilograms. Made up of a unit name, and the value of a single unit."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Item> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Unit> .
+
+<http://purl.org/onto-ocds/ocds#unitName> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Unit name"@en ;
+    rdfs:comment "Name of the unit"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Unit> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/onto-ocds/ocds#unitValue> a owl:ObjectProperty ;
+    rdfs:label "Unit value"@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Unit> ;
+    rdfs:range <http://purl.org/onto-ocds/ocds#Value> .
+
+<http://purl.org/onto-ocds/ocds#valueAmount> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "Amount"@en ;
+    rdfs:comment "Amount as a number."@en ;
+    rdfs:domain <http://purl.org/onto-ocds/ocds#Value> ;
+    rdfs:range xsd:integer .
+
+<http://purl.org/onto-ocds/ocds#awardStatusActive> a <http://purl.org/onto-ocds/ocds#AwardStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "active"@en ;
+    dcterms:title "Active"@en ;
+    rdfs:comment "This award has been made, and is currently in force."@en .
+
+<http://purl.org/onto-ocds/ocds#awardStatusCancelled> a <http://purl.org/onto-ocds/ocds#AwardStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "cancelled"@en ;
+    dcterms:title "Cancelled"@en ;
+    rdfs:comment "This award has been cancelled."@en .
+
+<http://purl.org/onto-ocds/ocds#awardStatusPending> a <http://purl.org/onto-ocds/ocds#AwardStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "pending"@en ;
+    dcterms:title "Pending"@en ;
+    rdfs:comment "This award has been proposed, but is not yet in force. This may be due to a cooling off period, or some other process."@en .
+
+<http://purl.org/onto-ocds/ocds#awardStatusUnsuccessful> a <http://purl.org/onto-ocds/ocds#AwardStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "unsuccessful"@en ;
+    dcterms:title "Unsuccessful"@en ;
+    rdfs:comment "This award could not be successfully made. If items or supplier details are included within the award section, then these narrow the scope of the unsuccessful award (i.e. the award of noted items, or an award to the noted supplier, was unsuccessful, but there may be other successful awards for different items listed in the tender, or to different suppliers)."@en .
+
+<http://purl.org/onto-ocds/ocds#contractStatusActive> a <http://purl.org/onto-ocds/ocds#ContractStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "active"@en ;
+    dcterms:title "Active"@en ;
+    rdfs:comment "This contract has been signed by all the parties, and is now legally in force."@en .
+
+<http://purl.org/onto-ocds/ocds#contractStatusCancelled> a <http://purl.org/onto-ocds/ocds#ContractStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "cancelled"@en ;
+    dcterms:title "Cancelled"@en ;
+    rdfs:comment "This contract has been cancelled prior to being signed."@en .
+
+<http://purl.org/onto-ocds/ocds#contractStatusPending> a <http://purl.org/onto-ocds/ocds#ContractStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "pending"@en ;
+    dcterms:title "Pending"@en ;
+    rdfs:comment "This contract has been proposed, but is not yet in force. It may be awaiting signature."@en .
+
+<http://purl.org/onto-ocds/ocds#contractStatusTerminated> a <http://purl.org/onto-ocds/ocds#ContractStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "terminated"@en ;
+    dcterms:title "Terminated"@en ;
+    rdfs:comment "This contract was signed and in force, and has now come to a close. This may be due to successful completion of the contract, or may be early termination due to some non-completion."@en .
+
+<http://purl.org/onto-ocds/ocds#initiationTypeTender> a <http://purl.org/onto-ocds/ocds#InitiationType>,
+        owl:NamedIndividual ;
+    rdfs:label "tender"@en ;
+    dcterms:title "Tender"@en ;
+    rdfs:comment "An open competitive bidding or tendering to form contracts. The process generally involves publicly inviting prospective contractors to submit bids for evaluation and selecting a winner or winners."@en .
+
+<http://purl.org/onto-ocds/ocds#methodLimited> a <http://purl.org/onto-ocds/ocds#Method>,
+        owl:NamedIndividual ;
+    rdfs:label "limited"@en ;
+    dcterms:title "Limited"@en ;
+    rdfs:comment "Limited tendering means a procurement method whereby the procuring entity contacts a supplier or suppliers of its choice."@en .
+
+<http://purl.org/onto-ocds/ocds#methodOpen> a <http://purl.org/onto-ocds/ocds#Method>,
+        owl:NamedIndividual ;
+    rdfs:label "open"@en ;
+    dcterms:title "Open"@en ;
+    rdfs:comment "Open tendering means a procurement method whereby all interested suppliers may submit a tender."@en .
+
+<http://purl.org/onto-ocds/ocds#methodSelective> a <http://purl.org/onto-ocds/ocds#Method>,
+        owl:NamedIndividual ;
+    rdfs:label "selective"@en ;
+    dcterms:title "Selective"@en ;
+    rdfs:comment "Selective tendering means a procurement method whereby only qualified suppliers are invited by the procuring entity to submit a tender."@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagAward> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "award"@en ;
+    dcterms:title "Award"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagAwardCancellation> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "awardCancellation"@en ;
+    dcterms:title "Award Cancellation"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagAwardUpdate> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "awardUpdate"@en ;
+    dcterms:title "Award Update"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagCompiled> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "compiled"@en ;
+    dcterms:title "Compiled Record"@en ;
+    rdfs:comment "This tag is used only in compiled records, which have merged together multiple releases to provide a snapshot view of the contract, and a version history."@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagContract> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "contract"@en ;
+    dcterms:title "Contract"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagContractAmendment> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "contractAmendment"@en ;
+    dcterms:title "Contract Amendment"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagContractTermination> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "contractTermination"@en ;
+    dcterms:title "Contract Termination"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagContractUpdate> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "contractUpdate"@en ;
+    dcterms:title "Contract Update"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagImplementation> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "implementation"@en ;
+    dcterms:title "Implementation"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagImplementationUpdate> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "implementationUpdate"@en ;
+    dcterms:title "Implementation Update"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagPlanning> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "planning"@en ;
+    dcterms:title "Planning"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagTender> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "tender"@en ;
+    dcterms:title "Tender"@en ;
+    rdfs:comment "Announcing a new tender (call for proposals) process. Tender release should contain details of the goods or services being sought."@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagTenderAmendment> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "tenderAmendment"@en ;
+    dcterms:title "Tender Amendment"@en ;
+    rdfs:comment "An amendment to an existing tender release. There should be at least one tender release with the same ocid, but an earlier releaseDate, before a tenderAmendment is published. The term amendment has legal meaning in many jurisdictions."@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagTenderCancellation> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "tenderCancellation"@en ;
+    dcterms:title "Tender Cancellation"@en .
+
+<http://purl.org/onto-ocds/ocds#releaseTagTenderUpdate> a <http://purl.org/onto-ocds/ocds#ReleaseTag>,
+        owl:NamedIndividual ;
+    rdfs:label "tenderUpdate"@en ;
+    dcterms:title "Tender Update"@en ;
+    rdfs:comment "An updated to an existing tender release. There should be at least one tender release with the same ocid, but an earlier releaseDate, before a tenderUpdate is published. An update may add new information or make corrections to prior published information. It should not be used for formal legal amendments to a tender, for which the tenderAmendment tag should be used."@en .
+
+<http://purl.org/onto-ocds/ocds#tenderStatusActive> a <http://purl.org/onto-ocds/ocds#TenderStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "active"@en ;
+    dcterms:title "Active"@en ;
+    rdfs:comment "A tender process is currently taking place."@en .
+
+<http://purl.org/onto-ocds/ocds#tenderStatusCancelled> a <http://purl.org/onto-ocds/ocds#TenderStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "cancelled"@en ;
+    dcterms:title "Cancelled"@en ;
+    rdfs:comment "The tender process has been cancelled."@en .
+
+<http://purl.org/onto-ocds/ocds#tenderStatusComplete> a <http://purl.org/onto-ocds/ocds#TenderStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "complete"@en ;
+    dcterms:title "Complete"@en ;
+    rdfs:comment "The tender process as unsucessful."@en .
+
+<http://purl.org/onto-ocds/ocds#tenderStatusPlanned> a <http://purl.org/onto-ocds/ocds#TenderStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "planned"@en ;
+    dcterms:title "Planned"@en ;
+    rdfs:comment "This tender has been proposed, but is not yet taking place."@en .
+
+<http://purl.org/onto-ocds/ocds#tenderStatusUnsuccessful> a <http://purl.org/onto-ocds/ocds#TenderStatus>,
+        owl:NamedIndividual ;
+    rdfs:label "unsuccessful"@en ;
+    dcterms:title "Unsuccessful"@en ;
+    rdfs:comment "The tender process as unsucessful."@en .
+
+<http://purl.org/onto-ocds/ocds#InitiationType> a owl:Class ;
+    rdfs:label "Codelist Initiation Type"@en ;
+    rdfs:comment "Contracting processes may be formed under a number of different processes. Currently, only ‘tender’ is supported in this codelist. Future versions of the standard may support other Initiation Types. The initiation type may be provide information to consuming applications on the different blocks of data and releases they should expect from a contracting process."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#initiationTypeTender> ) ] .
+
+<http://purl.org/onto-ocds/ocds#Change> a owl:Class ;
+    rdfs:label "Change"@en .
+
+<http://purl.org/onto-ocds/ocds#DocumentType> a owl:Class ;
+    rdfs:label "Codelist Document Type"@en ;
+    rdfs:comment "This list provides details of the documents that publishers may wish to provide at various points their contracting process."@en .
+
+<http://purl.org/onto-ocds/ocds#OrganizationIdentifierScheme> a owl:Class ;
+    rdfs:label "Codelist Organization Identifier Scheme"@en ;
+    rdfs:comment "The Organization Identifier Scheme currently uses the codes from the International Aid Transparency Initiative ‘Organisation Registration Agency’ codelist. See the identifiers section for more information on organization identifiers."@en .
+
+<http://purl.org/onto-ocds/ocds#Unit> a owl:Class ;
+    rdfs:label "Unit"@en .
+
+rdfs:Resource a owl:Class .
+
+<http://purl.org/onto-ocds/ocds#AwardCriteria> a owl:Class ;
+    rdfs:label "Codelist Award Criteria"@en ;
+    rdfs:comment "The award criteria code list describes the basis on which contract awards will be made."@en .
+
+<http://purl.org/onto-ocds/ocds#Implementation> a owl:Class ;
+    rdfs:label "Implementation" ;
+    rdfs:comment "Information during the performance / implementation stage of the contract."@en .
+
+<http://purl.org/onto-ocds/ocds#Method> a owl:Class ;
+    rdfs:label "Codelist Method"@en ;
+    rdfs:comment "The method codelist is based upon the GPA Definitions provided here."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#methodLimited> <http://purl.org/onto-ocds/ocds#methodOpen> <http://purl.org/onto-ocds/ocds#methodSelective> ) ] .
+
+<http://purl.org/onto-ocds/ocds#SubmissionMethod> a owl:Class ;
+    rdfs:label "Codelist Submission Method"@en ;
+    rdfs:comment "The submission method codelist is used to identify the mechanism through which a submission may be made."@en .
+
+<http://purl.org/onto-ocds/ocds#AwardStatus> a owl:Class ;
+    rdfs:label "Codelist Award Status"@en ;
+    rdfs:comment "An award move through multiple states. Releases over time may update the status of an award."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#awardStatusActive> <http://purl.org/onto-ocds/ocds#awardStatusCancelled> <http://purl.org/onto-ocds/ocds#awardStatusPending> <http://purl.org/onto-ocds/ocds#awardStatusUnsuccessful> ) ] .
+
+<http://purl.org/onto-ocds/ocds#ContractStatus> a owl:Class ;
+    rdfs:label "Codelist Contract Status"@en ;
+    rdfs:comment "Contracts can move through multiple states. Releases over time may update the status of a contract."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#contractStatusActive> <http://purl.org/onto-ocds/ocds#contractStatusCancelled> <http://purl.org/onto-ocds/ocds#contractStatusPending> <http://purl.org/onto-ocds/ocds#contractStatusTerminated> ) ] .
+
+<http://purl.org/onto-ocds/ocds#Lot> a owl:Class .
+
+dcterms:URI a owl:Class .
+
+<http://purl.org/onto-ocds/ocds#Address> a owl:Class ;
+    rdfs:label "Address"@en ;
+    rdfs:comment "An address. This may be the legally registered address of the organization, or may be a correspondence address for this particular contracting process."@en ;
+    rdfs:subClassOf <http://schema.org#PostalAddress> .
+
+<http://purl.org/onto-ocds/ocds#Amendment> a owl:Class ;
+    rdfs:label "Amendment"@en .
+
+<http://purl.org/onto-ocds/ocds#Classification> a owl:Class ;
+    rdfs:label "Classification"@en .
+
+<http://purl.org/onto-ocds/ocds#ContactPoint> a owl:Class ;
+    rdfs:label "Contact point"@en ;
+    rdfs:comment "An person, contact point or department to contact in relation to this contracting process."@en ;
+    rdfs:subClassOf <http://schema.org#ContactPoint> .
+
+<http://purl.org/onto-ocds/ocds#ItemClassificationScheme> a owl:Class .
+
+<http://purl.org/onto-ocds/ocds#Period> a owl:Class ;
+    rdfs:label "Period"@en .
+
+<http://purl.org/onto-ocds/ocds#TenderStatus> a owl:Class ;
+    rdfs:label "Codelist Tender Status"@en ;
+    rdfs:comment "The tender.status field is used to indicate the current status of a tender process."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#tenderStatusActive> <http://purl.org/onto-ocds/ocds#tenderStatusCancelled> <http://purl.org/onto-ocds/ocds#tenderStatusComplete> <http://purl.org/onto-ocds/ocds#tenderStatusPlanned> <http://purl.org/onto-ocds/ocds#tenderStatusUnsuccessful> ) ] .
+
+<http://purl.org/onto-ocds/ocds#Planning> a owl:Class ;
+    rdfs:label "Planning"@en ;
+    rdfs:comment "nformation from the planning phase of the contracting process. Note that many other fields may be filled in a planning release, in the appropriate fields in other schema sections, these would likely be estimates at this stage e.g. totalValue in tender"@en .
+
+<http://purl.org/onto-ocds/ocds#Budget> a owl:Class ;
+    rdfs:label "Budget"@en ;
+    rdfs:comment "This section contain information about the budget line, and associated projects, through which this contracting process is funded. It draws upon data model of the [Budget Data Package](https://github.com/openspending/budget-data-package/blob/master/specification.md), and should be used to cross-reference to more detailed information held using a Budget Data Package, or, where no linked Budget Data Package is available, to provide enough information to allow a user to manually or automatically cross-reference with another published source of budget and project information."@en .
+
+<http://purl.org/onto-ocds/ocds#Identifier> a owl:Class ;
+    rdfs:label "Identifier"@en .
+
+<http://purl.org/onto-ocds/ocds#Transaction> a owl:Class ;
+    rdfs:label "Transaction Information"@en ;
+    rdfs:comment "A spending transaction related to the contracting process. Draws upon the data models of the [Budget Data Package](https://github.com/openspending/budget-data-package/blob/master/specification.md) and the [International Aid Transpareny Initiative](http://iatistandard.org/activity-standard/iati-activities/iati-activity/transaction/) and should be used to cross-reference to more detailed information held using a Budget Data Package, IATI file, or to provide enough information to allow a user to manually or automatically cross-reference with some other published source of transactional spending data."@en .
+
+<http://purl.org/onto-ocds/ocds#Item> a owl:Class ;
+    rdfs:label "Item"@en ;
+    rdfs:comment "A good, service, or work to be contracted."@en ;
+    rdfs:subClassOf <http://purl.org/goodrelations/v1#Offering> .
+
+<http://purl.org/onto-ocds/ocds#Milestone> a owl:Class ;
+    rdfs:label "Milestone"@en .
+
+<http://purl.org/onto-ocds/ocds#Value> a owl:Class ;
+    rdfs:label "Value"@en ;
+    owl:equivalentClass <http://purl.org/goodrelations/v1#PriceSpecification> .
+
+<http://purl.org/onto-ocds/ocds#Organization> a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "An organization."@en ;
+    owl:equivalentClass <http://purl.org/goodrelations/v1#BusinessEntity> .
+
+<http://purl.org/onto-ocds/ocds#Release> a owl:Class ;
+    rdfs:label "Open Contracting Release"@en .
+
+<http://purl.org/onto-ocds/ocds#Document> a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:comment "Links to, or descriptions of, external documents can be attached at various locations within the standard. Documents may be supporting information, formal notices, downloadable forms, or any other kind of resource that should be made public as part of full open contracting."@en ;
+    rdfs:subClassOf foaf:Document .
+
+<http://purl.org/onto-ocds/ocds#ReleaseTag> a owl:Class ;
+    rdfs:label "Codelist ReleaseTag"@en ;
+    rdfs:comment "A contracting process may result in a number of releases of information over time. These should be tagged to indicate the stage of the contracting process they relate to."@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( <http://purl.org/onto-ocds/ocds#releaseTagAward> <http://purl.org/onto-ocds/ocds#releaseTagAwardCancellation> <http://purl.org/onto-ocds/ocds#releaseTagAwardUpdate> <http://purl.org/onto-ocds/ocds#releaseTagCompiled> <http://purl.org/onto-ocds/ocds#releaseTagContract> <http://purl.org/onto-ocds/ocds#releaseTagContractAmendment> <http://purl.org/onto-ocds/ocds#releaseTagContractTermination> <http://purl.org/onto-ocds/ocds#releaseTagContractUpdate> <http://purl.org/onto-ocds/ocds#releaseTagImplementation> <http://purl.org/onto-ocds/ocds#releaseTagImplementationUpdate> <http://purl.org/onto-ocds/ocds#releaseTagPlanning> <http://purl.org/onto-ocds/ocds#releaseTagTender> <http://purl.org/onto-ocds/ocds#releaseTagTenderAmendment> <http://purl.org/onto-ocds/ocds#releaseTagTenderCancellation> <http://purl.org/onto-ocds/ocds#releaseTagTenderUpdate> ) ] .
+
+<http://purl.org/onto-ocds/ocds#Award> a owl:Class ;
+    rdfs:label "Award"@en ;
+    rdfs:comment "An award for the given procurement. There may be more than one award per contracting process e.g. because the contract is split amongst different providers, or because it is a standing offer."@en .
+
+<http://purl.org/onto-ocds/ocds#Contract> a owl:Class ;
+    rdfs:label "Contract"@en ;
+    rdfs:comment "Information regarding the signed contract between the buyer and supplier(s)."@en ;
+    rdfs:subClassOf <http://purl.org/procurement/public-contracts#Contract> .
+
+<http://purl.org/onto-ocds/ocds#Tender> a owl:Class ;
+    rdfs:label "Tender"@en ;
+    rdfs:comment "Data regarding tender process - publicly inviting prospective contractors to submit bids for evaluation and selecting a winner or winners"@en ;
+    rdfs:subClassOf <http://purl.org/procurement/public-contracts#Tender> .
+

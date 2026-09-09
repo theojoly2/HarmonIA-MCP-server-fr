@@ -1,0 +1,71 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://www.gleif.org/ontology/Base/> .
+@prefix onto: <https://www.gleif.org/ontology/RegistrationAuthority/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:RAregistry a ns1:Registry ;
+    rdfs:label "RA registry" ;
+    rdfs:isDefinedBy onto: ;
+    skos:altLabel "GLEIF Registration Authorities List",
+        "RAL" ;
+    skos:prefLabel "RA registry" ;
+    ns1:hasNameLocal "GLEIF Registration Authorities List"@en ;
+    ns1:hasWebsite "https://www.gleif.org/en/about-lei/code-lists/gleif-registration-authorities-list"^^xsd:anyURI ;
+    ns1:isManagedBy ns1:GLEIF .
+
+onto:RegistrationAuthorityCode a owl:Class ;
+    rdfs:label "registration authority code" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:BusinessRegistry ;
+            owl:onProperty ns1:identifies ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:Identifier ;
+    skos:definition "The reference code of the registration authority, taken from the Registration Authorities Code List maintained by GLEIF." .
+
+onto:BusinessRegistry a owl:Class ;
+    rdfs:label "business registry" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasNameLegalLocal ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:RegistrationAuthority ;
+            owl:onProperty ns1:isManagedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasNameTranslatedEnglish ],
+        [ a owl:Restriction ;
+            owl:onProperty ns1:hasCoverageArea ;
+            owl:someValuesFrom <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/GeographicRegion> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasWebsite ],
+        ns1:Registry ;
+    skos:definition "a registry for registering and maintaining information about business entities" .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "GLEIF Registration Authority Ontology" ;
+    dcterms:abstract "Ontology defining concepts for Business Registries, including the jurisdictions served. This is based on the Registration Authority Code List (RAL) used for Global Legal Entity Identifier Foundation (GLEIF) registration, but is more broadly applicable."@en ;
+    dcterms:contributor <http://purl.org/bryon>,
+        <http://www.workingontologist.com>,
+        <https://www.linkedin.com/in/peterivett/> ;
+    dcterms:creator ns1:GLEIF ;
+    dcterms:issued "2019-02-01T00:00:00+00:00"^^xsd:dateTime ;
+    dcterms:license "https://www.gleif.org/en/meta/lei-data-terms-of-use/"^^xsd:anyURI ;
+    dcterms:rights "Copyright (c) 2019 Global Legal Entity Identifier Foundation (GLEIF)" ;
+    dcterms:rightsHolder ns1:GLEIF ;
+    dcterms:source "https://www.gleif.org/en/about-lei/gleif-registration-authorities-list"^^xsd:anyURI ;
+    dcterms:title "Global Legal Entity Identifier Foundation Registration Authority Ontology"@en ;
+    vann:preferredNamespacePrefix "gleif-ra" ;
+    vann:preferredNamespaceUri "https://www.gleif.org/ontology/RegistrationAuthority/" ;
+    owl:imports ns1:,
+        <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/> ;
+    owl:versionIRI <https://www.gleif.org/ontology/RegistrationAuthority-1.0/RegistrationAuthority/> .
+

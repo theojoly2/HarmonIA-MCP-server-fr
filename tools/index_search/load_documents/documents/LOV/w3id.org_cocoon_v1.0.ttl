@@ -1,0 +1,650 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/goodrelations/v1#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix ns3: <https://w3id.org/cocoon/v1.0#> .
+@prefix onto: <https://w3id.org/cocoon/v1.0> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:description a owl:AnnotationProperty .
+
+ns1:name a owl:AnnotationProperty .
+
+<http://qudt.org/schema/qudt#Unit> a owl:Class ;
+    owl:equivalentClass ns3:UnitOfMeasure .
+
+foaf:givenname a owl:AnnotationProperty .
+
+foaf:homepage a owl:AnnotationProperty .
+
+foaf:lastName a owl:AnnotationProperty .
+
+foaf:mbox a owl:AnnotationProperty .
+
+foaf:name a owl:AnnotationProperty .
+
+foaf:nick a owl:AnnotationProperty .
+
+foaf:page a owl:AnnotationProperty .
+
+foaf:title a owl:AnnotationProperty .
+
+foaf:workInfoHomepage a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "Cloud Computing Services Ontology"@en ;
+    ns2:attributionName "Qian ZHANG" ;
+    ns2:attributionURL <http://w3id.org/cocoon/v1.0> ;
+    dcterms:created "2012-10-01"^^xsd:date ;
+    dcterms:creator ns3:mirandazhangqian ;
+    dcterms:description "Simple ontology for Cloud Computing Services. This ontology allows to define model of prices used in large cloud computing providers such as Google, Amazon, Azure, etc., including options for regions, type of instances, prices specification, etc. "@en ;
+    dcterms:issued "2019-02-04"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-nc/4.0/> ;
+    dcterms:modified "2018-09-17" ;
+    dcterms:rights "Copyright © 2018 Qian ZHANG"@en ;
+    dcterms:title "Vocabulary in Cloud Computing Services"@en ;
+    vann:preferredNamespacePrefix "cocoon" ;
+    vann:preferredNamespaceUri "https://w3id.org/cocoon/v1.0#" ;
+    rdfs:seeAlso <https://github.com/miranda-zhang/cloud-computing-schema> ;
+    owl:versionInfo 1.0 .
+
+ns3:10TB a owl:NamedIndividual,
+        ns3:QuantityOfThings ;
+    ns3:hasUnitOfMeasurement ns3:GB ;
+    ns3:numericValue "10240"^^xsd:nonNegativeInteger .
+
+ns3:1TB a owl:NamedIndividual,
+        ns3:QuantityOfThings ;
+    ns3:hasUnitOfMeasurement ns3:GB ;
+    ns3:numericValue "1024"^^xsd:nonNegativeInteger .
+
+ns3:90TB a owl:NamedIndividual,
+        ns3:QuantityOfThings ;
+    ns3:hasUnitOfMeasurement ns3:GB ;
+    ns3:numericValue "92160"^^xsd:nonNegativeInteger .
+
+ns3:Database a owl:Class ;
+    rdfs:subClassOf ns3:SaaS .
+
+ns3:Egress a owl:Class ;
+    rdfs:subClassOf ns3:TrafficDirection ;
+    owl:disjointWith ns3:Ingress .
+
+ns3:ForwardingRule a owl:Class ;
+    rdfs:subClassOf ns3:LoadBalancing .
+
+ns3:GBPerMonth a <http://qudt.org/schema/qudt#DataRateUnit>,
+        <http://qudt.org/schema/qudt#DerivedUnit>,
+        owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "Gigabyte per Month"@en ;
+    dcterms:description "Often describe 1 GB per Month usage."@en .
+
+ns3:IOPs a <http://qudt.org/schema/qudt#DataRateUnit>,
+        <http://qudt.org/schema/qudt#DerivedUnit>,
+        owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "Input/output operations per sec"@en ;
+    dcterms:description "Azure Managed Disks provide different input/output operations per sec (IOPs)"@en .
+
+ns3:LBData a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass ns3:TrafficDirection ;
+            owl:onProperty ns3:hasDirection ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns3:LoadBalancing .
+
+ns3:LocalStorage a owl:Class ;
+    rdfs:comment "Storage that is not detachable from VM"@en ;
+    rdfs:subClassOf ns3:Storage .
+
+ns3:MBPerSec a <http://qudt.org/schema/qudt#DataRateUnit>,
+        <http://qudt.org/schema/qudt#DerivedUnit>,
+        owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "MB/second"@en ;
+    dcterms:description "Azure Managed Disks throughput caps per disk."@en .
+
+ns3:NetworkStorage a owl:Class ;
+    rdfs:comment "Storage can exist independent from VM"@en ;
+    rdfs:subClassOf ns3:Storage .
+
+ns3:PaaS a owl:Class ;
+    rdfs:comment "Platform as a Service, i.e. Google App Engine, Heroku."@en ;
+    rdfs:subClassOf ns3:CloudService .
+
+ns3:SystemImage a owl:Class ;
+    dcterms:description "A system image is a serialized copy of the entire state of a computer system.\\nSystem images can be used for backup." ;
+    rdfs:subClassOf ns3:SaaS .
+
+ns3:TB a <http://qudt.org/schema/qudt#DerivedUnit>,
+        <http://qudt.org/schema/qudt#InformationEntropyUnit>,
+        owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "Terabyte"@en ;
+    dcterms:description "Terabyte is more precisely defined as 1,024 gigabytes (GB)"@en .
+
+ns3:Zone a owl:Class ;
+    rdfs:subClassOf ns3:Region .
+
+ns3:azure a ns1:BusinessEntity,
+        owl:NamedIndividual ;
+    rdfs:label "Azure"@en ;
+    ns1:name "Microsoft Azure Cloud" ;
+    foaf:page <https://azure.microsoft.com/> .
+
+ns3:gceu a owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "Google Compute Engine Unit"@en ;
+    dcterms:description "GCEU (Google Compute Engine Unit), or GQ for short, is a unit of CPU capacity that we use to describe the compute power of our instance types. We chose 2.75 GQ's to represent the minimum power of one logical core (a hardware hyper-thread) on our Sandy Bridge platform."@en .
+
+ns3:gcloud a ns1:BusinessEntity,
+        owl:NamedIndividual ;
+    rdfs:label "Gcloud"@en ;
+    ns1:name "Google Cloud" ;
+    foaf:page <https://cloud.google.com/> .
+
+<http://www.semanticweb.org/owl/owlapi/turtle#location> a owl:DatatypeProperty .
+
+foaf:Person a owl:Class .
+
+ns3:Ingress a owl:Class ;
+    rdfs:subClassOf ns3:TrafficDirection .
+
+ns3:Internet a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns3:hasDestination ;
+            owl:someValuesFrom ns3:Location ],
+        [ a owl:Restriction ;
+            owl:onClass ns3:TrafficDirection ;
+            owl:onProperty ns3:hasDirection ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onProperty ns3:excludesDestination ;
+            owl:someValuesFrom ns3:Location ],
+        ns3:Network .
+
+ns3:Service a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns3:hasServiceLevelAgreement ;
+            owl:someValuesFrom ns3:ServiceLevelAgreement ] .
+
+ns3:ServiceLevelAgreement a owl:Class .
+
+ns3:StaticIP a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:boolean ;
+            owl:onProperty ns3:inUse ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns3:Network .
+
+ns3:continent a owl:DatatypeProperty ;
+    rdfs:comment "Similar to location, this property specifies the continent."@en ;
+    rdfs:subPropertyOf <http://www.semanticweb.org/owl/owlapi/turtle#location> .
+
+ns3:excludesDestination a owl:ObjectProperty .
+
+ns3:forUsageLessEqual a owl:ObjectProperty .
+
+ns3:forUsageMoreThan a owl:ObjectProperty .
+
+ns3:hasDestination a owl:ObjectProperty .
+
+ns3:hasServiceLevelAgreement a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasStorageSize a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasUnitOfMeasurement a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:inUse a owl:DatatypeProperty .
+
+ns3:mirandazhangqian a owl:NamedIndividual,
+        foaf:Person ;
+    foaf:givenname "Qian" ;
+    foaf:homepage <https://github.com/miranda-zhang> ;
+    foaf:lastName "Zhang" ;
+    foaf:mbox <mailto:miranda.zhang.q@gmail.com> ;
+    foaf:nick "Miranda" ;
+    foaf:title "Miss" ;
+    foaf:workInfoHomepage <https://www.linkedin.com/in/mirandazhangq/> .
+
+ns3:numericValue a owl:DatatypeProperty .
+
+<http://qudt.org/schema/qudt#InformationEntropyUnit> a owl:Class .
+
+ns3:NetworkPriceSpecification a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:forUsageMoreThan ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:forUsageLessEqual ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns3:specialRateType ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:UnitPriceSpecification .
+
+ns3:canHaveSnapshot a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:chargedPerCore a owl:DatatypeProperty ;
+    rdfs:comment "For Google Cloud, cost of SQL server image is charged on per core basis."@en ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+ns3:forCoresLessEqual a owl:DatatypeProperty ;
+    rdfs:comment "Google Cloud OS price for VM with different number of cores are different.\\nIt is used to describe price for machines with less than or\\nequal to the specified number of cores."@en ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+ns3:forCoresMoreThan a owl:DatatypeProperty ;
+    rdfs:comment "Google Cloud OS price for VM with different number of cores are different.\\nThis is used to describe the price for machines with more than specified\\nnumber of cores."@en ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+ns3:hasCPUcapacity a owl:ObjectProperty ;
+    rdfs:comment "The power or capacity of CPU available for this type of VM."@en ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasCurrencyValue a owl:DatatypeProperty .
+
+ns3:hasDirection a owl:ObjectProperty .
+
+ns3:hasMaxNumberOfDisk a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasMaxStorageSize a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasMemory a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasProvider a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasRegion a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasStorage a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasStorageIOMax a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:hasStorageThroughputMax a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:inJurisdiction a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:inPhysicalLocation a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:numberOfCores a owl:DatatypeProperty ;
+    rdfs:comment "For Google Cloud, cores and vCPU referes to the same thing." .
+
+ns3:ofObjectType a owl:ObjectProperty ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+ns3:specialRateType a owl:DatatypeProperty .
+
+<http://qudt.org/schema/qudt#DataRateUnit> a owl:Class .
+
+ns3:GB a <http://qudt.org/schema/qudt#DerivedUnit>,
+        <http://qudt.org/schema/qudt#InformationEntropyUnit>,
+        owl:NamedIndividual,
+        ns3:UnitOfMeasure ;
+    rdfs:label "Gigabyte"@en ;
+    dcterms:description "Gigabyte (GB): There are 1024MB in one gigabyte."@en .
+
+ns3:IaaS a owl:Class ;
+    rdfs:comment "Infrastructure as a Service"@en ;
+    rdfs:subClassOf ns3:CloudService .
+
+ns3:LoadBalancing a owl:Class ;
+    rdfs:subClassOf ns3:Network .
+
+ns3:Location a owl:Class .
+
+ns3:SaaS a owl:Class ;
+    rdfs:comment "Software as a Service"@en ;
+    rdfs:subClassOf ns3:CloudService .
+
+ns3:StorageTransactionsPriceSpecification a owl:Class ;
+    rdfs:comment "Can be used to define a common price spec for multiple cloud service individuals,\\ni.e. the storage transaction spec has a different price in a different region,\\nbut there is a common transaction price spec for a group of cloud storage offers."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:hasPriceSpecification ;
+            owl:someValuesFrom ns1:UnitPriceSpecification ],
+        ns1:UnitPriceSpecification .
+
+ns1:BusinessEntity a owl:Class .
+
+<http://www.geonames.org/ontology#Feature> a owl:Class .
+
+ns3:CloudService a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:hasPriceSpecification ;
+            owl:someValuesFrom ns1:UnitPriceSpecification ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:BusinessEntity ;
+            owl:onProperty ns3:hasProvider ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns3:Service .
+
+ns3:Network a owl:Class ;
+    rdfs:subClassOf ns3:IaaS .
+
+ns3:OSPriceSpecification a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:boolean ;
+            owl:onProperty ns3:chargedPerCore ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:forCoresLessEqual ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:forCoresMoreThan ],
+        ns1:UnitPriceSpecification .
+
+ns3:TrafficDirection a owl:Class .
+
+ns1:hasPriceSpecification a owl:ObjectProperty .
+
+<http://qudt.org/schema/qudt#DerivedUnit> a owl:Class .
+
+ns3:Region a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns1:BusinessEntity ;
+            owl:onProperty ns3:hasProvider ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.geonames.org/ontology#Feature> ;
+            owl:onProperty ns3:inPhysicalLocation ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns3:continent ],
+        [ a owl:Restriction ;
+            owl:onProperty ns3:inJurisdiction ;
+            owl:someValuesFrom <http://www.geonames.org/ontology#Feature> ],
+        ns3:Location .
+
+ns1:UnitPriceSpecification a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass ns3:Region ;
+            owl:onProperty ns3:hasRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:unionOf ( xsd:double xsd:float ) ] ;
+            owl:onProperty ns3:hasCurrencyValue ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+ns3:Storage a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasStorageSize ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasStorageIOMax ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasStorageThroughputMax ],
+        [ a owl:Restriction ;
+            owl:onProperty ns3:canHaveSnapshot ;
+            owl:someValuesFrom ns3:Storage ],
+        ns3:IaaS .
+
+ns3:UnitOfMeasure a owl:Class ;
+    rdfs:comment "Defines custome units."@en .
+
+ns3:VM a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMemory ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasCPUcapacity ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMaxStorageSize ],
+        [ a owl:Restriction ;
+            owl:onProperty ns3:hasStorage ;
+            owl:someValuesFrom ns3:QuantityOfThings ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:StorageTransactionsPriceSpecification ;
+            owl:onProperty ns1:hasPriceSpecification ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMaxNumberOfDisk ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:numberOfCores ],
+        ns3:IaaS .
+
+ns3:QuantityOfThings a owl:Class ;
+    rdfs:comment "Composition of value, unit, and type of object, i.e., 2 GB of Memory, 10 GB of local storage, 3 TB of network storage."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns3:ofObjectType ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:UnitOfMeasure ;
+            owl:onProperty ns3:hasUnitOfMeasurement ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:unionOf ( xsd:decimal xsd:double xsd:nonNegativeInteger ) ] ;
+            owl:onProperty ns3:numericValue ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ns3:Network ns3:Storage ns3:VM ) .
+
+[] a owl:Axiom ;
+    rdfs:comment "VM storage transaction price specification.\\nThere is a data access fees on local disk of Azure VM.\\nFor example, every single block access incurs a transaction. The default block size is 4 Megabytes, meaning uploading a 32Mb file will incur 8 Storage Transactions. Deleting the file will also incur 8 transactions, so will updating it, and any other time the file is touched. The transactions are charged at a cost of around $0.00036 USD per 10,000 transactions. So 32Mb file will cost $0.000000368 AUD.\\nThe only exception to Storage Transactions is when Premium Storage (persistent SSD storage) is used. That is, when you provision a P10, P20 or a P30 disk for your Virtual Machine those disks are exempt from Storage Transactions.\\n\\nhttps://github.com/miranda-zhang/cloud-computing-schema/blob/master/example/azure/vm.md#storage-transactions"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:StorageTransactionsPriceSpecification ;
+            owl:onProperty ns1:hasPriceSpecification ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Google specifies the maximum number of disk allowed to attach to a VM."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMaxNumberOfDisk ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Optional, if not sure the exact type of thing,\\nlike only know it is 8GB of Memory, but there is not a definition in ontology for the exact memory type.\\nOne usage example, `cocoon:ofObjectType cocoon:LocalStorage` ,\\nquantifies the type of object should be `LocalStorage`"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:QuantityOfThings ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns3:ofObjectType ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ns3:NetworkPriceSpecification ns3:OSPriceSpecification ns3:StorageTransactionsPriceSpecification ) .
+
+[] a owl:Axiom ;
+    rdfs:comment "NetworkPriceSpecification use other properties to sepecify destination, and this property may not be useful."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns1:UnitPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onClass ns3:Region ;
+            owl:onProperty ns3:hasRegion ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Local storage   available on this VM, or netowrk storage attached to this VM."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty ns3:hasStorage ;
+            owl:someValuesFrom ns3:QuantityOfThings ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "i.e. Gcloud Cloud Composer"@en ;
+    owl:annotatedProperty rdfs:comment ;
+    owl:annotatedSource ns3:SaaS ;
+    owl:annotatedTarget "Software as a Service"@en .
+
+[] a owl:Axiom ;
+    rdfs:comment "Google also specifies the maximum total disk size allowed to attach to a VM."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMaxStorageSize ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Some regions can be in multiple locations, i.e. nam-eur-asia1, they can be in multiple jurisdictions. Other region should have at most 1 phisical location associated with it." ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:Region ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty ns3:inJurisdiction ;
+            owl:someValuesFrom <http://www.geonames.org/ontology#Feature> ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Describe price for machines with less than orequal to the specified number of cores."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:OSPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:forCoresLessEqual ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "i.e. Egress between zones in the same region; Egress between regions within the US; Egress to Google products (such as YouTube, Maps, Drive)"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:NetworkPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty ns3:specialRateType ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Disks can have different throughput caps, i.e. 200 MB/second"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:Storage ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasStorageThroughputMax ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ns3:Internet ns3:LoadBalancing ns3:StaticIP ) .
+
+[] a owl:Axiom ;
+    rdfs:comment "Size of Memory"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasMemory ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Describe  the price  for  machines  with  more  than  specified  number  of  cores."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:OSPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:forCoresMoreThan ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "CPU power of VM"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasCPUcapacity ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Disks can have different input/output operations per sec (IOPs)."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:Storage ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns3:QuantityOfThings ;
+            owl:onProperty ns3:hasStorageIOMax ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "If a definite location or address is known, physical location can be set, otherwise cocoon:inJurisdiction can be used to describe where it is in approximately."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:Region ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.geonames.org/ontology#Feature> ;
+            owl:onProperty ns3:inPhysicalLocation ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "The number of cores available on this VM."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:VM ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:decimal ;
+            owl:onProperty ns3:numberOfCores ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Available snapshot options."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:Storage ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty ns3:canHaveSnapshot ;
+            owl:someValuesFrom ns3:Storage ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "gr:hasCurrencyValue seems only allow float value, extended to allow more precision with double floating-point numbers."@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns1:UnitPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onDataRange [ a rdfs:Datatype ;
+                    owl:unionOf ( xsd:double xsd:float ) ] ;
+            owl:onProperty ns3:hasCurrencyValue ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "Price specification for Cloud Service"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:CloudService ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty ns1:hasPriceSpecification ;
+            owl:someValuesFrom ns1:UnitPriceSpecification ] .
+
+[] a owl:Axiom ;
+    rdfs:comment "For example on Google Cloud, Windows Server images on some machine types are charged based on the number of CPUs, i.e., n1-standard-4, n1-highcpu-4, and n1-highmem-4 are machine-types with 4 vCPUs,\\nand are charged at $0.16 USD/hour (4 times $0.04 USD/hour).\\n\\nhttps://github.com/miranda-zhang/cloud-computing-schema/blob/master/example/gcloud/os.md#windows-server-images"@en ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ns3:OSPriceSpecification ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onDataRange xsd:boolean ;
+            owl:onProperty ns3:chargedPerCore ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+

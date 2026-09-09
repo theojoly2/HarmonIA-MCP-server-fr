@@ -1,0 +1,198 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://def.seegrid.csiro.au/isotc211/iso19150/-2/2012/basic#> .
+@prefix onto: <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/dataquality#Element> ns1:isAbstract true .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/dataquality#Result> ns1:isAbstract true .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#dateTime> a owl:DatatypeProperty ;
+    rdfs:label "date time"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#rationale> a owl:DatatypeProperty ;
+    rdfs:label "rationale"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+    rdfs:isDefinedBy onto: .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#statement> a owl:DatatypeProperty ;
+    rdfs:label "statement"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Lineage> ;
+    rdfs:isDefinedBy onto: .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#description> a owl:DatatypeProperty ;
+    rdfs:label "description"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ) ] ;
+    rdfs:isDefinedBy onto: .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processStep> a owl:ObjectProperty ;
+    rdfs:label "process step"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Lineage> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processor> a owl:ObjectProperty ;
+    rdfs:label "processor"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/citation#ResponsibleParty> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#scaleDenominator> a owl:ObjectProperty ;
+    rdfs:label "scale denominator"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/metadata#RepresentativeFraction> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceCitation> a owl:ObjectProperty ;
+    rdfs:label "source citation"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/citation#Citation> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceExtent> a owl:ObjectProperty ;
+    rdfs:label "source extent"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/extent#Extent> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceReferenceSystem> a owl:ObjectProperty ;
+    rdfs:label "source reference system"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/metadata#ReferenceSystem> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Lineage> a owl:Class ;
+    rdfs:label "Lineage"^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#statement> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processStep> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processStep> ] ;
+    skos:notation "LI_Lineage"^^ns1:ISOClassName .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceStep> a owl:ObjectProperty ;
+    rdfs:label "source step"^^xsd:string ;
+    rdfs:domain <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+    owl:inverseOf <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> a owl:ObjectProperty ;
+    rdfs:label "source"^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Lineage> <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+    owl:inverseOf <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceStep> .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> a owl:Class ;
+    rdfs:label "Process step"^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#description> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#rationale> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processor> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/citation#ResponsibleParty> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processor> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#dateTime> ] ;
+    skos:notation "LI_ProcessStep"^^ns1:ISOClassName .
+
+<http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source> a owl:Class ;
+    rdfs:label "Source"^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceReferenceSystem> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/extent#Extent> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceExtent> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/metadata#ReferenceSystem> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceReferenceSystem> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#scaleDenominator> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/citation#Citation> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceCitation> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceExtent> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceStep> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceCitation> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://def.seegrid.csiro.au/isotc211/iso19115/2003/metadata#RepresentativeFraction> ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#scaleDenominator> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#description> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceStep> ] ;
+    skos:notation "LI_Source"^^ns1:ISOClassName .
+
+onto: a owl:Ontology ;
+    dc:creator "Simon Jonathan David COX\\r\\nCSIRO"^^xsd:string ;
+    dc:date "2012-05-25T00:00:00"^^xsd:dateTime ;
+    dc:description "An OWL representation of parts of the Geographic Metadata model described in ISO 19115:2003 with Corrigendum 2006 - LI Package"^^xsd:string ;
+    dc:source "ISO 19115:2003\\r\\nISO 19115:2006 Corrigendum"^^xsd:string ;
+    dc:title "OWL representation of ISO 19115 (Geographic Information - Metadata - Lineage package)"^^xsd:string ;
+    dcterms:created "2012-05-18T00:00:00"^^xsd:dateTime ;
+    dcterms:hasPart <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Lineage>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#ProcessStep>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#Source>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#dateTime>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#description>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processStep>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#processor>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#rationale>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#scaleDenominator>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#source>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceCitation>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceExtent>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceReferenceSystem>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#sourceStep>,
+        <http://def.seegrid.csiro.au/isotc211/iso19115/2003/lineage#statement> ;
+    dcterms:modified "2012-10-26T00:00:00"^^xsd:dateTime ;
+    owl:imports <http://def.seegrid.csiro.au/isotc211/iso19150/-2/2012/basic> ;
+    owl:priorVersion <https://www.seegrid.csiro.au/subversion/xmml/ontologies/tags/201210/ISOTC211/HM/lineage.rdf> ;
+    owl:versionIRI <https://www.seegrid.csiro.au/subversion/xmml/ontologies/tags/201305/ISOTC211/HM/lineage.rdf> .
+

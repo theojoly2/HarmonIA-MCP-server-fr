@@ -1,0 +1,59 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://data.ordnancesurvey.co.uk/ontology/geometry/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "Geometry Ontology"^^xsd:string ;
+    dc:creator "Ordnance Survey."^^xsd:string ;
+    dcterms:creator <http://data.ordnancesurvey.co.uk/id/ordnancesurvey> ;
+    dcterms:publisher <http://data.ordnancesurvey.co.uk/id/ordnancesurvey> ;
+    rdfs:comment "A ontology to describe abstract geometries."^^xsd:string ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> .
+
+onto:1kmGridSquare a owl:Class ;
+    rdfs:label "1 km Grid Square" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> .
+
+onto:20kmGridSquare a owl:Class ;
+    rdfs:label "20km Grid Square" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> .
+
+onto:extent a owl:ObjectProperty ;
+    rdfs:label "extent"^^xsd:string ;
+    rdfs:comment "This relates any object to is two-dimensional geometrical extent."^^xsd:string ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> ;
+    rdfs:range onto:AbstractGeometry .
+
+onto:hectares a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "The area of a geometry in hectres.",
+        "hectres" ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> ;
+    rdfs:range xsd:double .
+
+dc:creator a owl:AnnotationProperty .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+onto:asGML a owl:DatatypeProperty ;
+    rdfs:label "as GML" ;
+    rdfs:comment "This property relates abstract geometry types to a GML (Geographic Markup Language) representation of that geometry. This GML representation is stored as an rdf:XMLLiteral." ;
+    rdfs:domain onto:AbstractGeometry ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> ;
+    rdfs:range rdf:XMLLiteral .
+
+onto:AbstractGeometry a owl:Class ;
+    rdfs:label "Abstract Geometry" ;
+    rdfs:comment "A superclass of all geometry types such as points, lines and polygons. This is currently a place holder class and likely to change when some standard way of representing geometries in RDF is agreed." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/geometry.owl> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange rdf:XMLLiteral ;
+            owl:onProperty onto:asGML ] .
+

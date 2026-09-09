@@ -1,0 +1,520 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://purl.org/ontology/chord/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Chord a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Chord" ;
+    rdfs:comment "Two or more notes played together." ;
+    rdfs:isDefinedBy onto: .
+
+onto:ChordEvent a rdfs:Class,
+        owl:Class ;
+    rdfs:label "ChordEvent" ;
+    rdfs:comment "A chord being played." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> .
+
+onto:Interval a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Interval" ;
+    rdfs:comment "An interval above the root of a chord." ;
+    rdfs:isDefinedBy onto: .
+
+onto:Modifier a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Modifier" ;
+    rdfs:comment "A modifier applied to a note to change its pitch." ;
+    rdfs:isDefinedBy onto: .
+
+onto:Natural a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Natural" ;
+    rdfs:comment "One of the seven natural notes of the Western music system." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Note .
+
+onto:Note a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Note" ;
+    rdfs:comment "FIXME" ;
+    rdfs:isDefinedBy onto: .
+
+onto:ScaleInterval a rdfs:Class,
+        owl:Class ;
+    rdfs:label "ScaleInterval" ;
+    rdfs:comment "An interval in the root scale, made up of the degree of the scale and optional modifier." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Interval .
+
+onto:SemitoneInterval a rdfs:Class,
+        owl:Class ;
+    rdfs:label "SemitoneInterval" ;
+    rdfs:comment "A semitone interval." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Interval .
+
+onto:aug a onto:Chord ;
+    rdfs:label "aug" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ;
+            onto:modifier onto:sharp ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "An augmented chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Augmented_chord> .
+
+onto:base_chord a rdf:Property ;
+    rdfs:label "base_chord" ;
+    rdfs:comment "The chord on which this one is based. \\n\\t\\t\\tFor example, a C7 chord might have chord:Cmaj as its base chord." ;
+    rdfs:domain onto:Chord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Chord .
+
+onto:bass a rdf:Property ;
+    rdfs:label "bass" ;
+    rdfs:comment "The bass note of the chord (indicates the inversion)." ;
+    rdfs:domain onto:Chord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Interval .
+
+onto:chord a rdf:Property ;
+    rdfs:label "chord" ;
+    rdfs:comment "The chord associated with a chord event." ;
+    rdfs:domain onto:ChordEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Chord .
+
+onto:degree a rdf:Property ;
+    rdfs:label "degree" ;
+    rdfs:comment "The degree of an interval based on the root of a chord." ;
+    rdfs:domain onto:ScaleInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer .
+
+onto:dim a onto:Chord ;
+    rdfs:label "dim" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "5" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A diminished chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Diminished_chord> .
+
+onto:dim7 a onto:Chord ;
+    rdfs:label "dim7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:doubleflat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ;
+            onto:modifier onto:flat ] ;
+    rdfs:comment "A diminished seventh chord." ;
+    rdfs:isDefinedBy onto: .
+
+onto:doublesharp a onto:Modifier ;
+    rdfs:label "double sharp" ;
+    rdfs:isDefinedBy onto: .
+
+onto:hdim7 a onto:Chord ;
+    rdfs:label "hdim7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A half-diminished seventh chord." ;
+    rdfs:isDefinedBy onto: .
+
+onto:interval a rdf:Property ;
+    rdfs:label "interval" ;
+    rdfs:comment "An interval from the root which is part of the chord." ;
+    rdfs:domain onto:Chord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Interval .
+
+onto:maj a onto:Chord ;
+    rdfs:label "maj" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ] ;
+    rdfs:comment "A major chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Major_chord> .
+
+onto:maj6 a onto:Chord ;
+    rdfs:label "maj6" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "6" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ] ;
+    rdfs:comment "A major sixth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Major_chord>,
+        <http://dbpedia.org/resource/Sixth_chord> .
+
+onto:maj7 a onto:Chord ;
+    rdfs:label "maj7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A major seventh chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Major_seventh_chord> .
+
+onto:maj9 a onto:Chord ;
+    rdfs:label "maj9" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "7" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "9" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A major ninth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Major_chord> .
+
+onto:min a onto:Chord ;
+    rdfs:label "min" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ] ;
+    rdfs:comment "A minor chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Minor_chord> .
+
+onto:min6 a onto:Chord ;
+    rdfs:label "min6" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "6" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ] ;
+    rdfs:comment "A minor sixth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Minor_chord>,
+        <http://dbpedia.org/resource/Sixth_chord> .
+
+onto:min7 a onto:Chord ;
+    rdfs:label "min7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ] ;
+    rdfs:comment "A minor seventh chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Minor_seventh_chord> .
+
+onto:min9 a onto:Chord ;
+    rdfs:label "min9" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "9" ] ;
+    rdfs:comment "A minor ninth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Minor_chord> .
+
+onto:minmaj7 a onto:Chord ;
+    rdfs:label "minmaj7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A minor (major 7th) chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Minor_major_seventh_chord> .
+
+onto:modifier a rdf:Property ;
+    rdfs:label "modifier" ;
+    rdfs:comment "A modification to a note's pitch." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Note onto:ScaleInterval ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Modifier .
+
+onto:natural a rdf:Property ;
+    rdfs:label "natural" ;
+    rdfs:comment "The natural from which this note is derived." ;
+    rdfs:domain onto:Note ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Natural .
+
+onto:ninth a onto:Chord ;
+    rdfs:label "9" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "9" ] ;
+    rdfs:comment "A ninth chord." ;
+    rdfs:isDefinedBy onto: .
+
+onto:noChord a onto:Chord ;
+    rdfs:label "noChord" ;
+    rdfs:comment "Indicates that no chord is played." ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Ab> a onto:Note ;
+    rdfs:label "Ab" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/A> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/As> a onto:Note ;
+    rdfs:label "A#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/A> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Bb> a onto:Note ;
+    rdfs:label "Bb" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/B> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Bs> a onto:Note ;
+    rdfs:label "B#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/B> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Cb> a onto:Note ;
+    rdfs:label "Cb" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/C> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Cs> a onto:Note ;
+    rdfs:label "C#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/C> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Db> a onto:Note ;
+    rdfs:label "Db" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/D> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Ds> a onto:Note ;
+    rdfs:label "D#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/D> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Eb> a onto:Note ;
+    rdfs:label "Eb" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/E> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Es> a onto:Note ;
+    rdfs:label "E#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/E> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Fb> a onto:Note ;
+    rdfs:label "Fb" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/F> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Fs> a onto:Note ;
+    rdfs:label "F#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/F> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Gb> a onto:Note ;
+    rdfs:label "Gb" ;
+    onto:modifier onto:flat ;
+    onto:natural <http://purl.org/ontology/chord/note/G> ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/Gs> a onto:Note ;
+    rdfs:label "G#" ;
+    onto:modifier onto:sharp ;
+    onto:natural <http://purl.org/ontology/chord/note/G> ;
+    rdfs:isDefinedBy onto: .
+
+onto:root a rdf:Property ;
+    rdfs:label "root" ;
+    rdfs:comment "The root note of the chord." ;
+    rdfs:domain onto:Chord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Note .
+
+onto:semitone_interval a rdf:Property ;
+    rdfs:label "semitone_interval" ;
+    rdfs:comment "An interval measured in semitones." ;
+    rdfs:domain onto:SemitoneInterval ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer .
+
+onto:seventh a onto:Chord ;
+    rdfs:label "7" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "3" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "7" ;
+            onto:modifier onto:flat ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A seventh chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Seventh_chord> .
+
+onto:sus2 a onto:Chord ;
+    rdfs:label "sus2" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "1" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "2" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ] ;
+    rdfs:comment "A suspended fourth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Suspended_chord> .
+
+onto:sus4 a onto:Chord ;
+    rdfs:label "sus4" ;
+    onto:interval [ a onto:ScaleInterval ;
+            onto:degree "4" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "5" ],
+        [ a onto:ScaleInterval ;
+            onto:degree "1" ] ;
+    rdfs:comment "A suspended fourth chord." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://dbpedia.org/resource/Suspended_chord> .
+
+onto:without_interval a rdf:Property ;
+    rdfs:label "without_interval" ;
+    rdfs:comment "A degree of the scale expected in the chord but not actually present here." ;
+    rdfs:domain onto:Chord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ScaleInterval .
+
+onto:doubleflat a onto:Modifier ;
+    rdfs:label "double flat" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/A> a onto:Natural ;
+    rdfs:label "A" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/B> a onto:Natural ;
+    rdfs:label "B" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/C> a onto:Natural ;
+    rdfs:label "C" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/D> a onto:Natural ;
+    rdfs:label "D" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/E> a onto:Natural ;
+    rdfs:label "E" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/F> a onto:Natural ;
+    rdfs:label "F" ;
+    rdfs:isDefinedBy onto: .
+
+<http://purl.org/ontology/chord/note/G> a onto:Natural ;
+    rdfs:label "G" ;
+    rdfs:isDefinedBy onto: .
+
+onto:sharp a onto:Modifier ;
+    rdfs:label "sharp" ;
+    rdfs:isDefinedBy onto: .
+
+onto:flat a onto:Modifier ;
+    rdfs:label "flat" ;
+    rdfs:isDefinedBy onto: .
+
+onto: a owl:Ontology ;
+    dc:date "2007-09-11" ;
+    dc:description "FIXME\\n\\t\\t" ;
+    dc:title "The Chord Ontology" ;
+    owl:versionInfo "Revision: 0.1" ;
+    foaf:maker <http://chrissutton.org/me> .
+

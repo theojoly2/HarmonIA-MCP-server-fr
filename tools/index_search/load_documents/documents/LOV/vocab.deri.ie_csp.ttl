@@ -1,0 +1,152 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/ns/adms#> .
+@prefix onto: <http://vocab.deri.ie/csp> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://vocab.deri.ie/csp#And> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "And" ;
+    rdfs:comment "Models a conjunctive logical sub-expression AND (BoolExpr1 BoolExpr2 ... BoolExprn)." ;
+    rdfs:subClassOf <http://vocab.deri.ie/csp#BoolExpr> .
+
+<http://vocab.deri.ie/csp#BoolExpr> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Boolean expression" ;
+    rdfs:comment "A Boolean expression." .
+
+<http://vocab.deri.ie/csp#Fluent> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Fluent" ;
+    rdfs:comment "A fluent is the association of a variable name and a subset of its domain of values." ;
+    rdfs:subClassOf <http://vocab.deri.ie/csp#BoolExpr> .
+
+<http://vocab.deri.ie/csp#Not> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Not" ;
+    rdfs:comment "Models the negation of a logical sub-expression NOT(BoolExpr)." ;
+    rdfs:subClassOf <http://vocab.deri.ie/csp#BoolExpr> ;
+    owl:disjointWith <http://vocab.deri.ie/csp#And>,
+        <http://vocab.deri.ie/csp#Or> .
+
+<http://vocab.deri.ie/csp#Or> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Or" ;
+    rdfs:comment "Models a disjunctive logical sub-expression OR (BoolExpr1 BoolExpr2 ... BoolExprn)." ;
+    rdfs:subClassOf <http://vocab.deri.ie/csp#BoolExpr> ;
+    owl:disjointWith <http://vocab.deri.ie/csp#And>,
+        <http://vocab.deri.ie/csp#Not> .
+
+<http://vocab.deri.ie/csp#Relation> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Relation" ;
+    rdfs:comment "The list of all valid combinations of values of a set of variables." .
+
+<http://vocab.deri.ie/csp#Solution> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Solution" ;
+    rdfs:comment "A solution of the constraint satisfaction problem." .
+
+<http://vocab.deri.ie/csp#DERI%2C%20NUI%20Galway> a dcterms:Agent ;
+    foaf:homepage <http://deri.ie> ;
+    foaf:member <http://vocab.deri.ie/csp#alepas>,
+        <http://vocab.deri.ie/csp#fbadra> ;
+    foaf:name "DERI, NUI Galway" .
+
+<http://vocab.deri.ie/csp#Renault> a dcterms:Agent ;
+    foaf:homepage onto: ;
+    foaf:member <http://vocab.deri.ie/csp#fpservant> ;
+    foaf:name "Renault" .
+
+<http://vocab.deri.ie/csp#and> a rdf:Property ;
+    rdfs:label "and" ;
+    rdfs:comment "Links a logical conjunction operator to its arguments." ;
+    rdfs:domain <http://vocab.deri.ie/csp#And> ;
+    rdfs:range <http://vocab.deri.ie/csp#BoolExpr> .
+
+<http://vocab.deri.ie/csp#isSatisfiable> a rdf:Property ;
+    rdfs:label "is satisfiable" ;
+    rdfs:comment "Boolean flag indicating for a relation if each supported combination of values must be satisfiable or not." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Relation> .
+
+<http://vocab.deri.ie/csp#not> a rdf:Property ;
+    rdfs:label "not" ;
+    rdfs:comment "Links a logical negation operator to its argument." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Not> ;
+    rdfs:range <http://vocab.deri.ie/csp#BoolExpr> .
+
+<http://vocab.deri.ie/csp#or> a rdf:Property ;
+    rdfs:label "or" ;
+    rdfs:comment "Links a logical disjunction operator to its arguments." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Or> ;
+    rdfs:range <http://vocab.deri.ie/csp#BoolExpr> .
+
+<http://vocab.deri.ie/csp#rdf> a ns1:SemanticDistribution ;
+    dcterms:FileFormat onto: ;
+    ns1:accessURL "http://vocab.deri.ie/csp.rdf" ;
+    ns1:status <http://purl.org/adms/status/Completed> .
+
+<http://vocab.deri.ie/csp#supports> a rdf:Property ;
+    rdfs:label "supports" ;
+    rdfs:comment "Specifies all supported value combinations in the relation. " ;
+    rdfs:domain <http://vocab.deri.ie/csp#Relation> ;
+    rdfs:range rdfs:Resource .
+
+<http://vocab.deri.ie/csp#ttl> a ns1:SemanticDistribution ;
+    dcterms:FileFormat onto: ;
+    ns1:accessURL "http://vocab.deri.ie/csp.ttl" ;
+    ns1:status <http://purl.org/adms/status/Completed> .
+
+<http://vocab.deri.ie/csp#val> a rdf:Property ;
+    rdfs:label "has value" ;
+    rdfs:comment "A value associated with a fluent." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Fluent> ;
+    rdfs:range rdfs:Resource .
+
+<http://vocab.deri.ie/csp#var> a rdf:Property ;
+    rdfs:label "has variable" ;
+    rdfs:comment "The variable associated with a fluent." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Fluent> ;
+    rdfs:range rdfs:Resource .
+
+<http://vocab.deri.ie/csp#variable> a rdf:Property ;
+    rdfs:label "variable" ;
+    rdfs:comment "A variable can be seen as a function associating a value to an object, and is therefore modelled as an RDF property that points to one (or many) value(s)." ;
+    rdfs:domain <http://vocab.deri.ie/csp#Solution> ;
+    rdfs:range rdfs:Resource .
+
+<http://vocab.deri.ie/csp#alepas> a foaf:Person ;
+    foaf:homepage <http://apassant.net> ;
+    foaf:name "Alexandre Passant" .
+
+<http://vocab.deri.ie/csp#fbadra> a foaf:Person ;
+    foaf:homepage <http://fadi.lautre.net> ;
+    foaf:name "Fadi Badra" .
+
+<http://vocab.deri.ie/csp#fpservant> a foaf:Person ;
+    foaf:homepage onto: ;
+    foaf:mbox <mailto:francois-paul.servant@renault.com> ;
+    foaf:name "François-Paul Servant" .
+
+onto: a owl:Ontology,
+        ns1:SemanticAsset ;
+    dc:creator <http://vocab.deri.ie/csp#alepas>,
+        <http://vocab.deri.ie/csp#fbadra>,
+        <http://vocab.deri.ie/csp#fpservant> ;
+    dcterms:created "2011-03-09"^^xsd:date ;
+    dcterms:description "A vocabulary to represent Constraint Satisfaction Problems (CSPs) in which constraints are expressed by Boolean expressions on fluents.</b>" ;
+    dcterms:modified "2011-06-29"^^xsd:date ;
+    dcterms:partOf <http://vocab.deri.ie> ;
+    dcterms:publisher "http://vocab.deri.ie/csp#DERI%2C%20NUI%20Galway" ;
+    dcterms:status <http://purl.org/adms/status/UnderDevelopment> ;
+    dcterms:title "CSP - A vocabulary to represent Constraint Satisfaction Problems." ;
+    dcterms:type <http://purl.org/adms/assettype/Ontology> ;
+    vann:preferredNamespacePrefix "csp" ;
+    vann:preferredNamespaceUri "http://vocab.deri.ie/csp#" ;
+    foaf:homepage onto:.html .
+

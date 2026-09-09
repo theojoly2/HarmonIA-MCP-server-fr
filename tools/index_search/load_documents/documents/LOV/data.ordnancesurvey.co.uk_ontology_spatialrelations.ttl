@@ -1,0 +1,150 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix onto: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:NamedIndividual,
+        owl:Ontology,
+        owl:Thing ;
+    rdfs:label "Spatial Relations Ontology"^^xsd:string ;
+    dc:contributor "John Goodwin" ;
+    dc:creator "Ordnance Survey"^^xsd:string ;
+    dc:description "An ontology describing basic spatial relations."^^xsd:string ;
+    dc:title "Spatial Relations Ontology"@en ;
+    dcterms:creator <http://data.ordnancesurvey.co.uk/id/ordnancesurvey> ;
+    dcterms:publisher <http://data.ordnancesurvey.co.uk/id/ordnancesurvey> ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    owl:imports <http://www.opengis.net/ont/geosparql> .
+
+onto:containedBy a owl:ObjectProperty ;
+    rdfs:seeAlso onto:within ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:deprecated true .
+
+onto:easting a owl:DatatypeProperty ;
+    rdfs:label "easting" ;
+    rdfs:comment "Distance in metres east of National Grid origin."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> .
+
+onto:northing a owl:DatatypeProperty ;
+    rdfs:label "northing" ;
+    rdfs:comment "Distance in metres north of National Grid origin."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> .
+
+onto:oneKMGridReference a owl:ObjectProperty ;
+    rdfs:label "1km Grid Reference" ;
+    rdfs:comment "The National Grid reference identifying the km square in which the name falls." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range <http://data.ordnancesurvey.co.uk/ontology/geometry/1kmGridSquare> .
+
+onto:twentyKMGridReference a owl:ObjectProperty ;
+    rdfs:label "20km Grid Reference" ;
+    rdfs:comment "The National Grid reference identifying the 20km square in which the name falls." ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range <http://data.ordnancesurvey.co.uk/ontology/geometry/20kmGridSquare> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+rdfs:label a owl:AnnotationProperty .
+
+rdfs:seeAlso a owl:AnnotationProperty .
+
+owl:deprecated a owl:AnnotationProperty .
+
+<http://data.ordnancesurvey.co.uk/ontology/geometry/1kmGridSquare> a owl:Class .
+
+<http://data.ordnancesurvey.co.uk/ontology/geometry/20kmGridSquare> a owl:Class .
+
+owl:Thing a owl:Class .
+
+onto:partiallyOverlaps a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "overlaps"@en ;
+    rdfs:comment "The boundaries and interiors of the two objects intersect."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfOverlaps ;
+    owl:propertyChainAxiom ( onto:partiallyOverlaps onto:equals ),
+        ( onto:equals onto:partiallyOverlaps ) .
+
+onto:touches a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "touches"@en ;
+    rdfs:comment "The boundaries of the two objects intersect but their interiors do not."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfTouches ;
+    owl:propertyChainAxiom ( onto:equals onto:touches ),
+        ( onto:touches onto:equals ) .
+
+onto:contains a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:comment "The interior of one object completely contains the interior of the other. Their boundaries may or may not intersect."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfContains ;
+    owl:propertyChainAxiom ( onto:equals onto:contains ),
+        ( onto:contains onto:equals ) .
+
+onto:disjoint a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "disjoint"@en ;
+    rdfs:comment "The boundaries and interiors of the two objects do not intersect, i.e. they have no points in common."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfDisjoint ;
+    owl:propertyChainAxiom ( onto:disjoint onto:contains ),
+        ( onto:equals onto:disjoint ),
+        ( onto:disjoint onto:equals ),
+        ( onto:within onto:disjoint ) .
+
+onto:within a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "within"@en ;
+    rdfs:comment "The interior of one object is completely within the interior of the other object. Their boundaries may or may not intersect."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfWithin ;
+    owl:inverseOf onto:contains ;
+    owl:propertyChainAxiom ( onto:equals onto:within ),
+        ( onto:within onto:equals ) .
+
+owl:topObjectProperty a owl:ObjectProperty .
+
+onto:equals a owl:ObjectProperty,
+        owl:ReflexiveProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "equal"@en ;
+    rdfs:comment "The two objects have the same boundary and the same interior."^^xsd:string ;
+    rdfs:domain geo:SpatialObject ;
+    rdfs:isDefinedBy <http://www.ordnancesurvey.co.uk/ontology/spatialrelations.owl> ;
+    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:equivalentProperty geo:sfEquals .
+

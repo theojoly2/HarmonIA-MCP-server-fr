@@ -1,0 +1,149 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://vocab.deri.ie/orca#> .
+@prefix ns2: <http://www.w3.org/ns/adms#> .
+@prefix onto: <http://vocab.deri.ie/orca> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:Basis a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Basis" ;
+    rdfs:comment "Indicates the basis of the knowledge" .
+
+ns1:ConfidenceLevel a rdfs:Class,
+        owl:Class ;
+    rdfs:label "ConfidenceLevel" ;
+    rdfs:comment "Indicates how certain the knowledge is" .
+
+ns1:Source a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Source" ;
+    rdfs:comment "Indicates the source of the knowledge" .
+
+ns1:AuthorExplicitly a ns1:Source ;
+    rdfs:label "author, explicitly"@en ;
+    rdfs:comment "Indicates knowledge explicitly attributed to the author."@en .
+
+ns1:AuthorImplicitly a ns1:Source ;
+    rdfs:label "author, implicitly"@en ;
+    rdfs:comment "Indicates knowledge implicitly attributed to the author."@en .
+
+ns1:DERI a dcterms:Agent ;
+    foaf:homepage onto: ;
+    foaf:member ns1:Jodi%20Schneider ;
+    foaf:name "DERI" .
+
+ns1:Data a ns1:Basis ;
+    rdfs:label "data"@en ;
+    rdfs:comment "Indicates knowledge known by data."@en .
+
+ns1:NamedExternalSource a ns1:Source ;
+    rdfs:label "named external source"@en ;
+    rdfs:comment "Indicates knowledge attributed to a named external source (either explicitly or as a reference)."@en .
+
+ns1:NamelessExternalSource a ns1:Source ;
+    rdfs:label "nameless external source"@en ;
+    rdfs:comment "Indicates knowledge attributed to a nameless external source."@en .
+
+ns1:NoSource a ns1:Source ;
+    rdfs:label "no source"@en ;
+    rdfs:comment "Indicates knowledge not attributed to any source."@en .
+
+ns1:Reasoning a ns1:Basis ;
+    rdfs:label "reasoning"@en ;
+    rdfs:comment "Indicates knowledge known by reasoning."@en .
+
+ns1:Unidentified a ns1:Basis ;
+    rdfs:label "unidentified"@en ;
+    rdfs:comment "Indicates knowledge whose basis is unidentified."@en .
+
+ns1:directlyLessCertainThan a rdf:Property ;
+    rdfs:label "directlyLessCertainThan" ;
+    rdfs:subPropertyOf ns1:lessCertain .
+
+ns1:directlyMoreCertainThan a rdf:Property ;
+    rdfs:label "directlyMoreCertainThan" ;
+    rdfs:subPropertyOf ns1:moreCertain .
+
+ns1:hasBasis a rdf:Property ;
+    rdfs:label "hasBasis" ;
+    rdfs:comment "Indicates the basis of the knowledge." ;
+    rdfs:range ns1:Basis .
+
+ns1:hasConfidenceLevel a rdf:Property ;
+    rdfs:label "hasConfidenceLevel" ;
+    rdfs:comment "Indicates the confidence/certainty level of the knowledge." ;
+    rdfs:range ns1:ConfidenceLevel .
+
+ns1:hasSource a rdf:Property ;
+    rdfs:label "hasSource" ;
+    rdfs:comment "Indicates the source of the knowledge." ;
+    rdfs:range ns1:Source .
+
+ns1:rdf a ns2:SemanticDistribution ;
+    dcterms:FileFormat onto: ;
+    ns2:accessURL "http://vocab.deri.ie/orca.rdf" ;
+    ns2:status <http://purl.org/adms/status/Completed> .
+
+ns1:ttl a ns2:SemanticDistribution ;
+    dcterms:FileFormat onto: ;
+    ns2:accessURL "http://vocab.deri.ie/orca.ttl" ;
+    ns2:status <http://purl.org/adms/status/Completed> .
+
+ns1:DoxasticKnowledge a ns1:ConfidenceLevel ;
+    rdfs:label "doxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact"@en ;
+    ns1:directlyMoreCertainThan ns1:DubitativeKnowledge ;
+    rdfs:comment "Indicates duoxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact."@en .
+
+ns1:LackOfKnowledge a ns1:ConfidenceLevel ;
+    rdfs:label "lack of knowledge"@en ;
+    ns1:directlyLessCertainThan ns1:HypotheticalKnowledge ;
+    rdfs:comment "Indicates lack of knowledge."@en .
+
+ns1:ahogan a foaf:Person ;
+    foaf:homepage onto: ;
+    foaf:name "Aidan Hogan" .
+
+ns1:lessCertain a rdf:Property ;
+    rdfs:label "lessCertain" .
+
+ns1:moreCertain a rdf:Property ;
+    rdfs:label "moreCertain" .
+
+ns1:DubitativeKnowledge a ns1:ConfidenceLevel ;
+    rdfs:label "dubitative knowledge: higher likelihood but short of complete certainty"@en ;
+    ns1:directlyLessCertainThan ns1:DoxasticKnowledge ;
+    ns1:directlyMoreCertainThan ns1:HypotheticalKnowledge ;
+    rdfs:comment "Indicates dubitative knowledge: higher likelihood but short of complete certainty."@en .
+
+ns1:HypotheticalKnowledge a ns1:ConfidenceLevel ;
+    rdfs:label "hypothetical knowledge: low certainty"@en ;
+    ns1:directlyLessCertainThan ns1:DubitativeKnowledge ;
+    ns1:directlyMoreCertainThan ns1:LackOfKnowledge ;
+    rdfs:comment "Indicates hypothetical knowledge: low certainty."@en .
+
+ns1:Jodi%20Schneider a foaf:Person ;
+    foaf:homepage onto: ;
+    foaf:mbox <mailto:jodi.schneider@deri.org> ;
+    foaf:name "Jodi Schneider" .
+
+onto: a owl:Ontology,
+        ns2:SemanticAsset ;
+    dc:creator ns1:Jodi%20Schneider,
+        ns1:ahogan ;
+    dcterms:created "2012-07-19"^^xsd:date ;
+    dcterms:description "orca, the Ontology of Reasoning, Certainty and Attribution, is an ontology for characterizing the certainty of information, how it is known, and its source" ;
+    dcterms:modified "2012-11-09"^^xsd:date ;
+    dcterms:partOf <http://vocab.deri.ie> ;
+    dcterms:status <http://purl.org/adms/status/UnderDevelopment> ;
+    dcterms:title "orca, the Ontology of Reasoning, Certainty and Attribution" ;
+    dcterms:type <http://purl.org/adms/assettype/Ontology> ;
+    vann:preferredNamespacePrefix "orca" ;
+    vann:preferredNamespaceUri "http://vocab.deri.ie/orca#" ;
+    foaf:homepage onto:.html .
+

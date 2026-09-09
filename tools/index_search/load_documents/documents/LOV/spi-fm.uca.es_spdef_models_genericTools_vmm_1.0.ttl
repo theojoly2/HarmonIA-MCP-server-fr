@@ -1,0 +1,158 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The Connector entity" ;
+    rdfs:comment "Clase que representa a una determinada relación entre\\n   dos elementos de modelado." ;
+    rdfs:isDefinedBy onto: .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The Diagram entity" ;
+    rdfs:comment "Clase que representa a un determinado diagrama modelado\\n   con algún lenguaje visual." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#Model> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The Element entity" ;
+    rdfs:comment "Enumeración con los posibles tipos de elementos que\\n   pueden participar en un diagrama. Casos de uso, clases o componentes\\n   son ejemplos de tipos de elementos en modelos UML." ;
+    rdfs:isDefinedBy onto: .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#ModelRepository> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The ModelRepository entity" ;
+    rdfs:comment "Clase contenedora de todos los proyectos gestionados con\\n   la herramienta de modelado." ;
+    rdfs:isDefinedBy onto: .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The Package entity" ;
+    rdfs:comment "Clase que representa a un paquete de modelos, con el\\n   cual organizar los diferentes modelos." ;
+    rdfs:isDefinedBy onto: .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Project> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "The Project entity" ;
+    rdfs:comment "Clase contenedora de todos los modelos generados para un\\n   determinado proyecto." ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#Project>,
+        doap:Project .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#connectors> a rdf:Property ;
+    rdfs:label "The connectors reference" ;
+    rdfs:comment "Conectores de un determinado elemento de modelado" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#containedElements> a rdf:Property ;
+    rdfs:label "The containedElements reference" ;
+    rdfs:comment "Elementos de modelado contenidos en un determinado diagrama" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#description> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "The description attribute" ;
+    rdfs:comment "Descripción de un paquete, diagrama, elemento, conector o proyecto" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Project> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dc:description,
+        <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#description> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#diagrams> a rdf:Property ;
+    rdfs:label "The diagrams reference" ;
+    rdfs:comment "Diagramas (modelos) includos en un paquete" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram> ;
+    rdfs:subClassOf <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#models> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#elements> a rdf:Property ;
+    rdfs:label "The elements reference" ;
+    rdfs:comment "Elementos de modelado incluidos en un paquete" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#embeddedPackages> a rdf:Property ;
+    rdfs:label "The embeddedPackages reference" ;
+    rdfs:comment "Paquetes incluidos dentro de un paquete de modelos" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#name> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "The name attribute" ;
+    rdfs:comment "Nombre de un paquete, diagrama, elemento, conector o proyecto" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Project> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dc:title,
+        <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#name> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#packages> a rdf:Property ;
+    rdfs:label "The packages reference" ;
+    rdfs:comment "Paquetes de modelos de un determinado proyecto" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Project> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Package> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#projects> a rdf:Property ;
+    rdfs:label "The projects reference" ;
+    rdfs:comment "Proyectos registrados en la herramienta de modelado visual" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#ModelRepository> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Project> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#target> a rdf:Property ;
+    rdfs:label "The target reference" ;
+    rdfs:comment "Elemento destino de un conector entre dos elementos de modelado" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#type> a rdf:Property ;
+    rdfs:label "The type attribute" ;
+    rdfs:comment "Tipo de un diagrama, elemento o conector entre elementos de modelado" ;
+    rdfs:domain <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Connector>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Diagram>,
+        <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#Element> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subClassOf <http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0#type> ;
+    rdfs:subPropertyOf dc:subject .
+
+<http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#ruizrube> a foaf:Person ;
+    foaf:name "Iván Ruiz Rube" .
+
+onto: a owl:Ontology ;
+    dc:creator <http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#ruizrube> ;
+    dc:description "<p>En Ingeniería del Software, así como en otras disciplinas, es habitual la utilización de herramientas de edición de diagramas mediante algún lenguaje visual. En particular, las herramientas de edición UML permiten construir modelos de software, de tal forma que permiten gestionar gran parte de los productos de trabajo de un proyecto. </p>\\n\\n<p>A partir del análisis de varias herramientas UML como Enterprise Architect, Visual Paradigm for UML o Rational Rose se ha diseñado este vocabulario. Este vocabulario permite representar la estructura básica de estas herramientas UML, aunque no excluye aquellas otras que permiten utilizar otros lenguajes visuales para el modelado de sistemas software u otras entidades.</p>" ;
+    dc:modified "2013-12-19"^^xsd:date ;
+    dc:title "Visual Modeling tool Model" ;
+    vann:preferredNamespacePrefix "vmm" ;
+    vann:preferredNamespaceUri "http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0#" ;
+    foaf:page onto:.html .
+

@@ -1,0 +1,188 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://data.press.net/ontology/stuff/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Intangible a owl:Class ;
+    rdfs:label "A base class for Intangible Stuff"@en ;
+    rdfs:comment "A base class for all intangible stuff (eg love, conservatism, fashion)"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Stuff ;
+    ns1:term_status "testing" .
+
+onto:Organization a owl:Class ;
+    rdfs:label "An Organization - a base class for instances of organizations"@en ;
+    rdfs:comment "An Organization - a base class for instances of organizations. Also a subclass of foaf:Organization"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Tangible,
+        foaf:Organization ;
+    ns1:term_status "testing" .
+
+onto:alias a owl:DatatypeProperty ;
+    rdfs:label "An alias label of a Stuff instance"@en ;
+    rdfs:comment "String property that indicates an alias of a Stuff instance. For example 'Television' might have an alias of 'TV'."@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf rdfs:label ;
+    ns1:term_status "testing" .
+
+onto:comment a owl:DatatypeProperty ;
+    rdfs:label "The definitive description of a Stuff instance"@en ;
+    rdfs:comment "String property that indicates the definitive description of a Stuff instance."@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf rdfs:comment ;
+    ns1:term_status "testing" .
+
+onto:dateOfBirth a owl:ObjectProperty ;
+    rdfs:label "A person's date of birth"@en ;
+    rdfs:comment "Property of a Person. A person's date of birth"@en ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range time:Instant ;
+    ns1:term_status "testing" .
+
+onto:dateOfDeath a owl:ObjectProperty ;
+    rdfs:label "A person's date of death"@en ;
+    rdfs:comment "Property of a Person. A person's date of death"@en ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range time:Instant ;
+    ns1:term_status "testing" .
+
+onto:hasImage a owl:ObjectProperty ;
+    rdfs:label "Property that associates images with domain entities."@en ;
+    rdfs:comment "Property that associates images with domain entities, e.g. official photograph, corporate logo"@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://data.press.net/ontology/asset/Image> ;
+    rdfs:subPropertyOf onto:hasAsset ;
+    ns1:term_status "testing" .
+
+onto:longName a owl:DatatypeProperty ;
+    rdfs:label "A long name of a Person or Organization"@en ;
+    rdfs:comment "String property that indicates the long name of a Person or Organization via foaf:Agent. Also infers Stuff label via pns:label. For example 'Manchester United F.C.'"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:label ;
+    ns1:term_status "testing" .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "The definitive name of a Person or Organization"@en ;
+    rdfs:comment "String property that indicates the definitive full name of a Person or Organization via foaf:Agent. Also infers Stuff label via pns:label"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:label,
+        foaf:name ;
+    ns1:term_status "testing" .
+
+onto:parentLocation a owl:TransitiveProperty ;
+    rdfs:label "A parent location"@en ;
+    rdfs:comment "Property of a Location. References the parent location of this location"@en ;
+    rdfs:domain onto:Location ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Location ;
+    ns1:term_status "testing" .
+
+onto:placeOfBirth a owl:ObjectProperty ;
+    rdfs:label "A person's place of birth"@en ;
+    rdfs:comment "Property of a Person. A person's place of birth"@en ;
+    rdfs:domain onto:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Location ;
+    rdfs:subPropertyOf onto:notablyAssociatedWith ;
+    ns1:term_status "testing" .
+
+onto:shortName a owl:DatatypeProperty ;
+    rdfs:label "A short name of a Person or Organization"@en ;
+    rdfs:comment "String property that indicates the short name of a Person or Organization via foaf:Agent. Also infers Stuff label via pns:label. For example 'Man Utd'"@en ;
+    rdfs:domain foaf:Agent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf onto:label ;
+    ns1:term_status "testing" .
+
+onto:hasAsset a owl:ObjectProperty ;
+    rdfs:label "Property that associates assets directly with domain entities."@en ;
+    rdfs:comment "Property that associates assets directly with domain entities, e.g. official biography, corporate logo"@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://data.press.net/ontology/asset/Asset> ;
+    ns1:term_status "testing" .
+
+onto:notablyAssociatedWith a owl:ObjectProperty ;
+    rdfs:label "Property that notably associates stuff together"@en ;
+    rdfs:comment "Property that notably associates stuff together, for example Karl Lagerfeld is notably associated with Fashion"@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Stuff ;
+    ns1:term_status "testing" .
+
+<http://uk.linkedin.com/in/jarredmcginnis> a foaf:Person ;
+    foaf:name "Jarred McGinnis" .
+
+<http://uk.linkedin.com/in/pauliharman> a foaf:Person ;
+    foaf:name "Paul Harman" .
+
+<http://uk.linkedin.com/in/paulwilton> a foaf:Person ;
+    foaf:name "Paul Wilton" .
+
+onto:Location a owl:Class ;
+    rdfs:label "A Location - a base class for Locations"@en ;
+    rdfs:comment "A Location - a base class for Locations. Also a subclass of geo:SpatialThing"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Tangible,
+        <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    ns1:term_status "testing" .
+
+onto:Person a owl:Class ;
+    rdfs:label "A Person - a base class for people instances."@en ;
+    rdfs:comment "A Person - a base class for people instances. Also a subclass of foaf:Person"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Tangible,
+        foaf:Person ;
+    ns1:term_status "testing" .
+
+onto:Tangible a owl:Class ;
+    rdfs:label "A base Class for Tangible Stuff"@en ;
+    rdfs:comment "A base class for all tangible stuff (eg people, places, physical things)"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Stuff ;
+    ns1:term_status "testing" .
+
+onto:label a owl:DatatypeProperty ;
+    rdfs:label "The definitive label of a Stuff instance"@en ;
+    rdfs:comment "String property that indicates the definitive label of a Stuff instance. This might be the full name of a Person, Organization or something Intangible"@en ;
+    rdfs:domain onto:Stuff ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf rdfs:label ;
+    ns1:term_status "testing" .
+
+onto:Stuff a owl:Class ;
+    rdfs:label "Generic Stuff Class"@en ;
+    rdfs:comment "Generic Stuff Class  - a base class for all domain stuff"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://data.press.net/ontology/identifier/Identifiable>,
+        <http://data.press.net/ontology/tag/Tag> ;
+    ns1:term_status "testing" .
+
+onto: a owl:Ontology ;
+    dcterms:created "2011-07-28"^^xsd:date ;
+    dcterms:license <http://creativecommons.org/licenses/by-nd/3.0/> ;
+    dcterms:modified "2012-06-18"^^xsd:date ;
+    dcterms:title "SNaP Stuff Ontology"@en ;
+    rdfs:comment "The Stuff Ontology models real world entities. There are two kinds of stuff: tangibles and intangibles. Tangible stuff includes persons, locations and organizations. Intangibles are abstract concepts such as smoking, feminism or love."@en ;
+    owl:versionInfo "0.4.1"^^xsd:string ;
+    foaf:maker <http://uk.linkedin.com/in/jarredmcginnis>,
+        <http://uk.linkedin.com/in/pauliharman>,
+        <http://uk.linkedin.com/in/paulwilton> .
+

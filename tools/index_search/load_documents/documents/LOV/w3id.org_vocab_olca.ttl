@@ -1,0 +1,89 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://w3id.org/vocab/olca#> .
+@prefix onto: <https://w3id.org/vocab/olca> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+dcterms:subject a rdf:Property ;
+    ns1:domainIncludes foaf:Document ;
+    ns1:rangeIncludes skos:Concept .
+
+<https://w3id.org/vocab/lingvoj#officialLanguage> a owl:ObjectProperty ;
+    rdfs:label "official language"@en ;
+    rdfs:comment "An official language of a country, project, organization or event."@en ;
+    rdfs:range <https://w3id.org/vocab/lingvoj#Lingvo> ;
+    ns1:domainIncludes <http://linkedevents.org/ontology/Event>,
+        <http://schema.org/Country>,
+        foaf:Organization,
+        foaf:Project .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "Ontology Loose Coupling Annotation"@en ;
+    dcterms:contributor <http://data.semanticweb.org/person/carlos-tejo-alonso>,
+        <https://w3id.org/people/gatemezing> ;
+    dcterms:creator <http://data.semanticweb.org/person/bernard-vatant> ;
+    dcterms:issued "2013-02-07" ;
+    dcterms:modified "2020-02-31" ;
+    dcterms:title "Ontology Loose Coupling Annotation"@en ;
+    vann:preferredNamespacePrefix "olca" ;
+    vann:preferredNamespaceUri ns1: ;
+    rdfs:comment "A vocabulary defining annotations enabling loose coupling between classes and properties in ontologies. Those annotations define with some accuracy the expected use of properties, in particular across vocabularies, without the formal constraints entailed by the use of OWL or RDFS constructions"@en ;
+    rdfs:seeAlso <http://www.w3.org/wiki/WebSchemas/SchemaDotOrgMetaSchema> ;
+    owl:versionIRI onto:_v2.0.ttl ;
+    owl:versionInfo "v2.0" .
+
+ns1:domainIncludes a owl:AnnotationProperty ;
+    rdfs:label "domain includes"@en ;
+    rdfs:comment "A loose coupling of a property to possible or expected class it can describe. This annotation is to be used when one does not want to enforce formally the coupling by rdfs:domain or some owl:Restriction constraint. "@en ;
+    ns1:domainIncludes rdf:Property,
+        owl:AnnotationProperty,
+        owl:DatatypeProperty,
+        owl:ObjectProperty ;
+    ns1:rangeIncludes rdfs:Class,
+        owl:Class .
+
+ns1:expectedProperty a owl:AnnotationProperty ;
+    rdfs:label "expected property"@en ;
+    rdfs:comment "A loose coupling of a class to possible or expected properties. This annotation is to be used when one does not want to enforce formally the coupling using rdfs:range or some owl:Restriction."@en ;
+    ns1:domainIncludes rdfs:Class,
+        owl:Class ;
+    ns1:rangeIncludes rdf:Property,
+        owl:AnnotationProperty,
+        owl:DatatypeProperty,
+        owl:ObjectProperty .
+
+ns1:rangeIncludes a owl:AnnotationProperty ;
+    rdfs:label "range includes"@en ;
+    rdfs:comment "A loose coupling of a property to possible or expected values. This annotation is to be used when one does not want to enforce formally the coupling by rdfs:range or some owl:Restriction constraint."@en ;
+    ns1:domainIncludes rdf:Property,
+        owl:AnnotationProperty,
+        owl:DatatypeProperty,
+        owl:ObjectProperty ;
+    ns1:rangeIncludes rdfs:Class,
+        owl:Class .
+
+ns1:similarClass a owl:AnnotationProperty ;
+    rdfs:label "similar class"@en ;
+    rdfs:comment "A loose similarity of classes, typically across ontologies . This annotation is to be used when one does not want to enforce formally the coupling by owl:equivalentClass. "@en ;
+    ns1:domainIncludes rdfs:Class,
+        owl:Class ;
+    ns1:rangeIncludes rdfs:Class,
+        owl:Class .
+
+ns1:similarProperty a owl:AnnotationProperty ;
+    rdfs:label "similar property"@en ;
+    rdfs:comment "A loose similary of properties, typically across ontologies . This annotation is to be used when one does not want to enforce formally the coupling by owl:equivalentProperty. "@en ;
+    ns1:domainIncludes rdf:Property,
+        owl:AnnotationProperty,
+        owl:DatatypeProperty,
+        owl:ObjectProperty ;
+    ns1:rangeIncludes rdf:Property,
+        owl:AnnotationProperty,
+        owl:DatatypeProperty,
+        owl:ObjectProperty .
+

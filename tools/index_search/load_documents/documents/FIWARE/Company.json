@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/schema#",
+  "$schemaVersion": "0.0.1",
+  "modelTags": "ESHUV",
+  "$id": "https://raw.githubusercontent.com/smart-data-models/dataModel.MarineTransport/master/company/schema.json",
+  "title": "Smart Data models company schema",
+  "description": "This data model describes a company in a port",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons"
+    },
+    {
+      "properties": {
+        "type": {
+          "description": "Property. NGSI Entity type. It has to be Company",
+          "enum": [
+            "Company"
+          ]
+        },
+        "mrn": {
+          "type": "string",
+          "description": "Property. MRN coded identifier. This URN should Conforms MRN & IETF specifically RFC 2141, RFC 5234, and RFC 8141. The proposed format is  id::='urn:mrn:<PORT>:<ONSS>:community:company:id:[0-9]+' or where PORT := UN/LOCODE of port, OID:= Organisation UN/LOCODE, OONSS:=Organization Name of Service, 9999999 an unique identifier that the creator of the company registry entity will identify on his systems (i.e. a SQL row-id), i.e. urn:mrn:eshuv:community:company:id:1296"
+        },
+        "legalCode": {
+          "type": "string",
+          "description": "Property. Code of the company or entity with activities or responsibility in the port"
+        },
+        "registeredName": {
+          "type": "string",
+          "description": "Property. official Name of the company or entity with activities or responsibility in the port"
+        },
+        "alias": {
+          "type": "string",
+          "description": "Property. Non official Name (nickname) of the company or entity with activities or responsibility in the port"
+        },
+        "entityType": {
+          "type": "string",
+          "description": "Property. Type of the company or entity with activities or responsibility in the port",
+          "enum": [
+            "Agent",
+            "Carrier",
+            "Consignee",
+            "LogisticsOperator",
+            "PortAuthority",
+            "PortReceptionFacilityOperator",
+            "PublicBody",
+            "ServiceProvider",
+            "Steevedore",
+            "TerminalOperator",
+            "TransportCompany",
+            "WasteManagementCompany",
+            "Other"
+          ]
+        },
+        "email": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Contact-Commons/properties/contactPoint/properties/email"
+        },
+        "telephone": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Contact-Commons/properties/contactPoint/properties/telephone"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Property. Status of activation of the company or entity with activities or responsibility in the port"
+        },
+        "admissionDate": {
+          "type": "string",
+          "format": "date-string",
+          "description": "Property. Date in which the company was registered in the model"
+        },
+        "licenses": {
+          "type": "array",
+          "description": "Property. Licenses of operation of the Company. Usually in pairs, code and description",
+          "items": {
+            "type": "array",
+            "description": "Property. Description of an item of the licenses. Usually a pair code and description",
+            "items": {
+              "type": "string",
+              "description": "Property. Every item in the usual pairs. Can be either the code or the description"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "required": [
+    "id",
+    "type"
+  ]
+}

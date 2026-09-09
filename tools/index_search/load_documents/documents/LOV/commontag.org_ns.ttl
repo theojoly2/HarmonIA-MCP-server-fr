@@ -1,0 +1,74 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://commontag.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+onto:AuthorTag a rdfs:Class ;
+    rdfs:label "Author Tag"@en ;
+    rdfs:comment "A Tag asserted by the author of a content resource."@en ;
+    rdfs:subClassOf onto:Tag .
+
+onto:AutoTag a rdfs:Class ;
+    rdfs:label "Auto Tag"@en ;
+    rdfs:comment "A Tag asserted by an automated tool on a content resource."@en ;
+    rdfs:subClassOf onto:Tag .
+
+onto:ReaderTag a rdfs:Class ;
+    rdfs:label "Reader Tag"@en ;
+    rdfs:comment "A Tag asserted by the reader (consumer) of a content resource."@en ;
+    rdfs:subClassOf onto:Tag .
+
+onto:Tag a rdfs:Class ;
+    rdfs:label "Tag"@en ;
+    rdfs:comment "A Common Tag associating a URI and a keyword to annotate a resource."@en .
+
+onto:TaggedContent a rdfs:Class ;
+    rdfs:label "Tagged Content"@en ;
+    rdfs:comment "Content which has one or more Common Tag."@en .
+
+onto: a owl:Ontology ;
+    rdfs:label "Common Tag vocabulary"@en ;
+    dc:contributor "Alex Iskold",
+        "Alexandre Passant",
+        "Andraz Tori",
+        "Jamie Taylor",
+        "Peter Mika",
+        "Scott Montgomerie",
+        "Vuk Milicic" ;
+    dc:description "Common Tag RDF vocabulary, described using W3C RDF Schema. Common Tags allows documents and document fragments (any resource which can be identified by a URI) to be labeled with keywords and URIs, unambigiously idenfying the concepts covered by the resource."@en ;
+    dc:title "Common Tag vocabulary"@en ;
+    dcterms:issued "2009-06-08" ;
+    rdfs:seeAlso <http://commontag.org/mappings> .
+
+onto:isAbout a rdf:Property ;
+    rdfs:label "is about"@en ;
+    rdfs:comment "A resource (URI) representing the concepts described by the content."@en ;
+    rdfs:domain onto:TaggedContent .
+
+onto:label a rdf:Property ;
+    rdfs:label "tag label"@en ;
+    rdfs:comment "A local, human-readable name for a Tag."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:subPropertyOf rdfs:label .
+
+onto:means a rdf:Property ;
+    rdfs:label "means"@en ;
+    rdfs:comment "A a resource (URI) representing the conceptual meaning of a Tag."@en ;
+    rdfs:domain onto:Tag .
+
+onto:tagged a rdf:Property ;
+    rdfs:label "tagged"@en ;
+    rdfs:comment "Links a resource to a Common Tag."@en ;
+    rdfs:domain onto:TaggedContent ;
+    rdfs:range onto:Tag .
+
+onto:taggingDate a rdf:Property ;
+    rdfs:label "tagging date"@en ;
+    rdfs:comment "The date the Tag was assigned."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:subPropertyOf dcterms:created .
+
+<http://commontag.org/mappings> rdfs:label "CommonTag mappings with other vocabularies" .
+

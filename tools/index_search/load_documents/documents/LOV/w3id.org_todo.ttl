@@ -1,0 +1,85 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/todo> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    ns2:license "http://purl.org/NET/rdflicense/cc-by4.0" ;
+    dcterms:contributor "Izaskun Fernández (Tekniker) <mailto:izaskun.fernandez@tekniker.es>"^^xsd:string ;
+    dcterms:created "2020-04-21T00:00:00" ;
+    dcterms:creator "Cristina Aceta (Tekniker) <mailto:cristina.aceta@tekniker.es>"^^xsd:string ;
+    dcterms:description "With the aim of enhancing natural communication between workers in industrial environments and the systems to be used by them, TODO (Task-Oriented Dialogue management Ontology) has been developed to be the core of task-oriented dialogue systems. TODO is a core ontology that provides task-oriented dialogue systems with the necessary means to be capable of naturally interacting with workers (both at understanding and at ommunication levels) and that can be easily adapted to different industrial scenarios, reducing adaptation time and costs. Moreover, it allows to store and reproduce the dialogue process to be able to learn from new interactions."^^xsd:string ;
+    dcterms:issued "" ;
+    dcterms:modified "2021-09-23T10:00:00" ;
+    dcterms:title "TODO: Task-Oriented Dialogue management Ontology"^^xsd:string ;
+    vann:preferredNamespacePrefix "todo" ;
+    vann:preferredNamespaceUri "https://w3id.org/todo"^^xsd:string ;
+    owl:imports <https://w3id.org/todo/tododial>,
+        <https://w3id.org/todo/tododom> ;
+    owl:versionInfo 2.1 .
+
+<https://w3id.org/todo/tododial#UserRequestTrace> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#hasActionTrace> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododom#ActionTrace> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo/tododom#hasKeyElement> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododom#KeyElementTrace> ] .
+
+<https://w3id.org/todo#hasActionTrace> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasActionTrace" ;
+    rdfs:comment "Establishes the relationship between an Action and its Trace" ;
+    rdfs:isDefinedBy "https://w3id.org/todo#" ;
+    owl:inverseOf <https://w3id.org/todo#isActionTraceOf> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo#isActionTraceOf> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isActionTraceOf" ;
+    rdfs:comment "Establishes the relationship between an ActionTrace and the Action it refers to." ;
+    rdfs:isDefinedBy "https://w3id.org/todo/todo" ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododom#ArgumentTrace> rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#obtainedThrough> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SecondaryDialogueTrace> ] .
+
+<https://w3id.org/todo/tododom#WorldElementTrace> rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#obtainedThrough> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SecondaryDialogueTrace> ] .
+
+<https://w3id.org/todo/tododom#ActionTrace> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#obtainedThrough> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododt#SecondaryDialogueTrace> ] .
+
+<https://w3id.org/todo#hasObtained> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasObtained" ;
+    rdfs:comment "Establishes a relation between a SecondaryDialogue and the information (ActionTrace/ArgumentTrace/WorldElementTrace) that has been obtained thanks to it." ;
+    rdfs:isDefinedBy "https://w3id.org/todo#" ;
+    owl:inverseOf <https://w3id.org/todo#obtainedThrough> ;
+    ns1:term_status "stable" .
+
+<https://w3id.org/todo/tododt#SecondaryDialogueTrace> rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#hasObtained> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododom#ArgumentTrace> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#hasObtained> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododom#ActionTrace> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/todo#hasObtained> ;
+            owl:someValuesFrom <https://w3id.org/todo/tododom#WorldElementTrace> ] .
+
+<https://w3id.org/todo#obtainedThrough> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "obtainedThrough" ;
+    rdfs:comment "Establishes a relation between a Trace (ActionTrace/ArgumentTrace/WorldElementTrace) and the SecondaryDialogue performed to obtain said Trace." ;
+    rdfs:isDefinedBy "https://w3id.org/todo#" ;
+    ns1:term_status "stable" .
+

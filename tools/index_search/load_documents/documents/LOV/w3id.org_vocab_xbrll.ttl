@@ -1,0 +1,168 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://schema.org/> .
+@prefix onto: <https://w3id.org/vocab/xbrll> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/vocab/xbrll#Context> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Context"@en ;
+    rdfs:comment "the context of a fact in a financial report"@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/vocab/xbrll#DataPoint> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "data point"@en ;
+    rdfs:comment "this define a fact in the report. A data point should have at least one context"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/vocab/xbrll#hasDimension> ;
+            owl:someValuesFrom <https://w3id.org/vocab/xbrll#Dimension> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <https://w3id.org/vocab/xbrll#Context> ;
+            owl:onProperty <https://w3id.org/vocab/xbrll#context> ] .
+
+<https://w3id.org/vocab/xbrll#Dimension> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Dimension"@en ;
+    rdfs:comment "The dimension defining whether the dimensions in the axis are explicit member or implicit ones"@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/vocab/xbrll#FinancialEntity> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Financial entity"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/ns/regorg#RegisteredOrganization> .
+
+<https://w3id.org/vocab/xbrll#FinancialReport> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Financial report"@en ;
+    rdfs:comment "A financial report may content many data points that are facts"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/vocab/xbrll#dataPoint> ;
+            owl:someValuesFrom <https://w3id.org/vocab/xbrll#DataPoint> ],
+        ns1:Report .
+
+<https://w3id.org/vocab/xbrll#Period> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Period"@en ;
+    rdfs:isDefinedBy onto: .
+
+<http://aims.fao.org/aos/geopolitical.owl#nameCurrencyEN> a owl:DatatypeProperty ;
+    rdfs:label "name currency EN"@en ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/vocab/xbrll#contactPerson> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Contact person"@en ;
+    rdfs:comment "The person of contact in the metadata info of a company"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent .
+
+<https://w3id.org/vocab/xbrll#decimals> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Decimals"@en ;
+    rdfs:comment "Number of decimals used for a currency"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer .
+
+<https://w3id.org/vocab/xbrll#endDate> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "End date"@en ;
+    rdfs:comment "End date of a period"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#Period> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+<https://w3id.org/vocab/xbrll#fiscalYear> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Fiscal year"@en ;
+    rdfs:comment "End of fiscal year"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+<https://w3id.org/vocab/xbrll#isForever> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Is forever"@en ;
+    rdfs:comment "Boolean telling the period is forever or not"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#Period> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/vocab/xbrll#isInstant> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Is instant"@en ;
+    rdfs:comment "boolean for the instant moment"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#Period> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/vocab/xbrll#period> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Period"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/vocab/xbrll#Period> .
+
+<https://w3id.org/vocab/xbrll#reportYear> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Report year"@en ;
+    rdfs:comment "year of the report"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/vocab/xbrll#startDate> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Start date"@en ;
+    rdfs:comment "Starting date of a period"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#Period> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+ns1:Report a owl:Class .
+
+<https://w3id.org/vocab/xbrll#context> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Context property"@en ;
+    rdfs:comment "Context property from a data point"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#DataPoint> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/vocab/xbrll#Context> .
+
+<https://w3id.org/vocab/xbrll#dataPoint> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "Data point property"@en ;
+    rdfs:comment "Data point property from a financial report"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#FinancialReport> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/vocab/xbrll#DataPoint> .
+
+<https://w3id.org/vocab/xbrll#hasDimension> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Has dimension"@en ;
+    rdfs:domain <https://w3id.org/vocab/xbrll#Dimension> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:DataRange ;
+            owl:oneOf ( "Explicit Member" "Typed Member" ) ] .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "A leightweight XBRL vocabulary"@en ;
+    dcterms:creator [ ns1:affiliation [ foaf:homepage <http://www.cdp.net> ;
+                    foaf:name "CDP" ] ;
+            foaf:name "Maria Moreno" ],
+        [ ns1:affiliation [ foaf:homepage <http://www.mondeca.com> ;
+                    foaf:name "Mondeca" ] ;
+            foaf:name "Ghislain Atemezing" ] ;
+    dcterms:issued "2016-05-18"^^xsd:date ;
+    dcterms:modified "2016-05-20"^^xsd:date,
+        "2016-06-01"^^xsd:date,
+        "2016-06-29"^^xsd:date ;
+    vann:preferredNamespacePrefix "xbrll" ;
+    owl:versionInfo "0.1" .
+

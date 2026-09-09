@@ -1,0 +1,158 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix ns2: <http://www.w3.org/2006/vcard/ns#> .
+@prefix ns3: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/cto> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:domainIncludes a rdf:Property .
+
+ns1:rangeIncludes a owl:AnnotationProperty .
+
+<https://w3id.org/cto#InspectionTask> a owl:Class ;
+    rdfs:label "an inspection task"@en ;
+    rdfs:comment "A specialized type of a (planned or executed) construction task that indicates that a construction element, spatial zone and/or damage are inspected. When a construction component or spatial zone is inspected and a damage is detected, the result of the inspection task is the damage description connected to the inspected object. Note that existing known damage, e.g. covered by previous inspections, can be the subject of subsequent inspection tasks."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#InstallmentTask> a owl:Class ;
+    rdfs:label "an installment task"@en ;
+    rdfs:comment "A specialized type of a (planned or executed) construction task that physically installs a construction component as part of the construction. The installment results in the addition of asserted triple(s) connecting the installed object to other construction elements and/or spatial zones and other triples describing the object through classification, properties and/or geometry."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#ModificationTask> a owl:Class ;
+    rdfs:label "a modification task"@en ;
+    rdfs:comment "A specialized type of a (planned or executed) construction task that physically modifies a construction component, spatial zone or damage. The modification results in a change to one or more properties and/or geometry descriptions of the modified subject. It should not be used to repair a damaged construction element or spatial zone as cto:RepairTask should be used instead."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#RemovalTask> a owl:Class ;
+    rdfs:label "a removal task"@en ;
+    rdfs:comment "A specialized type of a (planned or executed) construction task that physically removes a construction component from the construction. The removal results in the removal of all the (directly or indirectly) asserted triples related to the thing that is subject of this task, including triples that use terminology from BOT (building topology), DOT (damage topology), OMG/FOG (geometry, properties, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#RepairTask> a owl:Class ;
+    rdfs:label "a repair task"@en ;
+    rdfs:comment "A specialized type of a (planned or executed) construction task that repairs a damaged construction element or spatial zone. The subjects of this type of task are construction damages. Depending on the degree of modeling, a repair task can either directly result in the lifting of a damage (and its influence on properties of the damaged object) or subtasks can be defined e.g. to remove a damaged construction component and replace it by a new one."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#afterFinishedTask> a owl:ObjectProperty ;
+    rdfs:label "after finished task"@en ;
+    rdfs:comment "Connects the subject task to one ore more other tasks have to be finished before it is allowed to start."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#hasComplexTaskMethodDescription> a owl:ObjectProperty ;
+    rdfs:label "has complex task method description"@en ;
+    rdfs:comment "Property to connect a certain construction task (cto:Task) to the topnode of an RDF-based description of a task method. \\nDepending on the property level used, this property get's a different location. In case of L1, a task is directly connected with the task method description. When using L2, a task is first connected to an intermediate property node via cp:hasTaskMethod. The intermediate node is then connected using cp:hasComplexTaskMethodDescription. In case of L3, the first intermediate node from L2 receives an outgoing opm:hasPropertyState property. The property state node is then connected to the task method description using cp:hasComplexTaskMethodDescrription. A task method description contains a step-by-step description of the procedure, used materials and equipment."@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/cto#hasSimpleTaskMethodDescription> a owl:DatatypeProperty ;
+    rdfs:label "has simple task method description"@en ;
+    ns1:rangeIncludes rdf:langString,
+        xsd:anyURI,
+        xsd:base64Binary,
+        xsd:hexBinary,
+        xsd:string ;
+    rdfs:comment "Property to connect a construction task method node to an RDF literal containing either a text description for human interpretation (rdf:langString with language tag) and/or embedded or referenced file content (diagrams, movies, webpages, etc.). In case of a referenced external file, the literal contain the reference is of datatype xsd:anyURI. When the content of a file is embedded in the literal and file format is text-based the xsd:string datatype is used. If the file format is binary, a binary-to-text encoded version is located inside the RDF literal combined with a datatype to indicate the encoding scheme (xsd:base64Binary, xsd:hexBinary, or a custom datatype for other encoding schemes)."@en ;
+    rdfs:domain <https://w3id.org/cto#TaskMethod> ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/cto#hasTaskContext> a owl:ObjectProperty ;
+    rdfs:label "has task context"@en ;
+    rdfs:comment "Connects a task to a task context that forms a group of tasks with shared properties."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/cto#TaskContext> .
+
+<https://w3id.org/cto#hasTaskMethod> a owl:ObjectProperty ;
+    rdfs:label "has task method"@en ;
+    rdfs:comment "Property to connect a certain construction task (cto:Task) to an intermediate property node when applied on property level 2 or 3. The intermediate property node then connects to a task method description directly using cto:hasSimpleTaskMethodDescription or cto:hasComplexTaskMethodDescription (L2) or to a property state using opm:hasPropertyState (L3) to indicate a versioned task method description connected using cto:hasSimpleTaskMethodDescription or cto:hasComplexTaskMethodDescription. A task method description contains a step-by-step description of the procedure, used materials and equipment."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/cto#isSubjectOfTask> a owl:ObjectProperty ;
+    rdfs:label "is subject of task"@en ;
+    ns1:domainIncludes <https://w3id.org/bot#Element>,
+        <https://w3id.org/bot#Zone>,
+        <https://w3id.org/dot#Damage> ;
+    rdfs:comment "Connects a construction component (e.g. bot:Element instance), a spatial zone (e.g. bot:Zone instance) or a construction damage (e.g. dot:Damage instance) to a (planned or executed) task that is related to it."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://w3id.org/cto#Task> .
+
+<https://w3id.org/cto#resultsInAddedStatement> a owl:ObjectProperty ;
+    rdfs:label "results in added statement"@en ;
+    rdfs:comment "Connects a (planned or executed) task to a reified statement that is added to the construction description as a result of the task."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:Statement ;
+    rdfs:subPropertyOf <https://w3id.org/cto#resultsInStatement> .
+
+<https://w3id.org/cto#resultsInDeletedStatement> a owl:ObjectProperty ;
+    rdfs:label "results in deleted statement"@en ;
+    rdfs:comment "Connects a (planned or executed) task to a reified statement that is deleted from the construction description as a result of the task."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:Statement ;
+    rdfs:subPropertyOf <https://w3id.org/cto#resultsInStatement> .
+
+<https://w3id.org/dot#Inspection> a owl:Class .
+
+<https://w3id.org/bot#Element> a owl:Class .
+
+<https://w3id.org/bot#Zone> a owl:Class .
+
+<https://w3id.org/cto#TaskContext> a owl:Class ;
+    rdfs:label "a task context"@en ;
+    rdfs:comment "A task context allows to group certain tasks that are related. Examples are tasks that fall under the responsibility of a certain organization, tasks grouped per activity or project (e.g. inspections, demolition, construction, etc.), work item (cost estimation) or a larger task that can be subdivided in smaller tasks."@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/cto#TaskMethod> a owl:Class ;
+    rdfs:label "a task (execution) method"@en ;
+    rdfs:comment "A task method description defines how a task should be or was executed, depending on the construction dataset context (planning or progress monitoring). The cto:hasTaskMethod property connects a task to instances of this class that in turn point to a task method described in text using the cto:hasSimpleTaskMethodDescription. If RDF-based task method descriptions are applied instead of text, they can be connected using cto:hasComplexTaskMethodDescription."@en ;
+    rdfs:isDefinedBy onto: .
+
+<https://w3id.org/dot#Damage> a owl:Class .
+
+<https://w3id.org/cto#resultsInStatement> a owl:ObjectProperty ;
+    rdfs:label "results in statement"@en ;
+    rdfs:comment "Connects a (planned or executed) task to a reified statement that is either added or deleted as a result of the task. The subproperties of this property (cto:resultsInAddedStatement and cto:resultsInDeletedStatement) should be used to express the consequence of the task to the statement. A cto:InstalmentTask and dot:Inspection task typically result in the use of cto:resultsInAddedStatement, a cto:RemovalTask typically results in the use of cto:resultsInDeletedStatement while a cto:ModificationTask results in the use of cto:resultsInAddedStatement and/or cto:resultsInDeletedStatement."@en ;
+    rdfs:domain <https://w3id.org/cto#Task> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdf:Statement .
+
+<https://w3id.org/cto#Task> a owl:Class ;
+    rdfs:label "a construction task"@en ;
+    rdfs:comment "A generic class for defining (planned or executed) construction tasks. Instances of this class are connected with the construction element(s), spatial zone(s) or construction damages they operate on (cto:isSubjectOfTask). In addition, they might also be linked to a (planned or executed) moment or time span of performance (prov:atTime/prov:startedAtTime/prov:endedAtTime) and one or more task contexts (cto:hasTaskContext), task methods (cto:hasTaskMethod), assigned persons and/or organizations (prov:wasAssociatedWith), other tasks that must be finalized before the task can start (cto:afterFinishedTask) and reified statements that are added or deleted (cto:resultsInAddedStatement or cto:resultsInDeletedStatement)."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns3:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator [ a ns2:Individual ;
+            ns2:family-name "Bonduel" ;
+            ns2:fn "Mathias Bonduel" ;
+            ns2:given-name "Mathias" ;
+            ns2:hasOrganizationName [ a ns2:Organization ;
+                    owl:sameAs <http://dbpedia.org/resource/Katholieke_Universiteit_Leuven> ;
+                    ns2:hasURL <https://www.kuleuven.be> ;
+                    ns2:organization-name "KU Leuven" ] ;
+            ns2:hasURL <https://orcid.org/0000-0002-3313-924X>,
+                <https://www.kuleuven.be/wieiswie/nl/person/00110827>,
+                <https://www.researchgate.net/profile/Mathias_Bonduel> ] ;
+    dcterms:description "The Construction Tasks Ontology (CTO) describes tasks operating on construction elements, spatial zones and/or damages.  The tasks are either planned or executed depending on the dataset metadata context of the dataset its used in. Five different types of tasks are defined: instalment, removal, modification, repair and inspection. \\nConsequences of tasks on the dataset, i.e. added and/or deleted triples, are modeled using reified statements. The tasks can link to a reified statement using the CTO relations."@en ;
+    dcterms:issued "2020-12-18"^^xsd:date ;
+    dcterms:title "CTO: Construction Tasks Ontology"@en ;
+    vann:preferredNamespacePrefix "cto" ;
+    vann:preferredNamespaceUri "https://w3id.org/cto#" ;
+    rdfs:comment "- Version 0.0.1: initial version"@en ;
+    owl:versionInfo "0.0.1" .
+

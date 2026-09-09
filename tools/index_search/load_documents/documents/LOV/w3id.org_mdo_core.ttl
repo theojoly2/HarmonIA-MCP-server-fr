@@ -1,0 +1,165 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <https://w3id.org/mdo/core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+<http://qudt.org/schema/qudt/hasQuantityKind> a owl:ObjectProperty ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityKind> .
+
+<http://qudt.org/schema/qudt/numericalValue> a owl:DatatypeProperty ;
+    rdfs:range xsd:double .
+
+<http://qudt.org/schema/qudt/quantityValue> a owl:ObjectProperty ;
+    rdfs:range <http://qudt.org/schema/qudt/QuantityValue> .
+
+<http://qudt.org/schema/qudt/unit> a owl:ObjectProperty ;
+    rdfs:range <http://qudt.org/vocab/unit/Unit> .
+
+<http://qudt.org/vocab/unit/EV> a <http://qudt.org/vocab/unit/Unit>,
+        owl:NamedIndividual .
+
+<http://qudt.org/vocab/unit/GM-PER-CentiM3> a <http://qudt.org/vocab/unit/Unit>,
+        owl:NamedIndividual .
+
+xsd:date a rdfs:Datatype .
+
+onto: a owl:Ontology ;
+    dcterms:contributor "Patrick Lambrix"^^xsd:string,
+        "Rickard Armiento"^^xsd:string ;
+    dcterms:created "2019-11-07" ;
+    dcterms:creator "Huanyu Li"^^xsd:string ;
+    dcterms:license "https://github.com/huanyu-li/Materials-Design-Ontology/blob/master/LICENSE" ;
+    dcterms:title "Materials Design Ontology - Core Module"@en ;
+    vann:preferredNamespacePrefix "core" ;
+    vann:preferredNamespaceUri "https://w3id.org/mdo/core/1.0/" ;
+    rdfs:comment "This is the core module in Materials Design Ontology."@en ;
+    rdfs:seeAlso "https://github.com/huanyu-li/Materials-Design-Ontology" ;
+    owl:versionIRI <https://w3id.org/mdo/core/1.0/> ;
+    owl:versionInfo "1.0"^^xsd:string .
+
+onto:ID a owl:DatatypeProperty ;
+    rdfs:label "ID"@en ;
+    rdfs:comment "ID represents that a calculation has the unique ID in a string."@en ;
+    rdfs:domain onto:Calculation ;
+    rdfs:range xsd:string .
+
+onto:PropertyName a owl:DatatypeProperty ;
+    rdfs:label "property name"@en ;
+    rdfs:comment "PropertyName represents that a property has the name in a string."@en ;
+    rdfs:domain onto:Property ;
+    rdfs:range xsd:string .
+
+onto:hasQuantityValue a owl:ObjectProperty ;
+    rdfs:label "has quantity value"@en ;
+    rdfs:comment "hasQuantityValue represents the relationship between a property and quantity value it takes."@en .
+
+onto:relatesToStructure a owl:ObjectProperty ;
+    rdfs:label "relates to structure"@en ;
+    rdfs:comment "relatesToStructure represents the relationship between a property and the structures it comes from."@en ;
+    rdfs:domain onto:Property ;
+    rdfs:range onto:Structure .
+
+<http://qudt.org/schema/qudt/Quantity> a owl:Class .
+
+<http://qudt.org/schema/qudt/QuantityKind> a owl:Class .
+
+<http://qudt.org/schema/qudt/QuantityValue> a owl:Class .
+
+onto:PhysicalProperty a owl:Class ;
+    rdfs:label "Physical Property"@en ;
+    rdfs:comment "A physical property is an objective property over a physical system. (ie, a property pertains to the physical reality)"@en ;
+    rdfs:subClassOf onto:Property .
+
+onto:hasOutputCalculatedProperty a owl:ObjectProperty ;
+    rdfs:label "has output calculated property"@en ;
+    rdfs:comment "hasOutputCalculatedProperty represents the relationship between a calculation and the calculated properties it outputs."@en ;
+    rdfs:domain onto:Calculation ;
+    rdfs:range onto:CalculatedProperty .
+
+onto:hasOutputStructure a owl:ObjectProperty ;
+    rdfs:label "has output structure"@en ;
+    rdfs:comment "hasOutputStructure represents the relationship between a calculation and the structures it outputs."@en ;
+    rdfs:domain onto:Calculation ;
+    rdfs:range onto:Structure .
+
+onto:CalculatedProperty a owl:Class ;
+    rdfs:label "Calculated Property"@en ;
+    rdfs:comment "A calculated property is a proprty that is a result from a calculation."@en ;
+    rdfs:subClassOf onto:Property ;
+    owl:disjointWith onto:PhysicalProperty .
+
+onto:hasInputProperty a owl:ObjectProperty ;
+    rdfs:label "has input property"@en ;
+    rdfs:comment "hasInputProperty represents the relationship between a calculation and the properties it takes as input."@en ;
+    rdfs:domain onto:Calculation ;
+    rdfs:range onto:Property .
+
+onto:hasInputStructure a owl:ObjectProperty ;
+    rdfs:label "has input structure"@en ;
+    rdfs:comment "hasInputStructure represents the relationship between a calculation and the structures it takes as input."@en ;
+    rdfs:domain onto:Calculation ;
+    rdfs:range onto:Structure .
+
+onto:relatesToMaterial a owl:ObjectProperty ;
+    rdfs:label "relates to material"@en ;
+    rdfs:comment "relatesToMaterial represents the relationship between a structure and the materials it comes from."@en ;
+    rdfs:domain onto:Structure ;
+    rdfs:range <http://emmo.info/domains/emmo-material.owl#EMMO_4207e895_8b83_4318_996a_72cfb32acd94> .
+
+<http://emmo.info/domains/emmo-material.owl#EMMO_4207e895_8b83_4318_996a_72cfb32acd94> a owl:Class ;
+    rdfs:label "Material"^^xsd:string .
+
+<http://qudt.org/vocab/unit/Unit> a owl:Class .
+
+onto:Calculation a owl:Class ;
+    rdfs:label "Calculation"@en ;
+    rdfs:comment "A calculation is the use of a specific computational method to process structures and/or properties into output structures and/or calculated properties."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty onto:hasInputProperty ;
+                        owl:someValuesFrom onto:Property ] [ a owl:Restriction ;
+                        owl:allValuesFrom onto:Property ;
+                        owl:onProperty onto:hasInputProperty ] [ a owl:Restriction ;
+                        owl:allValuesFrom onto:CalculatedProperty ;
+                        owl:onProperty onto:hasOutputCalculatedProperty ] ) ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty onto:hasInputStructure ;
+                        owl:someValuesFrom onto:Structure ] [ a owl:Restriction ;
+                        owl:allValuesFrom onto:Structure ;
+                        owl:onProperty onto:hasInputStructure ] [ a owl:Restriction ;
+                        owl:allValuesFrom onto:Structure ;
+                        owl:onProperty onto:hasOutputStructure ] ) ] .
+
+onto:Property a owl:Class ;
+    rdfs:label "Property"@en ;
+    rdfs:comment "A property in materials design is data pertaining to at least one material or materials system."@en ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/Quantity> .
+
+onto:Structure a owl:Class ;
+    rdfs:label "Structure"@en ;
+    rdfs:comment "A structure is the information of the sites and their occupancies in a material or materials system."@en ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty onto:relatesToMaterial ;
+                        owl:someValuesFrom <http://emmo.info/domains/emmo-material.owl#EMMO_4207e895_8b83_4318_996a_72cfb32acd94> ] [ a owl:Restriction ;
+                        owl:allValuesFrom <http://emmo.info/domains/emmo-material.owl#EMMO_4207e895_8b83_4318_996a_72cfb32acd94> ;
+                        owl:onProperty onto:relatesToMaterial ] ) ] .
+

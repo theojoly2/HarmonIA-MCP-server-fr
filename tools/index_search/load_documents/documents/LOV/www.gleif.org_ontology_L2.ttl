@@ -1,0 +1,363 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://www.gleif.org/ontology/Base/> .
+@prefix onto: <https://www.gleif.org/ontology/L2/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:DirectConsolidation a owl:Class ;
+    rdfs:label "direct consolidation" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:AccountingConsolidation ;
+    skos:altLabel "is directly consolidated by" ;
+    skos:definition "The 'child' entity has its accounts fully consolidated by the 'parent' entity, in the sense given by the accounting standard(s) specified; the parent entity is the closest fully consolidating parent to the child entity in any applicable hierarchical ownership structure." ;
+    skos:prefLabel "direct consolidation" .
+
+onto:InternationalBranchRelationship a owl:Class ;
+    rdfs:label "international branch relationship" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:LegalEntityRelationship ;
+    skos:altLabel "is international branch of" ;
+    skos:definition "Child is a lead international branch or international branch network outside of the head office’s jurisdiction. The Parent is the Head Office and MUST have an LEI." ;
+    skos:note "A non-incorporated establishment of a head office legal entity, when this establishment is located in a separate jurisdiction from the jurisdiction in which the head office legal entity is located, i.e., in a host jurisdiction outside of its home jurisdiction. Under this definition, an establishment may consist of a single office or other business premises, or of several offices (i.e., a branch network) in different locations of the same host jurisdiction: even in the latter case, only one LEI would be issued per host jurisdiction, essentially amounting to, “one country-one LEI.” Unlike foreign subsidiaries of a parent entity, which are separately incorporated or organised under the laws of the host jurisdictions, an international branch, as defined here, is legally dependent on the head office legal entity and cannot exist without its head office legal entity " ;
+    skos:prefLabel "international branch relationship" .
+
+onto:UltimateConsolidation a owl:Class ;
+    rdfs:label "ultimate consolidation" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:AccountingConsolidation ;
+    skos:altLabel "is ultimately consolidated by" ;
+    skos:definition "The 'child' entity has its accounts fully consolidated by the 'parent' entity, in the sense given by the accounting standard(s) specified; the child entity is the most distant fully consolidating parent from the child entity in any applicable hierarchical ownership structure." ;
+    skos:prefLabel "ultimate consolidation" .
+
+onto:hasAccountingPeriod a owl:ObjectProperty ;
+    rdfs:label "has accounting period" ;
+    rdfs:domain onto:LegalEntityRelationshipRecord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Period ;
+    skos:definition "The dates in this Period indicate the accounting period covered by the most recent validation documents for this relationship." .
+
+onto:hasAccountingStandard a owl:ObjectProperty ;
+    rdfs:label "has accounting standard" ;
+    rdfs:domain onto:AccountingConsolidation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AccountingStandard ;
+    rdfs:subPropertyOf ns1:isQualifiedBy ;
+    skos:definition "The accounting standard applied to determine the definition of e.g. ultimate or direct accounting consolidating parent for the relationship. The relevant accounting standard is that applicable to the 'parent' entity." .
+
+onto:hasChild a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has child" ;
+    rdfs:domain ns1:LegalEntityRelationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Entity ;
+    rdfs:subPropertyOf ns1:hasSource ;
+    skos:definition "The entity that plays the child role." .
+
+onto:hasDocumentFilingPeriod a owl:ObjectProperty ;
+    rdfs:label "has document filing period" ;
+    rdfs:domain onto:LegalEntityRelationshipRecord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Period ;
+    skos:definition "The dates in this instance of Period indicate the validity period of a regulatory filing, accounting document, or other document demonstrating the relationship's validity" .
+
+onto:hasParent a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has parent" ;
+    rdfs:domain ns1:LegalEntityRelationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Entity ;
+    rdfs:subPropertyOf ns1:hasTarget ;
+    skos:definition "The entity that plays the parent role." .
+
+onto:hasRelationshipPeriod a owl:ObjectProperty ;
+    rdfs:label "has relationship period" ;
+    rdfs:domain ns1:LegalEntityRelationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range ns1:Period ;
+    skos:definition "The dates in this instance of Period indicate the duration of validity of the relationship itself, as distinct from any administrative or reporting aspects." .
+
+onto:hasRelationshipStatus a owl:ObjectProperty ;
+    rdfs:label "has relationship status" ;
+    rdfs:domain ns1:LegalEntityRelationship ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:RelationshipStatus ;
+    skos:definition "Indicates the status of the relationship (i.e., active, inactive)." .
+
+onto:hasValidationDocuments a owl:ObjectProperty ;
+    rdfs:label "has validation documents" ;
+    rdfs:domain onto:LegalEntityRelationshipRecord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:RelationshipValidationDocumentsKind ;
+    skos:definition "Type of source document(s) used for validating the relationship." .
+
+onto:hasValidationReference a owl:DatatypeProperty ;
+    rdfs:label "has validation reference" ;
+    rdfs:domain onto:LegalEntityRelationshipRecord ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A reference to a specific document or other source used as the basis of relationship validation for this relationship record." .
+
+onto:hasValidationSources a owl:ObjectProperty ;
+    rdfs:label "has validation sources" ;
+    rdfs:domain onto:LegalEntityRelationshipRecord ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <https://www.gleif.org/ontology/L1/ValidationSourceKind> ;
+    skos:definition "Level of relationship validation." .
+
+onto:AccountingStandardIFRS a owl:NamedIndividual,
+        onto:AccountingStandard ;
+    rdfs:label "IFRS" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "International Financial Reporting Standard (developed by the International Accounting Standards Board – IASB)" ;
+    ns1:hasTag "IFRS" .
+
+onto:AccountingStandardOtherAccountingStandard a owl:NamedIndividual,
+        onto:AccountingStandard ;
+    rdfs:label "other accounting standard" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A financial reporting (accounting) standard not otherwise listed in the latest version of the relationship data file format." ;
+    ns1:hasTag "OTHER_ACCOUNTING_STANDARD" .
+
+onto:AccountingStandardUSGAAP a owl:NamedIndividual,
+        onto:AccountingStandard ;
+    rdfs:label "US GAAP" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "United States-Generally Accepted Accounting Principles." ;
+    ns1:hasTag "US_GAAP" .
+
+onto:RegistrationStatusAnnulled a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "annulled" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A relationship data report that was marked as erroneous or invalid after it was published. The relationship report is kept in publication for historical audit trail purposes only (so that data recipients can correct their local data)." ;
+    ns1:hasTag "ANNULLED" .
+
+onto:RegistrationStatusDuplicate a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "duplicate" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A relationship data report that has been determined to be a  duplicate registration of the same relationship. In many cases this will mean more than one report with e.g. the same 2 entity IDs, the same relationship type, certain status values and the same relationship date(s), but this determination will depend on the relationship type in question." ;
+    ns1:hasTag "DUPLICATE" .
+
+onto:RegistrationStatusLapsed a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "lapsed" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A relationship data report that has not been renewed by the NextRenewalDate" ;
+    ns1:hasTag "LAPSED" .
+
+onto:RegistrationStatusPendingArchival a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "pending archival" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "An LEI registration is about to be transferred to a different LOU, after which its registration status will revert to a non-pending status." ;
+    ns1:hasTag "PENDING_ARCHIVAL" .
+
+onto:RegistrationStatusPendingTransfer a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "pending transfer" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "An LEI registration that has been requested to be transferred to another LOU. The request is being processed at the sending LOU." ;
+    ns1:hasTag "PENDING_TRANSFER" .
+
+onto:RegistrationStatusPublished a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "published" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A relationship data report that has been validated and published, and which is reported by an entity that was an operating legal entity as of the last update." ;
+    ns1:hasTag "PUBLISHED" .
+
+onto:RegistrationStatusRetired a owl:NamedIndividual,
+        onto:RegistrationStatus ;
+    rdfs:label "retired" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "status indicating that the registration is for an entity that has ceased operation, without having been merged into another entity" ;
+    ns1:hasTag "RETIRED" .
+
+onto:RelationshipStatusActive a owl:NamedIndividual,
+        onto:RelationshipStatus ;
+    rdfs:label "active" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "As of the last report or update, the reporting legal entity reported that it is legally registered and/or operating, AND that the relationship detailed in this RelationshipRecord is still valid." ;
+    ns1:hasTag "ACTIVE" .
+
+onto:RelationshipStatusInactive a owl:NamedIndividual,
+        onto:RelationshipStatus ;
+    rdfs:label "inactive" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "It has been determined that the relationship ended, e.g. because entity that reported this relationship is no longer legally registered and/or operating; or the relationship is no longer valid for other reasons" ;
+    ns1:hasTag "INACTIVE" .
+
+onto:RelationshipValidationDocumentsKindAccountsFiling a owl:NamedIndividual,
+        onto:RelationshipValidationDocumentsKind ;
+    rdfs:label "accounts filing" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "A consolidated financial (accounting) statement, prepared and submitted to the relevant authority." ;
+    ns1:hasTag "ACCOUNTS_FILING" .
+
+onto:RelationshipValidationDocumentsKindContracts a owl:NamedIndividual,
+        onto:RelationshipValidationDocumentsKind ;
+    rdfs:label "contracts" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "Other documents supporting the preparation of consolidated financial statements." ;
+    ns1:hasTag "CONTRACTS" .
+
+onto:RelationshipValidationDocumentsKindOtherOfficialDocuments a owl:NamedIndividual,
+        onto:RelationshipValidationDocumentsKind ;
+    rdfs:label "other official documents" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "Other official document(s) attesting to the validity of the relationship." ;
+    ns1:hasTag "OTHER_OFFICIAL_DOCUMENTS" .
+
+onto:RelationshipValidationDocumentsKindRegulatoryFiling a owl:NamedIndividual,
+        onto:RelationshipValidationDocumentsKind ;
+    rdfs:label "regulatory filing" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "An annual regulatory filing providing public information on parent relationships" ;
+    ns1:hasTag "REGULATORY_FILING" .
+
+onto:RelationshipValidationDocumentsKindSupportingDocuments a owl:NamedIndividual,
+        onto:RelationshipValidationDocumentsKind ;
+    rdfs:label "supporting documents" ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "Other documents supporting the preparation of consolidated financial statements." ;
+    ns1:hasTag "SUPPORTING_DOCUMENTS" .
+
+onto:AccountingConsolidation a owl:Class ;
+    rdfs:label "accounting consolidation" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:AccountingStandard ;
+            owl:onProperty onto:hasAccountingStandard ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:LegalEntityRelationship ;
+    skos:definition "Accounting consolidation holds when '[in the] financial statements of a group [...] the assets, liabilities, equity, income, expenses and cash flows of the parent and its subsidiaries are presented as those of a single economic entity'." .
+
+onto:RelationshipStatus a owl:Class ;
+    rdfs:label "relationship status" ;
+    rdfs:isDefinedBy onto: ;
+    owl:oneOf ( onto:RelationshipStatusActive onto:RelationshipStatusInactive ) ;
+    skos:definition "The status of the legal entities' relationship itself: active or inactive." .
+
+onto:AccountingStandard a owl:Class ;
+    rdfs:label "accounting standard" ;
+    rdfs:isDefinedBy onto: ;
+    owl:oneOf ( onto:AccountingStandardIFRS onto:AccountingStandardOtherAccountingStandard onto:AccountingStandardUSGAAP ) ;
+    skos:definition "the type of accounting standard used to source consolidation information, which is based on reported accounting roll-ups" .
+
+onto:LegalEntityRelationshipRecord a owl:Class ;
+    rdfs:label "legal entity relationship record" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns1:Period ;
+            owl:onProperty onto:hasDocumentFilingPeriod ],
+        [ a owl:Restriction ;
+            owl:onClass [ a owl:Class ;
+                    owl:oneOf ( onto:RegistrationStatusAnnulled onto:RegistrationStatusDuplicate onto:RegistrationStatusLapsed onto:RegistrationStatusPendingArchival onto:RegistrationStatusPendingTransfer onto:RegistrationStatusPublished onto:RegistrationStatusRetired ) ] ;
+            owl:onProperty ns1:hasRegistrationStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass [ a owl:Class ;
+                    owl:oneOf ( <https://www.gleif.org/ontology/L1/ValidationSourceKindEntitySuppliedOnly> <https://www.gleif.org/ontology/L1/ValidationSourceKindFullyCorroborated> <https://www.gleif.org/ontology/L1/ValidationSourceKindPartiallyCorroborated> ) ] ;
+            owl:onProperty onto:hasValidationSources ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:hasNextRenewalDate ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns1:Period ;
+            owl:onProperty onto:hasAccountingPeriod ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:hasValidationReference ],
+        [ a owl:Restriction ;
+            owl:onClass <https://www.gleif.org/ontology/L1/LocalOperatingUnit> ;
+            owl:onProperty <https://www.gleif.org/ontology/L1/hasManagingLOU> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:hasLastUpdateDate ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:LegalEntityRelationship ;
+            owl:onProperty ns1:records ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:dateTime ;
+            owl:onProperty ns1:hasInitialRegistrationDate ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass onto:RelationshipValidationDocumentsKind ;
+            owl:onProperty onto:hasValidationDocuments ],
+        ns1:RegistryEntry ;
+    skos:definition "The Registration container element contains information specifying the LOU's administration of the relationship record." .
+
+ns1:LegalEntityRelationship a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:RelationshipStatus ;
+            owl:onProperty onto:hasRelationshipStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass ns1:Period ;
+            owl:onProperty onto:hasRelationshipPeriod ],
+        [ a owl:Restriction ;
+            owl:onClass ns1:Entity ;
+            owl:onProperty onto:hasParent ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass <https://www.gleif.org/ontology/L1/RegisteredEntity> ;
+            owl:onProperty onto:hasChild ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+onto:RegistrationStatus a owl:Class ;
+    rdfs:label "relationship registration status" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf ns1:RegistrationStatus ;
+    skos:definition "The status of the legal entity's relationship record registration with the Managing LOU." .
+
+onto:RelationshipValidationDocumentsKind a owl:Class ;
+    rdfs:label "relationship validation documents kind" ;
+    rdfs:isDefinedBy onto: ;
+    owl:oneOf ( onto:RelationshipValidationDocumentsKindAccountsFiling onto:RelationshipValidationDocumentsKindContracts onto:RelationshipValidationDocumentsKindOtherOfficialDocuments onto:RelationshipValidationDocumentsKindRegulatoryFiling onto:RelationshipValidationDocumentsKindSupportingDocuments ) ;
+    skos:definition "Type of source document(s) used for validating the relationship." .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "GLEIF L2 Ontology" ;
+    dcterms:abstract "Ontology for legal entity parent relationships. It was designed for Global Legal Entity Identifier Foundation (GLEIF) Level 2 data corresponding to the Relationship Record format, version 1.1. Legal entities that have or acquire an LEI report their ‘direct accounting consolidating parent’ as well as their ‘ultimate accounting consolidating parent’, or for International Branches ‘is an International Branch of'. Otherwise they must provide a Reporting Exception."@en ;
+    dcterms:contributor <http://purl.org/bryon>,
+        <http://www.workingontologist.com>,
+        <https://www.linkedin.com/in/peterivett/> ;
+    dcterms:creator ns1:GLEIF ;
+    dcterms:issued "2019-02-01T00:00:00+00:00"^^xsd:dateTime ;
+    dcterms:license "https://www.gleif.org/en/meta/lei-data-terms-of-use/"^^xsd:anyURI ;
+    dcterms:rights "Copyright (c) 2019 Global Legal Entity Identifier Foundation (GLEIF)" ;
+    dcterms:rightsHolder ns1:GLEIF ;
+    dcterms:source "https://www.gleif.org/en/about-lei/common-data-file-format/relationship-record-cdf-format"^^xsd:anyURI ;
+    dcterms:title "Global Legal Entity Identifier Foundation Level 2 Ontology - Who Owns Whom"@en ;
+    vann:preferredNamespacePrefix "gleif-L2" ;
+    vann:preferredNamespaceUri "https://www.gleif.org/ontology/L2/" ;
+    owl:imports ns1:,
+        <https://www.gleif.org/ontology/L1/> ;
+    owl:versionIRI <https://www.gleif.org/ontology/L2-v1.0/L2/> .
+
+[] a owl:AllDifferent ;
+    owl:members ( onto:RegistrationStatusAnnulled onto:RegistrationStatusDuplicate onto:RegistrationStatusLapsed onto:RegistrationStatusPendingArchival onto:RegistrationStatusPendingTransfer onto:RegistrationStatusPublished onto:RegistrationStatusRetired ) .
+
+[] a owl:AllDifferent ;
+    owl:members ( onto:AccountingStandardIFRS onto:AccountingStandardOtherAccountingStandard onto:AccountingStandardUSGAAP ) .
+
+[] a owl:AllDifferent ;
+    owl:members ( onto:RelationshipValidationDocumentsKindAccountsFiling onto:RelationshipValidationDocumentsKindContracts onto:RelationshipValidationDocumentsKindOtherOfficialDocuments onto:RelationshipValidationDocumentsKindRegulatoryFiling onto:RelationshipValidationDocumentsKindSupportingDocuments ) .
+
+[] a owl:AllDifferent ;
+    owl:members ( onto:RelationshipStatusActive onto:RelationshipStatusInactive ) .
+

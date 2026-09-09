@@ -1,0 +1,97 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://purl.org/ontology/co/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Counter a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Counter"@en ;
+    rdfs:comment "Counter of a given object/ given objects, which are related to that counter."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:count ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:count ],
+        owl:Thing ;
+    ns1:term_status "stable"@en .
+
+onto:ScrobbleEvent a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Scrobble Event"@en ;
+    rdfs:comment "An event corresponding to a scrobbling (counting an activity, which includes at least a specific factor and \\na specific agent), e.g. a track being played by someone, a video watched by someone, a book read by \\nsomeone, a sporting activity by someone, ..."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> ;
+    ns1:term_status "unstable"@en .
+
+onto:event a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has event"@en ;
+    rdfs:comment "Links counter resources to related events."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://purl.org/NET/c4dm/event.owl#Event> ;
+    rdfs:subPropertyOf onto:object ;
+    owl:inverseOf onto:event_counter ;
+    ns1:term_status "testing"@en .
+
+onto:scrobble_object a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has scrobble object"@en ;
+    rdfs:comment "A scrobble object of a scrobble event, e.g. a music track, a video or a described activity. That means a specific thing that is involved in this scrobbling action."@en ;
+    rdfs:domain onto:ScrobbleEvent ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://purl.org/NET/c4dm/event.owl#factor> ;
+    ns1:term_status "unstable"@en .
+
+onto:event_counter a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has event counter"@en ;
+    rdfs:comment "Links events to a counter resource, where they where counted in."@en ;
+    rdfs:domain <http://purl.org/NET/c4dm/event.owl#Event> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf onto:counter ;
+    ns1:term_status "unstable"@en .
+
+onto:object a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has object"@en ;
+    rdfs:comment "Links a counter resource to an object. Please feel free to create further sub properties with more restricted ranges."@en ;
+    rdfs:domain onto:Counter ;
+    rdfs:isDefinedBy onto: ;
+    owl:inverseOf onto:counter ;
+    ns1:term_status "testing"@en .
+
+onto:count a rdf:Property,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "has count"@en ;
+    rdfs:comment "Links a counter resource to the actual count"@en ;
+    rdfs:domain onto:Counter ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:integer ;
+    ns1:term_status "stable"@en .
+
+onto:counter a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has counter"@en ;
+    rdfs:comment "Links an object to a counter resource. Please feel free to create further sub properties with more restricted domains."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Counter ;
+    ns1:term_status "stable"@en .
+
+onto: a owl:Ontology ;
+    dc:creator <http://foaf.me/intrz#me>,
+        <http://foaf.me/zazi#me>,
+        <http://moustaki.org/foaf.rdf#moustaki> ;
+    dc:date "2010-09-13T16:11:52+01:00"^^xsd:dateTime ;
+    dc:description "The Counter Ontology specification provides basic concepts and properties \\nfor describing a general counter concept and some important sub counters, e.g. an event counter, on/ for \\nthe Semantic Web. This document contains a RDF description of the Counter Ontology."@en ;
+    dc:title "The Counter Ontology"@en ;
+    owl:imports <http://purl.org/NET/c4dm/event.owl>,
+        dc:,
+        <http://www.w3.org/2003/06/sw-vocab-status/ns> ;
+    owl:versionInfo 0.81 .
+

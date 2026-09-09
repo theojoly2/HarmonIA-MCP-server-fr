@@ -1,0 +1,134 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://purl.org/ctic/dcat#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+onto:Catalog a rdfs:Class ;
+    rdfs:label "Catalog of Datasets"@en ;
+    dcterms:issued "2009-09-28" ;
+    rdfs:comment "Catalog which have defined datasets in"@en ;
+    rdfs:isDefinedBy onto: ;
+    skos:definition "Catalog which have defined datasets in"@en .
+
+onto:Dataset a rdfs:Class ;
+    rdfs:label "Dataset"@en ;
+    dcterms:issued "2009-09-28" ;
+    rdfs:comment "A dataset"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf dcterms:Dataset ;
+    skos:definition "A dataset"@en ;
+    skos:historyNote [ dc:creator "CTIC-CT" ;
+            dc:date "2010-03-01" ;
+            rdf:value "dcterms:Dataset term is broader than void:Dataset, allowing non-linked data datasets"@en ] .
+
+onto:accessMode-direct a skos:Concept ;
+    skos:inScheme onto:accessModeScheme ;
+    skos:prefLabel "Direct Access"@en .
+
+onto:accessMode-indirect a skos:Concept ;
+    skos:inScheme onto:accessModeScheme ;
+    skos:prefLabel "Indirect Access"@en .
+
+onto:member a rdf:Property ;
+    rdfs:label "A Catalog has a Dataset member"@en ;
+    dcterms:issued "2010-04-06" ;
+    rdfs:comment "Property which defines a Dataset member of the Catalog"@en ;
+    rdfs:domain onto:Catalog ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Dataset ;
+    skos:definition "Property which defines a Dataset member of the Catalog"@en .
+
+onto:memberOf a rdf:Property ;
+    rdfs:label "A Dataset is a member of a Catalog"@en ;
+    dcterms:issued "2009-09-28" ;
+    rdfs:comment "Property which defines a Catalog that contains the Dataset"@en ;
+    rdfs:domain onto:Dataset ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Catalog ;
+    skos:changeNote [ dc:creator "CTIC-CT" ;
+            dc:date "2010-04-06" ;
+            rdf:value "Improved definition for the property"@en ] ;
+    skos:definition "Property which defines a Catalog that contains the Dataset"@en .
+
+onto:status a rdf:Property ;
+    rdfs:label "Catalog status"@en ;
+    dcterms:issued "2010-09-01" ;
+    rdfs:comment "Property which defines the status of the Dataset according to a defined taxonomy"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Dataset ;
+    skos:definition "Property which defines the status of the Dataset according to a defined taxonomy"@en .
+
+onto:status-announced a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Catalog announced"@en .
+
+onto:status-data a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Data available on the Web"@en .
+
+onto:status-extinct a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Extinct initiative"@en .
+
+onto:status-ldFormat a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Data in Linked Data format available on the Web"@en .
+
+onto:status-linkedData a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Data linked with other data on the Web"@en .
+
+onto:status-nonProprietaryFormat a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Data in a non-proprietary format available on the Web"@en .
+
+onto:status-structuredData a skos:Concept ;
+    skos:inScheme onto:statusScheme ;
+    skos:prefLabel "Structured data available on the Web"@en .
+
+<http://data.fundacionctic.org/vocab/catalog/dcat_20130322.html> a dcmitype:Text ;
+    dc:format [ a dcterms:IMT ;
+            rdfs:label "HTML" ;
+            rdf:value "text/html" ] .
+
+<http://data.fundacionctic.org/vocab/catalog/dcat_20130322.rdf> a dcmitype:Text ;
+    dc:format [ a dcterms:IMT ;
+            rdfs:label "RDF" ;
+            rdf:value "application/rdf+xml" ] .
+
+onto:accessModeScheme a skos:ConceptScheme ;
+    rdfs:label "Taxonomy of the information access mode"@en ;
+    rdfs:comment "Concept scheme of the different access modes to the information distributions"@en ;
+    skos:definition "Concept scheme of the different access modes to the information distributions"@en .
+
+onto: a owl:Ontology ;
+    ns1:license <http://creativecommons.org/licenses/by-nc-sa/3.0> ;
+    dc:creator "CTIC CT" ;
+    dc:date "2013-03-22" ;
+    dc:identifier "http://data.fundacionctic.org/vocab/catalog/dcat_20130322" ;
+    dc:rights "CTIC CT - Creative Commons 3.0 (BY-NC-SA)"@en ;
+    dc:title "Dataset Catalog Vocabulary"@en ;
+    dcterms:hasFormat <http://data.fundacionctic.org/vocab/catalog/dcat_20130322.html>,
+        <http://data.fundacionctic.org/vocab/catalog/dcat_20130322.rdf> ;
+    dcterms:isVersionOf onto: ;
+    dcterms:issued "2009-09-28" ;
+    dcterms:replaces <http://data.fundacionctic.org/vocab/catalog/datasets_20111105> ;
+    vann:preferredNamespacePrefix "ds" ;
+    vann:preferredNamespaceUri "http://purl.org/ctic/dcat#" ;
+    rdfs:comment "This vocabulary is used for modelling catalogs of datasets and its relationships with the datasets"@en ;
+    skos:historyNote [ dc:creator "CTIC-CT" ;
+            dc:date "2011-11-05" ],
+        [ dc:creator "CTIC-CT" ;
+            dc:date "2013-03-22" ] .
+
+onto:statusScheme a skos:ConceptScheme ;
+    rdfs:label "Taxonomy of the catalog statuses"@en ;
+    rdfs:comment "Concept scheme of the different statuses for a catalog"@en ;
+    skos:definition "Concept scheme of the different statuses for a catalog"@en .
+

@@ -1,0 +1,360 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://lsdis.cs.uga.edu/projects/semdis/opus#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "SwetoDblp Ontology" ;
+    dc:creator "Boanerges Aleman-Meza" ;
+    rdfs:comment "This file specifies in RDF Schema format the classes and properties for SwetoDblp.\\n    These classes and properties are based on the internal LSDIS Library portal engine.\\n    Contact Person is Boanerges Aleman-Meza (baleman at uga dot edu).\\n    " ;
+    owl:versionInfo "2007-05-01" .
+
+onto:Article a owl:Class ;
+    rdfs:label "Article" ;
+    rdfs:comment "An article from a journal or magazine." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Article_in_Journal>,
+        <http://purl.org/net/nknouf/ns/bibtex#Article>,
+        <http://sw-portal.deri.org/ontologies/swportal#Article> .
+
+onto:Doctoral_Dissertation a owl:Class ;
+    rdfs:label "Doctoral Dissertation" ;
+    rdfs:comment "A dissertation written to receive a PhD." ;
+    rdfs:subClassOf onto:Thesis ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#PhD_Thesis>,
+        <http://purl.org/net/nknouf/ns/bibtex#Phdthesis>,
+        <http://sw-portal.deri.org/ontologies/swportal#PhDThesis>,
+        <http://swrc.ontoware.org/ontology#PhDThesis> .
+
+onto:Masters_Thesis a owl:Class ;
+    rdfs:label "Masters Thesis" ;
+    rdfs:comment "A thesis written to receive a Master's degree." ;
+    rdfs:subClassOf onto:Thesis ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Master_Thesis>,
+        <http://purl.org/net/nknouf/ns/bibtex#Mastersthesis>,
+        <http://sw-portal.deri.org/ontologies/swportal#MasterThesis>,
+        <http://swrc.ontoware.org/ontology#MasterThesis> .
+
+onto:Publishing_Organization a owl:Class ;
+    rdfs:label "Publisher" ;
+    rdfs:comment "An organization that, among other things, creates publishing periodicals, books or music." ;
+    rdfs:subClassOf foaf:Organization ;
+    owl:equivalentClass <http://www.aktors.org/ontology/portal#Publishing-House> .
+
+onto:Webpage a owl:Class ;
+    rdfs:label "Webpage" ;
+    rdfs:comment "A webpage, it is subclass of Document because we want to emphasize that the URL of the webpage is used the URI." ;
+    rdfs:subClassOf foaf:Document .
+
+onto:abstract a owl:DatatypeProperty ;
+    rdfs:label "abstract" ;
+    rdfs:comment "The abstract of a document" ;
+    rdfs:domain foaf:Document ;
+    rdfs:range xsd:string .
+
+onto:affiliation a owl:ObjectProperty ;
+    rdfs:label "Affiliation" ;
+    rdfs:comment "Indicates that a person is affiliated to a specific organization." ;
+    rdfs:domain foaf:Person ;
+    rdfs:range foaf:Organization ;
+    owl:equivalentProperty <http://swrc.ontoware.org/ontology#affiliation>,
+        <http://www.aktors.org/ontology/portal#has-affiliation> .
+
+onto:at_organization a owl:ObjectProperty ;
+    rdfs:label "at organization" ;
+    rdfs:comment "Indicates that a publication originates or is related to a specific Organization." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range foaf:Organization .
+
+onto:at_university a owl:ObjectProperty ;
+    rdfs:label "at university" ;
+    rdfs:comment "Indicates that a publication originates or is related to a specific University." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range onto:University .
+
+onto:author a owl:ObjectProperty ;
+    rdfs:label "Author" ;
+    rdfs:comment "Indicates that a publication is authored by a specific person(s)." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range rdf:Seq .
+
+onto:book_title a owl:DatatypeProperty ;
+    rdfs:label "book title" ;
+    rdfs:comment "An alternative Book Title or the Book Title where an article appears, such as title of proceedings." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasBooktitle>,
+        <http://swrc.ontoware.org/ontology#booktitle> .
+
+onto:cdrom a owl:DatatypeProperty ;
+    rdfs:label "cdrom" ;
+    rdfs:comment "The CDROM location of a Publication, as used by the ACM SIGMOD Anthology." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string .
+
+onto:chapter a owl:DatatypeProperty ;
+    rdfs:label "chapter" ;
+    rdfs:comment "The chapter number of a publication" ;
+    rdfs:domain onto:Book_Chapter ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Chapter>,
+        <http://swrc.ontoware.org/ontology#chapter> .
+
+onto:chapter_of a owl:ObjectProperty ;
+    rdfs:label "Chapter Of" ;
+    rdfs:comment "Indicates that a book chapter belongs to a specific book. It is debateable whether this should be subclass of Collection." ;
+    rdfs:domain onto:Book_Chapter ;
+    rdfs:range onto:Edited_Book .
+
+onto:cites a owl:ObjectProperty ;
+    rdfs:label "Cites" ;
+    rdfs:comment "Indicates that a publication cites another publication." ;
+    rdfs:domain onto:Publication ;
+    owl:equivalentProperty <http://swrc.ontoware.org/ontology#cite> .
+
+onto:coauthor a owl:ObjectProperty ;
+    rdfs:label "coauthor" ;
+    rdfs:comment "Indicates that a person is co-author with another person" ;
+    rdfs:domain foaf:Person ;
+    rdfs:range foaf:Person .
+
+onto:coeditor a owl:ObjectProperty ;
+    rdfs:label "coeditor" ;
+    rdfs:comment "Indicates that a person is co-editor with another person" ;
+    rdfs:domain foaf:Person ;
+    rdfs:range foaf:Person .
+
+onto:editor a owl:ObjectProperty ;
+    rdfs:label "Editor" ;
+    rdfs:comment "Indicates that a publication has a specific editor(s)." ;
+    rdfs:domain onto:Edited_Publication ;
+    rdfs:range rdf:Seq .
+
+onto:ee a owl:DatatypeProperty ;
+    rdfs:label "ee" ;
+    rdfs:comment "The Electronic Edition of a publication" ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string .
+
+onto:eepresentation a owl:DatatypeProperty ;
+    rdfs:label "presentation" ;
+    rdfs:comment "The Electronic Edition of a Presentation of a publication" ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string .
+
+onto:gMonth a owl:DatatypeProperty ;
+    rdfs:label "gMonth" ;
+    rdfs:comment "The month part of the date of a foaf:Document represented as xsd:gMonth value" ;
+    rdfs:domain foaf:Document ;
+    rdfs:range xsd:gMonth .
+
+onto:in_series a owl:ObjectProperty ;
+    rdfs:label "In Series" ;
+    rdfs:comment "Indicates that a Publication is part of a Publication Series." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range onto:Series .
+
+onto:isIncludedIn a owl:ObjectProperty ;
+    rdfs:label "is Included in Proceedings" ;
+    rdfs:comment "Indicates that a publication is included in a specific proceedings publication." ;
+    rdfs:domain onto:Article_in_Proceedings ;
+    rdfs:range onto:Proceedings ;
+    owl:equivalentProperty <http://sw-portal.deri.org/ontologies/swportal#containedInProceedings> .
+
+onto:isbn a owl:DatatypeProperty ;
+    rdfs:label "isbn" ;
+    rdfs:comment "The ISBN of a publication." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasISBN>,
+        <http://swrc.ontoware.org/ontology#isbn> .
+
+onto:journal_name a owl:DatatypeProperty ;
+    rdfs:label "journal name" ;
+    rdfs:comment "The name of a Journal, such as where an article appears" ;
+    rdfs:domain onto:Journal ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasJournal> .
+
+onto:last_modified_date a owl:DatatypeProperty ;
+    rdfs:label "last modified date" ;
+    rdfs:comment "The last modified date of a document." ;
+    rdfs:domain foaf:Document ;
+    rdfs:range xsd:string .
+
+onto:month a owl:DatatypeProperty ;
+    rdfs:label "month" ;
+    rdfs:comment "The month part of the date of a foaf:Document." ;
+    rdfs:domain foaf:Document ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasMonth>,
+        <http://swrc.ontoware.org/ontology#month> .
+
+onto:number a owl:DatatypeProperty ;
+    rdfs:label "number" ;
+    rdfs:comment "The Number part of citation of a publication." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasNumber> .
+
+onto:pages a owl:DatatypeProperty ;
+    rdfs:label "pages" ;
+    rdfs:comment "The Pages part of citation of a publication." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://purl.org/net/nknouf/ns/bibtex#hasPages>,
+        <http://swrc.ontoware.org/ontology#pages>,
+        <http://www.aktors.org/ontology/portal#has-page-numbers> .
+
+onto:sameAffiliation a owl:ObjectProperty ;
+    rdfs:label "sameAffiliation" ;
+    rdfs:comment "Indicates that a person has same affiliation than another person (this is not necessarily transitive)" ;
+    rdfs:domain foaf:Person ;
+    rdfs:range foaf:Person .
+
+onto:volume a owl:DatatypeProperty ;
+    rdfs:label "volume" ;
+    rdfs:comment "The Volume part of citation of a publication." ;
+    rdfs:domain onto:Publication ;
+    rdfs:range xsd:string ;
+    owl:equivalentProperty <http://swrc.ontoware.org/ontology#volume> .
+
+onto:year a owl:DatatypeProperty ;
+    rdfs:label "year" ;
+    rdfs:comment "The year part of the date of a foaf:Document." ;
+    rdfs:domain foaf:Document ;
+    rdfs:range xsd:gYear ;
+    owl:equivalentProperty <http://swrc.ontoware.org/ontology#year> .
+
+<http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Chapter> a owl:DatatypeProperty .
+
+onto:Article_in_Proceedings a owl:Class ;
+    rdfs:label "Article in Proceedings" ;
+    rdfs:comment "An article in the proceedings of a meeting, such as a conference, workhshop and symposium." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://purl.org/net/nknouf/ns/bibtex#Inproceedings>,
+        <http://sw-portal.deri.org/ontologies/swportal#Inproceedings> .
+
+onto:Book a owl:Class ;
+    rdfs:label "Book" ;
+    rdfs:comment "A book with an explicit publisher." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Book>,
+        <http://purl.org/net/nknouf/ns/bibtex#Book>,
+        <http://swrc.ontoware.org/ontology#Book>,
+        <http://www.aktors.org/ontology/portal#Book>,
+        <http://www.marcont.org/ontology/marcont.owl#Book> .
+
+onto:Edited_Book a owl:Class ;
+    rdfs:label "Edited Book" ;
+    rdfs:comment "An edited book with an explicit publisher." ;
+    rdfs:subClassOf onto:Book,
+        onto:Edited_Publication ;
+    owl:equivalentClass <http://www.aktors.org/ontology/portal#Edited-Book> .
+
+onto:Journal a owl:Class ;
+    rdfs:label "Journal" ;
+    rdfs:comment "A periodical presenting articles on a particular subject." ;
+    rdfs:subClassOf onto:Serial_Publication ;
+    owl:equivalentClass <http://sw-portal.deri.org/ontologies/swportal#Journal>,
+        <http://www.aktors.org/ontology/portal#Journal> .
+
+onto:Proceedings a owl:Class ;
+    rdfs:label "Proceedings" ;
+    rdfs:comment "A written account of what transpired at a meeting." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://purl.org/net/nknouf/ns/bibtex#Proceedings>,
+        <http://sw-portal.deri.org/ontologies/swportal#Proceedings>,
+        <http://swrc.ontoware.org/ontology#Proceedings> .
+
+onto:School a owl:Class ;
+    rdfs:label "School" ;
+    rdfs:comment "An organization where individuals receive education." ;
+    rdfs:subClassOf foaf:Organization .
+
+onto:Serial_Publication a owl:Class ;
+    rdfs:label "Serial Publication" ;
+    rdfs:comment "A periodical that appears at scheduled times." ;
+    rdfs:subClassOf onto:Publication .
+
+onto:Series a owl:Class ;
+    rdfs:label "Series" ;
+    rdfs:comment "Publication Series, such as LNCS, WEUR Workshops, etc. (at this time debatable whether this should be subclassof Publication)" .
+
+onto:University a owl:Class ;
+    rdfs:label "University" ;
+    rdfs:comment "An institution for higher learning with teaching and research facilities constituting a graduate school and professional schools that award master's degrees and doctorates and an undergraduate division that awards bachelor's degrees." ;
+    rdfs:subClassOf onto:School ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Organization_Ontology.owl#University>,
+        <http://sw-portal.deri.org/ontologies/swportal#University>,
+        <http://swrc.ontoware.org/ontology#University>,
+        <http://www.aktors.org/ontology/portal#University> .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasBooktitle> a owl:DatatypeProperty .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasISBN> a owl:DatatypeProperty .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasJournal> a owl:DatatypeProperty .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasMonth> a owl:DatatypeProperty .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasNumber> a owl:DatatypeProperty .
+
+<http://purl.org/net/nknouf/ns/bibtex#hasPages> a owl:DatatypeProperty .
+
+<http://sw-portal.deri.org/ontologies/swportal#containedInProceedings> a owl:ObjectProperty .
+
+<http://swrc.ontoware.org/ontology#affiliation> a owl:ObjectProperty .
+
+<http://swrc.ontoware.org/ontology#booktitle> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#chapter> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#cite> a owl:ObjectProperty .
+
+<http://swrc.ontoware.org/ontology#isbn> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#month> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#pages> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#volume> a owl:DatatypeProperty .
+
+<http://swrc.ontoware.org/ontology#year> a owl:DatatypeProperty .
+
+<http://www.aktors.org/ontology/portal#has-affiliation> a owl:ObjectProperty .
+
+<http://www.aktors.org/ontology/portal#has-page-numbers> a owl:DatatypeProperty .
+
+onto:Book_Chapter a owl:Class ;
+    rdfs:label "Book Chapter" ;
+    rdfs:comment "A part of a book, such as a chapter (or section/preface) and/or a range of pages." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Article_in_Book>,
+        <http://purl.org/net/nknouf/ns/bibtex#Inbook> .
+
+onto:Edited_Publication a owl:Class ;
+    rdfs:label "Edited Publication" ;
+    rdfs:comment "An edited publication, that is, it has one or more editors (edited books, etc)" ;
+    rdfs:subClassOf onto:Publication .
+
+onto:Thesis a owl:Class ;
+    rdfs:label "Thesis" ;
+    rdfs:comment "A treatise advancing a new point of view resulting from research; usually a requirement for an advanced academic degree." ;
+    rdfs:subClassOf onto:Publication ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Thesis>,
+        <http://sw-portal.deri.org/ontologies/swportal#Thesis>,
+        <http://swrc.ontoware.org/ontology#Thesis> .
+
+onto:Publication a owl:Class ;
+    rdfs:label "Publication" ;
+    rdfs:comment "Individual documents and collections of documents such as series, journals, etc." ;
+    rdfs:subClassOf foaf:Document ;
+    owl:equivalentClass <http://knowledgeweb.semanticweb.org/semanticportal/OWL/Documentation_Ontology.owl#Publication>,
+        <http://sw-portal.deri.org/ontologies/swportal#Publication>,
+        <http://swrc.ontoware.org/ontology#Publication>,
+        <http://www.aktors.org/ontology/portal#Publication> .
+

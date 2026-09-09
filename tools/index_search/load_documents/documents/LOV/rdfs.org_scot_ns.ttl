@@ -1,0 +1,393 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix onto: <http://rdfs.org/scot/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Cooccurrence a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Cooccurrence" ;
+    rdfs:comment "More than two tags are assigned to one resource. This class defines cooccurring tags and the cooccurring frequency between the tags" ;
+    rdfs:isDefinedBy onto: ;
+    owl:disjointWith onto:Tag,
+        onto:Tagcloud ;
+    ns1:term_status "testing" .
+
+onto:Tag a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Tag" ;
+    rdfs:comment "A free-text keyword which is used to annotate a resource "@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.holygoat.co.uk/owl/redwood/0.1/tags/Tag> ;
+    owl:disjointWith onto:Cooccurrence,
+        onto:Tagcloud ;
+    ns1:term_status "testing" .
+
+onto:Tagcloud a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Tagcloud"@en ;
+    rdfs:comment "Tagcloud consists of metadata related to tagging activities connecting to the basic components such as users, tags, resources. "@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:disjointWith onto:Cooccurrence,
+        onto:Tag ;
+    ns1:term_status "testing" .
+
+onto:acronym a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "acronym"@en ;
+    rdfs:comment "An abbreviation formed by the first letters of the compound word."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:spelling_variant ;
+    ns1:term_status "testing" .
+
+onto:aggregated_tag a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "aggregated tag"@en ;
+    rdfs:comment "A tag in tags:Tagging is collected to scot:Tag."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    ns1:term_status "testing" .
+
+onto:associated_by a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "associated by"@en ;
+    rdfs:comment "An agent who makes a synonym relationship between the tags."@en ;
+    rdfs:domain rdf:Statement ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    ns1:term_status "testing" .
+
+onto:composed_of a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "composed of"@en ;
+    rdfs:comment "A SCOT Tagcloud that is part of this Tagcloud(especially one Tagcloud in a group SCOT Tagcloud)."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tagcloud ;
+    ns1:term_status "testing" .
+
+onto:cooccur_afrequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "cooccur absolute frequency"@en ;
+    rdfs:comment "An absolute frequency of a particular cooccurring set of tags."@en ;
+    rdfs:domain onto:Cooccurrence ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:cooccur_rfrequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "cooccur absolute frequency"@en ;
+    rdfs:comment "A percentage frequency of cooccurring set of tags relative to the sum of frequencies of cooccurrence."@en ;
+    rdfs:domain onto:Cooccurrence ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:cooccurs_with a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "cooccurs with"@en ;
+    rdfs:comment "This property is used to represent relations among two or more tags."@en ;
+    rdfs:domain onto:Cooccurrence ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    owl:inverseOf onto:cooccurs_in ;
+    ns1:term_status "testing" .
+
+onto:created_by a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "created by"@en ;
+    rdfs:comment "Indicates that an agent as type of a foaf:Agent, who generates a Tagcloud."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:Agent ;
+    rdfs:subPropertyOf foaf:maker ;
+    ns1:term_status "testing" .
+
+onto:has_usergroup a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has usergroup"@en ;
+    rdfs:comment "The Usergroup that this Tagcloud is associated with."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://rdfs.org/sioc/ns#Usergroup> ;
+    ns1:term_status "testing" .
+
+onto:hypenated a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "hypenated"@en ;
+    rdfs:comment "A type of phrase in which each word is separated by a hyphen."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:delimited ;
+    ns1:term_status "testing" .
+
+onto:last_used a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "last used"@en ;
+    rdfs:comment "A last date on which a particular tag is used ."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "testing" .
+
+onto:own_afrequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "own absolute frequency"@en ;
+    rdfs:comment "An absolute frequency of a particular tag in a Tagcloud."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:own_rfrequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "own relative frequency"@en ;
+    rdfs:comment "A percentage frequency of a tag for a particular Tagcloud relative to the total of all Tag frequencies in that Tagcloud.."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:plural a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "plural"@en ;
+    rdfs:comment "Refers to more than one thing."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:spelling_variant ;
+    ns1:term_status "testing" .
+
+onto:singular a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "singular"@en ;
+    rdfs:comment "Refers to one thing."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:spelling_variant ;
+    ns1:term_status "testing" .
+
+onto:slashed a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "slashed"@en ;
+    rdfs:comment "A type of phrase in which each word is separated by a slash."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:delimited ;
+    ns1:term_status "testing" .
+
+onto:spaced a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "spaced"@en ;
+    rdfs:comment "A type of phrase in which each piece of word is separated by a space."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:delimited ;
+    ns1:term_status "testing" .
+
+onto:synonym a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "synonym"@en ;
+    rdfs:comment "Word which means the same as another word."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf <http://www.holygoat.co.uk/owl/redwood/0.1/tags/equivalentTag> ;
+    ns1:term_status "testing" .
+
+onto:tagging_account a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tagging account"@en ;
+    rdfs:comment "The relationship between an agent and an account held by this agent."@en ;
+    rdfs:domain <http://www.holygoat.co.uk/owl/redwood/0.1/tags/Tagging> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range foaf:OnlineAccount ;
+    ns1:term_status "testing" .
+
+onto:tagging_activity a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tagging activity"@en ;
+    rdfs:comment "The relationship between a tagcloud and a tagging. Note that a tagcloud allows us to contain one or more tagging instances."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.holygoat.co.uk/owl/redwood/0.1/tags/Tagging> ;
+    ns1:term_status "testing" .
+
+onto:tagspace a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tag space"@en ;
+    rdfs:comment "The environment where the tagging happens."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://rdfs.org/sioc/ns#Site> ;
+    ns1:term_status "testing" .
+
+onto:total_cooccur_frequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total cooccur frequency"@en ;
+    rdfs:comment "A number of total frequency for all cooccurring tag sets in a Tagcloud"@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:total_cooccur_tags a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total cooccur tags"@en ;
+    rdfs:comment "The total number of cooccuring tags in a Tagcloud."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:total_items a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total items"@en ;
+    rdfs:comment "A number of posted items with an associated Tagcloud."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:total_tag_frequency a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total tag frequency"@en ;
+    rdfs:comment "A number of total frequency for all Tags in a Tagcloud."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:total_tags a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "total tags"@en ;
+    rdfs:comment "The total number of Tags in a Tagcloud."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:float ;
+    ns1:term_status "testing" .
+
+onto:underscored a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "underscored"@en ;
+    rdfs:comment "A type of pharse in which each word is separated by an underscore."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:delimited ;
+    ns1:term_status "testing" .
+
+onto:updated a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "updated date"@en ;
+    rdfs:comment "Date on which a Tagcloud is updated."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime ;
+    ns1:term_status "testing" .
+
+onto:used_by a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "used by"@en ;
+    rdfs:comment "Refers to the sioc:User who uses or creates a tag."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://rdfs.org/sioc/ns#User> ;
+    rdfs:subPropertyOf <http://rdfs.org/sioc/ns#has_creator> ;
+    ns1:term_status "testing" .
+
+onto:contained_in a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "contained in"@en ;
+    rdfs:comment "An aggregated tag is contained in a tagcloud."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tagcloud ;
+    owl:inverseOf onto:contains ;
+    ns1:term_status "testing" .
+
+onto:contains a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:comment "The relationship between a tagcloud and a tag. The object is a tag which is aggregated from a tagging instance."@en ;
+    rdfs:domain onto:Tagcloud ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    owl:inverseOf onto:contained_in ;
+    ns1:term_status "testing" .
+
+onto:cooccurs_in a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "cooccurs in"@en ;
+    rdfs:comment "This property is used to represent relations among two or more tags."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Cooccurrence ;
+    owl:inverseOf onto:cooccured_with ;
+    ns1:term_status "testing" .
+
+onto:has_tag a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has tag"@en ;
+    rdfs:comment "An item has one and more tags."@en ;
+    rdfs:domain <http://rdfs.org/sioc/ns#Item> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf <http://rdfs.org/sioc/ns#topic> ;
+    owl:inverseOf onto:tag_of ;
+    ns1:term_status "testing" .
+
+onto:tag_of a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tag of"@en ;
+    rdfs:comment "Indicates that a tag is assigned to the sioc:Item."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://rdfs.org/sioc/ns#Item> ;
+    rdfs:subPropertyOf <http://www.holygoat.co.uk/owl/redwood/0.1/tags/isTagOf> ;
+    owl:inverseOf onto:has_tag ;
+    ns1:term_status "testing" .
+
+<http://rdfs.org/scot/spec> rdfs:label "SCOT Ontology Specification" .
+
+onto:delimited a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "delimited"@en ;
+    rdfs:comment "A type of phrase in which each word is separated by a certain character."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    rdfs:subPropertyOf onto:spelling_variant ;
+    ns1:term_status "testing" .
+
+onto:spelling_variant a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "spelling variant"@en ;
+    rdfs:comment "A variation in the way in which a word is spelled."@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Tag ;
+    ns1:term_status "testing" .
+
+onto: a owl:Ontology ;
+    dc:creator "Hak-Lae Kim",
+        "John G. Breslin" ;
+    dc:description "SCOT (Social Semantic Cloud of Tags) is an ontology for describing the structure and the semantics for tagging data across heterogenous users, sources, and applications.\\n  "@en ;
+    dc:title "SCOT Ontology Namespace"@en ;
+    dcterms:issued "2007-03-23" ;
+    dcterms:modified "2012-08-13" ;
+    rdfs:seeAlso <http://rdfs.org/scot/spec> ;
+    owl:versionInfo "Revision: 0.9" .
+

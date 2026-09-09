@@ -1,0 +1,187 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/tree#Collection> a rdfs:Class ;
+    rdfs:label "Collection"@en ;
+    rdfs:comment "A tree:Collection is a collection containing members. The members may be spread across multiple tree:Nodes."@en ;
+    rdfs:subClassOf dcat:Dataset .
+
+<https://w3id.org/tree#ConditionalImport> a rdfs:Class ;
+    rdfs:label "Conditional Import"@en ;
+    rdfs:comment "Import a page when the tree:path is interesting for the client"@en .
+
+<https://w3id.org/tree#EqualToRelation> a rdfs:Class ;
+    rdfs:label "Equal To Relation"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#GeospatiallyContainsRelation> a rdfs:Class ;
+    rdfs:label "Geospatially Contains Relation"@en ;
+    rdfs:comment "All further members are geospatially contained within the WKT string of the tree:value."@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#GreaterThanOrEqualToRelation> a rdfs:Class ;
+    rdfs:label "Greater than or equal to relation"@en ;
+    rdfs:comment "All members of this related node are greater than or equal to the value"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#GreaterThanRelation> a rdfs:Class ;
+    rdfs:label "Greater Than Relation"@en ;
+    rdfs:comment "All members of this related node are greater than the value"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#InBetweenRelation> a rdfs:Class ;
+    rdfs:label "In Between Relation"@en ;
+    rdfs:comment "For comparing intervals: all further members are in-between the given interval"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#LessThanOrEqualToRelation> a rdfs:Class ;
+    rdfs:label "Less than or equal to Relation"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#LessThanRelation> a rdfs:Class ;
+    rdfs:label "Less Than Relation"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#Node> a rdfs:Class ;
+    rdfs:label "Node"@en ;
+    rdfs:comment "A tree:Node is a node that may contain relations to other nodes."@en .
+
+<https://w3id.org/tree#PrefixRelation> a rdfs:Class ;
+    rdfs:label "Prefix Relation"@en ;
+    rdfs:comment "All members of this related node start with this prefix"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#Relation> a rdfs:Class ;
+    rdfs:label "Relation"@en ;
+    rdfs:comment "A class describing the relation between two nodes"@en .
+
+<https://w3id.org/tree#SubstringRelation> a rdfs:Class ;
+    rdfs:label "Substring Relation"@en ;
+    rdfs:comment "All members of this related node contain this substring"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#SuffixRelation> a rdfs:Class ;
+    rdfs:label "Suffix Relation"@en ;
+    rdfs:comment "All members of this related node end with this suffix"@en ;
+    rdfs:subClassOf <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#ViewDescription> a rdfs:Class ;
+    rdfs:label "View Description"@en ;
+    rdfs:comment "Describes a specific TREE structure on top of the tree:Collection"@en ;
+    rdfs:subClassOf dcat:DataService .
+
+<https://w3id.org/tree#> a foaf:Document ;
+    ns1:license <http://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator <http://www.rubensworks.net/#me>,
+        <https://pietercolpaert.be/#me> ;
+    foaf:primaryTopic <https://w3id.org/tree#Ontology> .
+
+<https://w3id.org/tree#conditionalImport> a rdf:Property ;
+    rdfs:label "Import conditionally"@en ;
+    rdfs:comment "Imports a file in order being able to evaluate a tree:path correctly"@en ;
+    rdfs:range <https://w3id.org/tree#ConditionalImport> .
+
+<https://w3id.org/tree#import> a rdf:Property ;
+    rdfs:label "Import"@en ;
+    rdfs:comment "Imports a file in order being able to evaluate a tree:path correctly or comply fully to the tree:shape defined in the Collection"@en .
+
+<https://w3id.org/tree#latitudeTile> a rdf:Property ;
+    rdfs:label "The Y tile number"@en ;
+    rdfs:comment "The Y tile number from latitude cfr. OSM convention"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:isDefinedBy <https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames> ;
+    rdfs:range xsd:float .
+
+<https://w3id.org/tree#longitudeTile> a rdf:Property ;
+    rdfs:label "The X tile number"@en ;
+    rdfs:comment "The X tile number from longitude cfr. OSM convention"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:isDefinedBy <https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames> ;
+    rdfs:range xsd:float .
+
+<https://w3id.org/tree#member> a rdf:Property ;
+    rdfs:label "Member"@en ;
+    rdfs:comment "The collection has a member."@en ;
+    rdfs:domain <https://w3id.org/tree#Collection> .
+
+<https://w3id.org/tree#node> a rdf:Property ;
+    rdfs:label "Has node"@en ;
+    rdfs:comment "The URL to follow when this Node cannot be pruned"@en ;
+    rdfs:domain <https://w3id.org/tree#Relation> ;
+    rdfs:range <https://w3id.org/tree#Node> .
+
+<https://w3id.org/tree#path> a rdf:Property ;
+    rdfs:label "Path"@en ;
+    rdfs:comment "A property path, as defined by shacl, that indicates what resource the tree:value affects."@en ;
+    rdfs:domain <https://w3id.org/tree#Relation> ;
+    rdfs:range rdfs:Resource .
+
+<https://w3id.org/tree#relation> a rdf:Property ;
+    rdfs:label "Relation"@en ;
+    rdfs:comment "Links a node with another through a Relation class"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:range <https://w3id.org/tree#Relation> .
+
+<https://w3id.org/tree#remainingItems> a rdf:Property ;
+    rdfs:label "Remaining Items"@en ;
+    rdfs:comment "Total number of items of this node and its children"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:range xsd:integer .
+
+<https://w3id.org/tree#search> a rdf:Property ;
+    rdfs:label "Search"@en ;
+    rdfs:comment "The Node can be searched for child nodes."@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:range <http://www.w3.org/ns/hydra/core#IriTemplate> .
+
+<https://w3id.org/tree#shape> a rdf:Property ;
+    rdfs:label "Shape"@en ;
+    rdfs:comment "The SHACL shape the members of the collection adhere to."@en ;
+    rdfs:domain <https://w3id.org/tree#Collection> ;
+    rdfs:range sh:NodeShape .
+
+<https://w3id.org/tree#timeQuery> a rdf:Property ;
+    rdfs:label "Time Query"@en ;
+    rdfs:comment "Will search for elements starting from a certain timestamp"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:range xsd:dateTime .
+
+<https://w3id.org/tree#value> a rdf:Property ;
+    rdfs:label "Value"@en ;
+    rdfs:comment "The value the node linked in the node relation is compared to"@en .
+
+<https://w3id.org/tree#view> a rdf:Property ;
+    rdfs:label "View"@en ;
+    rdfs:comment "Links the collection to a `tree:Node` from which all other members can be found."@en ;
+    rdfs:domain <https://w3id.org/tree#Collection> ;
+    rdfs:range <https://w3id.org/tree#Node> .
+
+<https://w3id.org/tree#viewDescription> a rdf:Property ;
+    rdfs:label "View Description" ;
+    rdfs:comment "Links together a tree:Node with its description of this TREE structure"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:range <https://w3id.org/tree#ViewDescription> .
+
+<https://w3id.org/tree#zoom> a rdf:Property ;
+    rdfs:label "Zoom level"@en ;
+    rdfs:comment "The zoom level of the tile cfr. OSM convention"@en ;
+    rdfs:domain <https://w3id.org/tree#Node> ;
+    rdfs:isDefinedBy <https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames> ;
+    rdfs:range xsd:float .
+
+<http://www.rubensworks.net/#me> foaf:name "Ruben Taelman" .
+
+<https://pietercolpaert.be/#me> foaf:mbox "pieter.colpaert@ugent.be" ;
+    foaf:name "Pieter Colpaert" .
+
+<https://w3id.org/tree#Ontology> a owl:Ontology ;
+    rdfs:label "TREE"@en ;
+    rdfs:comment "A hypermedia specification for fragmenting collections."@en .
+

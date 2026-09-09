@@ -1,0 +1,150 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://ns.inria.fr/ludo/v1/virtualcontext#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ns.inria.fr/ludo/v1/virtualcontext> a owl:Ontology .
+
+onto:VirtualLocation a owl:Class ;
+    rdfs:label "Virtual location"@en ;
+    rdfs:comment "Represents the relation between a real life location and a location inside the game"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:hasCurrentGameLevel a owl:ObjectProperty ;
+    rdfs:label "Has current game level"@en ;
+    rdfs:comment "The current level of the game in which the Gameplayer is"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GameLevel ;
+    ns1:term_status "stable" .
+
+onto:hasCurrentPOI a owl:ObjectProperty ;
+    rdfs:label "Has current POI"@en ;
+    rdfs:comment "Given the current virtual location of a GamePlayer, it defines the corresponding POI in real life"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:POI ;
+    ns1:term_status "stable" .
+
+onto:hasCurrentVirtualActivity a owl:ObjectProperty ;
+    rdfs:label "Has currrent VirtualAcitivity"@en ;
+    rdfs:comment "The currrent VirtualAcitivity of a GamePlayer"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:VirtualActivity ;
+    ns1:term_status "stable" .
+
+onto:hasDistance a owl:ObjectProperty ;
+    rdfs:label "Has distance"@en ;
+    rdfs:comment "Nearby player distance"@en ;
+    rdfs:domain foaf:Person ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:NearbyPlayer ;
+    ns1:term_status "stable" .
+
+onto:hasGameLevelLabel a owl:DatatypeProperty ;
+    rdfs:label "Has game level label"@en ;
+    rdfs:comment "The label of the game level"@en ;
+    rdfs:domain onto:GameLevel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasGameLevelNumber a owl:DatatypeProperty ;
+    rdfs:label "Has game level number"@en ;
+    rdfs:comment "The numeric label of the game level"@en ;
+    rdfs:domain onto:GameLevel ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger ;
+    ns1:term_status "stable" .
+
+onto:hasPOICategory a owl:DatatypeProperty ;
+    rdfs:label "Has POI category"@en ;
+    rdfs:comment "The category of the POI"@en ;
+    rdfs:domain onto:POI ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasPOILabel a owl:DatatypeProperty ;
+    rdfs:label "Has POI label"@en ;
+    rdfs:comment "A label with the name of the POI"@en ;
+    rdfs:domain onto:POI ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:hasVirtualActivityLabel a owl:DatatypeProperty ;
+    rdfs:label "Virtual Activity"@en ;
+    rdfs:comment "Virtual Activity"@en ;
+    rdfs:domain onto:VirtualActivity ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string ;
+    ns1:term_status "stable" .
+
+onto:nearbyPlayerDistance a owl:DatatypeProperty ;
+    rdfs:label "Nearby Player Distance"@en ;
+    rdfs:comment "Nearby Player Distance in meters"@en ;
+    rdfs:domain onto:NearbyPlayer ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal ;
+    ns1:term_status "stable" .
+
+<http://dbpedia.org/resource/National_Institute_for_Research_in_Computer_Science_and_Control> a foaf:Organization .
+
+<http://www.oscarrodriguez.me> a foaf:Person .
+
+<https://plus.google.com/106595696646939943813> a foaf:Person .
+
+onto:NearbyPlayer a owl:Class ;
+    rdfs:label "Nearby Player"@en ;
+    rdfs:comment "It represents the realation of proximity between two players"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:VirtualActivity a owl:Class ;
+    rdfs:label "Virtual activity"@en ;
+    rdfs:comment "Represents the virtual activity that the player is performing inside the game. Such as learning, exploring."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:GameLevel a owl:Class ;
+    rdfs:label "Game level"@en ;
+    rdfs:comment "Represents the current (latest) game level in which the player is in the serious game"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing ;
+    ns1:term_status "stable" .
+
+onto:POI a owl:Class ;
+    rdfs:label "POI"@en ;
+    rdfs:comment "Point of interest"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf owl:Thing,
+        <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    ns1:term_status "stable" .
+
+onto: a owl:Ontology ;
+    ns2:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dc:creator <http://www.oscarrodriguez.me>,
+        <https://plus.google.com/106595696646939943813> ;
+    dc:description "This vocabulary is a component of Ludo. It was created to describe and represent the virtual context of a game player in a serious game."@en ;
+    dc:issued "2016-02-01"^^xsd:date ;
+    dc:modified "2016-08-09"^^xsd:date ;
+    dc:publisher <http://dbpedia.org/resource/National_Institute_for_Research_in_Computer_Science_and_Control> ;
+    dc:rights "This ontology is distributed under a Creative Commons Attribution License - http://creativecommons.org/licenses/by/3.0 ."@en ;
+    dc:title "Ludo - Virtual Context"@en ;
+    vann:preferredNamespacePrefix "virtualcontext" ;
+    vann:preferredNamespaceUri "http://ns.inria.fr/ludo/v1/virtualcontext#"^^xsd:string ;
+    rdfs:comment "Given the increasing amount of structured data published on the Web, many possibilities are open for creating new types of games that use resources from the Web of Data. In particular, if we consider the subcategory of Serious Games in which the object of the game is to educate the user through the interactive discovery of real-life concepts (associated to Semantic Web resources), the inclusion of a semantic representation of the user profile and his contextual information becomes an important element to recommend the user more accurate concepts. Ludo is an ontology that allows the creation of Serious Games with those characteristics."@en ;
+    owl:imports foaf: ;
+    owl:versionInfo 0.1 .
+

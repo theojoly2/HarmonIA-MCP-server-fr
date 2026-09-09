@@ -1,0 +1,97 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://www.w3.org/ns/rdfa#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+onto:PGClass a rdfs:Class,
+        owl:Class ;
+    dcterms:description "is the top level class of the hierarchy" .
+
+onto:Pattern a rdfs:Class,
+        owl:Class ;
+    dcterms:description "Class to identify an (RDF) resource whose properties are to be copied to another resource" .
+
+onto:PrefixOrTermMapping a rdfs:Class,
+        owl:Class ;
+    dcterms:description "is the top level class for prefix or term mappings" .
+
+onto: a owl:Ontology ;
+    dcterms:creator <http://www.ivan-herman.net/foaf#me> ;
+    dcterms:date "2013-01-18" ;
+    dcterms:description "This document describes the RDFa Vocabulary for Term and Prefix Assignment. The Vocabulary is used to modify RDFa 1.1 processing behavior." ;
+    dcterms:publisher <http://www.w3.org/data#W3C> ;
+    dcterms:title "RDFa Vocabulary for Term and Prefix Assignment, and for Processor Graph Reporting" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/rdfa-core/#s_initialcontexts> ;
+    owl:versionInfo "$Date: 2013-03-11 07:54:23 $" .
+
+onto:DocumentError dcterms:description "error condition; to be used when the document fails to be fully processed as a result of non-conformant host language markup" ;
+    rdfs:subClassOf onto:Error .
+
+onto:Info dcterms:description "is the class for all informations" ;
+    rdfs:subClassOf onto:PGClass .
+
+onto:PrefixRedefinition dcterms:description "warning; to be used when a prefix, either from the initial context or inherited from an ancestor node, is redefined in an element" ;
+    rdfs:subClassOf onto:Warning .
+
+onto:UnresolvedCURIE dcterms:description "warning; to be used when a CURIE prefix fails to be resolved" ;
+    rdfs:subClassOf onto:Warning .
+
+onto:UnresolvedTerm dcterms:description "warning; to be used when a Term fails to be resolved" ;
+    rdfs:subClassOf onto:Warning .
+
+onto:VocabReferenceError dcterms:description "warning; to be used when the value of a @vocab attribute cannot be dereferenced, hence the vocabulary expansion cannot be completed" ;
+    rdfs:subClassOf onto:Warning .
+
+onto:context a rdf:Property,
+        owl:ObjectProperty ;
+    dcterms:description "provides extra context for the error, eg, http response, an XPointer/XPath information, or simply the URI that created the error" ;
+    rdfs:domain onto:PGClass .
+
+onto:copy a rdf:Property,
+        owl:ObjectProperty ;
+    dcterms:description "identifies the resource (i.e., pattern) whose properties and values should be copied to replace the current triple (retaining the subject of the triple)." .
+
+onto:prefix a rdf:Property,
+        owl:DatatypeProperty ;
+    dcterms:description "defines a prefix mapping for a URI; the value is supposed to be a NMTOKEN" ;
+    rdfs:domain onto:PrefixMapping .
+
+onto:term a rdf:Property,
+        owl:DatatypeProperty ;
+    dcterms:description "defines a term mapping for a URI; the value is supposed to be a NMTOKEN" ;
+    rdfs:domain onto:TermMapping .
+
+onto:uri a rdf:Property,
+        owl:DatatypeProperty ;
+    dcterms:description "defines the URI for either a prefix or a term mapping; the value is supposed to be an absolute URI" ;
+    rdfs:domain onto:PrefixOrTermMapping .
+
+onto:usesVocabulary a rdf:Property,
+        owl:ObjectProperty ;
+    dcterms:description "provides a relationship between the host document and a vocabulary\\n\\tdefined using the @vocab facility of RDFa1.1" .
+
+onto:vocabulary a rdf:Property,
+        owl:DatatypeProperty ;
+    dcterms:description "defines an absolute URI to be used as a default vocabulary; the value is can be any string; for documentation purposes it is advised to use the string 'true' or 'True'." .
+
+<http://www.ivan-herman.net/foaf#me> a foaf:Person ;
+    rdfs:seeAlso <http://www.ivan-herman.net/foaf> ;
+    foaf:mbox <mailto:ivan@w3.org> ;
+    foaf:name "Ivan Herman" ;
+    foaf:title "Semantic Web Activity Lead" ;
+    foaf:workplaceHomepage <http://www.w3.org> .
+
+onto:Error dcterms:description "is the class for all error conditions" ;
+    rdfs:subClassOf onto:PGClass .
+
+onto:PrefixMapping dcterms:description "is the class for prefix mappings" ;
+    rdfs:subClassOf onto:PrefixOrTermMapping .
+
+onto:TermMapping dcterms:description "is the class for term mappings" ;
+    rdfs:subClassOf onto:PrefixOrTermMapping .
+
+onto:Warning dcterms:description "is the class for all warnings" ;
+    rdfs:subClassOf onto:PGClass .
+

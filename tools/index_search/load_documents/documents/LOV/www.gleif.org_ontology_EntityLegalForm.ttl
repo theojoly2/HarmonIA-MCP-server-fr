@@ -1,0 +1,68 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://www.gleif.org/ontology/Base/> .
+@prefix onto: <https://www.gleif.org/ontology/EntityLegalForm/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:ELFregistry a ns1:Registry ;
+    rdfs:label "ELF registry" ;
+    rdfs:isDefinedBy onto: ;
+    skos:altLabel "ELF list",
+        "Entity Legal Form list" ;
+    skos:prefLabel "ELF registry" ;
+    ns1:hasWebsite "https://www.gleif.org/en/about-lei/code-lists/iso-20275-entity-legal-forms-code-list"^^xsd:anyURI ;
+    ns1:isManagedBy ns1:GLEIF .
+
+onto:EntityLegalFormIdentifier a owl:Class ;
+    rdfs:label "entity legal form identifier" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass onto:EntityLegalForm ;
+            owl:onProperty ns1:identifies ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        ns1:Identifier ;
+    skos:definition "A current code from the GLEIF-maintained list MUST be used. Values of the LegalFormEnum code list are maintained by GLEIF on behalf of ISO through the Entity Legal Form (ELF) as defined in ISO 20275." .
+
+onto:EntityLegalForm a owl:Class ;
+    rdfs:label "entity legal form" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ns1:hasCoverageArea ;
+            owl:someValuesFrom <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/GeographicRegion> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasAbbreviationLocal ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasNameLegalLocal ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasAbbreviationTransliterated ],
+        [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ns1:hasNameTransliterated ] ;
+    skos:definition "The legal form of the entity, taken from the ISO Entity Legal Form (ELF) code list maintained by GLEIF. " .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    rdfs:label "Entity Legal Form Ontology" ;
+    dcterms:abstract "Ontology defining concepts for Entity Legal Forms and their abbreviations by jurisdiction, based on ISO 20275. Though used by Global Legal Entity Identifier Foundation (GLEIF)  for Legal Entity Identifier registration, it is more broadly applicable."@en ;
+    dcterms:contributor <http://purl.org/bryon>,
+        <http://www.workingontologist.com>,
+        <https://www.linkedin.com/in/peterivett/> ;
+    dcterms:creator ns1:GLEIF ;
+    dcterms:issued "2019-02-01T00:00:00+00:00"^^xsd:dateTime ;
+    dcterms:license "https://www.gleif.org/en/meta/lei-data-terms-of-use/"^^xsd:anyURI ;
+    dcterms:rights "Copyright (c) 2019 Global Legal Entity Identifier Foundation (GLEIF)" ;
+    dcterms:rightsHolder ns1:GLEIF ;
+    dcterms:source "https://www.gleif.org/en/about-lei/code-lists/iso-20275-entity-legal-forms-code-list"^^xsd:anyURI ;
+    dcterms:title "Entity Legal Form Ontology"@en ;
+    vann:preferredNamespacePrefix "gleif-elf" ;
+    vann:preferredNamespaceUri "https://www.gleif.org/ontology/EntityLegalForm/" ;
+    owl:imports ns1:,
+        <https://www.omg.org/spec/LCC/Countries/CountryRepresentation/> ;
+    owl:versionIRI <https://www.gleif.org/ontology/EntityLegalForm-v1.0/EntityLegalForm/> .
+

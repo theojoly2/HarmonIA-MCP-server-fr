@@ -1,0 +1,121 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://moat-project.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:AutomatedTagging a onto:TagType ;
+    rdfs:isDefinedBy onto: .
+
+onto:ValidatedTagging a onto:TagType ;
+    rdfs:isDefinedBy onto: .
+
+onto:hasMeaning a owl:ObjectProperty ;
+    rdfs:label "tag meaning object - global context" ;
+    rdfs:comment "The link between a Tag and a Meaning object in a global context"@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Meaning .
+
+onto:localMeaning a owl:ObjectProperty ;
+    rdfs:label "local Meaning" ;
+    rdfs:comment "The URI used as a meaning for a local meaning of a Tag with MOAT"@en ;
+    rdfs:domain onto:Tag ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+onto:tagType a owl:ObjectProperty ;
+    rdfs:label "tagging type" ;
+    rdfs:comment "The type of the tagging, i.e. automatic or has been validated"@en ;
+    rdfs:domain <http://www.holygoat.co.uk/owl/redwood/0.1/tags/RestrictedTagging> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:TagType .
+
+onto:taggedWith a owl:ObjectProperty ;
+    rdfs:label "tagged with" ;
+    rdfs:comment "The URI ised to 'tag' an item with MOAT"@en ;
+    rdfs:domain <http://rdfs.org/sioc/ns#Item> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+dc:contributor a owl:DatatypeProperty .
+
+dc:creator a owl:DatatypeProperty .
+
+dc:description a owl:DatatypeProperty .
+
+dc:title a owl:DatatypeProperty .
+
+dcterms:issued a owl:DatatypeProperty .
+
+<http://apassant.net/alex> a foaf:Person .
+
+onto:meaningURI a owl:ObjectProperty ;
+    rdfs:label "tag meaning URI - global context" ;
+    rdfs:comment "The link between a reified Meaning object and the URI that defines a meaning"@en ;
+    rdfs:domain onto:Meaning ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+onto:tagMeaning a owl:ObjectProperty ;
+    rdfs:label "tag meaning - tagging context" ;
+    rdfs:comment "The link between a Tagging and a meaning (URI) of a tag in a given context (i.e. blog post)"@en ;
+    rdfs:domain <http://www.holygoat.co.uk/owl/redwood/0.1/tags/RestrictedTagging> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Resource .
+
+<http://moat-project.org/ontology> rdfs:label "Human-redeable information about this ontology" .
+
+<http://www.holygoat.co.uk/owl/redwood/0.1/tags/Tag> a owl:Class .
+
+<http://www.holygoat.co.uk/owl/redwood/0.1/tags/name> a owl:DatatypeProperty .
+
+foaf:Person a owl:Class .
+
+foaf:maker a owl:ObjectProperty .
+
+onto:Meaning a owl:Class ;
+    rdfs:label "Tag Meaning" ;
+    rdfs:comment "A reified object to define a potential meaning for a Tag. The meaning is a unique and explicitely defined Semantic Web resource and is related to the agent that defined it with foaf:maker"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty foaf:maker ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:meaningURI ] .
+
+onto:Tag a owl:Class ;
+    rdfs:label "Tag URI" ;
+    rdfs:comment "A Tag URI, that provides an unique identifier for a label attached to a resource"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty <http://www.holygoat.co.uk/owl/redwood/0.1/tags/name> ],
+        <http://www.holygoat.co.uk/owl/redwood/0.1/tags/Tag> .
+
+<http://www.holygoat.co.uk/owl/redwood/0.1/tags/RestrictedTagging> a owl:Class .
+
+onto:TagType a owl:Class ;
+    rdfs:isDefinedBy onto: .
+
+rdfs:Resource a owl:Class .
+
+onto: a owl:Ontology,
+        owl:Thing ;
+    rdfs:label "An ontology for the MOAT project."@en ;
+    dc:contributor "Philippe Laublet" ;
+    dc:creator "Alexandre Passant" ;
+    dc:title "MOAT ontology"@en ;
+    dcterms:issued "2008-01-15" ;
+    rdfs:comment "An ontology that let users define relationships between Tag objects and URIs of Semantic Web resources."@en ;
+    rdfs:seeAlso <http://moat-project.org/ontology> ;
+    foaf:maker <http://apassant.net/alex> .
+
+[] a owl:Restriction ;
+    rdfs:isDefinedBy onto: ;
+    owl:maxCardinality 1 ;
+    owl:onProperty onto:tagMeaning .
+

@@ -1,0 +1,493 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://schema.org/> .
+@prefix ns2: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns3: <http://creativecommons.org/ns#> .
+@prefix ns4: <http://spdx.org/rdf/terms#> .
+@prefix onto: <https://w3id.org/oseg/ont/okh> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    ns3:license <https://www.gnu.org/licenses/gpl-3.0.txt> ;
+        "Robin Vobruba <hoijui.quaero@gmail.com>" ;
+    dc:issued "2021-08-24 16:32:33" ;
+    dc:modified "2022-02-22 12:01:28" ;
+    dc:publisher "Robin Vobruba (Open Source Ecology Germany e.V.) <hoijui.quaero@gmail.com>" ;
+    dc:source "https://github.com/OPEN-NEXT/OKH-LOSH/master/OKH-LOSH.ttl" ;
+    dcterms:creator <https://orcid.org/0000-0002-1611-7129>,
+        <https://orcid.org/0009-0004-3559-6542> ;
+    dcterms:description "Used for indexing, searching and comparing Open Source Hardware projects"@en ;
+    dcterms:language <http://id.loc.gov/vocabulary/iso639-1/en> ;
+    dcterms:license <https://www.gnu.org/licenses/gpl-3.0.txt> ;
+    dcterms:title "Open Know How (OKH) ontology"@en ;
+    vann:preferredNamespacePrefix "okh" ;
+    vann:preferredNamespaceUri "https://w3id.org/oseg/ont/okh#" ;
+    ns1:comment "Regarding the use of `schema:domainIncludes`\\nand `schema:rangeIncludes` in this ontology:\\nLooking at the definitions for the RDFS version\\nof the two, `rdfs:domain` and `rdfs:range`:\\n* https://www.w3.org/TR/rdf-schema/#ch_domain\\n* https://www.w3.org/TR/rdf-schema/#ch_range\\nand as described in this StackOverflow answer:\\n<https://stackoverflow.com/a/74782257/586229>,\\nmultiple objects for the two RDFS properties mean,\\nthat *all of them* apply, simultaneously,\\nnot *one of them*.\\nYou may think of this as an `AND` coupling.\\nWe want the *one of them* meaning though (`OR`).\\nThe `schema:*` properties give us just that."@en ;
+    ns4:ListedLicense "GPL-3.0-or-later" ;
+    owl:versionIRI <https://w3id.org/oseg/ont/1.1.0/okh> ;
+    owl:versionInfo "1.1.0" .
+
+<https://w3id.org/oseg/ont/okh#FileUrl> a owl:Class ;
+    rdfs:label "permanent URL to file" ;
+    ns3:deprecatedOn "2023-07-11"^^xsd:date ;
+    ns1:supersededBy <https://w3id.org/oseg/ont/okh#File> ;
+    rdfs:subClassOf ns1:URL,
+        <https://w3id.org/oseg/ont/okh#ComponentReference> ;
+    owl:deprecated true ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#alternativeLicense> a owl:ObjectProperty ;
+    rdfs:label "non-SPDX license" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    rdfs:comment "URL to legal code of a license without SPDX identifier, hence OSHWA-compliance is to be checked manually" ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#attestation> a owl:ObjectProperty ;
+    rdfs:label "attestation" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#WebsiteUrl> ;
+    rdfs:comment "permanent URL to evidence of compliance (OSHWA, FSF, DIN SPEC 3105)" .
+
+<https://w3id.org/oseg/ont/okh#auxiliary> a owl:ObjectProperty ;
+    rdfs:label "has auxiliary file" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#AuxiliaryFile> ;
+    rdfs:comment "reference to an auxiliary file" .
+
+<https://w3id.org/oseg/ont/okh#compliesWith> a owl:ObjectProperty ;
+    rdfs:label "complies with a technical standard" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Component> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Standard> .
+
+<https://w3id.org/oseg/ont/okh#cpcPatentClass> a owl:ObjectProperty ;
+    rdfs:label "Patent Class" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes xsd:string ;
+    rdfs:comment "International Patent Classification (IPC)" ;
+    rdfs:subPropertyOf <http://data.epo.org/linked-data/def/patent/classificationIPCInventive> .
+
+<https://w3id.org/oseg/ont/okh#dataSource> a owl:DatatypeProperty ;
+    rdfs:label "Metadata Source" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    rdfs:comment "platform, where the crawler found the metadata (e.g. GitHub, Wikifactory)"@en ;
+    rdfs:subPropertyOf ns1:url ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#documentationLanguage> a owl:DatatypeProperty ;
+    rdfs:label "documentation language" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    rdfs:comment "\\n   IETF language tag\\n   following the BCP 47 standard e.g. en-GB\\n   denotes the language of the documentation for the component subject "@en ;
+    rdfs:subPropertyOf ns1:inLanguage ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#documentationReadinessLevel> a owl:ObjectProperty ;
+    rdfs:label "Documentation Readiness Level (DLR)" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/otrl#ODRL> ;
+    rdfs:comment "…using the ODRL definitions" ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#doi> a owl:DatatypeProperty ;
+    rdfs:label "DOI"@en ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Publication> ;
+    rdfs:comment "this publication has a digital object identifier (DOI)"@en ;
+    rdfs:subPropertyOf <http://ns.nature.com/terms/doi> .
+
+<https://w3id.org/oseg/ont/okh#export> a owl:ObjectProperty ;
+    rdfs:label "exported source file" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#ExportFile> ;
+    rdfs:comment "URL to a (generated) exported source file" .
+
+<https://w3id.org/oseg/ont/okh#fileFormat> a owl:ObjectProperty ;
+    rdfs:label "file format" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    rdfs:subPropertyOf ns1:encodingFormat .
+
+<https://w3id.org/oseg/ont/okh#fileUrl> a owl:ObjectProperty ;
+    rdfs:label "file URL" ;
+    ns3:deprecatedOn "2023-07-11"^^xsd:date ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    ns1:supersededBy <https://w3id.org/oseg/ont/okh#url> ;
+    rdfs:subPropertyOf ns1:url ;
+    owl:deprecated true ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#forkOf> a owl:ObjectProperty ;
+    rdfs:label "fork of" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    rdfs:subPropertyOf ns1:isBasedOn ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#function> a owl:DatatypeProperty ;
+    rdfs:label "functional description" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes xsd:string ;
+    rdfs:comment "\\n    functional description, e.g. what it actually does, what problem it solves, for whom, under which conditions etc.\\n    so if you wish that someone finds & uses your okh specifically e.g. for COVID-19-crisis response, include relevant keywords in this field\\n    optional: description of input, output and interfaces"@en ;
+    rdfs:subPropertyOf <http://purl.obolibrary.org/obo/BFO_0000016> ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#functionalMetadata> a owl:DatatypeProperty ;
+    rdfs:label "functionality metadata" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes ns1:StructuredValue ;
+    rdfs:comment "Metadata addressing functionality, such as dimensions, material, weight, RPM,… (not standardized)" ;
+    rdfs:subPropertyOf ns1:value .
+
+<https://w3id.org/oseg/ont/okh#hasBoM> a owl:ObjectProperty ;
+    rdfs:label "has Bill of Materials" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#BoM> ;
+    rdfs:comment "links to the corresponding Bill of Materials" .
+
+<https://w3id.org/oseg/ont/okh#hasComponent> a owl:ObjectProperty ;
+    rdfs:label "has Component" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part>,
+        <https://w3id.org/oseg/ont/okh#WebsiteUrl> ;
+    rdfs:comment "Links to sub-components of the Module. In the case of that sub-component being an external Module, it has to refer to a snapshot of the RDF object representing that OKH Module. Each sub-component should also appear in the BoM." .
+
+<https://w3id.org/oseg/ont/okh#hasContributionGuide> a owl:ObjectProperty ;
+    rdfs:label "has Contribution Guide" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#ContributionGuide> ;
+    rdfs:comment "links to the corresponding Contribution Guide" .
+
+<https://w3id.org/oseg/ont/okh#hasImage> a owl:ObjectProperty ;
+    rdfs:label "has image" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Component> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Image> ;
+    rdfs:comment "links to the corresponding Image" ;
+    rdfs:subPropertyOf ns1:image .
+
+<https://w3id.org/oseg/ont/okh#hasManifestFile> a owl:ObjectProperty ;
+    rdfs:label "has manifest file" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#ManifestFile> .
+
+<https://w3id.org/oseg/ont/okh#hasManufacturingInstructions> a owl:ObjectProperty ;
+    rdfs:label "has Manufacturing Instructions" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#ManufacturingInstructions> .
+
+<https://w3id.org/oseg/ont/okh#hasMass> a owl:ObjectProperty ;
+    rdfs:label "mass of the component" ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Mass> ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#productionMetadata> .
+
+<https://w3id.org/oseg/ont/okh#hasOuterDimensions> a owl:ObjectProperty ;
+    rdfs:label "outer dimensions using OpenSCAD primitives" ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#OuterDimensions> ;
+    rdfs:comment "https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Primitive_Solids" ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#productionMetadata> .
+
+<https://w3id.org/oseg/ont/okh#hasPublication> a owl:ObjectProperty ;
+    rdfs:label "has Publication" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    rdfs:comment "design files of this OSH modules have been peer reviewed in a scientific publication" ;
+    rdfs:subPropertyOf <http://ns.nature.com/terms/hasPublication> .
+
+<https://w3id.org/oseg/ont/okh#hasReadme> a owl:ObjectProperty ;
+    rdfs:label "has Readme" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Readme> ;
+    rdfs:comment "links to the corresponding Readme" .
+
+<https://w3id.org/oseg/ont/okh#hasSoftware> a owl:ObjectProperty ;
+    rdfs:label "has Software" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Software> .
+
+<https://w3id.org/oseg/ont/okh#hasUserManual> a owl:ObjectProperty ;
+    rdfs:label "has User Manual" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#UserManual> .
+
+<https://w3id.org/oseg/ont/okh#installationGuide> a owl:DatatypeProperty ;
+    rdfs:label "Installation Guide" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Software> .
+
+<https://w3id.org/oseg/ont/okh#licensor> a owl:ObjectProperty ;
+    rdfs:label "licensor" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes ns1:Organization,
+        ns1:Person ;
+    rdfs:comment "organization/individual behind the hardware design (holder of intellectual property)" ;
+    rdfs:subPropertyOf ns1:copyrightHolder ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#manufacturingProcess> a owl:DatatypeProperty ;
+    rdfs:label "manufacturing process" ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#productionMetadata> .
+
+<https://w3id.org/oseg/ont/okh#material> a owl:DatatypeProperty ;
+    rdfs:label "material" ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#productionMetadata> .
+
+<https://w3id.org/oseg/ont/okh#okhv> a owl:DatatypeProperty ;
+    rdfs:label "OKH version" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#ManifestFile> ;
+    rdfs:comment "version of OKH specification the metadata is following (different version → different data fields)" ;
+    rdfs:subPropertyOf ns1:version ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#openScad> ns3:deprecatedOn "2023-07-06"^^xsd:date ;
+    ns1:supersededBy <https://w3id.org/oseg/ont/okh#openSCAD> ;
+    owl:deprecated true ;
+    owl:sameAs <https://w3id.org/oseg/ont/okh#openSCAD> ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#organization> a owl:ObjectProperty ;
+    rdfs:label "organization" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes ns1:Organization ;
+    rdfs:comment "organization representing (most) contributors of this project" .
+
+<https://w3id.org/oseg/ont/okh#permaURL> a owl:ObjectProperty ;
+    rdfs:label "Permanent file URL - It was not 'permanent', but rather 'frozen in time', and it was alsoThis was used in the karwler, but badly. Things simply should not be done that way, but rather with a separate manifest file, where either everything is frozen, or nothing is, and the manifest file (internally) itsself being marked accordingly." ;
+    ns3:deprecatedOn "2023-07-11"^^xsd:date ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    owl:deprecated true ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#relatedTsdc> ns3:deprecatedOn "2023-07-10"^^xsd:date ;
+    ns1:supersededBy <https://w3id.org/oseg/ont/okh#tsdc> ;
+    owl:deprecated true ;
+    owl:sameAs <https://w3id.org/oseg/ont/okh#tsdc> ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#relativePath> a owl:ObjectProperty ;
+    rdfs:label "Project-/Repo-relative file path, directly starting with the first path element, *NOT* with '/' or './'" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    ns1:rangeIncludes xsd:string ;
+    rdfs:subPropertyOf ns1:url .
+
+<https://w3id.org/oseg/ont/okh#release> a owl:DatatypeProperty ;
+    rdfs:label "release" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Software> ;
+    rdfs:comment "URL to release" .
+
+<https://w3id.org/oseg/ont/okh#repoHost> a owl:DatatypeProperty ;
+    rdfs:label "Repository Host" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    rdfs:comment "platform where the OSH documentation is located (e.g. GitLab, Wikifactory or any self-hosted website or wiki)"@en ;
+    rdfs:subPropertyOf ns1:url ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#repoSnapshot> a owl:ObjectProperty ;
+    rdfs:label "respository snapshot" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#WebsiteUrl> ;
+    rdfs:comment "Repoistory snapshot (=specific version) URL" ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#repo> ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#smallestToleranceClass> a owl:ObjectProperty ;
+    rdfs:label "smallest tolerance class (following ISO 286)" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Part> ;
+    rdfs:subPropertyOf <https://w3id.org/oseg/ont/okh#productionMetadata> .
+
+<https://w3id.org/oseg/ont/okh#source> a owl:ObjectProperty ;
+    rdfs:label "source file" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#SourceFile> ;
+    rdfs:comment "relative link to a source file" .
+
+<https://w3id.org/oseg/ont/okh#spdxLicense> a owl:ObjectProperty ;
+    rdfs:label "SPDX license identifier" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes ns4:ListedLicense ;
+    rdfs:comment "view complete list under https://spdx.org/licenses/" ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#standardID> a owl:DatatypeProperty ;
+    rdfs:label "Document identifier for the technical standard" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Standard> ;
+    ns1:rangeIncludes xsd:string .
+
+<https://w3id.org/oseg/ont/okh#technologyReadinessLevel> a owl:ObjectProperty ;
+    rdfs:label "Technology Readiness Level (TRL)" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/otrl#OTRL> ;
+    rdfs:comment "…using the OTRL definitions" ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#timestamp> a owl:ObjectProperty ;
+    rdfs:label "timestamp" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes xsd:dateTimeStamp ;
+    rdfs:comment "following ISO 8601; see: <https://www.w3.org/TR/xmlschema11-2/#dateTimeStamp>" .
+
+<https://w3id.org/oseg/ont/okh#unit> a owl:DatatypeProperty ;
+    rdfs:label "unit" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Mass>,
+        <https://w3id.org/oseg/ont/okh#OuterDimensions> ;
+    rdfs:comment "mm, cm, m, g, kg" .
+
+<https://w3id.org/oseg/ont/okh#uploadMethod> a owl:DatatypeProperty ;
+    rdfs:label "Upload Method" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Component> ;
+    ns1:rangeIncludes xsd:string ;
+    rdfs:comment "e.g. auto (fully integrated platforms) or manifest file (for connected platforms)"@en ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#value> a owl:DatatypeProperty ;
+    rdfs:label "value" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Mass> .
+
+<https://w3id.org/oseg/ont/okh#version> a owl:DatatypeProperty ;
+    rdfs:label "version" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    rdfs:comment "version of this Component, preferably in the semantic versioning scheme (semver.org)" ;
+    rdfs:subPropertyOf ns1:version ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#versionOf> a owl:ObjectProperty ;
+    rdfs:label "version of" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    rdfs:comment "connects specific versions of Modules with their versionless superclass" .
+
+<https://w3id.org/oseg/ont/okh#AuxiliaryFile> a owl:Class ;
+    rdfs:label "auxiliary file (neither source nor export)" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#BoM> a owl:Class ;
+    rdfs:label "Bill of Materials" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#ComponentReference> a owl:Class ;
+    rdfs:label "Component Reference" ;
+    ns3:deprecatedOn "2023-08-19"^^xsd:date ;
+    rdfs:comment "\\n    others shall be able to identify/procure this component only by the given reference(s),\\n    MOSH → URL to corresponding release\\n    POSH → URL to containing folder\\n    STD  → standard designation (preferably naming the _latest_ standard)\\n    BUY  → unambiguous reference"@en ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#Reference> ;
+    owl:deprecated true ;
+    ns2:term_status "deprecated" .
+
+<https://w3id.org/oseg/ont/okh#ContributionGuide> a owl:Class ;
+    rdfs:label "Contribution Guide" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#ExportFile> a owl:Class ;
+    rdfs:label "exported source file" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#Image> a owl:Class ;
+    rdfs:label "Image" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#ManufacturingInstructions> a owl:Class ;
+    rdfs:label "Manufacturing Instructions" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#Publication> a owl:Class ;
+    rdfs:label "Scientific Publication" ;
+    rdfs:comment "_scientific_ (that is: peer reviewed) publication that _contains_ the design files" ;
+    rdfs:subClassOf <http://ns.nature.com/terms/Publication> .
+
+<https://w3id.org/oseg/ont/okh#Readme> a owl:Class ;
+    rdfs:label "Readme" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#SourceFile> a owl:Class ;
+    rdfs:label "source file" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#UserManual> a owl:Class ;
+    rdfs:label "User Manual" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#repo> a owl:ObjectProperty ;
+    rdfs:label "repository" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/okh#WebsiteUrl> ;
+    rdfs:comment "\\n    URL to the place where development happens (typically the repository)\" ;\\n    following this link people shall be able to contribute to the development\\n    (reporting issues, suggesting changes, connecting to the team etc.)\" "@en ;
+    rdfs:subPropertyOf ns1:codeRepository ;
+    owl:cardinality 1 .
+
+<https://w3id.org/oseg/ont/okh#url> a owl:ObjectProperty ;
+    rdfs:label "file URL"@en ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#File> ;
+    rdfs:comment "Global file locator, using either the HTTP or the HTTPS protocol."@en ;
+    rdfs:subPropertyOf ns1:url .
+
+<https://w3id.org/oseg/ont/okh#ManifestFile> a owl:Class ;
+    rdfs:label "manifest file" ;
+    rdfs:comment "file holding the metadata" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#File> .
+
+<https://w3id.org/oseg/ont/okh#Reference> a owl:Class ;
+    rdfs:label "unambiguous reference" .
+
+<https://w3id.org/oseg/ont/okh#Standard> a owl:Class ;
+    rdfs:label "Technical Standard"@en ;
+    rdfs:comment "official standard used in the _design_ (not e.g. DIN SPEC 3105-1)" .
+
+<https://w3id.org/oseg/ont/okh#openSCAD> a owl:DatatypeProperty ;
+    rdfs:label "OpenSCAD code defining a shape" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#OuterDimensions> ;
+    ns1:rangeIncludes xsd:string .
+
+<https://w3id.org/oseg/ont/okh#tsdc> a owl:ObjectProperty ;
+    rdfs:label "TsDC" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Component> ;
+    ns1:rangeIncludes <https://w3id.org/oseg/ont/tsdc/core#OHTsDC> ;
+    rdfs:comment "Applicable Technology-specific Documentation Criteria, according to DIN SPEC 3105-1, e.g. `tsdc:3DP`" .
+
+<https://w3id.org/oseg/ont/okh#Mass> a owl:Class ;
+    rdfs:label "mass"@en ;
+    rdfs:comment "…of a module or a part"@en .
+
+<https://w3id.org/oseg/ont/okh#OuterDimensions> a owl:Class ;
+    rdfs:label "outer dimensions"@en ;
+    rdfs:comment "…of a module or a part"@en .
+
+<https://w3id.org/oseg/ont/okh#Software> a owl:Class ;
+    rdfs:label "Software"@en ;
+    rdfs:comment "Software (including firmware) needed to run & use the OSH" ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#Component> .
+
+<https://w3id.org/oseg/ont/okh#WebsiteUrl> a owl:Class ;
+    rdfs:label "Website URL" ;
+    rdfs:subClassOf ns1:URL,
+        <https://w3id.org/oseg/ont/okh#Reference> .
+
+<https://w3id.org/oseg/ont/okh#productionMetadata> a rdf:Property ;
+    rdfs:label "production metadata" ;
+    ns1:domainIncludes <https://w3id.org/oseg/ont/okh#Module>,
+        <https://w3id.org/oseg/ont/okh#Part> ;
+    rdfs:comment "production-relevant metadata, such as material, manufacturing technology, outer dimensions, smallest tolerance, finest surface roughness" ;
+    rdfs:subPropertyOf ns1:value .
+
+<https://w3id.org/oseg/ont/okh#Component> a owl:Class ;
+    rdfs:label "Component"@en ;
+    rdfs:comment "Either a module (MOSH) or Part (POSH); more component types may be added in the future"@en .
+
+<https://w3id.org/oseg/ont/okh#Part> a owl:Class ;
+    rdfs:label "Part"@en ;
+    rdfs:comment "Piece of Open Source Hardware (POSH)"@en ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#Component> .
+
+<https://w3id.org/oseg/ont/okh#File> a owl:Class ;
+    rdfs:label "File" ;
+    rdfs:comment "A file that forms part of the project, specified/located either by a URL (okh:url) or a repo-/project-relative path (okh:relativePath)." .
+
+<https://w3id.org/oseg/ont/okh#Module> a owl:Class ;
+    rdfs:label "Module"@en ;
+    rdfs:comment "Module of Open Source Hardware (MOSH)"@en ;
+    rdfs:subClassOf <https://w3id.org/oseg/ont/okh#Component> .
+

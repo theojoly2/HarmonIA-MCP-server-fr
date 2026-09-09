@@ -1,0 +1,141 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://purl.org/vocommons/voaf#> .
+@prefix onto: <https://purl.org/psn/vocab#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:abstract a owl:AnnotationProperty .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:publisher a owl:AnnotationProperty .
+
+dcterms:source a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:example a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+ns1:extends a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype .
+
+foaf:homepage a owl:AnnotationProperty .
+
+foaf:name a owl:AnnotationProperty .
+
+onto:from a owl:ObjectProperty ;
+    rdfs:label "from"@en ;
+    rdfs:comment "Product that is (partially) consumed for the creation of another product. The latter derives from the former. If a psn:Derivation has multiple psn:from properties, these products are alternatives."@en ;
+    rdfs:domain onto:Derivation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Product .
+
+onto:into a owl:ObjectProperty ;
+    rdfs:label "into"@en ;
+    rdfs:comment "Product that is created while (partially) consuming another product. The latter derives into the former."@en ;
+    rdfs:domain onto:Derivation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Product .
+
+onto:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity"@en ;
+    rdfs:comment "The quantity of a product required in the creation of another product as described by a psn:Derivation. Has to regard the psn:unit property of the products."@en ;
+    rdfs:domain onto:Derivation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal .
+
+onto:sells a owl:ObjectProperty ;
+    rdfs:label "sells"@en ;
+    rdfs:comment "Product offered for sale by the enterprise to (potential) customers."@en ;
+    rdfs:domain onto:Enterprise ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Product .
+
+onto:unit a owl:ObjectProperty ;
+    rdfs:label "unit"@en ;
+    rdfs:comment "The unit of measure for the quantity of a volumetric product. To state that 20 ml of cleaning liquid derives into one microchip, set the psn:unit of the cleaning liquid as unit:MilliL and the psn:quantity of the psn:Derivation as '20'. To state that 1 ml of cleaning liquid derives from 0.6 ml of water, set the psn:unit of the water as unit:MilliL and the psn:quantity of the psn:Derivation as '0.6'."@en ;
+    rdfs:domain onto:Product ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://qudt.org/schema/qudt/Unit> ;
+    rdfs:subPropertyOf <http://qudt.org/schema/qudt/unit> .
+
+schema:creativeWorkStatus a owl:AnnotationProperty .
+
+schema:image a owl:AnnotationProperty .
+
+<http://qudt.org/schema/qudt/Unit> a owl:Class ;
+    rdfs:label "Unit" ;
+    vann:example <http://qudt.org/vocab/unit/> ;
+    rdfs:comment "A unit of measure, or unit, is a particular quantity value that has been chosen as a scale for measuring other quantities the same kind (more generally of equivalent dimension). For example, the meter is a quantity of length that has been rigorously defined and standardized by the BIPM (International Board of Weights and Measures). Any measurement of the length can be expressed as a number multiplied by the unit meter. More formally, the value of a physical quantity Q with respect to a unit (U) is expressed as the scalar multiple of a real number (n) and U, as Q = nU."@en ;
+    rdfs:isDefinedBy <http://qudt.org/schema/qudt/> .
+
+<http://qudt.org/schema/qudt/unit> a owl:ObjectProperty .
+
+<http://www.w3.org/ns/regorg#RegisteredOrganization> a owl:Class .
+
+<https://danielhenselmann.solidcommunity.net/profile/card#me> foaf:name "Daniel Henselmann" .
+
+onto:Enterprise a owl:Class ;
+    rdfs:label "Enterprise"@en ;
+    rdfs:comment "An enterprise that supervises the creation of products and sells products to (potential) customers."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://www.w3.org/ns/regorg#RegisteredOrganization> ;
+    owl:disjointWith onto:Product .
+
+onto:Derivation a owl:Class ;
+    rdfs:label "Derivation"@en ;
+    dcterms:source <https://doi.org/10.1186/gb-2005-6-5-r46> ;
+    rdfs:comment "The dependency relation between products in a supply network, characterized by the (partial) consumption of one product for the creation of another. This does not necessitate that a product becomes part of a (physical) presence of the created product. Such examples are chemicals used for cleaning in the manufacturing of microchip or a foundry service (time)slot. Neither example becomes a microchip, but without them, no new microchip are created. The derivation usually expresses the relation between two products, but may include multiple psn:from properties to express alternatives."@en ;
+    rdfs:isDefinedBy onto: ;
+    owl:disjointWith onto:Enterprise,
+        onto:Product .
+
+onto:Product a owl:Class ;
+    rdfs:label "Product"@en ;
+    dcterms:source <https://doi.org/10.1007/978-3-540-87696-0_29>,
+        <https://doi.org/10.1007/s00170-007-1052-6>,
+        <https://doi.org/10.1016/j.engappai.2011.02.014>,
+        <https://doi.org/10.1017/S0269888998001088>,
+        <https://doi.org/10.1145/2844544> ;
+    rdfs:comment "A product offered to customers by an enterprise. Products may be created in discrete or continuous manufacturing. Also includes services that are not an infinite pool but a limited amount of depletable (time)slots. Intermediate products not sold are abstracted into the product that is sold. Abstraction level of product model ('a BMW iX'), not product instance ('that blue BMW iX over there in the corner'). May also represent a product group of similar products having alike structures, similar characteristics, and production routes, that vary only in certain well-described ways, such as by size, color, or material. Not on the abstraction level of product model ('car')."@en ;
+    rdfs:isDefinedBy onto: .
+
+onto: a owl:Ontology ;
+    rdfs:label "Product Supply Network Vocabulary"@en ;
+    dcterms:abstract "A small ontology to model supply networks (supply chains) from all industries through products that are interlinked based on derivational dependencies."@en ;
+    dcterms:bibliographicCitation "Henselmann, D., Harth, A., 2024. Towards Modeling the Structure of Product Dependencies in Supply Networks to Identify Bottlenecks Among Suppliers, in: Proceedings of the Third International Workshop on Linked Data-Driven Resilience Research (D2R2’24) co-Located with European Semantic Web Conference 2024 (ESWC 2024). CEUR-WS, Hersonissos, Greece." ;
+    dcterms:created "2024-07-22"^^xsd:date ;
+    dcterms:creator <https://danielhenselmann.solidcommunity.net/profile/card#me> ;
+    dcterms:description "A small ontology to model supply networks (supply chains) from all industries through products that are interlinked based on derivational dependencies."@en ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:publisher [ foaf:homepage <https://www.scs.fraunhofer.de/en.html> ;
+            foaf:name "Center for Applied Research on Supply Chain Services at Fraunhofer IIS"@en ] ;
+    dcterms:title "Product Supply Network Vocabulary"@en ;
+    vann:preferredNamespacePrefix "psn" ;
+    vann:preferredNamespaceUri onto: ;
+    ns1:extends <http://qudt.org/schema/qudt/>,
+        <http://www.w3.org/ns/regorg#> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <https://ceur-ws.org/Vol-3707/D2R224_paper_8.pdf> ;
+    owl:versionIRI <https://purl.org/psn/vocab/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    schema:creativeWorkStatus "Ontology Release"@en ;
+    schema:image <https://purl.org/psn/visualization> .
+

@@ -1,0 +1,192 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://ontologi.es/doap-bugs#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:label "DOAP Bugs"@en ;
+    dcterms:created "2010-01-08"^^xsd:date ;
+    dcterms:creator <http://tobyinkster.co.uk/#i> ;
+    dcterms:issued "2010-01-08"^^xsd:date ;
+    dcterms:modified "2010-08-31"^^xsd:date,
+        "2011-02-15"^^xsd:date ;
+    vann:preferredNamespacePrefix "dbug" ;
+    vann:preferredNamespaceUri "http://ontologi.es/doap-bugs#" ;
+    rdfs:comment "EvoOnt BOM is way too overcomplicated. Let's subclass it..."@en .
+
+onto:Bug a owl:Class ;
+    rdfs:label "Bug"@en ;
+    rdfs:subClassOf onto:Issue,
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Defect> .
+
+onto:Enhancement a owl:Class ;
+    rdfs:label "Enhancement"@en ;
+    rdfs:subClasssOf onto:Issue,
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Enhancement> .
+
+onto:SecurityIssue a owl:Class ;
+    rdfs:label "Security Issue"@en ;
+    rdfs:comment "An issue that in some way compromises the security of affected versions of its project."@en ;
+    rdfs:subClassOf onto:Issue,
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Defect> .
+
+onto:affects a owl:ObjectProperty ;
+    rdfs:label "affects"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range doap:Version .
+
+onto:assignee a owl:ObjectProperty ;
+    rdfs:label "assignee"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range foaf:Agent ;
+    rdfs:subPropertyOf <http://www.w3.org/2005/01/wf/flow#assignee> .
+
+onto:blocks a owl:ObjectProperty ;
+    rdfs:label "blocks"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range onto:Issue ;
+    rdfs:subPropertyOf [ owl:inverseOf <http://www.w3.org/2005/01/wf/flow#dependent> ],
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#blocks> .
+
+onto:comment a owl:ObjectProperty ;
+    rdfs:label "comment"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range <http://rdfs.org/sioc/ns#Post> ;
+    rdfs:subPropertyOf [ owl:inverseOf foaf:topic ],
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasComment> .
+
+onto:confirmed a onto:StatusType ;
+    rdfs:label "confirmed"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "confirmed"@en .
+
+onto:critical a onto:SeverityLevel ;
+    rdfs:label "critical"@en ;
+    skos:inScheme onto:SEVERITY_LEVELS ;
+    skos:prefLabel "critical"@en .
+
+onto:fixed a onto:StatusType ;
+    rdfs:label "fixed"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "fixed"@en .
+
+onto:fixed-in a owl:ObjectProperty ;
+    rdfs:label "fixed in"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range doap:Version .
+
+onto:id a owl:DatatypeProperty ;
+    rdfs:label "identifier"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+onto:in-progress a onto:StatusType ;
+    rdfs:label "in progress"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "in progress"@en .
+
+onto:invalid a onto:StatusType ;
+    rdfs:label "invalid"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "invalid"@en .
+
+onto:issue a owl:ObjectProperty ;
+    rdfs:label "issue"@en ;
+    rdfs:domain doap:Project ;
+    rdfs:range onto:Issue .
+
+onto:major a onto:SeverityLevel ;
+    rdfs:label "major"@en ;
+    skos:inScheme onto:SEVERITY_LEVELS ;
+    skos:prefLabel "major"@en .
+
+onto:minor a onto:SeverityLevel ;
+    rdfs:label "minor"@en ;
+    skos:inScheme onto:SEVERITY_LEVELS ;
+    skos:prefLabel "minor"@en .
+
+onto:new a onto:StatusType ;
+    rdfs:label "new"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "new"@en .
+
+onto:page a owl:ObjectProperty ;
+    rdfs:label "page"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range foaf:Document ;
+    rdfs:subPropertyOf rdfs:seeAlso,
+        foaf:isPrimaryTopicOf,
+        foaf:page .
+
+onto:reporter a owl:ObjectProperty ;
+    rdfs:label "reporter"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range foaf:Agent .
+
+onto:severity a owl:ObjectProperty ;
+    rdfs:label "severity"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range onto:SeverityLevel ;
+    rdfs:subPropertyOf onto:classification,
+        <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#hasSeverity> .
+
+onto:status a owl:ObjectProperty ;
+    rdfs:label "status"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range onto:StatusType ;
+    rdfs:subPropertyOf onto:classification .
+
+onto:third-party a onto:StatusType ;
+    rdfs:label "third-party"@en ;
+    skos:definition "The issue is related to a third-party component."@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "third-party"@en .
+
+onto:trivial a onto:SeverityLevel ;
+    rdfs:label "trivial"@en ;
+    skos:inScheme onto:SEVERITY_LEVELS ;
+    skos:prefLabel "trivial"@en .
+
+onto:wont-fix a onto:StatusType ;
+    rdfs:label "won't fix"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "won't fix"@en .
+
+onto:works-for-me a onto:StatusType ;
+    rdfs:label "works for me"@en ;
+    skos:inScheme onto:STATUS_TYPES ;
+    skos:prefLabel "works for me"@en .
+
+onto:classification a owl:ObjectProperty ;
+    rdfs:label "classification"@en ;
+    rdfs:domain onto:Issue ;
+    rdfs:range skos:Concept .
+
+onto:SEVERITY_LEVELS a skos:ConceptScheme ;
+    rdfs:label "Built-in Severity Levels"@en ;
+    rdfs:comment "Please use these unless you have an important requirement to use your own severity level scheme. If you do design your own scheme, use skos:closeMatch, skos:exactMatch and so on to link to the definitions here."@en .
+
+onto:SeverityLevel a owl:Class ;
+    rdfs:label "Severity Level"@en ;
+    rdfs:subClassOf <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Severity>,
+        skos:Concept .
+
+    rdfs:label "Built-in Status Types"@en ;
+    rdfs:comment "Please use these unless you have an important requirement to use your own status scheme. If you do design your own scheme, use skos:closeMatch, skos:exactMatch and so on to link to the definitions here."@en .
+
+onto:StatusType a owl:Class ;
+    rdfs:label "Status Type"@en ;
+    rdfs:subClassOf skos:Concept .
+
+onto:Issue a owl:Class ;
+    rdfs:label "Issue"@en ;
+    rdfs:comment "Provide a quick summary as an rdfs:label and a more extensive summary (if necessary) as an rdfs:comment."@en ;
+    rdfs:subClassOf <http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Issue> ;
+    owl:disjointWith foaf:Document .
+

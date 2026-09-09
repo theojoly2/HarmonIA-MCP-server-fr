@@ -1,0 +1,1136 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <http://www.purl.org/drammar> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:issued a owl:AnnotationProperty .
+
+dc:modified a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:rights a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    rdfs:label "Drammar"@en ;
+    ns1:license "Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)" ;
+    dc:contributor "Carmi Terzulli",
+        "Mario Cataldi" ;
+    dc:creator "Antonio Pizzo",
+        "Rossana Damiano",
+        "Vincenzo Lombardo" ;
+    dc:date "2018-03-01" ;
+    dc:description "Designed with the goals to describe and encode the core dramatic qualities and to serve as a knowledge base underlying a number of applications, Drammar is a comprehensive ontology of drama, realized through a collaboration of computer scientists and drama scholars. It makes the knowledge about drama available as a vocabulary for the linked interchange of drama encodings and readily usable by automatic reasoners.\\nBy avoinding references to style and artistic qualities Drammar aims at representing the elements shared by different, cross-media manifestations of drama, the soâcalled intangible elements of drama as an intangible cultural heritage form." ;
+    dc:issued "2018-06-11" ;
+    dc:modified "2018-06-11" ;
+    dc:publisher "Centro Interdipartimentale di Ricerca per la Multimedialità e l'Audiovisivo - Interdeparmental Center for Research on Multimedia and Audivideo  (www.cirma.unito.it)" ;
+    dc:rights "Ontology Drammar is available at the url http://purl.org/drammar, under the license Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0). The canonical citation for Drammar is \"Vincenzo Lombardo, Rossana Damiano, Antonio Pizzo. Drammar: a comprehensive ontology of drama (2018). http://purl.org/drammar\"" ;
+    dc:title "Drammar: a comprehensive ontology of drama" ;
+    vann:preferredNamespacePrefix "drammar" ;
+    vann:preferredNamespaceUri <http://www.purl.org/drammar#> ;
+    rdfs:seeAlso "https://www.di.unito.it/wikidrammar" ;
+    owl:versionIRI <http://www.purl.org/drammar/0.9> ;
+    owl:versionInfo 0.9 .
+
+<http://www.purl.org/drammar#ExternalRefEntity> a owl:Class ;
+    rdfs:label "ExternalRefEntity" ;
+    rdfs:comment "The ExternalRefEntity class has the function of bridging the description of a\\n            DramaEntity (not an entity in general) to some external linguistic or semantic resource\\n            such a dictionary or an ontology. An entity can be linked to its ExternalReference by\\n            the hasExtRef object property, which has the ExternalReference as its range. The\\n            ExternalRefEntity iherits the \"quale\" data property from its direct ancestor,\\n            ExternalReference class." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#ExternalReference> .
+
+<http://www.purl.org/drammar#Goal_type> a owl:DatatypeProperty ;
+    rdfs:label "Goal_type" ;
+    rdfs:comment "Type of the goal: one of the strings \"Achievement\"\\n            \"Maintainance\" \"Perform\" \"Query\"" ;
+    rdfs:domain <http://www.purl.org/drammar#Goal> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "Achievement" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "Maintenance" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "Perform" ;
+                                    rdf:rest [ a rdf:List ;
+                                            rdf:first "Query" ;
+                                            rdf:rest () ] ] ] ] ] .
+
+<http://www.purl.org/drammar#StateOfAffairs> a owl:Class ;
+    rdfs:label "StateOfAffairs" ;
+    rdfs:comment "StateofAffairs are states that concern the storyworld as a whole; they are\\n            described by a FrameNetSchema, namely a SituationSchema that points (through the\\n            ExternalRefSchema class) points to a specific frame. This class gathers all states that\\n            are external to the characters' mental states, and can be linguistically described\\n            through some external resources such as FrameNet." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#State> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#State> [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#FrameNetSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#UnderspecifiedPlan> a owl:Class ;
+    rdfs:label "UnderspecifiedPlan" ;
+    rdfs:comment "An UnderspecifiedPlan is a plan that is part of a larger plan to achieve some\\n            goal, but has not been executed. In drama, it represents the unobservable part of a plan\\n            that has not been fully carried out by some agent. Its existence (in the agent's\\n            mind) can only be conjectured - remember that a Plan is intended by some agent by\\n            definition. As the object of a conjecture, it does not contain any details in the\\n            representation of drama (this does not mean that it does not contain them in the\\n            agent's mind). As such, an UnderspecifiedPlan: - does *not* motivate a timeline (it\\n            has not taken place); - does *not* achieve a goal (the actions/subplans composing it and\\n            its specific goal are not known); - does *not* contain any actions. These conditions,\\n            part of its definition as an Equivalent Class, distinguish it from Abstract and Directly\\n            Executable Plans." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Plan> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Plan> [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <http://www.purl.org/drammar#achieves> ;
+                                owl:someValuesFrom <http://www.purl.org/drammar#Goal> ] ] [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <http://www.purl.org/drammar#containsOLE> ;
+                                owl:someValuesFrom <http://www.purl.org/drammar#OrderedListElement> ] ] [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <http://www.purl.org/drammar#isMotivationFor> ;
+                                owl:someValuesFrom <http://www.purl.org/drammar#Timeline> ] ] ) ] .
+
+<http://www.purl.org/drammar#accomplished> a owl:DatatypeProperty ;
+    rdfs:label "accomplished" ;
+    rdfs:comment "Accomplished = true stands for entirely executed and goal achieved\\n            Accomplished = false stands for entirely executed and goal not achieved When missing,\\n            nothing is said about execution." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.purl.org/drammar#AbstractPlan> <http://www.purl.org/drammar#DirectlyExecutablePlan> ) ] ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<http://www.purl.org/drammar#coOccurInScene> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "coOccurInScene" ;
+    rdfs:comment "coOccurInScene can be used to describe the fact that two Plans co-occur in the\\n            same Scene." ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#Plan> .
+
+<http://www.purl.org/drammar#describes> a owl:ObjectProperty ;
+    rdfs:label "describes" ;
+    rdfs:comment "A SituationSchema describes a DramaPerdurant, i.e. provides a template for\\n            describing processes and states." ;
+    rdfs:domain <http://www.purl.org/drammar#SituationSchema> ;
+    rdfs:range <http://www.purl.org/drammar#DramaPerdurant> ;
+    owl:inverseOf <http://www.purl.org/drammar#isDescribedBy> .
+
+<http://www.purl.org/drammar#feels> a owl:ObjectProperty ;
+    rdfs:label "feels" ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasMentalState> ;
+    owl:inverseOf <http://www.purl.org/drammar#isEmotionOf> .
+
+<http://www.purl.org/drammar#follows> a owl:ObjectProperty ;
+    rdfs:label "follows" ;
+    rdfs:comment "Inverse of precedes. Sequential order in an ordered list." ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#olo:next>,
+        owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#precedes> .
+
+<http://www.purl.org/drammar#happyFor_appraisingAgent> a owl:ObjectProperty ;
+    rdfs:label "HappyFor_appraisingAgent" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#appraisingAgent> .
+
+<http://www.purl.org/drammar#happyFor_target> a owl:ObjectProperty ;
+    rdfs:label "happyFor_target" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#target> .
+
+<http://www.purl.org/drammar#hasDoneState> a owl:ObjectProperty ;
+    rdfs:label "hasDoneState" ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isDoneStateOf> .
+
+<http://www.purl.org/drammar#hasEmotionType> a owl:ObjectProperty ;
+    rdfs:label "hasEmotionType" ;
+    rdfs:domain <http://www.purl.org/drammar#EmotionSchema> ;
+    rdfs:range <http://www.purl.org/drammar#ExternalRefEmotionType> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#hasGoal> a owl:ObjectProperty ;
+    rdfs:label "hasGoal" ;
+    rdfs:comment "The property which connects an agent with her/his goals." ;
+    rdfs:domain <http://www.purl.org/drammar#Agent> ;
+    rdfs:range <http://www.purl.org/drammar#Goal> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasMentalState> ;
+    owl:inverseOf <http://www.purl.org/drammar#isGoalOf> .
+
+<http://www.purl.org/drammar#hasManifestation> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "hasManifestation" ;
+    rdfs:comment "hasManifestation This property connects a Unit to a manifestation of drama\\n            according to FRBR model. In the real world, a manifestation is represented by a IRI\\n            (e.g., the URL of a movie, of the recording of a performance, or of the digital edition\\n            of a novel)." ;
+    rdfs:domain <http://www.purl.org/drammar#Unit> ;
+    rdfs:range xsd:anyURI .
+
+<http://www.purl.org/drammar#hasMessage> a owl:DatatypeProperty ;
+    rdfs:label "hasMessage" ;
+    rdfs:comment "Anything can convey a message. Standard cases: Signpost at a city entrance\\n            \"Ciudad de Mexico\"; Toothpaste brand name on the object toothpaste:\\n            \"Colgate\" A specific utterance in a communication action." ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+<http://www.purl.org/drammar#hasMotivationIn> a owl:ObjectProperty ;
+    rdfs:label "hasMotivationIn" ;
+    rdfs:comment "The hasMotivation property represents the relation bewteen a plan and the\\n            timeline it motivates (namely, where the actions of the plan are actually\\n            contained)." ;
+    owl:inverseOf <http://www.purl.org/drammar#isMotivationFor> .
+
+<http://www.purl.org/drammar#hasPlanEffect> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasPlanEffect" ;
+    rdfs:comment "Property that connects a plan with the consistent set of states that is the\\n            effect of a plan (ConsistentStateSet)." ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#ConsistentStateSet> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isPlanEffectOf> .
+
+<http://www.purl.org/drammar#hasPlanPrecondition> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasPlanPrecondition" ;
+    rdfs:comment "Property that connect a plan with the ConsistentStateState which forms its\\n            precondition." ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#ConsistentStateSet> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isPlanPreconditionOf> .
+
+<http://www.purl.org/drammar#hasPropositionalContent> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasPropositionalContent" ;
+    rdfs:comment "hasPropositionalContent links a BeliefSchema or a GoalSchema to the its\\n            content (a factual state or process), that is, the Process or State that is the actual\\n            content of the belief or the goal." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.purl.org/drammar#BeliefSchema> <http://www.purl.org/drammar#GoalSchema> ) ] ;
+    owl:inverseOf <http://www.purl.org/drammar#isPropositionalContentOf> .
+
+<http://www.purl.org/drammar#hasValueEngaged> a owl:ObjectProperty ;
+    rdfs:label "hasValueEngaged" ;
+    rdfs:comment "The property hasValue connects an agent to her/his values" ;
+    rdfs:domain <http://www.purl.org/drammar#Agent> ;
+    rdfs:range <http://www.purl.org/drammar#Value> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasMentalState> ;
+    owl:inverseOf <http://www.purl.org/drammar#isValueEngagedOf> .
+
+<http://www.purl.org/drammar#inConflictWith> a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "inConflictWith" ;
+    rdfs:comment "The conflict relation over plans. The ontology is neutral with respect with\\n            conflicts over other entity types, such a goals: it only assumes that conflicts over\\n            plans are observable." ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#Plan> .
+
+<http://www.purl.org/drammar#inSupportOf> a owl:ObjectProperty ;
+    rdfs:label "inSupportOf" ;
+    rdfs:comment "The support relation over goals (parallel to inConflictWith)" ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#Plan> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isExtRefRoleOfExtRefSchema> a owl:ObjectProperty ;
+    rdfs:label "isExtRefRoleOfExtRefSchema" ;
+    rdfs:comment "This property chain serves the purpose of connecting a frame role with the\\n            frame it belongs to, via the following property chain: isExtRefOf o isRoleOf o hasExtRef\\n            where - isExtRefOf connects ExtRefRole to Role - isRoleOf connects Role to ProcessSchema\\n            - hasExtRef connects ProcessSchema to ExtRefSchema (remember that the actual reference\\n            to the frame or frame role in an external resources are dealt with by attaching a\\n            \"quale\" data property to the classes that represent the external\\n            references)" ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalRefRole> ;
+    rdfs:range <http://www.purl.org/drammar#ExternalRefSchema> ;
+    owl:propertyChainAxiom ( <http://www.purl.org/drammar#isExtRefOf> <http://www.purl.org/drammar#isRoleOf> <http://www.purl.org/drammar#hasExtRef> ) .
+
+<http://www.purl.org/drammar#isSpannedBy> a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isSpannedBy" ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#spans> .
+
+<http://www.purl.org/drammar#love_appraisingAgent> a owl:ObjectProperty ;
+    rdfs:label "love_appraisingAgent" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#appraisingAgent> .
+
+<http://www.purl.org/drammar#love_target> a owl:ObjectProperty ;
+    rdfs:label "love_target" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#target> .
+
+<http://www.purl.org/drammar#originalTerm> a owl:DatatypeProperty ;
+    rdfs:label "originalTerm" ;
+    rdfs:comment "This is the string originally inserted for searching the URI in the external\\n            ontology. E.g. \"parlare\" \"eleganza\"" ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalReference> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<http://www.purl.org/drammar#quale_MWNSense> a owl:DatatypeProperty ;
+    rdfs:label "quale_MWNSense" ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#quale> .
+
+<http://www.purl.org/drammar#quale_YAGOSUMOConcept> a owl:DatatypeProperty ;
+    rdfs:label "quale_YAGOSUMOConcept" ;
+    rdfs:comment "The range is a concept in YagoSUMO. E.g. &%Speaking+, &%Arriving=,\\n            these two probably from SUMO;\\n            http://www.mpii.de/yago/resource/wordnet_bathing_100427853, probably from\\n            YAGO." ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalReference> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#quale> .
+
+<http://www.purl.org/drammar#quale_framenetFrame> a owl:DatatypeProperty ;
+    rdfs:label "quale_framenetFrame" ;
+    rdfs:comment "This property of the ExternalRefSchema links the schema to the frame it\\n            corresponds to, needed to describe some state or process occurring in drama. The value\\n            is the ID in Framenet. Currently, in the implementation, it is the string of the number\\n            of choice in the list of frames returned. E.g. \"1\"" ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalRefSchema> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#quale> .
+
+<http://www.purl.org/drammar#quale_framenetRoleID> a owl:DatatypeProperty ;
+    rdfs:label "quale_framenetRoleID" ;
+    rdfs:comment "Role_framenetRoleID ID of the role as stated by Framenet. It is the string\\n            returned through the access to Framenet. The string represent the ID of the Frame\\n            Element. " ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalRefRole> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#quale> .
+
+<http://www.purl.org/drammar#quale_verbnetRoleLabel> a owl:DatatypeProperty ;
+    rdfs:label "quale_verbnetRoleLabel" ;
+    rdfs:comment "Type of the role as stated by Verbnet. It is the string returned through the\\n            access to Verbnet. This happens when the access to Framenet fails." ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalRefRole> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#quale> .
+
+<http://www.purl.org/drammar#shame_appraisingAgent> a owl:ObjectProperty ;
+    rdfs:label "shame_appraisingAgent" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#appraisingAgent> .
+
+<http://www.purl.org/drammar#shame_target> a owl:ObjectProperty ;
+    rdfs:label "shame_target" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#target> .
+
+<http://purl.org/ontology/olo/core#olo:OrderedList> a owl:Class .
+
+<http://purl.org/ontology/olo/core#olo:Slot> a owl:Class .
+
+<http://purl.org/ontology/olo/core#olo:item> a owl:ObjectProperty .
+
+<http://purl.org/ontology/olo/core#olo:next> a owl:ObjectProperty .
+
+<http://purl.org/ontology/olo/core#olo:previous> a owl:ObjectProperty .
+
+<http://purl.org/ontology/olo/core#olo:slot> a owl:ObjectProperty .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#endurant> a owl:Class .
+
+<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#perdurant> a owl:Class .
+
+<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#process> a owl:Class .
+
+<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#state> a owl:Class .
+
+<http://www.purl.org/drammar#AbstractPlan> a owl:Class ;
+    rdfs:label "AbstractPlan" ;
+    rdfs:comment "Abstract Plan An abstract plan is a recursive plan, i.e., a plan whose\\n            elements are plans. Formally, an AbstractPlan is a list (List class) containing\\n            (containsOLE) elements (OrderedListElements) that have plans as their data (hasData).\\n            The plans contained in an abstract plan can be either abstract plans or directly\\n            executable plans." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Plan> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Plan> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#achieves> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Goal> ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#containsOLE> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#OrderedListElement> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Plan> ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isMotivationFor> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Timeline> ] ) ] .
+
+<http://www.purl.org/drammar#Belief> a owl:Class ;
+    rdfs:label "Belief" ;
+    rdfs:comment "A belief is what an agent believes (which may be true or not in the world) In\\n            the BDI model, beliefs form the agent's knowledge about the world that the agent\\n            relies on for devising plans to achieve her goals. In Drammar there is no distinction\\n            between knowing and believing, because reasoning concerns the agent motivations for\\n            acting, rather than the relationship between single agent knowledge and shared\\n            knowledge. A belief is formally defined as the type of MentalState described by a\\n            BeliefSchema. In the annotation, it is in the scope a ConsistenStateSet, that is\\n            precondition or effect of a Plan. SWRL rules for mapping project a belief onto some\\n            ConsistentStateSet which precedes or follows a timeline." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalState> ;
+    owl:disjointWith <http://www.purl.org/drammar#Goal> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalState> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isKnownBy> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#BeliefSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#Agent> ;
+                        owl:onProperty <http://www.purl.org/drammar#isKnownBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#DirectlyExecutablePlan> a owl:Class ;
+    rdfs:label "DirectlyExecutablePlan" ;
+    rdfs:comment "DirectlyExecutablePlans Directly executable plans are plans that contain only\\n            actions. Formally, a directly executale plan is a list (List class) that contains\\n            (containsOLE) only elements (OrderedListElement) that have actions as their data\\n            (hasData)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Plan> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Plan> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#achieves> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Goal> ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#containsOLE> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#OrderedListElement> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Action> ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isMotivationFor> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Timeline> ] ) ] .
+
+<http://www.purl.org/drammar#DrammarScene> a owl:Class ;
+    rdfs:label "DrammarScene" ;
+    rdfs:comment "DrammarScene A DrammarScene is a type of scene that hinges on characters'\\n            conflicting plans. In Drammar, the conflict over plans is represented by a class, the\\n            ConflictSet, which contains the set of plans in conflict. The hingesOn object property\\n            connects the DrammarScene with the Conflict Set." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Scene> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Scene> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hingesOn> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#ConflictSet> ] ) ] .
+
+<http://www.purl.org/drammar#ExternalRefEmotionType> a owl:Class ;
+    rdfs:label "ExternalRefEmotionType" ;
+    rdfs:comment "This class includes individuals for all the 22 emotion types referred by OCC\\n            theory. The individuals are bridge individuals to some external formal OCC-based\\n            knowledge source, which does not exist yet but is assumed here. These individuals could\\n            also be a bridge to some commonsense ontology, such as YagoSumo for Values, but it would\\n            be different from the adoption of the OCC theory, as committed in\\n            Drammar." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#ExternalReference> .
+
+<http://www.purl.org/drammar#Object> a owl:Class ;
+    rdfs:label "Object" ;
+    rdfs:comment "Object Class of entities (endurant) that participates into Perdurants, but\\n            without having intentions. An object is formally defined as a subclass of DramaEndurant\\n            whose member do not have plans. Objects can be filler of roles in the description of\\n            processes and states (for example, a book can be \"theme\" in a giving action\\n            (i.e. the entity that changes ownership as a consequence of a giving act). This class is\\n            formally disjoint from Agents (Disjoint property)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DramaEndurant> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#DramaEndurant> [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty <http://www.purl.org/drammar#intends> ;
+                                owl:someValuesFrom <http://www.purl.org/drammar#Plan> ] ] ) ] .
+
+<http://www.purl.org/drammar#UnintentionalProcess> a owl:Class ;
+    rdfs:label "UnintentionalProcess" ;
+    rdfs:comment "UnintentionalProcess is an unintentional Process. So, an UnintentionalProcess\\n            is a Process with the property isIntentional that values FALSE." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Process> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Process> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isDataOf> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#isMemberOf> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Unit> ] ) ] ] [ a owl:Restriction ;
+                        owl:hasValue false ;
+                        owl:onProperty <http://www.purl.org/drammar#isIntentional> ] ) ] .
+
+<http://www.purl.org/drammar#ValueSchema> a owl:Class ;
+    rdfs:label "ValueSchema" ;
+    rdfs:comment "The ValueSchema class describes an agent's Value. Formally,\\n            it is a subclass of MentalStateSchema whose property quale_schemaType is constrained to\\n            the string \"value\"." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalStateSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalStateSchema> [ a owl:Restriction ;
+                        owl:hasValue "value" ;
+                        owl:onProperty <http://www.purl.org/drammar#Schema_type> ] ) ] .
+
+<http://www.purl.org/drammar#containsFirstOLE> a owl:ObjectProperty ;
+    rdfs:label "containsFirstOLE" ;
+    rdfs:comment "First OLE of a\\n            List."^^xsd:string ;
+    rdfs:domain <http://www.purl.org/drammar#List> ;
+    rdfs:range <http://www.purl.org/drammar#OrderedListElement> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#containsOLE> .
+
+<http://www.purl.org/drammar#containsLastOLE> a owl:ObjectProperty ;
+    rdfs:label "containsLastOLE" ;
+    rdfs:comment "Last OLE of a\\n            List."^^xsd:string ;
+    rdfs:domain <http://www.purl.org/drammar#List> ;
+    rdfs:range <http://www.purl.org/drammar#OrderedListElement> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#containsOLE> .
+
+<http://www.purl.org/drammar#hasExtRef> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasExtRef" ;
+    rdfs:comment "Quality of an entity (DramaEndurant) In particular: Object_type This property\\n            provides a URI, in YAGOSUMO or in Wordnet, or a custom string that defines the class of\\n            some object. E.g., object individual PinkOctopus in Oktapodi is of Object_type\\n            \"octopus\" in Yago. Environment_periodOfYear Epoch of some environment. E.g.\\n            summer, january, Easter. Can be a URI or forced custom string. This is why Range is\\n            empty. Environment_location Can be \"exterior\" or \"interior\". From a\\n            fixed menu. Environment_timeOfDay Can be \"dawn\" \"morning\"\\n            \"afternoon\" \"evening\" \"night\". From a fixed menu.\\n            Environment_type The type of an envrironment. E.g.: forest, kitchen, office, ... . It\\n            can be custom string or URI. This is why Range is empty. Environment_epoch Epoch of some\\n            environment. E.g. 20th century, 1710's, 50's. Can be a URI or forced custom\\n            string. This is why Range is empty. " ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.purl.org/drammar#DescriptionTemplate> <http://www.purl.org/drammar#DramaEntity> ) ] ;
+    rdfs:range <http://www.purl.org/drammar#ExternalReference> ;
+    owl:inverseOf <http://www.purl.org/drammar#isExtRefOf> .
+
+<http://www.purl.org/drammar#hasParent> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasParent" ;
+    rdfs:comment "The parent/child relation for modelling tree structures." .
+
+<http://www.purl.org/drammar#hasRole> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasRole" ;
+    rdfs:comment "Connects a SituationSchema ( modelled by a frame-like linguistic structure)\\n            with each Role of the schema." ;
+    rdfs:domain <http://www.purl.org/drammar#FrameNetSchema> ;
+    rdfs:range <http://www.purl.org/drammar#Role> ;
+    owl:inverseOf <http://www.purl.org/drammar#isRoleOf> .
+
+<http://www.purl.org/drammar#hasRoot> a owl:ObjectProperty ;
+    rdfs:label "hasRoot" ;
+    rdfs:comment "Connects the Tree with\\n            the TreeNode that is its Root."^^xsd:string ;
+    rdfs:domain <http://www.purl.org/drammar#Tree> ;
+    rdfs:range <http://www.purl.org/drammar#TreeNode> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#containsTN> .
+
+<http://www.purl.org/drammar#hasTimelineEffect> a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasTimelineEffect" ;
+    rdfs:comment "Property that connect a Timeline with the ConsistentStateState which forms its\\n            effects." ;
+    rdfs:domain <http://www.purl.org/drammar#Timeline> ;
+    rdfs:range <http://www.purl.org/drammar#ConsistentStateSet> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isTimelineEffectOf> .
+
+<http://www.purl.org/drammar#hasTimelinePrecondition> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasTimelinePrecondition" ;
+    rdfs:comment "Property that connect a Timeline with the ConsistentStateState which forms its\\n            precondition." ;
+    rdfs:domain <http://www.purl.org/drammar#Timeline> ;
+    rdfs:range <http://www.purl.org/drammar#ConsistentStateSet> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isTimelinePreconditionOf> .
+
+<http://www.purl.org/drammar#hingesOn> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hingesOn" ;
+    rdfs:comment "A DrammarScene hinges on some ConflictSet" ;
+    rdfs:domain <http://www.purl.org/drammar#DrammarScene> ;
+    rdfs:range <http://www.purl.org/drammar#ConflictSet> ;
+    owl:inverseOf <http://www.purl.org/drammar#isHingedOnBy> .
+
+<http://www.purl.org/drammar#isAchievedBy> a owl:ObjectProperty ;
+    rdfs:label "isAchievedBy" ;
+    rdfs:comment "This property connects a goal with the plan that achieves it." ;
+    rdfs:domain <http://www.purl.org/drammar#Goal> ;
+    rdfs:range <http://www.purl.org/drammar#Plan> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isDoneStateOf> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isDoneStateOf" ;
+    rdfs:comment "This is the property that connects a process with a particular state, called a\\n            done state, that holds whether the process has terminated. " ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( <http://www.purl.org/drammar#Plan> <http://www.purl.org/drammar#Process> ) ] .
+
+<http://www.purl.org/drammar#isEmotionOf> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isEmotionOf" ;
+    rdfs:comment "Connects an emotion with the agent who feels it." ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#isMentalStateOf> .
+
+<http://www.purl.org/drammar#isFillerOf> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isFillerOf" ;
+    rdfs:comment "Connects some DramaEndurant or Perdurant to a Role in a\\n            SituationSchema" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isHingedOnBy> a owl:ObjectProperty ;
+    rdfs:label "isHingedOnBy" ;
+    rdfs:comment "Inverse of hingesOn." .
+
+<http://www.purl.org/drammar#isOLEContained> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isOleContained" ;
+    rdfs:comment "Connects the element of an ordered list to the ordered list." ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isOrderedBy> a owl:ObjectProperty ;
+    rdfs:label "isOrderedBy" ;
+    owl:inverseOf <http://www.purl.org/drammar#orders> .
+
+<http://www.purl.org/drammar#isPropositionalContentOf> a owl:ObjectProperty ;
+    rdfs:label "isPropositionalContentOf" ;
+    rdfs:comment "Inverse of hasPropositionalContent. It links a BeliefSchema or a GoalSchema to\\n            a State or Process." .
+
+<http://www.purl.org/drammar#knows> a owl:ObjectProperty ;
+    rdfs:label "knows" ;
+    rdfs:comment "Property of an agent, who BELIEVES a Belief (a mental state with a\\n            propositional content). BELIEVES = KNOWS." ;
+    rdfs:domain <http://www.purl.org/drammar#Agent> ;
+    rdfs:range <http://www.purl.org/drammar#Belief> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasMentalState> .
+
+<http://www.purl.org/drammar#orders> a owl:ObjectProperty ;
+    rdfs:label "orders" ;
+    rdfs:comment "A Timeline orders Unit." ;
+    rdfs:domain <http://www.purl.org/drammar#Timeline> ;
+    rdfs:range <http://www.purl.org/drammar#Unit> .
+
+<http://www.purl.org/drammar#precedes> a owl:ObjectProperty ;
+    rdfs:label "precedes" ;
+    rdfs:comment "Sequential order in an ordered list." ;
+    rdfs:domain <http://www.purl.org/drammar#OrderedListElement> ;
+    rdfs:range <http://www.purl.org/drammar#OrderedListElement> ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#olo:previous> .
+
+<http://www.purl.org/drammar#Action> a owl:Class ;
+    rdfs:label "Action" ;
+    rdfs:comment "An Action is an intentional Process, which is a type of Process. Formally, an\\n            action is an Process which is constrained to be contained (isMemberOf) some Unit. In\\n            Drammar, an Action can be part of a plan of an agent (formally, a plan ia a list of\\n            actions), or can be included in a Unit (ordered into some timeline). Only direct\\n            executable plans (DirectlyExecutablePlan class) contain actions The Action class is\\n            formally disjoint with the UnintentionalEventiveProcess class. We have introduced an\\n            explicit boolean datatype property isIntentional, because it could be that the\\n            annotators will use actions directly in the units (i.e. without explicitly introducing a\\n            plan for it)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Process> ;
+    owl:disjointWith <http://www.purl.org/drammar#UnintentionalProcess> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Process> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isDataOf> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#isMemberOf> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Unit> ] ) ] ] [ a owl:Restriction ;
+                        owl:hasValue true ;
+                        owl:onProperty <http://www.purl.org/drammar#isIntentional> ] ) ] .
+
+<http://www.purl.org/drammar#BeliefSchema> a owl:Class ;
+    rdfs:label "BeliefSchema" ;
+    rdfs:comment "The BeliefSchema class describes a Belief (a type of MentalState). This class\\n            is formally defined as the subclass of MentalStateSchema having as its quale_schemaType\\n            value the string \"belief\". A BeliefSchema has as its propositional content\\n            (via the propositionalContent object property) a factual process (FactualProcess class)\\n            or state (FactualState class)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalStateSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalStateSchema> [ a owl:Restriction ;
+                        owl:hasValue "belief" ;
+                        owl:onProperty <http://www.purl.org/drammar#Schema_type> ] ) ] .
+
+<http://www.purl.org/drammar#ConflictSet> a owl:Class ;
+    rdfs:label "ConflictSet" ;
+    rdfs:comment "This class represents the relation of conflict distributed over a set of\\n            plans. It represents the orchestration of conflicts in drama. Although conflict may\\n            occur, in drama, between (or within) entities of different types (characters may be in\\n            conflict with each other, ir the same character may experience conflicting emotions),\\n            here we reduce the notion of conflict to this single class." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#Set> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Set> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasMember> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Plan> ] ) ] ] ) ] .
+
+<http://www.purl.org/drammar#DataStructure> a owl:Class ;
+    rdfs:label "DataStructure" ;
+    rdfs:comment "DataStructure This class encodes the data structures that provide structural\\n            organization to the other entities. It includes abstract data types (namely sets, lists\\n            and trees) and data type components." .
+
+<http://www.purl.org/drammar#EmotionSchema> a owl:Class ;
+    rdfs:label "EmotionSchema" ;
+    rdfs:comment "An EmotionSchema represents the description of an EmotionState, bridged onto\\n            some external linguistic or semantic system through the mediation of the\\n            ExternalRefEmotionType class. The EmotionSchema is a MentalStateSchema for describing an\\n            Emotion. Formally, it is constrained to the value \"emotion\" for the\\n            quale_schemaType data property. The hasExtRef property links the EmotionSchema to the\\n            ExternalRefEmotionType class which in turn links the description of the Emotion to a\\n            reference theory of emotions." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalStateSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalStateSchema> [ a owl:Restriction ;
+                        owl:hasValue "emotion" ;
+                        owl:onProperty <http://www.purl.org/drammar#Schema_type> ] ) ] .
+
+<http://www.purl.org/drammar#ExternalRefSchema> a owl:Class ;
+    rdfs:label "ExternalRefSchema" ;
+    rdfs:comment "The ExternalRefSchema class has the function of bridging the description of a\\n            SituationSchema to some external lexical-semantic resource representing apt to represent\\n            the role structure of a process or state. An SituationSchema (or, better, a subclass of\\n            it) can be linked to its ExternalRefSchema by the hasExtRef object property, which has\\n            the ExternalReference as its range. The quale_frame_URI data property connects the\\n            SituationSchema with the FrameNet frame which correponds to it, following the paradigm\\n            of Linked Data." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#ExternalReference> .
+
+<http://www.purl.org/drammar#GoalSchema> a owl:Class ;
+    rdfs:label "GoalSchema" ;
+    rdfs:comment "The GoalSchema class describes a Goal (a type of MentalState). This class is\\n            formally defined as the subclass of MentalStateSchema having as its quale_schemaType\\n            value the string \"goal\". A GoalSchema has as its propositional content (via\\n            the propositionalContent object property) a factual process (FactualProcess class) or\\n            state (FactualState class)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalStateSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalStateSchema> [ a owl:Restriction ;
+                        owl:hasValue "goal" ;
+                        owl:onProperty <http://www.purl.org/drammar#Schema_type> ] ) ] .
+
+<http://www.purl.org/drammar#Value> a owl:Class ;
+    rdfs:label "Value" ;
+    rdfs:comment "The Value Class represents the values of an agent. These values are\\n            engaged in drama by the execution of the agents' plans. Formally, a Value is\\n            a subclass of the MentalState class which is constrained to: - be in a given state, true\\n            or false, of the boolean property atStake - be in a ConsistentStateSet (namely, the\\n            consequences of some plan that puts the value at stake or brings it back to balance) -\\n            be described by a ValueSchema. For example, in the nunnery scene, Ophelia's\\n            answer \"At home, my Lord\", being a lie, results in a state that puts at stake\\n            Hamlet's value of honesty." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalState> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalState> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:hasValue false ;
+                                    owl:onProperty <http://www.purl.org/drammar#atStake> ] [ a owl:Restriction ;
+                                    owl:hasValue true ;
+                                    owl:onProperty <http://www.purl.org/drammar#atStake> ] ) ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isValueEngagedOf> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#ValueSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#Agent> ;
+                        owl:onProperty <http://www.purl.org/drammar#isValueEngagedOf> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#atStake> a owl:DatatypeProperty ;
+    rdfs:label "atStake" ;
+    rdfs:comment "Boolean property of a Value: - true, if the value is at stake; - false,\\n            if the value is balanced." ;
+    rdfs:domain <http://www.purl.org/drammar#Value> ;
+    rdfs:range xsd:boolean .
+
+<http://www.purl.org/drammar#containsTN> a owl:ObjectProperty ;
+    rdfs:label "containsTN" ;
+    rdfs:comment "Connects the tree to\\n            its (tree) nodes. E.g., the drama is a tree and the scenes are its tree\\n            nodes."^^xsd:string ;
+    rdfs:domain <http://www.purl.org/drammar#Tree> ;
+    rdfs:range <http://www.purl.org/drammar#TreeNode> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasADTComponent> .
+
+<http://www.purl.org/drammar#hasChild> a owl:ObjectProperty ;
+    rdfs:label "hasChild" ;
+    rdfs:comment "the basic relation employed for modelling the computational data structure of\\n            tree." ;
+    rdfs:domain <http://www.purl.org/drammar#TreeNode> ;
+    rdfs:range <http://www.purl.org/drammar#TreeNode> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasADTComponent> ;
+    owl:inverseOf <http://www.purl.org/drammar#hasParent> .
+
+<http://www.purl.org/drammar#hasFiller> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasFiller" ;
+    rdfs:comment "Filler is the property that connects a Role of a FrameNetSchema with the\\n            DramaEntity (DramaEndurant or DramaPerdurant) that fills that Role." ;
+    rdfs:domain <http://www.purl.org/drammar#Role> ;
+    rdfs:range <http://www.purl.org/drammar#DramaEntity> ;
+    owl:inverseOf <http://www.purl.org/drammar#isFillerOf> .
+
+<http://www.purl.org/drammar#intends> a owl:ObjectProperty ;
+    rdfs:label "intends" ;
+    rdfs:comment "Intends has as domain an Agent and as range a Plan." ;
+    rdfs:domain <http://www.purl.org/drammar#Agent> ;
+    rdfs:range <http://www.purl.org/drammar#Plan> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isIntendedBy> .
+
+<http://www.purl.org/drammar#isExtRefOf> a owl:ObjectProperty ;
+    rdfs:label "isExtRefOf" .
+
+<http://www.purl.org/drammar#isIntendedBy> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isIntendedBy" ;
+    rdfs:comment "Inverse of intends." ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isIntentional> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "isIntentional" ;
+    rdfs:comment "Boolean property for Intentionality of processes. Applies to Processes to\\n            distinguish Action from an UnintentionalProcess." ;
+    rdfs:domain <http://www.purl.org/drammar#Process> ;
+    rdfs:range xsd:boolean .
+
+<http://www.purl.org/drammar#isKnownBy> a owl:ObjectProperty ;
+    rdfs:label "isKnownBy" ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#isMentalStateOf> ;
+    owl:inverseOf <http://www.purl.org/drammar#knows> .
+
+<http://www.purl.org/drammar#isPlanEffectOf> a owl:ObjectProperty ;
+    rdfs:label "isPlanEffectOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isPlanPreconditionOf> a owl:ObjectProperty ;
+    rdfs:label "isPlanPreconditionOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isTimelineEffectOf> a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isTimelineEffectOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isTimelinePreconditionOf> a owl:ObjectProperty ;
+    rdfs:label "isTimelinePreconditionOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#spans> a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "spans" ;
+    rdfs:comment "The coincidence relation of a Scene on a Timeline." ;
+    rdfs:domain <http://www.purl.org/drammar#Scene> ;
+    rdfs:range <http://www.purl.org/drammar#Timeline> ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+owl:Thing a owl:Class ;
+    rdfs:comment "Thing contains four major taxonomies: - DescriptionTemplate - DramaEntity -\\n            ExternalReference - DataStructure" .
+
+<http://www.purl.org/drammar#ExternalRefRole> a owl:Class ;
+    rdfs:label "ExternalRefRole" ;
+    rdfs:comment "The ExternalRefRole class has the function of bridging the description of a\\n            Role (not an entity in general) to a description of the role in some external linguistic\\n            that represents the argument structure of an event. An Role can be linked to its\\n            ExternalRefRole by the hasExtRef object property, which has the ExternalRefRole as its\\n            range. The ExternalRefRole class has three data properties which connect it to the\\n            reference system: - role_framenetRoleID: connects the Role to the id of the\\n            corresponding role in FrameNet - role_verbnetRoleType: connects the Role to the name of\\n            the corresponding role in VerdNet (a string) - role_ID_resource" ;
+    rdfs:subClassOf <http://www.purl.org/drammar#ExternalReference> .
+
+<http://www.purl.org/drammar#Role> a owl:Class ;
+    rdfs:label "Role" ;
+    rdfs:comment "Role provides the pattern for the role fillers in a frame instantiation, that\\n            occurs in SituationSchema, for describing processes and states. A Role is filled by a\\n            DramaEntity: the fact that a given role has an entity as a filler is represented by the\\n            hasFiller property and its inverse isFillerOf property. A Role belongs (isRoleOf) to a\\n            given SituationSchema, namely a ProcessSchema or a StateSchema (hasRole property). The\\n            Role class is related to its filler by the hasFiller property, whose range is the\\n            DramaEntity class. For example, given the incident describable as \"Ophelia gives\\n            the gift back to Hamlet\", the roles of \"donor\" (the one who does the\\n            action of giving), \"recipient\" (the one wjho receives the object to be given)\\n            and \"theme\" (the object of giving action) are all instance of the Role class\\n            connected to the same Situation, each labeled with a linguistic label\\n            (\"donor\", \"recipient\", etc.) and each connected to its filler via\\n            the hasFiller property. Roles can also be intended as thematic roles of verbs following\\n            the description contained in the Verbnet resource\\n            (http://verbs.colorado.edu/verb-index/index.php). The Role class, via the hasExtRef\\n            object property, is linked to the subclass of the top level ExternalReference class, the\\n            ExternalRefRole class, whose function is to connect the description of the role with the\\n            appropriate role name or URI in a linguistic account of roles through apposite data\\n            properties (namely, the Role_framenetRoleID and Role_verbnetRoleType data properties\\n            respectively for FrameNet and VerbNet)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DescriptionTemplate> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#DescriptionTemplate> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasFiller> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:unionOf ( <http://www.purl.org/drammar#DramaEndurant> <http://www.purl.org/drammar#DramaPerdurant> ) ] ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#FrameNetSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isRoleOf> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#Tree> a owl:Class ;
+    rdfs:label "Tree" ;
+    rdfs:comment "Tree The class of tree\\n            structures. The relation between trees and tree nodes is represented by the containsTN\\n            abd hasRoot object properties. A drama is actually a tree, composed recursively of\\n            subtrees, which are scenes at different levels. The subtree relationship is established\\n            between scenes (property hasChild), which are actually tree nodes."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#TreeNode> ;
+            owl:onProperty <http://www.purl.org/drammar#containsTN> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://www.purl.org/drammar#TreeNode> ;
+            owl:onProperty <http://www.purl.org/drammar#hasRoot> ],
+        <http://www.purl.org/drammar#AbstractDataType> .
+
+<http://www.purl.org/drammar#achieves> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "achieves" ;
+    rdfs:comment "achieves links a Plan to the Goal it aims at achieving" ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    owl:inverseOf <http://www.purl.org/drammar#isAchievedBy> .
+
+<http://www.purl.org/drammar#appraisingAgent> a owl:ObjectProperty ;
+    rdfs:label "appraisingAgent" ;
+    rdfs:comment "The appraisingAgent property connects an Emotion with the Agent who appraises\\n            it. It encompasses specific subproperties for the specific emotion types (in OCC theory,\\n            there are 22 emotion types such as Love or Shame)" ;
+    rdfs:domain <http://www.purl.org/drammar#Emotion> ;
+    rdfs:range <http://www.purl.org/drammar#Agent> .
+
+<http://www.purl.org/drammar#isGoalOf> a owl:ObjectProperty ;
+    rdfs:label "isGoalOf" ;
+    rdfs:comment "inverse of hasGoal" ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#isMentalStateOf> .
+
+<http://www.purl.org/drammar#isRoleOf> a owl:ObjectProperty ;
+    rdfs:label "isRoleOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isValueEngagedOf> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isValueEngagedOf" ;
+    rdfs:range <http://www.purl.org/drammar#Agent> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#isMentalStateOf> .
+
+<http://www.purl.org/drammar#target> a owl:ObjectProperty ;
+    rdfs:label "target" ;
+    rdfs:comment "A generic property for describing the relation of an appraised emotional state\\n            with the target of the emotion, further articulated into more specific target types for\\n            each emotion type (see appraisingAgent property)." .
+
+owl:topDataProperty a owl:DatatypeProperty ;
+    rdfs:comment "All these properties are data associated with classes. Labels are\\n            self-explaining (e.g., isIntentional) or have Thing as domain. In\\n            non-obvious names, the domain class is in the prefix of the name (e.g. Goal_type)." .
+
+<http://www.purl.org/drammar#AbstractDataType> a owl:Class ;
+    rdfs:label "AbstractDataType" ;
+    rdfs:comment "AbstractDataType The data types needed for describing drama are sets, lists\\n            and trees (more precisely, tree nodes)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DataStructure> .
+
+<http://www.purl.org/drammar#DescriptionTemplate> a owl:Class ;
+    rdfs:label "DescriptionTemplate" ;
+    rdfs:comment "DescriptionTemplate This class contains a well known role-based pattern for\\n            representing the linguistic schemata that describe the elements of drama, such as the\\n            entities and dynamics. Drammar imports this pattern from other ontologies, namely DOLCE.\\n            The class DescriptionTemplate contains two classes: - Role - SituationSchema The class\\n            SituationSchema provides the specific pattern for the description of incidents and\\n            states, generically termed here as \"situations\". A situation can be either a\\n            process or a state, usually described by a linguistic expression consisting of a verb\\n            (\"giving\") for processes, such as in the expression \"Ophelia gives the\\n            gift back to Hamlet\", or a by a preposition (\"behind\") for states, such\\n            as in the expression \"Polonius is behind the tapestry\"). The Role class\\n            provides the pattern for the roles that play a part in the state or process (in the\\n            above example, the role of the \"donor\" filled by Ophelia, the role of the\\n            \"recipient\" filled by Hamlet, etc.). The linguistic counterpart of the\\n            role-based structure of the description templates is provided by a frame-like accounts\\n            of the linguistic descriptions of events, such as Framenet or Verbnet\\n            (https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml). Based on a lexical\\n            semantics perspective, these initiatives are aimed at grouping verbs (including\\n            statives) into \"frames of action\", i.e., linguistic structures representing a\\n            group of semantically similar verbs with the complements that accompany them. Following\\n            a design choice that characterizes the Drammar ontology, all references to the external\\n            (linguistic or commonsense) knowledge are mediated by the ExternalReference class, a top\\n            level class whose function is specifically to act as a bridge to the external knowledge\\n            (see the documentation of the class). So, neither the Roles nor the Situation Schemata\\n            directly refer to the external linguistic knowledge they assume: rather, the hasExtRef\\n            property links each component of the pattern onto its corresponding class within the\\n            ExternalReference class: the SituationSchema class is related to the ExternalRefSchema,\\n            the Role class is related to the ExternalRefRole class. Each ExternalReference subclass,\\n            then, bridges each pattern component onto the corresponding component within the\\n            external knowledge source via a specific data type property." ;
+    owl:disjointWith <http://www.purl.org/drammar#DramaEntity> .
+
+<http://www.purl.org/drammar#FrameNetSchema> a owl:Class ;
+    rdfs:label "FrameNetSchema" ;
+    rdfs:comment "A FrameNetSchema corresponds to a process or state describable by a frame in\\n            Framenet (https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml). The\\n            reference of the schema to the external linguistic reality (the FrameNet frame) is\\n            mediated through an apposite class subsumed by the ExternalReference class, the\\n            ExternalRefSchema class: the SituationSchema class (and, by inheritance, also the\\n            FrameNetSchema class) is linked to the ExternalRefSchema class via the hasExtRef\\n            property. The quale_frame_URI, then, bridges the ExternalRefSchema class onto the URI of\\n            the appropriate frame." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#SituationSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#SituationSchema> [ a owl:Restriction ;
+                        owl:hasValue "framenet" ;
+                        owl:onProperty <http://www.purl.org/drammar#Schema_type> ] ) ] .
+
+<http://www.purl.org/drammar#Scene> a owl:Class ;
+    rdfs:label "Scene" ;
+    rdfs:comment "Scene Drama is divided into scenes, which correspond to an extent of the\\n            'text' of drama. Scenes (as a type of TreeNode) form a hierarchy, which\\n            represents the recursive nature of drama. This is obtained by implementing the Scene\\n            class as a subclass of the TreeNode class. Scenes contains children scenes: this\\n            relation is modeled through the hasChild property. All scenes span some timeline (spans\\n            object property), i.e., they have a correspondance with some extent of the drama text\\n            (represented by the Timeline class)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#TreeNode> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#TreeNode> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#spans> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Timeline> ] [ a owl:Restriction ;
+                        owl:allValuesFrom <http://www.purl.org/drammar#Scene> ;
+                        owl:onProperty <http://www.purl.org/drammar#hasChild> ] ) ] .
+
+<http://www.purl.org/drammar#hasADTComponent> a owl:ObjectProperty ;
+    rdfs:label "hasADTComponent" ;
+    rdfs:comment "A generic property for representing the relation among a given abstract\\n            structure type and its components." ;
+    rdfs:domain <http://www.purl.org/drammar#AbstractDataType> ;
+    rdfs:range <http://www.purl.org/drammar#ADTComponent> .
+
+<http://www.purl.org/drammar#hasMember> a owl:ObjectProperty ;
+    rdfs:label "hasMember" ;
+    rdfs:comment "The specific property for modelling Sets (as a data structure). Any entity, in\\n            Drammar, can be a member of a Set." ;
+    rdfs:domain <http://www.purl.org/drammar#Set> ;
+    rdfs:range <http://www.purl.org/drammar#SetMember> ;
+    rdfs:subPropertyOf <http://www.purl.org/drammar#hasADTComponent> ;
+    owl:inverseOf <http://www.purl.org/drammar#isMemberOf> .
+
+<http://www.purl.org/drammar#hasMentalState> a owl:ObjectProperty ;
+    rdfs:label "hasMentalState" ;
+    rdfs:domain <http://www.purl.org/drammar#Agent> ;
+    rdfs:range <http://www.purl.org/drammar#MentalState> .
+
+<http://www.purl.org/drammar#isDataOf> a owl:ObjectProperty ;
+    rdfs:label "isDataOf" ;
+    rdfs:comment "isDataOf connects some entity to a data structure component (namely, an\\n            OrderedListElement) of which it is the content." .
+
+<http://www.purl.org/drammar#isMemberOf> a owl:ObjectProperty ;
+    rdfs:label "isMemberOf" ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#isMotivationFor> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isMotivationFor" ;
+    rdfs:comment "A plan is the motivation for a timeline, namely for a list of units containing\\n            actions. This property is functional: so, a plan can motivate only a timeline. Notice\\n            that this implies that a plan cannot motivate the same timeline motivated by a sub-plan,\\n            and that a plan cannot motivate the same timeline motivated by a more abstract plan. Of\\n            course, the fact that this property is functional does not imply that a single timeline\\n            cannot be motivated by more plans." ;
+    rdfs:domain <http://www.purl.org/drammar#Plan> ;
+    rdfs:range <http://www.purl.org/drammar#Timeline> .
+
+<http://www.purl.org/drammar#ADTComponent> a owl:Class ;
+    rdfs:label "ADTComponent" ;
+    rdfs:comment "ADTComponent This class includes the entities which provide the components of\\n            abstract data types. Currently, only the list data type includes a component, the\\n            OrderedListElement. The mapping on the AbstractDataType class is given by the\\n            hasADTComponent object property, which has the AbstractDataType class as its domain, and\\n            the ADTComponent class as its range." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DataStructure> .
+
+<http://www.purl.org/drammar#DramaEndurant> a owl:Class ;
+    rdfs:label "DramaEndurant" ;
+    rdfs:comment "DramaEndurant is an entity of drama that can be described as an endurant\\n            following Gangemi et al. 2002. In Gangemi et al. 2002 \"Endurants are wholly present\\n            (i.e., all their proper parts are present) at any time they are present\",\\n            differently from perdurants, which are only partially present at any time they are\\n            present. Endurants (and Perdurants, in some cases) play a role in processes and states:\\n            an Endurant is connected to a role (Role class) in the description of a given process or\\n            state by the hasRole object property. The class of drama endurants encompasses more\\n            specific drama entities such as Agent and Object. This bipartite distinction is derived\\n            from the drama literature, where - Agents that intentionally perform actions; - Objects\\n            are involved in the actions in an unintentional way. For instance, in Hamlet, the King\\n            of England is a drama endurant (but non an agent) because it is the filler of a role in\\n            Claudius' actions (sending ... ) but does not intend any plan (a feature would\\n            locate it in the Agent class). The difference beteween the King of England and a coffee\\n            machine is entrusted to common sense knowlegde (e.g., the external lexical knowledge\\n            stating the sementic type of these two entities). Reference: Gangemi, A., Guarino, N.,\\n            Masolo, C., Oltramari, A., & Schneider, L. (2002). Sweetening ontologies with DOLCE.\\n            In Knowledge engineering and knowledge management: Ontologies and the semantic Web (pp.\\n            166-181). Springer Berlin Heidelberg." ;
+    rdfs:subClassOf <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#endurant>,
+        <http://www.purl.org/drammar#DramaEntity> .
+
+<http://www.purl.org/drammar#DramaEntity> a owl:Class ;
+    rdfs:label "DramaEntity" ;
+    rdfs:comment "DramaEntity Class of all the dramatic entities, that is, of all the entities\\n            that are peculiar to drama. Its sisters are classes that are not peculiar to drama, but\\n            concern templates, (DescriptionTemplate), references to external lexical and semantic\\n            systems (ExternalReference) and data structures (DataStructure) from computer\\n            science." .
+
+<http://www.purl.org/drammar#DramaPerdurant> a owl:Class ;
+    rdfs:label "DramaPerdurant" ;
+    rdfs:comment "The DramaPerdurant class contains the entities of drama that can described as\\n            perdurants in DOLCE (Gangemi et al. 2002): \"Perdurants [...] just extend in time by\\n            accumulating different temporal parts, so that, at any time they are present, they are\\n            only partially present, in the sense that some of their proper temporal parts (e.g.,\\n            their previous or future phases) may be not present.\" In other words, perdurants,\\n            namaly processes, are not entirely present at any time they are present, differently\\n            from endurants. The DramaEdurant is the class of elements of Drama that describe the\\n            story dynamics, i.e. Processes and States. In the context of Drammar, the individuals of\\n            this class describe the story advancement in terms of incidents and states holding\\n            between incidents. Each has a specific relation to the segmentation of drama: processes\\n            are grouped in units, states precedes and follows timelines (which contain units).\\n            Notice that processes and states are not distinct in Framenet, the knowledge source we\\n            refer to for describing perdurants outside of Drammar. Reference: Gangemi, A., Guarino,\\n            N., Masolo, C., Oltramari, A., & Schneider, L. (2002). Sweetening ontologies with\\n            DOLCE. In Knowledge engineering and knowledge management: Ontologies and the semantic\\n            Web (pp. 166-181). Springer Berlin Heidelberg." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <http://www.purl.org/drammar#SituationSchema> ;
+            owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#perdurant>,
+        <http://www.purl.org/drammar#DramaEntity> .
+
+<http://www.purl.org/drammar#Schema_type> a owl:DatatypeProperty ;
+    rdfs:label "Schema_type" ;
+    rdfs:comment "This datatype property represents the type of schema for some construct. Its\\n            value correspond to the different types of state acknowledged in Drammar : beliefs,\\n            goals, etc. Each value correspond to a state type: e.g., \"belief\" for the\\n            Belief class. In particular, framenet is the magic word for the schemata extracted from\\n            Framenet." ;
+    rdfs:domain <http://www.purl.org/drammar#SituationSchema> ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "belief" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "emotion" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "framenet" ;
+                                    rdf:rest [ a rdf:List ;
+                                            rdf:first "goal" ;
+                                            rdf:rest [ a rdf:List ;
+                                                    rdf:first "value" ;
+                                                    rdf:rest () ] ] ] ] ] ] ;
+    rdfs:subPropertyOf owl:topDataProperty .
+
+<http://www.purl.org/drammar#State> a owl:Class ;
+    rdfs:label "State" ;
+    rdfs:comment "State represents the static class of the Perdurant. State is the class that\\n            bridges to the concept of State in upper ontologies, externally to Drammar. For example,\\n            in DOLCE, states and process are the two distinct types of statives. Both factual and\\n            eventive states are further divided into different state types: - MentalStates, namely\\n            Belief, Goals, Values and Emotions (all sharing some propositional content in their\\n            description); - StateOfAffairs, namely situations holding in the world. States participate\\n            to some structure. In Drammar, these structures are ConsistenStateSets (types of Sets),\\n            which borders timelines and plans. The specific type pf States are defined through the\\n            use of specific types of StateSchema (subclass of DescriptionTemplate). So, its\\n            subclasses are: - MentalState: the mental state of an agent; - StateOfAffairs: an\\n            objective state of the story world." ;
+    rdfs:subClassOf <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#state>,
+        <http://www.purl.org/drammar#DramaPerdurant> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#DramaPerdurant> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isDataOf> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#isMemberOf> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#ConsistentStateSet> ] ) ] ] ) ] .
+
+<http://www.purl.org/drammar#Unit> a owl:Class ;
+    rdfs:label "Unit" ;
+    rdfs:comment "Unit Units are the segmentation of drama. A drama can have multiple\\n            segmentations. Units are ordered by some Timeline. Units are devoted to the\\n            representation of characters' actions. So, we require that any unit contains at\\n            least one action whose description (ProcessSchema) encompasses at least one role having\\n            an agent as a filler. If a building collapses, this action, by itself, can be part of\\n            Unit only if an agent is involved in it (e.g., an agent dies). This definition\\n            guarantees that, in the minimal case, at least one agent appears as filler of the roles\\n            in the description of at least an action of every unit. A Unit has one or more actions\\n            as its members (hasMember property)." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Set> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasMember> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom [ a owl:Class ;
+                                                    owl:intersectionOf ( <http://www.purl.org/drammar#Action> [ a owl:Restriction ;
+                                                                owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                                                                owl:someValuesFrom [ a owl:Class ;
+                                                                        owl:intersectionOf ( <http://www.purl.org/drammar#FrameNetSchema> [ a owl:Restriction ;
+                                                                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                    owl:onClass [ a owl:Class ;
+                                                                                            owl:intersectionOf ( <http://www.purl.org/drammar#Role> [ a owl:Restriction ;
+                                                                                                        owl:onProperty <http://www.purl.org/drammar#hasFiller> ;
+                                                                                                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] ) ] ;
+                                                                                    owl:onProperty <http://www.purl.org/drammar#hasRole> ] ) ] ] ) ] ] ) ] ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isOrderedBy> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Timeline> ] ) ] .
+
+<http://www.purl.org/drammar#isMentalStateOf> a owl:ObjectProperty ;
+    rdfs:label "isMentalStateOf" .
+
+<http://www.purl.org/drammar#quale> a owl:DatatypeProperty ;
+    rdfs:label "quale" ;
+    rdfs:comment "Any quality associated to anything. Its range is a string (if a URI is needed\\n            to resolve the reference, this is dealt with when processing the annotation) All its\\n            subproperties are introduced on the basis of some specific annotation task. So, its\\n            current subproperties refer to FrameNet, VerbNet, YagoSumo, MWN corpora,\\n            respectively." ;
+    rdfs:domain <http://www.purl.org/drammar#ExternalReference> .
+
+<http://www.purl.org/drammar#Process> a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:comment "Processes represents the dynamic class of the perdurants: they are gathered\\n            into units, which are contained into ordered timelines bordered by states. Process is\\n            the class that bridges to the concept of Process in upper ontologies, externally to\\n            Drammar (like DOLCE, where States and Processes are types of Statives: here, we include\\n            also the event types called accomplishments and achievements in DOLCE). Consider that\\n            such resources are not of linguistic type. The DescriptionTemplate class (or, better,\\n            its subclass FrameNetSchema), in fact, drives the behavior of the process inside a Plan\\n            or a Unit, linking it (via the ExternalReference Class) to: 1. a Wordnet sense 2. a\\n            Frame (from Framenet or Verbnet) 3. a set of Roles, played by roles encompassed in the\\n            frame All these links are bridged by the ExternalReference Class, which has\\n            \"quale\" properties that link the reference to specific resources. In the\\n            external ontology, a process may be logically defined through the use of axioms: for\\n            example, in the action of asking, it is assumed that Speaker and Addressee are connected\\n            through some communication medium, e.g. co-presence in a room or a telephone. In\\n            Drammar, the DramaStructures that contain the Processes are Units (subclasses of\\n            DramaSets) and Plans (subclasses of DramaLists). They are then subdivided through a\\n            further trait, that is whether the process is intentional (of an agent) or not (Action\\n            or UnintentionalProcess). This trait is defined through a specific Datatype property, of\\n            boolean type, called isIntentional. So, its subclasses are: - Action: with isIntentional\\n            property valued TRUE; - UnintentionalProcess: with isIntentional property valued FALSE.\\n            Same happens in parallel to the States, although in that case the trait concerns the\\n            state schema." ;
+    rdfs:subClassOf <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#process>,
+        <http://www.purl.org/drammar#DramaPerdurant> .
+
+<http://www.purl.org/drammar#Set> a owl:Class ;
+    rdfs:label "Set" ;
+    rdfs:comment "Set The class of set structures. The relation between sets and set members is\\n            represented by the hasMember object property. It includes specific subclasses, with each\\n            subclass characterized by a specific type of members. Sets include: - ConflictsSets:\\n            sets of conflicting plans; - ConsistentStateSets: sets of consistent states (left and\\n            right boundaries of timelines and plans). - Units: sets of actions." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#SetMember> ;
+            owl:onProperty <http://www.purl.org/drammar#hasMember> ],
+        <http://www.purl.org/drammar#AbstractDataType> .
+
+<http://www.purl.org/drammar#hasData> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasData" ;
+    rdfs:comment "Property that connects a structural element (e.g. of the class OLE) with the\\n            data contained in it. Range is not defined; it is defined for each specific structure\\n            element. " ;
+    rdfs:domain <http://www.purl.org/drammar#ADTComponent> ;
+    rdfs:range owl:Thing ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#olo:item> ;
+    owl:inverseOf <http://www.purl.org/drammar#isDataOf> .
+
+<http://www.purl.org/drammar#ConsistentStateSet> a owl:Class ;
+    rdfs:label "ConsistentStateSet" ;
+    rdfs:comment "A ConsistentStateSet is a set of states held consistent by definition. It can\\n            be a set of states bordering a timeline (i.e., the state of affairs holding before and\\n            after the timeline) or it can be the state of affairs that holds before and after a plan\\n            (in this case, it represents the plan precondintions and effects). The\\n            isTimelinePreconditionOf (isTimelineEffectOf) property connects a ConsistentStateSet\\n            with a Timeline. The isPlanPreconditionOf (isPlanEffectOf) property connects a\\n            ConsistentStateSet with a Plan. A ConsistentStateSet has one or more states as its\\n            members (hasMember property)" ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#Set> [ a owl:Class ;
+                        owl:unionOf ( [ a owl:Restriction ;
+                                    owl:onClass <http://www.purl.org/drammar#Plan> ;
+                                    owl:onProperty <http://www.purl.org/drammar#isPlanEffectOf> ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                                    owl:onClass <http://www.purl.org/drammar#Plan> ;
+                                    owl:onProperty <http://www.purl.org/drammar#isPlanPreconditionOf> ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                                    owl:onClass <http://www.purl.org/drammar#Timeline> ;
+                                    owl:onProperty <http://www.purl.org/drammar#isTimelineEffectOf> ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                                    owl:onClass <http://www.purl.org/drammar#Timeline> ;
+                                    owl:onProperty <http://www.purl.org/drammar#isTimelinePreconditionOf> ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasMember> ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#SetMember> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#State> ] ) ] ] ) ] .
+
+<http://www.purl.org/drammar#Goal> a owl:Class ;
+    rdfs:label "Goal" ;
+    rdfs:comment "The Goal class represents the objectives of an agent. In the BDI model, the\\n            agent is driven by her desires, or goal, and forms plans to achieve them. In Drammar, a\\n            goal is achieved by a plan; the achives object property connects a plan with the goal it\\n            achieves (a single goal, since the achieves property is functional). An agent intends\\n            (intends object property) a goal. Formally, the Goal class is a defined as a subclass of\\n            the MentalState class which is constrained: - to be the goal of some agent - to be part\\n            of some ConsistentStateState - to be described by a GoalSchema Goal has a propositional\\n            content that is - a process in the case of perform goal PG (Hamlet wants to ask Ophelia\\n            ...) - a state in the case of - achievement (Hamlet wants Ophelia goes to a nunnery) -\\n            maintenance (Hamlet wants Claudius (keeps) believing Hamlet is mad) - query (Hamlet\\n            wants to know whether Ophelia is honest) In these various cases the propositional\\n            content is different: - Perform Goal - PC: Action - AG - PC: State, embedded in one\\n            Belief, with status false or Process, embedded in Belief, with accomplishment false - MG\\n            - PC: State or Process, embedded in Belief, with status/accomplishment true - Query Goal\\n            - PC: depends on query; e.g.: - Y/N question: the boolean status of a state (currently\\n            implemented as a State with status TRUE) - Wh question: the filler of a role in some\\n            state or process (currently not implemented) These are guidelines for writing the plans\\n            correctly." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#MentalState> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalState> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isGoalOf> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#GoalSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#Agent> ;
+                        owl:onProperty <http://www.purl.org/drammar#isGoalOf> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#List> a owl:Class ;
+    rdfs:label "List" ;
+    rdfs:comment "List List is inspired by a well known ontology\\n            (http://smiy.sourceforge.net/olo/spec/orderedlistontology.html#ordered_list); however,\\n            its implementation in Drammar makes some simplifications (e.g., indexes are not\\n            included) and renames some entities according to the terminology of the drama domain.\\n            List in drama: - Plan: sequence of plans (abstract plans) or single actions (directly\\n            executable plans); - Timeline: sequence of units." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#OrderedListElement> ;
+            owl:onProperty <http://www.purl.org/drammar#containsFirstOLE> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#OrderedListElement> ;
+            owl:onProperty <http://www.purl.org/drammar#containsLastOLE> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#OrderedListElement> ;
+            owl:onProperty <http://www.purl.org/drammar#containsOLE> ],
+        <http://purl.org/ontology/olo/core#olo:OrderedList>,
+        <http://www.purl.org/drammar#AbstractDataType> .
+
+<http://www.purl.org/drammar#SituationSchema> a owl:Class ;
+    rdfs:label "SituationSchema" ;
+    rdfs:comment "The situation schema provides the pattern for the description of incidents and states. It is inspired by the Situation ontology Pattern of the Ontology Design Pattern initiative (http://ontologydesignpatterns.org/). So, a SituationSchema describes (\"describes\" object property) a DramaPerdurant (either a State or a Process).\\nThe schema works as a hub for the roles involved in a situation. The property hasRole links the Situation class (its domain) with the Role class (the range of the property). Also, notice that, as illustrated in the documentation of the SituationSchema class, a Situation Schema (or, better, its subclasses) does not directly refer to the external linguistic knowledge employed to describe drama: rather, it refers to the ExternalRefSchema class (subclass of the top level ExternalReference class), which in  turn refers to the linguistic knowledge. The SituationSchema class specializes into specific schemata for describing specific type of situations: \\n- FrameNetSchema: for describing processes, like giving or killing (in Drammar, they are grouped into units arranged on timelines), and states, like being behind some object or being dead (in Drammar, they are bundled into sets that border timelines and plans). \\n- MentalStateSchema: this class groups the specific types of schemata for describing the mental states of the agents in Drammar, namely beliefs, goals, emotions and values. \\nTechnically, the subtypes of SituationSchema are characterized by different values of the quale_schemaType data property: \"belief\", \"emotion\", \"framenet\", \"goal\",  \"value\". \\nFinally, it is worth mentioning that is a specific design choice of Drammar not to represent the nesting of states: only the type of the top level state, e.g., a belief, is represented, independent of what that belief contains in turn. This flat style of representation is determined by the decision not to commit to a specific logical account of state types. When Drammar is employed for annotation, the content nested into a state is described informally in natural language description accompanying the state, if needed. \\nRefs: Gangemi, A., & Presutti, V. (2009). Ontology design patterns. In Handbook on ontologies (pp. 221-243). Springer Berlin, Heidelberg." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DescriptionTemplate> .
+
+<http://www.purl.org/drammar#containsOLE> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "containsOLE" ;
+    rdfs:comment "Inverse of isOLElementOf. Connects the ordered list to its elements.\\n        " ;
+    rdfs:domain <http://www.purl.org/drammar#List> ;
+    rdfs:range <http://www.purl.org/drammar#OrderedListElement> ;
+    rdfs:subPropertyOf <http://purl.org/ontology/olo/core#olo:slot>,
+        <http://www.purl.org/drammar#hasADTComponent> ;
+    owl:inverseOf <http://www.purl.org/drammar#isOLEContained> .
+
+<http://www.purl.org/drammar#Emotion> a owl:Class ;
+    rdfs:label "Emotion" ;
+    rdfs:comment "Emotion is the class of emotions felt by an agent in a scene. Formally, it is\\n            described as the subclass of MentalState described by an EmotionSchema. The emotions\\n            refer to OCC emotion ontology (22 emotions types). Emotion type is an external resource\\n            (ExternalRefEmotionType). An Emotion has an appraising agent (appraisingAgent object\\n            property) and, when appraised, is an emotion of (isEmotionOf object property) that\\n            agent. An emotion also has a target (the agent or object that is the target of the\\n            emotion): a specifi object property connects each emotion type with its target (e.g.,\\n            shame_target, love_target, etc.)." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#MentalState> [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#EmotionSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#ExternalReference> a owl:Class ;
+    rdfs:label "ExternalReference" ;
+    rdfs:comment "ExternalReference This is a class that provides the service of accumulating\\n            all the \"quale\" datatype properties that refer to external linguistic or\\n            commonsense knowledge sources. Through this class, the description of the drama entities\\n            is bridged onto some external lexicon or ontology. Its subclasses are useful in\\n            grouping, but do not represent specific issues in support." .
+
+<http://www.purl.org/drammar#MentalState> a owl:Class ;
+    rdfs:label "MentalState" ;
+    rdfs:comment "MentalStates are EventiveStates that are attributed to the mind of an agent.\\n            There are four types of mental states: 1. Emotion 2. Belief 3. Goal 4. Value Belief and\\n            Goal are traditionally described as having a propositional content because they both\\n            concern some attitude of the agent toward a proposition; in Drammar, we don't\\n            enforce this distinction because the reference theoriesd we adopt for emotion and values\\n            also enforce some time of propositional content. The only difference is that only the\\n            schema types for beliefs and goals (BeliefSchema and GoalSchema) have a propositional\\n            content attached to it (through the propositionalContent object property). A MentalState\\n            is defined as an EventiveState that is described by a MentalStateSchema. The latter are\\n            to be specified as EmotionSchema, BeliefSchema, GoalSchema, ValueSchema,\\n            depending on the MentalState type: so, the MentalStateSchema type works as a selector\\n            for the right trait of the mental schema." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#State> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#State> [ a owl:Restriction ;
+                        owl:onClass <http://www.purl.org/drammar#MentalStateSchema> ;
+                        owl:onProperty <http://www.purl.org/drammar#isDescribedBy> ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<http://www.purl.org/drammar#SetMember> a owl:Class ;
+    rdfs:label "SetMember" ;
+    rdfs:comment "Class of the elements\\n            of the sets (sets are conflict sets, consistent state sets, and units). Sometimes\\n            referred to as SM. The hasMember object property has the Set class as its domain and the\\n            SetMember as its range. Notice that this class works as a placeholder that represents\\n            the single element in a set (it is not the content itself): the property hasData links\\n            the SetMember with the actual data, i.e. the content of the item. For example, the\\n            specific Set that is a Unit hasMember some SetMember that hasData some\\n            Action."^^xsd:string ;
+    rdfs:subClassOf <http://www.purl.org/drammar#ADTComponent> .
+
+<http://www.purl.org/drammar#MentalStateSchema> a owl:Class ;
+    rdfs:label "MentalStateSchema" ;
+    rdfs:comment "The MentalStateSchema class collects all the schemata that license the\\n            behavior of the mental states. Following the guidelines for describing mental states in\\n            Ferrario, R., & Oltramari, A. (2005, March). Towards a computational ontology of\\n            mind. In Aerospace Conference, 2005 IEEE (pp. 1-9). IEEE, propositional attitudes such\\n            as beliefs and goals are considered mental states in Drammar. The MentalState class\\n            includes: - BeliefSchema - EmotionSchema - GoalSchema - ValueSchema The schemata\\n            match the mental states included in Drammar. Mental states are grouped in the\\n            DramaPerdurant class as eventive mental states (MentalState class) or as factual mental\\n            states (F_MentalState class)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#SituationSchema> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#SituationSchema> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isMentalStateOf> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] ) ] .
+
+<http://www.purl.org/drammar#TreeNode> a owl:Class ;
+    rdfs:label "TreeNode" ;
+    rdfs:comment "TreeNode The TreeNode class represents tree-like structures in drama, namely\\n            Scenes. This class only represents the recursive structure of drama without an explicit\\n            commitment to the notion of 'drama as a tree'." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <http://www.purl.org/drammar#TreeNode> ;
+            owl:onProperty <http://www.purl.org/drammar#hasChild> ],
+        <http://www.purl.org/drammar#ADTComponent> .
+
+<http://www.purl.org/drammar#isDescribedBy> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isDescribedBy" ;
+    rdfs:comment "Inverse of describes, this property connects a Dynamics (Process or State)\\n            with the SituationSchema that describes it." ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+<http://www.purl.org/drammar#OrderedListElement> a owl:Class ;
+    rdfs:label "OrderedListElement" ;
+    rdfs:comment "Class of the elements of the ordered lists (lists are plans and timelines).\\n            Sometimes referred to as OLE. The hasOrderedListElement object property has the List\\n            class as its domain and the OrderedListElement as its range. Notice that this class\\n            works as a placeholder that represents the single item in a list (it is not the list\\n            content itself): the property hasData links the OrderedListElement with the actual data,\\n            i.e. the content of the item. For example, the OrderedListElements Plans have other\\n            plans or actions as their data." ;
+    rdfs:subClassOf <http://purl.org/ontology/olo/core#olo:Slot>,
+        <http://www.purl.org/drammar#ADTComponent> .
+
+<http://www.purl.org/drammar#Timeline> a owl:Class ;
+    rdfs:label "Timeline" ;
+    rdfs:comment "Timeline Timeline is a subclass of List whose function is to impose some\\n            ordering on the units in a drama. Notice that the notion of timeline cannot be collapsed\\n            onto the actual text: rather, it is simply an indexing posed upon units (which\\n            correspond to a manifestation of drama in FRBR sense). In formal terms, the orders\\n            object property has Timeline as its domain and units as its range, so a unit\\n            \"orders\" some units. A Timeline contains unit. Formally, the elements\\n            (OrderedListElements class) contained in a timeline (containsOLE property) are units. A\\n            Timeline is surrounded by states of affairs that hold before and after it, namely\\n            instances of the ConsistentSateSets class that precede and follow a given timeline.\\n            Formally, the Timeline class is the domain of the hasTimelineEffect(Precondition)\\n            properties, which have the ConsistentStateSet class as their range. A timeline is\\n            motivated by some plan (motivates object property) and is spanned by some unit (span\\n            object property). The relation between units and timelines is independent of the\\n            scene/timeline relation." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#List> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasTimelineEffect> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#ConsistentStateSet> ] [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#hasTimelinePrecondition> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#ConsistentStateSet> ] [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( <http://www.purl.org/drammar#OrderedListElement> [ a owl:Restriction ;
+                                            owl:onProperty <http://www.purl.org/drammar#hasData> ;
+                                            owl:someValuesFrom <http://www.purl.org/drammar#Unit> ] ) ] ;
+                        owl:onProperty <http://www.purl.org/drammar#containsOLE> ] ) ] .
+
+owl:topObjectProperty a owl:ObjectProperty .
+
+<http://www.purl.org/drammar#Plan> a owl:Class ;
+    rdfs:label "Plan" ;
+    rdfs:comment "Plan A plan is a sequence of actions devised by an agent to achieve some Goal.\\n            In the BDI model, the agent's 'intention' to execute a plan is the bridge\\n            between goals and practical actions. In Drammar, a plan is intended by (intendedBy\\n            object property) an Agent to achieve (achieve property) some Goal. As a consequence, the\\n            plan motivates (isMotivationFor object property) a timeline (i.e. a given extent of the\\n            drama text). These are the necessary and sufficient conditions of class. Following the\\n            paradigm of hierarchical planning, plans are recursive. So plans can contains actions or\\n            other, simpler plans. Formally, a Plan is a list (namely, it is a subclass of the List\\n            class) whose elements are simpler plans (for abstract plans) or actions (for directly\\n            executable plans). A plan is related to its elements by the containsOLE\\n            property." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#List> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#List> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#isIntendedBy> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Agent> ] ) ] .
+
+<http://www.purl.org/drammar#Agent> a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "Agent. Derived from BDI model, a mentalist model of agent which sees the agent\\n            as a rational entity who form intentions, or plans, (based on her beliefs) to achieve\\n            her desires (or goals). See Bratman et al. 1988 and Cohen and Levesque 1995. Agents are\\n            those entities in drama, that potentially - have goals (object property hasGoal); -\\n            intend plans to achieve goals (object property intends); - participate in actions with\\n            some role (object property isFillerOf); In addition, agents have emotional states (as a\\n            result of targeted emotions appraisal processes) and have moral values (hasValue): -\\n            feel emotions as a result of a cognitive appraisal process (specific object properties\\n            link each the appraisal of each emotion type to the agent); - have values (object\\n            property hasValue); The requirement, in drama, is that an agent has a plan, since the\\n            fact of having a goal would not be sufficient to ensure that the goal is translated into\\n            some concrete, perceivable behavior in drama. Having a plan, instead, implies that the\\n            agent also has goal. Notice that some Agent (e.g. Polonius) is involved in an action\\n            without being intentional (e.g., being the topic of a conversation), it remains\\n            classified as an Agent in Drammar, though it fills a different role in the frame (e.g.,\\n            Topic of Conversation). References: Bratman, M. E., Israel, D. J., & Pollack, M. E.\\n            (1988). Plans and resourceâbounded practical reasoning. Computational intelligence,\\n            4(3), 349-355. Cohen, P. R., & Levesque, H. J. (1995, June). Communicative Actions\\n            for Artificial Agents. In ICMAS (Vol. 95, pp. 65-72)." ;
+    rdfs:subClassOf <http://www.purl.org/drammar#DramaEndurant> ;
+    owl:disjointWith <http://www.purl.org/drammar#Object> ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( <http://www.purl.org/drammar#DramaEndurant> [ a owl:Restriction ;
+                        owl:onProperty <http://www.purl.org/drammar#intends> ;
+                        owl:someValuesFrom <http://www.purl.org/drammar#Plan> ] ) ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( <http://www.purl.org/drammar#List> <http://www.purl.org/drammar#Set> <http://www.purl.org/drammar#Tree> ) .
+

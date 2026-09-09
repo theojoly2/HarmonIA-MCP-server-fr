@@ -1,0 +1,244 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://w3id.org/medred/medred#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:CaseReportForm a owl:Class ;
+    rdfs:label "CaseReportForm"@en ;
+    rdfs:comment "A CaseReportForm is a tool used for a clinical study to collect data from each participating subject"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Instrument .
+
+onto:Information a owl:Class ;
+    rdfs:label "Information"@en ;
+    rdfs:comment "Information corresponds to an instrument item that holds an information for the subject"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Item .
+
+onto:Questionnaire a owl:Class ;
+    rdfs:label "Questionnaire"@en ;
+    rdfs:comment "A Questionnaire is an Instrument that consists fo different questions made to the subject"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Instrument .
+
+onto:calculation a owl:DatatypeProperty ;
+    rdfs:label "calculation"@en ;
+    rdfs:domain onto:Operation .
+
+onto:dataType a owl:ObjectProperty ;
+    rdfs:label "dataType"@en ;
+    rdfs:comment "The dataType estalbishes a relationship between a Variable and the datatype of its data item"@en ;
+    rdfs:domain <http://purl.org/net/p-plan#Variable> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range rdfs:Datatype ;
+    rdfs:subPropertyOf owl:topObjectProperty .
+
+onto:dataValue a owl:DatatypeProperty ;
+    rdfs:domain onto:Observation .
+
+onto:hasValue a owl:DatatypeProperty ;
+    rdfs:domain onto:Choice ;
+    rdfs:range rdfs:Literal .
+
+onto:instrument a owl:ObjectProperty ;
+    rdfs:label "instrument"@en ;
+    rdfs:comment "The instrument establishes a relationship between a Study and an Instrument"@en ;
+    rdfs:domain onto:Study ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Instrument ;
+    rdfs:seeAlso onto:Instrument .
+
+onto:items a owl:ObjectProperty ;
+    rdfs:label "items"@en ;
+    rdfs:comment "The items property represents a relationship between an Instrument and its constitutent ItemList"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf [ a rdf:List ;
+                    rdf:first onto:Instrument ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first onto:Item ;
+                            rdf:rest () ] ] ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ItemList ;
+    rdfs:seeAlso onto:ItemList .
+
+onto:ofInstrument a owl:ObjectProperty ;
+    rdfs:label "ofInstrument"@en ;
+    rdfs:comment "It establishes a relationships between an Item and an Instrument"@en ;
+    rdfs:domain onto:Item ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Instrument ;
+    rdfs:seeAlso onto:Instrument ;
+    rdfs:subPropertyOf <http://purl.org/net/p-plan#isStepOfPlan> .
+
+onto:ofSection a owl:ObjectProperty ;
+    rdfs:label "ofSection"@en ;
+    rdfs:comment "It establishes a relationship between an Item and a Section"@en ;
+    rdfs:domain onto:Item ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Section ;
+    rdfs:seeAlso onto:Section ;
+    rdfs:subPropertyOf <http://purl.org/net/p-plan#isStepOfPlan> .
+
+onto:studyName a owl:DatatypeProperty ;
+    rdfs:label "studyName"@en ;
+    rdfs:domain onto:Study ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:title .
+
+onto:validationShape a owl:ObjectProperty ;
+    rdfs:domain onto:Item ;
+    rdfs:range sh:PropertyShape .
+
+onto:varName a owl:DatatypeProperty ;
+    rdfs:label "varName"@en ;
+    rdfs:domain <http://purl.org/net/p-plan#Variable> ;
+    rdfs:range xsd:string .
+
+<http://purl.org/vocommons/voaf#Vocabulary> a owl:Class .
+
+onto:Observation a owl:Class ;
+    rdfs:subClassOf <http://purl.org/net/p-plan#Entity> .
+
+onto:Operation a owl:Class ;
+    rdfs:label "Operation"@en ;
+    rdfs:comment "An Operation is an Instrument item that results of a computation, or generated form other items"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Item .
+
+onto:choices a owl:ObjectProperty ;
+    rdfs:label "choices"@en ;
+    rdfs:comment "A relation between an Instrument question, and the list of possible Choice elements"@en ;
+    rdfs:domain onto:Question ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ChoiceList ;
+    rdfs:seeAlso onto:Choice .
+
+rdfs:Datatype a owl:Class .
+
+dcterms:title a owl:DatatypeProperty .
+
+onto:Question a owl:Class ;
+    rdfs:label "Question"@en ;
+    rdfs:comment "A Question is an Instrument item consisting of an inquiry or query to a subject"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://rdf-vocabulary.ddialliance.org/discovery#Question>,
+        onto:Item .
+
+onto:Section a owl:Class ;
+    rdfs:label "Section"@en ;
+    rdfs:comment "A Section is an Instrument item that regroups a subset of Items"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://purl.org/net/p-plan#MultiStep>,
+        onto:Item .
+
+onto:Study a owl:Class ;
+    rdfs:label "Study"@en ;
+    rdfs:comment "A Study is a medical research investigation composed of several instruments"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso <http://rdf-vocabulary.ddialliance.org/discovery#Study> ;
+    rdfs:subClassOf <http://rdf-vocabulary.ddialliance.org/discovery#Study>,
+        prov:Entity .
+
+rdf:first a owl:ObjectProperty .
+
+rdf:rest a owl:ObjectProperty .
+
+onto:Choice a owl:Class ;
+    rdfs:label "Choice"@en ;
+    rdfs:comment "Each Choice corresponds to a possible answer to a given Question"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:seeAlso onto:ChoiceList .
+
+onto:ChoiceList a owl:Class ;
+    rdfs:label "ChoiceList"@en ;
+    rdfs:comment "The ChoiceList corresponds to a list of Choice items for a given Question"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Choice ;
+            owl:onProperty rdf:first ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf [ a rdf:List ;
+                            rdf:first onto:ChoiceList ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first [ a owl:Class ;
+                                            owl:oneOf [ a rdf:List ;
+                                                    rdf:first () ;
+                                                    rdf:rest () ] ] ;
+                                    rdf:rest () ] ] ] ;
+            owl:onProperty rdf:rest ],
+        rdf:List ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty [ owl:inverseOf onto:choices ] ;
+            owl:someValuesFrom onto:Question ] .
+
+onto:ItemList a owl:Class ;
+    rdfs:label "ItemList"@en ;
+    rdfs:comment "The ItemList is a list of Item elements"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:Item ;
+            owl:onProperty rdf:first ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a owl:Class ;
+                    owl:unionOf [ a rdf:List ;
+                            rdf:first onto:ItemList ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first [ a owl:Class ;
+                                            owl:oneOf [ a rdf:List ;
+                                                    rdf:first () ;
+                                                    rdf:rest () ] ] ;
+                                    rdf:rest () ] ] ] ;
+            owl:onProperty rdf:rest ],
+        rdf:List .
+
+onto:Instrument a owl:Class ;
+    rdfs:label "Instrument"@en ;
+    rdfs:comment "An Instrument represents a data acquisition tool for a medical study, e.g. a questionnaire, survey, assessment, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf <http://rdf-vocabulary.ddialliance.org/discovery#Instrument>,
+        prov:Plan .
+
+() a owl:NamedIndividual .
+
+onto:Item a owl:Class ;
+    rdfs:label "Item"@en ;
+    rdfs:comment "An Item is a step of an Instrument"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty dcterms:title ;
+            owl:someValuesFrom xsd:string ],
+        <http://purl.org/net/p-plan#Step> .
+
+rdf:List a owl:Class .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:NamedIndividual,
+        owl:Ontology ;
+    dc:publisher <http://aislab.hevs.ch/> ;
+    dcterms:creator <http://jeanpi.org>,
+        <http://w3id.org/people/jpcik/me> ;
+    dcterms:description "This ontology aims to model generic Medical Data Acquisition Instruments, which can be interoperable across different clinical data management systems. The ontology is developed in the context of the MedRed project (https://www.hevs.ch/en/rad-institutes/institute-of-information-systems/projects/medical-research-data-acquisition-platform-14092)"@en,
+        "Cette ontologie a été conçue pour representer des Instruments pour l'aquisition de données cliniques, dans le contexte du projet MedRed project (https://www.hevs.ch/en/rad-institutes/institute-of-information-systems/projects/medical-research-data-acquisition-platform-14092)"@fr ;
+    dcterms:issued "2017-04-01"^^xsd:date ;
+    dcterms:license <http://purl.org/NET/rdflicense/cc-by4.0> ;
+    dcterms:modified "2017-04-25"^^xsd:date ;
+    dcterms:publisher <http://w3id.org/hes-so/aislab> ;
+    dcterms:rights "Copyright © 2017 HES-SO Valais-Wallis" ;
+    dcterms:title "MedRed ontology: clinical data acquisition model"@en,
+        "MedRed ontologie: modèle d'aquisition de données cliniques"@fr ;
+    vann:preferredNamespacePrefix "medred" ;
+    vann:preferredNamespaceUri "http://w3id.org/medred/medred#" ;
+    rdfs:comment "This ontology aims to model generic Medical Data Acquisition Instruments, which can be interoperable across different clinical data management systems. The ontology is developed in the context of the MedRed project (https://www.hevs.ch/en/rad-institutes/institute-of-information-systems/projects/medical-research-data-acquisition-platform-14092)"@en,
+        "Cette ontologie a été conçue pour representer des Instruments pour l'aquisition de données cliniques, dans le contexte du projet MedRed project (https://www.hevs.ch/en/rad-institutes/institute-of-information-systems/projects/medical-research-data-acquisition-platform-14092)"@fr ;
+    owl:imports <http://purl.org/net/p-plan#>,
+        <http://rdf-vocabulary.ddialliance.org/discovery>,
+        sh: ;
+    owl:versionInfo "0.0.1" .
+

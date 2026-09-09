@@ -1,0 +1,90 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix ns2: <http://semanticscience.org/resource/> .
+@prefix ns3: <http://creativecommons.org/ns#> .
+@prefix onto: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingAlgorithm> a owl:Class ;
+    rdfs:label "species modelling algorithm"^^xsd:string ;
+    ns2:example "Bioclim"^^xsd:string ;
+    rdfs:comment "Following SIO's definition of algorithm, a species modelling algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a model about species."^^xsd:string ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#behaviorControlledBy> ;
+                        owl:someValuesFrom <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters> ] [ a owl:Restriction ;
+                        owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#implementedIn> ;
+                        owl:someValuesFrom <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware> ] [ a owl:Restriction ;
+                        owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasAlgorithmName> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#controlsBehaviorOf> a owl:ObjectProperty ;
+    rdfs:label "controls behavior of" .
+
+ns2:example a owl:AnnotationProperty .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter> a owl:Class ;
+    rdfs:label "species modelling parameter"^^xsd:string ;
+    ns2:example "Standard deviation cutoff"^^xsd:string ;
+    rdfs:comment "Following SIO's definition of parameter, a species modelling parameter  is variable whose value changes the characteristics of a species model."^^xsd:string ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#boundToValue> ;
+                        owl:someValuesFrom rdfs:Literal ] [ a owl:Restriction ;
+                        owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterName> ;
+                        owl:someValuesFrom rdfs:Literal ] ) ] .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters> a owl:Class ;
+    rdfs:label "species modelling parameters"^^xsd:string ;
+    rdfs:comment "A set of modelling parameter(s) required by a specific species modeling algorithm."^^xsd:string ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterMember> ;
+            owl:someValuesFrom <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter> ] .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware> a owl:Class ;
+    rdfs:label "species modelling software"^^xsd:string ;
+    rdfs:comment "Following SIO's definition of software application, a species modelling software is a software that can be directly executed by some processing unit and offers species modelling services."^^xsd:string .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#behaviorControlledBy> a owl:ObjectProperty ;
+    rdfs:label "behaviour controlled by" .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#boundToValue> a owl:DatatypeProperty ;
+    rdfs:label "bound to value" .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasAlgorithmName> a owl:DatatypeProperty ;
+    rdfs:label "has algorithm name" .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterMember> a owl:ObjectProperty ;
+    rdfs:label "has parameter member" .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterName> a owl:DatatypeProperty ;
+    rdfs:label "has parameter name" .
+
+<http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#implementedIn> a owl:ObjectProperty ;
+    rdfs:label "implemented in" .
+
+onto: a owl:Ontology ;
+    ns3:license "http://creativecommons.org/licenses/by/3.0/"^^xsd:anyURI ;
+    ns1:defaultLanguage "en" ;
+    dc:contributor "Contributors are those that engage in discussions during the development of this ontology (in alphabetical order):\\nkarl benedict\\nluis garnica\\ncj grady\\nbill hudspeth\\ndeana pennington\\nsoren scott\\naimee stewart"^^xsd:string ;
+    dc:creator "http://cybershare.utep.edu"^^xsd:anyURI,
+        "ELSEWeb team"@en,
+        "Natalia Villanueva-Rosales"@en,
+        "Nicholas del Rio"@en ;
+    dc:description "The ELSEWeb Modelling ontology provides simple classes for describing data models. This project provides foundational support for the ELSEWeb project(http://elseweb.cybershare.utep.edu/).\\nwebsite: http://elseweb.cybershare.utep.edu/ontologies\\nemail: nvillanuevarosales@utep.edu\\n"@en ;
+    dc:issued "2014-05-01"^^xsd:date ;
+    dc:rights "free to use,share,modify. modify with attribution [http://creativecommons.org/licenses/by/3.0/]."^^xsd:string ;
+    dc:title "ELSEWeb Modelling Ontology"@en ;
+    dcterms:identifier "elseweb-modelling.owl" ;
+    dcterms:modified "2015-09-24"^^xsd:date ;
+    vann:preferredNamespacePrefix "elseweb-modelling"@en ;
+    vann:preferredNamespaceUri "http://ontology.cybershare.utep.edu/ELSEWeb/"^^xsd:string ;
+    rdfs:isDefinedBy onto: ;
+    owl:versionIRI onto: ;
+    owl:versionInfo "1.2"^^xsd:string .
+

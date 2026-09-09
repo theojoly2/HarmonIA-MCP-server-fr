@@ -1,0 +1,241 @@
+@prefix onto: <https://data.nasa.gov/ontologies/atmonto/general#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.nasa.gov/ontologies/atmonto/general> a owl:Ontology ;
+    owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
+
+onto:FloatParameter a owl:Class ;
+    rdfs:label "Float parameter"^^xsd:string ;
+    rdfs:comment "A subclass of NumericParameter representing parameters with floating-point values."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty onto:parameterValue ],
+        onto:NumericParameter .
+
+onto:IntegerParameter a owl:Class ;
+    rdfs:label "Integer Parameter"^^xsd:string ;
+    rdfs:comment "A subclass of NumericParameter representing parameters with interger values."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty onto:parameterValue ],
+        onto:NumericParameter .
+
+onto:WKTgeoRepresentation a owl:DatatypeProperty ;
+    rdfs:label "Well-Known Text geographic representation"^^xsd:string ;
+    rdfs:comment "The WKT string representation of a location. Well-known text (WKT) is a text markup language for representing vector geometry objects on a map, spatial reference systems of spatial objects and transformations between spatial reference systems. WKT is a standards-based representation stored as an alternative to the explicit polygon boundary representation employed in the Ontology (see gen:PolygonBoundary)."^^xsd:string ;
+    rdfs:domain onto:Location ;
+    rdfs:range xsd:string .
+
+onto:altitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "altitude"^^xsd:string ;
+    rdfs:comment "The altitude of a point location."^^xsd:string ;
+    rdfs:domain onto:PointLocation ;
+    rdfs:range xsd:float .
+
+onto:centerpoint a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "centerpoint"^^xsd:string ;
+    rdfs:comment "Links to the center point of the 2-D circular region."^^xsd:string ;
+    rdfs:domain onto:CircularRegion ;
+    rdfs:range onto:PointLocation .
+
+onto:closedEndTimeInterval a owl:DatatypeProperty ;
+    rdfs:label "closed end time interval"^^xsd:string ;
+    rdfs:comment "A boolean property that specifies whether or not the endpoint of the time interval is closes (inclusive of the point)."^^xsd:string ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:range xsd:boolean .
+
+onto:closedStartTimeInterval a owl:DatatypeProperty ;
+    rdfs:label "closed start time interval"^^xsd:string ;
+    rdfs:comment "A boolean property that specifies whether or not the starting point of the time interval is closed (inclusive of the point)."^^xsd:string ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:range xsd:boolean .
+
+onto:endTime a owl:DatatypeProperty ;
+    rdfs:label "end time"^^xsd:string ;
+    rdfs:comment "The ending time of a defined time interval."^^xsd:string ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:range xsd:dateTime .
+
+onto:hasNextItem a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasNext"^^xsd:string ;
+    rdfs:comment "Links an item in a sequence to the subsequent item in the sequence."^^xsd:string ;
+    rdfs:domain onto:SequencedItem ;
+    rdfs:range onto:SequencedItem .
+
+onto:hasPolygonBoundary a owl:ObjectProperty ;
+    rdfs:label "has polygon boundary"^^xsd:string ;
+    rdfs:comment "Links a polygonal region to its boundary representation."^^xsd:string ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Polygonal2DRegion onto:ShearSidedPolygonalVolume ) ] ;
+    rdfs:range onto:PolygonBoundary .
+
+onto:latitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "latitude"^^xsd:string ;
+    rdfs:comment "The latitude of a point location."^^xsd:string ;
+    rdfs:domain onto:PointLocation ;
+    rdfs:range xsd:float .
+
+onto:longitude a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "longitude"^^xsd:string ;
+    rdfs:comment "The longitude of a point location."^^xsd:string ;
+    rdfs:domain onto:PointLocation ;
+    rdfs:range xsd:float .
+
+onto:polygonHeight a owl:DatatypeProperty ;
+    rdfs:label "polygon height"^^xsd:string ;
+    rdfs:comment "Specifies the length dimension of a polygonal volume."^^xsd:string ;
+    rdfs:domain onto:ShearSidedPolygonalVolume ;
+    rdfs:range xsd:float .
+
+onto:radius a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "radius"^^xsd:string ;
+    rdfs:comment "The radius of a circular region. Note: Unfortunately, the units are currently dependent the type of circular region defined. This needs to be improved."^^xsd:string ;
+    rdfs:domain onto:CircularRegion ;
+    rdfs:range xsd:float .
+
+onto:sequenceLength a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "sequence length"^^xsd:string ;
+    rdfs:comment "The number of items in the ordered sequence."^^xsd:string ;
+    rdfs:domain onto:Sequence ;
+    rdfs:range xsd:integer .
+
+onto:sequenceNumber a owl:DatatypeProperty ;
+    rdfs:label "sequenceNumber"^^xsd:string ;
+    rdfs:comment "Indicates the ordered position of this item within the sequence, where 1 signifies the first position in the sequence."^^xsd:string ;
+    rdfs:domain onto:SequencedItem ;
+    rdfs:range xsd:integer .
+
+onto:startTime a owl:DatatypeProperty ;
+    rdfs:label "start time"^^xsd:string ;
+    rdfs:comment "The starting time of a defined time interval."^^xsd:string ;
+    rdfs:domain onto:TimeInterval ;
+    rdfs:range xsd:dateTime .
+
+onto:subsequenceEndIndex a owl:DatatypeProperty ;
+    rdfs:label "subsequence end index"^^xsd:string ;
+    rdfs:comment "A numeric position within a base sequence that represents the end of the subsequence."^^xsd:string ;
+    rdfs:domain onto:SubSequence ;
+    rdfs:range xsd:integer .
+
+onto:subsequenceOf a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "subsequence of"^^xsd:string ;
+    rdfs:comment "Links a subsequence to its base sequence."^^xsd:string ;
+    rdfs:domain onto:SubSequence ;
+    rdfs:range onto:Sequence .
+
+onto:subsequenceStartIndex a owl:DatatypeProperty ;
+    rdfs:label "subsequence start index"^^xsd:string ;
+    rdfs:comment "A numeric position within a base sequence that represents the start of the subsequence."^^xsd:string ;
+    rdfs:domain onto:SubSequence ;
+    rdfs:range xsd:integer .
+
+onto:PolygonBoundary a owl:Class ;
+    rdfs:label "Polygon boundary"^^xsd:string ;
+    rdfs:comment "An ordered sequence of point locations where the last point connects back to the first point, closing the polygon."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:PointLocation ;
+            owl:onProperty onto:hasLastItem ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:PointLocation ;
+            owl:onProperty onto:hasFirstItem ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:PointLocation ;
+            owl:onProperty onto:hasSequencedItem ],
+        onto:Sequence .
+
+onto:Polygonal2DRegion a owl:Class ;
+    rdfs:comment "A two-dimensional region defined by a polygonal boundary."^^xsd:string ;
+    rdfs:subClassOf onto:Region2D .
+
+onto:Region3D a owl:Class ;
+    rdfs:comment "A three-dimensional geographic region."^^xsd:string ;
+    rdfs:subClassOf onto:GeographicRegion .
+
+onto:hasFirstItem a owl:ObjectProperty ;
+    rdfs:label "hasFirstItem"^^xsd:string ;
+    rdfs:comment "Links a sequence to the first item being sequenced."^^xsd:string ;
+    rdfs:domain onto:Sequence ;
+    rdfs:range onto:SequencedItem ;
+    rdfs:subPropertyOf onto:hasSequencedItem .
+
+onto:hasLastItem a owl:ObjectProperty ;
+    rdfs:label "hasLastItem"^^xsd:string ;
+    rdfs:comment "Links a sequence to the last item being sequenced."^^xsd:string ;
+    rdfs:domain onto:Sequence ;
+    rdfs:range onto:SequencedItem ;
+    rdfs:subPropertyOf onto:hasSequencedItem .
+
+onto:CircularRegion a owl:Class ;
+    rdfs:comment "A two-dimensional region defined by a geographic centerpoint and radius."^^xsd:string ;
+    rdfs:subClassOf onto:Region2D .
+
+onto:GeographicRegion a owl:Class ;
+    rdfs:comment "A class representing a demarcated region on or above the surface of the Earth."^^xsd:string ;
+    rdfs:subClassOf onto:Location .
+
+onto:Region2D a owl:Class ;
+    rdfs:comment "A two-dimensional geographic region."^^xsd:string ;
+    rdfs:subClassOf onto:GeographicRegion .
+
+onto:ShearSidedPolygonalVolume a owl:Class ;
+    rdfs:label "Shear sided polygonal volume"^^xsd:string ;
+    rdfs:comment "A three-dimensional volume defined by a two-dimensional polygon plus a length component that stretches the polygon along an axis perpendicular to the polygon surface."^^xsd:string ;
+    rdfs:subClassOf onto:Region3D .
+
+onto:parameterValue a owl:DatatypeProperty ;
+    rdfs:label "parameter value"^^xsd:string ;
+    rdfs:comment "The numeric value of a parameter."^^xsd:string ;
+    rdfs:domain onto:NumericParameter .
+
+onto:Location a owl:Class ;
+    rdfs:label "Location"^^xsd:string ;
+    rdfs:comment "A place defined by a point or a contiguous geographic region."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:NumericParameter a owl:Class ;
+    rdfs:label "Numeric Parameter"^^xsd:string ;
+    rdfs:comment "A class representing numeric parameters explicitly as objects (versus representing them as datatype properties). These parameters can be inserted into containers and sequenced. This enables reuse of the same parameter value in multiple sequences."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:SubSequence a owl:Class ;
+    rdfs:label "Subsequence"^^xsd:string ;
+    rdfs:comment "Represents a subsequence of existing base sequence. The subsequence does not replicate the items of the sequence, but merely points to the start and end positions within the base sequence."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:hasSequencedItem a owl:ObjectProperty ;
+    rdfs:label "hasSequencedItem"^^xsd:string ;
+    rdfs:comment "Links a sequence to each of the items being sequenced."^^xsd:string ;
+    rdfs:domain onto:Sequence ;
+    rdfs:range onto:SequencedItem .
+
+onto:TimeInterval a owl:Class ;
+    rdfs:label "Time interval"^^xsd:string ;
+    rdfs:comment "A time interval with starting and ending time points. Intervals can be open (including the end points) or closed including the end points) or mixed including one but not the other end point)."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:Sequence a owl:Class ;
+    rdfs:label "Sequence"^^xsd:string ;
+    rdfs:comment "An ordered sequence of items."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+
+onto:PointLocation a owl:Class ;
+    rdfs:comment "A location in three-space defined by a latitude, longitude, and altitude."^^xsd:string ;
+    rdfs:subClassOf onto:Location,
+        onto:SequencedItem .
+
+onto:SequencedItem a owl:Class ;
+    rdfs:label "Sequenced item"^^xsd:string ;
+    rdfs:comment "The set of items that can be sequenced."^^xsd:string ;
+    rdfs:subClassOf owl:Thing .
+

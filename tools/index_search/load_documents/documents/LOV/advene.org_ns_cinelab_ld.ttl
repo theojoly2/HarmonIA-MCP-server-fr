@@ -1,0 +1,369 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <http://advene.org/ns/cinelab/ld> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://advene.org/ns/cinelab/ld#Annotation> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Annotation"@en,
+        "Annotation"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://advene.org/ns/cinelab/ld#hasAnnotationContent> ;
+            owl:someValuesFrom owl:Thing ],
+        <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#WithContent>,
+        <http://www.w3.org/ns/oa#Annotation> .
+
+<http://advene.org/ns/cinelab/ld#AnnotationType> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Annotation Type"@en,
+        "Type d'Annotation"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Tag> .
+
+<http://advene.org/ns/cinelab/ld#Content> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Content"@en,
+        "Contenu"@fr ;
+    rdfs:subClassOf <http://www.w3.org/2011/content#ContentAsText> .
+
+<http://advene.org/ns/cinelab/ld#Element> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Element"@en,
+        "Élément"@fr .
+
+<http://advene.org/ns/cinelab/ld#FrameOfReference> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Frame of Reference"@en,
+        "Référenciel"@fr .
+
+<http://advene.org/ns/cinelab/ld#Group> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Group"@en,
+        "Groupe"@fr ;
+    rdfs:comment "Aspect of all elements acting as collections of other elements"@en .
+
+<http://advene.org/ns/cinelab/ld#Import> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Import"@en,
+        "Import"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element> .
+
+<http://advene.org/ns/cinelab/ld#List> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "List"@en,
+        "Liste"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#Group> .
+
+<http://advene.org/ns/cinelab/ld#Media> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Media"@en,
+        "Média"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element> .
+
+<http://advene.org/ns/cinelab/ld#Package> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Package"@en,
+        "Recueil"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( [ owl:complementOf <http://advene.org/ns/cinelab/ld#Annotation> ] [ a owl:Restriction ;
+                                owl:onProperty <http://advene.org/ns/cinelab/ld#hasAType> ;
+                                owl:someValuesFrom owl:Thing ] ) ] ;
+            owl:onProperty <http://advene.org/ns/cinelab/ld#hasElement> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( [ owl:complementOf <http://advene.org/ns/cinelab/ld#Relation> ] [ a owl:Restriction ;
+                                owl:onProperty <http://advene.org/ns/cinelab/ld#hasRType> ;
+                                owl:someValuesFrom owl:Thing ] ) ] ;
+            owl:onProperty <http://advene.org/ns/cinelab/ld#hasElement> ] .
+
+<http://advene.org/ns/cinelab/ld#Pipe> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Pipe"@en,
+        "Tube"@fr ;
+    rdfs:comment "Aspect of all elements able to transform other elements"@en .
+
+<http://advene.org/ns/cinelab/ld#Query> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Query"@en,
+        "Requête"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#Pipe>,
+        <http://advene.org/ns/cinelab/ld#WithContent> .
+
+<http://advene.org/ns/cinelab/ld#Relation> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Relation"@en,
+        "Relation"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#Group>,
+        <http://advene.org/ns/cinelab/ld#WithContent> .
+
+<http://advene.org/ns/cinelab/ld#RelationType> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Relation Type"@en,
+        "Type de Relation"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Tag> .
+
+<http://advene.org/ns/cinelab/ld#Resource> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Resource"@en,
+        "Ressource"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#WithContent> .
+
+<http://advene.org/ns/cinelab/ld#Schema> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Schema"@en,
+        "Schéma"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#List> .
+
+<http://advene.org/ns/cinelab/ld#Tag> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Tag"@en,
+        "Tag"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#Group> .
+
+<http://advene.org/ns/cinelab/ld#Test> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "Test"@en,
+        "Test"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#View> .
+
+<http://advene.org/ns/cinelab/ld#UserList> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "User List"@en,
+        "Liste Utilisateur"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#List> .
+
+<http://advene.org/ns/cinelab/ld#UserTag> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "User Tag"@en,
+        "Tag Utilisateur"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Tag> .
+
+<http://advene.org/ns/cinelab/ld#View> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "View"@en,
+        "Vue"@fr ;
+    rdfs:subClassOf <http://advene.org/ns/cinelab/ld#Element>,
+        <http://advene.org/ns/cinelab/ld#Pipe>,
+        <http://advene.org/ns/cinelab/ld#WithContent> .
+
+<http://advene.org/ns/cinelab/ld#WithContent> a rdfs:Class,
+        owl:Class ;
+    rdfs:label "With Content"@en,
+        "Ayant un Contenu"@fr ;
+    rdfs:comment "Aspect of all elements supporting the :hasContent property"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://advene.org/ns/cinelab/ld#hasContent> ;
+            owl:someValuesFrom owl:Thing ] .
+
+onto: a vann:Vocabulary,
+        owl:Ontology ;
+    dcterms:contributor "Olivier Aubert",
+        "Yannick Prié" ;
+    dcterms:created "2014-03-26T21:31:42CET" ;
+    dcterms:creator <http://champin.net/#pa> ;
+    dcterms:date "2015-03-28" ;
+    dcterms:description "The Advene project aims at providing a model and various formats to share annotations about digital video documents (movies, courses, conferences...), as well as tools to edit and visualize the hypervideos generated from both the annotations and the audiovisual documents. Teachers, moviegoers, etc. can use them to exchange multimedia comments and analyses about video documents.\\n\\nThe Cinelab model allows not only to represent video annotations, but also an elicitation of their structure (through notions of schema and annotation type), as well as their presentations with views (templates applied on data to produce hypervideos) and queries.\\n\\nThis model has been developed by the partners of the Cinelab project (2007-2008, funded by the french national research agency), and used afterwards in a number of projects and applications, including Advene (LIRIS) and Ligne de temps (IRI)."@en,
+        "Le projet Advene a pour objectif de fournir un modèle et plusieurs formats de données pour partager des annotations sur des vidéos numériques (films, cours, conférences...), ainsi que des outils pour éditer et visualiser les hypérvidéos générées à partir de ces vidéos et des annotations. Les enseignants, les amateurs de cinéma, etc., peuvent les utiliser pour échanger leurs commentaires et analyse de documents audiovisuels.\\n\\nLe modèle Cinelab permet non seulement de représenter les annotations vidéos, mais aussi d'expliciter leur structure (à travers les notions de schéma et de type d'annotation), ainsi que leur présentations à l'aide de vues (modèles appliqués aux données pour produire des hypervidéos) et de requêtes.\\n\\nCe modèle a été développé par les partenaires du projet Cinelab (2007-2008, financé par l'ANR), et utilisé par la suite dans plusieurs projets et applications, dont Advene (LIRIS) et Ligne de temps (IRI)."@fr ;
+    dcterms:modified "2015-03-28T19:32:00CET" ;
+    dcterms:title "Cinelab ontology" ;
+    vann:preferredNamespacePrefix "cl" ;
+    vann:preferredNamespaceUri "http://advene.org/ns/cinelab/ld#" ;
+    rdfs:comment "This ontology allows to represent in RDF the Cinelab model <http://advene.org/cinelab/>."@en,
+        "Cette ontologie permet de représenter en RDF le modèle Cinelab <http://advene.org/cinelab/>."@fr ;
+    rdfs:isDefinedBy <http://advene.org/cinelab/> ;
+    owl:imports <http://www.w3.org/ns/ma-ont>,
+        <http://www.w3.org/ns/oa#> .
+
+<http://advene.org/ns/cinelab/ld#begin> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "has begin"@en,
+        "a pour début"@fr ;
+    rdfs:comment "Start-time of the fragment, in milliseconds."@en ;
+    rdfs:domain <http://www.w3.org/ns/ma-ont#MediaFragment> ;
+    rdfs:range xsd:integer .
+
+<http://advene.org/ns/cinelab/ld#end> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "has end"@en,
+        "a pour fin"@fr ;
+    rdfs:comment "End-time of the fragment, in milliseconds."@en ;
+    rdfs:domain <http://www.w3.org/ns/ma-ont#MediaFragment> ;
+    rdfs:range xsd:integer .
+
+<http://advene.org/ns/cinelab/ld#fragDimId> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Fragment Dimension 'id'" ;
+    rdfs:comment "This metadata of an annotation encodes the 'id' dimension of its fragment."@en ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> .
+
+<http://advene.org/ns/cinelab/ld#fragDimTrack> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Fragment Dimension 'track'" ;
+    rdfs:comment "This metadata of an annotation encodes the 'track' dimension of its fragment."@en ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> .
+
+<http://advene.org/ns/cinelab/ld#fragDimXywh> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Fragment Dimension 'xywh'" ;
+    rdfs:comment "This metadata of an annotation encodes the 'xywh' dimension of its fragment."@en ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> .
+
+<http://advene.org/ns/cinelab/ld#hasFragment> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has fragment"@en,
+        "a pour fragment"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> ;
+    rdfs:range <http://www.w3.org/ns/ma-ont#MediaFragment> ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/oa#hasTarget> .
+
+<http://advene.org/ns/cinelab/ld#hasFrameOfReference> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has frame of reference"@en,
+        "a pour référenciel"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Media> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#FrameOfReference> .
+
+<http://advene.org/ns/cinelab/ld#hasImportedPackage> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has imported package"@en,
+        "a pour recueil importé"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Import> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Package> .
+
+<http://advene.org/ns/cinelab/ld#hasItems> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has items"@en,
+        "a pour éléments"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#List> ;
+    rdfs:range rdf:List .
+
+<http://advene.org/ns/cinelab/ld#hasMediaElement> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has media element"@en,
+        "a pour élément média"@fr ;
+    rdfs:domain <http://www.w3.org/ns/ma-ont#MediaFragment> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Media> .
+
+<http://advene.org/ns/cinelab/ld#hasMembers> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has members"@en,
+        "a pour membres"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Relation> ;
+    rdfs:range rdf:List .
+
+<http://advene.org/ns/cinelab/ld#hasModel> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has content model"@en,
+        "a pour modèle de contenu"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Content> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Resource> .
+
+<http://advene.org/ns/cinelab/ld#hasPackage> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has package"@en,
+        "a pour recueil"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Element> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Package> ;
+    owl:inverseOf <http://advene.org/ns/cinelab/ld#hasElement> .
+
+<http://advene.org/ns/cinelab/ld#imports> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "imports"@en,
+        "importe"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Package> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Package> .
+
+<http://advene.org/ns/cinelab/ld#mimeType> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "has MIME type"@en,
+        "a pour type MIME"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Content> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dc:format .
+
+<http://advene.org/ns/cinelab/ld#represents> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "represents"@en,
+        "représente"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Media> ;
+    rdfs:range <http://www.w3.org/ns/ma-ont#MediaResource> .
+
+<http://advene.org/ns/cinelab/ld#url> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "URL"@en,
+        "URL"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Package> ;
+    rdfs:range xsd:anyURI .
+
+<http://advene.org/ns/cinelab/ld#base64> a rdfs:Datatype ;
+    rdfs:label "base64 encoded data"@en,
+        "données encodées en base64"@fr ;
+    rdfs:comment "A literal datatype to represent base64-encoded binary data."@en ;
+    rdfs:seeAlso <http://advene.org/ns/cinelab/ld#data> .
+
+<http://advene.org/ns/cinelab/ld#data> a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "has value"@en,
+        "a pour valeur"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Content> ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso <http://advene.org/ns/cinelab/ld#base64> ;
+    rdfs:subPropertyOf <http://www.w3.org/2011/content#chars> .
+
+<http://advene.org/ns/cinelab/ld#hasAType> a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has annotation type"@en,
+        "a pour type d'annotation"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#AnnotationType> ;
+    rdfs:subPropertyOf <http://advene.org/ns/cinelab/ld#taggedWith> .
+
+<http://advene.org/ns/cinelab/ld#hasAnnotationContent> a owl:ObjectProperty ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Annotation> ;
+    rdfs:subPropertyOf <http://advene.org/ns/cinelab/ld#hasContent>,
+        <http://www.w3.org/ns/oa#hasBody> .
+
+<http://advene.org/ns/cinelab/ld#hasRType> a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has relation type"@en,
+        "a pour type d'relation"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Relation> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#RelationType> ;
+    rdfs:subPropertyOf <http://advene.org/ns/cinelab/ld#taggedWith> .
+
+<http://champin.net/#pa> rdfs:label "Pierre-Antoine Champin" .
+
+<http://advene.org/ns/cinelab/ld#hasContent> a rdf:Property,
+        owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has content"@en,
+        "a pour contenu"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#WithContent> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Content> .
+
+<http://advene.org/ns/cinelab/ld#taggedWith> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "tagged with"@en,
+        "tagué avec"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Element> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Tag> .
+
+<http://advene.org/ns/cinelab/ld#hasElement> a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has element"@en,
+        "a pour élément"@fr ;
+    rdfs:domain <http://advene.org/ns/cinelab/ld#Package> ;
+    rdfs:range <http://advene.org/ns/cinelab/ld#Element> .
+
+<http://www.w3.org/ns/ma-ont#MediaFragment> a owl:Class .
+

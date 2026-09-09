@@ -1,0 +1,116 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://www.telegraphis.net/ontology/measurement/measurement#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dc:creator <http://www.pipian.com/people/pipian/card#me> ;
+    dc:description "The Measurement Ontology is an ontology in which measurements may be rendered."@en ;
+    dc:title "Measurement Ontology" .
+
+onto:Km2 a onto:AreaUnit ;
+    rdfs:label "square kilometers"@en .
+
+onto:UnitSystem a owl:Class ;
+    rdfs:label "Unit System"@en ;
+    rdfs:description "A unit system is a class of units for which no two elements in the class measure the same dimension (i.e. all dimensions are orthogonal to each other, or measure dimensions derived from a set of orthogonal dimensions with units derived from the units that measure those orthogonal dimensions specified in the system."@en ;
+    rdfs:subClassOf onto:UnitClass .
+
+onto:area a owl:ObjectProperty ;
+    rdfs:label "area"@en ;
+    rdfs:range onto:AreaMeasurement .
+
+onto:equivalentQuantity a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "equivalent quantity"@en ;
+    rdfs:description "An equivalent quantity of a unit class is the quantity measured by all units in the unit class."@en ;
+    rdfs:domain onto:UnitClass ;
+    rdfs:range onto:Quantity ;
+    owl:inverseOf onto:unitClass .
+
+onto:equivalentUnitClass a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "equivalent unit class"@en ;
+    rdfs:description "An equivalent unit class of a quantity is the unit class corresponding to units that measure the quantity."@en ;
+    rdfs:domain onto:Quantity ;
+    rdfs:range onto:UnitClass ;
+    owl:inverseOf onto:quantityMeasured .
+
+onto:AreaMeasurement a owl:Class ;
+    rdfs:label "Area Measurement"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:hasValue onto:Area ;
+            owl:onProperty onto:measuredQuantity ],
+        [ a owl:Restriction ;
+            owl:hasValue [ a onto:AreaUnit ] ;
+            owl:onProperty onto:unit ],
+        onto:Measurement .
+
+onto:unit a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "unit"@en ;
+    rdfs:description "The unit a measurement is made in."@en ;
+    rdfs:domain onto:Measurement ;
+    rdfs:range onto:Unit ;
+    rdfs:subPropertyOf <http://purl.org/NET/scovo#dimension> .
+
+onto:Area a onto:Quantity ;
+    rdfs:label "Area"@en ;
+    onto:equivalentUnitClass onto:AreaUnit .
+
+onto:quantityMeasured a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "measured quantity"@en ;
+    rdfs:description "The quantity measured for a measurement."@en ;
+    rdfs:domain onto:Measurement ;
+    rdfs:range onto:Quantity ;
+    rdfs:subPropertyOf <http://purl.org/NET/scovo#dimension> .
+
+onto:AreaUnit a onto:UnitClass ;
+    rdfs:label "Area Unit"@en ;
+    onto:equivalentQuantity onto:Area ;
+    rdfs:subClassOf onto:Unit .
+
+onto:Measurement a owl:Class ;
+    rdfs:label "Measurement"@en ;
+    rdfs:description "A measurement is a statistic that measures a quantity that may or may not have units."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:quantityMeasured ],
+        <http://purl.org/NET/scovo#Item> .
+
+onto:Unit a owl:Class ;
+    rdfs:label "Unit"@en ;
+    rdfs:description "A unit is a particular quantity against which another quantity may be compared.  Hence, a unit is dimensionful and provides a ratio by which a quantity may be measured."@en ;
+    rdfs:subClassOf <http://purl.org/NET/scovo#Dimension> ;
+    owl:disjointWith onto:Quantity,
+        onto:UnitClass .
+
+onto:Quantity a owl:Class ;
+    rdfs:label "Quantity"@en ;
+    rdfs:description "A quantity is a quantifiable quality of an object."@en ;
+    rdfs:subClassOf <http://purl.org/NET/scovo#Dimension> ;
+    owl:disjointWith onto:Unit,
+        onto:UnitClass .
+
+onto:UnitClass a owl:Class,
+        owl:Restriction ;
+    rdfs:label "Unit Class"@en ;
+    rdfs:description "A unit class is a subset of units, with no particular restriction on its contents (i.e. it may be a set of units measuring orthogonal quantities, making a UnitSystem, or a set of units measuring the same quantity)."@en ;
+    rdfs:subClassOf owl:Class ;
+    owl:disjointWith onto:Quantity,
+        onto:Unit ;
+    owl:hasValue onto:Unit ;
+    owl:onProperty rdfs:subClassOf .
+
+[] a owl:Restriction ;
+    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onProperty onto:units .
+

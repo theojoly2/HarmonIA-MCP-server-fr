@@ -1,0 +1,183 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://www.w3.org/2001/02pd/rec54#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+onto:ActivityStatement a rdfs:Class ;
+    rdfs:label "Activity Statement" .
+
+onto: dc:description "This is (the start of) an event-based model of the W3C process;\\n  e.g. RECdd is the class of Recommendation Director's Decisions;\\n\\ti.e. messages to w3c-ac-members announcing a new\\n\\tW3C Recommendation." ;
+    dc:title "Model of the W3C Process" ;
+    rdfs:comment "$Id: rec54.rdf,v 1.20 2014-06-12 11:03:50 denis Exp $" ;
+    rdfs:seeAlso <http://www.ilrt.bris.ac.uk/discovery/harmony/docs/abc/abc_draft.html>,
+        <http://www.indecs.org/>,
+        <http://www.w3.org/2002/01/tr-automation/>,
+        <http://www.w3.org/Consortium/Process/>,
+        <http://www.w3.org/DesignIssues/PaperTrail> .
+
+onto:CFI rdfs:label "CFI" ;
+    rdfs:subClassOf onto:ACnotice ;
+    onto:cites onto:CR,
+        onto:CRreq ;
+    onto:effect onto:CR .
+
+onto:CFP rdfs:label "CFP" ;
+    rdfs:subClassOf onto:ACnotice ;
+    onto:cites onto:ActivityCreation,
+        onto:ActivityStatement,
+        onto:Charter ;
+    onto:effect onto:Charter .
+
+onto:ED rdfs:label "Editor's draft" ;
+    rdfs:domain onto:TRPub .
+
+onto:FirstEdition rdfs:label "first Edition of a Recommendation" ;
+    rdfs:subClassOf onto:REC .
+
+onto:LCann rdfs:label "Last Call Ann." ;
+    rdfs:subClassOf onto:WGAction ;
+    onto:cites onto:Charter ;
+    onto:effect onto:LastCall .
+
+onto:PER rdfs:label "W3C Proposed Edited Recommendation" ;
+    rdfs:subClassOf onto:TRPub .
+
+onto:RECdd rdfs:label "Rec. dd" ;
+    rdfs:subClassOf onto:ACnotice ;
+    onto:cites onto:CFR,
+        onto:PRReview,
+        onto:REC ;
+    onto:effect onto:REC .
+
+onto:RSCND rdfs:label "W3C Rescinded Recommendation" ;
+    rdfs:subClassOf onto:TRPub .
+
+onto:Retired rdfs:label "WD not longer in development" ;
+    rdfs:subClassOf onto:WD .
+
+onto:Superseded rdfs:label "supersed Work" ;
+    rdfs:comment "Another work has superseded this one, which should not be considered as current any more." ;
+    rdfs:subClassOf <http://www.w3.org/2000/10/swap/pim/doc#Work> .
+
+onto:cites rdfs:label "cites" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/doc#Work> .
+
+onto:editor rdfs:label "editor" ;
+    rdfs:subPropertyOf dc:contributor .
+
+onto:effect rdfs:label "has an effect on" .
+
+onto:formerShortname rdfs:label "former short name" ;
+    rdfs:subPropertyOf dc:identifier .
+
+onto:fromSubmission rdfs:label "published per Member Submission request" ;
+    rdfs:domain onto:NOTE .
+
+onto:implementationFeedbackDue rdfs:label "implementation feedback due" ;
+    rdfs:domain onto:CR .
+
+onto:lastCallFeedBackDue rdfs:label "last call feedbackdue" ;
+    rdfs:domain onto:LastCall .
+
+onto:nomination rdfs:label "nomination" ;
+    rdfs:subClassOf onto:ACaction ;
+    onto:cites onto:Charter,
+        onto:OrgJoins ;
+    onto:effect onto:participation .
+
+onto:patentRules rdfs:label "governed by patent rules" ;
+    rdfs:domain onto:TRPub .
+
+onto:prReviewsDue rdfs:label "proposed recommendation feedback due" ;
+    rdfs:domain onto:PR .
+
+onto:previousEdition rdfs:label "previous edition" ;
+    rdfs:subPropertyOf dc:relation .
+
+onto:replaces rdfs:label "replaces" ;
+    rdfs:comment "Specs that shouldn't be used anymore because a newer one is available" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/doc#Work> .
+
+onto:supersedes rdfs:label "supersedes" ;
+    rdfs:comment "this Work supersedes what was one in that Work" ;
+    rdfs:domain <http://www.w3.org/2000/10/swap/pim/doc#Work> ;
+    rdfs:range <http://www.w3.org/2000/10/swap/pim/doc#Work> ;
+    rdfs:subPropertyOf dc:relation .
+
+onto:APreview rdfs:label "A.P. review" ;
+    rdfs:subClassOf onto:ACaction ;
+    onto:cites onto:ActivityProposal,
+        onto:OrgJoins .
+
+onto:ActivityCreation rdfs:label "Activity Creation" ;
+    rdfs:subClassOf onto:ACnotice ;
+    onto:cites onto:APreview ;
+    onto:effect onto:ActivityStatement .
+
+onto:ActivityProposal rdfs:label "Activity Proposal" ;
+    rdfs:subClassOf onto:ACnotice .
+
+onto:CRreq rdfs:label "CR req." ;
+    rdfs:subClassOf onto:WGAction ;
+    onto:cites onto:LastCall .
+
+onto:ImpEvidence rdfs:label "Impl. Evidence" ;
+    rdfs:subClassOf onto:WGAction .
+
+onto:NOTE rdfs:label "W3C Note" ;
+    rdfs:subClassOf onto:TRPub .
+
+onto:PRReview rdfs:label "PR review" ;
+    rdfs:subClassOf onto:ACaction ;
+    onto:cites onto:CFR,
+        onto:OrgJoins,
+        onto:PR .
+
+onto:PRreq rdfs:label "PR req." ;
+    rdfs:subClassOf onto:WGAction ;
+    onto:cites onto:ImpEvidence,
+        onto:LastCall .
+
+onto:WDreq rdfs:label "WD req." ;
+    rdfs:subClassOf onto:WGAction ;
+    onto:effect onto:WD .
+
+onto:participation rdfs:label "participation" ;
+    onto:effect onto:WDreq .
+
+onto:CFR rdfs:label "Call for Review" ;
+    rdfs:subClassOf onto:ACnotice ;
+    onto:cites onto:PR,
+        onto:PRreq ;
+    onto:effect onto:PR .
+
+onto:OrgJoins rdfs:label "Org. Joins" ;
+    rdfs:subClassOf onto:ACaction .
+
+onto:REC rdfs:label "W3C Recommendation" ;
+    rdfs:subClassOf onto:TRPub ;
+    onto:cites onto:PR .
+
+onto:CR rdfs:label "Candidate Recommendation" ;
+    rdfs:subClassOf onto:TRPub ;
+    onto:cites onto:WD .
+
+onto:Charter rdfs:label "charter" .
+
+onto:LastCall rdfs:label "Last Call WD",
+        "a WD in Last Call" ;
+    rdfs:subClassOf onto:WD ;
+    onto:cites onto:WD .
+
+onto:PR rdfs:label "W3C Proposed Reccommendation" ;
+    rdfs:subClassOf onto:TRPub ;
+    onto:cites onto:CR,
+        onto:WD .
+
+onto:WD rdfs:label "W3C Working Draft" ;
+    rdfs:subClassOf onto:TRPub ;
+    onto:cites onto:ActivityStatement .
+
+onto:TRPub rdfs:label "a W3C Technical Report" ;
+    rdfs:seeAlso <http://www.w3.org/Consortium/Process/tr.html#Reports> ;
+    rdfs:subClassOf <http://www.w3.org/2000/10/swap/pim/doc#Work> .
+

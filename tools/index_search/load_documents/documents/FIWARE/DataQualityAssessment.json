@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "0.0.5",
+  "$id": "https://smart-data-models.github.io/dataModel.DataQuality/DataQualityAssessment/schema.json",
+  "title": "Smart Data Models - Data Quality Assessment schema",
+  "modelTags": "",
+  "derivedFrom": "",
+  "license": "https://smart-data-models.github.io/dataModel.DataQuality/DataQualityAssessment/LICENSE.md",
+  "description": "This entity describes the data quality properties of a measurement, such as temperature.",
+  "type": "object",
+  "required": [
+    "id",
+    "type"
+  ],
+  "allOf": [
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons"
+    },
+    {
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "DataQualityAssessment"
+          ],
+          "description": "Property. NGSI Entity type. It has to be DataQualityAssessment"
+        },
+        "dateCalculated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Property. Date of the calculated entity defined by the user"
+        },
+        "outlier": {
+          "type": "object",
+          "description": "Property. Includes information about the outlier characteristics of the measurement",
+          "properties": {
+            "isOutlier": {
+              "type": "boolean",
+              "description": "Property. Determine whether the measurement has been considered an outlier or not"
+            },
+            "outlierScore": {
+              "type": "number",
+              "description": "Property. A score indicating the degree of outlierness"
+            },
+            "methodology": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "pattern": "^[\\w\\-\\.\\{\\}\\$\\+\\*\\[\\]`|~^@!,:\\\\]+$",
+                  "description": "Property. Identifier format of any NGSI entity"
+                },
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Property. Identifier format of any NGSI entity"
+                }
+              ],
+              "description": "Relationship. Reference to the other entity including AI methodology information"
+            }
+          }
+        },
+        "duplicate": {
+          "type": "object",
+          "description": "Property. Includes information about duplicated data",
+          "properties": {
+            "isDuplicate": {
+              "type": "boolean",
+              "description": "Property. Determine whether the measurement is duplicated or not"
+            },
+            "foundMatches": {
+              "type": "array",
+              "description": "Property. If this is a duplicate, determine measurements it does match with",
+              "items": {
+                "type": "string",
+                "description": "Property. Every match found in the data"
+              }
+            }
+          }
+        },
+        "synthetic": {
+          "type": "object",
+          "description": "Property. Includes information about the origin of the measurement",
+          "properties": {
+            "isSynthetic": {
+              "type": "boolean",
+              "description": "Property. Determine whether the measurement has been created synthetically or not"
+            },
+            "methodology": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "pattern": "^[\\w\\-\\.\\{\\}\\$\\+\\*\\[\\]`|~^@!,:\\\\]+$",
+                  "description": "Property. Identifier format of any NGSI entity"
+                },
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Property. Identifier format of any NGSI entity"
+                }
+              ],
+              "description": "Relationship. Reference to the other entity including AI methodology information"
+            }
+          }
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "Property. Accuracy measures the maximum systematic numerical error produced in a sensor measurement"
+        },
+        "timeliness": {
+          "type": "number",
+          "description": "Property. Average timeliness of the data-stream. Units:'minutes'"
+        },
+        "completeness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Property. Completeness quantifies the number of missed measurements or observations in a given time window. Units:'P1'"
+        },
+        "precision": {
+          "type": "number",
+          "description": "Property. Precision measures the standard deviation of a dataset. That is, it measures how close the values in the dataset are to each other"
+        },
+        "dataQualityAssessmentVariableNames": {
+          "type": "array",
+          "description": "Relationship. Array of variable names used to describe the values for each dataQualityAssessmentDomain property",
+          "items": {
+            "type": "string",
+            "description": "Property. Every item in the variable names array"
+          }
+        },
+        "dataQualityAssessmentDomains": {
+          "type": "object",
+          "description": "Property. Data quality assessment domains with their respective scores",
+          "properties": {
+            "completeness": {
+              "type": "array",
+              "description": "Property. Completeness scores for variables",
+              "items": {
+                "type": "number",
+                "description": "Property. Every item in the completeness array",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "consistency": {
+              "type": "array",
+              "description": "Property. Consistency scores for variables",
+              "items": {
+                "type": "number",
+                "description": "Property. Every item in the consistency array",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "timeliness": {
+              "type": "array",
+              "description": "Property. Timeliness scores for variables",
+              "items": {
+                "type": "number",
+                "description": "Property. Every item in the timeliness array",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "uniqueness": {
+              "type": "array",
+              "description": "Property. Uniqueness scores for variables",
+              "items": {
+                "type": "number",
+                "description": "Property. Every item in the uniqueness array",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "validity": {
+              "type": "array",
+              "description": "Property. Validity scores for variables",
+              "items": {
+                "type": "number",
+                "description": "Property. Every item in the validity array",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "dataQualityAssessmentParameters": {
+          "type": "object",
+          "description": "Property. Configuration parameters for data quality assessment",
+          "properties": {
+            "id_columns": {
+              "type": "array",
+              "description": "Property. Columns used as identifiers in the dataset",
+              "items": {
+                "type": "string",
+                "description": "Property. Every item in the id_columns array"
+              }
+            },
+            "date_column": {
+              "type": "string",
+              "description": "Property. Name of the column containing date information used for timeliness assessments"
+            },
+            "drop_columns": {
+              "type": "array",
+              "description": "Property. Columns to be excluded from data quality assessment",
+              "items": {
+                "type": "string",
+                "description": "Property. Every item in the drop_columns array"
+              }
+            },
+            "group_id": {
+              "type": "array",
+              "description": "Property. Columns used for grouping data in quality assessments",
+              "items": {
+                "type": "string",
+                "description": "Property. Every item in the group_id array"
+              }
+            },
+            "lower_bd": {
+              "type": "number",
+              "description": "Property. Minimum acceptable value for numeric data"
+            },
+            "upper_bd": {
+              "type": "number",
+              "description": "Property. Maximum acceptable value for numeric data"
+            },
+            "all_positive": {
+              "type": "boolean",
+              "description": "Property. Whether all numeric values must be positive"
+            },
+            "non_zero": {
+              "type": "boolean",
+              "description": "Property. Whether all numeric values must be non-zero"
+            },
+            "str_min_len": {
+              "type": "integer",
+              "description": "Property. Minimum acceptable length for string values",
+              "minimum": 0
+            },
+            "str_max_len": {
+              "type": "integer",
+              "description": "Property. Maximum acceptable length for string values",
+              "minimum": 0
+            },
+            "dec_places": {
+              "type": "integer",
+              "description": "Property. Maximum number of decimal places allowed for numeric values",
+              "minimum": 0
+            },
+            "thousands_sep": {
+              "type": "boolean",
+              "description": "Property. Whether numeric values can include thousands separators"
+            },
+            "freq_unit": {
+              "type": "string",
+              "description": "Property. Unit of frequency for data timestamps",
+              "enum": [
+                "Y",
+                "M",
+                "D",
+                "H",
+                "T",
+                "S",
+                "L",
+                "U",
+                "N"
+              ]
+            },
+            "freq_num": {
+              "type": "integer",
+              "description": "Property. Number of frequency units to consider"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

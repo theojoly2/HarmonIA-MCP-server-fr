@@ -1,0 +1,1607 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://spinrdf.org/spl#> .
+@prefix ns2: <http://spinrdf.org/sp#> .
+@prefix ns3: <http://spinrdf.org/spin#> .
+@prefix onto: <http://semwebquality.org/ontologies/dq-constraints> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:creator a owl:AnnotationProperty ;
+    rdfs:label "Creator"@en .
+
+dc:date a owl:AnnotationProperty ;
+    rdfs:label "Date"@en .
+
+dc:subject a owl:AnnotationProperty ;
+    rdfs:label "Subject"@en .
+
+dc:title a owl:AnnotationProperty ;
+    rdfs:label "Title"@en .
+
+dcterms:license a owl:AnnotationProperty ;
+    rdfs:label "License"@en ;
+    rdfs:comment "A legal document giving official permission to do something with the resource."@en .
+
+onto: a owl:Ontology ;
+    rdfs:label "The Data Quality Constraints Library"@en ;
+    dc:creator "Christian Fuerber, Martin Hepp, and Markus Wischnewski"@en ;
+    dc:date "2011-03-28"^^xsd:string ;
+    dc:subject "Semantic Data Quality Management"@en ;
+    dc:title "The Data Quality Constraints Library"@en ;
+    dcterms:license <http://www.gnu.org/licenses/lgpl.html> ;
+    rdfs:comment "This RDF document contains a library of data quality constraints represented as SPARQL query templates based on the SPARQL Inferencing Framework (SPIN). The data quality constraint templates are especially useful for the identification of data quality problems during data entry and for periodic quality checks during data usage."@en ;
+    owl:imports <http://spinrdf.org/spin> ;
+    owl:versionInfo "V 1.1 Release 2011-03-28"^^xsd:string .
+
+<http://semwebquality.org/ontologies/dq-constraints#EAN-13All> a ns3:Template ;
+    rdfs:label "EAN-13 All"^^xsd:string ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B4fd778962865f0d31dfd384824a56f81 ] [ ns2:object _:B474fc99e471c0223c3990d3f5b095918 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B4fd778962865f0d31dfd384824a56f81 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B4fd778962865f0d31dfd384824a56f81 ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?instance .\\n    _:c0 spin:violationPath ?arg1 .}\\nWHERE\\n  { ?instance ?arg1 ?ean\\n    LET (?1 := afn:substr(str(?ean), 0, 1))\\n    LET (?2 := afn:substr(str(?ean), 1, 2))\\n    LET (?3 := afn:substr(str(?ean), 2, 3))\\n    LET (?4 := afn:substr(str(?ean), 3, 4))\\n    LET (?5 := afn:substr(str(?ean), 4, 5))\\n    LET (?6 := afn:substr(str(?ean), 5, 6))\\n    LET (?7 := afn:substr(str(?ean), 6, 7))\\n    LET (?8 := afn:substr(str(?ean), 7, 8))\\n    LET (?9 := afn:substr(str(?ean), 8, 9))\\n    LET (?10 := afn:substr(str(?ean), 9, 10))\\n    LET (?11 := afn:substr(str(?ean), 10, 11))\\n    LET (?12 := afn:substr(str(?ean), 11, 12))\\n    LET (?13 := afn:substr(str(?ean), 12, 13))\\n    LET (?value := ( ( ( ( ( ( ( xsd:int(?2) + xsd:int(?4) ) + xsd:int(?6) ) + xsd:int(?8) ) + xsd:int(?10) ) + xsd:int(?12) ) * 3 ) + ( ( ( ( ( xsd:int(?1) + xsd:int(?3) ) + xsd:int(?5) ) + xsd:int(?7) ) + xsd:int(?9) ) + xsd:int(?11) ) ))\\n    LET (?check := afn:substr(str(?value), ( fn:string-length(str(?value)) - 1 ), fn:string-length(str(?value))))\\n    FILTER ( ( ( ( xsd:int(?check) + xsd:int(?13) ) != 0 ) && ( ( xsd:int(?check) + xsd:int(?13) ) != 10 ) ) || ( ! regex(str(?ean), \"^[0-9]{13}$\") ) )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B949117962b025d0c8279b4aeec13c02e ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B474fc99e471c0223c3990d3f5b095918 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 0 ;
+                                ns2:arg3 1 ] ;
+                        ns2:variable _:B49ece17925c190a82592ee4817972c18 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 1 ;
+                                ns2:arg3 2 ] ;
+                        ns2:variable _:B77b7909b0f36b4ec7a70113282d40203 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 2 ;
+                                ns2:arg3 3 ] ;
+                        ns2:variable _:B830b2dce97040a2d0b2c63ea0a4be746 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 3 ;
+                                ns2:arg3 4 ] ;
+                        ns2:variable _:Bd17c543a56c4a289224e5b42e1013473 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 4 ;
+                                ns2:arg3 5 ] ;
+                        ns2:variable _:Baf08cc987d43a2fe25dd8a0d606d2ecf ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 5 ;
+                                ns2:arg3 6 ] ;
+                        ns2:variable _:B61950cf647c95bc8a71e8ddeac1b758b ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 6 ;
+                                ns2:arg3 7 ] ;
+                        ns2:variable _:Bbaa02e0f40a0e6a9b1de32d5a1d52233 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 7 ;
+                                ns2:arg3 8 ] ;
+                        ns2:variable _:B0a15e7fc7ffdca2439e65b8a640e19ab ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 8 ;
+                                ns2:arg3 9 ] ;
+                        ns2:variable _:Bfddd5fcb3c1cb6d30cdcb30461ad5aa6 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 9 ;
+                                ns2:arg3 10 ] ;
+                        ns2:variable _:Bdac8756732f7bc02ea400489a2c4d615 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 10 ;
+                                ns2:arg3 11 ] ;
+                        ns2:variable _:Bcc52f7baa05f0dd8ce5f60a8a30967b1 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 11 ;
+                                ns2:arg3 12 ] ;
+                        ns2:variable _:B36c7fae58ae6377aab95357b52f5380e ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                ns2:arg2 12 ;
+                                ns2:arg3 13 ] ;
+                        ns2:variable _:B8edb597f68de368027a650124e1d1fb6 ] [ a ns2:Let ;
+                        ns2:expression [ a ns2:add ;
+                                ns2:arg1 [ a ns2:mul ;
+                                        ns2:arg1 [ a ns2:add ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a ns2:add ;
+                                                                ns2:arg1 [ a ns2:add ;
+                                                                        ns2:arg1 [ a ns2:add ;
+                                                                                ns2:arg1 [ a xsd:int ;
+                                                                                        ns2:arg1 _:B77b7909b0f36b4ec7a70113282d40203 ] ;
+                                                                                ns2:arg2 [ a xsd:int ;
+                                                                                        ns2:arg1 _:Bd17c543a56c4a289224e5b42e1013473 ] ] ;
+                                                                        ns2:arg2 [ a xsd:int ;
+                                                                                ns2:arg1 _:B61950cf647c95bc8a71e8ddeac1b758b ] ] ;
+                                                                ns2:arg2 [ a xsd:int ;
+                                                                        ns2:arg1 _:B0a15e7fc7ffdca2439e65b8a640e19ab ] ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:Bdac8756732f7bc02ea400489a2c4d615 ] ] ;
+                                                ns2:arg2 [ a xsd:int ;
+                                                        ns2:arg1 _:B36c7fae58ae6377aab95357b52f5380e ] ] ;
+                                        ns2:arg2 3 ] ;
+                                ns2:arg2 [ a ns2:add ;
+                                        ns2:arg1 [ a ns2:add ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a ns2:add ;
+                                                                ns2:arg1 [ a ns2:add ;
+                                                                        ns2:arg1 [ a xsd:int ;
+                                                                                ns2:arg1 _:B49ece17925c190a82592ee4817972c18 ] ;
+                                                                        ns2:arg2 [ a xsd:int ;
+                                                                                ns2:arg1 _:B830b2dce97040a2d0b2c63ea0a4be746 ] ] ;
+                                                                ns2:arg2 [ a xsd:int ;
+                                                                        ns2:arg1 _:Baf08cc987d43a2fe25dd8a0d606d2ecf ] ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:Bbaa02e0f40a0e6a9b1de32d5a1d52233 ] ] ;
+                                                ns2:arg2 [ a xsd:int ;
+                                                        ns2:arg1 _:Bfddd5fcb3c1cb6d30cdcb30461ad5aa6 ] ] ;
+                                        ns2:arg2 [ a xsd:int ;
+                                                ns2:arg1 _:Bcc52f7baa05f0dd8ce5f60a8a30967b1 ] ] ] ;
+                        ns2:variable _:B9c9bff57399fd854cd654b1afd4bbaa8 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B9c9bff57399fd854cd654b1afd4bbaa8 ] ;
+                                ns2:arg2 [ a ns2:sub ;
+                                        ns2:arg1 [ a <http://www.w3.org/2005/xpath-functions#string-length> ;
+                                                ns2:arg1 [ a ns2:str ;
+                                                        ns2:arg1 _:B9c9bff57399fd854cd654b1afd4bbaa8 ] ] ;
+                                        ns2:arg2 1 ] ;
+                                ns2:arg3 [ a <http://www.w3.org/2005/xpath-functions#string-length> ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:B9c9bff57399fd854cd654b1afd4bbaa8 ] ] ] ;
+                        ns2:variable _:B32509a76fc15b0620d3a05767f73e7d1 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:or ;
+                                ns2:arg1 [ a ns2:and ;
+                                        ns2:arg1 [ a ns2:ne ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a xsd:int ;
+                                                                ns2:arg1 _:B32509a76fc15b0620d3a05767f73e7d1 ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:B8edb597f68de368027a650124e1d1fb6 ] ] ;
+                                                ns2:arg2 0 ] ;
+                                        ns2:arg2 [ a ns2:ne ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a xsd:int ;
+                                                                ns2:arg1 _:B32509a76fc15b0620d3a05767f73e7d1 ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:B8edb597f68de368027a650124e1d1fb6 ] ] ;
+                                                ns2:arg2 10 ] ] ;
+                                ns2:arg2 [ a ns2:not ;
+                                        ns2:arg1 [ a ns2:regex ;
+                                                ns2:arg1 [ a ns2:str ;
+                                                        ns2:arg1 _:B949117962b025d0c8279b4aeec13c02e ] ;
+                                                ns2:arg2 "^[0-9]{13}$" ] ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Please enter the property holding the EAN-13!"^^xsd:string ] ;
+    ns3:labelTemplate "Incorrect EAN-13 in {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags wrong EAN-13 values."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#EAN-13Class> a ns3:Template ;
+    rdfs:label "EAN-13 Class"^^xsd:string ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B22ec42350f4ba4455f73f6bfa699324a ] [ ns2:object _:B610cd47b6f24ea72bafa46e6cd585076 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B22ec42350f4ba4455f73f6bfa699324a ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B22ec42350f4ba4455f73f6bfa699324a ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?instance .\\n    _:c0 spin:violationPath ?arg2 .}\\nWHERE\\n  { ?instance rdf:type ?arg1 .\\n    ?instance ?arg2 ?ean\\n    LET (?1 := afn:substr(str(?ean), 0, 1))\\n    LET (?2 := afn:substr(str(?ean), 1, 2))\\n    LET (?3 := afn:substr(str(?ean), 2, 3))\\n    LET (?4 := afn:substr(str(?ean), 3, 4))\\n    LET (?5 := afn:substr(str(?ean), 4, 5))\\n    LET (?6 := afn:substr(str(?ean), 5, 6))\\n    LET (?7 := afn:substr(str(?ean), 6, 7))\\n    LET (?8 := afn:substr(str(?ean), 7, 8))\\n    LET (?9 := afn:substr(str(?ean), 8, 9))\\n    LET (?10 := afn:substr(str(?ean), 9, 10))\\n    LET (?11 := afn:substr(str(?ean), 10, 11))\\n    LET (?12 := afn:substr(str(?ean), 11, 12))\\n    LET (?13 := afn:substr(str(?ean), 12, 13))\\n    LET (?value := ( ( ( ( ( ( ( xsd:int(?2) + xsd:int(?4) ) + xsd:int(?6) ) + xsd:int(?8) ) + xsd:int(?10) ) + xsd:int(?12) ) * 3 ) + ( ( ( ( ( xsd:int(?1) + xsd:int(?3) ) + xsd:int(?5) ) + xsd:int(?7) ) + xsd:int(?9) ) + xsd:int(?11) ) ))\\n    LET (?check := afn:substr(str(?value), ( fn:string-length(str(?value)) - 1 ), fn:string-length(str(?value))))\\n    FILTER ( ( ( ( xsd:int(?check) + xsd:int(?13) ) != 0 ) && ( ( xsd:int(?check) + xsd:int(?13) ) != 10 ) ) || ( ! regex(str(?ean), \"^[0-9]{13}$\") ) )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B610cd47b6f24ea72bafa46e6cd585076 ] [ ns2:object _:B6c13d5692e5fd8c068470d534045f41f ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B610cd47b6f24ea72bafa46e6cd585076 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 0 ;
+                                ns2:arg3 1 ] ;
+                        ns2:variable _:B9f51a1e2ff4739d9fe2da01dec41acaf ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 1 ;
+                                ns2:arg3 2 ] ;
+                        ns2:variable _:B0a272103742d760acf8d73a38efd8606 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 2 ;
+                                ns2:arg3 3 ] ;
+                        ns2:variable _:B9718b1889276ea5e419003ddfbae4d2c ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 3 ;
+                                ns2:arg3 4 ] ;
+                        ns2:variable _:Bb04db965e73381b5120680d42619ebdf ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 4 ;
+                                ns2:arg3 5 ] ;
+                        ns2:variable _:B3f3f7234127c5cf4f6be2c295a798965 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 5 ;
+                                ns2:arg3 6 ] ;
+                        ns2:variable _:B9b6ede0a9f1e84bbc43ad54128a3bf1a ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 6 ;
+                                ns2:arg3 7 ] ;
+                        ns2:variable _:Bf993a046533ee53c7db71385acf391d9 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 7 ;
+                                ns2:arg3 8 ] ;
+                        ns2:variable _:B61e27d203aae990bc784fd1d4e2bf07f ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 8 ;
+                                ns2:arg3 9 ] ;
+                        ns2:variable _:Bb02dd0bdb39ca2c35e46ca6d25ca460a ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 9 ;
+                                ns2:arg3 10 ] ;
+                        ns2:variable _:B39573b09fc162824873f7254e00f7f97 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 10 ;
+                                ns2:arg3 11 ] ;
+                        ns2:variable _:B1cf03fbbf08c9ca7ed2f23d2d21e7f88 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 11 ;
+                                ns2:arg3 12 ] ;
+                        ns2:variable _:B24b6af48880120ac39ada3dc3bbdb2f1 ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                ns2:arg2 12 ;
+                                ns2:arg3 13 ] ;
+                        ns2:variable _:Be7a3a5b91b1d95f06226f20540b1b3b8 ] [ a ns2:Let ;
+                        ns2:expression [ a ns2:add ;
+                                ns2:arg1 [ a ns2:mul ;
+                                        ns2:arg1 [ a ns2:add ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a ns2:add ;
+                                                                ns2:arg1 [ a ns2:add ;
+                                                                        ns2:arg1 [ a ns2:add ;
+                                                                                ns2:arg1 [ a xsd:int ;
+                                                                                        ns2:arg1 _:B0a272103742d760acf8d73a38efd8606 ] ;
+                                                                                ns2:arg2 [ a xsd:int ;
+                                                                                        ns2:arg1 _:Bb04db965e73381b5120680d42619ebdf ] ] ;
+                                                                        ns2:arg2 [ a xsd:int ;
+                                                                                ns2:arg1 _:B9b6ede0a9f1e84bbc43ad54128a3bf1a ] ] ;
+                                                                ns2:arg2 [ a xsd:int ;
+                                                                        ns2:arg1 _:B61e27d203aae990bc784fd1d4e2bf07f ] ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:B39573b09fc162824873f7254e00f7f97 ] ] ;
+                                                ns2:arg2 [ a xsd:int ;
+                                                        ns2:arg1 _:B24b6af48880120ac39ada3dc3bbdb2f1 ] ] ;
+                                        ns2:arg2 3 ] ;
+                                ns2:arg2 [ a ns2:add ;
+                                        ns2:arg1 [ a ns2:add ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a ns2:add ;
+                                                                ns2:arg1 [ a ns2:add ;
+                                                                        ns2:arg1 [ a xsd:int ;
+                                                                                ns2:arg1 _:B9f51a1e2ff4739d9fe2da01dec41acaf ] ;
+                                                                        ns2:arg2 [ a xsd:int ;
+                                                                                ns2:arg1 _:B9718b1889276ea5e419003ddfbae4d2c ] ] ;
+                                                                ns2:arg2 [ a xsd:int ;
+                                                                        ns2:arg1 _:B3f3f7234127c5cf4f6be2c295a798965 ] ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:Bf993a046533ee53c7db71385acf391d9 ] ] ;
+                                                ns2:arg2 [ a xsd:int ;
+                                                        ns2:arg1 _:Bb02dd0bdb39ca2c35e46ca6d25ca460a ] ] ;
+                                        ns2:arg2 [ a xsd:int ;
+                                                ns2:arg1 _:B1cf03fbbf08c9ca7ed2f23d2d21e7f88 ] ] ] ;
+                        ns2:variable _:B05dbe0d60d7941e968f93c65c3cedcad ] [ a ns2:Let ;
+                        ns2:expression [ a <http://jena.hpl.hp.com/ARQ/function#substr> ;
+                                ns2:arg1 [ a ns2:str ;
+                                        ns2:arg1 _:B05dbe0d60d7941e968f93c65c3cedcad ] ;
+                                ns2:arg2 [ a ns2:sub ;
+                                        ns2:arg1 [ a <http://www.w3.org/2005/xpath-functions#string-length> ;
+                                                ns2:arg1 [ a ns2:str ;
+                                                        ns2:arg1 _:B05dbe0d60d7941e968f93c65c3cedcad ] ] ;
+                                        ns2:arg2 1 ] ;
+                                ns2:arg3 [ a <http://www.w3.org/2005/xpath-functions#string-length> ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:B05dbe0d60d7941e968f93c65c3cedcad ] ] ] ;
+                        ns2:variable _:Bef34cb94d081537ee659a1a604c1eaf9 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:or ;
+                                ns2:arg1 [ a ns2:and ;
+                                        ns2:arg1 [ a ns2:ne ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a xsd:int ;
+                                                                ns2:arg1 _:Bef34cb94d081537ee659a1a604c1eaf9 ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:Be7a3a5b91b1d95f06226f20540b1b3b8 ] ] ;
+                                                ns2:arg2 0 ] ;
+                                        ns2:arg2 [ a ns2:ne ;
+                                                ns2:arg1 [ a ns2:add ;
+                                                        ns2:arg1 [ a xsd:int ;
+                                                                ns2:arg1 _:Bef34cb94d081537ee659a1a604c1eaf9 ] ;
+                                                        ns2:arg2 [ a xsd:int ;
+                                                                ns2:arg1 _:Be7a3a5b91b1d95f06226f20540b1b3b8 ] ] ;
+                                                ns2:arg2 10 ] ] ;
+                                ns2:arg2 [ a ns2:not ;
+                                        ns2:arg1 [ a ns2:regex ;
+                                                ns2:arg1 [ a ns2:str ;
+                                                        ns2:arg1 _:B6c13d5692e5fd8c068470d534045f41f ] ;
+                                                ns2:arg2 "^[0-9]{13}$" ] ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Please enter the property holding the EAN-13!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Please enter the class holding the instances that shall be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Incorrect EAN-13 in {?arg2} of {?arg1} class instances!"^^xsd:string ;
+    rdfs:comment "This query flags wrong EAN-13 values in instances of a specified class."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ExclusiveFunctionalDependencyAll> a ns3:Template ;
+    rdfs:label "exclusive functional dependency check in all instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B492186ed07158607df7d766a06431ca5 ] [ ns2:object _:B32ed09fc10e5ca00dc732a348a7bd40e ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B492186ed07158607df7d766a06431ca5 ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B492186ed07158607df7d766a06431ca5 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg3 .\\n}\\nWHERE {\\n    ?s ?arg1 ?arg2 .\\n    FILTER (!spl:hasValue(?s, ?arg3, ?arg4)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B32ed09fc10e5ca00dc732a348a7bd40e ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns1:hasValue ;
+                                        ns2:arg1 _:B32ed09fc10e5ca00dc732a348a7bd40e ;
+                                        ns2:arg2 ns3:_arg3 ;
+                                        ns2:arg3 ns3:_arg4 ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 2 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType xsd:string ;
+            rdfs:comment "Enter functionally dependent value 2 of property 2!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType xsd:string ;
+            rdfs:comment "Enter functionally dependent value 1 of property 1!"^^xsd:string ] ;
+    ns3:labelTemplate "Value \"{?arg2}\" of {?arg1} must only have value \"{?arg4}\" in {?arg3} in all instances!"^^xsd:string ;
+    rdfs:comment "This query flags instances with property ?arg1 and value ?arg2 that do not have value ?arg4 with property ?arg3. It is only suitable for value dependencies with one to one cardinality. The query does not tolerate homonyms and is not restricted to a specific class."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ExclusiveFunctionalDependencyClass> a ns3:Template ;
+    rdfs:label "exclusive functional dependency check in class instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bfd0a354d8f72a7770407f86916bfa6bd ] [ ns2:object ns3:_this ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bfd0a354d8f72a7770407f86916bfa6bd ] [ ns2:object ns3:_arg4 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bfd0a354d8f72a7770407f86916bfa6bd ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?this .\\n    _:b0 spin:violationPath ?arg4 .\\n}\\nWHERE {\\n    ?this a ?arg1 .\\n    ?this ?arg2 ?arg3 .\\n    FILTER (!spl:hasValue(?this, ?arg4, ?arg5)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject ns3:_this ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject ns3:_this ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns1:hasValue ;
+                                        ns2:arg1 ns3:_this ;
+                                        ns2:arg2 ns3:_arg4 ;
+                                        ns2:arg3 ns3:_arg5 ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType xsd:string ;
+            rdfs:comment "Enter functionally dependent value 1 of property 1!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg5 ;
+            ns1:valueType xsd:string ;
+            rdfs:comment "Enter functionally dependent value 2 of property 2!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 2 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ] ;
+    ns3:labelTemplate "Value \"{?arg3}\" of {?arg2} must only have value \"{?arg5}\" in {?arg4} in instances of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags instances of class ?arg1 with property ?arg2 and value ?arg3 that do not have value ?arg5 with property ?arg4. It is only suitable for value dependencies with one to one cardinality. The query does not tolerate homonyms. Not defined dependencies will not be flagged."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#FiveDigitNumericAll> a ns3:Template ;
+    rdfs:label "syntax check in all instances:  5 digit numeric values"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B705685fb1b271d16c0e3436907c1465a ] [ ns2:object _:B86a3acb6379d00fd2afb2543b422b210 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B705685fb1b271d16c0e3436907c1465a ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B705685fb1b271d16c0e3436907c1465a ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (!regex(str(?value), \"^[0-9]{5}$\"^^xsd:string)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B9b6c15f52f1558e81f130fc5a23ae2c2 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B86a3acb6379d00fd2afb2543b422b210 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:regex ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:B9b6c15f52f1558e81f130fc5a23ae2c2 ] ;
+                                        ns2:arg2 "^[0-9]{5}$"^^xsd:string ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select the property that contains the US zip codes!"^^xsd:string ] ;
+    ns3:labelTemplate "Syntax rule: {?arg1} must contain 5-digit numeric value in all instances!"^^xsd:string ;
+    rdfs:comment "This query flags all instances that do not have a five digit numeric value for property ?arg1."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyTrustedReferenceAll> a ns3:Template ;
+    rdfs:label "Functional dependency check in all instances with trusted reference"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bca882624b004366408fb0629afd972b8 ] [ ns2:object _:B24cf648d189177477feeba0f82de0348 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bca882624b004366408fb0629afd972b8 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bca882624b004366408fb0629afd972b8 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bca882624b004366408fb0629afd972b8 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    OPTIONAL {\\n        ?s ?arg1 ?value1 .\\n        OPTIONAL {\\n            ?s ?arg2 ?value2 .\\n        } \\n    } \\n    NOT EXISTS {\\n        ?s2 a ?arg3 .\\n        ?s2 ?arg4 ?value1 .\\n        ?s2 ?arg5 ?value2 .\\n    } \\n}"^^xsd:string ;
+            ns2:where ( [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object _:B893f1d7b05b13c5a77321722ba192f05 ;
+                                    ns2:predicate ns3:_arg1 ;
+                                    ns2:subject _:B24cf648d189177477feeba0f82de0348 ] [ a ns2:Optional ;
+                                    ns2:elements ( [ ns2:object _:B2363f0fb0f18a9b5059b53fb8a52a9a4 ;
+                                                ns2:predicate ns3:_arg2 ;
+                                                ns2:subject _:B24cf648d189177477feeba0f82de0348 ] ) ] ) ] [ a ns2:NotExists ;
+                        ns2:elements ( [ ns2:object ns3:_arg3 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:Bf80821a67af396689fb0e7b8fbd9d446 ] [ ns2:object _:B893f1d7b05b13c5a77321722ba192f05 ;
+                                    ns2:predicate ns3:_arg4 ;
+                                    ns2:subject _:Bf80821a67af396689fb0e7b8fbd9d446 ] [ ns2:object _:B2363f0fb0f18a9b5059b53fb8a52a9a4 ;
+                                    ns2:predicate ns3:_arg5 ;
+                                    ns2:subject _:Bf80821a67af396689fb0e7b8fbd9d446 ] ) ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg5 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select second property of trusted reference that holds legal values for property 2!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class of trusted reference that holds instances with legal value combinations!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 2 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select first property of trusted reference that holds legal values for property 1!"^^xsd:string ] ;
+    ns3:labelTemplate "Value combinations of properties {?arg1} and {?arg2} must always be identical with value combinations of properties {?arg4} and {?arg5} in class {?arg3} for all instances!"^^xsd:string ;
+    rdfs:comment "This query flags instances with properties ?arg1 and ?arg2 that do not have a corresponding value combination in instances of the trusted reference in class ?arg3. The semantics of property ?arg1 should be equal with property ?arg4, and the semantics of property ?arg2 should be equal with ?arg5. The query tolerates homonymous values, i.e. the same value may be assigned to different dependent values by using different instances in the trusted reference. Value combinations that cannot be found in the trusted reference will also be flagged as incorrect. The query will also test the existence of a single value in the trusted reference when one property of the tested data is missing."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyTrustedReferenceClass> a ns3:Template ;
+    rdfs:label "Functional dependency check in class instances with trusted reference"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B7b54f901e7a2e6019879873c6ae6f86e ] [ ns2:object _:B79fb3d9f71795320d6484efe7056adbe ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B7b54f901e7a2e6019879873c6ae6f86e ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B7b54f901e7a2e6019879873c6ae6f86e ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B7b54f901e7a2e6019879873c6ae6f86e ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg2 .\\n    _:b0 spin:violationPath ?arg3 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    OPTIONAL {\\n        ?s ?arg2 ?value1 .\\n        OPTIONAL {\\n            ?s ?arg3 ?value2 .\\n        } \\n    } \\n    NOT EXISTS {\\n        ?s2 a ?arg4 .\\n        ?s2 ?arg5 ?value1 .\\n        ?s2 ?arg6 ?value2 .\\n    } \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B79fb3d9f71795320d6484efe7056adbe ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object _:Bb9b3020a31650a4ceb7a71e2a30a630c ;
+                                    ns2:predicate ns3:_arg2 ;
+                                    ns2:subject _:B79fb3d9f71795320d6484efe7056adbe ] [ a ns2:Optional ;
+                                    ns2:elements ( [ ns2:object _:B4735331f3f5da525c3bb7d92f4f0d84a ;
+                                                ns2:predicate ns3:_arg3 ;
+                                                ns2:subject _:B79fb3d9f71795320d6484efe7056adbe ] ) ] ) ] [ a ns2:NotExists ;
+                        ns2:elements ( [ ns2:object ns3:_arg4 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:B661b231d12229520c7a42dddba3bf8a7 ] [ ns2:object _:Bb9b3020a31650a4ceb7a71e2a30a630c ;
+                                    ns2:predicate ns3:_arg5 ;
+                                    ns2:subject _:B661b231d12229520c7a42dddba3bf8a7 ] [ ns2:object _:B4735331f3f5da525c3bb7d92f4f0d84a ;
+                                    ns2:predicate [ ns2:varName "arg6"^^xsd:string ] ;
+                                    ns2:subject _:B661b231d12229520c7a42dddba3bf8a7 ] ) ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg6 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select second property of trusted reference that holds legal values for property 2!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class of trusted reference that holds instances with legal value combinations!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 2 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg5 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select first property of trusted reference that holds legal values for property 1!"^^xsd:string ] ;
+    ns3:labelTemplate "Value combinations of properties {?arg2} and {?arg3} must always be identical with value combinations of properties {?arg5} and {?arg6} of class {?arg4}  for all instances of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags instances of class ?arg 1 with properties ?arg2 and ?arg3 that do not have the exact value combination in instances of the trusted reference in class ?arg4. The semantics of property ?arg2 should be equal with property ?arg5, and the semantics of property ?arg3 should be equal with ?arg6. The query tolerates homonymous values, i.e. the same value may be assigned to different dependent values. Value combinations that cannot be found in the trusted reference will also be flagged. The query will also test the existence of a single value in the trusted reference when one property of the tested data is missing."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyTrustedReference_ClassOverBlankNode> a ns3:Template ;
+    rdfs:label "Functional dependency check in blank node instances of a class with trusted reference"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B46bb1189fda5589b0d672f8072e865cf ] [ ns2:object _:B5b7b4541ef28bee77e68319e629e9082 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B46bb1189fda5589b0d672f8072e865cf ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B46bb1189fda5589b0d672f8072e865cf ] [ ns2:object ns3:_arg4 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B46bb1189fda5589b0d672f8072e865cf ] ) ;
+            ns2:text "CONSTRUCT { \\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg3 .\\n    _:b0 spin:violationPath ?arg4 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    OPTIONAL {\\n        ?s ?arg2 ?node .\\n        OPTIONAL {\\n            ?node ?arg3 ?value1 .\\n        } \\n        OPTIONAL {\\n            ?s ?arg4 ?value2 .\\n        } \\n    } \\n    NOT EXISTS {\\n        ?s2 a ?arg5 .\\n        ?s2 ?arg6 ?value1 .\\n        ?s2 ?arg7 ?value2 .\\n    } \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B5b7b4541ef28bee77e68319e629e9082 ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object _:B748500947cbbcce4a17c67446e22f81c ;
+                                    ns2:predicate ns3:_arg2 ;
+                                    ns2:subject _:B5b7b4541ef28bee77e68319e629e9082 ] [ a ns2:Optional ;
+                                    ns2:elements ( [ ns2:object _:B515a21842bbf395cdccfeb54dac03653 ;
+                                                ns2:predicate ns3:_arg3 ;
+                                                ns2:subject _:B748500947cbbcce4a17c67446e22f81c ] ) ] [ a ns2:Optional ;
+                                    ns2:elements ( [ ns2:object _:Ba07c4f7f45152435a65e5f304c7307c5 ;
+                                                ns2:predicate ns3:_arg4 ;
+                                                ns2:subject _:B5b7b4541ef28bee77e68319e629e9082 ] ) ] ) ] [ a ns2:NotExists ;
+                        ns2:elements ( [ ns2:object ns3:_arg5 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:B38f04b2d3962255f3bb280d87398bc6e ] [ ns2:object _:B515a21842bbf395cdccfeb54dac03653 ;
+                                    ns2:predicate [ ns2:varName "arg6"^^xsd:string ] ;
+                                    ns2:subject _:B38f04b2d3962255f3bb280d87398bc6e ] [ ns2:object _:Ba07c4f7f45152435a65e5f304c7307c5 ;
+                                    ns2:predicate [ ns2:varName "arg7"^^xsd:string ] ;
+                                    ns2:subject _:B38f04b2d3962255f3bb280d87398bc6e ] ) ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 2 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg7 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select second property of trusted reference that holds legal values for property 2!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds blank nodes!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg6 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select first property of trusted reference that holds legal values for property 1!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg5 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class of trusted reference that holds instances with legal value combinations!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ] ;
+    ns3:labelTemplate "Value combinations of properties {?arg3} and {?arg4} must always be identical with value combinations of properties {?arg6} and {?arg7} of class {?arg5}  for all instances of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query is designed to test (blank node) instances of the property-and-node element (rdf:parseType=\"Resource\") ?arg2 that are part of the instances of class ?arg 1. The query flags instances of property ?arg2 with properties ?arg3 and ?arg4 that do not have the exact value combination in instances of the trusted reference in class ?arg5. The semantics of property ?arg3 should be equal with property ?arg6, and the semantics of property ?arg4 should be equal with ?arg7. The query tolerates homonymous values, i.e. the same value may be assigned to different dependent values. Value combinations that cannot be found in the trusted reference will also be flagged. The query will also test the existence of a single value in the trusted reference when one property of the tested data is missing."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#FunctionalDependentEmptyValueAll> a ns3:Template ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B6dba93dccac4677f2aa99a4989de07b2 ] [ ns2:object _:Bb5038e0d68759b0c6e169aebf2cdc080 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B6dba93dccac4677f2aa99a4989de07b2 ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B6dba93dccac4677f2aa99a4989de07b2 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg3 .\\n}\\nWHERE {\\n    ?s ?arg1 ?arg2 .\\n    FILTER (!spl:hasValue(?s, ?arg3, \"\"^^xsd:string)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:Bb5038e0d68759b0c6e169aebf2cdc080 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns1:hasValue ;
+                                        ns2:arg1 _:Bb5038e0d68759b0c6e169aebf2cdc080 ;
+                                        ns2:arg2 ns3:_arg3 ;
+                                        ns2:arg3 ""^^xsd:string ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property 1 of functional dependency!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType xsd:string ;
+            rdfs:comment "Enter functionally dependent value 1 of property 1!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that must contain empty literal!"^^xsd:string ] ;
+    ns3:labelTemplate "When {?arg1} has value {?arg2}, then {?arg3} has to be empty!"^^xsd:string ;
+    rdfs:comment "This query returns all instances with value ?arg2 for property ?arg1 that do not have an empty literal string for property ?arg3."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#InconsistentValueRangeAll> a ns3:Template ;
+    rdfs:label "Inconsistent value range all"^^xsd:string ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B9b7b27fa7696f8e8f616642c6591b073 ] [ ns2:object _:B4ff42f1a8032cb3dcd4e6455d0b9e66c ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B9b7b27fa7696f8e8f616642c6591b073 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B9b7b27fa7696f8e8f616642c6591b073 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B9b7b27fa7696f8e8f616642c6591b073 ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?instance .\\n    _:c0 spin:violationPath ?arg1 .\\n    _:c0 spin:violationPath ?arg2 .}\\nWHERE\\n  { ?instance ?arg1 ?from .\\n    ?instance ?arg2 ?through\\n    FILTER ( ?from >= ?through )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B52ad0f8337fdd0c70f61846140a6146d ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B4ff42f1a8032cb3dcd4e6455d0b9e66c ] [ ns2:object _:Bea08dfc8638975e8edb13495c17f482c ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B4ff42f1a8032cb3dcd4e6455d0b9e66c ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:ge ;
+                                ns2:arg1 _:B52ad0f8337fdd0c70f61846140a6146d ;
+                                ns2:arg2 _:Bea08dfc8638975e8edb13495c17f482c ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Please enter the datatype property that shall hold the greater value!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Please enter the datatype property that shall hold the lower value!"^^xsd:string ] ;
+    ns3:labelTemplate "Value in {?arg1} cannot be greater than value of {?arg2}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with inconsistant value ranges. Among others it is suitable for value ranges with datatypes xsd:integer, xsd:int, xsd:float, xsd:date, and xsd:dateTime. The literals must be typed."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#LettersAll> a ns3:Template ;
+    rdfs:label "syntax check in all instances: only letters allowed"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B550c49c7359e1482c9229c4376bbe482 ] [ ns2:object _:B043e3101ef8fae4e38161f06bc044f4e ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B550c49c7359e1482c9229c4376bbe482 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B550c49c7359e1482c9229c4376bbe482 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (!regex(str(?value), \"^([A-Za-z])*$\"^^xsd:string)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B6faaef1b59ac46b40d55037cecf1de4c ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B043e3101ef8fae4e38161f06bc044f4e ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:regex ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:B6faaef1b59ac46b40d55037cecf1de4c ] ;
+                                        ns2:arg2 "^([A-Za-z])*$"^^xsd:string ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Syntax rule: only letters allowed in {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with property ?arg1 that do not have letters as literal values. The query tolerates language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#LettersAndDotsAll> a ns3:Template ;
+    rdfs:label "syntax check in all instances: only letters and dots allowed"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B56eea82e97bffb041372eb7443e6f35c ] [ ns2:object _:B66033c9fa1882331f443173bc3a14408 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B56eea82e97bffb041372eb7443e6f35c ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B56eea82e97bffb041372eb7443e6f35c ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (!regex(str(?value), \"^([A-Za-z\\\\\\\\. ])*$\"^^xsd:string)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:Bddcb3dbf2a5f3763eee7a4287d123f6f ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B66033c9fa1882331f443173bc3a14408 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:regex ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:Bddcb3dbf2a5f3763eee7a4287d123f6f ] ;
+                                        ns2:arg2 "^([A-Za-z\\\\. ])*$"^^xsd:string ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Syntax rule: only letters and dots allowed in {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with property ?arg1 that have characters other than letters or dots in literal values. The query tolerates language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ListedIllegalValueAll> a ns3:Template ;
+    rdfs:label "Illegal value check in all instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B7493a2f8afb1b5c6619ebb094a681276 ] [ ns2:object _:Bd1f2c53750436d60dca6affe8995a763 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B7493a2f8afb1b5c6619ebb094a681276 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B7493a2f8afb1b5c6619ebb094a681276 ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?s .\\n    _:c0 spin:violationPath ?arg1 .}\\nWHERE\\n  { ?s ?arg1 ?value\\n    OPTIONAL\\n      { ?s2 rdf:type ?arg2 .\\n        ?s2 ?arg3 ?value1\\n        FILTER ( str(?value1) = str(?value) )\\n      }\\n    FILTER bound(?value1)\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B7fad0a8bf20a66d6709462e11bb6ff3c ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:Bd1f2c53750436d60dca6affe8995a763 ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object ns3:_arg2 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:B24d252a77ca44b206d813706cbfd6a8b ] [ ns2:object _:B640f94944ecdf39dff0af44916297b2e ;
+                                    ns2:predicate ns3:_arg3 ;
+                                    ns2:subject _:B24d252a77ca44b206d813706cbfd6a8b ] [ a ns2:Filter ;
+                                    ns2:expression [ a ns2:eq ;
+                                            ns2:arg1 [ a ns2:str ;
+                                                    ns2:arg1 _:B640f94944ecdf39dff0af44916297b2e ] ;
+                                            ns2:arg2 [ a ns2:str ;
+                                                    ns2:arg1 _:B7fad0a8bf20a66d6709462e11bb6ff3c ] ] ] ) ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:bound ;
+                                ns2:arg1 _:B640f94944ecdf39dff0af44916297b2e ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class with instances holding the illegal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property holding the illegal values!"^^xsd:string ] ;
+    ns3:labelTemplate "Property {?arg1} cannot have the same values as property {?arg3} in class {?arg2}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with property ?arg1 that have values which are contained in property ?arg3 of instances of class ?arg2. The query tolerates chaotic assignments of language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ListedIllegalValueClass> a ns3:Template ;
+    rdfs:label "Illegal value check in class instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bde8e969da97bfdfdcd4e1676b2a84263 ] [ ns2:object _:B18d75847d79491a043f4b9ebee2ae829 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bde8e969da97bfdfdcd4e1676b2a84263 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bde8e969da97bfdfdcd4e1676b2a84263 ] ) ;
+            ns2:text "CONSTRUCT\\r\\n{   _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?s .\\n    _:c0 spin:violationPath ?arg2 .\\r\\n}\\nWHERE\\n  { ?s rdf:type ?arg1 .\\n    ?s ?arg2 ?value\\n    OPTIONAL\\n      { ?s2 rdf:type ?arg3 .\\n        ?s2 ?arg4 ?value1\\n        FILTER ( str(?value1) = str(?value) )\\n      }\\n    FILTER bound(?value1)\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B18d75847d79491a043f4b9ebee2ae829 ] [ ns2:object _:Bba8db777ef86e841390137cd37083a90 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B18d75847d79491a043f4b9ebee2ae829 ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object ns3:_arg3 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:Bf43a677efe75042729f419caa82520e6 ] [ ns2:object _:B86957617acef45fd0bd7920166d156af ;
+                                    ns2:predicate ns3:_arg4 ;
+                                    ns2:subject _:Bf43a677efe75042729f419caa82520e6 ] [ a ns2:Filter ;
+                                    ns2:expression [ a ns2:eq ;
+                                            ns2:arg1 [ a ns2:str ;
+                                                    ns2:arg1 _:B86957617acef45fd0bd7920166d156af ] ;
+                                            ns2:arg2 [ a ns2:str ;
+                                                    ns2:arg1 _:Bba8db777ef86e841390137cd37083a90 ] ] ] ) ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:bound ;
+                                ns2:arg1 _:B86957617acef45fd0bd7920166d156af ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds illegal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances with illegal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class with instances to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Instances of class {?arg1} cannot have the same values for property {?arg2} as property {?arg4} in class {?arg3}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances of class ?arg1 with property ?arg2 that have values which are contained in property ?arg4 of instances of class ?arg3. The query tolerates chaotic assignments of language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ListedLegalValueAll> a ns3:Template ;
+    rdfs:label "Legal value check in all instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bf211f62ae72f64cec1ffbe4df0a5f8a1 ] [ ns2:object _:B5fbbfc283ec00f03ea946636bc76ba2d ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bf211f62ae72f64cec1ffbe4df0a5f8a1 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bf211f62ae72f64cec1ffbe4df0a5f8a1 ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?s .\\n    _:c0 spin:violationPath ?arg1 .}\\nWHERE\\n  { ?s ?arg1 ?value\\n    OPTIONAL\\n      { ?s2 rdf:type ?arg2 .\\n        ?s2 ?arg3 ?value1\\n        FILTER ( str(?value1) = str(?value) )\\n      }\\n    FILTER ( ! bound(?value1) )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B2a5de8806463b00f50d07d384cbbba48 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B5fbbfc283ec00f03ea946636bc76ba2d ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object ns3:_arg2 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:B8cfde04bb81d90a689dab9bc5e45c21c ] [ ns2:object _:B4d365f7a8321bad9e10ca5df1656bcdc ;
+                                    ns2:predicate ns3:_arg3 ;
+                                    ns2:subject _:B8cfde04bb81d90a689dab9bc5e45c21c ] [ a ns2:Filter ;
+                                    ns2:expression [ a ns2:eq ;
+                                            ns2:arg1 [ a ns2:str ;
+                                                    ns2:arg1 _:B4d365f7a8321bad9e10ca5df1656bcdc ] ;
+                                            ns2:arg2 [ a ns2:str ;
+                                                    ns2:arg1 _:B2a5de8806463b00f50d07d384cbbba48 ] ] ] ) ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:bound ;
+                                        ns2:arg1 _:B4d365f7a8321bad9e10ca5df1656bcdc ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds legal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances with legal values!"^^xsd:string ] ;
+    ns3:labelTemplate "Property {?arg1} can only contain the same values as property {?arg3} in instances of class {?arg2}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with property ?arg1 that have values which are not contained in  property ?arg3 of instances of class ?arg2. The query tolerates chaotic assignments of language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ListedLegalValueClass> a ns3:Template ;
+    rdfs:label "Legal value check in class instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B262d55c39fe7a3d1062519e9bce32a0a ] [ ns2:object _:B57153f86b53fa2e0b870a2d91e80be30 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B262d55c39fe7a3d1062519e9bce32a0a ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B262d55c39fe7a3d1062519e9bce32a0a ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?s .\\n    _:c0 spin:violationPath ?arg2 .}\\nWHERE\\n  { ?s rdf:type ?arg1 .\\n    ?s ?arg2 ?value\\n    OPTIONAL\\n      { ?s2 rdf:type ?arg3 .\\n        ?s2 ?arg4 ?value1\\n        FILTER ( str(?value1) = str(?value) )\\n      }\\n    FILTER ( ! bound(?value1) )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B57153f86b53fa2e0b870a2d91e80be30 ] [ ns2:object _:B2449edea83c44a127ab4e6462765cb09 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B57153f86b53fa2e0b870a2d91e80be30 ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object ns3:_arg3 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:Bde835a47e3945c2ff100ad86e89473b6 ] [ ns2:object _:B56a2c1051967ce73a40476683923cbc0 ;
+                                    ns2:predicate ns3:_arg4 ;
+                                    ns2:subject _:Bde835a47e3945c2ff100ad86e89473b6 ] [ a ns2:Filter ;
+                                    ns2:expression [ a ns2:eq ;
+                                            ns2:arg1 [ a ns2:str ;
+                                                    ns2:arg1 _:B56a2c1051967ce73a40476683923cbc0 ] ;
+                                            ns2:arg2 [ a ns2:str ;
+                                                    ns2:arg1 _:B2449edea83c44a127ab4e6462765cb09 ] ] ] ) ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:bound ;
+                                        ns2:arg1 _:B56a2c1051967ce73a40476683923cbc0 ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class with instances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances with legal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds legal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Instances of class {?arg1} can only contain the same values for property {?arg2} as property {?arg4} in instances of class {?arg3}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances of class ?arg1 with property ?arg2 that have values which are not contained in property ?arg4 of instances of class ?arg3. The query tolerates chaotic assignments of language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ListedLegalValueClassOverBlankNode> a ns3:Template ;
+    rdfs:label "Legal value check in blank node instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B8a3d08334c155def4748883a78f113cf ] [ ns2:object _:Bed76dce01a8ddb468e54de92a2b48b21 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B8a3d08334c155def4748883a78f113cf ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B8a3d08334c155def4748883a78f113cf ] [ ns2:object ns3:_arg3 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B8a3d08334c155def4748883a78f113cf ] ) ;
+            ns2:text "CONSTRUCT \\n  { _:c0 rdf:type spin:ConstraintViolation .\\n    _:c0 spin:violationRoot ?s .\\n    _:c0 spin:violationPath ?arg2 .\\n    _:c0 spin:violationPath ?arg3 .}\\nWHERE\\n  { ?s rdf:type ?arg1 .\\n    ?s ?arg2 ?node .\\n    ?node ?arg3 ?value\\n    OPTIONAL\\n      { ?s2 rdf:type ?arg4 .\\n        ?s2 ?arg5 ?value1\\n        FILTER ( str(?value) = str(?value1) )\\n      }\\n    FILTER ( ! bound(?value1) )\\n  }"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bed76dce01a8ddb468e54de92a2b48b21 ] [ ns2:object _:Ba94c852bbaf0925cd7be2f25b715b605 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:Bed76dce01a8ddb468e54de92a2b48b21 ] [ ns2:object _:Bf51c028295e9a42fba14e9b1708b57a7 ;
+                        ns2:predicate ns3:_arg3 ;
+                        ns2:subject _:Ba94c852bbaf0925cd7be2f25b715b605 ] [ a ns2:Optional ;
+                        ns2:elements ( [ ns2:object ns3:_arg4 ;
+                                    ns2:predicate rdf:type ;
+                                    ns2:subject _:B1cc5d50bd121da61c4fea2ac23ff8520 ] [ ns2:object _:B3e62633afd0b5e179547d42a3f49ad9c ;
+                                    ns2:predicate ns3:_arg5 ;
+                                    ns2:subject _:B1cc5d50bd121da61c4fea2ac23ff8520 ] [ a ns2:Filter ;
+                                    ns2:expression [ a ns2:eq ;
+                                            ns2:arg1 [ a ns2:str ;
+                                                    ns2:arg1 _:Bf51c028295e9a42fba14e9b1708b57a7 ] ;
+                                            ns2:arg2 [ a ns2:str ;
+                                                    ns2:arg1 _:B3e62633afd0b5e179547d42a3f49ad9c ] ] ] ) ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:bound ;
+                                        ns2:arg1 _:B3e62633afd0b5e179547d42a3f49ad9c ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg5 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds legal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg4 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that holds instances with legal values!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property that holds blank nodes!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class with instances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Instances of property-and-node element {?arg2} in class {?arg1} can only contain the same values for property {?arg3} as property {?arg5} in instances of class {?arg4}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances of property-and-node element ?arg2 (rdf:parseType=\"Resource\") with property ?arg3 in class ?arg1 that have values which are not contained in property ?arg5 of instances of class ?arg3. The query tolerates chaotic assignments of language tags."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#LowerLimitAll> a ns3:Template ;
+    rdfs:label "Lower limit check in all instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bd962f1654095f18ea5b769d0dd979375 ] [ ns2:object _:Bc23ff2cb34194d5936767b1c6f07a1b5 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bd962f1654095f18ea5b769d0dd979375 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bd962f1654095f18ea5b769d0dd979375 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (smf:cast(?value, xsd:decimal) < ?arg2) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B1bf4dd94236d0456dcfad2b970051f47 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:Bc23ff2cb34194d5936767b1c6f07a1b5 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:lt ;
+                                ns2:arg1 [ a <http://topbraid.org/sparqlmotionfunctions#cast> ;
+                                        ns2:arg1 _:B1bf4dd94236d0456dcfad2b970051f47 ;
+                                        ns2:arg2 xsd:decimal ] ;
+                                ns2:arg2 ns3:_arg2 ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType xsd:decimal ;
+            rdfs:comment "Enter lower limit!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ] ;
+    ns3:labelTemplate "Values in {?arg1} must be greater than {?arg2}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances that have a value for property ?arg1 below the user defined limit ?arg2. The query tolerates chaotic datatype assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#LowerLimitClass> a ns3:Template ;
+    rdfs:label "Lower limit check in all instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B4472b3d79453f493a33fe159a993047f ] [ ns2:object _:Bfcda24a3e9dba01d7a3e722ea5445299 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B4472b3d79453f493a33fe159a993047f ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B4472b3d79453f493a33fe159a993047f ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    ?s ?arg2 ?value .\\n    FILTER (smf:cast(?value, xsd:decimal) < ?arg3) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bfcda24a3e9dba01d7a3e722ea5445299 ] [ ns2:object _:B386ad564d937951b43bcf0ffa2ec9640 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:Bfcda24a3e9dba01d7a3e722ea5445299 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:lt ;
+                                ns2:arg1 [ a <http://topbraid.org/sparqlmotionfunctions#cast> ;
+                                        ns2:arg1 _:B386ad564d937951b43bcf0ffa2ec9640 ;
+                                        ns2:arg2 xsd:decimal ] ;
+                                ns2:arg2 ns3:_arg3 ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType xsd:decimal ;
+            rdfs:comment "Enter lower limit! {@en}"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that contains instances to be tested!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ] ;
+    ns3:labelTemplate "Values in {?arg2} for instances of class {?arg1} must be greater than {?arg3}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 that have a value for property ?arg2 below the user defined limit ?arg3. The query tolerates chaotic datatype assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#MissingLiterals> a ns3:Template ;
+    rdfs:label "mandatory literal value check in instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B4a6a3ea56b5a2e7660e125c9ceeaad56 ] [ ns2:object _:B9baaa7cf7853f5a7cae7d2336415f002 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B4a6a3ea56b5a2e7660e125c9ceeaad56 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B4a6a3ea56b5a2e7660e125c9ceeaad56 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    ?s ?arg2 \"\"^^xsd:string .\\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B9baaa7cf7853f5a7cae7d2336415f002 ] [ ns2:object ""^^xsd:string ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B9baaa7cf7853f5a7cae7d2336415f002 ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class to be tested!"@en ] ;
+    ns3:labelTemplate "Mandatory literals in {?arg2} of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 where the literal for ?arg2 is empty. It does not return instances where the whole property ?arg2 is missing."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#MissingElementConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#MissingLiteralsAndProperties> a ns3:Template ;
+    rdfs:label "Mandatory literal value and property check in instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B853e7afc4df09d0ee78000849411f5f9 ] [ ns2:object ns3:_this ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B853e7afc4df09d0ee78000849411f5f9 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B853e7afc4df09d0ee78000849411f5f9 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?this .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    {\\n        ?this a ?arg1 .\\n        ?this ?arg2 \"\" .\\n    }\\n    UNION\\n    {\\n        ?this a ?arg1 .\\n        NOT EXISTS {\\n            ?this ?arg2 ?value .\\n        } \\n    } \\n}"^^xsd:string ;
+            ns2:where ( [ a ns2:Union ;
+                        ns2:elements ( ( [ ns2:object ns3:_arg1 ;
+                                        ns2:predicate rdf:type ;
+                                        ns2:subject ns3:_this ] [ ns2:object "" ;
+                                        ns2:predicate ns3:_arg2 ;
+                                        ns2:subject ns3:_this ] ) ( [ ns2:object ns3:_arg1 ;
+                                        ns2:predicate rdf:type ;
+                                        ns2:subject ns3:_this ] [ a ns2:NotExists ;
+                                        ns2:elements ( [ ns2:object [ ns2:varName "value"^^xsd:string ] ;
+                                                    ns2:predicate ns3:_arg2 ;
+                                                    ns2:subject ns3:_this ] ) ] ) ) ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that contains intances to be tested!"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Property {?arg2} is mandatory and must not contain empty literals for instances of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 where the literal for ?arg2 is empty or the whole property ?arg2 is missing."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#MissingElementConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#MissingProperties> a ns3:Template ;
+    rdfs:label "Mandatory property check in instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bfdd99e9800603cb05b2ecdc3ba8c50b9 ] [ ns2:object _:Bd52fe249115bf7f075daf575d9d93a2a ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bfdd99e9800603cb05b2ecdc3ba8c50b9 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bfdd99e9800603cb05b2ecdc3ba8c50b9 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    NOT EXISTS {\\n        ?s ?arg2 ?value .\\n    } \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bd52fe249115bf7f075daf575d9d93a2a ] [ a ns2:NotExists ;
+                        ns2:elements ( [ ns2:object [ ns2:varName "value"^^xsd:string ] ;
+                                    ns2:predicate ns3:_arg2 ;
+                                    ns2:subject _:Bd52fe249115bf7f075daf575d9d93a2a ] ) ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that contains instances to be tested!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ] ;
+    ns3:labelTemplate "Property {?arg2} is mandatory but may contain empty literals for instances of class {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 where property ?arg2 is missing. It explicitly tolerates empty literal values in property ?arg2."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#MissingElementConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#NumbersAll> a ns3:Template ;
+    rdfs:label "syntax check in all instances: only numbers allowed"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bb53eef7784bba703ae32f3a3377c0dc0 ] [ ns2:object _:B3f0c78cbbcaa3536b44008148d992d54 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bb53eef7784bba703ae32f3a3377c0dc0 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bb53eef7784bba703ae32f3a3377c0dc0 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (!regex(str(?value), \"^([0-9])*$\"^^xsd:string)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:Bff8586249213af7abdaf25a891308a4b ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B3f0c78cbbcaa3536b44008148d992d54 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:not ;
+                                ns2:arg1 [ a ns2:regex ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:Bff8586249213af7abdaf25a891308a4b ] ;
+                                        ns2:arg2 "^([0-9])*$"^^xsd:string ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"^^xsd:string ] ;
+    ns3:labelTemplate "Syntax rule: only numbers allowed in {?arg1}!"^^xsd:string ;
+    rdfs:comment "This query flags all instances with property ?arg1 that have characters other than numbers as literal values."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#UniqueValueAll> a ns3:Template ;
+    rdfs:label "Uniqueness check for all values in a property"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B6883d14f724694cf11a6b9f673925e7b ] [ ns2:object _:B4eaedc8e395bd80ad3cf5f8cfd8c2804 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B6883d14f724694cf11a6b9f673925e7b ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B6883d14f724694cf11a6b9f673925e7b ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?a .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?a ?arg1 ?uniqueValue1 .\\n    ?b ?arg1 ?uniqueValue2 .\\n    FILTER ((str(?uniqueValue1) = str(?uniqueValue2)) && (?a != ?b)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:Baa4a5c7edfebd6d744f2978c9463ff6d ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B4eaedc8e395bd80ad3cf5f8cfd8c2804 ] [ ns2:object _:B8de26f9d84970171665d3042d5defca0 ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B001c6fbf9a80fc057024cf721434c59d ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:and ;
+                                ns2:arg1 [ a ns2:eq ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:Baa4a5c7edfebd6d744f2978c9463ff6d ] ;
+                                        ns2:arg2 [ a ns2:str ;
+                                                ns2:arg1 _:B8de26f9d84970171665d3042d5defca0 ] ] ;
+                                ns2:arg2 [ a ns2:ne ;
+                                        ns2:arg1 _:B4eaedc8e395bd80ad3cf5f8cfd8c2804 ;
+                                        ns2:arg2 _:B001c6fbf9a80fc057024cf721434c59d ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ] ;
+    ns3:labelTemplate "Values in {?arg1} must be unique!"^^xsd:string ;
+    rdfs:comment "This query returns all instances where the value for property ?arg1 is not unique in the tested data set. The query tolerates chaotic language tag assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#UniquenessConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#UniqueValueClass> a ns3:Template ;
+    rdfs:label "Uniqueness check for all values in instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B2256573173e741cfcdae2ffba74a0ecf ] [ ns2:object _:Bef91c18a1cdf1820188a7b2f253d17bc ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B2256573173e741cfcdae2ffba74a0ecf ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B2256573173e741cfcdae2ffba74a0ecf ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?a .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    ?a a ?arg1 .\\n    ?a ?arg2 ?uniqueValue1 .\\n    ?b a ?arg1 .\\n    ?b ?arg2 ?uniqueValue2 .\\n    FILTER ((str(?uniqueValue1) = str(?uniqueValue2)) && (?a != ?b)) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bef91c18a1cdf1820188a7b2f253d17bc ] [ ns2:object _:B845d9d710b70da0f6b7285a12acffa06 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:Bef91c18a1cdf1820188a7b2f253d17bc ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B29d8cc3257ea6371bc9c4be823cdbe38 ] [ ns2:object _:Ba47457640fd11d7e6d583659492460eb ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B29d8cc3257ea6371bc9c4be823cdbe38 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:and ;
+                                ns2:arg1 [ a ns2:eq ;
+                                        ns2:arg1 [ a ns2:str ;
+                                                ns2:arg1 _:B845d9d710b70da0f6b7285a12acffa06 ] ;
+                                        ns2:arg2 [ a ns2:str ;
+                                                ns2:arg1 _:Ba47457640fd11d7e6d583659492460eb ] ] ;
+                                ns2:arg2 [ a ns2:ne ;
+                                        ns2:arg1 _:Bef91c18a1cdf1820188a7b2f253d17bc ;
+                                        ns2:arg2 _:B29d8cc3257ea6371bc9c4be823cdbe38 ] ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested! {@en}"^^xsd:string ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that contains instances to be tested!"@en ] ;
+    ns3:labelTemplate "{?arg2} in {?arg1} must be unique!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 where the value for property ?arg2 is not unique in the tested data set. The query tolerates chaotic language tag assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#UniquenessConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#UpperLimitAll> a ns3:Template ;
+    rdfs:label "Upper limit check in all instances"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:Bcc50c66fc16a8efb027b1ae5ad6cdb33 ] [ ns2:object _:B4e029592804372652d1a87dd4afed064 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:Bcc50c66fc16a8efb027b1ae5ad6cdb33 ] [ ns2:object ns3:_arg1 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:Bcc50c66fc16a8efb027b1ae5ad6cdb33 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg1 .\\n}\\nWHERE {\\n    ?s ?arg1 ?value .\\n    FILTER (smf:cast(?value, xsd:decimal) > ?arg2) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object _:B4ccd642aa43601c222794d72d4b111ed ;
+                        ns2:predicate ns3:_arg1 ;
+                        ns2:subject _:B4e029592804372652d1a87dd4afed064 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:gt ;
+                                ns2:arg1 [ a <http://topbraid.org/sparqlmotionfunctions#cast> ;
+                                        ns2:arg1 _:B4ccd642aa43601c222794d72d4b111ed ;
+                                        ns2:arg2 xsd:decimal ] ;
+                                ns2:arg2 ns3:_arg2 ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType xsd:decimal ;
+            rdfs:comment "Enter upper limit!"^^xsd:string ] ;
+    ns3:labelTemplate "Values in {?arg1} must be lower than {?arg2}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances that have a value for property ?arg1 above the user defined limit ?arg2. The query tolerates chaotic datatype assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> .
+
+<http://semwebquality.org/ontologies/dq-constraints#UpperLimitClass> a ns3:Template ;
+    rdfs:label "Upper limit check in all instances of a class"@en ;
+    ns3:body [ a ns2:Construct ;
+            ns2:templates ( [ ns2:object ns3:ConstraintViolation ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B47ef93e3a89a690c3b4bb77cc353d1d3 ] [ ns2:object _:B0cb8b01a83d3de840395bb72563a0f93 ;
+                        ns2:predicate ns3:violationRoot ;
+                        ns2:subject _:B47ef93e3a89a690c3b4bb77cc353d1d3 ] [ ns2:object ns3:_arg2 ;
+                        ns2:predicate ns3:violationPath ;
+                        ns2:subject _:B47ef93e3a89a690c3b4bb77cc353d1d3 ] ) ;
+            ns2:text "CONSTRUCT {\\n    _:b0 a spin:ConstraintViolation .\\n    _:b0 spin:violationRoot ?s .\\n    _:b0 spin:violationPath ?arg2 .\\n}\\nWHERE {\\n    ?s a ?arg1 .\\n    ?s ?arg2 ?value .\\n    FILTER (smf:cast(?value, xsd:decimal) > ?arg3) \\n}"^^xsd:string ;
+            ns2:where ( [ ns2:object ns3:_arg1 ;
+                        ns2:predicate rdf:type ;
+                        ns2:subject _:B0cb8b01a83d3de840395bb72563a0f93 ] [ ns2:object _:Bfadf0381537b760d8ffb698d33783848 ;
+                        ns2:predicate ns3:_arg2 ;
+                        ns2:subject _:B0cb8b01a83d3de840395bb72563a0f93 ] [ a ns2:Filter ;
+                        ns2:expression [ a ns2:gt ;
+                                ns2:arg1 [ a <http://topbraid.org/sparqlmotionfunctions#cast> ;
+                                        ns2:arg1 _:Bfadf0381537b760d8ffb698d33783848 ;
+                                        ns2:arg2 xsd:decimal ] ;
+                                ns2:arg2 ns3:_arg3 ] ] ) ] ;
+    ns3:constraint [ a ns1:Argument ;
+            ns1:predicate ns2:arg3 ;
+            ns1:valueType xsd:decimal ;
+            rdfs:comment "Enter upper limit!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg2 ;
+            ns1:valueType rdf:Property ;
+            rdfs:comment "Select property to be tested!"@en ],
+        [ a ns1:Argument ;
+            ns1:predicate ns2:arg1 ;
+            ns1:valueType rdfs:Class ;
+            rdfs:comment "Select class that contains instances to be tested!"@en ] ;
+    ns3:labelTemplate "Values in {?arg2} for instances of class {?arg1} must be lower than {?arg3}!"^^xsd:string ;
+    rdfs:comment "This query returns all instances of class ?arg1 that have a value for property ?arg2 above the user defined limit ?arg3. The query tolerates chaotic datatype assignments."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> .
+
+ns2:arg7 a rdf:Property ;
+    rdfs:label "arg7"^^xsd:string ;
+    rdfs:comment "The seventh argument of a function call."^^xsd:string ;
+    rdfs:subPropertyOf ns2:arg .
+
+<http://semwebquality.org/ontologies/dq-constraints#UniquenessConstraints> a ns3:Template ;
+    rdfs:label "uniqueness constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Uniqueness constraints identify values that shall be unique, but are redundant within a certain data set."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+ns2:arg6 a rdf:Property ;
+    rdfs:label "arg6"^^xsd:string ;
+    rdfs:comment "The sixth argument of a function call."^^xsd:string ;
+    rdfs:subPropertyOf ns2:arg .
+
+<http://semwebquality.org/ontologies/dq-constraints#MissingElementConstraints> a ns3:Template ;
+    rdfs:label "missing element constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Missing element constraints identify elements in the data set that are missing but required."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+<http://semwebquality.org/ontologies/dq-constraints#LegalValueConstraints> a ns3:Template ;
+    rdfs:label "legal value constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Legal value constraints identify values that are either not explicitly allowed or explicitly illegal."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ValueRangeConstraints> a ns3:Template ;
+    rdfs:label "value range constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Value range constraints allow the identification of values that do not obey a certain upper and/or lower limit."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+<http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> a ns3:Template ;
+    rdfs:label "data quality constraint templates"^^xsd:string ;
+    ns3:abstract true ;
+    rdfs:comment "Constraint templates are generalized SPARQL query templates based on the SPARQL Inferencing Framework (SPIN). The query templates represent generic data quality rules that may be used to identify data quality problems, i.e. violations of previously defined constraints."@en ;
+    rdfs:subClassOf ns3:Templates .
+
+<http://semwebquality.org/ontologies/dq-constraints#FunctionalDependencyConstraints> a ns3:Template ;
+    rdfs:label "functional dependency constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Functional dependencies are dependencies between the values of two or more different properties. Functional dependency constraints check the abidance of functional dependencies."@en ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+<http://semwebquality.org/ontologies/dq-constraints#SyntaxConstraints> a ns3:Template ;
+    rdfs:label "syntax constraints"@en ;
+    ns3:abstract true ;
+    rdfs:comment "Syntax constraints identify values that do not adhere to syntactical rules. {@en} "^^xsd:string ;
+    rdfs:subClassOf <http://semwebquality.org/ontologies/dq-constraints#ConstraintTemplates> .
+
+_:B001c6fbf9a80fc057024cf721434c59d ns2:varName "b"^^xsd:string .
+
+_:B043e3101ef8fae4e38161f06bc044f4e ns2:varName "s"^^xsd:string .
+
+_:B0a15e7fc7ffdca2439e65b8a640e19ab ns2:varName "8"^^xsd:string .
+
+_:B0a272103742d760acf8d73a38efd8606 ns2:varName "2"^^xsd:string .
+
+_:B1bf4dd94236d0456dcfad2b970051f47 ns2:varName "value"^^xsd:string .
+
+_:B1cc5d50bd121da61c4fea2ac23ff8520 ns2:varName "s2"^^xsd:string .
+
+_:B1cf03fbbf08c9ca7ed2f23d2d21e7f88 ns2:varName "11"^^xsd:string .
+
+_:B2363f0fb0f18a9b5059b53fb8a52a9a4 ns2:varName "value2"^^xsd:string .
+
+_:B2449edea83c44a127ab4e6462765cb09 ns2:varName "value"^^xsd:string .
+
+_:B24b6af48880120ac39ada3dc3bbdb2f1 ns2:varName "12"^^xsd:string .
+
+_:B24d252a77ca44b206d813706cbfd6a8b ns2:varName "s2"^^xsd:string .
+
+_:B2a5de8806463b00f50d07d384cbbba48 ns2:varName "value"^^xsd:string .
+
+_:B36c7fae58ae6377aab95357b52f5380e ns2:varName "12"^^xsd:string .
+
+_:B386ad564d937951b43bcf0ffa2ec9640 ns2:varName "value"^^xsd:string .
+
+_:B39573b09fc162824873f7254e00f7f97 ns2:varName "10"^^xsd:string .
+
+_:B3f0c78cbbcaa3536b44008148d992d54 ns2:varName "s"^^xsd:string .
+
+_:B3f3f7234127c5cf4f6be2c295a798965 ns2:varName "5"^^xsd:string .
+
+_:B4735331f3f5da525c3bb7d92f4f0d84a ns2:varName "value2"^^xsd:string .
+
+_:B474fc99e471c0223c3990d3f5b095918 ns2:varName "instance"^^xsd:string .
+
+_:B49ece17925c190a82592ee4817972c18 ns2:varName "1"^^xsd:string .
+
+_:B4ccd642aa43601c222794d72d4b111ed ns2:varName "value"^^xsd:string .
+
+_:B4e029592804372652d1a87dd4afed064 ns2:varName "s"^^xsd:string .
+
+_:B515a21842bbf395cdccfeb54dac03653 ns2:varName "value1"^^xsd:string .
+
+_:B52ad0f8337fdd0c70f61846140a6146d ns2:varName "from"^^xsd:string .
+
+_:B5fbbfc283ec00f03ea946636bc76ba2d ns2:varName "s"^^xsd:string .
+
+_:B61950cf647c95bc8a71e8ddeac1b758b ns2:varName "6"^^xsd:string .
+
+_:B61e27d203aae990bc784fd1d4e2bf07f ns2:varName "8"^^xsd:string .
+
+_:B66033c9fa1882331f443173bc3a14408 ns2:varName "s"^^xsd:string .
+
+_:B6faaef1b59ac46b40d55037cecf1de4c ns2:varName "value"^^xsd:string .
+
+_:B748500947cbbcce4a17c67446e22f81c ns2:varName "node"^^xsd:string .
+
+_:B77b7909b0f36b4ec7a70113282d40203 ns2:varName "2"^^xsd:string .
+
+_:B7fad0a8bf20a66d6709462e11bb6ff3c ns2:varName "value"^^xsd:string .
+
+_:B830b2dce97040a2d0b2c63ea0a4be746 ns2:varName "3"^^xsd:string .
+
+_:B845d9d710b70da0f6b7285a12acffa06 ns2:varName "uniqueValue1"^^xsd:string .
+
+_:B86a3acb6379d00fd2afb2543b422b210 ns2:varName "s"^^xsd:string .
+
+_:B893f1d7b05b13c5a77321722ba192f05 ns2:varName "value1"^^xsd:string .
+
+_:B8cfde04bb81d90a689dab9bc5e45c21c ns2:varName "s2"^^xsd:string .
+
+_:B8de26f9d84970171665d3042d5defca0 ns2:varName "uniqueValue2"^^xsd:string .
+
+_:B9718b1889276ea5e419003ddfbae4d2c ns2:varName "3"^^xsd:string .
+
+_:B9b6c15f52f1558e81f130fc5a23ae2c2 ns2:varName "value"^^xsd:string .
+
+_:B9b6ede0a9f1e84bbc43ad54128a3bf1a ns2:varName "6"^^xsd:string .
+
+_:B9f51a1e2ff4739d9fe2da01dec41acaf ns2:varName "1"^^xsd:string .
+
+_:Ba07c4f7f45152435a65e5f304c7307c5 ns2:varName "value2"^^xsd:string .
+
+_:Ba47457640fd11d7e6d583659492460eb ns2:varName "uniqueValue2"^^xsd:string .
+
+_:Ba94c852bbaf0925cd7be2f25b715b605 ns2:varName "node"^^xsd:string .
+
+_:Baa4a5c7edfebd6d744f2978c9463ff6d ns2:varName "uniqueValue1"^^xsd:string .
+
+_:Baf08cc987d43a2fe25dd8a0d606d2ecf ns2:varName "5"^^xsd:string .
+
+_:Bb02dd0bdb39ca2c35e46ca6d25ca460a ns2:varName "9"^^xsd:string .
+
+_:Bb04db965e73381b5120680d42619ebdf ns2:varName "4"^^xsd:string .
+
+_:Bb9b3020a31650a4ceb7a71e2a30a630c ns2:varName "value1"^^xsd:string .
+
+_:Bba8db777ef86e841390137cd37083a90 ns2:varName "value"^^xsd:string .
+
+_:Bbaa02e0f40a0e6a9b1de32d5a1d52233 ns2:varName "7"^^xsd:string .
+
+_:Bc23ff2cb34194d5936767b1c6f07a1b5 ns2:varName "s"^^xsd:string .
+
+_:Bcc52f7baa05f0dd8ce5f60a8a30967b1 ns2:varName "11"^^xsd:string .
+
+_:Bd17c543a56c4a289224e5b42e1013473 ns2:varName "4"^^xsd:string .
+
+_:Bd1f2c53750436d60dca6affe8995a763 ns2:varName "s"^^xsd:string .
+
+_:Bdac8756732f7bc02ea400489a2c4d615 ns2:varName "10"^^xsd:string .
+
+_:Bddcb3dbf2a5f3763eee7a4287d123f6f ns2:varName "value"^^xsd:string .
+
+_:Bde835a47e3945c2ff100ad86e89473b6 ns2:varName "s2"^^xsd:string .
+
+_:Bea08dfc8638975e8edb13495c17f482c ns2:varName "through"^^xsd:string .
+
+_:Bf43a677efe75042729f419caa82520e6 ns2:varName "s2"^^xsd:string .
+
+_:Bf51c028295e9a42fba14e9b1708b57a7 ns2:varName "value"^^xsd:string .
+
+_:Bf993a046533ee53c7db71385acf391d9 ns2:varName "7"^^xsd:string .
+
+_:Bfadf0381537b760d8ffb698d33783848 ns2:varName "value"^^xsd:string .
+
+_:Bfddd5fcb3c1cb6d30cdcb30461ad5aa6 ns2:varName "9"^^xsd:string .
+
+_:Bff8586249213af7abdaf25a891308a4b ns2:varName "value"^^xsd:string .
+
+_:B0cb8b01a83d3de840395bb72563a0f93 ns2:varName "s"^^xsd:string .
+
+_:B18d75847d79491a043f4b9ebee2ae829 ns2:varName "s"^^xsd:string .
+
+_:B24cf648d189177477feeba0f82de0348 ns2:varName "s"^^xsd:string .
+
+_:B29d8cc3257ea6371bc9c4be823cdbe38 ns2:varName "b"^^xsd:string .
+
+_:B32509a76fc15b0620d3a05767f73e7d1 ns2:varName "check"^^xsd:string .
+
+_:B32ed09fc10e5ca00dc732a348a7bd40e ns2:varName "s"^^xsd:string .
+
+_:B38f04b2d3962255f3bb280d87398bc6e ns2:varName "s2"^^xsd:string .
+
+_:B3e62633afd0b5e179547d42a3f49ad9c ns2:varName "value1"^^xsd:string .
+
+_:B4d365f7a8321bad9e10ca5df1656bcdc ns2:varName "value1"^^xsd:string .
+
+_:B4eaedc8e395bd80ad3cf5f8cfd8c2804 ns2:varName "a"^^xsd:string .
+
+_:B4ff42f1a8032cb3dcd4e6455d0b9e66c ns2:varName "instance"^^xsd:string .
+
+_:B56a2c1051967ce73a40476683923cbc0 ns2:varName "value1"^^xsd:string .
+
+_:B57153f86b53fa2e0b870a2d91e80be30 ns2:varName "s"^^xsd:string .
+
+_:B610cd47b6f24ea72bafa46e6cd585076 ns2:varName "instance"^^xsd:string .
+
+_:B640f94944ecdf39dff0af44916297b2e ns2:varName "value1"^^xsd:string .
+
+_:B661b231d12229520c7a42dddba3bf8a7 ns2:varName "s2"^^xsd:string .
+
+_:B86957617acef45fd0bd7920166d156af ns2:varName "value1"^^xsd:string .
+
+_:B8edb597f68de368027a650124e1d1fb6 ns2:varName "13"^^xsd:string .
+
+_:B9baaa7cf7853f5a7cae7d2336415f002 ns2:varName "s"^^xsd:string .
+
+_:Bb5038e0d68759b0c6e169aebf2cdc080 ns2:varName "s"^^xsd:string .
+
+_:Bd52fe249115bf7f075daf575d9d93a2a ns2:varName "s"^^xsd:string .
+
+_:Be7a3a5b91b1d95f06226f20540b1b3b8 ns2:varName "13"^^xsd:string .
+
+_:Bed76dce01a8ddb468e54de92a2b48b21 ns2:varName "s"^^xsd:string .
+
+_:Bef34cb94d081537ee659a1a604c1eaf9 ns2:varName "check"^^xsd:string .
+
+_:Bf80821a67af396689fb0e7b8fbd9d446 ns2:varName "s2"^^xsd:string .
+
+_:Bfcda24a3e9dba01d7a3e722ea5445299 ns2:varName "s"^^xsd:string .
+
+_:B05dbe0d60d7941e968f93c65c3cedcad ns2:varName "value"^^xsd:string .
+
+_:B5b7b4541ef28bee77e68319e629e9082 ns2:varName "s"^^xsd:string .
+
+_:B79fb3d9f71795320d6484efe7056adbe ns2:varName "s"^^xsd:string .
+
+_:B9c9bff57399fd854cd654b1afd4bbaa8 ns2:varName "value"^^xsd:string .
+
+_:Bef91c18a1cdf1820188a7b2f253d17bc ns2:varName "a"^^xsd:string .
+
+_:B6c13d5692e5fd8c068470d534045f41f ns2:varName "ean"^^xsd:string .
+
+_:B949117962b025d0c8279b4aeec13c02e ns2:varName "ean"^^xsd:string .
+

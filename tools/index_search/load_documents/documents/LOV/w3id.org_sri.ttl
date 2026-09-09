@@ -1,0 +1,380 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://purl.org/ontology/bibo/> .
+@prefix onto: <https://w3id.org/sri> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:bibliographicCitation a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:issued a owl:AnnotationProperty .
+
+dcterms:publisher a owl:AnnotationProperty .
+
+dcterms:source a owl:AnnotationProperty .
+
+ns1:doi a owl:AnnotationProperty .
+
+ns1:status a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+schema:affiliation a owl:AnnotationProperty .
+
+schema:funding a owl:AnnotationProperty .
+
+schema:image a owl:AnnotationProperty .
+
+schema:logo a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "Smart Readiness Indicator Vocabulary"@en ;
+    dcterms:bibliographicCitation "Stefan Bischof, Erwin Filtz, Josiane Xavier Parreira. Smart Readiness Indicator Vocabulary. Revision: 1.0.0. Retrieved from: https://w3id.org/sri/1.0"@en ;
+    dcterms:contributor <https://orcid.org/0000-0002-3050-159X>,
+        <https://orcid.org/0000-0003-3445-0504> ;
+    dcterms:created "2022-02-02"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0001-9521-8907> ;
+    dcterms:description "A vocabulary specifying concepts and structures needed to represent different data cubes needed for the Smart Readiness Indicator." ;
+    dcterms:issued "2023-11-30"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2023-11-30"^^xsd:date ;
+    dcterms:publisher <https://www.siemens.at/> ;
+    dcterms:source <https://data.europa.eu/doi/10.2833/41100> ;
+    dcterms:title "Smart Readiness Indicator Vocabulary"@en ;
+    ns1:doi "10.5281/zenodo.10047286" ;
+    ns1:status <http://purl.org/ontology/bibo/status/published> ;
+    vann:preferredNamespacePrefix "sri" ;
+    vann:preferredNamespaceUri "https://w3id.org/sri#" ;
+    rdfs:seeAlso <https://energy.ec.europa.eu/topics/energy-efficiency/energy-efficient-buildings/smart-readiness-indicator_en> ;
+    owl:imports <http://purl.org/linked-data/cube> ;
+    owl:versionIRI <https://w3id.org/sri/1.0> ;
+    owl:versionInfo "1.0.0" ;
+    schema:funding <https://cordis.europa.eu/project/id/893079> ;
+    schema:image <https://raw.githubusercontent.com/stefanbischof/sri/main/sridiagram.svg> ;
+    schema:logo <https://raw.githubusercontent.com/stefanbischof/sri/main/srilogo.svg> .
+
+<https://w3id.org/sri#ServiceLevel> a owl:Class ;
+    rdfs:label "Service level"@en ;
+    rdfs:comment "Class for all ServiceLevel instances, which are all allowed/defined combinations of Services and Levels."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/sri#function> ;
+            owl:someValuesFrom <https://w3id.org/sri#Service> ],
+        [ a owl:Restriction ;
+            owl:onProperty <https://w3id.org/sri#level> ;
+            owl:someValuesFrom <https://w3id.org/sri#Level> ] .
+
+<https://w3id.org/sri#additionalLevel> a owl:ObjectProperty ;
+    rdfs:label "additional level"@en ;
+    rdfs:comment "Additional Level if share is < 100%."@en ;
+    rdfs:range <https://w3id.org/sri#Level> .
+
+<https://w3id.org/sri#assessment> a owl:ObjectProperty ;
+    rdfs:label "assessment"@en ;
+    rdfs:comment "Relates something to an assessment dataset."@en ;
+    rdfs:range [ a owl:Restriction ;
+            owl:hasValue <https://w3id.org/sri#dsd-assessment> ;
+            owl:onProperty qb:structure ],
+        qb:DataSet .
+
+<https://w3id.org/sri#building> a owl:ObjectProperty ;
+    rdfs:label "building"@en ;
+    rdfs:comment "Relates something to a Building."@en ;
+    rdfs:range <https://w3id.org/sri#Building> .
+
+<https://w3id.org/sri#dsd-scores> a qb:DataStructureDefinition,
+        owl:NamedIndividual ;
+    qb:component [ qb:dimension <https://w3id.org/sri#impact> ],
+        [ qb:dimension <https://w3id.org/sri#function> ],
+        [ qb:measure <https://w3id.org/sri#score> ] .
+
+<https://w3id.org/sri#dsd-sriscores> a qb:DataStructureDefinition,
+        owl:NamedIndividual ;
+    rdfs:label "SRI scores DSD"@en ;
+    qb:component [ qb:dimension <https://w3id.org/sri#level> ],
+        [ qb:dimension <https://w3id.org/sri#function> ],
+        [ qb:measure <https://w3id.org/sri#icscore> ] .
+
+<https://w3id.org/sri#dsd-weights> a qb:DataStructureDefinition,
+        owl:NamedIndividual ;
+    qb:component [ qb:measure <https://w3id.org/sri#weight> ],
+        [ qb:dimension <https://w3id.org/sri#impact> ],
+        [ qb:dimension <https://w3id.org/sri#function> ] .
+
+<https://w3id.org/sri#level0> a owl:NamedIndividual,
+        <https://w3id.org/sri#Level> ;
+    rdfs:label "Level 0"@en .
+
+<https://w3id.org/sri#level1> a owl:NamedIndividual,
+        <https://w3id.org/sri#Level> ;
+    rdfs:label "Level 1"@en .
+
+<https://w3id.org/sri#level2> a owl:NamedIndividual,
+        <https://w3id.org/sri#Level> ;
+    rdfs:label "Level 2"@en .
+
+<https://w3id.org/sri#level3> a owl:NamedIndividual,
+        <https://w3id.org/sri#Level> ;
+    rdfs:label "Level 3"@en .
+
+<https://w3id.org/sri#level4> a owl:NamedIndividual,
+        <https://w3id.org/sri#Level> ;
+    rdfs:label "Level 4"@en .
+
+<https://w3id.org/sri#max> a qb:,
+        owl:DatatypeProperty,
+        owl:NamedIndividual ;
+    rdfs:label "maximum impact criterion score"@en ;
+    rdfs:comment "Maximum impact criterion score. This is defined for Domains and calculated in Step 4."@en ;
+    rdfs:range xsd:integer .
+
+<https://w3id.org/sri#serviceCatalogue> a owl:ObjectProperty ;
+    rdfs:label "service catalogue"@en ;
+    rdfs:comment "Relates something to a ServiceCatalogue."@en ;
+    rdfs:range <https://w3id.org/sri#ServiceCatalogue> .
+
+<https://w3id.org/sri#share> a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "share"@en ;
+    rdfs:comment "A percentage (value between 0.0 and 1.0) which expresses that parts of a building are assessed with different levels wrt. a Service. If share is < 100% then additionalLevel has to be defined."@en ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:decimal xsd:double xsd:float ) ] .
+
+<https://w3id.org/sri#topDomain> a owl:NamedIndividual,
+        <https://w3id.org/sri#FunctionalThing> ;
+    rdfs:label "All domains"@en ;
+    skos:narrower <https://w3id.org/sri#cooling>,
+        <https://w3id.org/sri#dE>,
+        <https://w3id.org/sri#dHW>,
+        <https://w3id.org/sri#eV>,
+        <https://w3id.org/sri#electricity>,
+        <https://w3id.org/sri#heating>,
+        <https://w3id.org/sri#lighting>,
+        <https://w3id.org/sri#mC>,
+        <https://w3id.org/sri#ventilation> .
+
+<https://w3id.org/sri#topImpact> a owl:NamedIndividual,
+        <https://w3id.org/sri#ImpactThing> ;
+    rdfs:label "All impacts"@en ;
+    skos:narrower <https://w3id.org/sri#adaptTheirOperationToTheNeedsOfTheOccupant>,
+        <https://w3id.org/sri#adaptToSignalsFromTheGrid>,
+        <https://w3id.org/sri#optimiseEnergyEfficiencyAndOverallIn-UsePerformance> .
+
+qb: a owl:Class .
+
+<https://orcid.org/0000-0001-9521-8907> rdfs:label "Stefan Bischof" ;
+    schema:affiliation <https://www.siemens.at/> .
+
+<https://orcid.org/0000-0002-3050-159X> rdfs:label "Josiane Xavier Parreira" ;
+    schema:affiliation <https://www.siemens.at/> .
+
+<https://orcid.org/0000-0003-3445-0504> rdfs:label "Erwin Filtz" ;
+    schema:affiliation <https://www.siemens.at/> .
+
+<https://w3id.org/sri#Building> a owl:Class ;
+    rdfs:label "Building"@en ;
+    rdfs:comment "This represents a building which is assessed."@en .
+
+<https://w3id.org/sri#ServiceCatalogue> a owl:Class ;
+    rdfs:label "Service catalogue"@en ;
+    rdfs:comment "A Service Catalogue is a collection of services used in an assessment."@en .
+
+<https://w3id.org/sri#adaptTheirOperationToTheNeedsOfTheOccupant> a owl:NamedIndividual,
+        <https://w3id.org/sri#KeyCapability> ;
+    rdfs:label "Adapt their operation to the needs of the occupant"@en ;
+    skos:narrower <https://w3id.org/sri#comfort>,
+        <https://w3id.org/sri#convenience>,
+        <https://w3id.org/sri#health_well_being_and_accessibility>,
+        <https://w3id.org/sri#information_to_occupants> .
+
+<https://w3id.org/sri#adaptToSignalsFromTheGrid> a owl:NamedIndividual,
+        <https://w3id.org/sri#KeyCapability> ;
+    rdfs:label "Adapt to signals from the grid"@en ;
+    skos:narrower <https://w3id.org/sri#energy_flexibility_and_storage> .
+
+<https://w3id.org/sri#comfort> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Comfort"@en .
+
+<https://w3id.org/sri#convenience> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Convenience"@en .
+
+<https://w3id.org/sri#cooling> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Cooling"@en .
+
+<https://w3id.org/sri#dE> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Dynamic building envelope"@en .
+
+<https://w3id.org/sri#dHW> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Domestic hot water"@en .
+
+<https://w3id.org/sri#dsd-assessment> a qb:DataStructureDefinition,
+        owl:NamedIndividual ;
+    qb:component [ qb:dimension <https://w3id.org/sri#function> ],
+        [ qb:measure <https://w3id.org/sri#level> ] .
+
+<https://w3id.org/sri#eV> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Electric vehicle charging"@en .
+
+<https://w3id.org/sri#electricity> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Electricity"@en .
+
+<https://w3id.org/sri#energy_efficiency> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Energy efficiency"@en .
+
+<https://w3id.org/sri#energy_flexibility_and_storage> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Energy flexibility and storage"@en .
+
+<https://w3id.org/sri#health_well_being_and_accessibility> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Health well being and accessibility"@en .
+
+<https://w3id.org/sri#heating> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Heating"@en .
+
+<https://w3id.org/sri#icscore> a qb:MeasureProperty,
+        owl:DatatypeProperty,
+        owl:NamedIndividual ;
+    rdfs:label "impact criterion score"@en ;
+    rdfs:comment "The impact criterion score is defined for Services and calculated for Domains in Step 3."@en ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf <http://purl.org/linked-data/sdmx/2009/measure#obsValue> .
+
+<https://w3id.org/sri#information_to_occupants> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Information to occupants"@en .
+
+<https://w3id.org/sri#lighting> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Lighting"@en .
+
+<https://w3id.org/sri#mC> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Monitoring and control"@en .
+
+<https://w3id.org/sri#maintenance_and_fault_prediction> a owl:NamedIndividual,
+        <https://w3id.org/sri#Impact> ;
+    rdfs:label "Maintenance and fault prediction"@en .
+
+<https://w3id.org/sri#optimiseEnergyEfficiencyAndOverallIn-UsePerformance> a owl:NamedIndividual,
+        <https://w3id.org/sri#KeyCapability> ;
+    rdfs:label "Optimise energy efficiency and overall in-use performance"@en ;
+    skos:narrower <https://w3id.org/sri#energy_efficiency>,
+        <https://w3id.org/sri#maintenance_and_fault_prediction> .
+
+<https://w3id.org/sri#score> a qb:MeasureProperty,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty,
+        owl:NamedIndividual ;
+    rdfs:label "smart-readiness score"@en ;
+    rdfs:comment "The smart-readiness score is defined for ImpactThings on all levels from Impacts to the complete Building (Steps 5, 6, and 7) and optionally for Domains (Step 8)"@en ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:decimal xsd:double xsd:float ) ] ;
+    rdfs:subPropertyOf <http://purl.org/linked-data/sdmx/2009/measure#obsValue> .
+
+<https://w3id.org/sri#ventilation> a owl:NamedIndividual,
+        <https://w3id.org/sri#Domain> ;
+    rdfs:label "Ventilation"@en .
+
+<https://w3id.org/sri#weight> a qb:MeasureProperty,
+        owl:DatatypeProperty,
+        owl:FunctionalProperty,
+        owl:NamedIndividual ;
+    rdfs:label "weight"@en ;
+    rdfs:comment "A weight of the weight matrix used for weighing the smart-readiness scores before aggregation."@en ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:unionOf ( xsd:decimal xsd:double xsd:float ) ] ;
+    rdfs:subPropertyOf <http://purl.org/linked-data/sdmx/2009/measure#obsValue> .
+
+skos:broader a owl:ObjectProperty .
+
+<https://w3id.org/sri#impact> a owl:FunctionalProperty,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "impact"@en ;
+    rdfs:comment "Relates something to an ImpactThing."@en ;
+    rdfs:range <https://w3id.org/sri#ImpactThing> .
+
+<http://purl.org/linked-data/sdmx/2009/measure#obsValue> a owl:DatatypeProperty .
+
+<https://w3id.org/sri#Service> a owl:Class ;
+    rdfs:label "Service"@en ;
+    rdfs:comment "Class for Services."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/sri#Domain> ;
+            owl:onProperty skos:broader ],
+        <https://w3id.org/sri#FunctionalThing> .
+
+<https://w3id.org/sri#level> a owl:FunctionalProperty,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "level"@en ;
+    rdfs:comment "Relates something to a Level."@en ;
+    rdfs:range <https://w3id.org/sri#Level> .
+
+<https://w3id.org/sri#FunctionalThing> a owl:Class ;
+    rdfs:label "FunctionalThing"@en ;
+    rdfs:comment "Class of instances in the functional hierarchy, this includes Domains and Services."@en .
+
+<https://w3id.org/sri#ImpactThing> a owl:Class ;
+    rdfs:label "ImpactThing"@en ;
+    rdfs:comment "Class of all instances in the impact hierarchy, this includes Impacts and Key Capabilities."@en .
+
+<https://www.siemens.at/> rdfs:label "Siemens AG Österreich" .
+
+<https://w3id.org/sri#KeyCapability> a owl:Class ;
+    rdfs:label "KeyCapability"@en ;
+    rdfs:comment "Class of all Key Capabilities, aggregation of Impacts."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/sri#Impact> ;
+            owl:onProperty skos:narrower ],
+        <https://w3id.org/sri#ImpactThing> .
+
+<https://w3id.org/sri#function> a owl:FunctionalProperty,
+        owl:NamedIndividual,
+        owl:ObjectProperty ;
+    rdfs:label "function"@en ;
+    rdfs:comment "Relates something to a FunctionalThing."@en ;
+    rdfs:range <https://w3id.org/sri#FunctionalThing> .
+
+<https://w3id.org/sri#Impact> a owl:Class ;
+    rdfs:label "Impact"@en ;
+    rdfs:comment "Class of Impacts."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/sri#KeyCapability> ;
+            owl:onProperty skos:broader ],
+        <https://w3id.org/sri#ImpactThing> ;
+    owl:disjointWith <https://w3id.org/sri#KeyCapability> .
+
+<https://w3id.org/sri#Level> a owl:Class ;
+    rdfs:label "Level"@en ;
+    rdfs:comment "Class of service levels."@en .
+
+<https://w3id.org/sri#Domain> a owl:Class ;
+    rdfs:label "Domain"@en ;
+    rdfs:comment "Class of technical domains."@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/sri#Service> ;
+            owl:onProperty skos:narrower ],
+        <https://w3id.org/sri#FunctionalThing> ;
+    owl:disjointWith <https://w3id.org/sri#Service> .
+

@@ -1,0 +1,108 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix onto: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+onto:Class a onto:Class ;
+    onto:label "Class" ;
+    onto:comment "The class of classes." ;
+    onto:isDefinedBy onto: ;
+    onto:subClassOf onto:Resource .
+
+onto:Container a onto:Class ;
+    onto:label "Container" ;
+    onto:comment "The class of RDF containers." ;
+    onto:isDefinedBy onto: ;
+    onto:subClassOf onto:Resource .
+
+onto:ContainerMembershipProperty a onto:Class ;
+    onto:label "ContainerMembershipProperty" ;
+    onto:comment "The class of container membership properties, rdf:_1, rdf:_2, ...,\\n                    all of which are sub-properties of 'member'." ;
+    onto:isDefinedBy onto: ;
+    onto:subClassOf rdf:Property .
+
+onto:Datatype a onto:Class ;
+    onto:label "Datatype" ;
+    onto:comment "The class of RDF datatypes." ;
+    onto:isDefinedBy onto: ;
+    onto:subClassOf onto:Class .
+
+onto:Literal a onto:Class ;
+    onto:label "Literal" ;
+    onto:comment "The class of literal values, eg. textual strings and integers." ;
+    onto:isDefinedBy onto: ;
+    onto:subClassOf onto:Resource .
+
+onto:Resource a onto:Class ;
+    onto:label "Resource" ;
+    onto:comment "The class resource, everything." ;
+    onto:isDefinedBy onto: .
+
+onto:comment a rdf:Property ;
+    onto:label "comment" ;
+    onto:comment "A description of the subject resource." ;
+    onto:domain onto:Resource ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Literal .
+
+onto:domain a rdf:Property ;
+    onto:label "domain" ;
+    onto:comment "A domain of the subject property." ;
+    onto:domain rdf:Property ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Class .
+
+onto:isDefinedBy a rdf:Property ;
+    onto:label "isDefinedBy" ;
+    onto:comment "The defininition of the subject resource." ;
+    onto:domain onto:Resource ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Resource ;
+    onto:subPropertyOf onto:seeAlso .
+
+onto:label a rdf:Property ;
+    onto:label "label" ;
+    onto:comment "A human-readable name for the subject." ;
+    onto:domain onto:Resource ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Literal .
+
+onto:member a rdf:Property ;
+    onto:label "member" ;
+    onto:comment "A member of the subject resource." ;
+    onto:domain onto:Resource ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Resource .
+
+onto:range a rdf:Property ;
+    onto:label "range" ;
+    onto:comment "A range of the subject property." ;
+    onto:domain rdf:Property ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Class .
+
+onto:subClassOf a rdf:Property ;
+    onto:label "subClassOf" ;
+    onto:comment "The subject is a subclass of a class." ;
+    onto:domain onto:Class ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Class .
+
+onto:subPropertyOf a rdf:Property ;
+    onto:label "subPropertyOf" ;
+    onto:comment "The subject is a subproperty of a property." ;
+    onto:domain rdf:Property ;
+    onto:isDefinedBy onto: ;
+    onto:range rdf:Property .
+
+onto:seeAlso a rdf:Property ;
+    onto:label "seeAlso" ;
+    onto:comment "Further information about the subject resource." ;
+    onto:domain onto:Resource ;
+    onto:isDefinedBy onto: ;
+    onto:range onto:Resource .
+
+onto: a owl:Ontology ;
+    dc:title "The RDF Schema vocabulary (RDFS)" ;
+    onto:seeAlso <http://www.w3.org/2000/01/rdf-schema-more> .
+

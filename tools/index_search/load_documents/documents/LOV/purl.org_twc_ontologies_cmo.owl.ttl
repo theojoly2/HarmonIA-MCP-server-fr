@@ -1,0 +1,180 @@
+@prefix onto: <http://purl.org/twc/ontologies/cmo.owl> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    owl:imports <http://purl.obolibrary.org/obo/iao.owl>,
+        <http://www.w3.org/TR/skos-reference/skos-owl1-dl.rdf> .
+
+<http://purl.org/twc/ontologies/cmo.owl#UniversalClass> a owl:Class ;
+    rdfs:label "Universal Class" ;
+    rdfs:comment "Universal (natural) sets of objects, processes, qualities, states, \\netc. in reality (for example on the side of the patient); (from http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf)" ;
+    rdfs:seeAlso <http://purl.org/twc/ontologies/cmo.owl#http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+            owl:onProperty <http://purl.org/twc/ontologies/cmo.owl#representedBy> ],
+        <http://purl.org/twc/ontologies/cmo.owl#Universal> .
+
+<http://purl.org/twc/ontologies/cmo.owl#UniversalQuality> a owl:Class ;
+    rdfs:label "Universal Quality" ;
+    rdfs:seeAlso <http://purl.org/twc/ontologies/cmo.owl#http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf>,
+        "Qualities in reality. (from http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf)" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://purl.org/twc/ontologies/cmo.owl#Quality> ;
+            owl:onProperty <http://purl.org/twc/ontologies/cmo.owl#representedBy> ],
+        <http://purl.org/twc/ontologies/cmo.owl#Universal> .
+
+<http://purl.org/twc/ontologies/cmo.owl#UniversalRelation> a owl:Class ;
+    rdfs:label "Universal Relation" ;
+    rdfs:comment "Relationships in reality. (from http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf)" ;
+    rdfs:seeAlso <http://purl.org/twc/ontologies/cmo.owl#http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onClass <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+            owl:onProperty <http://purl.org/twc/ontologies/cmo.owl#representedBy> ],
+        <http://purl.org/twc/ontologies/cmo.owl#Universal> .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasPrimaryConcept> a owl:ObjectProperty ;
+    rdfs:label "has primary concept" ;
+    rdfs:subPropertyOf skos:broadMatch .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasQualifier> a owl:ObjectProperty ;
+    rdfs:label "has qualifying concept" ;
+    rdfs:subPropertyOf skos:broadMatch .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasSourceRoleIn> a owl:ObjectProperty ;
+    rdfs:label "has source role in relation" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:subPropertyOf <http://purl.org/twc/ontologies/cmo.owl#hasRoleIn> ;
+    owl:inverseOf <http://purl.org/twc/ontologies/cmo.owl#hasSourceRole> .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasTargetRoleIn> a owl:ObjectProperty ;
+    rdfs:label "has target role in relation" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:subPropertyOf <http://purl.org/twc/ontologies/cmo.owl#hasRoleIn> ;
+    owl:inverseOf <http://purl.org/twc/ontologies/cmo.owl#hasTargetRole> .
+
+<http://purl.org/twc/ontologies/cmo.owl#qualityOf> a owl:ObjectProperty ;
+    rdfs:label "is quality of" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Quality> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:subPropertyOf skos:relatedMatch ;
+    owl:inverseOf <http://purl.org/twc/ontologies/cmo.owl#hasQuality> .
+
+<http://purl.org/twc/ontologies/cmo.owl#representsUniversal> a owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "represents universal" ;
+    rdfs:comment "Concepts represent universals in the world." ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Universal> ;
+    rdfs:subPropertyOf <http://purl.org/twc/ontologies/cmo.owl#represents> .
+
+<http://purl.org/twc/ontologies/cmo.owl#valuesCanBe> a owl:ObjectProperty ;
+    rdfs:label "values can be" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Quality> ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf skos:relatedMatch .
+
+skos:broaderTransitive a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( skos:exactMatch skos:broader ) .
+
+<http://purl.obolibrary.org/obo/IAO_0000030> a owl:Class .
+
+<http://purl.obolibrary.org/obo/IAO_0000136> a owl:ObjectProperty .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasQuality> a owl:ObjectProperty ;
+    rdfs:label "has quality" ;
+    rdfs:comment "A conceptual type can have qualities that describe it." ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Quality> ;
+    rdfs:subPropertyOf skos:relatedMatch .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasSourceRole> a owl:ObjectProperty ;
+    rdfs:label "has source role" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:subPropertyOf <http://purl.org/twc/ontologies/cmo.owl#hasRole> .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasTargetRole> a owl:ObjectProperty ;
+    rdfs:label "has target role" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:subPropertyOf <http://purl.org/twc/ontologies/cmo.owl#hasRole> .
+
+<http://purl.org/twc/ontologies/cmo.owl#represents> a owl:ObjectProperty ;
+    rdfs:label "represents" ;
+    rdfs:comment "Things in the real world can be represented by concepts. This is a link from the concepts and the things those concepts represent. Concepts represent things." ;
+    rdfs:domain skos:Concept ;
+    rdfs:range <http://www.ifomis.org/bfo/1.1#Entity> ;
+    rdfs:subPropertyOf <http://purl.obolibrary.org/obo/IAO_0000136> ;
+    owl:inverseOf <http://purl.org/twc/ontologies/cmo.owl#representedBy> .
+
+<http://www.ifomis.org/bfo/1.1/snap#IndependentContinuant> a owl:Class .
+
+owl:Thing a owl:Class .
+
+skos:broader a owl:ObjectProperty .
+
+skos:exactMatch a owl:ObjectProperty .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasRoleIn> a owl:ObjectProperty ;
+    rdfs:label "has role in relation" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:subPropertyOf skos:relatedMatch ;
+    owl:inverseOf <http://purl.org/twc/ontologies/cmo.owl#hasRole> .
+
+<http://www.ifomis.org/bfo/1.1#Entity> a owl:Class .
+
+skos:broadMatch a owl:ObjectProperty .
+
+<http://purl.org/twc/ontologies/cmo.owl#hasRole> a owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:domain <http://purl.org/twc/ontologies/cmo.owl#Relation> ;
+    rdfs:range <http://purl.org/twc/ontologies/cmo.owl#Type> ;
+    rdfs:subPropertyOf skos:relatedMatch .
+
+<http://purl.org/twc/ontologies/cmo.owl#Quality> a owl:Class ;
+    rdfs:label "Quality" ;
+    rdfs:comment "The conceputal representation of anything that is a property (a thing that is inherent in an entity, like eye color) or an attribute (a thing that has been assigned, or attributed, to an entity, like name or identification number)." ;
+    rdfs:subClassOf skos:Concept .
+
+<http://purl.org/twc/ontologies/cmo.owl#Universal> a owl:Class ;
+    rdfs:label "Universal" ;
+    rdfs:comment "Entities that describe the objects, processes, qualities, states, \\netc. in reality (for example on the side of the patient); (from http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf)" ;
+    rdfs:seeAlso <http://purl.org/twc/ontologies/cmo.owl#http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onClass skos:Concept ;
+            owl:onProperty <http://purl.org/twc/ontologies/cmo.owl#representedBy> ],
+        <http://www.ifomis.org/bfo/1.1/snap#IndependentContinuant> .
+
+<http://purl.org/twc/ontologies/cmo.owl#http://ontology.buffalo.edu/bfo/Terminology_for_Ontologies.pdf> a owl:Thing .
+
+<http://purl.org/twc/ontologies/cmo.owl#representedBy> a owl:ObjectProperty ;
+    rdfs:label "represented by" ;
+    rdfs:comment "Things in the real world can be represented by concepts. This is a link between the concepts and the things those concepts represent. Things, including sets of things, are represented by concepts." ;
+    rdfs:domain <http://www.ifomis.org/bfo/1.1#Entity> ;
+    rdfs:range skos:Concept .
+
+skos:relatedMatch a owl:ObjectProperty .
+
+<http://purl.org/twc/ontologies/cmo.owl#Relation> a owl:Class ;
+    rdfs:label "Relation" ;
+    rdfs:comment "A concept representing the relationship between two independent entities." ;
+    rdfs:subClassOf skos:Concept .
+
+skos:Concept a owl:Class ;
+    rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000030> .
+
+<http://purl.org/twc/ontologies/cmo.owl#Type> a owl:Class ;
+    rdfs:label "Type" ;
+    rdfs:comment "An abstract or general idea inferred or derived from specific instances, representing a set of those instances." ;
+    rdfs:subClassOf skos:Concept .
+

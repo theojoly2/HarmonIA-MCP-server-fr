@@ -1,0 +1,403 @@
+@prefix onto: <http://www.w3.org/2006/time-entry> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto: a owl:Ontology ;
+    rdfs:comment "An entry sub-ontology of time (OWL-Time)." ;
+    rdfs:seeAlso <http://www.w3.org/TR/owl-time> .
+
+<http://www.w3.org/2006/time-entry#after> a owl:ObjectProperty ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#before> .
+
+<http://www.w3.org/2006/time-entry#begins> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#calendarClockDescriptionDataType> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockInterval> ;
+    rdfs:range xsd:dateTime .
+
+<http://www.w3.org/2006/time-entry#calendarClockDescriptionOf> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockInterval> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#CalendarClockDescription> .
+
+<http://www.w3.org/2006/time-entry#durationDescriptionDataType> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    rdfs:range xsd:duration .
+
+<http://www.w3.org/2006/time-entry#durationDescriptionOf> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#DurationDescription> .
+
+<http://www.w3.org/2006/time-entry#ends> a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#inCalendarClock> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#CalendarClockDescription> .
+
+<http://www.w3.org/2006/time-entry#inCalendarClockDataType> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThing> ;
+    rdfs:range xsd:dateTime .
+
+<http://www.w3.org/2006/time-entry#inside> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#IntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#instantPairDurationDescriptionDataType> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThingPair> ;
+    rdfs:range xsd:duration .
+
+<http://www.w3.org/2006/time-entry#instantPairDurationDescriptionOf> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThingPair> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#DurationDescription> .
+
+<http://www.w3.org/2006/time-entry#intAfter> a owl:ObjectProperty ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#nonoverlap> ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intBefore> .
+
+<http://www.w3.org/2006/time-entry#intContains> a owl:ObjectProperty ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intDuring> .
+
+<http://www.w3.org/2006/time-entry#intEquals> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> .
+
+<http://www.w3.org/2006/time-entry#intFinishedBy> a owl:ObjectProperty ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intFinishes> .
+
+<http://www.w3.org/2006/time-entry#intMetBy> a owl:ObjectProperty ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#nonoverlap> ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intMeets> .
+
+<http://www.w3.org/2006/time-entry#intOverlappedBy> a owl:ObjectProperty ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intOverlaps> .
+
+<http://www.w3.org/2006/time-entry#intStartedBy> a owl:ObjectProperty ;
+    owl:inverseOf <http://www.w3.org/2006/time-entry#intStarts> .
+
+<http://www.w3.org/2006/time-entry#ProperInterval> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#Interval>,
+        <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    owl:disjointWith <http://www.w3.org/2006/time-entry#Instant> .
+
+<http://www.w3.org/2006/time-entry#intBefore> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#before>,
+        <http://www.w3.org/2006/time-entry#nonoverlap> .
+
+<http://www.w3.org/2006/time-entry#intDuring> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#startsOrDuring> .
+
+<http://www.w3.org/2006/time-entry#intFinishes> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> .
+
+<http://www.w3.org/2006/time-entry#intMeets> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#nonoverlap> .
+
+<http://www.w3.org/2006/time-entry#intOverlaps> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> .
+
+<http://www.w3.org/2006/time-entry#intStarts> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:subPropertyOf <http://www.w3.org/2006/time-entry#startsOrDuring> .
+
+<http://www.w3.org/2006/timezone#TimeZone> a owl:Class .
+
+<http://www.w3.org/2006/time-entry#CalendarClockInterval> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#ProperInterval> .
+
+<http://www.w3.org/2006/time-entry#Event> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    owl:unionOf ( <http://www.w3.org/2006/time-entry#InstantEvent> <http://www.w3.org/2006/time-entry#IntervalEvent> ),
+        ( <http://www.w3.org/2006/time-entry#InstantEvent> <http://www.w3.org/2006/time-entry#IntervalEvent> ) .
+
+<http://www.w3.org/2006/time-entry#TemporalEntity> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    owl:unionOf ( <http://www.w3.org/2006/time-entry#Instant> <http://www.w3.org/2006/time-entry#Interval> ),
+        ( <http://www.w3.org/2006/time-entry#Instant> <http://www.w3.org/2006/time-entry#Interval> ) .
+
+<http://www.w3.org/2006/time-entry#before> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#TemporalThing> .
+
+<http://www.w3.org/2006/time-entry#day> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:gDay .
+
+<http://www.w3.org/2006/time-entry#dayOfWeekField> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://www.w3.org/2006/time-entry#dayOfYearField> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://www.w3.org/2006/time-entry#days> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#firstInstantThing> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThingPair> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#hour> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://www.w3.org/2006/time-entry#hours> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#minute> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://www.w3.org/2006/time-entry#minutes> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#month> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:gMonth .
+
+<http://www.w3.org/2006/time-entry#months> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#second> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#secondInstantThing> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#InstantThingPair> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#seconds> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#startsOrDuring> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> .
+
+<http://www.w3.org/2006/time-entry#timeZone> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range <http://www.w3.org/2006/timezone#TimeZone> .
+
+<http://www.w3.org/2006/time-entry#unitDay> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitHour> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitMinute> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitMonth> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitSecond> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitType> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitWeek> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#unitYear> a <http://www.w3.org/2006/time-entry#TemporalUnit> .
+
+<http://www.w3.org/2006/time-entry#week> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:nonNegativeInteger .
+
+<http://www.w3.org/2006/time-entry#weeks> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#year> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#CalendarClockDescription> ;
+    rdfs:range xsd:gYear .
+
+<http://www.w3.org/2006/time-entry#years> a owl:DatatypeProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#DurationDescription> ;
+    rdfs:range xsd:decimal .
+
+<http://www.w3.org/2006/time-entry#InstantEvent> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#Event>,
+        <http://www.w3.org/2006/time-entry#InstantThing> .
+
+<http://www.w3.org/2006/time-entry#InstantThingPair> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#secondInstantThing> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#secondInstantThing> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#firstInstantThing> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#firstInstantThing> ] .
+
+<http://www.w3.org/2006/time-entry#IntervalEvent> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#Event>,
+        <http://www.w3.org/2006/time-entry#IntervalThing> .
+
+<http://www.w3.org/2006/time-entry#nonoverlap> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/2006/time-entry#ProperIntervalThing> ;
+    rdfs:range <http://www.w3.org/2006/time-entry#ProperIntervalThing> .
+
+<http://www.w3.org/2006/time-entry#Instant> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#InstantThing>,
+        <http://www.w3.org/2006/time-entry#TemporalEntity> .
+
+<http://www.w3.org/2006/time-entry#Interval> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#IntervalThing>,
+        <http://www.w3.org/2006/time-entry#TemporalEntity> .
+
+<http://www.w3.org/2006/time-entry#IntervalThing> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    owl:unionOf ( <http://www.w3.org/2006/time-entry#Interval> <http://www.w3.org/2006/time-entry#IntervalEvent> ),
+        ( <http://www.w3.org/2006/time-entry#Interval> <http://www.w3.org/2006/time-entry#IntervalEvent> ) .
+
+<http://www.w3.org/2006/time-entry#TemporalUnit> a owl:Class ;
+    owl:oneOf ( <http://www.w3.org/2006/time-entry#unitSecond> <http://www.w3.org/2006/time-entry#unitMinute> <http://www.w3.org/2006/time-entry#unitHour> <http://www.w3.org/2006/time-entry#unitDay> <http://www.w3.org/2006/time-entry#unitWeek> <http://www.w3.org/2006/time-entry#unitMonth> <http://www.w3.org/2006/time-entry#unitYear> ),
+        ( <http://www.w3.org/2006/time-entry#unitSecond> <http://www.w3.org/2006/time-entry#unitMinute> <http://www.w3.org/2006/time-entry#unitHour> <http://www.w3.org/2006/time-entry#unitDay> <http://www.w3.org/2006/time-entry#unitWeek> <http://www.w3.org/2006/time-entry#unitMonth> <http://www.w3.org/2006/time-entry#unitYear> ) .
+
+<http://www.w3.org/2006/time-entry#DurationDescription> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#minutes> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#seconds> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#days> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#hours> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#weeks> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#years> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#days> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#months> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#hours> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#minutes> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#seconds> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#weeks> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#months> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#years> ] .
+
+<http://www.w3.org/2006/time-entry#TemporalThing> a owl:Class ;
+    owl:unionOf ( <http://www.w3.org/2006/time-entry#InstantThing> <http://www.w3.org/2006/time-entry#IntervalThing> ),
+        ( <http://www.w3.org/2006/time-entry#InstantThing> <http://www.w3.org/2006/time-entry#IntervalThing> ) .
+
+<http://www.w3.org/2006/time-entry#InstantThing> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#TemporalThing> ;
+    owl:unionOf ( <http://www.w3.org/2006/time-entry#Instant> <http://www.w3.org/2006/time-entry#InstantEvent> ),
+        ( <http://www.w3.org/2006/time-entry#Instant> <http://www.w3.org/2006/time-entry#InstantEvent> ) .
+
+<http://www.w3.org/2006/time-entry#CalendarClockDescription> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#timeZone> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#hour> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#day> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#minute> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#unitType> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#week> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#hour> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#timeZone> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#minute> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#dayOfWeekField> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#day> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#unitType> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#month> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#second> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#second> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#month> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#year> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#week> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#dayOfWeekField> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#dayOfYearField> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#dayOfYearField> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://www.w3.org/2006/time-entry#year> ] .
+
+<http://www.w3.org/2006/time-entry#ProperIntervalThing> a owl:Class ;
+    rdfs:subClassOf <http://www.w3.org/2006/time-entry#IntervalThing> ;
+    owl:disjointWith <http://www.w3.org/2006/time-entry#InstantThing> .
+

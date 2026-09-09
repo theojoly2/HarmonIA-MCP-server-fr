@@ -1,0 +1,191 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns2: <http://creativecommons.org/ns#> .
+@prefix onto: <http://www.w3.org/ns/lemon/synsem> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+rdfs:comment a owl:AnnotationProperty .
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+
+ns1:term_status a owl:AnnotationProperty .
+
+<http://www.w3.org/ns/lemon/synsem#isA> a owl:ObjectProperty ;
+    rdfs:label "Instance de"@fr ;
+    rdfs:comment "The 'is a' property represents the single argument of a class or unary  predicate."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/synsem#ontoCorrespondence> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#marker> a owl:ObjectProperty ;
+    rdfs:label "marker"@en,
+        "marqueur"@fr ;
+    rdfs:comment "The 'marker' property indicates the marker of a syntactic argument; this can be a case marker or some other lexical entry such as a preposition or particle."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#SyntacticArgument> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#optional> a owl:DatatypeProperty ;
+    rdfs:label "optional"@en,
+        "optionnel"@fr ;
+    rdfs:comment "The 'optional' property indicates whether a syntactic argument is optional, that is, it can be syntactically omitted."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#SyntacticArgument> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#propertyDomain> a owl:ObjectProperty ;
+    rdfs:label "property domain"@en,
+        "ensemble de la propriété"@fr ;
+    rdfs:comment "'Property domain' provides a pragmatic restriction on the domain of the property referred to by this sense."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/synsem#condition> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#propertyRange> a owl:ObjectProperty ;
+    rdfs:label "property range"@en,
+        "image de la propriété"@fr ;
+    rdfs:comment "'Property domain' provides a pragmatic restriction on the range of the property referred to by this sense."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/synsem#condition> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#submap> a owl:ObjectProperty ;
+    rdfs:label "submap"@en,
+        "cadre composante"@fr ;
+    rdfs:comment "The 'submap' property relates a (complex) ontological mapping to a set of bindings that together bind the arguments of the involved predicates to a set of syntactic arguments that realize them syntactically."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#OntoMap> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/synsem#OntoMap> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#synArg> a owl:ObjectProperty ;
+    rdfs:label "syntactic argument"@en,
+        "actant syntaxique"@fr ;
+    rdfs:comment "The object property synArg relates a syntactic frame to one of its syntactic arguments."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#SyntacticFrame> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/synsem#SyntacticArgument> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#synBehavior> a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "syntactic behavior"@en,
+        "conduite syntaxique"@fr ;
+    rdfs:comment "The 'syntactic behavior' property relates a lexical entry to one of its syntactic behaviors as captured by a syntactic frame."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/ontolex#LexicalEntry> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/synsem#SyntacticFrame> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+owl:topDataProperty a owl:DatatypeProperty ;
+    rdfs:range xsd:boolean .
+
+<http://www.w3.org/ns/lemon/synsem#objOfProp> a owl:ObjectProperty ;
+    rdfs:label "object of property"@en,
+        "complément de la propriété"@fr ;
+    rdfs:comment "The 'objOfProp' represents the 2nd argument or object of a binary predicate (property) in the ontology."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf owl:topObjectProperty,
+        <http://www.w3.org/ns/lemon/synsem#ontoCorrespondence> ;
+    owl:propertyChainAxiom ( <http://www.w3.org/ns/lemon/synsem#ontoMapping> <http://www.w3.org/ns/lemon/synsem#objOfProp> ) ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#subjOfProp> a owl:ObjectProperty ;
+    rdfs:label "subject of property"@en,
+        "sujet de la propriété"@fr ;
+    rdfs:comment "The 'subjOfProp' property represents the 1st argument or subject of a binary predicate (property) in the ontology."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/synsem#ontoCorrespondence> ;
+    owl:propertyChainAxiom ( <http://www.w3.org/ns/lemon/synsem#ontoMapping> <http://www.w3.org/ns/lemon/synsem#subjOfProp> ) ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#SyntacticFrame> a owl:Class ;
+    rdfs:label "Syntactic Frame"@en,
+        "cadre syntaxique"@fr ;
+    rdfs:comment "A 'syntactic frame' represents the syntactic behavior of an open class word in terms of the (syntactic) arguments it requires. It essentially describes the so called subcategorization structure of the word in question, in particular the syntactic arguments it requires."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#condition> a owl:ObjectProperty ;
+    rdfs:label "condition"@en,
+        "condition"@fr ;
+    rdfs:comment "The 'condition' property defines an evaluable constraint that derives from using a certain lexical entry to express a given ontological predicate."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#OntoMap> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/lemon/ontolex#usage> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#ontoMapping> a owl:FunctionalProperty,
+        owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "application de l'ontologie"@fr ;
+    rdfs:comment "The 'ontoMapping'  property relates an ontology mapping to its corresponding lexical sense."@en ;
+    rdfs:domain <http://www.w3.org/ns/lemon/synsem#OntoMap> ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/ontolex#LexicalSense> ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#ontoCorrespondence> a owl:ObjectProperty ;
+    rdfs:label "ontological correspondence"@en,
+        "correspondance ontologique"@fr ;
+    rdfs:comment "The 'ontoCorrespondence' property binds an argument of a predicate defined in the ontology to a syntactic argument that realizes this predicate argument syntactically."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( <http://www.w3.org/ns/lemon/ontolex#LexicalSense> <http://www.w3.org/ns/lemon/synsem#OntoMap> ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://www.w3.org/ns/lemon/synsem#SyntacticArgument> ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#SyntacticArgument> a owl:Class ;
+    rdfs:label "Syntactic Argument"@en,
+        "actant syntaxique"@fr ;
+    rdfs:comment "A 'syntactic argument' represents a slot that needs to be filled for a certain syntactic frame to be complete. Syntactic arguments typically realize a certain grammatical function (e.g. subject, direct object, indirect object, prepositional object, etc.)."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+<http://www.w3.org/ns/lemon/synsem#OntoMap> a owl:Class ;
+    rdfs:label "ontology mapping"@en,
+        "application de l'ontologie"@fr ;
+    rdfs:comment "An 'ontology mapping' (OntoMap for short) specifies how a syntactic frame and its syntactic arguments map to a set of concepts and properties in the ontology that together specify the meaning of the syntactic frame."@en ;
+    rdfs:isDefinedBy onto: ;
+    ns1:term_status "stable" .
+
+owl:topObjectProperty a owl:ObjectProperty .
+
+onto: a <http://purl.org/vocommons/voaf#Vocabulary>,
+        owl:Ontology ;
+    ns2:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    dc:contributor <http://art.uniroma2.it/fiorelli/>,
+        <http://art.uniroma2.it/stellato/>,
+        <http://jogracia.url.ph/web/>,
+        <http://mayor2.dia.fi.upm.es/oeg-upm/index.php/en/teachers/52-emontiel>,
+        <http://www.dfki.de/~declerck/>,
+        <http://www.ilc.cnr.it/en/content/anas-fahad-khan>,
+        <http://www.istc.cnr.it/people/aldo-gangemi>,
+        <http://www.oeg-upm.net/index.php/teachers/53-lupe>,
+        <http://www.paulbuitelaar.net/>,
+        <https://sites.google.com/site/francescafrontini/> ;
+    dc:creator <http://john.mccr.ae/>,
+        <http://www.cimiano.de/> ;
+    dc:description "A model for the representation of lexical information relative to ontologies. Syntax and semantics module."@en ;
+    dc:issued "2016-01-10"^^xsd:date ;
+    dc:modified "2016-01-10"^^xsd:date ;
+    dc:publisher <http://www.w3.org/community/ontolex> ;
+    dc:rights "CC-Zero" ;
+    dc:title "Lexicon Model for Ontologies - Synsem"@en ;
+    vann:preferredNamespacePrefix "synsem" ;
+    vann:preferredNamespaceUri "http://www.w3.org/ns/lemon/synsem#" ;
+    rdfs:comment "-Version 1.0: depreciation with minor change in metadata for LOV publication\\r\\n-Version 1.1: creation"@en ;
+    owl:imports <http://www.w3.org/ns/lemon/ontolex> ;
+    owl:versionInfo 1.1 .
+

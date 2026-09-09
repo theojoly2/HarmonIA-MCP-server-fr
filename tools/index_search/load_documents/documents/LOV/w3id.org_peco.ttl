@@ -1,0 +1,186 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <https://w3id.org/peco> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+dc:description a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:abstract a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+<http://qudt.org/schema/qudt/hasQuantityKind> a owl:ObjectProperty ;
+    rdfs:label "has quantity kind" ;
+    rdfs:domain <https://qudt.org/2.1/schema/qudt/Quantity> ;
+    rdfs:range <https://qudt.org/2.1/schema/qudt/QuantityKind> .
+
+<http://qudt.org/schema/qudt/unit> a owl:ObjectProperty ;
+    rdfs:label "unit" ;
+    rdfs:comment "A reference to the unit of measure of a quantity (variable or constant) of interest." ;
+    rdfs:domain <https://qudt.org/2.1/schema/qudt/Quantity> ;
+    rdfs:range <https://qudt.org/2.1/schema/qudt/Unit> .
+
+rdf:HTML a rdfs:Datatype .
+
+<http://www.w3.org/2008/05/skos#prefLabel> a owl:AnnotationProperty ;
+    rdfs:subPropertyOf rdfs:label .
+
+org:memberOf a owl:AnnotationProperty .
+
+sosa:Result a owl:Class .
+
+sosa:Sensor a owl:Class .
+
+sosa:hasFeatureOfInterest a owl:ObjectProperty .
+
+sosa:hasResult a owl:ObjectProperty .
+
+sosa:madeBySensor a owl:ObjectProperty .
+
+sosa:phenomenonTime a owl:ObjectProperty .
+
+foaf:homepage a owl:AnnotationProperty .
+
+foaf:name a owl:AnnotationProperty .
+
+onto: a owl:Ontology ;
+    dc:description "This ontology defines a vocabulary for describing provenance traces of carbon emission calculations by capturing the quantifiable measurements of carbon emission sources used by some activities (e.g., electricity used by a machinery to produce a product, petrol used to make a car journey, etc.) and emission conversion factors used to estimate the carbon emissions produced by these. In addition, the ontology provides the ability to capture various data transformations that occurred before energy estimates may be used with relevant conversion factors. For example, sensors may provide raw readings about a water flow of an irrigation rig in an agri-food operation which is then used as a proxy to estimate the total volume of fertilisers used."@en ;
+    dc:title "The Provenance of Emission Calculations Ontology"@en ;
+    dcterms:abstract "With the Net Zero agenda gaining significant traction across the world, organisations are often required to report carbon emissions associated with their operation. However, calculating emissions is a non-trivial task and reported scores can differ depending on the choices made by those performing the calculations or the software used to assist with this task. Emission conversion factors are used to calculate greenhouse emissions for different business operations. This ontology aims to enhance the transparency of the carbon footprint calculations via detailed provenance traces."@en ;
+    dcterms:created "April 24th, 2023"@en ;
+    dcterms:creator [ ],
+        [ ],
+        [ ],
+        [ ] ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "May 5th, 2023"@en ;
+    vann:preferredNamespacePrefix "peco"@en ;
+    vann:preferredNamespaceUri "https://w3id.org/peco#" ;
+    owl:priorVersion <https://w3id.org/peco/0.0.1> ;
+    owl:versionIRI <https://w3id.org/peco/1.0.0> ;
+    owl:versionInfo "1.0.0"@en .
+
+<https://w3id.org/peco#EmissionCalculationActivity> a owl:Class ;
+    rdfs:label "Emission Calculation Activity" ;
+    rdfs:comment "An activity representing a whole or a part of the carbon emission calculation process." ;
+    rdfs:subClassOf prov:Activity .
+
+<https://w3id.org/peco#hasEmissionScore> a owl:ObjectProperty ;
+    rdfs:label "has emission score" ;
+    rdfs:comment "A property linking peco:EmissionGenerationActivity with a quantifiable representation of the amount of emissions prodcued by this activity." ;
+    rdfs:domain <https://w3id.org/peco#EmissionGenerationActivity> ;
+    rdfs:range <https://w3id.org/peco#EmissionScore> .
+
+<https://w3id.org/peco#inEmissionActivityContext> a owl:ObjectProperty ;
+    rdfs:label "in emission activity context" ;
+    rdfs:comment "A property linking peco:EmissionGenerationActivity to sosa:Observation. For example, a machine learning training activity (peco:EmissionGenerationActivity) is linked to electricity monitoring activity (sosa:Observation) that monitors electricity consumption of a GPU (sosa:FeatureOfInterest) used to train the ML model." ;
+    rdfs:domain sosa:Observation ;
+    rdfs:range <https://w3id.org/peco#EmissionGenerationActivity> .
+
+prov:Entity a owl:Class .
+
+sosa:Observation a owl:Class .
+
+<https://qudt.org/2.1/schema/qudt/QuantityKind> a owl:Class .
+
+<https://qudt.org/2.1/schema/qudt/Unit> a owl:Class .
+
+<https://w3id.org/peco#EmissionCalculationEntity> a owl:Class ;
+    rdfs:label "Emission Calculation Entity" ;
+    rdfs:comment "A prov:Entitiy representing quantifieble input and output data described as qudt:Quantity that influenced emission calculation process. If this data is produced as a result of some sensor observation it would be also of type sosa:Result." ;
+    rdfs:subClassOf prov:Entity,
+        <https://qudt.org/2.1/schema/qudt/Quantity> .
+
+<https://w3id.org/peco#EmissionScore> a owl:Class ;
+    rdfs:label "Emission Score" ;
+    rdfs:comment "The result of the peco:EmissionCalculationActivity representing the carbon emissions produced by the linked peco:EmissionGenerationActivity." ;
+    rdfs:subClassOf <https://w3id.org/peco#EmissionCalculationEntity> .
+
+prov:Activity a owl:Class .
+
+<https://w3id.org/peco#EmissionGenerationActivity> a owl:Class ;
+    rdfs:label "Emission Generation Activity" ;
+    rdfs:comment "An activity that produces emissions. For example, training of ML models, driving a car, farming operation, etc. This activity can be represented at differentl levels of abstraction, for example, as a single overarching activity (e.g., factory producion for year 2022) or as a number of smaller activities (e.g., production of a single batch of products)." ;
+    rdfs:subClassOf prov:Activity .
+
+<https://qudt.org/2.1/schema/qudt/Quantity> a owl:Class .
+
+<https://www.abdn.ac.uk#this> a owl:NamedIndividual,
+        foaf:Organization ;
+    foaf:homepage "https://www.abdn.ac.uk" ;
+    foaf:name "University of Aberdeen" .
+
+<https://www.open.ac.uk#this> a owl:NamedIndividual,
+        foaf:Organization ;
+    foaf:homepage "https://www.open.ac.uk" ;
+    foaf:name "The Open University" .
+
+<https://www.ox.ac.uk#this> a owl:NamedIndividual,
+        foaf:Organization ;
+    foaf:homepage "https://www.ox.ac.uk" ;
+    foaf:name "University of Oxford" .
+
+<https://www.upm.es#this> a owl:NamedIndividual,
+        foaf:Organization ;
+    foaf:homepage "https://www.upm.es" ;
+    foaf:name "Universidad Politécnica de Madrid" .
+
+foaf:Organization a owl:Class .
+
+[] org:memberOf <https://www.ox.ac.uk#this> ;
+    foaf:name "Stefano Germano"@en .
+
+[] org:memberOf <https://www.abdn.ac.uk#this> ;
+    foaf:name "Milan Markovic"@en .
+
+[] org:memberOf <https://www.open.ac.uk#this> ;
+    foaf:name "Iman Naja"@en .
+
+[] org:memberOf <https://www.upm.es#this> ;
+    foaf:name "Daniel Garijo"@en .
+
+[] org:memberOf <https://www.upm.es#this> ;
+    foaf:name "Daniel Garijo"@en .
+
+[] org:memberOf <https://www.ox.ac.uk#this> ;
+    foaf:name "Stefano Germano"@en .
+
+[] org:memberOf <https://www.open.ac.uk#this> ;
+    foaf:name "Iman Naja"@en .
+
+[] org:memberOf <https://www.abdn.ac.uk#this> ;
+    foaf:name "Milan Markovic"@en .
+
+[] org:memberOf <https://www.upm.es#this> ;
+    foaf:name "Daniel Garijo"@en .
+
+[] org:memberOf <https://www.ox.ac.uk#this> ;
+    foaf:name "Stefano Germano"@en .
+
+[] org:memberOf <https://www.open.ac.uk#this> ;
+    foaf:name "Iman Naja"@en .
+
+[] org:memberOf <https://www.abdn.ac.uk#this> ;
+    foaf:name "Milan Markovic"@en .
+

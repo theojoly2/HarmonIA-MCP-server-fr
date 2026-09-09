@@ -1,0 +1,122 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix onto: <https://w3id.org/mdo/provenance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+xsd:date a rdfs:Datatype,
+        owl:AnnotationProperty .
+
+<https://w3id.org/mdo/core/Calculation> a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty prov:wasAssociatedWith ;
+            owl:someValuesFrom prov:SoftwareAgent ] .
+
+<https://w3id.org/mdo/core/Property> rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom onto:ReferenceAgent ;
+                        owl:onProperty prov:wasAttributedTo ] [ a owl:Restriction ;
+                        owl:onClass onto:ReferenceAgent ;
+                        owl:onProperty prov:wasAttributedTo ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+<https://w3id.org/mdo/core/Structure> rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom onto:ReferenceAgent ;
+                        owl:onProperty prov:wasAttributedTo ] [ a owl:Restriction ;
+                        owl:onClass onto:ReferenceAgent ;
+                        owl:onProperty prov:wasAttributedTo ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] ) ] .
+
+onto: a owl:Ontology ;
+    dcterms:contributor "Patrick Lambrix"^^xsd:string,
+        "Rickard Armiento"^^xsd:string ;
+    dcterms:created "2020-04-02" ;
+    dcterms:creator "Huanyu Li"^^xsd:string ;
+    dcterms:license "https://github.com/huanyu-li/Materials-Design-Ontology/blob/master/LICENSE" ;
+    dcterms:title "Materials Design Ontology - Provenance Module"@en ;
+    vann:preferredNamespacePrefix "provenance" ;
+    vann:preferredNamespaceUri "https://w3id.org/mdo/provenance/1.0/" ;
+    rdfs:comment "This is the provenance module of Materials Design Ontology."@en ;
+    rdfs:seeAlso "https://github.com/huanyu-li/Materials-Design-Ontology" ;
+    owl:imports <https://w3id.org/mdo/core/1.0/> ;
+    owl:versionIRI <https://w3id.org/mdo/provenance/1.0/> ;
+    owl:versionInfo "1.0"^^xsd:string .
+
+onto:AuthorName a owl:DatatypeProperty ;
+    rdfs:label "author name"@en ;
+    rdfs:comment "AuthorName represents that a reference agent has the author's name in a string."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:string .
+
+onto:DOI a owl:DatatypeProperty ;
+    rdfs:label "DOI"@en ;
+    rdfs:comment "DOI represents that a reference agent has the DOI in a string."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:string .
+
+onto:DatabaseName a owl:DatatypeProperty ;
+    rdfs:label "database name"@en ;
+    rdfs:comment "DatabaseName represents that a reference agent has the database's name in a string."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:string .
+
+onto:PublicationDateTime a owl:DatatypeProperty ;
+    rdfs:label "publication dateTime"@en ;
+    rdfs:comment "PublicationDateTime represents that a reference agent has the date time in a dateTime."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:dateTime .
+
+onto:PublicationTitle a owl:DatatypeProperty ;
+    rdfs:label "publication title"@en ;
+    rdfs:comment "PublicationTitle represents that a reference agent has the publication's title in a string."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:string .
+
+onto:URL a owl:DatatypeProperty ;
+    rdfs:label "URL"@en ;
+    rdfs:comment "URL represents that a reference agent has the URL in a string."@en ;
+    rdfs:domain onto:ReferenceAgent ;
+    rdfs:range xsd:string .
+
+prov:wasAssociatedWith a owl:ObjectProperty .
+
+onto:SoftwareName a owl:DatatypeProperty ;
+    rdfs:label "software name"@en ;
+    rdfs:comment "SoftwareName represents that a software agent has the name in a string."@en ;
+    rdfs:domain prov:SoftwareAgent ;
+    rdfs:range xsd:string .
+
+prov:Agent a owl:Class .
+
+prov:SoftwareAgent a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty onto:SoftwareName ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        prov:Agent .
+
+prov:wasAttributedTo a owl:ObjectProperty .
+
+onto:ReferenceAgent a owl:Class ;
+    rdfs:label "Reference Agent"@en ;
+    rdfs:comment "A reference agent is the representation of the reference that the structure or property refer to."@en ;
+    rdfs:subClassOf prov:Agent .
+

@@ -1,0 +1,809 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix onto: <http://rdf.myexperiment.org/ontologies/base/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dc:contributor a owl:AnnotationProperty .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:date a owl:AnnotationProperty .
+
+dc:format a owl:AnnotationProperty .
+
+dc:language a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:type a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+onto:License a owl:Class ;
+    rdfs:label "License" ;
+    rdfs:comment "A License under which an Upload is licensed under" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:identifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://web.resource.org/cc/permits> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://web.resource.org/cc/prohibits> ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://web.resource.org/cc/requires> ],
+        onto:Contribution,
+        <http://web.resource.org/cc/License> .
+
+onto:activated-at a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "activated-at" ;
+    rdfs:comment "A User account is a activated-at certain dateTime" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+onto:contact-details a owl:DatatypeProperty ;
+    rdfs:label "contact-details" ;
+    rdfs:comment "A User has contact-details" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:count a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "count" ;
+    rdfs:comment "Certain Annotations may be a count of something" ;
+    rdfs:domain onto:Annotation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:country a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "country" ;
+    rdfs:comment "A User is based in a country" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:deleted-by-recipient a owl:DatatypeProperty ;
+    rdfs:label "deleted-by-recipient" ;
+    rdfs:comment "The recipient has deleted this Message from their inbox" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:deleted-by-sender a owl:DatatypeProperty ;
+    rdfs:label "deleted-by-sender" ;
+    rdfs:comment "The sender has deleted this Message from their inbox" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:email a owl:ObjectProperty ;
+    rdfs:label "email" ;
+    rdfs:comment "A User has an email address" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf foaf:mbox .
+
+onto:email-confirmed-at a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "email-confirmed-at" ;
+    rdfs:comment "An email is confirmed at a certain dateTime" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+onto:field a owl:DatatypeProperty ;
+    rdfs:label "field" ;
+    rdfs:comment "A User works in a field" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:filename a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "filename" ;
+    rdfs:comment "A File has a filename" ;
+    rdfs:domain onto:Upload ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:from a owl:ObjectProperty ;
+    rdfs:label "from" ;
+    rdfs:comment "A Message is sent from a User" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User .
+
+onto:has-announcement a owl:ObjectProperty ;
+    rdfs:label "has-announcement" ;
+    rdfs:comment "Groups may have GroupAnnouncements" ;
+    rdfs:domain onto:Group ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GroupAnnouncement ;
+    owl:inverseOf onto:announced-to .
+
+onto:has-current-version a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-current-version" ;
+    rdfs:comment "A Versionable object has a current version" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subPropertyOf onto:has-version .
+
+onto:has-friendship a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-friendship" ;
+    rdfs:comment "A User has a Friendship (with another User)" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Friendship .
+
+onto:has-membership a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-membership" ;
+    rdfs:comment "A User has a Membership (of a Group)" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Membership .
+
+onto:has-shared-item a owl:ObjectProperty ;
+    rdfs:label "has-shared-item" ;
+    rdfs:comment "Contributions that are shared within a Group" ;
+    rdfs:domain onto:Group ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Contribution .
+
+onto:interests a owl:DatatypeProperty ;
+    rdfs:label "interests" ;
+    rdfs:comment "A User's interests" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:is-current-version a owl:DatatypeProperty ;
+    rdfs:label "is-current-version" ;
+    rdfs:comment "A User's interests" ;
+    rdfs:domain onto:Versionable ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:is-friends-with a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "is-friends-with" ;
+    rdfs:comment "A User may be friends with another User" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User ;
+    rdfs:subPropertyOf foaf:knows .
+
+onto:last-seen-at a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "last-seen-at" ;
+    rdfs:comment "The last time a User was seen" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+onto:membership-policy a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "" ;
+    rdfs:comment "The policy for Users joining a Group (e.g. open, invite only, etc.)" ;
+    rdfs:domain onto:Group ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:occupation a owl:DatatypeProperty ;
+    rdfs:label "occupation" ;
+    rdfs:comment "A User has an occupation" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:openid-url a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "openid-url" ;
+    rdfs:comment "A User may have an openid-url represented as a uri" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: .
+
+onto:organisation a owl:DatatypeProperty ;
+    rdfs:label "organisation" ;
+    rdfs:comment "A User is part of an organisation" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:read-at a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "read-at" ;
+    rdfs:comment "A Message is a read-at a particular dateTime" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+onto:receive-notifications a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "receive-notifications" ;
+    rdfs:comment "Does the user receive-notifications" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:reply-to a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "reply-to" ;
+    rdfs:comment "A Message may have a Message it is a reply-to" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Message .
+
+onto:request-token a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "request-token" ;
+    rdfs:comment "Requests may have a request-token as a string" ;
+    rdfs:domain onto:Request ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:revision-comments a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "revision-comments" ;
+    rdfs:comment "Comments may be associated with a particular Version of something" ;
+    rdfs:domain onto:Version ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:subject a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "subject" ;
+    rdfs:comment "A Message has a subject" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:to a owl:ObjectProperty ;
+    rdfs:label "to" ;
+    rdfs:comment "A Message is sent to a User" ;
+    rdfs:domain onto:Message ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User .
+
+onto:unconfirmed-email a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "unconfirmed-email" ;
+    rdfs:comment "An email that has yet to be confirmed" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: .
+
+onto:uri a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "uri" ;
+    rdfs:comment "The URI for some object" ;
+    rdfs:isDefinedBy onto: .
+
+<http://dbpedia.org/ontology/residence> a owl:ObjectProperty .
+
+dcterms:Agent a owl:Class .
+
+dcterms:identifier a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+onto:ContentType a owl:Class ;
+    rdfs:label "ContentType" ;
+    rdfs:comment "The type of content for an Upload" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Contribution .
+
+onto:FriendshipInvitation a owl:Class ;
+    rdfs:label "FriendshipInvitation" ;
+    rdfs:comment "A FriendshipInvitation to an external email address" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Invitation ;
+    owl:disjointWith onto:MembershipInvitation .
+
+onto:MembershipInvitation a owl:Class ;
+    rdfs:label "MembershipInvitation" ;
+    rdfs:comment "A MembershipInvitation to an external email address" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Invitation ;
+    owl:disjointWith onto:FriendshipInvitation .
+
+onto:accepted-at a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "accepted-at" ;
+    rdfs:comment "A Request can be accepted-at a certain dateTime" ;
+    rdfs:domain onto:Request ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:dateTime .
+
+onto:annotator-of a owl:ObjectProperty ;
+    rdfs:label "annotator" ;
+    rdfs:comment "A User is an annotator-of an Annotation" ;
+    rdfs:domain onto:User ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Annotation ;
+    rdfs:subPropertyOf <http://rdfs.org/sioc/ns#owner_of> ;
+    owl:inverseOf onto:has-annotator .
+
+onto:content-url a owl:ObjectProperty ;
+    rdfs:label "content-url" ;
+    rdfs:comment "An Upload has content at a URL" ;
+    rdfs:isDefinedBy onto: .
+
+onto:has-accepter a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-accepter" ;
+    rdfs:comment "A Request must have an accepter that can accept" ;
+    rdfs:domain onto:Request ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Actor .
+
+onto:has-announcer a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-announcer" ;
+    rdfs:comment "An Announcement has an annoucer that is a User" ;
+    rdfs:domain onto:Announcement ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User ;
+    rdfs:subPropertyOf <http://rdfs.org/sioc/ns#has_owner> .
+
+onto:has-content-type a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-content-type" ;
+    rdfs:comment "An Upload has a ContentType" ;
+    rdfs:domain onto:Upload ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:ContentType .
+
+onto:has-policy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-policy" ;
+    rdfs:comment "A Contribution has a Policy for access rights management" ;
+    rdfs:domain onto:Contribution ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range <http://rdf.myexperiment.org/ontologies/snarm/Policy> .
+
+onto:has-requester a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-requester" ;
+    rdfs:comment "A Request must have a requester" ;
+    rdfs:domain onto:Request ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Actor .
+
+onto:public-announcement a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "public-announcement" ;
+    rdfs:comment "Is the GroupAnnouncement viewable (public) to those outside the Group" ;
+    rdfs:domain onto:GroupAnnouncement ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:boolean .
+
+onto:username a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "username" ;
+    rdfs:comment "A User may have a username represented as a string" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:version-number a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "version-number" ;
+    rdfs:comment "A Version has a version-number" ;
+    rdfs:domain onto:Version ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:positiveInteger .
+
+<http://rdf.myexperiment.org/ontologies/snarm/Policy> a owl:Class .
+
+<http://rdfs.org/sioc/ns#Item> a owl:Class .
+
+<http://rdfs.org/sioc/ns#UserAccount> a owl:Class .
+
+<http://rdfs.org/sioc/ns#UserGroup> a owl:Class .
+
+<http://rdfs.org/sioc/ns#avatar> a owl:ObjectProperty .
+
+<http://rdfs.org/sioc/ns#name> a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+<http://web.resource.org/cc/License> a owl:Class .
+
+<http://web.resource.org/cc/license> a owl:ObjectProperty .
+
+<http://web.resource.org/cc/permits> a owl:ObjectProperty .
+
+<http://web.resource.org/cc/prohibits> a owl:ObjectProperty .
+
+<http://web.resource.org/cc/requires> a owl:ObjectProperty .
+
+foaf:based_near a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+foaf:homepage a owl:ObjectProperty .
+
+foaf:knows a owl:ObjectProperty .
+
+foaf:name a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+dcterms:created a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime .
+
+dcterms:hasVersion a owl:ObjectProperty ;
+    owl:inverseOf dcterms:isVersionOf .
+
+dcterms:isVersionOf a owl:ObjectProperty ;
+    owl:inverseOf dcterms:hasVersion .
+
+dcterms:title a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+onto:Annotatable a owl:Class ;
+    rdfs:label "Annotatable" ;
+    rdfs:comment "An object that can be annotated with Annotations" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-annotation ],
+        onto:Interface .
+
+onto:Upload a owl:Class ;
+    rdfs:label "Upload" ;
+    rdfs:comment "An object that can be contributed by a User that requires uploading" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:title ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://web.resource.org/cc/license> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-content-type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:content-url ],
+        onto:Contribution .
+
+onto:Versionable a owl:Class ;
+    rdfs:label "Versionable" ;
+    rdfs:comment "A Contribution that can be a Version" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-version ],
+        onto:Interface .
+
+onto:annotates a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "annotates" ;
+    rdfs:comment "An Annotation is associated with a particular Contribution" ;
+    rdfs:domain onto:Annotation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Annotatable ;
+    owl:inverseOf onto:has-annotation .
+
+onto:announced-to a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "announced-to" ;
+    rdfs:comment "The Group a GroupAnnouncement has been announced to" ;
+    rdfs:domain onto:GroupAnnouncement ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Group .
+
+onto:has-annotation a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-annotation" ;
+    rdfs:comment "An Annotable may have a Annotation" ;
+    rdfs:domain onto:Annotatable ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Annotation ;
+    owl:inverseOf onto:annotates .
+
+onto:has-annotator a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has-annotator" ;
+    rdfs:comment "An Annotation has User as annotator" ;
+    rdfs:domain onto:Annotation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:User ;
+    rdfs:subPropertyOf <http://rdfs.org/sioc/ns#has_owner> ;
+    owl:inverseOf onto:annotator-of .
+
+onto:has-version a owl:ObjectProperty ;
+    rdfs:label "has-version" ;
+    rdfs:comment "A Versionable object has at least one version" ;
+    rdfs:domain onto:Versionable ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Version ;
+    rdfs:subPropertyOf dcterms:hasVersion .
+
+onto:text a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "text" ;
+    rdfs:comment "A Submission has some text associated with it" ;
+    rdfs:domain onto:Submission ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+<http://rdfs.org/sioc/ns#has_member> a owl:ObjectProperty ;
+    owl:inverseOf <http://rdfs.org/sioc/ns#member_of> .
+
+<http://rdfs.org/sioc/ns#member_of> a owl:ObjectProperty ;
+    owl:inverseOf <http://rdfs.org/sioc/ns#has_member> .
+
+<http://rdfs.org/sioc/ns#owner_of> a owl:ObjectProperty ;
+    owl:inverseOf <http://rdfs.org/sioc/ns#has_owner> .
+
+foaf:mbox a owl:ObjectProperty .
+
+foaf:mbox_sha1sum a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+dcterms:description a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
+
+dcterms:modified a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime .
+
+onto:Friendship a owl:Class ;
+    rdfs:label "Friendship" ;
+    rdfs:comment "A Friendship between two Users" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Request ;
+    owl:disjointWith onto:Invitation,
+        onto:Membership .
+
+onto:GroupAnnouncement a owl:Class ;
+    rdfs:label "GroupAnnouncement" ;
+    rdfs:comment "An Announcement to a Group" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:public-announcement ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:announced-to ],
+        onto:Announcement .
+
+onto:Interface a owl:Class ;
+    rdfs:label "Interface" ;
+    rdfs:comment "Superclass for all Interface classes" ;
+    rdfs:isDefinedBy onto: .
+
+onto:Membership a owl:Class ;
+    rdfs:label "Membership" ;
+    rdfs:comment "A Membership of a User to a Group" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Request ;
+    owl:disjointWith onto:Friendship,
+        onto:Invitation .
+
+onto:Version a owl:Class ;
+    rdfs:label "Version" ;
+    rdfs:comment "A Contribution may be a Version of another Contribution" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:version-number ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:isVersionOf ],
+        onto:Interface .
+
+onto:Invitation a owl:Class ;
+    rdfs:label "Invitation" ;
+    rdfs:comment "A Request could be an external Invitation" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#has_owner> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:mbox_sha1sum ],
+        onto:Request ;
+    owl:disjointWith onto:Friendship,
+        onto:Membership .
+
+onto:Actor a owl:Class ;
+    rdfs:label "Actor" ;
+    rdfs:comment "An object that can perform an action" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#name> ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:created ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:modified ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:name ],
+        dcterms:Agent ;
+    owl:disjointWith onto:Submission .
+
+onto:Group a owl:Class ;
+    rdfs:label "Group" ;
+    rdfs:comment "A Group of Users" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#has_member> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#has_owner> ],
+        onto:Actor ;
+    owl:disjointWith onto:User ;
+    owl:equivalentClass <http://rdfs.org/sioc/ns#UserGroup> .
+
+onto:Announcement a owl:Class ;
+    rdfs:label "Announcement" ;
+    rdfs:comment "A public Announcement" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:text ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:modified ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-announcer ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:title ],
+        onto:Submission ;
+    owl:disjointWith onto:Annotation,
+        onto:Contribution,
+        onto:Message,
+        onto:Request .
+
+onto:Submission a owl:Class ;
+    rdfs:label "Submission" ;
+    rdfs:comment "An object that has been submitted.  This might be a Contribution, Annotation, Request or an Attibution/Creditation of an Upload" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:created ] ;
+    owl:disjointWith onto:Actor ;
+    owl:equivalentClass <http://rdfs.org/sioc/ns#Item> .
+
+<http://rdfs.org/sioc/ns#has_owner> a owl:ObjectProperty ;
+    owl:inverseOf <http://rdfs.org/sioc/ns#owner_of> .
+
+onto:Annotation a owl:Class ;
+    rdfs:label "Annotation" ;
+    rdfs:comment "An Annotation of a Annotatable object" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:annotates ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-annotator ],
+        onto:Submission ;
+    owl:disjointWith onto:Announcement,
+        onto:Contribution,
+        onto:Message,
+        onto:Request .
+
+onto:Contribution a owl:Class ;
+    rdfs:label "Contribution" ;
+    rdfs:comment "An object that is contributed by a User" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#has_owner> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-policy ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty dcterms:modified ],
+        onto:Submission ;
+    owl:disjointWith onto:Annotation,
+        onto:Announcement,
+        onto:Message,
+        onto:Request .
+
+onto:Request a owl:Class ;
+    rdfs:label "Request" ;
+    rdfs:comment "A Request can be made by an Actor to another Actor" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#has_owner> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-accepter ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:has-requester ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:accepted-at ],
+        onto:Submission ;
+    owl:disjointWith onto:Annotation,
+        onto:Announcement,
+        onto:Contribution,
+        onto:Message .
+
+onto:Message a owl:Class ;
+    rdfs:label "Message" ;
+    rdfs:comment "A Message sent between two Users" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:text ],
+        onto:Submission ;
+    owl:disjointWith onto:Annotation,
+        onto:Announcement,
+        onto:Contribution,
+        onto:Request .
+
+onto:User a owl:Class ;
+    rdfs:label "User" ;
+    rdfs:comment "A User" ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:homepage ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty onto:username ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://dbpedia.org/ontology/residence> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:mbox_sha1sum ],
+        [ a owl:Restriction ;
+            owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#member_of> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:mbox ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty <http://rdfs.org/sioc/ns#avatar> ],
+        [ a owl:Restriction ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty foaf:based_near ],
+        onto:Actor ;
+    owl:disjointWith onto:Group ;
+    owl:equivalentClass <http://rdfs.org/sioc/ns#UserAccount> .
+
+onto: a owl:Ontology ;
+    rdfs:label "myExperiment Base v1.0" ;
+    dc:contributor "David R Newman"^^xsd:string ;
+    dc:creator <http://id.ecs.soton.ac.uk/person/9421> ;
+    dc:date "2009-01-28"^^xsd:date ;
+    dc:format "rdf/xml"^^xsd:string ;
+    dc:language "en" ;
+    dc:publisher <http://rdf.myexperiment.org> ;
+    dc:title "The myExperiment Base Ontology"@en ;
+    rdfs:comment "This provides the base elements required by myExperiment for content management, social networking and object annotation." ;
+    owl:imports <http://rdf.myexperiment.org/ontologies/snarm/> ;
+    owl:versionInfo "$Date: 2013/03/26 $" .
+

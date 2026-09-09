@@ -1,0 +1,107 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://creativecommons.org/ns#> .
+@prefix onto: <https://w3id.org/EUTaxO> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:license a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:created a owl:AnnotationProperty .
+
+dcterms:creator a owl:AnnotationProperty .
+
+dcterms:description a owl:AnnotationProperty .
+
+dcterms:title a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+<http://rs.tdwg.org/dwc/terms/acceptedNameUsage> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/genus> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/namePublishedInYear> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/scientificName> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/scientificNameAuthorship> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/specificEpithet> a owl:DatatypeProperty .
+
+<http://rs.tdwg.org/dwc/terms/taxonRank> a owl:DatatypeProperty .
+
+onto: a owl:Ontology ;
+    rdfs:label "EUTaxO - EUdaphobase Taxonomy Ontology"^^xsd:string ;
+    ns1:license "https://opensource.org/licenses/MIT"^^xsd:string ;
+    dcterms:contributor "Carlos Alberto Martínez Muñoz"^^xsd:string ;
+    dcterms:created "2022-09-29T23:59:59"^^xsd:dateTime ;
+    dcterms:creator "José F. Aldana-Martín"^^xsd:string ;
+    dcterms:description "EUdaphobase Taxonomy Ontology for the European Soil-Biology Data Warehouse for Soil Protection"^^xsd:string ;
+    dcterms:title "EUTaxO - EUdaphobase Taxonomy Ontology"^^xsd:string ;
+    vann:preferredNamespacePrefix "tax"^^xsd:string ;
+    vann:preferredNamespaceUri "https://w3id.org/EUTaxO#"^^xsd:anyURI ;
+    owl:priorVersion "https://www.eudaphobase.eu/ontologies/taxonomy/1.3.0"^^xsd:anyURI ;
+    owl:versionIRI <https://w3id.org/EUTaxO#2.0.0> ;
+    owl:versionInfo "v2.0.0 - Changes:\\nThis major version adapts the ontology to better comply with the FAIR principles.\\n- Changed URI from \"https://www.eudaphobase.eu/ontologies/taxonomy\" to \"https://w3id.org/EUTaxO\"\\n- Complete ontology metadata\\n- Complete labels and comments for all terms\\n- Remove support to parse output excel file\\n- Remove all spaces from URIs"^^xsd:string .
+
+<https://w3id.org/EUTaxO#Animalia> a owl:Class ;
+    rdfs:label "Animalia" ;
+    rdfs:comment "Animalia kingdom"^^xsd:string ;
+    rdfs:subClassOf <https://w3id.org/EUTaxO#Taxon> .
+
+<https://w3id.org/EUTaxO#belongsTo> a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "belongs to"^^xsd:string ;
+    rdfs:comment "Defines a hierarchy from more generic taxa, to more specific ones"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range <https://w3id.org/EUTaxO#Taxon> .
+
+<https://w3id.org/EUTaxO#brackets> a owl:DatatypeProperty ;
+    rdfs:label "brackets"^^xsd:string ;
+    rdfs:comment "Whether to use brackets for the correct nomenclature of a taxon"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/EUTaxO#id> a owl:DatatypeProperty ;
+    rdfs:label "id"^^xsd:string ;
+    rdfs:comment "id from the EUdaphobase database"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range xsd:string .
+
+<https://w3id.org/EUTaxO#kingdom> a owl:ObjectProperty ;
+    rdfs:label "kingdom"^^xsd:string ;
+    rdfs:comment "The kingdom of a specific taxon"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range <https://w3id.org/EUTaxO#Taxon> .
+
+<https://w3id.org/EUTaxO#phylum> a owl:ObjectProperty ;
+    rdfs:label "phylum"^^xsd:string ;
+    rdfs:comment "The phylum of a specific taxon"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range <https://w3id.org/EUTaxO#Taxon> .
+
+<https://w3id.org/EUTaxO#synonym> a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "synonym"^^xsd:string ;
+    rdfs:comment "Relates if two taxon are synonyms"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range <https://w3id.org/EUTaxO#Taxon> .
+
+<https://w3id.org/EUTaxO#synonyms_exist> a owl:DatatypeProperty ;
+    rdfs:label "synonyms exist"^^xsd:string ;
+    rdfs:comment "Whether or not synonyms exists for a given taxon"^^xsd:string ;
+    rdfs:domain <https://w3id.org/EUTaxO#Taxon> ;
+    rdfs:range xsd:boolean .
+
+<https://w3id.org/EUTaxO#Taxon> a owl:Class ;
+    rdfs:label "Taxon"^^xsd:string ;
+    rdfs:comment "Base taxon class"^^xsd:string ;
+    rdfs:seeAlso "http://purl.org/biodiversity/taxon/Taxon"^^xsd:anyURI .
+

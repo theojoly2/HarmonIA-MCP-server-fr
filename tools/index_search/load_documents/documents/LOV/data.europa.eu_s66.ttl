@@ -1,0 +1,1278 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.w3.org/2006/vcard/ns#> .
+@prefix ns2: <http://www.w3.org/ns/adms#> .
+@prefix onto: <http://data.europa.eu/s66#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+onto:Book a owl:Class ;
+    rdfs:label "Book"@en ;
+    rdfs:comment "A non-serial document that is complete in one volume or a designated finite number of volumes. A book published by a publisher is usually identified by an International Standard Book Number (ISBN), and may be manifested as a physical printed publication on paper bound in a hard or soft cover, or in electronic format as an 'e-book'."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ProjectPublication ;
+    skos:broadMatch <http://purl.org/spar/fabio/Book> .
+
+onto:DetectedAcronym a owl:Class ;
+    rdfs:label "Detected Acronym"@en ;
+    rdfs:comment "Any acronym that has been detected, automatically or manually, from the description of an entity or from any other form of natural language text."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Acronym ;
+    owl:disjointWith onto:TitleAcronym .
+
+onto:NonPeerReviewedPublication a owl:Class ;
+    rdfs:label "Non Peer-Reviewed Publication"@en ;
+    rdfs:comment "A work that hasn't undergone peer reviewing prior to its publication."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ProjectPublication .
+
+onto:ThesisDissertation a owl:Class ;
+    rdfs:label "Thesis Dissertation"@en ;
+    rdfs:comment "A book authored by a student containing a formal presentations of research outputs submitted for examination in completion of a course of study at an institution of higher education, to fulfil the requirements for an academic degree. Also know as a dissertation."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ProjectPublication ;
+    skos:broadMatch <http://purl.org/spar/fabio/Thesis> .
+
+onto:code a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "code"@en ;
+    rdfs:comment "A CORDA code."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:currency a owl:DatatypeProperty ;
+    rdfs:label "currency"@en ;
+    rdfs:comment "The currency in which the monetary amount is expressed."@en ;
+    rdfs:domain onto:MonetaryAmount ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:disburses a owl:ObjectProperty ;
+    rdfs:label "disburses"@en ;
+    rdfs:comment "Relates the funding agency to the grant(s) that it disburses."@en ;
+    rdfs:domain onto:FundingAgency ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Grant ;
+    owl:inverseOf onto:isDisbursedBy .
+
+onto:hasAcronym a owl:ObjectProperty ;
+    rdfs:label "has acronym"@en ;
+    rdfs:comment "Relates an entity (e.g. project, grant, etc.) with its acronym(s). This includes acronyms representing the entity’s title as well as any additional acronyms extracted from other attributes of the entity."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Acronym ;
+    owl:inverseOf onto:isAcronymOf .
+
+onto:hasAssociatedFundingScheme a owl:ObjectProperty ;
+    rdfs:label "has associated funding scheme"@en ;
+    rdfs:comment "Relates an entity other than funding scheme (e.g., result, etc.) with associated funding schemes."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme .
+
+onto:hasEuroSciVocClassification a owl:ObjectProperty ;
+    rdfs:label "has EuroSciVoc classification"@en ;
+    rdfs:comment "One or more values from the EuroSciVoc taxonomy that represent the main fields of science of the project."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:hasFundingSchemeCall a owl:ObjectProperty ;
+    rdfs:label "has funding scheme call"@en ;
+    rdfs:comment "Indicates the Call under which a project has been funded."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    rdfs:subPropertyOf onto:hasFundingScheme .
+
+onto:hasFundingSchemeProgramme a owl:ObjectProperty ;
+    rdfs:label "has funding scheme programme"@en ;
+    rdfs:comment "Indicates the legal basis under which a project has been funded."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    rdfs:subPropertyOf onto:hasFundingScheme .
+
+onto:hasFundingSchemeTopic a owl:ObjectProperty ;
+    rdfs:label "has funding scheme topic"@en ;
+    rdfs:comment "Indicates the Topic under which a project has been funded."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    rdfs:subPropertyOf onto:hasFundingScheme .
+
+onto:hasFundingSchemeType a owl:ObjectProperty ;
+    rdfs:label "has funding scheme type"@en ;
+    rdfs:comment "Indicates the type of action under which a project has been funded."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    rdfs:subPropertyOf onto:hasFundingScheme .
+
+onto:hasISOCountryCode a owl:ObjectProperty ;
+    rdfs:label "has ISO country code"@en ;
+    rdfs:comment "The 2-digit ISO country code."@en ;
+    rdfs:domain onto:Country ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:hasNUTS0code a owl:ObjectProperty ;
+    rdfs:label "has NUTS 0 code"@en ;
+    rdfs:comment "A value representing the NUTS-0 code of the place or address."@en ;
+    rdfs:domain onto:AdministrativeArea ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf onto:hasNUTSCode .
+
+onto:hasNUTS1code a owl:ObjectProperty ;
+    rdfs:label "has NUTS 1 code"@en ;
+    rdfs:comment "A value representing the NUTS-1 code of the place or address."@en ;
+    rdfs:domain onto:AdministrativeArea ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf onto:hasNUTSCode .
+
+onto:hasNUTS2code a owl:ObjectProperty ;
+    rdfs:label "has NUTS 2 code"@en ;
+    rdfs:comment "A value representing the NUTS-2 code of the place or address."@en ;
+    rdfs:domain onto:AdministrativeArea ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf onto:hasNUTSCode .
+
+onto:hasNUTS3code a owl:ObjectProperty ;
+    rdfs:label "has NUTS 3 code"@en ;
+    rdfs:comment "A value representing the NUTS-3 code of the place or address."@en ;
+    rdfs:domain onto:AdministrativeArea ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept ;
+    rdfs:subPropertyOf onto:hasNUTSCode .
+
+onto:hasNextFundingScheme a owl:ObjectProperty ;
+    rdfs:label "has next funding scheme"@en ;
+    rdfs:comment "Relates a funding scheme with the next funding scheme."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme .
+
+onto:hasPreviousFundingScheme a owl:ObjectProperty ;
+    rdfs:label "has previous funding scheme"@en ;
+    rdfs:comment "Relates a funding scheme with the previous funding scheme."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme .
+
+onto:hasRecipient a owl:ObjectProperty ;
+    rdfs:label "has recipient"@en ;
+    rdfs:comment "Relates the grant payment to the organisation role(s) which have received the grant payment. Inverse property of isRecipientOf."@en ;
+    rdfs:domain onto:GrantPayment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Role ;
+    owl:inverseOf onto:isRecipientOf .
+
+onto:hasRelatedProject a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "has related project"@en ;
+    rdfs:comment "Represents a generic non parent-child relation between two CORDIS projects."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Project .
+
+onto:hasRelatedScheme a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "has related scheme"@en ;
+    rdfs:comment "Represents a generic non parent-child relation between two funding schemes."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme .
+
+onto:hasResult a owl:ObjectProperty ;
+    rdfs:label "has result"@en ;
+    rdfs:comment "Relates the project with its result(s)."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:Project ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Result ;
+    owl:inverseOf onto:isResultOf .
+
+onto:hasSubOrganisation a owl:ObjectProperty ;
+    rdfs:label "has sub-organisation"@en ;
+    rdfs:comment "Relates the organisation with another organisation which is a sub-part or child of it."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Organisation ;
+    owl:inverseOf onto:isSubOrganisationOf .
+
+onto:hasSubScheme a owl:ObjectProperty ;
+    rdfs:label "has subscheme"@en ;
+    rdfs:comment "Relates the funding scheme to its sub-schemes."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    owl:inverseOf onto:isSubSchemeOf .
+
+onto:hasUnit a owl:ObjectProperty ;
+    rdfs:label "has unit"@en ;
+    rdfs:comment "Relates the organisation with a unit or department that forms part of the organisation."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:OrganisationUnit ;
+    owl:inverseOf onto:isUnitOf .
+
+onto:implements a owl:ObjectProperty ;
+    rdfs:label "implements"@en ;
+    rdfs:comment "Relates a funding agency to the funding schemes that it implements and administers."@en ;
+    rdfs:domain onto:FundingAgency ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    owl:inverseOf onto:isImplementedBy .
+
+onto:isbn a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "isbn"@en ;
+    rdfs:comment "The international standard book number of book publications."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:issn a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "issn"@en ;
+    rdfs:comment "The international standard serial number of journal publications."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:keyword a owl:DatatypeProperty ;
+    rdfs:label "keyword"@en ;
+    rdfs:comment "Word or words that represent the main idea of a referred entity (e.g., project. project result, etc.)"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:order a owl:DatatypeProperty ;
+    rdfs:domain onto:OrganisationRole ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:periodFrom a owl:DatatypeProperty ;
+    rdfs:label "period from"@en ;
+    rdfs:comment "The date that the reporting period started."@en ;
+    rdfs:domain onto:ProjectReportSummary ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+onto:periodNumber a owl:DatatypeProperty ;
+    rdfs:label "period number"@en ;
+    rdfs:comment "The number of the reporting period."@en ;
+    rdfs:domain onto:ProjectReportSummary ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:periodTo a owl:DatatypeProperty ;
+    rdfs:label "period to"@en ;
+    rdfs:comment "The date that the reporting period ended."@en ;
+    rdfs:domain onto:ProjectReportSummary ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+onto:postOfficeBoxNumber a owl:DatatypeProperty ;
+    rdfs:label "post office box number"@en ;
+    rdfs:comment "The post office box number for PO box addresses."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to"@en ;
+    rdfs:comment "The entity to which this acronym refers. This can either be an entity inside of the knowledge graph or an external entity of any type."@en ;
+    rdfs:domain onto:Acronym ;
+    rdfs:isDefinedBy onto: .
+
+onto:terminationDate a owl:DatatypeProperty ;
+    rdfs:label "termination date"@en ;
+    rdfs:comment "The termination date of a project."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf onto:date .
+
+<http://publications.europa.eu/resource/dataset/eurio> a owl:Ontology,
+        ns2:Asset,
+        dcat:Dataset ;
+    dcterms:creator [ a foaf:Agent ;
+            foaf:name "Publications Office of the European Commission"@en ] ;
+    dcterms:description "The EUropean Research Information Ontology (EURIO) conceptualises, formally encodes and makes available in an open, structured and machine-readable format data about research projects funded by the EU's framework programmes for research and innovation."@en ;
+    dcterms:issued "2021-12-01T00:00:00"^^xsd:dateTime ;
+    dcterms:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:modified "2025-05-08T00:00:00"^^xsd:dateTime ;
+    dcterms:publisher <http://publications.europa.eu/resource/authority/corporate-body/PUBL> ;
+    dcterms:title "EURIO: EUropean Research Information Ontology"@en ;
+    dcterms:type <http://purl.org/adms/assettype/Ontology> ;
+    vann:preferredNamespacePrefix "eurio" ;
+    rdfs:comment "CORDIS is the portal responsible for publishing the results of EU-funded research and innovation projects. EURIO (EUropean Research Information Ontology) is the conceptual data model developed by the Publications Office of the European Commission to represent and structure the CORDIS content in a semantic format improving its transparency, reusability and accessibility."@en ;
+    owl:versionIRI <http://data.europa.eu/s66/v2.5#> ;
+    owl:versionInfo "2.5.0" ;
+    ns2:status <http://purl.org/adms/status/Completed> ;
+    ns2:versionNotes "Update to delete person class and contact details."@en ;
+    dcat:contactPoint [ a ns1:Kind,
+                ns1:Organization ;
+            ns1:fn "Publications Office of the European Union"@en ;
+            ns1:hasEmail <mailto:op-info@publications.europa.eu> ] ;
+    dcat:contributor [ a foaf:Agent ;
+            foaf:name "Cognizone" ] ;
+    dcat:distribution [ a dcat:Distribution ;
+            dcterms:downloadURL <https://op.europa.eu/s/eurio-v2.5.ttl> ;
+            dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+            dcat:accessURL <https://op.europa.eu/en/web/eu-vocabularies/eurio> ] ;
+    dcat:keyword "EU projects"@en,
+        "ontology"@en,
+        "research"@en ;
+    dcat:theme <http://eurovoc.europa.eu/100142> .
+
+dc:creator a owl:AnnotationProperty .
+
+dc:description a owl:AnnotationProperty .
+
+dc:publisher a owl:AnnotationProperty .
+
+dc:title a owl:AnnotationProperty .
+
+dcterms:contributor a owl:AnnotationProperty .
+
+dcterms:license a owl:AnnotationProperty .
+
+dcterms:modified a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+skos:broadMatch a owl:AnnotationProperty .
+
+skos:closeMatch a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:exactMatch a owl:AnnotationProperty .
+
+skos:note a owl:AnnotationProperty .
+
+dcat:accessURL a owl:AnnotationProperty .
+
+dcat:distribution a owl:AnnotationProperty .
+
+dcat:downloadURL a owl:AnnotationProperty .
+
+foaf:mbox a owl:AnnotationProperty .
+
+onto:ForProfitOrganisation a owl:Class ;
+    rdfs:label "For Profit Organisation"@en ;
+    rdfs:comment "A for profit entity"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:broadMatch <https://w3id.org/dingo#ForProfitOrganisation> .
+
+onto:HigherOrSecondaryEducation a owl:Class ;
+    rdfs:label "Higher Or Secondary Education"@en ;
+    rdfs:comment "Institution that provides education."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:broadMatch <http://schema.org/EducationalOrganization>,
+        <https://w3id.org/dingo#EducationOrganisation> .
+
+onto:JournalPaper a owl:Class ;
+    rdfs:label "Journal Paper"@en ;
+    rdfs:comment "An article, typically the realization of a research paper reporting original research findings, published in a journal issue."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ProjectPublication ;
+    skos:broadMatch <http://purl.org/spar/fabio/JournalArticle> .
+
+onto:ProceedingsPaper a owl:Class ;
+    rdfs:label "Procedings Paper"@en ;
+    rdfs:comment "A paper, typically the realization of a research paper reporting original research findings, usually presented at a workshop and published within a workshop proceedings volume."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:ProjectPublication ;
+    skos:broadMatch <http://purl.org/spar/fabio/WorkshopPaper> .
+
+onto:ProjectDeliverable a owl:Class ;
+    rdfs:label "Project Deliverable"@en ;
+    rdfs:comment "A document referring to the results obtained during the development of a project."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasResultType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:description ],
+        onto:Result ;
+    skos:broadMatch <http://purl.org/spar/fabio/ProjectReportDocument> .
+
+onto:PublicBody a owl:Class ;
+    rdfs:label "Public Body"@en ;
+    rdfs:comment "Organisation or agency depending on a government, State or other supranational organisation and mainly operated by the government."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:closeMatch <http://purl.org/cerif/frapo/NotForProfitOrganization>,
+        <https://w3id.org/dingo#GovernamentalOrganisation> .
+
+onto:ResearchOrganisation a owl:Class ;
+    rdfs:label "Research Organisation"@en ;
+    rdfs:comment "Organisations devoted to research activities."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:broadMatch <https://w3id.org/dingo#ResearchPerformingOrganisation> .
+
+onto:SME a owl:Class ;
+    rdfs:label "SME"@en ;
+    rdfs:comment "Small and Medium Enterprises."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:broadMatch <http://purl.org/cerif/frapo/SME> .
+
+onto:TitleAcronym a owl:Class ;
+    rdfs:label "Title Acronym"@en ;
+    rdfs:comment "An acronym explicitly defined as the title or name of another entity (e.g. Project, Organisation, Funding Scheme, etc.)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Acronym .
+
+onto:addressCountry a owl:DatatypeProperty ;
+    rdfs:label "address country"@en ;
+    rdfs:comment "The country of the place or address. You can also provide the two-letter ISO 3166-1 alpha-2 country code."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:addressLocality a owl:DatatypeProperty ;
+    rdfs:label "address locality"@en ;
+    rdfs:comment "The locality, town or city of the place or address."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:author a owl:DatatypeProperty ;
+    rdfs:label "author"@en ;
+    rdfs:comment "The list of authors."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:definition a owl:DatatypeProperty ;
+    rdfs:label "definition"@en ;
+    rdfs:comment "The definition of the acronym."@en ;
+    rdfs:domain onto:Acronym ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:description a owl:DatatypeProperty ;
+    rdfs:label "description"@en ;
+    rdfs:comment "A brief summary of the entity (project, etc.)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:doi a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "doi"@en ;
+    rdfs:comment "The digital object identifier of a publication."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI .
+
+onto:finalResults a owl:DatatypeProperty ;
+    rdfs:label "final results"@en ;
+    rdfs:comment "A brief description of the project findings."@en ;
+    rdfs:domain onto:ProjectReportSummary ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:fullAddress a owl:DatatypeProperty ;
+    rdfs:label "full address"@en ;
+    rdfs:comment "The full address of a physical location of an entity."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:funds a owl:ObjectProperty ;
+    rdfs:label "funds"@en ;
+    rdfs:comment "Relates the grant with the project(s) that are completely or partially funded by it."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Project ;
+    owl:inverseOf onto:isFundedBy .
+
+onto:hasAddress a owl:ObjectProperty ;
+    rdfs:label "has address"@en ;
+    rdfs:comment "Relates a physical location to its registered address."@en ;
+    rdfs:domain onto:Site ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:PostalAddress .
+
+onto:hasBeneficiary a owl:ObjectProperty ;
+    rdfs:label "has beneficiary"@en ;
+    rdfs:comment "Relates the grant to the organisation role(s) that are a beneficiary of the grant. "@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Role ;
+    owl:inverseOf onto:isBeneficiaryOf .
+
+onto:hasCoordinates a owl:ObjectProperty ;
+    rdfs:label "has coordinates"@en ;
+    rdfs:comment "The geo-coordinates of a place"@en ;
+    rdfs:domain onto:Site ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Coordinates .
+
+onto:hasEUCountryCode a owl:ObjectProperty ;
+    rdfs:label "has EU country code"@en ;
+    rdfs:comment "The country code of the location or address according to the EU country codes."@en ;
+    rdfs:domain onto:Country ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:hasFundingAmount a owl:ObjectProperty ;
+    rdfs:label "has funding amount"@en ;
+    rdfs:comment "Relates the grant or funding scheme to the amount of money available for funding."@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( onto:FundingScheme onto:Grant ) ] ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MonetaryAmount .
+
+onto:hasFundingSchemeCategory a owl:ObjectProperty ;
+    rdfs:label "has funding scheme category"@en ;
+    rdfs:comment "A list of terms specifying the different categories / types of funding schemes."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:hasGeographicalLocation a owl:ObjectProperty ;
+    rdfs:label "has geographical location"@en ;
+    rdfs:comment "The basic containment relation between a place and one that contains it"@en ;
+    rdfs:domain onto:Site ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:AdministrativeArea .
+
+onto:hasGrant a owl:ObjectProperty ;
+    rdfs:label "has grant"@en ;
+    rdfs:comment "Relates a funding scheme with the grants that form part of it. "@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Grant .
+
+onto:hasInvolvedParty a owl:ObjectProperty ;
+    rdfs:label "has involved party"@en ;
+    rdfs:comment "Relates the Project to the roles that are involved in the project."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Role ;
+    owl:inverseOf onto:isInvolvedIn .
+
+onto:hasPayment a owl:ObjectProperty ;
+    rdfs:label "has payment"@en ;
+    rdfs:comment "Relates the grant to its payment(s)."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GrantPayment ;
+    owl:inverseOf onto:isPaymentOf .
+
+onto:hasPaymentAmount a owl:ObjectProperty ;
+    rdfs:label "has payment amount"@en ;
+    rdfs:comment "Relates the payment to the amount of money that was given to the beneficiary of the payment."@en ;
+    rdfs:domain onto:GrantPayment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MonetaryAmount .
+
+onto:hasResultType a owl:ObjectProperty ;
+    rdfs:label "has result type"@en ;
+    rdfs:comment "A list of terms specifying the types of results that can have a project."@en ;
+    rdfs:domain onto:Result ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:comment "Relates the organisation to the roles that the organisation takes."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Role ;
+    owl:inverseOf onto:isRoleOf .
+
+onto:hasSite a owl:ObjectProperty ;
+    rdfs:label "has site"@en ;
+    rdfs:comment "relates an organisation to its physical site"@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Site .
+
+onto:hasTotalCost a owl:ObjectProperty ;
+    rdfs:label "has total cost"@en ;
+    rdfs:comment "Relates the project with the amount of money expected, required, or given in payment for the project."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:MonetaryAmount .
+
+onto:isAcronymOf a owl:ObjectProperty ;
+    rdfs:label "is acronym of"@en ;
+    rdfs:comment "Relates the acronym to the entity or entities to which it belongs."@en ;
+    rdfs:domain onto:Acronym ;
+    rdfs:isDefinedBy onto: .
+
+onto:isBeneficiaryOf a owl:ObjectProperty ;
+    rdfs:label "is beneficiary of"@en ;
+    rdfs:comment "Relates the role to the grant(s) of which the role is a beneficiary."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Grant .
+
+onto:isPaymentOf a owl:ObjectProperty ;
+    rdfs:label "is payment of"@en ;
+    rdfs:comment "Relates a payment to the grant of which it is a part."@en ;
+    rdfs:domain onto:GrantPayment ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Grant .
+
+onto:isRecipientOf a owl:ObjectProperty ;
+    rdfs:label "is recipient of"@en ;
+    rdfs:comment "Relates the organisation role with the grant payment(s) which they have received. Inverse property of hasRecipient."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:GrantPayment .
+
+onto:isResultOf a owl:ObjectProperty ;
+    rdfs:label "is result of"@en ;
+    rdfs:comment "Relates the results with the Project(s) involved."@en ;
+    rdfs:domain onto:Result ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( onto:Project ) ] .
+
+onto:isSiteOf a owl:ObjectProperty ;
+    rdfs:label "is site of"@en ;
+    rdfs:comment "Indicates an entity which has presence at the given site"@en ;
+    rdfs:domain onto:Site ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Organisation .
+
+onto:isSubOrganisationOf a owl:ObjectProperty ;
+    rdfs:label "is sub-organisation of"@en ;
+    rdfs:comment "Relates the organisation with another organisation of which it is a sub-part."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Organisation .
+
+onto:isSubSchemeOf a owl:ObjectProperty ;
+    rdfs:label "is subscheme of"@en ;
+    rdfs:comment "Relates the funding scheme to its parent scheme of which this funding scheme forms a part. "@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme .
+
+onto:isUnitOf a owl:ObjectProperty ;
+    rdfs:label "is unit of"@en ;
+    rdfs:comment "Relates the unit to the organisation of which the unit forms a part. "@en ;
+    rdfs:domain onto:OrganisationUnit ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Organisation .
+
+onto:journalNumber a owl:DatatypeProperty ;
+    rdfs:label "journal number"@en ;
+    rdfs:comment "The journal number of a published result."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:journalTitle a owl:DatatypeProperty ;
+    rdfs:label "journal title"@en ;
+    rdfs:comment "The title of the journal of a published result."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:language a owl:DatatypeProperty ;
+    rdfs:label "language"@en ;
+    rdfs:comment "The language used in a project result."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:latitude a owl:DatatypeProperty ;
+    rdfs:label "latitude"@en ;
+    rdfs:comment "The latitude of a location. For example 37.42242 (WGS 84)."@en ;
+    rdfs:domain onto:Coordinates ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal .
+
+onto:legalName a owl:DatatypeProperty ;
+    rdfs:label "legal name"@en ;
+    rdfs:comment "The official name of the organization, e.g. the registered company name."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:longitude a owl:DatatypeProperty ;
+    rdfs:label "longitude"@en ;
+    rdfs:comment "The longitude of a location. For example -122.08585 (WGS 84)."@en ;
+    rdfs:domain onto:Coordinates ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal .
+
+onto:postalCode a owl:DatatypeProperty ;
+    rdfs:label "postal code"@en ;
+    rdfs:comment "The postal code of the place or address."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:projectStatus a owl:DatatypeProperty ;
+    rdfs:label "project status"@en ;
+    rdfs:comment "The current status (signed, ongoing, terminated, etc.) of the project."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf ( "CANCEL" "CLOSED" "ONGOING" "SIGNED" "TERMINATED" ) ] .
+
+onto:publishedPages a owl:DatatypeProperty ;
+    rdfs:label "published pages"@en ;
+    rdfs:comment "The pages of a published result."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:publishedYear a owl:DatatypeProperty ;
+    rdfs:label "published year"@en ;
+    rdfs:comment "The year of publication."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:publisher a owl:DatatypeProperty ;
+    rdfs:label "publisher"@en ;
+    rdfs:comment "Represents the publishing body of a published result."@en ;
+    rdfs:domain onto:ProjectPublication ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:roleLabel a owl:DatatypeProperty ;
+    rdfs:label "role label"@en ;
+    rdfs:comment "Title for capturing the role of an organisation."@en ;
+    rdfs:domain onto:OrganisationRole ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf ( "coordinator" "international partner" "participant" "partner" "third party" ) ] .
+
+onto:shortForm a owl:DatatypeProperty ;
+    rdfs:label "short form"@en ;
+    rdfs:comment "The value of the acronym."@en ;
+    rdfs:domain onto:Acronym ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:signatureDate a owl:DatatypeProperty ;
+    rdfs:label "signature date"@en ;
+    rdfs:comment "The day a grant agreement has been signed."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf onto:date .
+
+onto:streetAddress a owl:DatatypeProperty ;
+    rdfs:label "street address"@en ;
+    rdfs:comment "The street name and number of the place or address."@en ;
+    rdfs:domain onto:PostalAddress ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:value a owl:DatatypeProperty ;
+    rdfs:label "value"@en ;
+    rdfs:comment "The value of amount being expressed."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:decimal .
+
+onto:vatNumber a owl:DatatypeProperty ;
+    rdfs:label "VAT number"@en ;
+    rdfs:comment "The unique number that identifies a taxable organisation or non-taxable legal entity that is registered for VAT."@en ;
+    rdfs:domain onto:Organisation ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:workPerformed a owl:DatatypeProperty ;
+    rdfs:label "work performed"@en ;
+    rdfs:comment "A summary of the work carried out during the development of the project."@en ;
+    rdfs:domain onto:ProjectReportSummary ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+<http://publications.europa.eu/resource/authority/language/ENG> a skos:Concept .
+
+<https://w3id.org/dingo#EducationOrganisation> skos:broadMatch <http://schema.org/EducationalOrganization> .
+
+onto:Country a owl:Class ;
+    rdfs:label "Country"@en ;
+    rdfs:comment "A country"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:hasEUCountryCode ],
+        onto:AdministrativeArea ;
+    skos:broadMatch <http://schema.org/Country> .
+
+onto:OrganisationUnit a owl:Class ;
+    rdfs:label "Organisation Unit"@en ;
+    rdfs:comment "A department or unit which is part of some larger Organization and only has full recognition within the context of that Organization. In CORDIS, it represents for instance the different departments of a university that participate in a particular project."@en ;
+    rdfs:isDefinedBy onto: ;
+    skos:broadMatch org:OrganizationalUnit .
+
+onto:abstract a owl:DatatypeProperty ;
+    rdfs:label "abstract"@en ;
+    rdfs:comment "The general summary and ideas of a CORDIS entity, e.g., project, result."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:identifier a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "identifier"@en ;
+    rdfs:comment "The internal CORDA identifier."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:isDisbursedBy a owl:ObjectProperty ;
+    rdfs:label "is disbursed by"@en ;
+    rdfs:comment "Relates the grant to the funding agency that disburses the grant."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingAgency .
+
+onto:isFundedBy a owl:ObjectProperty ;
+    rdfs:label "is funded by"@en ;
+    rdfs:comment "Relates the project with the grant(s) that completely or partially fund the project."@en ;
+    rdfs:domain onto:Project ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Grant .
+
+onto:isImplementedBy a owl:ObjectProperty ;
+    rdfs:label "is implemented by"@en ;
+    rdfs:comment "Relates the funding scheme with the funding agency that implements and administers the scheme."@en ;
+    rdfs:domain onto:FundingScheme ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingAgency .
+
+onto:isInvolvedIn a owl:ObjectProperty ;
+    rdfs:label "is involved in"@en ;
+    rdfs:comment "Relates the role to the Project in which it is involved."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Project .
+
+onto:name a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    rdfs:comment "The name of an entity"@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:rcn a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "rcn"@en ;
+    rdfs:comment "Internal CORDIS identifier used for the identification of the domain entities (e.g., projects, project results, organisations, funding schemes, etc.). Stands for Resource Control Number."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:Coordinates a owl:Class ;
+    rdfs:label "Coordinates"@en ;
+    rdfs:comment "The geo coordinates for a location of entities that participate in or form part of research projects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:longitude ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:latitude ] ;
+    skos:broadMatch <http://www.w3.org/ns/locn#Geometry> ;
+    skos:closeMatch <http://schema.org/GeoCoordinates> .
+
+onto:OrganisationRole a owl:Class ;
+    rdfs:label "Organisation Role"@en ;
+    rdfs:comment "Function assumed by or ascribed to an organisation that takes part in a particular project. In CORDIs, it represents roles such as coordinator, partner, consortium member, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:isRoleOf ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom onto:Organisation ;
+            owl:onProperty onto:isRoleOf ],
+        onto:Role ;
+    skos:broadMatch <https://w3id.org/dingo#OrganisationRole> .
+
+onto:duration a owl:DatatypeProperty ;
+    rdfs:label "duration"@en ;
+    rdfs:comment "The period of time an entity (e.g. project, grant, etc.) has taken, represented as number of months."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:nonNegativeInteger .
+
+onto:isRoleOf a owl:ObjectProperty ;
+    rdfs:label "is role of"@en ;
+    rdfs:comment "Relates the organisation role to the organisation which assumes the role."@en ;
+    rdfs:domain onto:Role ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:Organisation .
+
+onto:title a owl:DatatypeProperty ;
+    rdfs:label "title"@en ;
+    rdfs:comment "The entity’s (e.g. project, work package, etc.) official name or title."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:string .
+
+onto:MonetaryAmount a owl:Class ;
+    rdfs:label "Monetary Amount"@en ;
+    rdfs:comment "A monetary value or range. This type can be used to describe an amount of money such as $50 USD, or a range as in describing a bank account being suitable for a balance between £1,000 and £1,000,000 GBP, or the value of a salary, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:value ] ;
+    skos:broadMatch <http://schema.org/MonetaryAmount> .
+
+onto:date a owl:DatatypeProperty ;
+    rdfs:label "date"@en ;
+    rdfs:comment "The date in which the grant payment took place."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date .
+
+onto:endDate a owl:DatatypeProperty ;
+    rdfs:label "end date"@en ;
+    rdfs:comment "The date on which an entity (e.g. project, grant, etc.) is finalized or ceases to exist."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf onto:date .
+
+onto:hasNUTSCode a owl:ObjectProperty ;
+    rdfs:label "has NUTS code"@en ;
+    rdfs:comment "A value representing the NUTS code of the place or address."@en ;
+    rdfs:domain onto:AdministrativeArea ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range skos:Concept .
+
+onto:startDate a owl:DatatypeProperty ;
+    rdfs:label "start date"@en ;
+    rdfs:comment "The time an entity (e.g. project, grant, etc.) is initialized or starts to take effect."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:date ;
+    rdfs:subPropertyOf onto:date .
+
+onto:url a owl:DatatypeProperty ;
+    rdfs:label "URL"@en ;
+    rdfs:comment "A URL that links internet resources related to a CORDIS entity."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range xsd:anyURI .
+
+onto:FundingAgency a owl:Class ;
+    rdfs:label "Funding Agency"@en ;
+    rdfs:comment "An organisation that materially administrates funding schemes and disburses related grants. In the context of CORDIS, it represents the various European agencies responsible for funding research projects (e.g. ERC, EASME, REA, etc.)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf onto:Organisation ;
+    skos:broadMatch <https://w3id.org/dingo#FundingAgency> .
+
+onto:GrantPayment a owl:Class ;
+    rdfs:label "Grant Payment"@en ;
+    rdfs:comment "A single payment to a recipient or beneficiary of a Grant within a research project."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasPaymentAmount ] ;
+    skos:broadMatch <https://w3id.org/dingo#GrantPayment> .
+
+onto:Site a owl:Class ;
+    rdfs:label "Site"@en ;
+    rdfs:comment "The physical extension of entities that participate in or form part of research projects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:name ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:isSiteOf ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasAddress ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasGeographicalLocation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:hasCoordinates ] ;
+    skos:broadMatch org:Site .
+
+onto:hasFundingScheme a owl:ObjectProperty ;
+    rdfs:label "has funding scheme"@en ;
+    rdfs:comment "Relates the grant to the funding scheme of which the grant forms a part."@en ;
+    rdfs:domain onto:Grant ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:range onto:FundingScheme ;
+    owl:inverseOf onto:hasGrant .
+
+onto:ProjectReportSummary a owl:Class ;
+    rdfs:label "Project Report Summary"@en ;
+    rdfs:comment "A document reporting on the progress of an on-going or completed project at a given period.."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:abstract ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:workPerformed ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:startDate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:finalResults ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:endDate ],
+        onto:Result ;
+    skos:broadMatch <http://purl.org/spar/fabio/ProjectReportSummary> .
+
+onto:Result a owl:Class ;
+    rdfs:label "Result"@en ;
+    rdfs:comment "Any tangible or intangible output of the project (such as data, knowledge and information, whatever their form or nature, whether or not they can be protected), which are generated in the project."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:title ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:language ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:url ] .
+
+onto:Acronym a owl:Class ;
+    rdfs:label "Acronym"@en ;
+    rdfs:comment "An abbreviation formed from the initial letters of other words and pronounced as a word. It can refer to any type of entities in the CORDIS conceptual framework, and may be stated explicitly or extracted automatically from text."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:shortForm ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:definition ] .
+
+onto:AdministrativeArea a owl:Class ;
+    rdfs:label "Administrative Area"@en ;
+    rdfs:comment "An administrative geographical area that is typically managed by a public body. It can be a country, a region, a municipality, a province, a sub-municipality area, etc."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:name ] ;
+    skos:broadMatch <http://data.europa.eu/m8g/AdminUnit>,
+        <http://schema.org/AdministrativeArea> .
+
+onto:PostalAddress a owl:Class ;
+    rdfs:label "Postal Address"@en ;
+    rdfs:comment "The postal address of entities that participate in or form part of research projects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:addressCountry ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:addressLocality ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:postalCode ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:streetAddress ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:fullAddress ] ;
+    skos:broadMatch <http://schema.org/PostalAddress>,
+        <http://www.w3.org/ns/locn#Address> .
+
+xsd:date a rdfs:Datatype .
+
+onto:Role a owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:comment "The function assumed by or ascribed to an entity (typically an organisation) in a particular project. It can be used to precise or represent additional information about a relationship or property such as participation or membership. In CORDIS, it represents the participation of an organisation in a research project."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:roleLabel ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:endDate ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:startDate ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:isInvolvedIn ] ;
+    skos:broadMatch <https://w3id.org/dingo#Role> .
+
+skos:Concept a owl:Class .
+
+onto:Project a owl:Class ;
+    rdfs:label "Project"@en ;
+    rdfs:comment "A planned research work that has one or more objectives (divided or not into tasks) and is conducted by one or more organisations. In CORDIS, it represents a project funded by an EU programme."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:endDate ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:rcn ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:projectStatus ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:url ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:doi ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:signatureDate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:isFundedBy ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasTotalCost ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:startDate ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:duration ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:identifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasInvolvedParty ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:title ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:abstract ] ;
+    skos:broadMatch <https://w3id.org/dingo#Project> .
+
+onto:ProjectPublication a owl:Class ;
+    rdfs:label "Project Publication"@en ;
+    rdfs:comment "A scientific publication (e.g., journal article, conference paper, thesis dissertation, book, etc.) that resulted from the project activities."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:publishedYear ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:journalTitle ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:author ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:journalNumber ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:publisher ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:publishedPages ],
+        onto:Result ;
+    skos:broadMatch <http://purl.org/spar/fabio/Expression> .
+
+onto:Grant a owl:Class ;
+    rdfs:label "Grant"@en ;
+    rdfs:comment "A disbursed fund paid to a recipient or beneficiary within the context of a funded research project. In the context of CORDIS, it represents a grant of a specific EU programme (e.g. an H2020 grant)."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:funds ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:endDate ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasFundingAmount ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:startDate ],
+        [ a owl:Restriction ;
+            owl:onProperty onto:duration ;
+            owl:someValuesFrom xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasFundingScheme ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasPayment ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:isDisbursedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasBeneficiary ] ;
+    skos:broadMatch <https://w3id.org/dingo#Grant> .
+
+onto:Organisation a owl:Class ;
+    rdfs:label "Organisation"@en ;
+    rdfs:comment "Represents a group of people, with the same purpose, organized together into a community or other social, commercial or political structure that participate in CORDIS projects."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom onto:OrganisationRole ;
+            owl:onProperty onto:hasRole ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:rcn ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:legalName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:hasSite ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:vatNumber ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty onto:url ] ;
+    skos:broadMatch org:Organization,
+        <https://w3id.org/dingo#Organisation> .
+
+onto:FundingScheme a owl:Class ;
+    rdfs:label "Funding Scheme"@en ;
+    rdfs:comment "Set of rules and conditions which forms the basis for public funding of European research. In CORDIS, they represent the different legal frameworks (e.g. FP6, FP7, H2020). They can also be used to represent the different calls inside each framework by using the recursive relation “partOfScheme”."@en ;
+    rdfs:isDefinedBy onto: ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:nonNegativeInteger ;
+            owl:onProperty onto:duration ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:isImplementedBy ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:title ],
+        [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onProperty onto:hasFundingSchemeCategory ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty onto:url ] ;
+    skos:broadMatch <https://w3id.org/dingo#FundingScheme> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:ProjectDeliverable onto:ProjectPublication onto:ProjectReportSummary ) .
+
+[] dcat:accessURL onto: ;
+    dcat:downloadURL onto: .
+
+[] foaf:mbox "cordis@publications.europa.eu" .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:ForProfitOrganisation onto:FundingAgency onto:HigherOrSecondaryEducation onto:PublicBody onto:ResearchOrganisation onto:SME ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( onto:JournalPaper onto:ProceedingsPaper ) .
+
