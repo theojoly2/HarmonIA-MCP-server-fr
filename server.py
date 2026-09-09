@@ -29,7 +29,7 @@ load_dotenv(dotenv_path=env_path)
 ai_thread_pool = ThreadPoolExecutor(max_workers=2)
 
 mcp = FastMCP(
-    name="ServeurSemantique",
+    name="ServeurHarmonIA",
 )
 
 

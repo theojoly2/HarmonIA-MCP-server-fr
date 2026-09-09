@@ -1,5 +1,7 @@
 from pathlib import Path
 from hashlib import sha256
+import base64
+import os
 import re
 import codecs
 import json
@@ -14,6 +16,7 @@ from qdrant_client.models import (
     PointStruct,
     SparseVectorParams,
     SparseVector,
+    PayloadSchemaType,
 )
 
 try:
@@ -25,6 +28,51 @@ client = cf.client
 model = cf.model
 COLLECTION = cf.COLLECTION
 BATCH_SIZE = cf.BATCH_SIZE
+
+# ─── Configuration des résumés ─────────────────────────────────────────────
+SUMMARY_CFG = getattr(cf, "config", {}).get("summary", {})
+SUMMARY_ENABLED = bool(SUMMARY_CFG.get("enabled", False))
+SUMMARY_LANG = str(SUMMARY_CFG.get("lang", "fr"))
+SUMMARY_LLM_CFG = SUMMARY_CFG.get("llm", {})
+SUMMARY_MAX_INPUT_CHARS = int(SUMMARY_LLM_CFG.get("max_input_chars", 800_000))
+SUMMARY_MIN_OUTPUT_CHARS = int(SUMMARY_LLM_CFG.get("min_output_chars", 200))
+SUMMARY_MAX_OUTPUT_CHARS = int(SUMMARY_LLM_CFG.get("max_output_chars", 400))
+SUMMARY_FALLBACK_MAX_CHARS = int(SUMMARY_CFG.get("fallback", {}).get("max_chars", 400))
+SUMMARY_SYSTEM_PROMPT = SUMMARY_LLM_CFG.get("system_prompt", "")
+
+def _load_summary_llm_config():
+    """Charge la configuration LLM pour les résumés (.env prioritaire sur config.yaml)."""
+    summary_cfg = getattr(cf, "config", {}).get("summary", {})
+    base_url = (os.getenv("URL_LLM_API") or summary_cfg.get("base_url", "")).strip()
+    model = (os.getenv("LLM_MODEL") or summary_cfg.get("model", "")).strip()
+
+    api_key_env = summary_cfg.get("api_key_env", "")
+    api_key = os.getenv("LLM_API_KEY") or (os.getenv(api_key_env) if api_key_env else None)
+    if api_key:
+        api_key = api_key.strip()
+    if api_key == "":
+        api_key = None
+
+    return base_url, model, api_key
+
+
+_LLM_CLIENT = None
+_LLM_MODEL = None
+if SUMMARY_ENABLED:
+    try:
+        from openai import OpenAI
+
+        _URL_API, _LLM_MODEL, _LLM_API_KEY = _load_summary_llm_config()
+        if _URL_API and _LLM_API_KEY and _LLM_MODEL:
+            _LLM_CLIENT = OpenAI(base_url=_URL_API, api_key=_LLM_API_KEY)
+            print(f"✓ Summary LLM configured: {_LLM_MODEL} ({_URL_API})")
+        else:
+            print(
+                "[!] Summary LLM enabled but missing LLM_API_KEY / URL_LLM_API / LLM_MODEL. "
+                "Falling back to native descriptions."
+            )
+    except Exception as e:
+        print(f"[!] Failed to initialize summary LLM client: {e}")
 
 XML_DECL_RE = re.compile(br'<\?xml[^>]+encoding\s*=\s*["\']([^"\']+)', re.IGNORECASE)
 TEXT_BOMS = (
@@ -39,6 +87,246 @@ PRINTABLE_ASCII = set(range(32, 127))
 
 DENSE_VECTOR_NAME = "dense"
 SPARSE_VECTOR_NAME = "sparse"
+
+# ─── Helpers extraction native de description ──────────────────────────────
+
+def _truncate_text(text: str, max_chars: int) -> str:
+    """Tronque proprement un texte à max_chars caractères."""
+    if not text:
+        return ""
+    text = text.strip()
+    if len(text) <= max_chars:
+        return text
+    # Coupure au dernier espace avant la limite pour éviter de couper un mot
+    cut = text[:max_chars].rsplit(" ", 1)[0]
+    return cut.rstrip() + "…"
+
+
+def _clean_fallback_text(text: str) -> str:
+    """Nettoie un texte brut pour en faire un fallback descriptif."""
+    # Supprime les lignes vides répétées et les espaces superflus
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    joined = " ".join(lines)
+    # Supprime les artefacts fréquents (URL, tags XML bruts, etc.)
+    joined = re.sub(r"\s+", " ", joined)
+    return joined.strip()
+
+
+def _extract_description_from_json(text: str) -> str:
+    """Extrait la description d'un document JSON/JSON-LD."""
+    try:
+        data = json.loads(text)
+    except Exception:
+        return ""
+    if not isinstance(data, dict):
+        return ""
+    for key in ("description", "rdfs:comment", "comment", "abstract", "dcterms:description", "dc:description"):
+        value = data.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+        if isinstance(value, list) and value:
+            first = value[0]
+            if isinstance(first, str) and first.strip():
+                return first.strip()
+            if isinstance(first, dict):
+                # JSON-LD avec @value
+                val = first.get("@value", "")
+                if isinstance(val, str) and val.strip():
+                    return val.strip()
+    return ""
+
+
+def _extract_description_from_ttl(text: str) -> str:
+    """Extrait la description d'un document Turtle/OWL."""
+    try:
+        import rdflib
+    except ImportError:
+        return ""
+    try:
+        g = rdflib.Graph()
+        g.parse(data=text, format="turtle")
+    except Exception:
+        return ""
+
+    predicates = [
+        rdflib.URIRef("http://purl.org/dc/terms/description"),
+        rdflib.URIRef("http://purl.org/dc/elements/1.1/description"),
+        rdflib.URIRef("http://www.w3.org/2000/01/rdf-schema#comment"),
+        rdflib.URIRef("http://www.w3.org/2004/02/skos/core#definition"),
+        rdflib.URIRef("http://purl.org/dc/terms/abstract"),
+    ]
+
+    # Cherche d'abord sur owl:Ontology
+    for s, p, o in g.triples((None, rdflib.RDF.type, rdflib.OWL.Ontology)):
+        for pred in predicates:
+            for obj in g.objects(s, pred):
+                val = str(obj)
+                if val.strip():
+                    return val.strip()
+
+    # Sinon, première description trouvée dans le graphe
+    for pred in predicates:
+        for obj in g.objects(None, pred):
+            val = str(obj)
+            if val.strip():
+                return val.strip()
+
+    return ""
+
+
+def _extract_description_from_xml(text: str) -> str:
+    """Extrait la description d'un document XML/XMI."""
+    try:
+        import xml.etree.ElementTree as ET
+        root = ET.fromstring(text)
+    except Exception:
+        return ""
+
+    # Namespaces courants
+    namespaces = {
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "skos": "http://www.w3.org/2004/02/skos/core#",
+        "dcterms": "http://purl.org/dc/terms/",
+        "dc": "http://purl.org/dc/elements/1.1/",
+        "uml": "http://schema.omg.org/spec/UML/2.1",
+        "xmi": "http://schema.omg.org/spec/XMI/2.1",
+    }
+
+    tags = [
+        ".//rdfs:comment",
+        ".//skos:definition",
+        ".//dcterms:description",
+        ".//dc:description",
+        ".//{http://www.sparxsystems.com/profiles/thecustomprofile/1.0}definition",
+        ".//{http://www.sparxsystems.com/profiles/TerminologyProfile/1.0}definition",
+    ]
+
+    for tag in tags:
+        try:
+            if tag.startswith(".//{http"):
+                elems = root.findall(tag)
+            else:
+                elems = root.findall(tag, namespaces)
+            for elem in elems:
+                if elem.text and elem.text.strip():
+                    return elem.text.strip()
+        except Exception:
+            continue
+
+    return ""
+
+
+def _extract_description_from_sql(text: str) -> str:
+    """Extrait la description des commentaires de header SQL."""
+    lines = []
+    for raw_line in text.splitlines()[:30]:
+        line = raw_line.strip()
+        if line.startswith("--"):
+            comment = line[2:].strip("- ").strip()
+            if comment:
+                lines.append(comment)
+        elif line.startswith("/*") and not line.endswith("*/"):
+            continue
+        elif lines and line == "*/":
+            break
+        elif not line or line.startswith("SET") or line.startswith("CREATE"):
+            if lines:
+                break
+    description = " ".join(lines)
+    return description.strip()
+
+
+def extract_native_description(filepath: Path, text: str) -> str:
+    """
+    Extrait une description native du fichier selon son type.
+    Si aucune description structurée n'est trouvée, retourne un texte descriptif court.
+    """
+    ext = filepath.suffix.lower()
+    description = ""
+
+    if ext in (".json", ".jsonld"):
+        description = _extract_description_from_json(text)
+    elif ext in (".ttl", ".owl"):
+        description = _extract_description_from_ttl(text)
+    elif ext in (".xml", ".xmi"):
+        description = _extract_description_from_xml(text)
+    elif ext in (".sql", ".ddl"):
+        description = _extract_description_from_sql(text)
+
+    description = description.strip()
+    if description:
+        return _truncate_text(description, SUMMARY_FALLBACK_MAX_CHARS)
+
+    # Fallback : 400 premiers caractères descriptifs du texte
+    cleaned = _clean_fallback_text(text)
+    return _truncate_text(cleaned, SUMMARY_FALLBACK_MAX_CHARS)
+
+
+def generate_llm_summary(filename: str, full_text: str) -> str:
+    """
+    Appelle le LLM configuré pour générer un résumé du document.
+    Non bloquant : retourne une chaîne vide en cas d'échec.
+    """
+    if _LLM_CLIENT is None or not _LLM_MODEL:
+        return ""
+
+    if not full_text.strip():
+        return ""
+
+    truncated = False
+    text_input = full_text
+    if len(full_text) > SUMMARY_MAX_INPUT_CHARS:
+        text_input = full_text[:SUMMARY_MAX_INPUT_CHARS]
+        truncated = True
+        print(
+            f"[~] '{filename}' truncated for LLM summary: "
+            f"{len(full_text)} → {SUMMARY_MAX_INPUT_CHARS} chars"
+        )
+
+    system_prompt = SUMMARY_SYSTEM_PROMPT.format(lang=SUMMARY_LANG)
+    user_message = (
+        f"Voici le contenu du document '{filename}'"
+        + (" (tronqué, suite non disponible)" if truncated else "")
+        + f" :\n\n{text_input}\n\nRésume ce document selon les instructions."
+    )
+
+    try:
+        response = _LLM_CLIENT.chat.completions.create(
+            model=_LLM_MODEL,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+            temperature=0.0,
+            max_tokens=300,
+        )
+        summary = response.choices[0].message.content or ""
+        summary = summary.strip()
+        if len(summary) < SUMMARY_MIN_OUTPUT_CHARS:
+            # Trop court : probablement invalide, on retombe en extraction native
+            print(f"[!] LLM summary too short for '{filename}' ({len(summary)} chars). Using native fallback.")
+            return ""
+        if len(summary) > SUMMARY_MAX_OUTPUT_CHARS:
+            summary = _truncate_text(summary, SUMMARY_MAX_OUTPUT_CHARS)
+        return summary
+    except Exception as e:
+        print(f"[!] LLM summary generation failed for '{filename}': {e}")
+        return ""
+
+
+def get_doc_summary(filename: str, filepath: Path, full_text: str) -> str:
+    """
+    Renvoie le résumé d'un document.
+    Si summary.enabled=true et LLM disponible → génération LLM.
+    Sinon → extraction native (description du fichier ou texte descriptif).
+    """
+    if SUMMARY_ENABLED and _LLM_CLIENT is not None:
+        llm_summary = generate_llm_summary(filename, full_text)
+        if llm_summary:
+            return llm_summary
+        print(f"[~] LLM summary failed for '{filename}', falling back to native description.")
+
+    return extract_native_description(filepath, full_text)
 
 CHUNK_SIZE = int(
     getattr(cf, "config", {}).get("chunking", {}).get("chunk_size", 4000)
@@ -520,10 +808,12 @@ def setup_collection(capabilities: dict[str, Any]) -> bool:
     elif capabilities["has_dense"]:
         client.create_collection(
             collection_name=COLLECTION,
-            vectors_config=VectorParams(
-                size=capabilities["dense_dim"],
-                distance=Distance.COSINE,
-            ),
+            vectors_config={
+                DENSE_VECTOR_NAME: VectorParams(
+                    size=capabilities["dense_dim"],
+                    distance=Distance.COSINE,
+                ),
+            },
         )
         print(
             f"[✓] Created dense-only collection '{COLLECTION}' "
@@ -542,6 +832,30 @@ def setup_collection(capabilities: dict[str, Any]) -> bool:
 
     else:
         raise ValueError("Model has neither dense nor sparse capability")
+
+    print("[~] Creating payload index for 'tags'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="tags",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'tags' created.")
+
+    print("[~] Creating payload index for 'document_id'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="document_id",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'document_id' created.")
+
+    print("[~] Creating payload index for 'summary_enabled'...")
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="summary_enabled",
+        field_type=PayloadSchemaType.KEYWORD,
+    )
+    print("[✓] Payload index for 'summary_enabled' created.")
 
     return True
 
@@ -586,6 +900,8 @@ def encode_batch(texts: list[str], capabilities: dict[str, Any]) -> list[dict[st
             item = {}
             if i < len(dense_vecs):
                 dense = dense_vecs[i]
+                if isinstance(dense, str):
+                    raise ValueError(f"Expected numeric vector, got string: {dense!r}")
                 item["dense"] = dense.tolist() if hasattr(dense, "tolist") else list(dense)
             if i < len(lexical_weights):
                 item["sparse"] = _lexical_to_sparse_vector(lexical_weights[i])
@@ -594,8 +910,15 @@ def encode_batch(texts: list[str], capabilities: dict[str, Any]) -> list[dict[st
         return outputs
 
     if capabilities["has_dense"]:
-        dense_vecs = model.encode(texts)
+        result = model.encode(texts)
+        # Si le résultat est un dict (API embedding), extraire dense_vecs
+        if isinstance(result, dict):
+            dense_vecs = result.get("dense_vecs", [])
+        else:
+            dense_vecs = result
         for dense in dense_vecs:
+            if isinstance(dense, str):
+                raise ValueError(f"Expected numeric vector, got string: {dense!r}")
             outputs.append(
                 {"dense": dense.tolist() if hasattr(dense, "tolist") else list(dense)}
             )
@@ -646,7 +969,7 @@ def build_point(
     if capabilities["has_dense"]:
         return PointStruct(
             id=docid,
-            vector=vectors["dense"],
+            vector={DENSE_VECTOR_NAME: vectors["dense"]},
             payload=payload,
         )
 
@@ -665,8 +988,14 @@ def flush_batch(
     points: list[PointStruct],
     capabilities: dict[str, Any],
 ) -> int:
-    texts = [item["text"] for item in batch_docs]
-    encoded_vectors = encode_batch(texts, capabilities)
+    # Enrichit le texte à embedder avec les tags et le nom de fichier pour améliorer
+    # la recherche sémantique (surtout utile pour les vocabulaires et standards).
+    texts_to_embed = [
+        f"Source : {', '.join(item['payloadextra'].get('tags', []))}\n"
+        f"Fichier : {item['filename']}\n\n{item['text']}"
+        for item in batch_docs
+    ]
+    encoded_vectors = encode_batch(texts_to_embed, capabilities)
 
     for item, vectors in zip(batch_docs, encoded_vectors):
         point = build_point(
@@ -679,11 +1008,12 @@ def flush_batch(
             payloadextra=item.get("payloadextra"),
         )
         points.append(point)
+        tags = item['payloadextra'].get('tags', [])
         print(
             f"[~] Loaded {item['filename']} "
             f"(chunk {item['payloadextra'].get('chunk_index', 0) + 1}/"
             f"{item['payloadextra'].get('chunk_count', 1)}) "
-            f"({item['encoding']})"
+            f"tags={tags}"
         )
 
     client.upsert(collection_name=COLLECTION, points=points)
@@ -699,6 +1029,29 @@ def flush_batch(
 def index_documents():
     print("Detecting model capabilities...")
     capabilities = cf.MODEL_CAPABILITIES
+
+    # Vérification silencieuse du modèle d'embedding
+    try:
+        sample_result = cf.model.encode(["test"], return_dense=True, return_sparse=False)
+        dense_vecs = None
+        if isinstance(sample_result, dict):
+            dense_vecs = sample_result.get("dense_vecs")
+        elif isinstance(sample_result, (list, tuple)):
+            dense_vecs = sample_result
+        elif hasattr(sample_result, "tolist"):
+            dense_vecs = sample_result.tolist()
+
+        if dense_vecs is None or len(dense_vecs) == 0:
+            raise ValueError("Embedding model returned no dense vectors")
+
+        first_vec = dense_vecs[0]
+        if hasattr(first_vec, "tolist"):
+            first_vec = first_vec.tolist()
+        if not isinstance(first_vec, (list, tuple)) or len(first_vec) == 0:
+            raise ValueError(f"Embedding model returned invalid dense vector: {type(first_vec)}")
+    except Exception as e:
+        print(f"⚠ Embedding API check failed: {e}")
+        raise
 
     is_fresh = setup_collection(capabilities)
     existing_ids = set() if is_fresh else get_existing_ids()
@@ -718,7 +1071,7 @@ def index_documents():
         print(f"[!] Directory not found: {docs_path}")
         return
 
-    print(f"[~] Scanning documents in {docs_path}")
+    print(f"[~] Scanning documents recursively in {docs_path}")
 
     def pushdoc(
         filename: str,
@@ -748,13 +1101,23 @@ def index_documents():
             }
         )
 
-    for filepath in docs_path.iterdir():
+    for filepath in docs_path.rglob("*"):
         if not filepath.is_file():
             continue
+
+        relative_path = filepath.relative_to(docs_path)
+        tags = list(relative_path.parent.parts)
 
         ext = filepath.suffix.lower()
 
         try:
+            file_base64 = None
+            try:
+                with open(filepath, "rb") as f:
+                    file_base64 = base64.b64encode(f.read()).decode("utf-8")
+            except Exception as e:
+                print(f"[!] Warning: Could not base64 encode {filepath.name}: {e}")
+
             if ext == ".pdf":
                 text, encodingused = read_pdf_document(filepath)
             else:
@@ -774,29 +1137,50 @@ def index_documents():
                 )
 
             document_id = generate_document_id(filepath)
+
+            # Génération/extraction du résumé (stocké uniquement sur le chunk 0)
+            # On ne regénère pas si le document est déjà indexé.
+            chunk0_id = generate_chunk_stable_id(document_id, 0)
+            if not is_fresh and chunk0_id in existing_ids:
+                print(f"[~] Document already indexed, skipping summary: {filepath.name}")
+                doc_summary = None
+            else:
+                doc_summary = get_doc_summary(filepath.name, filepath, optimized_text)
+                if doc_summary:
+                    print(f"[~] Summary for {filepath.name}: {doc_summary[:120]}{'…' if len(doc_summary) > 120 else ''}")
+
             chunks = split_text_uniformly(optimized_text)
 
             if not chunks:
                 continue
 
             total_chunks += len(chunks)
-            print(f"[~] Chunked {filepath.name} into {len(chunks)} chunks")
+            print(f"[~] Chunked {filepath.name} into {len(chunks)} chunks (Tags: {tags})")
 
             for chunk_index, chunk_text in enumerate(chunks):
+                payloadextra = {
+                    "doctype": "uniform_chunk",
+                    "document_id": document_id,
+                    "chunk_index": chunk_index,
+                    "chunk_count": len(chunks),
+                    "is_child_chunk": True,
+                    "source_path": str(filepath.resolve()),
+                    "source_extension": filepath.suffix.lower(),
+                    "document_name": filepath.stem,
+                    "tags": tags,
+                    "summary_enabled": bool(SUMMARY_ENABLED),
+                }
+                if chunk_index == 0:
+                    if doc_summary:
+                        payloadextra["doc_summary"] = doc_summary
+                    if file_base64:
+                        payloadextra["file_base64"] = file_base64
+
                 pushdoc(
                     filename=filepath.name,
                     content=chunk_text,
                     encodingused=encodingused,
-                    payloadextra={
-                        "doctype": "uniform_chunk",
-                        "document_id": document_id,
-                        "chunk_index": chunk_index,
-                        "chunk_count": len(chunks),
-                        "is_child_chunk": True,
-                        "source_path": str(filepath.resolve()),
-                        "source_extension": filepath.suffix.lower(),
-                        "document_name": filepath.stem,
-                    },
+                    payloadextra=payloadextra,
                 )
 
                 if len(batch_docs) >= BATCH_SIZE:
